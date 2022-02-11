@@ -83,9 +83,8 @@ function HomeBanner(props: any) {
           return console.log("PROMOTION");
         case "ORGANIZATION":
           return history.push({
-            pathname: `/org/${chooseBanner.origin_id}`,
-            search: `${chooseBanner.origin_id}`,
-            state: chooseBanner,
+            pathname: `/org/${chooseBanner?.name}`,
+            search: `${chooseBanner?.origin_id}`,
           });
         default:
           break;

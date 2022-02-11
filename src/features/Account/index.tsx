@@ -1,18 +1,19 @@
 import { RouteComponentProps } from "@reach/router";
-import {  Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 // import CheckNoti from "./components/CheckNotification";
 import PaymentMethod from "./components/PaymentMethod/index";
 import Information from "./components/Information/index";
 import Head from "../Head/index";
 import "./account.css";
 import SideBar from "./components/MenuSideBar";
-import Orders from '../Orders/index';
+import Orders from "../Orders/index";
 import Product from "./components/HistoryProduct";
 import Service from "./components/HistoryService";
 import ComboList from "./components/HistoryCombo/components/Combolist";
 import AccountMb from "../../featuresMobile/Account";
-import OrderDetail from "../OrderDetail"
+import OrderDetail from "../OrderDetail";
 import Footer from "../Footer";
+import HeadTitle from "../HeadTitle";
 const routes = [
   {
     path: `/tai-khoan/phuong-thuc-thanh-toan`,
@@ -35,20 +36,22 @@ const routes = [
     component: <ComboList />,
   },
   {
-    path:'/tai-khoan/lich-su-mua',
-    component: <Orders/>
+    path: "/tai-khoan/lich-su-mua",
+    component: <Orders />,
   },
   {
-    path:'/tai-khoan/chi-tiet-don-hang',
-    component: <OrderDetail/>
-  }
+    path: "/tai-khoan/chi-tiet-don-hang",
+    component: <OrderDetail />,
+  },
 ];
 function Account() {
+  const headerTitle = "Thông tin cá nhân";
   const RouterPage = (
     props: { pageComponent: JSX.Element } & RouteComponentProps
   ) => props.pageComponent;
   return (
     <>
+      <HeadTitle title={headerTitle} />
       <Head />
       <div className="wrapper account_section">
         <SideBar />
@@ -65,7 +68,7 @@ function Account() {
         </div>
       </div>
       {/* for mobile */}
-      <AccountMb/>
+      <AccountMb />
       <Footer />
     </>
   );
