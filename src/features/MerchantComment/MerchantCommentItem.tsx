@@ -1,16 +1,23 @@
 import React from "react";
 import icon from "../../constants/icon";
+import { IComment } from '../../interface/comments';
+import formatDate from '../../utils/formatDate'
 
-export default function MerchantCommentItem() {
+interface IProps {
+  comment: IComment
+}
+
+export default function MerchantCommentItem(props: IProps) {
+  const { comment } = props;
   return (
-    <>
+    <div>
       <div className="comment-item">
         <div className="comment-user">
           <div className="comment-user__avatar">
-            <img src="https://source.unsplash.com/random" alt="" />
+            {comment.user.fullname?.slice(0, 1)}
           </div>
           <div className="comment-user__info">
-            <span className="comment-user__name">Name User</span>
+            <span className="comment-user__name">{comment.user.fullname}</span>
           </div>
         </div>
         <div className="comment-option">
@@ -18,7 +25,7 @@ export default function MerchantCommentItem() {
             <img src={icon.Favorite} alt="" />
             <span>0</span>
           </div>
-          <img src={icon.phone} alt="" />
+          <span className="create">{formatDate(comment.created_at)}</span>
         </div>
       </div>
       <div className="comment-star__all">
@@ -29,15 +36,11 @@ export default function MerchantCommentItem() {
         <img src={icon.star} alt="" />
       </div>
       <div className="comment-evalutes">
-        <h3>Spectacular</h3>
-        <span>12/2021</span>
+        {/* <h3>Spectacular</h3> */}
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-          commodi, dolor soluta illum alias animi amet saepe eveniet inventore,
-          magni cum minima deserunt aliquam, adipisci explicabo aliquid quasi
-          omnis deleniti!
+          {comment.body}
         </p>
       </div>
-    </>
+    </div>
   );
 }

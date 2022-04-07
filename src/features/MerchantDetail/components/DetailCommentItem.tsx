@@ -9,7 +9,6 @@ interface IProps{
 
 function DetailCommentItem(props:IProps) {
       const {comment} = props;
-      console.log(comment)
       // console.log(comment.rateStar)
       // const starArr: any[] = [];
       // for (let i = 0; i < comment.rateStar; i++) {

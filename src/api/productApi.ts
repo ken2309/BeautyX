@@ -1,17 +1,22 @@
 import axiosClient from "./axios";
 
 class ProductApi {
-  getByOrgId = (params: any) => {
-    //console.log(params);
-    const url = `/organizations/${params.org_id}/products?page=${params.page}&limit=8`;
-    return axiosClient.get(url);
+  getByOrgId = (values: any) => {
+    const url = `/organizations/${values.org_id}/products`;
+    const params = {
+      page: values.page,
+      limit: 15,
+    }
+    return axiosClient.get(url, { params });
   };
-  getByOrgId_cateId = (params: any) => {
-    const url =
-      `/organizations/${params.org_id}` +
-      `/products?page=${params.page}` +
-      `&limit=9&filter%5Bproduct_category_id%5D=${params.cate_id}`;
-    return axiosClient.get(url);
+  getByOrgId_cateId = (values: any) => {
+    const url = `/organizations/${values.org_id}/products`;
+    const params = {
+      page: values.page,
+      limit: 15,
+      "filter[product_category_id]": values.cate_id
+    }
+    return axiosClient.get(url, { params });
   };
   getDetailById = (params: any) => {
     const url = `/organizations/${params.org_id}/products/${params.id}`;
@@ -21,6 +26,16 @@ class ProductApi {
     const url = `/organizations/${params.org_id}/products?page=1&limit=15&filter%5Bkeyword%5D=${params.searchKey}`;
     return axiosClient.get(url);
   };
+  getSpecialPriceByOrg_id = (values: any) => {
+    const url = `/organizations/${values?.org_id}/products`;
+    const params = {
+      page: values.page,
+      limit: 15,
+      "filter[special]": true,
+      "filter[is_momo_ecommerce_enable]": true
+    }
+    return axiosClient.get(url, { params })
+  }
 }
 const productsApi = new ProductApi();
 export default productsApi;
