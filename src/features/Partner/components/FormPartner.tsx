@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { partnerStyle } from "../style";
 import ButtonCus from "../../../components/ButtonCus";
 import Checkbox from "@mui/material/Checkbox";
@@ -6,9 +6,14 @@ import icon from "../../../constants/icon";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AppContext } from "../../../context/AppProvider";
+import PopupSuccess from "./popUpSuccess";
 export default function FormPartner() {
   const { t } = useContext(AppContext);
   const parner = partnerStyle();
+  const [popup,setPopup] = useState(false);
+  const handleContact= () => {
+    setPopup(true);
+  }
   const formikPartner = useFormik({
     initialValues: {
       Name: "",
@@ -65,6 +70,7 @@ export default function FormPartner() {
     }),
     onSubmit: (values) => {
       console.log(values);
+      handleContact();
     },
   });
 
@@ -214,6 +220,11 @@ export default function FormPartner() {
           />
         </div>
       </form>
+      <PopupSuccess
+        popup={popup}
+        setPopup={setPopup}
+        title={t('Contact.success')}
+      />
     </div>
   );
 }

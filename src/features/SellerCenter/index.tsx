@@ -15,7 +15,7 @@ function SellerCenter() {
     const [sub, setSub] = useState('')
     const onGotoManager = () => {
         if (sub.length > 0) {
-            const newWindow = window.open(`https://${sub}.myspa.vn`, '_blank', 'noopener,noreferrer')
+            const newWindow = window.open(`https://${sub}.myclinic.vn`, '_blank', 'noopener,noreferrer')
             if (newWindow) newWindow.opener = null
         }
         // const a = document.createElement('a');
@@ -64,7 +64,7 @@ function SellerCenter() {
                                     placeholder='Nhập địa chỉ subdomain'
                                 />
                                 <div className="inp-right">
-                                    .myspa.vn
+                                .myclinic.vn
                                 </div>
                             </div>
                             <div className="form-cnt__btn">

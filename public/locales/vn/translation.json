@@ -342,5 +342,8 @@
     "to":"đến",
     "invalid":"Không hợp lệ",
     "apply":"Áp dụng khoảng giá"
+  },
+  "Contact":{
+    "success":"Đã nhận thông tin"
   }
 }
