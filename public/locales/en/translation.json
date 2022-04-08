@@ -345,5 +345,9 @@
   },
   "Contact":{
     "success":"submit success"
+  },
+  "sell_center":{
+    "next":"Next",
+    "enter_your_subdomain":"Enter your subdomain"
   }
 }

@@ -3,26 +3,19 @@ import formatPrice from "../../../utils/formatPrice";
 import icon from "../../../constants/icon";
 import { IOrganization } from "../../../interface/organization";
 import orgApi from "../../../api/organizationApi";
-// import { useHistory } from 'react-router-dom';
-// import slugify from '../../../utils/formatUrlString';
 import OrderDetail from "../../OrderDetail";
 import { AppContext } from "../../../context/AppProvider";
-import {IOrderV2} from '../../../interface/orderv2'
+import { IOrderV2 } from '../../../interface/orderv2';
+import onErrorImg from "../../../utils/errorImg";
 
-interface IProp{
-  order : IOrderV2
+interface IProp {
+  order: IOrderV2
 }
 
 function OrderItem(props: IProp) {
-  // const history = useHistory();
   const { t } = useContext(AppContext);
   const { order } = props;
   const countItem = order.items_count
-  // const status = order.status;
-  // const countItem =
-  //   order.items_product.length +
-  //   order.items_service.length +
-  //   order.items_treatment_combo.length;
   const [org, setOrg] = useState<IOrganization>();
   const [openDetail, setOpenDetail] = useState(false);
   useEffect(() => {
@@ -83,7 +76,8 @@ function OrderItem(props: IProp) {
         <div className="order-item">
           <img
             className="order-item__img"
-            src={"https://picsum.photos/650/976?random=1" + order.id}
+            src={org?.image_url}
+            onError={(e) => onErrorImg(e)}
             alt=""
           />
           <div className="order-item__cnt">

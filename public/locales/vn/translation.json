@@ -345,5 +345,9 @@
   },
   "Contact":{
     "success":"Đã nhận thông tin"
+  },
+  "sell_center":{
+    "next":"Tiếp tục",
+    "enter_your_subdomain":"Nhập đia chỉ Subdomain"
   }
 }

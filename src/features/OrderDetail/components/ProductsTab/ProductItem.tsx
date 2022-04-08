@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import slugify from "../../../../utils/formatUrlString";
 import { AppContext } from "../../../../context/AppProvider";
 import scrollTop from "../../../../utils/scrollTop";
+import onErrorImg from "../../../../utils/errorImg";
 
 function ProductItem(props: any) {
   const { productItem, org, open } = props;
@@ -69,7 +70,8 @@ function ProductItem(props: any) {
     <li>
       <div className="order-de-list__item">
         <img
-          src={"https://picsum.photos/650/976?random=1" + product?.id}
+          src={product?.image_url ? product?.image_url : org.image_url }
+          onError={(e)=>onErrorImg(e)}
           alt=""
           className="order-de-pr-item__img"
         />

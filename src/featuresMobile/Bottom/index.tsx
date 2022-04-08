@@ -6,9 +6,12 @@ import SearchFilter from '../SearchResult/SearchFilter';
 import { AppContext } from '../../context/AppProvider';
 import scrollTop from '../../utils/scrollTop';
 import notifications from '../../data/listNotifications';
+import {useLocation} from 'react-router-dom'
 
 function Bottom(props: any) {
-      const { t, acBtn, setAcBtn } = useContext(AppContext)
+      const { t, acBtn, setAcBtn } = useContext(AppContext);
+      const location = useLocation();
+      console.log(location)
       const Btns = [
             {
                   id: 2,

@@ -21,6 +21,7 @@ class ServicePromo {
             limit: 20,
             "filter[keyword]": values.keyword,
             "filter[special_price]": true,
+            "filter[is_momo_ecommerce_enable]": true,
             "sort": values.dataSort
         }
         return axiosClient.get(url, { params })
@@ -56,6 +57,7 @@ class ServicePromo {
             page: values.page,
             limit: 24,
             "filter[special_price]": true,
+            "filter[is_momo_ecommerce_enable]": true,
             "sort": values.sort
         }
         return axiosClient.get(url, { params })
@@ -67,6 +69,7 @@ class ServicePromo {
             page: values.page,
             limit: 30,
             "filter[special_price]": true,
+            "filter[is_momo_ecommerce_enable]": true,
             "filter[location]": location_user ? `${location_user.lat},${location_user.long}` : ``
         }
         return axiosClient.get(url, { params })
@@ -78,7 +81,8 @@ class ServicePromo {
             page: 1,
             limit: 30,
             "filter[is_featured]": true,
-            "sort": "-modified_date",
+            "filter[is_momo_ecommerce_enable]": true,
+            "sort": "random",
         }
         return axiosClient.get(url, { params })
     }
