@@ -7,6 +7,7 @@ import ButtonCus from "../../../components/ButtonCus/index";
 import { AppContext } from "../../../context/AppProvider";
 import { IComment } from "../../../interface/comments";
 import commentsApi from "../../../api/commentsApi";
+import slugify from "../../../utils/formatUrlString";
 
 interface IData {
   comments: IComment[] | any,
@@ -16,12 +17,6 @@ interface IData {
 
 function DetailComment(props: any) {
   const history = useHistory();
-  function handleSeeAllFeedback() {
-    history.push({
-      pathname: `/merchant-comment`,
-      state: data
-    });
-  }
   const { styleCmt, org } = props;
   const { t } = useContext(AppContext);
   const [data, setData] = useState<IData>({
@@ -29,6 +24,13 @@ function DetailComment(props: any) {
     page: 1,
     totalItem: 1
   })
+  function handleSeeAllFeedback() {
+    history.push({
+      pathname: `/merchant-comment/${slugify(org?.name)}`,
+      search: `${org?.id}`,
+      state: data
+    });
+  }
 
   const handleGetCommentsArg = async () => {
     const ORG = await org;
@@ -67,27 +69,24 @@ function DetailComment(props: any) {
       </div>
       <ul className="mer-detail-cmt__box">
         {
-          data.comments.slice(0,7).map((item:IComment, index:number) => (
+          data.comments.slice(0, 7).map((item: IComment, index: number) => (
             <DetailCommentItem
               key={index}
-              comment = {item}
+              comment={item}
             />
           ))
         }
       </ul>
-      {
-        data.comments.length > 7 &&
-        <ButtonCus
-          text={t("Mer_de.view_all_feedback")}
-          imgIcon={icon.next}
-          color="var(--purple)"
-          border="solid 1px var(--purple)"
-          borderRadius="18px"
-          onClick={() => {
-            handleSeeAllFeedback();
-          }}
-        />
-      }
+      <ButtonCus
+        text={t("Mer_de.view_all_feedback")}
+        imgIcon={icon.next}
+        color="var(--purple)"
+        border="solid 1px var(--purple)"
+        borderRadius="18px"
+        onClick={() => {
+          handleSeeAllFeedback();
+        }}
+      />
     </div>
   );
 }

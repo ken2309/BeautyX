@@ -3,7 +3,7 @@ import productsApi from "../../../api/productApi";
 import icon from "../../../constants/icon";
 import { AppContext } from "../../../context/AppProvider";
 export default function InputProByMerSearch(props: any) {
-  const { mer_id, setProducts } = props;
+  const { mer_id, setDataProducts } = props;
   const { t } = useContext(AppContext);
   function handerOnchange(e: any) {
     const { value } = e.target;
@@ -12,7 +12,11 @@ export default function InputProByMerSearch(props: any) {
         org_id: mer_id,
         searchKey: value,
       });
-      setProducts(res.data.context.data);
+      setDataProducts({
+        products: res.data.context.data,
+        page: 1,
+        page_count: res.data.context.last_page
+      })
     }
     handleFilterByKey();
   }

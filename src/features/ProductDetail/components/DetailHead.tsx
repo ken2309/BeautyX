@@ -5,16 +5,13 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import DetailDesc from './DetailDesc';
-import DetailComment from '../../MerchantDetail/components/DetailComment';
 import DetailMer from '../components/DetailMer';
 import SuggestionList from '../../ServiceDetail/components/SuggestionList';
 import DetailNameMb from '../../../featuresMobile/DetailNameMb';
 import { AppContext } from '../../../context/AppProvider';
 import onErrorImg from '../../../utils/errorImg';
+import Comments from '../../Comments';
 
-const styleCmt = {
-      width: '100%'
-}
 function DetailHead(props: any) {
       const { product, org, listServices, is_type } = props;
       const { t } = useContext(AppContext)
@@ -22,6 +19,7 @@ function DetailHead(props: any) {
       const handleChange = (event: React.SyntheticEvent, newValue: string) => {
             setValue(newValue);
       };
+      const COMMENT_TYPE = is_type === 1 ? "PRODUCT" : "SERVICE";
       return (
             <div className="product-cnt__left">
                   <img
@@ -55,9 +53,11 @@ function DetailHead(props: any) {
                                                 <DetailDesc product={product} />
                                           </TabPanel>
                                           <TabPanel value="2">
-                                                <DetailComment
-                                                      t={t}
-                                                      styleCmt={styleCmt}
+                                                <Comments
+                                                      org={org}
+                                                      id={product?.id}
+                                                      detail={product}
+                                                      comment_type={COMMENT_TYPE}
                                                 />
                                           </TabPanel>
                                           <TabPanel value="3">
