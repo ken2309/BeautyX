@@ -17,7 +17,6 @@ export default function AppProvider({ children }) {
   const [sign, setSign] = useState();
   const [profile, setProfile] = useState();
   const [tempCount, setTempleCount] = useState(0);
-  const [acBtn, setAcBtn] = useState(1);
   const [tags, setTags] = useState([]);
   const [provinces, setProvinces] = useState([])
 
@@ -101,8 +100,6 @@ export default function AppProvider({ children }) {
     t,
     tags,
     provinces,
-    acBtn,
-    setAcBtn,
     language,
     openModal,
     setOpenModal,

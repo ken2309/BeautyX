@@ -56,7 +56,7 @@ function CardItem(props: any) {
                         Giảm {discount.toFixed()}%
                   </div>
                   <img
-                        src={`${detail.image ? detail.image_url : org.image_url}`}
+                        src={`${detail.image ? detail?.image_url : org?.image_url}`}
                         alt=""
                         onError={(e) => onErrorImg(e)}
                         className="card-img"

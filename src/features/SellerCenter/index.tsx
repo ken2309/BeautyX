@@ -5,16 +5,21 @@ import { AppContext } from '../../context/AppProvider';
 import { Container } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import Footer from '../Footer';
+import icon from '../../constants/icon';
 
-// window.location.assign(deepLink);
+const onDropList = () => {
+    document.querySelector('.sel-cent-cnt__form .inp-right')?.classList.toggle('drop')
+}
 
 function SellerCenter() {
     const history = useHistory();
     const { t } = useContext(AppContext)
-    const [sub, setSub] = useState('')
+    const [sub, setSub] = useState('');
+    const domains = ['.myspa.vn', '.myclinic.vn'];
+    const [chooseDomain, setChooseDomain] = useState('.myspa.vn')
     const onGotoManager = () => {
         if (sub.length > 0) {
-            const newWindow = window.open(`https://${sub}.myspa.vn/moba_manager/dashboard`, '_blank')
+            const newWindow = window.open(`https://${sub}${chooseDomain}`, '_blank', 'noopener,noreferrer')
             if (newWindow) newWindow.opener = null
         }
     }
@@ -23,6 +28,7 @@ function SellerCenter() {
             onGotoManager();
         }
     };
+
     return (
         <>
             {/* <Head /> */}
@@ -50,30 +56,49 @@ function SellerCenter() {
                     <div className="container">
                         <div className="form-cnt">
                             <img className='logo' src={img.beautyX} alt="" />
-                            <span className="title">Xin mời đăng nhập</span>
+                            <span className="title"></span>
                             <div className="inp">
                                 <input
                                     onKeyDown={handleKeyDown}
                                     onChange={(e) => setSub(e.target.value)}
                                     type="text"
-                                    placeholder='Nhập địa chỉ subdomain'
+                                    placeholder={t("sell_center.enter_your_subdomain")}
                                 />
-                                <div className="inp-right">
-                                    .myspa.vn
+                                <div
+                                    className="inp-right"
+                                    onClick={onDropList}
+                                >
+                                    <span className='flex-row'>
+                                        {chooseDomain}
+                                        <img src={icon.down_2} alt="" />
+                                    </span>
+                                    <ul className="inp-right__list">
+                                        {
+                                            domains.map((item, index) => (
+                                                <li
+                                                    onClick={() => setChooseDomain(item)}
+                                                    key={index}
+                                                    style={chooseDomain === item ? { color: 'var(--purple)' } : {}}
+                                                >
+                                                    {item}
+                                                </li>
+                                            ))
+                                        }
+                                    </ul>
                                 </div>
                             </div>
                             <div className="form-cnt__btn">
                                 <button
                                     onClick={onGotoManager}
                                 >
-                                    Tiếp tục
+                                    {t("sell_center.next")}
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </>
     );
 }

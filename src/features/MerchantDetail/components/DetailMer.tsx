@@ -15,6 +15,7 @@ function DetailMer(props: IProps) {
                         merDetail={merDetail}
                   />
                   <DetailComment
+                        org={merDetail}
                   />
             </div>
       );

@@ -24,7 +24,7 @@
     "search": "Search"
   },
   "Banner": {
-    "1": "Explore and experience \n Beauty paradise right near you \n Booking Flatform Myspa"
+    "1": "Explore and experience \n Beauty paradise right near you \n Beautyx.vn"
   },
   "Home": {
     "home": "Home",
@@ -342,5 +342,12 @@
     "to":"to",
     "invalid":"invalid",
     "apply":"Apply"
+  },
+  "Contact":{
+    "success":"submit success"
+  },
+  "sell_center":{
+    "next":"Next",
+    "enter_your_subdomain":"Enter your subdomain"
   }
 }

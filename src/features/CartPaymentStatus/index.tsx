@@ -6,7 +6,8 @@ import { Container, CircularProgress } from '@mui/material';
 import useCountDown from '../../utils/useCountDown';
 import { useLocation, useHistory } from 'react-router-dom';
 import paymentGatewayApi from '../../api/paymentGatewayApi';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import formatPrice from '../../utils/formatPrice'
 
 
 function CartPaymentStatus() {
@@ -18,6 +19,7 @@ function CartPaymentStatus() {
     const location = useLocation();
     const history = useHistory();
     const res: any = location?.state;
+    console.log(res)
     const intervalRef = useRef<any>();
     const deep_link = res.payment_gateway.extra_data.deeplink;
     const transaction_uuid = res?.payment_gateway?.transaction_uuid;
@@ -60,7 +62,6 @@ function CartPaymentStatus() {
             }
         }, 4000);
     };
-    //======== end
     useEffect(() => {
         if (transaction_uuid) {
             setInter();
@@ -105,7 +106,7 @@ function CartPaymentStatus() {
                                 Số tiền
                             </span>
                             <span className="body-item__text">
-                                2.800.000
+                                {formatPrice(res?.payment_gateway?.amount)}đ
                             </span>
                         </div>
                         {

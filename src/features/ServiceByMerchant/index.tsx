@@ -4,67 +4,86 @@ import ServiceCate from "./components/ServiceCate";
 import ServiceCateMb from "./components/ServiceCateMb";
 import ServiceList from "./components/ServiceList";
 import servicesApi from "../../api/serviceApi";
-import { Service } from "../../interface/service";
 import categoryApi from "../../api/categoryApi";
-import {IOrganization} from '../../interface/organization'
+import { IOrganization } from '../../interface/organization'
 import "./serviceByMerchant.css";
 
-interface IProps{
-  activeTab:number,
-  mer_id:number,
-  org:IOrganization | undefined
+interface IProps {
+  activeTab: number,
+  mer_id: number,
+  org: IOrganization | undefined
 }
 
 const tab_id = 2;
 function ServiceByMerchant(props: IProps) {
   const { t } = useContext(AppContext);
   const { activeTab, mer_id, org } = props;
-  const [services, setServices] = useState<Service[]>([]);
-  const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(1);
-  const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [chooseCate, setChooseCate] = useState();
-  const [loading, setLoading] = useState(false);
-  const [loading_cate, setLoading_cate] = useState(false);
+  const [dataCates, setDataCates] = useState({
+    cates: [],
+    loadingCate: true
+  })
+  const [dataServices, setDataServices] = useState({
+    services: [],
+    page: 1,
+    page_count: 1,
+    loading: true
+  })
+
   useEffect(() => {
     async function handleGetServices() {
-      setLoading(true);
       try {
         if (!chooseCate) {
           const res = await servicesApi.getByOrg_id({
             org_id: mer_id,
-            page: page,
+            page: dataServices.page,
           });
-          setServices(res.data.context.data);
-          setTotalPage(res.data.context.last_page);
+          setDataServices({
+            ...dataServices,
+            services: res.data.context.data,
+            page_count: res.data.context.last_page,
+            loading: false
+          })
         } else {
           const resByCate = await servicesApi.getByOrgId_cateId({
             cate_id: chooseCate,
-            page: page,
+            page: dataServices.page,
             org_id: mer_id,
           });
-          setServices(resByCate.data.context.data);
-          setTotalPage(resByCate.data.context.last_page);
+          setDataServices({
+            ...dataServices,
+            services: resByCate.data.context.data,
+            page_count: resByCate.data.context.last_page,
+            loading: false
+          })
         }
-        setLoading(false);
       } catch (err) {
+        setDataServices({
+          ...dataServices,
+          loading: false
+        })
         console.log(err);
       }
     }
     handleGetServices();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mer_id, page, chooseCate]);
+  }, [mer_id, dataServices.page, chooseCate]);
   useEffect(() => {
-    setLoading_cate(true);
     async function handleGetCategories() {
       try {
         const resCate = await categoryApi.getByOrgId_services({
           org_id: mer_id,
         });
-        setCategories(resCate.data.context.data);
-        setLoading_cate(false);
+        setDataCates({
+          cates: resCate.data.context.data,
+          loadingCate: false
+        })
       } catch (err) {
+        setDataCates({
+          ...dataCates,
+          loadingCate: false
+        })
         console.log(err);
       }
     }
@@ -81,32 +100,29 @@ function ServiceByMerchant(props: IProps) {
         style={{ alignItems: "flex-start" }}
       >
         <ServiceCate
-          t={t}
-          categories={categories}
+          dataCates={dataCates}
+          dataServices={dataServices}
+          setDataServices={setDataServices}
           chooseCate={chooseCate}
           setChooseCate={setChooseCate}
-          setPage={setPage}
-          loading_cate={loading_cate}
         />
         {/* for mobile */}
         <ServiceCateMb
-          categories={categories}
+          categories={dataCates.cates}
           chooseCate={chooseCate}
           setChooseCate={setChooseCate}
-          setPage={setPage}
+          dataServices={dataServices}
+          setDataServices={setDataServices}
         />
         {/* ----- */}
         <ServiceList
-          loading={loading}
-          services={services}
-          setServices={setServices}
           t={t}
           mer_id={mer_id}
           org={org}
-          totalPage={totalPage}
-          setPage={setPage}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
+          dataServices={dataServices}
+          setDataServices={setDataServices}
         />
       </div>
     </div>

@@ -16,7 +16,6 @@ import SignPageRequest from "../features/SignPageRequest/index";
 import Notification from "../features/Notification/index";
 import PrivateRoute from "./PrivateRoute";
 import CartPaymentStatus from "../features/CartPaymentStatus";
-//import CountDown from "../features/CountDown";
 import ServicesUser from "../features/ServiceUser";
 import DatePicker from "../components/DatePicker"
 import { AppContext } from "../context/AppProvider";
@@ -27,6 +26,7 @@ import HomeProvince from "../features/HomeResults/HomeProvince";
 import HomeListProvince from "../features/HomeResults/HomeListProvince";
 import Policy from "../features/Policy";
 import SellerCenter from "../features/SellerCenter";
+import CommentsDetail from "../features/Comments/CommentsDetail";
 
 // feature mobile
 import Calendar from "../featuresMobile/Calendar";
@@ -82,14 +82,6 @@ function RouterConfig(props: any) {
       path: "/sign-request",
       component: <SignPageRequest />,
     },
-    // {
-    //   path: "/tai-khoan",
-    //   component: <Account />,
-    // },
-    // {
-    //   path: "/Partner",
-    //   component: <Partner />,
-    // },
     {
       path: "/merchant-comment",
       component: <MerchantComment />,
@@ -98,17 +90,6 @@ function RouterConfig(props: any) {
       path: "/date",
       component: <DatePicker />
     },
-    // {
-    //   path:''
-    // }
-    // {
-    //   path: "/Calendar",
-    //   component: <Calendar />,
-    // },
-    // {
-    //   path: '/goi-dich-vu',
-    //   component: <ServicesUser />
-    // },
     {
       path: "/org/:subdomain",
       component: <MerchantDetail />,
@@ -140,6 +121,10 @@ function RouterConfig(props: any) {
     {
       path:"/kenh-nguoi-ban",
       component:<SellerCenter/>
+    },
+    {
+      path:"/danh-gia/",
+      component:<CommentsDetail/>
     }
   ];
   const routesPrivate = [

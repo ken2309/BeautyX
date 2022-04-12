@@ -1,26 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import SectionTitle from "../../SectionTitle/index";
 import icon from "../../../constants/icon";
 import categoryApi from "../../../api/categoryApi";
 import Skeleton from "react-loading-skeleton";
+import { AppContext } from "../../../context/AppProvider";
 
 function ProductCate(props: any) {
-  const { mer_id, t, setCate_id, setPage, categories, setCategories } = props;
-  const [activeCate, setActiveCate] = useState();
-  const [loading, setLoading] = useState(false);
+  const { t } = useContext(AppContext)
+  const { mer_id, cate_id, setCate_id, dataCates, setDataCates, dataProducts, setDataProducts } = props;
   const handleActiveCateClick = (cate: any) => {
-    setActiveCate(cate);
     setCate_id(cate.id);
-    setPage(1);
+    setDataProducts({
+      ...dataProducts,
+      page: 1
+    })
   };
   useEffect(() => {
-    setLoading(true);
     async function getCateByOrgId() {
       try {
         const res = await categoryApi.getByOrgId(mer_id);
-        setCategories(res.data.context.data);
-        setLoading(false);
+        setDataCates({
+          cates: res.data.context.data,
+          loading: false
+        })
       } catch (err) {
+        setDataCates({
+          ...dataCates,
+          loading: true
+        })
         console.log(err);
       }
     }
@@ -36,12 +43,18 @@ function ProductCate(props: any) {
       <div className="ser-category-box">
         <ul className="ser-category-box__list">
           <li onClick={() => setCate_id(0)} className="ser-category-box__item">
-            <div className="flex-row-sp">
+            <div
+              style={
+                cate_id === 0
+                  ? { color: "var(--purple)" }
+                  : { color: "var(--text-hover)" }
+              }
+              className="flex-row-sp">
               Tất cả
               <img src={icon.next} alt="" />
             </div>
           </li>
-          {loading === true ? (
+          {dataCates.loading === true ? (
             <Skeleton
               count={8}
               style={{
@@ -51,7 +64,7 @@ function ProductCate(props: any) {
               }}
             />
           ) : (
-            categories.map((item: any) => (
+            dataCates.cates.map((item: any) => (
               <li
                 onClick={() => handleActiveCateClick(item)}
                 key={item.id}
@@ -59,7 +72,7 @@ function ProductCate(props: any) {
               >
                 <div
                   style={
-                    activeCate === item
+                    cate_id === item.id
                       ? { color: "var(--purple)" }
                       : { color: "var(--text-hover)" }
                   }

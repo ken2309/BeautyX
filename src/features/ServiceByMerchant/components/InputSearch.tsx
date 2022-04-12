@@ -5,7 +5,7 @@ import serviceApi from "../../../api/serviceApi";
 
 function InputSearch(props: any) {
   const { t } = useContext(AppContext);
-  const { mer_id, setServices } = props;
+  const { mer_id, dataServices, setDataServices } = props;
   function handerOnchange(e: any) {
     const { value } = e.target;
     async function handleFilterByKey() {
@@ -13,7 +13,12 @@ function InputSearch(props: any) {
         org_id: mer_id,
         searchKey: value,
       });
-      setServices(res.data.context.data);
+      setDataServices({
+        ...dataServices,
+        services: res.data.context.data,
+        page_count: res.data.context.last_page,
+        page: 1,
+      })
     }
     handleFilterByKey();
   }

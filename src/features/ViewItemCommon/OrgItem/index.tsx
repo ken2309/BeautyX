@@ -48,10 +48,10 @@ function OrgItem(props: IProps) {
                 <span className="org_name">
                     {org.name}
                 </span>
-                <span className="org_address">
+                <div className="org_address">
                     <img src={icon.pinMap} alt="" />
-                    {org?.address}
-                </span>
+                    <span>{org?.address}</span>
+                </div>
                 {
                     org.distance ?
                         <div className="flex-row org_distance">
@@ -67,10 +67,15 @@ function OrgItem(props: IProps) {
                         :
                         <></>
                 }
-                <span className="org_tag">
-                    <img src={icon.Menu} alt="" />
-                    {org.tags?.map((t: any) => t.name).join(',')}
-                </span>
+                {
+                    org.tags.length > 0 &&
+                    <>
+                        <span className="org_tag">
+                            <img src={icon.Menu} alt="" />
+                            {org.tags?.map((t: any) => t.name).join(',')}
+                        </span>
+                    </>
+                }
             </div>
         </div>
     );

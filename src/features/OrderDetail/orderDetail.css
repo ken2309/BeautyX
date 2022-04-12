@@ -105,9 +105,9 @@
 }
 
 .order-de-pr-item__img {
-  width: 234px;
+  width: 156px;
   height: 156px;
-  border-radius: 24px;
+  border-radius: 12px;
   object-fit: cover;
 }
 .order-de-pr-item__cnt {

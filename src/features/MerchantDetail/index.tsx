@@ -10,6 +10,7 @@ import DetailSaleList from "./components/DetailSaleList";
 import ServiceByMerchant from "../ServiceByMerchant/index";
 import ProductByMerchant from "../ProductByMerchant/index";
 import ComboByMerchant from "../ComboByMerchant/index";
+import SaleByMerchant from "../SaleByMerchant";
 import Footer from "../Footer";
 import orgApi from "../../api/organizationApi";
 //import branchApi from "../../api/branchApi";
@@ -119,13 +120,14 @@ function MerchantDetail() {
             <RecommendListMb productsSale={productsSale} org={org} />
             {/* ----- */}
           </div>
+          <SaleByMerchant activeTab={activeTab} mer_id={mer_id} org={org} />
           <ServiceByMerchant activeTab={activeTab} mer_id={mer_id} org={org} />
           <ProductByMerchant mer_id={mer_id} activeTab={activeTab} org={org} />
           <ComboByMerchant org={org} org_id={mer_id} activeTab={activeTab} />
         </Container>
       </div>
       <Footer />
-      <Bottom />
+      {/* <Bottom /> */}
     </div>
   );
 }

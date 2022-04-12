@@ -24,7 +24,7 @@
     "search": "Tìm kiếm"
   },
   "Banner": {
-    "1": "Khám phá và trải nghiệm \n thiên đường làm đẹp ngay gần bạn với \n Booking Flatform Myspa"
+    "1": "Khám phá và trải nghiệm \n thiên đường làm đẹp ngay gần bạn với \n Beautyx.vn"
   },
   "Home": {
     "home": "Trang chủ",
@@ -342,5 +342,12 @@
     "to":"đến",
     "invalid":"Không hợp lệ",
     "apply":"Áp dụng khoảng giá"
+  },
+  "Contact":{
+    "success":"Đã nhận thông tin"
+  },
+  "sell_center":{
+    "next":"Tiếp tục",
+    "enter_your_subdomain":"Nhập đia chỉ Subdomain"
   }
 }

@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import SectionTitle from "../../SectionTitle/index";
-import CardItem from "../../CardItem";
 import Carousel from "react-elastic-carousel";
+import ServiceItem from "../../ViewItemCommon/ServiceItem";
 
-const cardStyle = {
-  width: "272px",
-};
 const buttons = [
   { id: 1, text: "Sắp hết hạn" },
   { id: 2, text: "Giảm nhiều" },
 ];
 function RecommendList(props: any) {
-  const { org, list, is_type } = props;
+  const { org, list } = props;
   const title = `Ưu đãi của "${org?.name}"`;
   const [activeBtn, setActiveBtn] = useState();
   return (
@@ -25,9 +22,9 @@ function RecommendList(props: any) {
               style={
                 activeBtn === item
                   ? {
-                      backgroundColor: "var(--purple)",
-                      color: "var(--bg-gray)",
-                    }
+                    backgroundColor: "var(--purple)",
+                    color: "var(--bg-gray)",
+                  }
                   : {}
               }
               onClick={() => setActiveBtn(item)}
@@ -40,20 +37,19 @@ function RecommendList(props: any) {
       </div>
       <div className="mer-sale-list">
         <Carousel
-          children={list.map((item: any) => (
-            <CardItem
-              is_type={is_type}
-              key={item.id}
-              style={cardStyle}
-              detail={item}
-              name={item.service_name}
-              org={org}
-              retail_price={item.price}
-              special_price={item.special_price}
-            />
+          children={list.map((item: any, index: number) => (
+            <div
+              key={index}
+              style={{ width: '178px' }}
+            >
+              <ServiceItem
+                org={org}
+                service={item}
+              />
+            </div>
           ))}
           isRTL={false}
-          itemsToShow={4}
+          itemsToShow={6}
           showArrows={false}
         />
       </div>

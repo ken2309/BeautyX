@@ -1,23 +1,27 @@
 import React, { useState } from "react";
-// import icon from "../../../constants/icon";
-import CardItem from "../../CardItem";
 import { Pagination } from "@mui/material";
-// import useSearchTerm from "../../../utils/useSearchTerm";
-// import { Service } from "../../../interface/service";
+import { Service } from "../../../interface/service";
 import GridLoading from "../../Loading/GridLoading";
 import scrollTop_2 from "../../../utils/scrollTop_2";
 import InputSearch from "./InputSearch";
+import ServiceItem from "../../ViewItemCommon/ServiceItem";
 
-const cardStyle = {
-  width: "100%",
-};
 interface ActiveFilter {
   id: number;
   title: string;
 }
 function ServiceList(props: any) {
-  const { t, mer_id, org, services, setServices, totalPage, setPage, loading } =
-    props;
+  const {
+    t,
+    mer_id,
+    org,
+    //services,
+    //setServices,
+    //totalPage,
+    //setPage,
+    //loading,
+    dataServices, setDataServices
+  } = props;
   const buttons = [
     { id: 1, title: t("Mer_de.popular") },
     { id: 2, title: t("Mer_de.selling") },
@@ -28,37 +32,6 @@ function ServiceList(props: any) {
     id: 0,
     title: "",
   });
-  // const [serviceSort, setServiceSort] = useState<Service[]>([]);
-  // // const [state, setstate] = useState(initialState)
-  // const [sort, setSort] = useState({
-  //   _sortPrice: services,
-  // });
-  // const [searchTerm, setSearchTerm] = useState("");
-  // const handleSearchOnChange = (e: any) => {
-  //   setSearchTerm(e.target.value);
-  //   setActiveFilter({ id: 0, title: "" });
-  // };
-  // const serviceByFilter = useSearchTerm(searchTerm, services);
-  // useEffect(() => {
-  //   function handleSort() {
-  //     setServiceSort(serviceByFilter);
-  //   }
-  //   handleSort();
-  // }, [sort, serviceByFilter, serviceSort]);
-  // const ascPrice = () => {
-  //   const asc = serviceByFilter.sort((a, b) => a.price - b.price);
-  //   setSort({
-  //     ...sort,
-  //     _sortPrice: asc,
-  //   });
-  // };
-  // const descPrice = () => {
-  //   const desc = serviceByFilter.sort((a, b) => b.price - a.price);
-  //   setSort({
-  //     ...sort,
-  //     _sortPrice: desc,
-  //   });
-  // };
   const handleActiveFilter = (item: any) => {
     setActiveFilter(item);
     if (item.id === 1) {
@@ -73,14 +46,11 @@ function ServiceList(props: any) {
       // descPrice();
     }
   };
-  //Add values is product: false
-  // const servicesIs = [];
-  // for (var item of serviceByFilter) {
-  //   const service = { ...item, is_product: false };
-  //   servicesIs.push(service);
-  // }
   const pageChange = (event: any, value: any) => {
-    setPage(value);
+    setDataServices({
+      ...dataServices,
+      page: value
+    })
     scrollTop_2(500);
   };
   return (
@@ -94,9 +64,9 @@ function ServiceList(props: any) {
                 style={
                   activeFilter.id === item.id
                     ? {
-                        backgroundColor: "var(--purple)",
-                        color: "var(--bg-gray)",
-                      }
+                      backgroundColor: "var(--purple)",
+                      color: "var(--bg-gray)",
+                    }
                     : {}
                 }
                 onClick={() => handleActiveFilter(item)}
@@ -108,25 +78,23 @@ function ServiceList(props: any) {
           </div>
         </div>
         <div className="flex-row list-filter__right">
-          <InputSearch mer_id={mer_id} setServices={setServices} />
+          <InputSearch
+            mer_id={mer_id}
+            dataServices={dataServices}
+            setDataServices={setDataServices}
+          />
         </div>
       </div>
       <div className="flex-column ser-list__content">
         <ul className="ser-list__content-list">
-          {loading === true ? (
+          {dataServices.loading === true ? (
             <GridLoading />
           ) : (
-            services.map((item: any) => (
+            dataServices.services.map((item: Service) => (
               <li key={item.id} className="ser-list__content-list-item">
-                <CardItem
-                  org_id={mer_id}
+                <ServiceItem
+                  service={item}
                   org={org}
-                  name={item.service_name}
-                  retail_price={item.price}
-                  special_price={item.special_price}
-                  detail={item}
-                  style={cardStyle}
-                  is_type={2}
                 />
               </li>
             ))
@@ -135,7 +103,7 @@ function ServiceList(props: any) {
         <Pagination
           color="secondary"
           shape="rounded"
-          count={totalPage}
+          count={dataServices.page_count}
           onChange={pageChange}
         />
       </div>

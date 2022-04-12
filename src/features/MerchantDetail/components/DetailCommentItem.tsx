@@ -1,8 +1,13 @@
 import React from 'react';
 import icon from '../../../constants/icon';
-import img from '../../../constants/img';
+import formatDate from '../../../utils/formatDate';
+import {IComment} from '../../../interface/comments'
 
-function DetailCommentItem(props:any) {
+interface IProps{
+      comment: IComment
+}
+
+function DetailCommentItem(props:IProps) {
       const {comment} = props;
       // console.log(comment.rateStar)
       // const starArr: any[] = [];
@@ -16,9 +21,12 @@ function DetailCommentItem(props:any) {
                   <div className="mer-detail-cmt__box-item">
                         <div className="flex-row-sp cmt-head">
                               <div className="flex-row-sp cmt-head__user">
-                                    <img src={img.Avatar} alt="" />
+                                    {/* <img src={img.Avatar} alt="" /> */}
+                                    <div className="cmt-head__user-avatar">
+                                          {comment?.user?.fullname?.slice(0,1)}
+                                    </div>
                                     <span>
-                                          <p>{comment.name}</p>
+                                    <p>{comment?.user?.fullname}</p>
                                           <ul>
                                                 <li>
                                                       <img src={icon.star} alt="" />
@@ -35,13 +43,13 @@ function DetailCommentItem(props:any) {
                                           </ul>
                                     </span>
                               </div>
-                              <h3 className="date">{comment.date}</h3>
+                              <h3 className="date">{formatDate(comment.created_at)}</h3>
                         </div>
                         <div className="cmt-text">
-                              {comment.text}
-                              <button>
+                              {comment?.body}
+                              {/* <button>
                                     ...Xem thêm
-                              </button>
+                              </button> */}
                         </div>
                   </div>
             </li>
