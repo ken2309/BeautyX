@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { addCart } from "../../../../redux/cartSlice";
 import slugify from "../../../../utils/formatUrlString";
 import { AppContext } from "../../../../context/AppProvider";
+import onErrorImg from "../../../../utils/errorImg";
 
 function ServiceItem(props: any) {
   const { t } = useContext(AppContext);
@@ -65,8 +66,9 @@ function ServiceItem(props: any) {
     <li>
       <div className="order-de-list__item">
         <img
-          src={"https://picsum.photos/650/976?random=1" + service?.id}
+          src={service?.image ? service?.image_url : org?.image_url}
           alt=""
+          onError={(e)=>onErrorImg(e)}
           className="order-de-pr-item__img"
         />
         <div className="order-de-pr-item__cnt">

@@ -5,6 +5,8 @@ import "./appointment-detail.css";
 import { TransitionProps } from "@mui/material/transitions";
 import icon from "../../constants/icon";
 import formatPrice from "../../utils/formatPrice";
+import onErrorImg from "../../utils/errorImg";
+import {Service} from '../../interface/service'
 
 const view = window.screen.width;
 const Transition = React.forwardRef(function Transition(
@@ -18,7 +20,7 @@ const Transition = React.forwardRef(function Transition(
 
 function AppointmentDetail(props: any) {
   const { openPopupDetail, setOpenPopupDetail, datingList, org } = props;
-  const [services, setServices] = useState([]);
+  const [services, setServices] = useState<Service[]>([]);
   useEffect(() => {
     async function handleSetDetail() {
       try {
@@ -78,11 +80,12 @@ function AppointmentDetail(props: any) {
               Dịch vụ: ({services?.length} dịch vụ)
             </span>
             <ul className="app-de__ser-list">
-              {services?.map((item: any, index: number) => (
+              {services?.map((item: Service, index: number) => (
                 <li key={index} className="app-de__ser-item">
                   <div className="item">
                     <img
-                      src={"https://picsum.photos/650/976?random=" + item.id}
+                      src={item.image ? item?.image_url : org?.image_url}
+                      onError={(e)=>onErrorImg(e)}
                       alt=""
                       className="item-img"
                     />

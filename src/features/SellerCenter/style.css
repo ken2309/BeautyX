@@ -64,7 +64,7 @@
 }
 .sel-cent-cnt__form .inp{
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 }
 .sel-cent-cnt__form input{
     width: 284px;
@@ -88,6 +88,12 @@
     border: solid 1px var(--text-hover);
     padding: 0px 8px;
     border-radius: 0px 8px 8px 0px;
+    overflow-y: hidden;
+    transition: all .3s;
+    cursor: pointer;
+}
+.drop{
+    height: 102px !important;
 }
 .sel-cent-cnt__form button{
     margin-top: 24px;

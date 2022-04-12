@@ -72,9 +72,9 @@ function Footer() {
                                     data_footer.map((item, index) => (
                                           <div key={index} className="wrap">
                                                 <div className="footer-cnt__item">
-                                                      <span className="footer-cnt__item-title">
+                                                      <div className="footer-cnt__item-title">
                                                             {item.title}
-                                                      </span>
+                                                      </div>
                                                       <ul>
                                                             {
                                                                   item.items.map((a, i) => (

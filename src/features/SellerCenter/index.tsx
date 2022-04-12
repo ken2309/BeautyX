@@ -5,29 +5,30 @@ import { AppContext } from '../../context/AppProvider';
 import { Container } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import Footer from '../Footer';
-//import { Link } from 'react-router-dom'
+import icon from '../../constants/icon';
 
-// window.location.assign(deepLink);
+const onDropList = () => {
+    document.querySelector('.sel-cent-cnt__form .inp-right')?.classList.toggle('drop')
+}
 
 function SellerCenter() {
     const history = useHistory();
     const { t } = useContext(AppContext)
-    const [sub, setSub] = useState('')
+    const [sub, setSub] = useState('');
+    const domains = ['.myspa.vn', '.myclinic.vn'];
+    const [chooseDomain, setChooseDomain] = useState('.myspa.vn')
     const onGotoManager = () => {
         if (sub.length > 0) {
-            const newWindow = window.open(`https://${sub}.myclinic.vn`, '_blank', 'noopener,noreferrer')
+            const newWindow = window.open(`https://${sub}${chooseDomain}`, '_blank', 'noopener,noreferrer')
             if (newWindow) newWindow.opener = null
         }
-        // const a = document.createElement('a');
-        // a.href = `https://${sub}.myspa.vn/moba_manager/dashboard`;
-        // a.target = '_blank';
-        // a.click();
     }
-    // const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    //     if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
-    //         onGotoManager();
-    //     }
-    // };
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
+            onGotoManager();
+        }
+    };
+
     return (
         <>
             {/* <Head /> */}
@@ -55,38 +56,42 @@ function SellerCenter() {
                     <div className="container">
                         <div className="form-cnt">
                             <img className='logo' src={img.beautyX} alt="" />
-                            <span className="title">Xin mời đăng nhập</span>
+                            <span className="title"></span>
                             <div className="inp">
                                 <input
-                                    //onKeyDown={handleKeyDown}
+                                    onKeyDown={handleKeyDown}
                                     onChange={(e) => setSub(e.target.value)}
                                     type="text"
-                                    placeholder='Nhập địa chỉ subdomain'
+                                    placeholder={t("sell_center.enter_your_subdomain")}
                                 />
-                                <div className="inp-right">
-                                .myclinic.vn
+                                <div
+                                    className="inp-right"
+                                    onClick={onDropList}
+                                >
+                                    <span className='flex-row'>
+                                        {chooseDomain}
+                                        <img src={icon.down_2} alt="" />
+                                    </span>
+                                    <ul className="inp-right__list">
+                                        {
+                                            domains.map((item, index) => (
+                                                <li
+                                                    onClick={() => setChooseDomain(item)}
+                                                    key={index}
+                                                    style={chooseDomain === item ? { color: 'var(--purple)' } : {}}
+                                                >
+                                                    {item}
+                                                </li>
+                                            ))
+                                        }
+                                    </ul>
                                 </div>
                             </div>
                             <div className="form-cnt__btn">
-                                {/* {
-                                    sub.length > 0 &&
-                                    <button
-                                        onClick={onGotoManager}
-                                    >
-                                        <Link
-                                            to={{
-                                                pathname: `https://${sub}.myspa.vn/moba_manager/dashboard`
-                                            }}
-                                            target="_blank"
-                                        >
-                                            Tiếp tục
-                                        </Link>
-                                    </button>
-                                } */}
                                 <button
                                     onClick={onGotoManager}
                                 >
-                                    Tiếp tục
+                                    {t("sell_center.next")}
                                 </button>
                             </div>
                         </div>
