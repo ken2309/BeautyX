@@ -110,7 +110,8 @@ import chevronRightBlack from '../assets/icon/chevronRightBlack.svg';
 import distance from '../assets/icon/distance.svg';
 import fire from '../assets/icon/fire.svg';
 import shield from '../assets/icon/sheild.svg';
-import editWhite from '../assets/icon/editWhite.svg'
+import editWhite from '../assets/icon/editWhite.svg';
+import pinMapGreen from '../assets/icon/pinMapGreen.svg';
 
 const icon = {
   Favorite,
@@ -224,6 +225,7 @@ const icon = {
   distance,
   fire,
   shield,
-  editWhite
+  editWhite,
+  pinMapGreen
 };
 export default icon;

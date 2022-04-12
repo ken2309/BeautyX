@@ -21,5 +21,5 @@ export interface IOrganization {
   favorites_count: number,
   is_favorite?: boolean | null,
   distance: number | undefined,
-  tags:[] | undefined
+  tags:[],
 }

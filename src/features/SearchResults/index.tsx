@@ -9,6 +9,7 @@ import FilterOrgs from '../FilterOrgs';
 import TabService from './components/TabService';
 import Footer from '../Footer';
 import TabOrgs from './components/TabOrgs';
+import TabLocation from './components/TabLocation';
 import orgApi from '../../api/organizationApi';
 
 interface ITabs {
@@ -130,6 +131,10 @@ function SearchResults(props: any) {
                             data={data}
                             setData={setData}
                             handleOrgsByKeyword={handleOrgsByKeyword}
+                        />
+                        <TabLocation
+                            acTab={acTab}
+                            searchKey={searchKey}
                         />
                     </div>
                 </div>

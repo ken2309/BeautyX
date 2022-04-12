@@ -9,9 +9,9 @@ import notifications from '../../data/listNotifications';
 import {useLocation} from 'react-router-dom'
 
 function Bottom(props: any) {
-      const { t, acBtn, setAcBtn } = useContext(AppContext);
+      const { t } = useContext(AppContext);
       const location = useLocation();
-      console.log(location)
+      const pathname = location.pathname;
       const Btns = [
             {
                   id: 2,
@@ -35,7 +35,7 @@ function Bottom(props: any) {
                   title: t('Bottom.home'),
                   icon_active: icon.home,
                   icon: icon.home_1,
-                  path: '/',
+                  path: '/home',
                   is_badge: false,
             },
             {
@@ -51,7 +51,6 @@ function Bottom(props: any) {
       const history = useHistory();
       const chooseBtn = (item: any) => {
             scrollTop();
-            setAcBtn(item.id)
             history.push(`${item.path}`)
       }
       return (
@@ -64,7 +63,7 @@ function Bottom(props: any) {
                                           onClick={() => chooseBtn(item)}
                                           className="flex-column bt-cnt__item"
                                     >
-                                          <img src={item.id === acBtn ? item.icon_active : item.icon} alt="" />
+                                          <img src={item.path === pathname ? item.icon_active : item.icon} alt="" />
                                           {
                                                 item.is_badge === true ?
                                                       <span className="bt-cnt__item-badge">
@@ -74,7 +73,7 @@ function Bottom(props: any) {
                                                       <></>
                                           }
                                           <span
-                                                style={item.id === acBtn ? { color: 'var(--purple)', fontWeight:'700' } : {}}
+                                                style={item.path === pathname ? { color: 'var(--purple)', fontWeight:'700' } : {}}
                                                 className="bt-cnt__item-title"
                                           >
                                                 {item.title}

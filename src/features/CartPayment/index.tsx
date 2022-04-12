@@ -33,6 +33,7 @@ function CartPayment(props: any) {
   const products = list.filter((item: any) => item.is_type === 1);
   const services = list.filter((item: any) => item.is_type === 2);
   const combos = list.filter((item: any) => item.is_type === 3);
+  const [chooseBr, setChooseBr] = useState();
   useEffect(() => {
     dispatch(getTotal());
   }, [dispatch, carts]);
@@ -94,20 +95,23 @@ function CartPayment(props: any) {
     // { id: 4, img: img.creditMachine, title: 'Thanh toán bằng thẻ quốc tế Visa/Master/JCB', method: 'PAYMENT_VISA', method_list:[] },
     // { id: 6, img: img.imagePay, title: 'Thanh toán qua Ví Ngân Lượng', method: 'PAYMENT_CL', method_list:[] },
   ];
+  const data_cart = {
+    list, products, services, combos, address, note, chooseBr, carts
+  }
   return (
     <div className="payment">
       <Head isCart={isCart} title={headerTitle} />
       <Container>
         <div className="payment-cnt">
           <PaymentForm
+            list={list}
             address={address}
             setNote={setNote}
+            chooseBr={chooseBr}
+            setChooseBr={setChooseBr}
           />
           <PaymentCart
-            list={list}
-            products={products}
-            services={services}
-            combos={combos}
+            data_cart={data_cart}
           />
           <PaymentMethod
             methodList={PAYMENT_METHOD}
@@ -122,14 +126,9 @@ function CartPayment(props: any) {
         value={value}
         methodList={PAYMENT_METHOD}
         carts={carts}
-        list={list}
         profile={profile}
         chooseE_wall={chooseE_wall}
-        products={products}
-        services={services}
-        combos={combos}
-        address={address}
-        note={note}
+        data_cart={data_cart}
       />
       <Footer />
     </div>

@@ -31,7 +31,7 @@ function ServiceBottom(props: any) {
   const [chooseBranch, setChooseBranch] = useState<IBranch>();
   const [chooseDate, setChooseDate] = useState();
   const [chooseTime, setChooseTime] = useState();
-  const [, setNote] = useState("note");
+  const [note, setNote] = useState('');
   const [openNotiApp, setOpenNotiApp] = useState(false);
   const [errCode, setErrCode] = useState<number | undefined>();
   const handleNextStep = () => {
@@ -85,6 +85,7 @@ function ServiceBottom(props: any) {
       "service_ids":[${service_ids}]
       ${chooseBranch ? `,"branch_id":${chooseBranch?.id}` : ''},
       "time_start":${JSON.stringify(timeStart)}
+      ${note.length > 0 ? `,"note":"${note}"` : ''}
       }`
     //const params = JSON.parse(a)
     if (order_id && chooseDate && chooseTime) {

@@ -62,7 +62,6 @@ function CartPaymentStatus() {
             }
         }, 4000);
     };
-    //======== end
     useEffect(() => {
         if (transaction_uuid) {
             setInter();
