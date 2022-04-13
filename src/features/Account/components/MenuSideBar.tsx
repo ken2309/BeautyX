@@ -154,7 +154,7 @@ function MenuSideBar(props: info) {
             </li>
           </ul>
         </div> */}
-        <div className="tab">
+        <div onClick={() => history.push('/tai-khoan/ma-uu-dai')} className="tab">
           <div className="icon">
             <img src={icon.Ticket} alt="" />
           </div>
