@@ -17,7 +17,6 @@ import orgApi from "../../api/organizationApi";
 import DetailTab from "./components/DetailTab";
 import DetailTabMb from "../../featuresMobile/DetailTabMb";
 import MerchantMb from "../../featuresMobile/MerchantMb";
-import Bottom from "../../featuresMobile/Bottom";
 import HeadTitle from "../HeadTitle/index";
 import { Product } from "../../interface/product";
 import productApi from "../../api/productApi";

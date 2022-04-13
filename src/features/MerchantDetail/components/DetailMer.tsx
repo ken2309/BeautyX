@@ -1,7 +1,8 @@
 import React from 'react';
 import DetailInfo from './DetailInfo';
 import DetailComment from './DetailComment';
-import { IOrganization } from '../../../interface/organization'
+import { IOrganization } from '../../../interface/organization';
+import DetailDiscount from './DetailDiscount';
 
 interface IProps {
       merDetail: IOrganization | undefined
@@ -10,14 +11,19 @@ interface IProps {
 function DetailMer(props: IProps) {
       const { merDetail } = props;
       return (
-            <div className="mer-detail__content-desc">
-                  <DetailInfo
-                        merDetail={merDetail}
-                  />
-                  <DetailComment
+            <>
+                  <DetailDiscount
                         org={merDetail}
                   />
-            </div>
+                  <div className="mer-detail__content-desc">
+                        <DetailInfo
+                              merDetail={merDetail}
+                        />
+                        <DetailComment
+                              org={merDetail}
+                        />
+                  </div>
+            </>
       );
 }
 
