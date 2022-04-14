@@ -14,6 +14,7 @@ import { IComment } from '../../interface/comments';
 import commentsApi from '../../api/commentsApi'
 import { AppContext } from "../../context/AppProvider";
 import SignInUp from '../poupSignInUp/index';
+import mediaApi from "../../api/mediaApi";
 
 interface IData {
   comments: IComment[],
@@ -21,12 +22,19 @@ interface IData {
   totalItem: number,
   loadPage: boolean
 }
+interface ICmtTemp {
+  text: string,
+  image_url: string
+}
 export default function MerchantComment() {
   const location: any = useLocation();
   const { profile } = useContext(AppContext)
   const org_id = location.search.slice(1, location.search.length);
-  const [cmt, setCmt] = useState('');
-  const [cmtTemp, setCmtTemp] = useState<any>([]);
+  const [cmt, setCmt] = useState({
+    text: '',
+    image_url: ''
+  });
+  const [cmtTemp, setCmtTemp] = useState<ICmtTemp[]>([]);
   const [data, setData] = useState<IData>({
     comments: [],
     page: 1,
@@ -65,11 +73,30 @@ export default function MerchantComment() {
       loadPage: true
     })
   }
+  //handle post image
+  const handlePostImageMedia = async (form: any) => {
+    let formData = new FormData();
+    formData.append('file', form);
+    try {
+      const res = await mediaApi.postMedia(formData);
+      setCmt({
+        ...cmt,
+        image_url: res.data.context.original_url
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const onChangeMedia = (e: any) => {
+    const media = e.target.files[0];
+    handlePostImageMedia(media)
+  }
+
   async function handlePostComment() {
     try {
       await commentsApi.postCommentOrg({
         org_id: org_id,
-        body: cmt
+        body: JSON.stringify(cmt)
       })
       setCmtTemp([...cmtTemp, cmt].reverse())
     } catch (error) {
@@ -81,12 +108,21 @@ export default function MerchantComment() {
     if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
       if (profile) {
         handlePostComment();
-        setCmt('')
+        setCmt({
+          text: '', image_url: ''
+        })
+        //console.log(JSON.stringify(cmt))
       } else {
         setOpen(true)
       }
     }
   };
+  const onRemoveImageTemp = () => {
+    setCmt({
+      ...cmt,
+      image_url: ''
+    })
+  }
 
   return (
     <div>
@@ -140,15 +176,39 @@ export default function MerchantComment() {
             </div>
           </div>
           <div className="merchantComment-right">
-            <div className="sign-form__box">
+            <div className="flex-row-sp sign-form__box">
               <input
                 autoComplete="off"
-                value={cmt}
-                onChange={(e) => setCmt(e.target.value)}
+                value={cmt.text}
+                onChange={(e) => setCmt({ ...cmt, text: e.target.value })}
                 onKeyDown={handleKeyDown}
                 placeholder="Nhập bình luận ..."
               />
+              <div title="Thêm hình" className="merchantComment-img">
+                <label htmlFor="file">
+                  <img src={icon.Camera_purple} alt="" />
+                </label>
+              </div>
+              <input
+                hidden
+                id="file"
+                type="file"
+                name="file"
+                accept="image/png, image/jpeg"
+                onChange={onChangeMedia}
+              />
             </div>
+            {
+              cmt.image_url?.length > 0 &&
+              <div className="input-image">
+                <img className="input-image__temp" src={cmt.image_url} alt="" />
+                <button
+                  onClick={onRemoveImageTemp}
+                >
+                  <img src={icon.closeCircle} alt="" />
+                </button>
+              </div>
+            }
             {/* <div className="merchantComment-right__btn">
               <ButtonCus
                 text="Bộ lọc"
@@ -181,7 +241,7 @@ export default function MerchantComment() {
             </div> */}
             <div className="merchantComment-right__comment">
               {
-                cmtTemp.map((item: string, index: number) => (
+                cmtTemp.map((item: ICmtTemp, index: number) => (
                   <CommentItemTemp
                     key={index}
                     body={item}

@@ -12,7 +12,7 @@ function DetailDiscount(props: IProps) {
     const { org } = props;
     const [discounts, setDiscounts] = useState<IDiscountPar[]>([])
     const handleGetDiscountByOrg = async () => {
-        const org_id = (await org).id
+        const org_id = (await org)?.id
         try {
             const res = await discountApi.getByOrgId({
                 org_id: org_id
@@ -26,29 +26,32 @@ function DetailDiscount(props: IProps) {
         handleGetDiscountByOrg()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [org])
-    
+
     return (
-        <div
-            className='org-dis-cnt'
-        >
-            <ul className="org-dis-list">
-                {
-                    discounts.map((discount: IDiscountPar, index: number) => (
-                        <li key={index} >
-                            {
-                                discount.items.map((item: IITEMS_DISCOUNT, i: number) => (
-                                    <DiscountItem
-                                        key={i}
-                                        discountPar={discount}
-                                        discountItem={item}
-                                    />
-                                ))
-                            }
-                        </li>
-                    ))
-                }
-            </ul>
-        </div>
+        discounts.length > 0 ?
+            <div
+                className='org-dis-cnt'
+            >
+                <ul className="org-dis-list">
+                    {
+                        discounts.map((discount: IDiscountPar, index: number) => (
+                            <li key={index} >
+                                {
+                                    discount.items.map((item: IITEMS_DISCOUNT, i: number) => (
+                                        <DiscountItem
+                                            key={i}
+                                            discountPar={discount}
+                                            discountItem={item}
+                                        />
+                                    ))
+                                }
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+            :
+            <></>
     );
 }
 

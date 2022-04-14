@@ -10,11 +10,16 @@ import MerchantCommentItem from '../MerchantComment/MerchantCommentItem';
 import { AppContext } from '../../context/AppProvider';
 import SignInUp from '../poupSignInUp';
 import CommentItemTemp from '../MerchantComment/CommentItemTemp';
+import mediaApi from '../../api/mediaApi';
 
 interface IData {
     comments: IComment[],
     page: number,
     totalItem: number
+}
+interface ICmtTemp {
+    text: string,
+    image_url: string
 }
 
 function CommentsDetail() {
@@ -31,8 +36,10 @@ function CommentsDetail() {
         page: 1,
         totalItem: 1
     })
-    const [cmt, setCmt] = useState('');
-    const [cmtTemp, setCmtTemp] = useState<any>([]);
+    const [cmt, setCmt] = useState({
+        text: '', image_url: ''
+    });
+    const [cmtTemp, setCmtTemp] = useState<ICmtTemp[]>([]);
     const [open, setOpen] = useState(false)
     const handleGetComments = async () => {
         try {
@@ -55,13 +62,32 @@ function CommentsDetail() {
         handleGetComments()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data.page])
+    //handle post image
+    const handlePostImageMedia = async (form: any) => {
+        let formData = new FormData();
+        formData.append('file', form);
+        try {
+            const res = await mediaApi.postMedia(formData);
+            setCmt({
+                ...cmt,
+                image_url: res.data.context.original_url
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const onChangeMedia = (e: any) => {
+        const media = e.target.files[0];
+        handlePostImageMedia(media)
+    }
+
     const handlePostComment = async () => {
         try {
             await commentsApi.postComment({
                 type: params.comment_type,
                 id: params.id,
                 org_id: params.org_id,
-                body: cmt
+                body: JSON.stringify(cmt)
             })
             setCmtTemp([...cmtTemp, cmt].reverse())
         } catch (error) {
@@ -72,12 +98,20 @@ function CommentsDetail() {
         if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
             if (profile) {
                 handlePostComment();
-                setCmt('')
+                setCmt({
+                    text: '', image_url: ''
+                })
             } else {
                 setOpen(true)
             }
         }
     };
+    const onRemoveImageTemp = () => {
+        setCmt({
+            ...cmt,
+            image_url: ''
+        })
+    }
     return (
         <>
             <SignInUp
@@ -129,15 +163,39 @@ function CommentsDetail() {
                         </div>
                     </div>
                     <div className="merchantComment-right">
-                        <div className="sign-form__box">
+                        <div className="flex-row-sp sign-form__box">
                             <input
                                 autoComplete="off"
-                                value={cmt}
-                                onChange={(e) => setCmt(e.target.value)}
+                                value={cmt.text}
+                                onChange={(e) => setCmt({ ...cmt, text: e.target.value })}
                                 onKeyDown={handleKeyDown}
                                 placeholder="Nhập bình luận ..."
                             />
+                            <div title="Thêm hình" className="merchantComment-img">
+                                <label htmlFor="file">
+                                    <img src={icon.Camera_purple} alt="" />
+                                </label>
+                            </div>
+                            <input
+                                hidden
+                                id="file"
+                                type="file"
+                                name="file"
+                                accept="image/png, image/jpeg"
+                                onChange={onChangeMedia}
+                            />
                         </div>
+                        {
+                            cmt.image_url?.length > 0 &&
+                            <div className="input-image">
+                                <img className="input-image__temp" src={cmt.image_url} alt="" />
+                                <button
+                                    onClick={onRemoveImageTemp}
+                                >
+                                    <img src={icon.closeCircle} alt="" />
+                                </button>
+                            </div>
+                        }
                         {/* <div className="merchantComment-right__btn">
               <ButtonCus
                 text="Bộ lọc"
@@ -170,7 +228,7 @@ function CommentsDetail() {
             </div> */}
                         <div className="merchantComment-right__comment">
                             {
-                                cmtTemp.map((item: string, index: number) => (
+                                cmtTemp.map((item: ICmtTemp, index: number) => (
                                     <CommentItemTemp
                                         key={index}
                                         body={item}

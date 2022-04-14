@@ -103,6 +103,14 @@
     font-weight: 700;
 }
 @media only screen and (max-width: 767px) {
+    .dis-cnt__list{
+        display: flex;
+        flex-direction: column;
+    }
+    .dis-cnt__list-item{
+        width: 100%;
+        padding: 0px;
+    }
     .discount-item__img{
         width: 84px;
         height: 84px;

@@ -710,7 +710,7 @@ img {
 }
 .calendar-appointment {
   display: grid;
-  gap: 0 24px;
+  gap: 0 6px;
   grid-template-columns: repeat(7, 1fr);
 }
 .calendar-appointment__list {
@@ -804,7 +804,7 @@ img {
   background-color: #7fc128;
 }
 .status-dot-pink {
-  background-color: #f893c8;
+  background-color: #ff6ab8;;
 }
 .status-dot-blue {
   background-color: #0faff6;

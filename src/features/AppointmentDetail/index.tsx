@@ -63,7 +63,7 @@ function AppointmentDetail(props: any) {
             <div className="flex-row app-de__head-status">
               <div className="flex-row app-de__head-status-it">
                 <span></span>
-                Chờ xác nhận
+                {datingList.status?.length === 0 ? "Chưa xác nhận": datingList.status}
               </div>
             </div>
             <div className="flex-row">
