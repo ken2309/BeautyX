@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import MerchantWrap from './components/MerchantWrap'
 import './merchantMb.css'
 import icon from '../../constants/icon';
-import { IBranch } from '../../interface/branch'
+import {IOrganization} from '../../interface/organization'
 
 interface IProps {
-      branches: IBranch[]
+      org: IOrganization | any
 }
 
 function MerchantMb(props: IProps) {
-      const { branches } = props;
+      const { org } = props;
       const [open, setOpen] = useState(false);
       const [display, setDisplay] = useState<number>(1);
       const cards = [
@@ -46,8 +46,7 @@ function MerchantMb(props: IProps) {
                         display={display}
                         open={open}
                         setOpen={setOpen}
-                        //data props;
-                        branches={branches}
+                        org={org}
                   />
             </div>
       );

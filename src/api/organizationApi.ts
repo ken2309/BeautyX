@@ -11,10 +11,12 @@ class Organization {
     return axiosClient.get(url);
   };
   getOrgById = (id: any) => {
+    const session = window.sessionStorage.getItem("_WEB_TK");
+    const local = localStorage.getItem("_WEB_TK")
     const url = `/organizations/${id}?withBranches=true`;
     return axiosClient.get(url, {
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("_WEB_TK"),
+        Authorization: `${session ? session : local}`,
       },
     });
   };

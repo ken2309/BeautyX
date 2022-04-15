@@ -5,6 +5,7 @@ import formatPrice from '../../../utils/formatPrice';
 import { useDispatch } from 'react-redux';
 import { addCart } from '../../../redux/cartSlice'
 import { AppContext } from '../../../context/AppProvider';
+import onErrorImg from '../../../utils/errorImg';
 
 function SuggestionList(props: any) {
       const dispatch = useDispatch();
@@ -40,7 +41,8 @@ function SuggestionList(props: any) {
                                     <li key={item.id} style={{ padding: '12px 0px' }}>
                                           <div className="flex-row-sp suggest-cnt__list-tem">
                                                 <img
-                                                      src={"https://picsum.photos/650/976?random=" + item.id}
+                                                      src={item.image ? item.image_url : org.image_url}
+                                                      onError={(e) => onErrorImg(e)}
                                                       alt=""
                                                       className="suggest-cnt__list-tem__img"
                                                 />

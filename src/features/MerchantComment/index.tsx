@@ -1,8 +1,6 @@
 import { Container } from "@mui/material";
 import React, { useEffect, useState, KeyboardEvent, useContext } from "react";
-//import ButtonCus from "../../components/ButtonCus";
 import icon from "../../constants/icon";
-import Bottom from "../../featuresMobile/Bottom";
 import Footer from "../Footer";
 import Head from "../Head";
 import HeadTitle from "../HeadTitle";
@@ -89,7 +87,11 @@ export default function MerchantComment() {
   }
   const onChangeMedia = (e: any) => {
     const media = e.target.files[0];
-    handlePostImageMedia(media)
+    if (profile) {
+      handlePostImageMedia(media)
+    } else {
+      setOpen(true)
+    }
   }
 
   async function handlePostComment() {
@@ -270,9 +272,7 @@ export default function MerchantComment() {
           </div>
         </div>
       </Container>
-
       <Footer />
-      <Bottom />
     </div>
   );
 }
