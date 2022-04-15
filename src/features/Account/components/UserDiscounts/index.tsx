@@ -3,6 +3,7 @@ import discountApi from '../../../../api/discountApi';
 import { IDiscountPar, IITEMS_DISCOUNT } from '../../../../interface/discount';
 import DiscountItem from './DiscountItem';
 import './discount.css'
+import Head from '../../../Head';
 
 interface IData {
     discounts: IDiscountPar[],
@@ -11,6 +12,7 @@ interface IData {
 }
 
 function UserDiscounts(props: any) {
+    const { setOpen } = props;
     const [data, setData] = useState<IData>({
         discounts: [],
         page: 1,
@@ -41,43 +43,48 @@ function UserDiscounts(props: any) {
         })
     }
     return (
-        <div
-            className='order'
-        >
-            <div className="flex-column dis-cnt">
-                <ul
-                    className='dis-cnt__list'
-                >
-                    {
-                        data.discounts.map((discount: IDiscountPar, index: number) => (
-                            <li
-                                className='dis-cnt__list-item'
-                                key={index}
-                            >
-                                {
-                                    discount.items.map((item: IITEMS_DISCOUNT, i: number) => (
-                                        <DiscountItem
-                                            key={i}
-                                            discountItem={item}
-                                            discountPar={discount}
-                                        />
-                                    ))
-                                }
-                            </li>
-                        ))
-                    }
-                </ul>
-                {
-                    data.discounts.length < data.total &&
-                    <button
-                        onClick={onViewMore}
-                        className='dis-cnt__list-btn'
+        <>
+            <Head
+                setCloseDialog={setOpen}
+            />
+            <div
+                className='order'
+            >
+                <div className="flex-column dis-cnt">
+                    <ul
+                        className='dis-cnt__list'
                     >
-                        Xem thêm mã ưu đãi
-                    </button>
-                }
+                        {
+                            data.discounts.map((discount: IDiscountPar, index: number) => (
+                                <li
+                                    className='dis-cnt__list-item'
+                                    key={index}
+                                >
+                                    {
+                                        discount.items.map((item: IITEMS_DISCOUNT, i: number) => (
+                                            <DiscountItem
+                                                key={i}
+                                                discountItem={item}
+                                                discountPar={discount}
+                                            />
+                                        ))
+                                    }
+                                </li>
+                            ))
+                        }
+                    </ul>
+                    {
+                        data.discounts.length < data.total &&
+                        <button
+                            onClick={onViewMore}
+                            className='dis-cnt__list-btn'
+                        >
+                            Xem thêm mã ưu đãi
+                        </button>
+                    }
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 

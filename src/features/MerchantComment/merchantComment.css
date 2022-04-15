@@ -16,6 +16,11 @@
   width: calc(100% - 33.33%);
   height: 100%;
 }
+.merchantComment-img{
+  cursor: pointer;
+  margin-left: 16px;
+  padding: 0px 12px;
+}
 .merchantComment-right 
 .merchantComment-left__vote {
   display: flex;
@@ -151,6 +156,29 @@
 .merchantComment .comment-star__all {
   display: flex;
   margin-top: 6px;
+}
+.input-image{
+  position: relative;
+  width: fit-content;
+}
+.input-image button{
+  position: absolute;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  top: 0;
+  right: 0;
+  margin: -8px -8px 0px 0px;
+}
+.input-image__temp{
+  width: 84px;
+  margin-top: 12px;
+  border-radius: 6px;
+}
+.comment-evalutes__img{
+  margin-top: 8px;
+  width: 164px;
+  border-radius: 6px;
 }
 .comment-evalutes h3,
 .comment-evalutes span,

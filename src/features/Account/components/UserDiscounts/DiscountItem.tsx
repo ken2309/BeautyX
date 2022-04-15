@@ -20,9 +20,12 @@ function DiscountItem(props: IProps) {
                     src={discountItem.productable.image_url}
                     alt=""
                 />
-                <div className="vail_util">
-                    <span>Hết hạn:{formatDate(discountPar.valid_util)} </span>
-                </div>
+                {
+                    discountPar.valid_util &&
+                    <div className="vail_util">
+                        <span>Hết hạn:{formatDate(discountPar.valid_util)} </span>
+                    </div>
+                }
             </div>
             <div
                 className='discount-item__cnt'

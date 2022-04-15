@@ -44,7 +44,7 @@
 .re-org-item .re-org-item__img {
     width: 100%;
     height: auto;
-    min-height: 182px;
+    /* min-height: 182px; */
     border-radius: 8px;
 }
 

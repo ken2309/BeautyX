@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import icon from "../../constants/icon";
 import { IComment } from '../../interface/comments';
 import formatDate from '../../utils/formatDate'
@@ -9,6 +9,27 @@ interface IProps {
 
 export default function MerchantCommentItem(props: IProps) {
   const { comment } = props;
+  //const cmt = JSON.parse(`${comment.body}`);
+  //console.log(typeof comment.body)
+  const [body, setBody] = useState({
+    text: '',
+    image_url: ''
+  })
+  useEffect(() => {
+    try {
+      const cmt = JSON.parse(`${comment.body}`)
+      setBody({
+        text: cmt.text,
+        image_url: cmt.image_url
+      })
+    } catch (error) {
+      setBody({
+        text: comment.body,
+        image_url: ''
+      })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <div>
       <div className="comment-item">
@@ -38,8 +59,15 @@ export default function MerchantCommentItem(props: IProps) {
       <div className="comment-evalutes">
         {/* <h3>Spectacular</h3> */}
         <p>
-          {comment.body}
+          {body.text}
         </p>
+        {
+          body.image_url?.length > 0 &&
+          <img
+            className="comment-evalutes__img"
+            src={body.image_url} alt=""
+          />
+        }
       </div>
     </div>
   );

@@ -113,12 +113,14 @@ function SearchFilter(props: any) {
                                                 data.orgs.length > 0 &&
                                                 <SectionOrgs
                                                       orgs={data.orgs}
+                                                      setOpenSearch={setOpenSearch}
                                                 />
                                           }
                                           {
                                                 data.services.length > 0 &&
                                                 <SectionServices
                                                       services={data.services}
+                                                      setOpenSearch={setOpenSearch}
                                                 />
                                           }
                                     </div>

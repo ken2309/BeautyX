@@ -1,5 +1,6 @@
 import React from "react";
 import range from "lodash-es/range";
+import { STATUS } from '../../../../utils/statusApp'
 
 interface IHomeLoggedCalendarComponent {
   weekDays: any;
@@ -50,21 +51,13 @@ export default function HomeLoggedCalendarComponent(
 
   const checkdotstt = (stt: any) => {
     switch (stt) {
-      case "CONFIRMED":
-        return <span className="status-dot status-dot-green" />;
-      case "Xác nhận":
-        return <span className="status-dot status-dot-green" />;
-      case "ARRIVED":
-        return <span className="status-dot status-dot-green" />;
-      case "NEW":
-        return <span className="status-dot status-dot-blue" />;
-      case "ONLINE_BOOKING":
-        return <span className="status-dot status-dot-blue" />;
-      case "DONE":
+      case STATUS.DONE:
         return <span className="status-dot status-dot-pink" />;
-      case "CANCEL":
-        return <span className="status-dot status-dot-red" />;
-      case "NOT COME":
+      case STATUS.CONFIRMED:
+        return <span className="status-dot status-dot-blue" />;
+      case STATUS.ARRIVED:
+        return <span className="status-dot status-dot-green" />;
+      case STATUS.CANCEL:
         return <span className="status-dot status-dot-red" />;
       default:
         return <span className="status-dot status-dot-red" />;
@@ -98,13 +91,12 @@ export default function HomeLoggedCalendarComponent(
             <div
               // click active
               onClick={() => handleGetDate(i, thisMonth, thisYear)}
-              className={`day-cell day-cell--in-month dot-active${
-                i + 1 === datepick.date &&
+              className={`day-cell day-cell--in-month dot-active${i + 1 === datepick.date &&
                 thisMonth === datepick.month &&
                 thisYear === datepick.year
-                  ? " day-cell--today "
-                  : ""
-              }`}
+                ? " day-cell--today "
+                : ""
+                }`}
               key={i}
             >
               <div className="status-dots ">
