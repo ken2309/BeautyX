@@ -8,6 +8,7 @@ import { AppContext } from "../../../context/AppProvider";
 import { IComment } from "../../../interface/comments";
 import commentsApi from "../../../api/commentsApi";
 import slugify from "../../../utils/formatUrlString";
+import scrollTop from "../../../utils/scrollTop";
 
 interface IData {
   comments: IComment[] | any,
@@ -25,6 +26,7 @@ function DetailComment(props: any) {
     totalItem: 1
   })
   function handleSeeAllFeedback() {
+    scrollTop();
     history.push({
       pathname: `/merchant-comment/${slugify(org?.name)}`,
       search: `${org?.id}`,

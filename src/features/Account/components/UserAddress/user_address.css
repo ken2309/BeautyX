@@ -121,3 +121,15 @@
     box-shadow: inset 0px 2px 6px rgba(113, 97, 186, 0.2);
     border-radius: 18px;
 }
+.acc-add__btn{
+    display: none;
+}
+/* Mobile */
+@media only screen and (max-width: 767px) {
+    .acc-add__btn{
+        display: block;
+        border: none;
+        outline: none;
+        background-color: transparent;
+    }
+}

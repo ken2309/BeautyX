@@ -4,6 +4,7 @@ import { AppContext } from '../../../../context/AppProvider';
 import { IUserAddress } from '../../../../interface/userAddress';
 import userAddressApi from '../../../../api/userAddressApi';
 import AddressItem from './components/AddressItem';
+import icon from '../../../../constants/icon';
 
 function Address(props: any) {
     //console.log(session, local)
@@ -77,6 +78,9 @@ function Address(props: any) {
                 >
                     {t("acc.add_other_address")}
                 </span>
+                <button className="acc-add__btn">
+                    <img src={icon.plus} alt="" />
+                </button>
             </div>
             {
                 addressList.map((item: IUserAddress, index: number) => (

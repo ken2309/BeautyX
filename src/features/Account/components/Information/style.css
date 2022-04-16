@@ -281,6 +281,9 @@
 }
 /* Mobile */
 @media only screen and (max-width: 767px) {
+  .title_section .subtitle {
+    display: none;
+  }
   /* cus calendar date of birth */
   .MuiDialogContent-root,
   .MuiDialogActions-root {
@@ -305,9 +308,8 @@
   .info_section {
     background-color: var(--bgWhite);
     width: 100%;
-    min-height: calc(100vh - 76px);
-    height: max-content;
-    padding: 24px;
+    height: 100vh;
+    padding: 20px;
   }
   .form-account__wraper {
     flex-direction: column;

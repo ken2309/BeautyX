@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import icon from '../../../constants/icon';
 import formatDate from '../../../utils/formatDate';
-import { IComment } from '../../../interface/comments'
+import { IComment } from '../../../interface/comments';
+import FullImage from '../../OpenFullImage/index'
 
 interface IProps {
       comment: IComment
@@ -9,27 +10,27 @@ interface IProps {
 
 function DetailCommentItem(props: IProps) {
       const { comment } = props;
-      const [body, setBody] = useState({
-            text: '',
-            image_url: ''
-      })
-      useEffect(() => {
-            try {
-                  const cmt = JSON.parse(`${comment.body}`)
-                  setBody({
-                        text: cmt.text,
-                        image_url: cmt.image_url
-                  })
-            } catch (error) {
-                  setBody({
-                        text: comment.body,
-                        image_url: ''
-                  })
+      const [open, setOpen] = useState<boolean>(false)
+      let body;
+      try {
+            const cmt = JSON.parse(`${comment.body}`)
+            body = {
+                  text: cmt.text,
+                  image_url: cmt.image_url
             }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [])
+      } catch (error) {
+            body = {
+                  text: comment.body,
+                  image_url: ''
+            }
+      }
       return (
             <li className="mer-detail-cmt__box-li">
+                  <FullImage
+                        open={open}
+                        setOpen={setOpen}
+                        comment={comment}
+                  />
                   <div className="mer-detail-cmt__box-item">
                         <div className="flex-row-sp cmt-head">
                               <div className="flex-row-sp cmt-head__user">
@@ -64,6 +65,7 @@ function DetailCommentItem(props: IProps) {
                               {
                                     body.image_url?.length > 0 &&
                                     <img
+                                          onClick={() => setOpen(true)}
                                           className="comment-evalutes__img"
                                           src={body.image_url} alt=""
                                     />

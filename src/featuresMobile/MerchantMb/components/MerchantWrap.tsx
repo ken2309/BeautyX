@@ -8,7 +8,7 @@ import { utilsList } from '../../../features/MerchantDetail/components/DetailInf
 import { staffList } from '../../../features/MerchantDetail/components/DetailInfo';
 import { Slide, Dialog } from '@mui/material'
 import { TransitionProps } from '@mui/material/transitions';
-import { IBranch } from '../../../interface/branch'
+import { IOrganization } from '../../../interface/organization'
 
 const Transition = React.forwardRef(function Transition(
       props: TransitionProps & {
@@ -23,22 +23,22 @@ interface IProps {
       open: boolean,
       display: number,
       setOpen: (open: boolean) => void,
-      branches: IBranch[]
+      org: IOrganization
 }
 
 function MerchantWrap(props: IProps) {
-      const { open, setOpen, display, branches } = props;
+      const { open, setOpen, display,org } = props;
       const [element, setElement] = useState(<DetailInfoUtil utilsList={utilsList} />);
       useEffect(() => {
             switch (display) {
                   case 1:
                         return setElement(<DetailInfoUtil utilsList={utilsList} />);
                   case 2:
-                        return setElement(<DetailBranchesList branches={branches} />);
+                        return setElement(<DetailBranchesList branches={org.branches} />);
                   case 3:
                         return setElement(<DetailPersonnel list={staffList} />);
                   case 4:
-                        return setElement(<DetailComment />)
+                        return setElement(<DetailComment org={org} />)
                   default:
                         break;
             }
@@ -64,20 +64,6 @@ function MerchantWrap(props: IProps) {
                         </div>
                   </div>
             </Dialog>
-            // <div
-            //       style={open === true ? { marginTop: '0px' } : { marginTop: '100vh' }}
-            //       className="mb-mer-cnt"
-            // >
-            //       <div className="mb-mer-cnt__box">
-            //             <div className="flex-row-sp mb-mer-cnt__box-head">
-            //                   <div></div>
-            //                   <img onClick={onClose} src={icon.x} alt="" />
-            //             </div>
-            //             <div className="mb-mer-cnt__box-content">
-            //                   {element}
-            //             </div>
-            //       </div>
-            // </div>
       );
 }
 

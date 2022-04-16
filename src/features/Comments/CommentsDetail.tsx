@@ -196,36 +196,6 @@ function CommentsDetail() {
                                 </button>
                             </div>
                         }
-                        {/* <div className="merchantComment-right__btn">
-              <ButtonCus
-                text="Bộ lọc"
-                border="1px solid var(--purple)"
-                color="var(--purple)"
-                fontSize="14px"
-                lineHeight="20px"
-                borderRadius="20px"
-                padding="6px 22px"
-              />
-              <ButtonCus
-                text="Tất cả"
-                border="1px solid var(--purple)"
-                color="var(--purple)"
-                fontSize="14px"
-                lineHeight="20px"
-                borderRadius="20px"
-                padding="6px 22px"
-              />
-              <ButtonCus
-                // onClick={popupSignInClick}
-                text="Gần nhất"
-                border="1px solid var(--purple)"
-                color="var(--purple)"
-                fontSize="14px"
-                lineHeight="20px"
-                borderRadius="20px"
-                padding="6px 22px"
-              />
-            </div> */}
                         <div className="merchantComment-right__comment">
                             {
                                 cmtTemp.map((item: ICmtTemp, index: number) => (

@@ -177,8 +177,9 @@
 }
 .comment-evalutes__img{
   margin-top: 8px;
-  width: 164px;
+  width: 182px;
   border-radius: 6px;
+  cursor: pointer;
 }
 .comment-evalutes h3,
 .comment-evalutes span,

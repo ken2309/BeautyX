@@ -1,8 +1,7 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import { Container } from "@mui/material";
 import icon from "../../../constants/icon";
 import { AppContext } from "../../../context/AppProvider";
-//import { IOrganization } from "../../../interface/organization";
 import img from "../../../constants/img";
 import OrgCardLoading from "../../Loading/OrgCardLoading";
 import PopupDetailContact from "./PopupDetailContact";
@@ -13,6 +12,7 @@ import DetailHeadOpenTime from "../components/DetailHeadOpenTime";
 import favorites from "../../../api/favorite";
 import SignInUp from "../../poupSignInUp/index";
 import onErrorImg from "../../../utils/errorImg";
+import orgApi from "../../../api/organizationApi";
 
 const settings = {
   dots: true,
@@ -31,53 +31,67 @@ const settings = {
     </div>
   ),
 };
-
-// interface IProps {
-//   org: IOrganization;
-//   loading: boolean;
-// }
-
 function DetailHead(props: any) {
-  const { org, loading, tempCount, setTempleCount, follow, setFollow } = props;
+  const { org, loading } = props;
   const [openSignIn, setOpenSignIn] = useState(false);
   const { t, profile } = useContext(AppContext);
   const infoBox = useRef(null);
   const [openPopupContact, setOpenPopupContact] = useState(false);
   const [openTime, setOpenTime] = useState(false);
 
+  const [orgFavorite, setOrgFavorite] = useState({
+    favorite: false,
+    count: 0
+  })
+
   const handleOpenPopupContact = () => {
     setOpenPopupContact(true);
   };
-
-  async function handlePostFavorites(org_id: number) {
+  const handleGetOrgFollow = async () => {
+    const org_id = (await org)?.id;
+    console.log(org_id)
     try {
-      await favorites.postFavorite(org_id);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-  async function handleDeleteFavorite(org_id: number) {
-    try {
-      await favorites.deleteFavorite(org_id);
+      const res = await orgApi.getOrgById(org_id);
+      setOrgFavorite({
+        favorite: res.data.context.is_favorite,
+        count: res.data.context.favorites_count
+      })
+      console.log(res)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
-
-  const handleFollowClick = () => {
-    if (profile) {
-      setFollow(!follow);
-      if (follow === true) {
-        setTempleCount(tempCount - 1);
-        handleDeleteFavorite(org.id);
-      } else {
-        setTempleCount(tempCount + 1);
-        handlePostFavorites(org.id);
-      }
-    } else {
-      setOpenSignIn(true);
+  useEffect(() => {
+    if (org?.id) {
+      handleGetOrgFollow()
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [org])
+  const handleRemoveFavorite = async () => {
+    setOrgFavorite({
+      favorite: false, count: orgFavorite.count - 1
+    })
+    try {
+      await favorites.deleteFavorite(org.id)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const handlePostFavorite = async () => {
+    setOrgFavorite({ favorite: true, count: orgFavorite.count + 1 })
+    try {
+      await favorites.postFavorite(org.id);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const onOrgFavorite = () => {
+    if (orgFavorite.favorite === true) {
+      handleRemoveFavorite()
+    } else {
+      handlePostFavorite()
+    }
+  }
   return (
     <div className="mer-detail">
       <Container>
@@ -96,7 +110,7 @@ function DetailHead(props: any) {
                       <img src={icon.star} alt="" />
                       <span>250</span>
                       <img src={icon.chatAll} alt="" />
-                      <span>{`${org?.favorites_count + tempCount}`}</span>
+                      <span>{orgFavorite.count}</span>
                       <img src={icon.Favorite} alt="" />
                     </div>
                   </div>
@@ -131,16 +145,16 @@ function DetailHead(props: any) {
                   <button
                     disabled={profile ? false : true}
                     style={
-                      follow === true && profile
+                      orgFavorite.favorite === true && profile
                         ? {
                           backgroundColor: "var(--purple)",
                           color: "var(--bg-gray)",
                         }
                         : {}
                     }
-                    onClick={handleFollowClick}
+                    onClick={onOrgFavorite}
                   >
-                    {follow === true && profile
+                    {orgFavorite.favorite === true && profile
                       ? t("Mer_de.flowing")
                       : t("Mer_de.flow")}
                   </button>

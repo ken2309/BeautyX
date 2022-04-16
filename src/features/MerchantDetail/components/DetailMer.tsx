@@ -5,22 +5,22 @@ import { IOrganization } from '../../../interface/organization';
 import DetailDiscount from './DetailDiscount';
 
 interface IProps {
-      merDetail: IOrganization | undefined
+      org: IOrganization | undefined
 }
 
 function DetailMer(props: IProps) {
-      const { merDetail } = props;
+      const { org } = props;
       return (
             <>
                   <DetailDiscount
-                        org={merDetail}
+                        org={org}
                   />
                   <div className="mer-detail__content-desc">
                         <DetailInfo
-                              merDetail={merDetail}
+                              merDetail={org}
                         />
                         <DetailComment
-                              org={merDetail}
+                              org={org}
                         />
                   </div>
             </>

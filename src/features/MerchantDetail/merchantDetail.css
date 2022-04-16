@@ -884,6 +884,9 @@
     width: 100%;
     padding: 0px;
   }
+  .mer-detail-cmt__head-star {
+    display: none;
+  }
   .mer__content-info__introduction .section-title {
     font-size: 18px;
     line-height: 24px;
