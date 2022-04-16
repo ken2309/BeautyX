@@ -4,14 +4,14 @@ class Order {
       getOrder = (page: number) => {
             const session = window.sessionStorage.getItem("_WEB_TK");
             const local = localStorage.getItem("_WEB_TK")
-            const url = `orders?sort=-id&page=${page}&limit=4`;
+            const url = `/orders?sort=-id&page=${page}&limit=4`;
             return axiosClient.get(url, {
                   headers: {
                         Authorization: `Bearer ${session ? session : local}`,
                   },
             })
       }
-      getOrders = (page:number) => {
+      getOrders = (page: number) => {
             const session = window.sessionStorage.getItem("_WEB_TK");
             const local = localStorage.getItem("_WEB_TK");
             const url = '/orders'
@@ -20,7 +20,8 @@ class Order {
                   limit: 4,
                   include: 'items|items_count',
                   sort: '-created_at',
-                  'filter[platform]':'BEAUTYX'
+                  'filter[platform]': 'BEAUTYX',
+                  'filter[productable]': true,
             }
             return axiosClient.get(url, {
                   params,
