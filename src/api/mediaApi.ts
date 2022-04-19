@@ -1,20 +1,13 @@
 import axiosClient from "./axios";
+import { AUTH_HEADER } from "../utils/authHeader";
 
 class Media {
     postMedia = (formData: any) => {
-        console.log(formData)
-        const session = window.sessionStorage.getItem("_WEB_TK");
-        const local = localStorage.getItem("_WEB_TK");
         const url = `media`;
         // const params = {
         //     file: ''
         // }
-        return axiosClient.post(url, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${session ? session : local}`,
-            },
-        })
+        return axiosClient.post(url, formData, AUTH_HEADER())
     }
 }
 const mediaApi = new Media();

@@ -25,26 +25,12 @@ import HomeSecond from "../Homev2";
 // import { useDispatch, useSelector } from 'react-redux';
 // import { getAllOrg, fetchAsyncOrg } from '../../redux/orgSlice'
 
-// const logged: boolean = true;
-// const headerStyle = {
-//   position: 'fixed',
-//   top: 0,
-//   left: 0,
-//   right: 0,
-//   backgroundColor: 'transparent',
-//   zIndex:10
-// }
 function Home() {
-  const {t } = useContext(AppContext);
+  const { t } = useContext(AppContext);
   // const dispatch = useDispatch();
   // useEffect(() => {
   //   dispatch(fetchAsyncOrg())
   // }, [dispatch])
-
-  // const org = useSelector(getAllOrg);
-  // console.log(org);
-
-
   return (
     <div className="home">
       <HeadTitle title={t("Home.home")} />

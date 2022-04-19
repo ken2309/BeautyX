@@ -6,7 +6,8 @@ import { TransitionProps } from "@mui/material/transitions";
 import icon from "../../constants/icon";
 import formatPrice from "../../utils/formatPrice";
 import onErrorImg from "../../utils/errorImg";
-import {Service} from '../../interface/service'
+import {Service} from '../../interface/service';
+import useFullScreen from "../../utils/useFullScreen";
 
 const view = window.screen.width;
 const Transition = React.forwardRef(function Transition(
@@ -20,6 +21,8 @@ const Transition = React.forwardRef(function Transition(
 
 function AppointmentDetail(props: any) {
   const { openPopupDetail, setOpenPopupDetail, datingList, org } = props;
+  const fullScreen = useFullScreen();
+  
   const [services, setServices] = useState<Service[]>([]);
   useEffect(() => {
     async function handleSetDetail() {
@@ -40,7 +43,7 @@ function AppointmentDetail(props: any) {
   }
   return (
     <Dialog
-      fullScreen={view < 768 ? true : false}
+      fullScreen={fullScreen}
       TransitionComponent={Transition}
       keepMounted
       onClose={handleClosePopupDetail}

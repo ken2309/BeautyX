@@ -1,4 +1,5 @@
 import axiosClient from "./axios";
+import { AUTH_HEADER_PARAM_GET, AUTH_HEADER } from "../utils/authHeader";
 
 class ApointmentApi {
   sendApointment = (props: any) => {
@@ -30,7 +31,6 @@ class ApointmentApi {
     }
   };
   getAppoitment = (time: any) => {
-    console.log(time)
     const url = 'appointments';
     const params = {
       page: 1,
@@ -40,29 +40,13 @@ class ApointmentApi {
       "append": "services",
       "sort": "-id"
     }
-    // const url = "appointments?sort=-id&page=1&limit=15";
-    const session = window.sessionStorage.getItem("_WEB_TK");
-    const local = localStorage.getItem("_WEB_TK");
-    //const url = `appointments?sort=-id&page=1&limit=15&filter%5Btime_start%5D=${params}`;
-    if (localStorage.getItem("_WEB_TK") || session) {
-      return axiosClient.get(url, {
-        params,
-        headers: {
-          Authorization: `Bearer ${session ? session : local}`,
-        },
-      });
-    }
+    return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params));
   };
   postAppointment = (params: any, org_id: any) => {
-    // console.log(params, org_id);
-    const session = window.sessionStorage.getItem("_WEB_TK");
-    const local = localStorage.getItem("_WEB_TK");
+    //const session = window.sessionStorage.getItem("_WEB_TK");
+    //const local = localStorage.getItem("_WEB_TK");
     const url = `organizations/${org_id}/appointments`;
-    return axiosClient.post(url, params, {
-      headers: {
-        Authorization: `Bearer ${session ? session : local}`,
-      },
-    });
+    return axiosClient.post(url, params, AUTH_HEADER());
   };
 }
 const apointmentApi = new ApointmentApi();

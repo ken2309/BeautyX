@@ -1,5 +1,5 @@
-
 import axiosClient from "./axios";
+import { AUTH_HEADER } from "../utils/authHeader";
 
 class Comments {
     //get comments org
@@ -17,8 +17,6 @@ class Comments {
     }
     //post comments org
     postCommentOrg = (values: any) => {
-        const session = window.sessionStorage.getItem("_WEB_TK");
-        const local = localStorage.getItem("_WEB_TK")
         const url = `/comments`;
         const params = {
             "commentable_type": "ORGANIZATION",
@@ -26,11 +24,7 @@ class Comments {
             "organization_id": values.org_id,
             "body": values.body
         }
-        return axiosClient.post(url, params, {
-            headers: {
-                Authorization: `Bearer ${session ? session : local}`,
-            },
-        })
+        return axiosClient.post(url, params, AUTH_HEADER())
     }
     //comments products, services
     getComments = (values: any) => {
@@ -47,8 +41,6 @@ class Comments {
         return axiosClient.get(url, { params })
     }
     postComment = (values: any) => {
-        const session = window.sessionStorage.getItem("_WEB_TK");
-        const local = localStorage.getItem("_WEB_TK")
         const url = `/comments`;
         const params = {
             "commentable_type": values.type,
@@ -56,11 +48,7 @@ class Comments {
             "organization_id": values.org_id,
             "body": values.body
         }
-        return axiosClient.post(url, params, {
-            headers: {
-                Authorization: `Bearer ${session ? session : local}`,
-            },
-        })
+        return axiosClient.post(url, params, AUTH_HEADER())
     }
 }
 const commentsApi = new Comments();

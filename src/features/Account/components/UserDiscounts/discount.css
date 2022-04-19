@@ -1,9 +1,11 @@
+.discount-head{
+    display: none;
+}
 .dis-cnt__list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
-
 .dis-cnt__list-item {
     width: 50%;
     height: 142px;
@@ -103,6 +105,9 @@
     font-weight: 700;
 }
 @media only screen and (max-width: 767px) {
+    .discount-head{
+        display: block;
+    }
     .dis-cnt__list{
         display: flex;
         flex-direction: column;
