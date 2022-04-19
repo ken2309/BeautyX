@@ -114,11 +114,14 @@ function PaymentForm(props: any) {
                                                             </span>
                                                       </>
                                           }
-                                          <button
-                                                onClick={() => setOpen(true)}
-                                          >
-                                                Chọn chi nhánh
-                                          </button>
+                                          {
+                                                org && org.branches?.length > 0 &&
+                                                <button
+                                                      onClick={() => setOpen(true)}
+                                                >
+                                                      Chọn chi nhánh
+                                                </button>
+                                          }
                                     </div>
                               </div>
                         </div>

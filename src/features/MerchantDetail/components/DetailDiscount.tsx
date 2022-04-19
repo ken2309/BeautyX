@@ -23,7 +23,9 @@ function DetailDiscount(props: IProps) {
         }
     }
     useEffect(() => {
-        handleGetDiscountByOrg()
+        if(org?.id){
+            handleGetDiscountByOrg()
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [org])
 

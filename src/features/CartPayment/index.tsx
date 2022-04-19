@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import Head from "../Head/index";
 import "./cartPayment.css";
 import { Container } from "@mui/material";
-//import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
 import PaymentForm from "./components/PaymentForm";
 import PaymentCart from "./components/PaymentCart";
@@ -15,7 +14,6 @@ import { AppContext } from "../../context/AppProvider";
 import payments from "../../api/paymentApi";
 import { IUserAddress } from '../../interface/userAddress';
 import userAddressApi from "../../api/userAddressApi";
-// import {useHistory} from 'react-router-dom'
 
 const isCart: boolean = true;
 function CartPayment(props: any) {
@@ -59,11 +57,9 @@ function CartPayment(props: any) {
       const local = await localStorage.getItem("_WEB_TK")
       try {
         const res = await userAddressApi.getAll(session, local);
-        const addressList = await res?.data.context;
-        setAddress(addressList.find((item: IUserAddress) => item.is_default === true))
+        setAddress(res?.data.context.find((item: IUserAddress) => item.is_default === true))
       } catch (error) {
         console.log(error)
-        //history.push('/sign-request')
       }
     }
     handleGetUserAddress()

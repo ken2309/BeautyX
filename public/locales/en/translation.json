@@ -246,7 +246,9 @@
     "password_confirm_invalid": "Confirm password invalid",
     "now": "now",
     "is_not_registered": "is not registered",
-    "register_success": "Successful account registration"
+    "register_success": "Successful account registration",
+    "email_already":"The email has already been taken.",
+    "phone_already":"The telephone has already been taken."
   },
   "partner": {
     "online_business": "Online business platform for the beauty industry",

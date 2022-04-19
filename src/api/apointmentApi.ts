@@ -19,15 +19,11 @@ class ApointmentApi {
   };
   // get detail appointment by id
   getAppointmentById = (id: any) => {
-    const session = window.sessionStorage.getItem("_WEB_TK");
-    const local = localStorage.getItem("_WEB_TK");
+    //const session = window.sessionStorage.getItem("_WEB_TK");
+    //const local = localStorage.getItem("_WEB_TK");
     const url = `appointments/${id}`;
     if (localStorage.getItem("_WEB_TK")) {
-      return axiosClient.get(url, {
-        headers: {
-          Authorization: `Bearer ${session ? session : local}`,
-        },
-      });
+      return axiosClient.get(url, AUTH_HEADER());
     }
   };
   getAppoitment = (time: any) => {
