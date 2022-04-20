@@ -5,7 +5,7 @@ import icon from '../../../constants/icon';
 import { FormControl, RadioGroup, FormControlLabel, Radio, Checkbox, CircularProgress } from '@mui/material'
 import { AppContext } from '../../../context/AppProvider';
 import { AxiosError } from "axios";
-import auth from '../../../api/authApi';
+import authentication from '../../../api/authApi';
 import PopupNoti from './PopupNoti';
 import validateForm from '../../../utils/validateForm';
 
@@ -29,7 +29,7 @@ function SignUps(props: any) {
             platform: 'BEAUTYX'
         }
         try {
-            await auth.register(params);
+            await authentication.register(params);
             setLoading(false);
             setPopup(true)
         } catch (error) {
@@ -201,7 +201,7 @@ function SignUps(props: any) {
                 </div>
                 <div className="flex-column w-100">
                     <div className="sign-form__box  mb-16 ">
-                        <img className="sign-form__box-icon" src={icon.Message} alt="" />
+                        <img className="sign-form__box-icon" src={icon.phone} alt="" />
                         <input
                             value={formik.values.phone}
                             onChange={formik.handleChange}

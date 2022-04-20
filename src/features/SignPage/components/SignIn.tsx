@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import { AxiosError } from "axios";
 import PopupNoti from "./PopupNoti";
-import auth from "../../../api/authApi";
+import authentication from "../../../api/authApi";
 import PopupForgot from "./PopupForgot";
 import PopupVerification from "./PopupVerification";
 import PopupNewPass from "./PopupNewPass";
@@ -32,7 +32,7 @@ function SignIn(props: any) {
   //handle submit login form
   async function submitLogin(values: any) {
     try {
-      const response = await auth.login(values);
+      const response = await authentication.login(values);
       localStorage.setItem("_WEB_US", JSON.stringify(response.data.context));
       setTk("_WEB_TK", response.data.context.token);
       if (remember === true) {
@@ -156,7 +156,7 @@ function SignIn(props: any) {
             />
             <span>{t("Home.Sign_remember")}</span>
           </div>
-          <span onClick={handleClickOpenForgotPass}>
+          <span onClick={()=>history.push('/doi-mat-khau')}>
             {t("Home.Sign_forgot")} ?
           </span>
         </div>
