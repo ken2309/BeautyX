@@ -4,34 +4,24 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import Checkbox from "@mui/material/Checkbox";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AxiosError } from "axios";
-import { CircularProgress } from "@mui/material";
 import { AppContext } from "../../../context/AppProvider";
 import PopupNoti from "./PopupNoti";
 import auth from "../../../api/authApi";
-import TextField from "@mui/material/TextField";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DatePicker from "@mui/lab/DatePicker";
 function SignUp(props: any) {
   const { activeTabSign, setActiveTabSign } = props;
   const { t } = useContext(AppContext);
   const [typePass, setTypePass] = useState("password");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const [, setErrMail] = useState();
   const [popup, setPopup] = useState(false);
-  const [value, setValue] = React.useState<Date | null>(new Date());
   async function submitRegisterForm(user: any) {
     try {
       await auth.register(user);
-      setLoading(false);
       setPopup(true);
     } catch (error) {
-      setLoading(false);
       const err = error as AxiosError;
       if (err.response?.status === 400) {
         setError(err.response.data.context.telephone);
@@ -40,7 +30,6 @@ function SignUp(props: any) {
     }
   }
   const handleOnSubmitSignUp = (values: any) => {
-    setLoading(true);
     const params = {
       fullname: values.Name,
       email: values.EmailPhone,

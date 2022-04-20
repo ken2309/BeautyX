@@ -246,7 +246,9 @@
     "password_confirm_invalid": "Mật khẩu không khớp",
     "now": "ngay",
     "is_not_registered": "chưa được đăng ký",
-    "register_success": "Đăng ký tài khoản thành công"
+    "register_success": "Đăng ký tài khoản thành công",
+    "email_already":"Email này đã được đăng ký",
+    "phone_already":"Số điện thoại này đã được đăng ký"
   },
   "partner": {
     "online_business": "Nền tảng kinh doanh online ngành làm đẹp",

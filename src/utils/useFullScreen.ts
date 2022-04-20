@@ -1,0 +1,12 @@
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles'
+
+
+function useFullScreen() {
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+    return fullScreen
+}
+
+export default useFullScreen;
+

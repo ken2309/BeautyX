@@ -3,6 +3,8 @@ import { Dialog } from '@mui/material';
 import { IComment } from '../../interface/comments';
 import formatDate from '../../utils/formatDate';
 import './full-img.css';
+import icon from '../../constants/icon';
+import useFullScreen from '../../utils/useFullScreen';
 
 interface IProps {
     open: boolean,
@@ -12,6 +14,7 @@ interface IProps {
 
 function FullImage(props: IProps) {
     const { open, setOpen, comment } = props;
+    const fullScreen = useFullScreen();
     let body;
     try {
         const cmt = JSON.parse(`${comment.body}`)
@@ -25,13 +28,20 @@ function FullImage(props: IProps) {
             image_url: ''
         }
     }
-
     return (
         <Dialog
             open={open}
+            fullScreen={fullScreen}
             onClose={() => setOpen(false)}
         >
             <div className="full-img-cnt">
+                <div className="full-img-cnt__head">
+                    <button
+                        onClick={()=>setOpen(false)}
+                    >
+                        <img src={icon.closeCircleWhite} alt="" />
+                    </button>
+                </div>
                 {
                     body.image_url?.length > 0 &&
                     <img className='full-img-cnt__img' src={body.image_url} alt="" />

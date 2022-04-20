@@ -44,9 +44,11 @@ function UserDiscounts(props: any) {
     }
     return (
         <>
-            <Head
-                setCloseDialog={setOpen}
-            />
+            <div className="discount-head">
+                <Head
+                    setCloseDialog={setOpen}
+                />
+            </div>
             <div
                 className='order'
             >

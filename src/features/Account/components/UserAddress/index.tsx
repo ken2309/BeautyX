@@ -14,10 +14,8 @@ function Address(props: any) {
     const [chooseAdd, setChooseAdd] = useState()
     const [addressList, setAddressList] = useState<IUserAddress[]>([])
     async function getListUserAddress() {
-        const session = await window.sessionStorage.getItem("_WEB_TK");
-        const local = await localStorage.getItem("_WEB_TK")
         try {
-            const res = await userAddressApi.getAddress(session, local);
+            const res = await userAddressApi.getAddress();
             const addressList = res?.data.context
             setChooseAdd(addressList?.find((item: IUserAddress) => item.is_default === true))
             setAddressList(addressList)

@@ -112,6 +112,7 @@ import fire from '../assets/icon/fire.svg';
 import shield from '../assets/icon/sheild.svg';
 import editWhite from '../assets/icon/editWhite.svg';
 import pinMapGreen from '../assets/icon/pinMapGreen.svg';
+import closeCircleWhite from '../assets/icon/closeCircleWhite.svg';
 
 const icon = {
   Favorite,
@@ -226,6 +227,7 @@ const icon = {
   fire,
   shield,
   editWhite,
-  pinMapGreen
+  pinMapGreen,
+  closeCircleWhite
 };
 export default icon;

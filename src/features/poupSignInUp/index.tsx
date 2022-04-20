@@ -7,6 +7,7 @@ import { TransitionProps } from "@mui/material/transitions";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import { AppContext } from "../../context/AppProvider";
+import useFullScreen from "../../utils/useFullScreen";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -24,6 +25,7 @@ function SignInUp(props: any) {
     setActiveTabSign,
     useForSignRes,
   } = props;
+  const fullScreen = useFullScreen();
   const { t } = useContext(AppContext);
   const buttons = [
     { id: 1, title: t("Home.Sign_in") },
@@ -37,6 +39,7 @@ function SignInUp(props: any) {
   };
   return (
     <Dialog
+      fullScreen={fullScreen}
       open={openSignIn}
       TransitionComponent={Transition}
       keepMounted

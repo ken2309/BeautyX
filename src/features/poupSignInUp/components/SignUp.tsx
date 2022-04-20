@@ -11,17 +11,15 @@ import { t } from "i18next";
 import axios from "axios";
 import { baseURL } from "../../../api/axios";
 import { CircularProgress } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DatePicker from "@mui/lab/DatePicker";
+import validateForm from "../../../utils/validateForm";
+
+
 function SignUp(props: any) {
   const { activeTabSign, setOpenSignIn } = props;
   const [typePass, setTypePass] = useState("password");
   const [loading, setLoading] = useState(false);
   const [errTelephone, setErrTelephone] = useState();
   const [errGmail, setErrGmail] = useState();
-  const [value, setValue] = React.useState<Date | null>(new Date());
   const handleSignUp = (values: any) => {
     setLoading(true);
     const params = {
@@ -66,29 +64,27 @@ function SignUp(props: any) {
         .min(2, "Tên lớn hơn 2 ký tự")
         .required("Vui lòng nhập họ và tên")
         .matches(
-          /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/,
+          validateForm.fullname,
           "Tên không đúng định dạng"
         ),
       Sex: Yup.string().required("Vui lòng chọn giới tính"),
       EmailPhone: Yup.string()
         .required("Vui lòng nhập Email hoặc Số điện thoại")
         .matches(
-          // eslint-disable-next-line no-useless-escape
-          /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/i,
+          validateForm.email,
           "Vui lòng nhập đúng định dạng Example@gmail.com"
         ),
-      Phone: Yup.string().required(
-        `${t("pm.please_enter")} ${t("pm.phone_number")}`
-      ),
+      Phone: Yup.string()
+        .required(`${t("pm.please_enter")} ${t("pm.phone_number")}`)
+        .matches(
+          validateForm.phone,
+          'Số điện thoại không đúng định dạng'
+        ),
 
       password: Yup.string()
         .min(8, "Mật khẩu lớn hơn 8 ký tự")
         .max(32, "Mật khẩu tối đa 32 kí tự")
         .required("Vui lòng nhập mật khẩu"),
-      // .matches(
-      //   /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-      //   "Mật khẩu phải có ít nhất 8 ký tự, 1 chữ hoa, 1 số và 1 ký tự chữ 1 đặc biệt"
-      // ),
       confirmPassword: Yup.string()
         .required("Vui lòng xác nhận lại mật khẩu")
         .oneOf([Yup.ref("password"), null], "Mật khẩu không khớp"),
@@ -200,7 +196,7 @@ function SignUp(props: any) {
               name="EmailPhone"
               id="EmailPhone"
               type="text"
-              placeholder="Email/Số điện thoại"
+              placeholder="Email"
             />
           </div>
           {formik.errors.EmailPhone && formik.touched.EmailPhone && (

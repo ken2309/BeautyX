@@ -1,8 +1,5 @@
 import axiosClient from "./axios";
-
-const _session = window.sessionStorage.getItem("_WEB_TK");
-const _local = localStorage.getItem("_WEB_TK")
-
+import { AUTH_HEADER, AUTH_HEADER_PARAM_GET } from "../utils/authHeader";
 class UserAddress {
     getAll = (session: any, local: any) => {
         const url = `/useraddresses`;
@@ -19,20 +16,13 @@ class UserAddress {
             });
         }
     }
-    getAddress = (session: any, local: any) => {
+    getAddress = () => {
         const url = `/useraddresses`;
         const params = {
             limit: 15,
             page: 1
         }
-        if (localStorage.getItem("_WEB_TK") || window.sessionStorage.getItem("_WEB_TK")) {
-            return axiosClient.get(url, {
-                params,
-                headers: {
-                    Authorization: `Bearer ${session ? session : local}`,
-                },
-            });
-        }
+        return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params));
     }
     postAddress = (values: any, session: any, local: any) => {
         const url = `/useraddresses`;
@@ -41,23 +31,13 @@ class UserAddress {
             "is_default": values.is_default,
             "is_bookmark": true
         }
-        if (session || local) {
-            return axiosClient.post(url, params, {
-                headers: {
-                    Authorization: `Bearer ${session ? session : local}`,
-                }
-            });
-        }
+        return axiosClient.post(url, params, AUTH_HEADER());
     }
 
     deleteAddress = (id: number) => {
         const url = `/useraddresses/${id}`;
         if (localStorage.getItem("_WEB_TK") || window.sessionStorage.getItem("_WEB_TK")) {
-            return axiosClient.delete(url, {
-                headers: {
-                    Authorization: `Bearer ${_session ? _session : _local}`,
-                }
-            });
+            return axiosClient.delete(url, AUTH_HEADER());
         }
     }
     updateAddress = (values: any) => {
@@ -66,13 +46,7 @@ class UserAddress {
             "address": values.address,
             "is_default": true,
         }
-        if (localStorage.getItem("_WEB_TK") || window.sessionStorage.getItem("_WEB_TK")) {
-            return axiosClient.put(url, params, {
-                headers: {
-                    Authorization: `Bearer ${_session ? _session : _local}`,
-                }
-            });
-        }
+        return axiosClient.put(url, params, AUTH_HEADER());
     }
     updateAddressCancelDefault = (values: any) => {
         const url = `/useraddresses/${values.id}`;
@@ -80,13 +54,7 @@ class UserAddress {
             "address": values.address,
             "is_default": false
         }
-        if (localStorage.getItem("_WEB_TK") || window.sessionStorage.getItem("_WEB_TK")) {
-            return axiosClient.put(url, params, {
-                headers: {
-                    Authorization: `Bearer ${_session ? _session : _local}`,
-                }
-            });
-        }
+        return axiosClient.put(url, params, AUTH_HEADER());
     }
 }
 const userAddressApi = new UserAddress();

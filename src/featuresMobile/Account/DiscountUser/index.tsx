@@ -1,7 +1,6 @@
 import React from 'react';
 import { Dialog, Slide } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
-import ServicesUser from '../../../features/ServiceUser';
 import UserDiscounts from '../../../features/Account/components/UserDiscounts';
 
 const Transition = React.forwardRef(function Transition(

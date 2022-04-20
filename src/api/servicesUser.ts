@@ -1,4 +1,5 @@
 import axiosClient from "./axios";
+import { AUTH_HEADER_PARAM_GET } from "../utils/authHeader";
 
 
 
@@ -14,12 +15,7 @@ class ServicesUser {
             "sort": "-created_at",
             'filter[platform]': 'BEAUTYX'
         }
-        return axiosClient.get(url, {
-            params,
-            headers: {
-                Authorization: `Bearer ${session ? session : local}`,
-            },
-        })
+        return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params))
     }
 }
 const servicesUserApi = new ServicesUser();

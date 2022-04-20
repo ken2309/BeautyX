@@ -49,14 +49,12 @@ function DetailHead(props: any) {
   };
   const handleGetOrgFollow = async () => {
     const org_id = (await org)?.id;
-    console.log(org_id)
     try {
       const res = await orgApi.getOrgById(org_id);
       setOrgFavorite({
         favorite: res.data.context.is_favorite,
         count: res.data.context.favorites_count
       })
-      console.log(res)
     } catch (error) {
       console.log(error)
     }
