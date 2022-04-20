@@ -42,8 +42,15 @@ function CommentItemTemp(props: any) {
             <div className="comment-evalutes">
                 {/* <h3>Spectacular</h3> */}
                 <p>
-                    {body}
+                    {body.text}
                 </p>
+                {
+                    body.image_url?.length > 0 &&
+                    <img
+                        className="comment-evalutes__img"
+                        src={body.image_url} alt=""
+                    />
+                }
             </div>
         </div>
     );

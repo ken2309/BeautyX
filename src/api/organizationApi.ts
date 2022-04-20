@@ -1,4 +1,5 @@
 import axiosClient from "./axios";
+import { AUTH_HEADER } from "../utils/authHeader";
 
 const location_user = JSON.parse(`${sessionStorage.getItem('USER_LOCATION')}`)
 
@@ -11,12 +12,8 @@ class Organization {
     return axiosClient.get(url);
   };
   getOrgById = (id: any) => {
-    const url = `/organizations/${id}?withBranches=true`;
-    return axiosClient.get(url, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("_WEB_TK"),
-      },
-    });
+    const url = `/organizations/${id}`;
+    return axiosClient.get(url, AUTH_HEADER());
   };
   getOrgByKeyword = (values: any) => {
     const location = JSON.stringify(`${location_user?.lat},${location_user?.long}`)

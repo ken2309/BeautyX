@@ -3,12 +3,15 @@ import icon from '../../../constants/icon';
 import { IOrganization } from '../../../interface/organization';
 import onErrorImg from '../../../utils/errorImg';
 import scrollTop from '../../../utils/scrollTop';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 function SectionOrgs(props: any) {
-    const { orgs } = props;
+    const { orgs, setOpenSearch } = props;
     const history = useHistory();
-    const gotoDetail = (org:IOrganization) => {
+    const gotoDetail = (org: IOrganization) => {
+        if (setOpenSearch) {
+            setOpenSearch(false)
+        }
         scrollTop()
         //console.log(org)
         history.push({
@@ -29,7 +32,7 @@ function SectionOrgs(props: any) {
                     orgs.slice(0, 2).map((item: IOrganization, index: number) => (
                         <li
                             key={index}
-                            onClick={()=>gotoDetail(item)}
+                            onClick={() => gotoDetail(item)}
                         >
                             <div className="org-item">
                                 <img

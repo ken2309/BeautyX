@@ -1,8 +1,9 @@
 import icon from "../../../constants/icon";
 import { useHistory } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import CheckNotification from "./CheckNotification";
 import { AppContext } from "../../../context/AppProvider";
+import mediaApi from "../../../api/mediaApi";
 
 interface info {
   name?: string;
@@ -35,16 +36,44 @@ function MenuSideBar(props: info) {
     const token = "";
     localStorage.setItem("_WEB_TK", token);
   };
+
+  const [avatar, setAvatar] = useState();
+
+  const onFileChange = (e: any) => {
+    const form = e.target.files[0];
+    handlePostMedia(form)
+  }
+  const handlePostMedia = async (form: any) => {
+    let formData = new FormData();
+    formData.append('file', form);
+    try {
+      const res = await mediaApi.postMedia(formData);
+      setAvatar(res.data.context.original_url);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div>
       <div className="infor_section">
         <div className="avatar">
           <div className="img_mask">
-            <img src={data.avatar} alt="img" />
+            <img src={avatar ? avatar : data.avatar} alt="img" />
           </div>
           <div className="camera_icon">
-            <img src={icon.Camera_purple} alt="icon" />
+            <label htmlFor="file">
+              <img src={icon.Camera_purple} alt="icon" />
+            </label>
           </div>
+          <input
+            hidden
+            id="file"
+            type="file"
+            name="file"
+            accept="image/png, image/jpeg"
+            onChange={onFileChange}
+          />
         </div>
         <div className="info">
           <p className="quicksand-xl">
@@ -154,7 +183,7 @@ function MenuSideBar(props: info) {
             </li>
           </ul>
         </div> */}
-        <div className="tab">
+        <div onClick={() => history.push('/tai-khoan/ma-uu-dai')} className="tab">
           <div className="icon">
             <img src={icon.Ticket} alt="" />
           </div>

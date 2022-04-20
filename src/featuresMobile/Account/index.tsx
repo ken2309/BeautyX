@@ -5,6 +5,7 @@ import Bottom from "../Bottom/index";
 import OrderMb from "./Orders";
 import AccountForm from "./AccountForm/index";
 import ServicesUserMb from "./ServicesUser";
+import DiscountUserMb from "./DiscountUser";
 import { AppContext } from "../../context/AppProvider";
 
 // function change() {
@@ -24,10 +25,11 @@ import { AppContext } from "../../context/AppProvider";
 //       document.querySelector('.mb-ac__cnt-avt')?.classList.remove('mb-ac__cnt-avt-ch')
 // }
 function AccountMb() {
-  const { userInfo } = useContext(AppContext);
+  const { userInfo, t } = useContext(AppContext);
   const [openOrder, setOpenOrder] = useState(false);
   const [openAcc, setOpenAcc] = useState(false);
   const [openSer, setOpenSer] = useState(false);
+  const [openDiscount, setOpenDiscount] = useState(false)
   return (
     <div className="mb-ac">
       <div className="mb-ac__cnt">
@@ -87,13 +89,13 @@ function AccountMb() {
                 className="flex-column mb-ac__cnt-private-item"
               >
                 <img src={icon.User_purple} alt="" />
-                <span>Tài khoản của tôi</span>
+                <span>{t("Header.my_acc")}</span>
               </div>
             </li>
             <li>
               <div className="flex-column mb-ac__cnt-private-item">
                 <img src={icon.Credit_card} alt="" />
-                <span>Phương thức thanh toán</span>
+                <span>{t("pm.payment_method")}</span>
               </div>
             </li>
             <li>
@@ -102,7 +104,7 @@ function AccountMb() {
                 className="flex-column mb-ac__cnt-private-item"
               >
                 <img src={icon.Clock_purple} alt="" />
-                <span>Lịch sử đơn hàng</span>
+                <span>{t("Header.my_order")}</span>
               </div>
             </li>
             <li>
@@ -111,13 +113,16 @@ function AccountMb() {
                 className="flex-column mb-ac__cnt-private-item"
               >
                 <img src={icon.bag} alt="" />
-                <span>Gói dịch vụ</span>
+                <span>{t("app.my_services")}</span>
               </div>
             </li>
             <li>
-              <div className="flex-column mb-ac__cnt-private-item">
+              <div
+                onClick={() => setOpenDiscount(true)}
+                className="flex-column mb-ac__cnt-private-item"
+              >
                 <img src={icon.Ticket} alt="" />
-                <span>Danh sách mã ưu đãi</span>
+                <span>{t("Header.my_codes")}</span>
               </div>
             </li>
           </ul>
@@ -127,19 +132,19 @@ function AccountMb() {
             <li>
               <div className="flex-column mb-ac__cnt-private-item">
                 <img src={icon.Bell} alt="" />
-                <span>Thông báo</span>
+                <span>{t("Header.noti")}</span>
               </div>
             </li>
             <li>
               <div className="flex-column mb-ac__cnt-private-item">
                 <img src={icon.Setting} alt="" />
-                <span>Cài đặt</span>
+                <span>{t("Header.settings")}</span>
               </div>
             </li>
             <li>
               <div className="flex-column mb-ac__cnt-private-item">
                 <img src={icon.Headphones_purple} alt="" />
-                <span>Hỗ trợ</span>
+                <span>{t("Header.support")}</span>
               </div>
             </li>
           </ul>
@@ -150,6 +155,7 @@ function AccountMb() {
       <OrderMb openOrder={openOrder} setOpenOrder={setOpenOrder} />
       <ServicesUserMb open={openSer} setOpen={setOpenSer} />
       <AccountForm open={openAcc} setOpen={setOpenAcc} />
+      <DiscountUserMb open={openDiscount} setOpen={setOpenDiscount} />
     </div>
   );
 }

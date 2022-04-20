@@ -5,12 +5,15 @@ import onErrorImg from '../../../utils/errorImg';
 import formatPrice from '../../../utils/formatPrice';
 import slugify from '../../../utils/formatUrlString';
 import scrollTop from '../../../utils/scrollTop';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 function SectionServices(props: any) {
-    const { services } = props;
+    const { services, setOpenSearch } = props;
     const history = useHistory();
-    const gotoDetail = (service:IServicePromo) => {
+    const gotoDetail = (service: IServicePromo) => {
+        if(setOpenSearch){
+            setOpenSearch(false)
+        }
         scrollTop()
         history.push({
             pathname: `/dich-vu/${slugify(service.service_name)}`,
@@ -29,7 +32,7 @@ function SectionServices(props: any) {
                     services.slice(0, 3).map((item: IServicePromo, index: number) => (
                         <li
                             key={index}
-                            onClick={()=>gotoDetail(item)}
+                            onClick={() => gotoDetail(item)}
                         >
                             <div className="org-item">
                                 <img
@@ -75,7 +78,7 @@ function SectionServices(props: any) {
                                                     <span>{formatPrice(item.price)}đ</span>
                                                 </>
                                                 :
-                                                <span style={{color:'var(--purple)'}}>{formatPrice(item.price)}đ</span>
+                                                <span style={{ color: 'var(--purple)' }}>{formatPrice(item.price)}đ</span>
                                         }
                                     </div>
                                 </div>

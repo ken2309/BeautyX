@@ -4,6 +4,7 @@ import { AppContext } from '../../../../context/AppProvider';
 import { IUserAddress } from '../../../../interface/userAddress';
 import userAddressApi from '../../../../api/userAddressApi';
 import AddressItem from './components/AddressItem';
+import icon from '../../../../constants/icon';
 
 function Address(props: any) {
     //console.log(session, local)
@@ -13,10 +14,8 @@ function Address(props: any) {
     const [chooseAdd, setChooseAdd] = useState()
     const [addressList, setAddressList] = useState<IUserAddress[]>([])
     async function getListUserAddress() {
-        const session = await window.sessionStorage.getItem("_WEB_TK");
-        const local = await localStorage.getItem("_WEB_TK")
         try {
-            const res = await userAddressApi.getAddress(session, local);
+            const res = await userAddressApi.getAddress();
             const addressList = res?.data.context
             setChooseAdd(addressList?.find((item: IUserAddress) => item.is_default === true))
             setAddressList(addressList)
@@ -77,6 +76,9 @@ function Address(props: any) {
                 >
                     {t("acc.add_other_address")}
                 </span>
+                <button className="acc-add__btn">
+                    <img src={icon.plus} alt="" />
+                </button>
             </div>
             {
                 addressList.map((item: IUserAddress, index: number) => (

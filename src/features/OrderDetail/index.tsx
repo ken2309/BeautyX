@@ -12,6 +12,7 @@ import { AppContext } from "../../context/AppProvider";
 import scrollTop from "../../utils/scrollTop";
 import onErrorImg from "../../utils/errorImg";
 import formatDate from "../../utils/formatDate";
+import useFullScreen from "../../utils/useFullScreen";
 
 const view = window.screen.width;
 const Transition = React.forwardRef(function Transition(
@@ -26,6 +27,7 @@ const Transition = React.forwardRef(function Transition(
 
 function OrderDetail(props: any) {
   const history = useHistory();
+  const fullScreen = useFullScreen();
   const { t } = useContext(AppContext);
   const { open, setOpen, org, order, countItem } = props;
   const [acTab, setAcTab] = useState();
@@ -41,7 +43,7 @@ function OrderDetail(props: any) {
     <Dialog
       open={open}
       onClose={() => setOpen(false)}
-      fullScreen={view > 768 ? false : true}
+      fullScreen={fullScreen}
       TransitionComponent={Transition}
     >
       <div className="order-de">

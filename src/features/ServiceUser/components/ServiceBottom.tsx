@@ -10,7 +10,26 @@ import apointmentApi from "../../../api/apointmentApi";
 import PopupNotiApp from "./PopupNotiApp";
 import { AxiosError } from "axios";
 import { AppContext } from "../../../context/AppProvider";
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import { IOrganization } from '../../../interface/organization';
+import onErrorImg from "../../../utils/errorImg";
+
+interface IServiceBook {
+  description: string,
+  duration: number,
+  id: number,
+  image: string,
+  image_url: string,
+  order_id: number,
+  org: IOrganization
+  org_id: number,
+  remain_time: number,
+  ser_book_id: number
+  service_name: string
+  time_expired: any,
+  times: number | null,
+  unlimited: boolean
+}
 
 function ServiceBottom(props: any) {
   const { t } = useContext(AppContext);
@@ -77,8 +96,8 @@ function ServiceBottom(props: any) {
   }
   const handleSubmitApp = () => {
     const timeStart = `${chooseDate} ${chooseTime}:00`;
-    //const service_ids = servicesBook.map((item: any) => item.id);
-    const service_ids = [1];
+    const service_ids = servicesBook.map((item: any) => item.id);
+    //const service_ids = [1];
 
     const a = `{
       "order_id":${748},
@@ -124,11 +143,12 @@ function ServiceBottom(props: any) {
             <div className="title">{t("my_ser.services_selected")}</div>
             <div className="my-ser-choose">
               <ul>
-                {servicesBook.map((item: any, index: number) => (
+                {servicesBook.map((item: IServiceBook, index: number) => (
                   <li key={index}>
                     <div className="flex-row my-ser-choose__item">
                       <img
-                        src={"https://picsum.photos/650/976?random=1" + item.id}
+                        src={item.image ? item.image_url : item.org.image_url}
+                        onError={(e) => onErrorImg(e)}
                         alt=""
                       />
                       <div className="flex-row-sp my-ser-choose__item-cnt">
