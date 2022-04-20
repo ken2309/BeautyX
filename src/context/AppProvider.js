@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import auth from "../api/authApi";
+import authentication from "../api/authApi";
 import dateNow from "../utils/dateExp";
 import tagsApi from "../api/tagApi";
 import provincesApi from "../api/provinceApi";
@@ -55,7 +55,7 @@ export default function AppProvider({ children }) {
   useEffect(() => {
     async function handleGetProfile() {
       try {
-        const res = await auth.getUserProfile();
+        const res = await authentication.getUserProfile();
         setProfile(res.data);
       } catch (err) {
         setProfile(undefined);

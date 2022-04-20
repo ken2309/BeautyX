@@ -1,0 +1,22 @@
+/* .for-pass-cnt{
+    display: flex;
+    justify-content: center;
+} */
+.for-pass-cnt__phone{
+    width: 50%;
+    height: 200px;
+    background-color: burlywood;
+    margin: auto;
+    margin-top: 150px;
+    padding: 12px 20px;
+}
+.for-pass-phone{
+    width: 100%;
+    margin-top: 36px;
+}
+.for-pass-cnt__phone-ip{
+    width: 66.66%;
+}
+.for-pass-cnt__phone-ip{
+    padding: 4px 12px;
+}
