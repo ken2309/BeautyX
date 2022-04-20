@@ -113,6 +113,8 @@ import shield from '../assets/icon/sheild.svg';
 import editWhite from '../assets/icon/editWhite.svg';
 import pinMapGreen from '../assets/icon/pinMapGreen.svg';
 import closeCircleWhite from '../assets/icon/closeCircleWhite.svg';
+import sucessGreen from '../assets/icon/sucessGreen.svg';
+import xCircleRed from '../assets/icon/xCircleRed.svg';
 
 const icon = {
   Favorite,
@@ -228,6 +230,8 @@ const icon = {
   shield,
   editWhite,
   pinMapGreen,
-  closeCircleWhite
+  closeCircleWhite,
+  sucessGreen,
+  xCircleRed
 };
 export default icon;

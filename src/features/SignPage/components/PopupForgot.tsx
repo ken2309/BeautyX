@@ -4,6 +4,7 @@ import React from "react";
 import ButtonCus from "../../../components/ButtonCus";
 import icon from "../../../constants/icon";
 import * as Yup from "yup";
+import validateForm from "../../../utils/validateForm";
 
 export default function PopupForgot(props: any) {
   const { openForgotPass, setOpenForgotPass, setOpenVerification } = props;
@@ -23,10 +24,8 @@ export default function PopupForgot(props: any) {
     validationSchema: Yup.object({
       email: Yup.string()
         .required("Vui lòng nhập Email/số điện thoại")
-        .matches(
-          // eslint-disable-next-line no-useless-escape
-          /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/i,
-          "Vui lòng nhập đúng định dạng Example@gmail.com"
+        .matches(validateForm.phone,
+          "Vui lòng nhập đúng số điện thoại"
         ),
     }),
     onSubmit: (values) => {
@@ -57,7 +56,7 @@ export default function PopupForgot(props: any) {
               name="email"
               id="email"
               type="text"
-              placeholder="Email/ Số điện thoại"
+              placeholder="Số điện thoại"
             />
           </div>
           {formikForgotPass.errors.email && formikForgotPass.touched.email && (

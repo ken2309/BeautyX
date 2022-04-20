@@ -1,11 +1,23 @@
 .pm-st-cnt{
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    padding: 36px 0px;
+    justify-content: space-between;
+    padding: 24px 0px;
+    
+    height: calc(100vh - 96px);
+}
+.pm-st-cnt__qr{
+    width: 66.66%;
+    height: 100%;
+}
+.pm-st-cnt__qr-cnt{
+    width: 100%;
+    height: 100%;
+    border: none;
 }
 .pm-st-cnt__body{
-    padding: 20px 42px;
+    width: 32%;
+    padding: 20px 18px;
     background-color: var(--bgWhite);
     box-shadow: 0px 6px 15px #DCD8EE;
     border-radius: 12px;
@@ -38,19 +50,19 @@
     align-items: center;
     padding: 8px 0px;
 }
-.pm-st-cnt__body-status .st-title{
+.st-title{
     font-size: 16px;
     font-weight: 600;
 }
-.pm-st-cnt__body-status .st-process{
+.pm-pending-cnt .st-process{
     margin: 4px 0px;
 }
-.pm-st-cnt__body-status .st-time-out{
+.pm-pending-cnt .st-time-out{
     border: solid 1px var(--red-cl);
     padding: 4px 12px;
     border-radius: 8px;
 }
-.pm-st-cnt__body-status .st-time-out span{
+.pm-pending-cnt .st-time-out span{
     font-size: 14px;
     font-weight: 600;
     color: var(--red-cl);
@@ -67,6 +79,9 @@
     margin-bottom: 8px;
     color: var(--green);
 }
+.st-time__success .control{
+    height: fit-content;
+}
 .st-time__success .control button{
     margin: 0px 12px;
     border: none;
@@ -78,4 +93,151 @@
     line-height: 24px;
     font-weight: 700;
     border-radius: 12px;
+    height: fit-content;
+}
+.st-cancel__cnt span{
+    margin: 8px 0px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    color: var(--red-cl);
+}
+.st-pm-info__btn,
+.pm-pending-cnt button{
+    padding: 4px 16px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: var(--purple);
+    border-radius: 14px;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--bgWhite);
+    font-weight: 600;
+}
+.pm-pending-cnt button{
+    margin-top: 12px;
+    background-color: var(--red-cl);
+}
+/* payment qr */
+.pm-success-cnt{
+    width: 100%;
+    height: 100%;
+}
+.pm-success-cnt{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.pm-success-cnt__head{
+    width: 66.66%;
+    padding: 6px 12px;
+    border: solid 1px var(--text-hover);
+    border-radius: 6px;
+}
+.pm-success-cnt__head span:nth-child(1){
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--text-hover);
+    font-weight: 500;
+}
+.pm-success-cnt__head span:nth-child(2){
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 700;
+    color: var(--text-black);
+}
+.pm-success-cnt__body{
+    margin: 12px 0px;
+    width: 66.66%;
+    padding: 12px;
+    border: solid 1px var(--text-hover);
+    border-radius: 6px;
+}
+.pm-success-cnt__body-top img{
+    width: 64px;
+    height: 64px;
+}
+.pm-success-cnt__body-top .title{
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    margin: 8px;
+}
+.pm-success-cnt__body-top .amount{
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 700;
+}
+.pm-success-cnt__body-cnt{
+    background-color: var(--grey);
+    margin: 6px 0px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+}
+.pm-success-cnt__body-cnt span{
+    margin: 0px 2px;
+    font-weight: 700;
+}
+.pm-success-cnt__body-code{
+    width: 100%;
+    margin: 6px 0px;
+}
+.pm-success-cnt__body-code span:nth-child(1){
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 700;
+    color: var(--text-hover);
+}
+.pm-success-cnt__body-code span:nth-child(2){
+    font-family: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    color: var(--purple);
+}
+/* Mobile */
+@media only screen and (max-width: 767px) {
+    .pm-st-cnt{
+        display: flex;
+        flex-direction: column;
+        padding: 0px;
+        height: 100vh;
+    }
+    .pm-st-cnt__body{
+        height: 41.5%;
+        width: 100%;
+        padding: 8px 12px;
+        box-shadow: none;
+        background-color: #FFFFFF;
+    }
+    .pm-st-cnt__qr{
+        width: 100%;
+        height: 58.1%;
+    }
+    .pm-st-cnt__body .title{
+        display: none;
+    }
+    .pm-st-cnt__body .body-item .body-item__title {
+        font-size: 14px;
+        line-height: 16px;
+    }
+    .st-pm-info__btn, .pm-pending-cnt button{
+        padding: 12px 0px;
+        width: 100%;
+        border-radius: 6px;
+    }
+    .pm-pending-cnt .st-process{
+        display: none;
+    }
+    .pm-success-cnt{
+        background-color: #FFFFFF;
+    }
+    .pm-success-cnt__head,
+    .pm-success-cnt__body{
+        width: 100%;
+    }
 }

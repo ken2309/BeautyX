@@ -27,6 +27,8 @@ import HomeListProvince from "../features/HomeResults/HomeListProvince";
 import Policy from "../features/Policy";
 import SellerCenter from "../features/SellerCenter";
 import CommentsDetail from "../features/Comments/CommentsDetail";
+import Otp from "../features/Otp";
+import ResetPassword from "../features/ResetPassword";
 
 // feature mobile
 import Calendar from "../featuresMobile/Calendar";
@@ -42,10 +44,14 @@ function RouterConfig(props: any) {
       path: `/home`,
       component: <Home />,
     },
-    // {
-    //   path: `/beta`,
-    //   component: <Home />,
-    // },
+    {
+      path: `/otp`,
+      component: <Otp />,
+    },
+    {
+      path:'/doi-mat-khau',
+      component: <ResetPassword/>
+    },
     {
       path: "/search-result/",
       component: <SearchResult />,

@@ -22,6 +22,12 @@ class Auth {
       return axiosClient.get(url, AUTH_HEADER());
     }
   };
+  forgotPassword = (values: any) => {
+    const url = `/auth/forgot`;
+    const params = values
+    console.log(params)
+    return axiosClient.post(url, params)
+  }
 }
-const auth = new Auth();
-export default auth;
+const authentication = new Auth();
+export default authentication;
