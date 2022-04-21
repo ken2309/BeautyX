@@ -9,7 +9,6 @@ import img from "../../constants/img";
 import Notification from "./components/Notification";
 import Language from "./components/Language";
 import Menu from "./components/Menu";
-import SectionTitle from "../SectionTitle";
 import { useSelector, useDispatch } from "react-redux";
 import { getTotal } from "../../redux/cartSlice";
 import MbMenu from "../../featuresMobile/Menu";
@@ -40,7 +39,7 @@ window.addEventListener("scroll", function () {
 
 function Head(props: any) {
   const { t, profile, userInfo } = useContext(AppContext);
-  const { isCart, title, setCloseDialog, headerStyle } = props;
+  const { IN_HOME, setCloseDialog, headerStyle } = props;
   const dispatch = useDispatch();
   const [openNo, setOpenNo] = useState(false);
   const [openLang, setOpenLang] = useState(false);
@@ -56,10 +55,10 @@ function Head(props: any) {
     dispatch(getTotal());
   }, [dispatch, carts]);
   const gotoPartner = () => {
-    if (isCart) {
-      history.goBack();
-    } else {
+    if (IN_HOME === true) {
       history.push("/kenh-nguoi-ban");
+    } else {
+      history.goBack();
     }
   };
   const gotoPageSignUp = () => {
@@ -105,15 +104,11 @@ function Head(props: any) {
       <Container>
         <div className="flex-row-sp hd-cnt">
           <div className="hd-logo">
-            {isCart ? (
-              <SectionTitle title={title} />
-            ) : (
-              <img onClick={() => history.push("/")} src={img.beautyX} alt="" />
-            )}
+            <img onClick={() => history.push("/")} src={img.beautyX} alt="" />
           </div>
           <div className="hd-cnt__left">
             <ButtonCus
-              text={isCart ? t("Header.back") : t("Header.seller_center")}
+              text={IN_HOME === true ? t("Header.seller_center") : t("Header.back")}
               borderRadius="18px"
               lineHeight="20px"
               color="var(--purple)"

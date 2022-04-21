@@ -342,6 +342,24 @@
     margin: 0 auto;
   }
 }
+.sign-form__box-otp__ch,
+.sign-form__box-otp-right span:nth-child(2){
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 700;
+  color: var(--purple);
+  cursor: pointer;
+}
+.sign-up-ip-otp{
+  width: 100%;
+}
+.sign-form__box-otp{
+  width: 41.5%;
+}
+.sign-form__box-otp-right{
+  width: 58.1%;
+  padding-left: 6px;
+}
 /* res-mobile */
 /* Mobile */
 @media only screen and (max-width: 767px) {
