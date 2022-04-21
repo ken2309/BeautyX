@@ -96,7 +96,8 @@ function Footer() {
                               onClick={() => window.open(`${url_map}`, '_blank', 'noopener,noreferrer')}
                               className="address"
                         >
-                              Công ty CP MYSPA - Lầu 4, Nam Giao building 261-263 Phan Xích Long, Phường 2, Quận Phú Nhuận, TP.HCM, TP.HCM - GPĐKKD: 0314964245, cấp ngày:03/04/2018, bởi Phòng Đăng ký kinh doanh – Sở kế hoạch và Đầu tư TP.HCM
+
+                              Công ty CP MYSPA - Lầu 3, 27k Trần Nhật Duật, Phường Tân Định, Quận 1, TP.HCM, TP.HCM - GPĐKKD: 0314964245, cấp ngày:03/04/2018, bởi Phòng Đăng ký kinh doanh – Sở kế hoạch và Đầu tư TP.HCM
                         </div>
                   </Container>
             </div>
