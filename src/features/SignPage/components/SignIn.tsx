@@ -11,18 +11,12 @@ import { CircularProgress } from "@mui/material";
 import { AxiosError } from "axios";
 import PopupNoti from "./PopupNoti";
 import authentication from "../../../api/authApi";
-import PopupForgot from "./PopupForgot";
-import PopupVerification from "./PopupVerification";
-import PopupNewPass from "./PopupNewPass";
 
 function SignIn(props: any) {
   const { t, setSign, setTk } = useContext(AppContext);
-  const { activeTabSign, setActiveTabSign } = props;
+  const { setActiveTabSign } = props;
   const history = useHistory();
   const [typePass, setTypePass] = useState("password");
-  const [openForgotPass, setOpenForgotPass] = React.useState(false);
-  const [openVerification, setOpenVerification] = React.useState(false);
-  const [openNewPass, setOpenNewPass] = React.useState(false);
   const [loading, setLoading] = useState(false);
   const [errPass, setErrPass] = useState("");
   const [display_email, setDisplay_email] = useState("");
@@ -62,14 +56,6 @@ function SignIn(props: any) {
     setDisplay_email(values.email);
     submitLogin(values);
   };
-  // mở popup forgot
-  const handleClickOpenForgotPass = () => {
-    setOpenForgotPass(true);
-  };
-  // mở popup New Pass
-  const handleClickOpenNewPass = () => {
-    setOpenNewPass(true);
-  };
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -92,9 +78,7 @@ function SignIn(props: any) {
   });
 
   return (
-    <div
-      style={activeTabSign === 1 ? { display: "block" } : { display: "none" }}
-    >
+    <div>
       <form
         onSubmit={formik.handleSubmit}
         autoComplete="off"
@@ -156,7 +140,7 @@ function SignIn(props: any) {
             />
             <span>{t("Home.Sign_remember")}</span>
           </div>
-          <span onClick={()=>history.push('/doi-mat-khau')}>
+          <span onClick={() => history.push('/doi-mat-khau')}>
             {t("Home.Sign_forgot")} ?
           </span>
         </div>
@@ -187,17 +171,6 @@ function SignIn(props: any) {
         {t("Home.Sign_no_acc")}?
         <span onClick={() => setActiveTabSign(2)}>{t("Home.Sign_up_now")}</span>
       </p>
-      <PopupForgot
-        openForgotPass={openForgotPass}
-        setOpenVerification={setOpenVerification}
-        setOpenForgotPass={setOpenForgotPass}
-      />
-      <PopupVerification
-        setOpenVerification={setOpenVerification}
-        openVerification={openVerification}
-        handleClickOpenNewPass={handleClickOpenNewPass}
-      />
-      <PopupNewPass openNewPass={openNewPass} setOpenNewPass={setOpenNewPass} />
       <PopupNoti
         setActiveTabSign={setActiveTabSign}
         popup={popup}

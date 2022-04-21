@@ -8,9 +8,6 @@ import auth from "../../../api/authApi";
 import { AppContext } from "../../../context/AppProvider";
 import PopupNoti from "../../SignPage/components/PopupNoti";
 import { CircularProgress } from "@mui/material";
-import ForgotPass from "./ForgotPass";
-import Verification from "./Verification";
-import NewPass from "./NewPass";
 import { useHistory } from "react-router-dom";
 
 function SignIn(props: any) {
@@ -21,23 +18,12 @@ function SignIn(props: any) {
     setActiveTabSign,
     setOpenSignIn,
     useForSignRes,
-    // handleClickOpenVerification,
-    // handleCloseForgotPass,
-    // handleClickOpenNewPass,
-    // handleCloseVerification
   } = props;
   const [typePass, setTypePass] = useState("password");
-  const [openForgotPass, setOpenForgotPass] = React.useState(false);
-  const [openVerification, setOpenVerification] = React.useState(false);
-  const [openNewPass, setOpenNewPass] = React.useState(false);
   const [loading, setLoading] = useState(false);
   const [errPass, setErrPass] = useState("");
   const [display_email, setDisplay_email] = useState("");
   const [popup, setPopup] = useState(false);
-
-  //submit form login
-  //handle submit login form
-  //handle submit login form
   async function submitLogin(values: any) {
     try {
       const response = await auth.login(values);
@@ -67,11 +53,6 @@ function SignIn(props: any) {
     setLoading(true);
     setDisplay_email(values.email);
     submitLogin(values);
-  };
-
-  // Open Popup Forgot
-  const handleClickOpenForgotPass = () => {
-    setOpenForgotPass(true);
   };
   const formikLogin = useFormik({
     initialValues: {
@@ -150,7 +131,7 @@ function SignIn(props: any) {
             />
             <span>{t("Home.Sign_remember")}</span>
           </div>
-          <span onClick={handleClickOpenForgotPass}>
+          <span onClick={() => history.push('/doi-mat-khau')} >
             {t("Home.Sign_forgot")} ?
           </span>
         </div>
@@ -189,19 +170,6 @@ function SignIn(props: any) {
         <span onClick={() => setActiveTabSign(2)}>Đăng ký ngay</span>
       </p>
       {/* Dialog ForgotPass */}
-      <ForgotPass
-        setOpenForgotPass={setOpenForgotPass}
-        setOpenVerification={setOpenVerification}
-        openForgotPass={openForgotPass}
-      />
-      {/* Dialog Verification */}
-      <Verification
-        setOpenVerification={setOpenVerification}
-        setOpenNewPass={setOpenNewPass}
-        openVerification={openVerification}
-      />
-      {/* Dialog New Pass */}
-      <NewPass openNewPass={openNewPass} setOpenNewPass={setOpenNewPass} />
       <PopupNoti
         popup={popup}
         setPopup={setPopup}

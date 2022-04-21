@@ -1,27 +1,81 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container } from '@mui/material';
 import './style.css';
+import FormTelephone from './components/FormTelephone';
+import FormOtp from './components/FormOtp';
+import { auth, firebase } from '../../firebase';
+import FormHead from './components/FormHead';
+import Footer from '../Footer';
 
+
+export const  formatTelephone=(telephone: string) =>{
+    const phone = `${telephone}`.slice(-9)
+    return `+84${phone}`
+}
 function ResetPassword() {
+    const [values, setValues] = useState({
+        telephone: '',
+        new_password: '',
+        code: '',
+        verification_id: ''
+    })
+    const [step, setStep] = useState(1)
+    //send otp
+    const handlePostTelephone = (telephone: string) => {
+        const phoneNumber = formatTelephone(telephone)
+        if (phoneNumber === "") return;
+        let verify = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+            'size': 'invisible'
+        });
+        auth.signInWithPhoneNumber(phoneNumber, verify).then((result) => {
+            console.log(result)
+            setValues({
+                ...values,
+                telephone: telephone,
+                verification_id: result?.verificationId
+            })
+            setStep(2)
+        })
+            .catch((err) => {
+                console.log(err)
+            });
+    }
+    const onSwitchStep = () => {
+        switch (step) {
+            case 1:
+                return <FormTelephone
+                    setValues={setValues}
+                    setStep={setStep}
+                    handlePostTelephone={handlePostTelephone}
+                />;
+            case 2:
+                return <FormOtp
+                    data={values}
+                    setStep={setStep}
+                    handlePostTelephone={handlePostTelephone}
+                />
+            default:
+                break;
+        }
+    }
+
+
     return (
-        <Container>
-            <div
-                className='for-pass-cnt'
-            >
-                <div className="for-pass-cnt__phone">
-                    <div className="for-pass-cnt__phone-head">
-                        <span>Đặt lại mật khẩu</span>
+        <>
+            <FormHead />
+            <Container>
+                <div
+                    className='for-pass-cnt'
+                >
+                    <div className="for-pass-cnt__phone">
+                        {onSwitchStep()}
                     </div>
-                    <form className="flex-column for-pass-phone">
-                        <input type="text" className="for-pass-cnt__phone-ip" placeholder='Số điện thoại' />
-                        <span className="for-pass-cnt__phone-err">
-                            Số điện thoại không hợp lệ
-                        </span>
-                        <button>Tiếp theo</button>
-                    </form>
                 </div>
+            </Container>
+            <div className="for-footer">
+                <Footer />
             </div>
-        </Container>
+        </>
     );
 }
 

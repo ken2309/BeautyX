@@ -6,11 +6,15 @@ import { useHistory } from 'react-router-dom'
 
 function BackButton(props: any) {
       const history = useHistory();
-      const { setOpenFilter } = props;
+      const { setOpenFilter, setStep } = props;
       const backClick = () => {
             if (setOpenFilter) {
                   setOpenFilter(false)
-            } else {
+            }
+            else if (setStep) {
+                  setStep(1)
+            }
+            else {
                   history.goBack()
             }
       }
