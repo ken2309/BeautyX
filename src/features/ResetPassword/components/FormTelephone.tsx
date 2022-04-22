@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik'
 import * as Yup from 'yup';
 import validateForm from '../../../utils/validateForm';
 import icon from '../../../constants/icon';
 import { useHistory } from 'react-router-dom'
+import { AppContext } from '../../../context/AppProvider';
 
 function FormTelephone(props: any) {
+    const {t} = useContext(AppContext);
     const { handlePostTelephone, title } = props;
     const history = useHistory();
     const formikTelephone = useFormik({
@@ -14,9 +16,9 @@ function FormTelephone(props: any) {
         },
         validationSchema: Yup.object({
             telephone: Yup.string()
-                .required("Vui lòng nhập Số điện thoại")
+                .required(t("form.please_enter_your_phone"))
                 .matches(validateForm.phone,
-                    "Vui lòng nhập đúng số điện thoại"
+                    t("pm.phone_number")
                 ),
         }),
         onSubmit: (values) => {
@@ -32,7 +34,7 @@ function FormTelephone(props: any) {
                 >
                     <img src={icon.chevronLeft} alt="" />
                 </button>
-                <span>{title ? title : 'Đặt lại mật khẩu'}</span>
+                <span>{title ? title : t("form.reset_password")}</span>
                 <div></div>
             </div>
             <form
@@ -46,7 +48,7 @@ function FormTelephone(props: any) {
                     onChange={formikTelephone.handleChange}
                     type="text"
                     className="for-pass-cnt__phone-ip"
-                    placeholder='Số điện thoại'
+                    placeholder={t("pm.phone_number")}
                 />
                 {
                     formikTelephone.errors.telephone && formikTelephone.touched.telephone &&
@@ -58,7 +60,7 @@ function FormTelephone(props: any) {
                     className='for-pass-cnt__btn'
                     type='submit'
                 >
-                    Tiếp theo
+                    {t("form.continue")}
                 </button>
             </form>
         </>

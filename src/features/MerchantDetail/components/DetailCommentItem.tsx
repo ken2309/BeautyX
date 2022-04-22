@@ -36,10 +36,10 @@ function DetailCommentItem(props: IProps) {
                               <div className="flex-row-sp cmt-head__user">
                                     {/* <img src={img.Avatar} alt="" /> */}
                                     <div className="cmt-head__user-avatar">
-                                          {comment?.user?.fullname?.slice(0, 1)}
+                                          {comment?.user?.fullname?.slice(0, 1) || "K"}
                                     </div>
                                     <span>
-                                          <p>{comment?.user?.fullname}</p>
+                                          <p>{comment?.user?.fullname || "Khách"}</p>
                                           <ul>
                                                 <li>
                                                       <img src={icon.star} alt="" />

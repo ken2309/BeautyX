@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import useCountDown from '../../../utils/useCountDown';
@@ -7,8 +7,10 @@ import { AxiosError } from "axios";
 import DialogNotification from './DialogNotification';
 import icon from '../../../constants/icon';
 import { CircularProgress } from "@mui/material";
+import { AppContext } from '../../../context/AppProvider';
 
 function FormOtp(props: any) {
+    const { t } = useContext(AppContext);
     const {
         data,
         handlePostTelephone,
@@ -29,7 +31,7 @@ function FormOtp(props: any) {
             setErrorCode({
                 code: 200,
                 open: true,
-                title: 'Đổi mật khẩu thành công',
+                title: t("form.change_password_successfully"),
                 loading: false
             })
         } catch (error) {
@@ -62,17 +64,17 @@ function FormOtp(props: any) {
         },
         validationSchema: Yup.object({
             otp: Yup.string()
-                .required("Vui lòng nhập mã xác thực")
-                .matches(/^[0-9]+$/, "Mã xác thực không hợp lệ")
-                .min(6, 'Mã xác thực gồm 6 ký tự')
-                .max(6, 'Mã xác thực gồm 6 ký tự'),
+                .required(t("form.please_enter_your_verification_code"))
+                .matches(/^[0-9]+$/, t("form.verification_invalid"))
+                .min(6, t("form.verification_code_of_6_characters"))
+                .max(6, t("form.verification_code_of_6_characters")),
             new_password: Yup.string()
-                .min(8, "Mật khẩu lớn hơn 8 ký tự")
-                .max(32, "Mật khẩu tối đa 32 kí tự")
-                .required("Vui lòng nhập mật khẩu"),
+                .min(8, t("form.password_min"))
+                .max(32, t("form.password_max"))
+                .required(t("Home.Sign_val_password")),
             confirm_password: Yup.string()
-                .required("Vui lòng xác nhận lại mật khẩu")
-                .oneOf([Yup.ref("new_password"), null], "Mật khẩu không khớp"),
+                .required(t("form.please_confirm_password"))
+                .oneOf([Yup.ref("new_password"), null], t("form.password_confirm_invalid")),
         }),
         onSubmit: (values) => {
             const params = {
@@ -102,11 +104,11 @@ function FormOtp(props: any) {
                 >
                     <img src={icon.chevronLeft} alt="" />
                 </button>
-                <span>Đổi mật khẩu</span>
+                <span>{t("form.reset_password")}</span>
                 <div></div>
             </div>
             <div className="flex-column for-pass-cnt__phone-noti">
-                <span>Mã xác minh của bạn sẽ được gửi bằng tin nhắn đến</span>
+                <span>{t("form.send_your_code_text")}</span>
                 <span>{data.telephone}</span>
                 <form
                     autoComplete='off'
@@ -120,7 +122,7 @@ function FormOtp(props: any) {
                         type="text"
                         style={{ textAlign: 'center' }}
                         className="for-pass-cnt__phone-ip"
-                        placeholder='Mã xác thực'
+                        placeholder={t("form.verification_code")}
                     />
                     {
                         formikTelephone.errors.otp && formikTelephone.touched.otp &&
@@ -135,7 +137,7 @@ function FormOtp(props: any) {
                         type="text"
                         style={{ textAlign: 'center' }}
                         className="for-pass-cnt__phone-ip"
-                        placeholder='Mật khẩu mới'
+                        placeholder={t("Home.Sign_in_pl_password")}
                     />
                     {
                         formikTelephone.errors.new_password && formikTelephone.touched.new_password &&
@@ -150,7 +152,7 @@ function FormOtp(props: any) {
                         type="text"
                         style={{ textAlign: 'center' }}
                         className="for-pass-cnt__phone-ip"
-                        placeholder='Nhập lại mật khẩu'
+                        placeholder={t("form.confirm_password")}
                     />
                     {
                         formikTelephone.errors.confirm_password && formikTelephone.touched.confirm_password &&
@@ -161,9 +163,9 @@ function FormOtp(props: any) {
                     <div className="for-pass-cnt__time">
                         {
                             sec > 0 ?
-                                <>Vui lòng chờ <span>{sec}</span> để nhận lại mã xác thực</>
+                                <>{t("form.please_wait")} <span>{sec}</span> {t("form.to_get_the_verification_code_back")}</>
                                 :
-                                <span onClick={onReSendOtp} >Gửi lại mã</span>
+                                <span onClick={onReSendOtp} >{t("form.resend_code")}</span>
                         }
                     </div>
                     <button
@@ -176,7 +178,7 @@ function FormOtp(props: any) {
                                 <CircularProgress size="25px" color="inherit" />
                             </div>
                         }
-                        Tiếp theo
+                        {t("form.continue")}
                     </button>
                 </form>
             </div>

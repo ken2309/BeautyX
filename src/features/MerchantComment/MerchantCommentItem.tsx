@@ -35,10 +35,10 @@ export default function MerchantCommentItem(props: IProps) {
         <div className="comment-item">
           <div className="comment-user">
             <div className="comment-user__avatar">
-              {comment.user.fullname?.slice(0, 1)}
+              {comment.user.fullname?.slice(0, 1) || "K"}
             </div>
             <div className="comment-user__info">
-              <span className="comment-user__name">{comment.user.fullname}</span>
+              <span className="comment-user__name">{comment.user.fullname || "Khách"}</span>
             </div>
           </div>
           <div className="comment-option">
