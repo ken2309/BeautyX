@@ -1,7 +1,7 @@
 import icon from "../../../constants/icon";
 import { useHistory } from "react-router-dom";
 import { useContext, useState } from "react";
-import CheckNotification from "./CheckNotification";
+//import CheckNotification from "./CheckNotification";
 import { AppContext } from "../../../context/AppProvider";
 import mediaApi from "../../../api/mediaApi";
 
@@ -24,13 +24,13 @@ function MenuSideBar(props: info) {
   };
   const history = useHistory();
 
-  const handleDropdown = (e: any) => {
-    if (e.target.classList.value.indexOf("active") !== -1) {
-      e.target.classList.remove("active");
-    } else {
-      e.target.classList.add("active");
-    }
-  };
+  // const handleDropdown = (e: any) => {
+  //   if (e.target.classList.value.indexOf("active") !== -1) {
+  //     e.target.classList.remove("active");
+  //   } else {
+  //     e.target.classList.add("active");
+  //   }
+  // };
   const handleSignOut = () => {
     setSign(false);
     const token = "";
@@ -195,7 +195,7 @@ function MenuSideBar(props: info) {
           </div>
           <span className="quicksand-md text-bold">{t("Header.noti")}</span>
         </div>
-        <div className="dropdown">
+        {/* <div className="dropdown">
           <div className="tab" onClick={handleDropdown}>
             <div className="icon">
               <img src={icon.Union} alt="" />
@@ -218,7 +218,7 @@ function MenuSideBar(props: info) {
               </div>
             </li>
           </ul>
-        </div>
+        </div> */}
         <div className="tab">
           <div className="icon">
             <img src={icon.Headphones_purple} alt="" />

@@ -9,10 +9,11 @@
 .pm-st-cnt__qr{
     width: 66.66%;
     height: 100%;
+    overflow: scroll;
 }
 .pm-st-cnt__qr-cnt{
     width: 100%;
-    height: 100%;
+    height: 100vh;
     border: none;
 }
 .pm-st-cnt__body{
@@ -58,14 +59,14 @@
     margin: 4px 0px;
 }
 .pm-pending-cnt .st-time-out{
-    border: solid 1px var(--red-cl);
+    border: solid 1px var(--pink-momo);
     padding: 4px 12px;
     border-radius: 8px;
 }
 .pm-pending-cnt .st-time-out span{
     font-size: 14px;
     font-weight: 600;
-    color: var(--red-cl);
+    color: var(--pink-momo);
 }
 .st-time__success{
     display: flex;
@@ -100,10 +101,11 @@
     font-size: 16px;
     line-height: 20px;
     font-weight: 700;
-    color: var(--red-cl);
+    color: var(--pink-momo);
 }
 .st-pm-info__btn,
-.pm-pending-cnt button{
+.pm-pending-cnt button,
+.payment-mb-ewall__btn{
     padding: 4px 16px;
     border: none;
     outline: none;
@@ -115,9 +117,10 @@
     color: var(--bgWhite);
     font-weight: 600;
 }
-.pm-pending-cnt button{
+.pm-pending-cnt button,
+.payment-mb-ewall__btn{
     margin-top: 12px;
-    background-color: var(--red-cl);
+    background-color: var(--pink-momo);
 }
 /* payment qr */
 .pm-success-cnt{
@@ -199,8 +202,94 @@
     font-weight: 700;
     color: var(--purple);
 }
+.pay-st-cnt{
+    background-color: var(--bgWhite);
+    padding: 36px;
+}
+.pay-st-cnt__head{
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+    color: var(--purple);
+}
+.pay-st-cnt__text{
+    margin: 12px 0px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    color: var(--text-black);
+}
+.pay-view-pc{
+    display: block;
+}
+.pay-view-mb{
+    display: none;
+}
 /* Mobile */
 @media only screen and (max-width: 767px) {
+    .pay-view-pc{
+        display: none;
+    }
+    .pay-view-mb{
+        display: block;
+        padding: 36px 20px;
+    }
+    .pay-view-mb__title{
+        margin: 12px 0px;
+        text-align: center;
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 700;
+        color: var(--text-black);
+    }
+    .pay-view-mb__amount{
+        width: 100%;
+        margin-top: 12px;
+        border: solid 1px var(--text-hover);
+        padding: 2px 6px;
+        border-radius: 6px;
+    }
+    .pay-view-mb__org{
+        margin-top: 36px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .pay-view-mb__amount span{
+        font-size: 16px;
+        line-height: 30px;
+        font-weight: 600;
+        color: var(--text-hover);
+    }
+    .pay-view-mb__amount span:nth-child(2){
+        font-size: 20px;
+        line-height: 26px;
+        font-weight: 700;
+        color: var(--pink-momo);
+    }
+    .pay-view-mb__org-avt{
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+    }
+    .pay-view-mb__org-de{
+        width: calc(100% - 64px);
+        padding-left: 8px;
+        display: flex;
+        flex-direction: column;
+    }
+    .pay-view-mb__org-de .org-name{
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 700;
+        color: var(--purple);
+    }
+    .pay-view-mb__org-de .org-address{
+        margin-top: 4px;
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 500;
+        color: var(--text-hover);
+    }
     .pm-st-cnt{
         display: flex;
         flex-direction: column;
@@ -239,5 +328,8 @@
     .pm-success-cnt__head,
     .pm-success-cnt__body{
         width: 100%;
+    }
+    .pay-st-cnt{
+        padding: 36px 20px;
     }
 }

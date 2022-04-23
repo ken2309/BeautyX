@@ -9,8 +9,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import DetailHeadOpenTime from "../components/DetailHeadOpenTime";
+import { useHistory } from 'react-router-dom'
 import favorites from "../../../api/favorite";
-import SignInUp from "../../poupSignInUp/index";
 import onErrorImg from "../../../utils/errorImg";
 import orgApi from "../../../api/organizationApi";
 
@@ -33,7 +33,7 @@ const settings = {
 };
 function DetailHead(props: any) {
   const { org, loading } = props;
-  const [openSignIn, setOpenSignIn] = useState(false);
+  const history = useHistory();
   const { t, profile } = useContext(AppContext);
   const infoBox = useRef(null);
   const [openPopupContact, setOpenPopupContact] = useState(false);
@@ -84,10 +84,14 @@ function DetailHead(props: any) {
     }
   }
   const onOrgFavorite = () => {
-    if (orgFavorite.favorite === true) {
-      handleRemoveFavorite()
+    if (profile) {
+      if (orgFavorite.favorite === true) {
+        handleRemoveFavorite()
+      } else {
+        handlePostFavorite()
+      }
     } else {
-      handlePostFavorite()
+      history.push({ pathname: '/sign-in', search: '1' })
     }
   }
   return (
@@ -141,7 +145,6 @@ function DetailHead(props: any) {
                     {t("Mer_de.contact")}
                   </button>
                   <button
-                    disabled={profile ? false : true}
                     style={
                       orgFavorite.favorite === true && profile
                         ? {
@@ -182,11 +185,6 @@ function DetailHead(props: any) {
       <PopupDetailContact
         setOpenPopupContact={setOpenPopupContact}
         openPopupContact={openPopupContact}
-      />
-      <SignInUp
-        openSignIn={openSignIn}
-        setOpenSignIn={setOpenSignIn}
-        activeTabSign={1}
       />
     </div>
   );

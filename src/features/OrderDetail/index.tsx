@@ -30,6 +30,9 @@ function OrderDetail(props: any) {
   const fullScreen = useFullScreen();
   const { t } = useContext(AppContext);
   const { open, setOpen, org, order, countItem } = props;
+  if(open === true){
+    console.log(order)
+  }
   const [acTab, setAcTab] = useState();
   const handleDetailMerchant = () => {
     scrollTop();

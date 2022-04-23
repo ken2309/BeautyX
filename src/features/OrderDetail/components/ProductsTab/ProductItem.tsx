@@ -1,6 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
-import productsApi from "../../../../api/productApi";
-import { Product } from "../../../../interface/product";
+import React, { useContext } from "react";
 import formatPrice from "../../../../utils/formatPrice";
 import ButtonCus from "../../../../components/ButtonCus";
 import { addCart } from "../../../../redux/cartSlice";
@@ -12,12 +10,11 @@ import scrollTop from "../../../../utils/scrollTop";
 import onErrorImg from "../../../../utils/errorImg";
 
 function ProductItem(props: any) {
-  const { productItem, org, open } = props;
+  const { productItem, org} = props;
+  const product = productItem.productable;
   const { t } = useContext(AppContext);
-  const [product, setProduct] = useState<Product>();
   const history = useHistory();
   const dispatch = useDispatch();
-  // go to detail product
   const is_type = 1;
   const detail = product;
   const name = product?.product_name;
@@ -33,6 +30,7 @@ function ProductItem(props: any) {
   const values = {
     id: product?.id,
     org_id: org.id,
+    org: org,
     org_name: org.name,
     cart_id: parseInt(`${is_type}${org.id}${product?.id}`), //is_type + org_id + id
     name: product?.product_name,
@@ -49,23 +47,6 @@ function ProductItem(props: any) {
     });
     dispatch(action);
   };
-
-  useEffect(() => {
-    async function handleGetPrDetail() {
-      try {
-        const res = await productsApi.getDetailById({
-          org_id: org.id,
-          id: productItem.productable_id,
-        });
-        setProduct(res.data.context);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    if (open === true) {
-      handleGetPrDetail();
-    }
-  }, [org.id, productItem.productable_id, open]);
   return (
     <li>
       <div className="order-de-list__item">

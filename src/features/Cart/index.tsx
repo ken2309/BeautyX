@@ -22,6 +22,7 @@ function Cart(props: any) {
 	const headerTitle = t('cart.cart')
 	const dispatch = useDispatch();
 	const carts = useSelector((state: any) => state.carts);
+	
 	const [showOrg, setShowOrg] = useState(false);
 	const orgCart: any[] = []
 	const [chooseOrg, setChooseOrg] = useState<Org>();
@@ -43,6 +44,7 @@ function Cart(props: any) {
 	for (var i of carts.cartList) {
 		listOrg.push({ id: i.org_id, name: i.org_name })
 	}
+	
 	for (var item of carts.cartList) {
 		const org = {
 			name: item.org_name

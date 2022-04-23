@@ -1,6 +1,8 @@
 import React from 'react';
 import formatPrice from '../../../utils/formatPrice';
 import icon from '../../../constants/icon';
+import img from '../../../constants/img';
+import onErrorImg from '../../../utils/errorImg';
 
 // interface IProps {
 //     dataStatus: string,
@@ -9,16 +11,56 @@ import icon from '../../../constants/icon';
 
 function PaymentQr(props: any) {
     const { orderStatus, pay_url, res } = props;
-    console.log(res)
-    console.log(orderStatus)
+    const org = res.organization;
+
+    const deepLink = res.payment_gateway.extra_data.deeplink;
+    const openDeepLink = () => {
+        const newWindow = window.open(`${deepLink}`, '_blank', 'noopener,noreferrer');
+        if (newWindow) newWindow.opener = null
+    }
+
     const checkStatus = () => {
         switch (orderStatus) {
             case "PENDING":
-                return <iframe
-                    className='pm-st-cnt__qr-cnt'
-                    src={`${pay_url}`}
-                    title="This is a unique title"
-                />;
+                return <div>
+                    <div className="pay-view-mb">
+                        <div className="flex-column pay-view-mb__cnt">
+                            <img src={img.imgDefault} alt="" className="pay-view-mb__img" />
+                            <div className="pay-view-mb__title">
+                                Thanh toán CÔNG TY CỔ PHẦN MYSPA qua Ví MoMo
+                            </div>
+                            <div className="flex-row-sp pay-view-mb__amount">
+                                <span>Số tiền</span>
+                                <span>{formatPrice(res.payment_gateway.amount)}đ</span>
+                            </div>
+                            <div className="pay-view-mb__org">
+                                <img
+                                    src={org.image_url}
+                                    onError={(e) => onErrorImg(e)} alt=""
+                                    className="pay-view-mb__org-avt"
+                                />
+                                <div className="pay-view-mb__org-de">
+                                    <span className="org-name">{org.name}</span>
+                                    <span className="org-address">
+                                        {org.full_address}
+                                    </span>
+                                </div>
+                            </div>
+                            <button
+                                onClick={openDeepLink}
+                                className='payment-mb-ewall__btn' >
+                                Mở ví momo
+                            </button>
+                        </div>
+                    </div>
+                    <div className='pay-view-pc' >
+                        <iframe
+                            className='pm-st-cnt__qr-cnt'
+                            src={`${pay_url}`}
+                            title="This is a unique title"
+                        />
+                    </div>
+                </div>;
             case "PAID":
                 return <div className='pm-success-cnt' >
                     <div className="flex-row-sp pm-success-cnt__head">

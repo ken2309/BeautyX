@@ -167,6 +167,7 @@ export default function HomeLoggedCalendar() {
       );
     });
     setdatingList(dateList);
+    
   }
 
   // hiển thị status ở calendar dựa api

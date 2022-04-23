@@ -9,7 +9,6 @@ import CartPopupNoti from "./CartPopupNoti";
 import scrollTop from "../../../utils/scrollTop";
 import CartPopupNotiSign from "./CartPopupNotiSign";
 import { AppContext } from "../../../context/AppProvider";
-import SignInUp from "../../poupSignInUp/index";
 
 function CartBottom(props: any) {
   const { orgs, chooseOrg, chooseOrgClick } = props;
@@ -18,8 +17,6 @@ function CartBottom(props: any) {
   const history = useHistory();
   const [popUp, setPopUp] = useState(false);
   const [popupSign, setPopupSign] = useState(false);
-  const [openSignIn, setOpenSignIn] = useState(false);
-  const [activeTabSign, setActiveTabSign] = useState(1);
   const carts = useSelector((state: any) => state.carts);
   useEffect(() => {
     dispatch(getTotal());
@@ -106,14 +103,6 @@ function CartBottom(props: any) {
       <CartPopupNotiSign
         popupSign={popupSign}
         setPopupSign={setPopupSign}
-        setOpenSignIn={setOpenSignIn}
-        setActiveTabSign={setActiveTabSign}
-      />
-      <SignInUp
-        openSignIn={openSignIn}
-        setOpenSignIn={setOpenSignIn}
-        activeTabSign={activeTabSign}
-        setActiveTabSign={setActiveTabSign}
       />
     </div>
   );

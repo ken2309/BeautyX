@@ -1,3 +1,6 @@
+import { Service } from './service';
+import { Product } from './product'
+
 export interface ITems {
     id: number,
     order_id: number,
@@ -5,6 +8,7 @@ export interface ITems {
     quantity: number,
     productable_type: string,
     productable_id: number,
+    productable: Service | Product,
     created_at: string,
     updated_at: string,
     origin_id: null | number,

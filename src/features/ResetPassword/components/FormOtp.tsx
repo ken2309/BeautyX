@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
-import useCountDown from '../../../utils/useCountDown';
 import authentication from '../../../api/authApi';
 import { AxiosError } from "axios";
 import DialogNotification from './DialogNotification';
@@ -22,8 +21,17 @@ function FormOtp(props: any) {
         title: '',
         loading: false
     })
-    //const [time, setTime] = useState(60)
-    const sec = useCountDown(90)
+    const [sec, setSec] = useState(90);
+    useEffect(() => {
+        const timeSec = setInterval(() => {
+            if (sec > 0) {
+                setSec(prevState => prevState - 1)
+            }
+        }, 1000)
+        return () => clearInterval(timeSec)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sec])
+
     const handleOnResetPassword = async (params: any) => {
         setErrorCode({ ...errorCode, loading: true })
         try {
@@ -88,7 +96,7 @@ function FormOtp(props: any) {
     });
     const onReSendOtp = () => {
         handlePostTelephone(data.telephone);
-        //setStep(1)
+        setSec(90)
     }
 
     return (

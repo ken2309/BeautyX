@@ -35,7 +35,7 @@ function SignIn(props: any) {
         window.sessionStorage.setItem("_WEB_TK", response.data.context.token)
       }
       setSign(true);
-      history.push('/home');
+      history.goBack() || history.push('/home');
       setLoading(false);
     } catch (error) {
       setLoading(false);

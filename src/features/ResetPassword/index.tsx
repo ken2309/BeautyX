@@ -8,7 +8,7 @@ import FormHead from './components/FormHead';
 import Footer from '../Footer';
 
 
-export const  formatTelephone=(telephone: string) =>{
+export const formatTelephone = (telephone: string) => {
     const phone = `${telephone}`.slice(-9)
     return `+84${phone}`
 }
@@ -21,12 +21,16 @@ function ResetPassword() {
     })
     const [step, setStep] = useState(1)
     //send otp
-    const handlePostTelephone = (telephone: string) => {
-        const phoneNumber = formatTelephone(telephone)
-        if (phoneNumber === "") return;
+    const handleRecapcha = () => {
         let verify = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
             'size': 'invisible'
         });
+        return verify
+    }
+    const handlePostTelephone = (telephone: string) => {
+        const phoneNumber = formatTelephone(telephone)
+        if (phoneNumber === "") return;
+        const verify = handleRecapcha();
         auth.signInWithPhoneNumber(phoneNumber, verify).then((result) => {
             console.log(result)
             setValues({
