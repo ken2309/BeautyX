@@ -117,7 +117,7 @@ class Organization {
     const params_string = `{
       "page":${values.page},
       "limit":15
-      ${values.tags.length > 0 ? `,"filter[tags]":${JSON.stringify(values.tags)}` : ''}
+      ${values.tags.length > 0 ? `,"filter[tags]":"${values.tags}"` : ''}
       ${values.province > 0 ? `,"filter[province_code]":${values.province}` : ''}
       ${values.price.min > 0 ? `,"filter[min_price]":${values.price.min}` : ''}
       ${values.price.max > 0 ? `,"filter[max_price]":${values.price.max}` : ''},

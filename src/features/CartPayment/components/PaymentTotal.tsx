@@ -43,7 +43,7 @@ function PaymentTotal(props: any) {
     try {
       const response = await order.postOrder(org_id, params);
       const state_payment = await response.data.context
-      const payUrl = await state_payment.payment_gateway.extra_data.payUrl;
+      //const payUrl = await state_payment.payment_gateway.extra_data.payUrl;
       const desc = await state_payment.payment_gateway.description;
       const transaction_uuid = state_payment.payment_gateway.transaction_uuid;
       //const newWindow = window.open(`${payUrl}`, '_blank', 'noopener,noreferrer')

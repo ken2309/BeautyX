@@ -31,7 +31,7 @@ function HomeProvince(props: any) {
             const res = await orgApi.getOrgsByProvinceCode({
                 page: data.page,
                 province: orgFilter.province_code,
-                tags: orgFilter.tags,
+                tags: orgFilter.tags.join("|"),
                 price: { min: orgFilter.min_price, max: orgFilter.max_price }
             })
             setData({
@@ -46,7 +46,7 @@ function HomeProvince(props: any) {
     useEffect(() => {
         getOrgsByProvince()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [orgFilter])
+    }, [orgFilter.tags])
     const onPageChange = (e: any, value: any) => {
         setData({
             ...data,
@@ -54,6 +54,7 @@ function HomeProvince(props: any) {
         })
         scrollTop()
     }
+    
     return (
         <>
             <Head />

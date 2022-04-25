@@ -48,7 +48,7 @@ function SearchResults(props: any) {
             const res = await orgApi.getOrgByKeyword({
                 keyword: searchKey,
                 page: data.page,
-                tags: orgFilter.tags,
+                tags: orgFilter.tags.join("|"),
                 province: orgFilter.province_code,
                 price: {
                     min: orgFilter.min_price,
