@@ -372,4 +372,7 @@
     height: 20px;
     margin-right: 4px;
   }
+  .cart-footer{
+    display: none;
+  }
 }

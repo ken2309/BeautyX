@@ -7,21 +7,26 @@ import icon from '../../constants/icon';
 
 const tags = ['Nail', 'Phòng khám', 'Salon', 'Spa', 'Thẩm mỹ viện']
 
-const toggleFilter =()=>{
+const toggleFilter = () => {
     document.querySelector('.re-sort-org')?.classList.toggle('re-sort-org__ac')
 }
-const removeFilter =()=>{
+const removeFilter = () => {
     document.querySelector('.re-sort-org')?.classList.remove('re-sort-org__ac')
 }
 
 function FilterOrgs(props: any) {
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const {
         orgFilter,
         setOrgFilter,
         setData,
+        //optional
         handleOrgsByKeyword,
+        handleGetOrgsDealLocation,
+        handleGetOrgsDistance,
+        handleGetOrgsByTrust,
 
+        //
         hideTags, hideProvinces
     } = props;
     const { provinces } = useContext(AppContext);
@@ -83,13 +88,37 @@ function FilterOrgs(props: any) {
                 })
                 removeFilter()
                 handleOrgsByKeyword()
+            } else if (handleGetOrgsDealLocation) {
+                setData({
+                    orgs: [],
+                    page: 1,
+                    lastPage: 1
+                })
+                removeFilter()
+                handleGetOrgsDealLocation()
+            } else if (handleGetOrgsDistance) {
+                setData({
+                    orgs: [],
+                    page: 1,
+                    lastPage: 1
+                })
+                removeFilter()
+                handleGetOrgsDistance()
+            } else if (handleGetOrgsByTrust) {
+                setData({
+                    orgs: [],
+                    page: 1,
+                    lastPage: 1
+                })
+                removeFilter()
+                handleGetOrgsByTrust()
             }
         }
     }
     // console.log(orgFilter)
     return (
         <div className="se-re-cnt__left-sort">
-            <span 
+            <span
                 onClick={toggleFilter}
                 className="se-re-cnt__left-sort__title"
             >

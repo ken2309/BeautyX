@@ -17,7 +17,9 @@ function TabTrust(props: any) {
     })
     async function getOrgsByTrust() {
         try {
-            const res = await orgApi.getOrgsByTrust();
+            const res = await orgApi.getOrgsByTrust({
+                page: 1
+            });
             setData({
                 ...data,
                 orgs: res.data.context.data
@@ -30,12 +32,12 @@ function TabTrust(props: any) {
         getOrgsByTrust()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    console.log(data)
+
     return (
         <div className='home-card-list-org'>
             <ul className='org-list'>
                 {
-                    data.orgs.slice(0,8).map((item: IOrganization, index: number) => (
+                    data.orgs.slice(0, 8).map((item: IOrganization, index: number) => (
                         <li
                             key={index}
                         >

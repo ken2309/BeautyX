@@ -6,12 +6,13 @@ import scrollTop from '../../../utils/scrollTop';
 import { useHistory } from 'react-router-dom'
 
 function SectionOrgs(props: any) {
-    const { orgs, setOpenSearch } = props;
+    const { orgs, setOpenSearch, hiddenFilter } = props;
     const history = useHistory();
     const gotoDetail = (org: IOrganization) => {
         if (setOpenSearch) {
             setOpenSearch(false)
         }
+        hiddenFilter()
         scrollTop()
         //console.log(org)
         history.push({

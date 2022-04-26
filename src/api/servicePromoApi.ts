@@ -47,7 +47,6 @@ class ServicePromo {
             "filter[is_momo_ecommerce_enable]": true,
             "filter[location]": location_user ? `${location_user.lat},${location_user.long}` : ``
         }
-        console.log(params, values)
         return axiosClient.get(url, { params })
     }
     //services promo

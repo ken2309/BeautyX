@@ -70,7 +70,7 @@ function CartPaymentStatus() {
             } else {
                 return clearInterval(intervalRef.current);
             }
-        }, 4000);
+        }, 5000);
     };
     useEffect(() => {
         if (transaction_uuid) {

@@ -17,7 +17,9 @@ function TabDealHot(props: any) {
     })
     async function getOrgsManyDealHot() {
         try {
-            const res = await orgApi.getOrgsByManyDealHot();
+            const res = await orgApi.getOrgsByManyDealHot({
+                page:1
+            });
             setData({
                 ...data,
                 orgs: res.data.context.data

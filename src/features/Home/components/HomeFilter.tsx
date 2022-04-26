@@ -119,6 +119,7 @@ function HomeFilter(props: any) {
           <FilterKeywordHome
             dataSearch={dataSearch}
             searchText={searchText}
+            hiddenFilter={hiddenFilter}
           />
           :
           <></>

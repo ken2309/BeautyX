@@ -24,6 +24,7 @@ import HomeTags from "../features/HomeResults/HomeTags";
 import HomePromo from "../features/HomeResults/HomePromo";
 import HomeProvince from "../features/HomeResults/HomeProvince";
 import HomeListProvince from "../features/HomeResults/HomeListProvince";
+import HomeCardResult from "../features/HomeResults/HomeCardResult";
 import Policy from "../features/Policy";
 import SellerCenter from "../features/SellerCenter";
 import CommentsDetail from "../features/Comments/CommentsDetail";
@@ -115,6 +116,10 @@ function RouterConfig(props: any) {
     {
       path:'/dia-diem-quan-tam',
       component: <HomeListProvince/>
+    },
+    {
+      path:'/doanh-nghiep/:title',
+      component: <HomeCardResult/>
     },
     {
       path:'/chinh-sach/',
