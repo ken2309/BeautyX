@@ -12,7 +12,7 @@ import onErrorImg from '../../../utils/errorImg';
 function PaymentQr(props: any) {
     const { orderStatus, pay_url, res } = props;
     const org = res.organization;
-    console.log(org)
+    // console.log(org)
 
     const deepLink = res.payment_gateway.extra_data.deeplink;
     const openDeepLink = () => {
@@ -34,19 +34,19 @@ function PaymentQr(props: any) {
                                 <span>Số tiền</span>
                                 <span>{formatPrice(res.payment_gateway.amount)}đ</span>
                             </div>
-                            {/* <div className="pay-view-mb__org">
+                            <div className="pay-view-mb__org">
                                 <img
                                     src={org?.image_url}
                                     onError={(e) => onErrorImg(e)} alt=""
                                     className="pay-view-mb__org-avt"
                                 />
                                 <div className="pay-view-mb__org-de">
-                                    <span className="org-name">{org.name}</span>
+                                    <span className="org-name">{org?.name}</span>
                                     <span className="org-address">
-                                        {org.full_address}
+                                        {org?.full_address}
                                     </span>
                                 </div>
-                            </div> */}
+                            </div>
                             <button
                                 onClick={openDeepLink}
                                 className='payment-mb-ewall__btn' >

@@ -12,7 +12,9 @@ function SectionOrgs(props: any) {
         if (setOpenSearch) {
             setOpenSearch(false)
         }
-        hiddenFilter()
+        if(hiddenFilter){
+            hiddenFilter()
+        }
         scrollTop()
         //console.log(org)
         history.push({

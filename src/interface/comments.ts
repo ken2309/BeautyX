@@ -11,10 +11,12 @@ export interface IComment {
     deleted_at: null | string,
     rate: null | number,
     user: {
-        id: number,
-        fullname: string,
+        avatar: string,
         email: string,
-        telephone: string,
-        platform: null | string
+        fullname: string,
+        id: number
+        media: [],
+        platform: null | string,
+        telephone: string
     }
 }

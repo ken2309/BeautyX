@@ -234,6 +234,11 @@
         display: block;
         padding: 36px 20px;
     }
+    .payment-mb-ewall__btn{
+        width: 100%;
+        padding: 8px 0px;
+        border-radius: 6px;
+    }
     .pay-view-mb__title{
         margin: 12px 0px;
         text-align: center;

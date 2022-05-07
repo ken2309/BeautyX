@@ -7,8 +7,8 @@ import { useHistory } from 'react-router-dom'
 import { AppContext } from '../../../context/AppProvider';
 
 function FormTelephone(props: any) {
-    const {t} = useContext(AppContext);
-    const { handlePostTelephone, title } = props;
+    const { t } = useContext(AppContext);
+    const { handlePostTelephone, title, load } = props;
     const history = useHistory();
     const formikTelephone = useFormik({
         initialValues: {
@@ -60,7 +60,7 @@ function FormTelephone(props: any) {
                     className='for-pass-cnt__btn'
                     type='submit'
                 >
-                    {t("form.continue")}
+                    {load ? t("form.sending") : t("form.continue")}
                 </button>
             </form>
         </>

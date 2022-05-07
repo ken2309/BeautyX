@@ -258,7 +258,8 @@
     "resend_code":"Gửi lại mã",
     "verification_invalid":"Mã xác thực không hợp lệ",
     "verification_code_of_6_characters":"Mã xác thực gồm 6 ký tự",
-    "change_password_successfully":"Đổi mật khẩu thành công"
+    "change_password_successfully":"Đổi mật khẩu thành công",
+    "sending":"Đang gửi..."
   },
   "partner": {
     "online_business": "Nền tảng kinh doanh online ngành làm đẹp",

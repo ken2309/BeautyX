@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface IProps{
-      title:string
+      title:string | any
 }
 
 function HeadTitle(props:IProps) {

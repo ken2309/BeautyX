@@ -1,6 +1,7 @@
 import axiosClient from "./axios";
 import { AUTH_HEADER } from "../utils/authHeader";
-import { pickBy, identity } from 'lodash'
+import { pickBy, identity } from 'lodash';
+import { AUTH_LOCATION } from "./authLocation";
 
 const location_user = JSON.parse(`${sessionStorage.getItem('USER_LOCATION')}`)
 
@@ -18,6 +19,7 @@ class Organization {
   };
   getOrgByKeyword = (values: any) => {
     const url = `/organizations?page=1&limit=15`;
+    const LOCATION = AUTH_LOCATION();
     const paramsOb = {
       "page": values.page,
       "limit": 15,
@@ -28,7 +30,7 @@ class Organization {
       "filter[min_price]": values.price.min,
       "filter[max_price]": values.price.max,
       "include": "favorites_count|tags|branches",
-      "filter[location]": `${location_user?.lat},${location_user?.long}`
+      "filter[location]": LOCATION
     }
     const params = pickBy(paramsOb, identity);
     return axiosClient.get(url, { params })

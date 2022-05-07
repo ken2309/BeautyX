@@ -17,7 +17,7 @@ interface IData {
 function HomePromo(props: any) {
     //const [services, setServices] = useState<IServicePromo[]>([])
     const history = useHistory();
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const [data, setData] = useState<IData>({
         services: [],
         lastPage: 1,
@@ -38,26 +38,8 @@ function HomePromo(props: any) {
             console.log(error)
         }
     }
-    async function getServicesPromoByLocation() {
-        try {
-            const res = await servicePromoApi.getServicesPromoLocation({
-                page: data.page,
-                sort: dataSort
-            });
-            setData({
-                ...data,
-                services: res.data.data.hits
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
     useEffect(() => {
-        if (dataSort === 'none') {
-            getServicesPromoByLocation()
-        } else {
-            getServicesPromo()
-        }
+        getServicesPromo()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dataSort])
     return (

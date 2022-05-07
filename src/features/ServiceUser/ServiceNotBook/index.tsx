@@ -42,19 +42,6 @@ function ServiceNotBook(props: any) {
             style={tab_id === 1 ? { display: 'block' } : { display: 'none' }}
         >
             <div className="my-ser-book">
-                {/* <ul className="my-ser-book__list">
-                              {
-                                    data.services_user.map((item: IServiceUser, index: number) => (
-                                          <li
-                                                key={index}
-                                          >
-                                                <TreatmentCardItem
-                                                      card_items={item}
-                                                />
-                                          </li>
-                                    ))
-                              }
-                        </ul> */}
                 <Masonry
                     columns={fullScreen ? 1 : 2}
                     spacing={fullScreen ? 1 : 3}

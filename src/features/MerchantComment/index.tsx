@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import React, { useEffect, useState, KeyboardEvent, useContext } from "react";
+import React, { useEffect, useState, KeyboardEvent } from "react";
 import icon from "../../constants/icon";
 import Footer from "../Footer";
 import Head from "../Head";
@@ -10,9 +10,10 @@ import CommentItemTemp from "./CommentItemTemp";
 import { useLocation } from 'react-router-dom';
 import { IComment } from '../../interface/comments';
 import commentsApi from '../../api/commentsApi'
-import { AppContext } from "../../context/AppProvider";
 import SignInUp from '../poupSignInUp/index';
 import mediaApi from "../../api/mediaApi";
+import ButtonLoading from "../../components/ButtonLoading";
+import { useSelector } from "react-redux";
 
 interface IData {
   comments: IComment[],
@@ -26,7 +27,7 @@ interface ICmtTemp {
 }
 export default function MerchantComment() {
   const location: any = useLocation();
-  const { profile } = useContext(AppContext)
+  const USER = useSelector((state:any) => state.USER.USER)
   const org_id = location.search.slice(1, location.search.length);
   const [cmt, setCmt] = useState({
     text: '',
@@ -87,7 +88,7 @@ export default function MerchantComment() {
   }
   const onChangeMedia = (e: any) => {
     const media = e.target.files[0];
-    if (profile) {
+    if (USER) {
       handlePostImageMedia(media)
     } else {
       setOpen(true)
@@ -108,7 +109,7 @@ export default function MerchantComment() {
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
-      if (profile) {
+      if (USER) {
         handlePostComment();
         setCmt({
           text: '', image_url: ''
@@ -258,16 +259,14 @@ export default function MerchantComment() {
               ))}
             </div>
             {
-              data.comments.length === data.totalItem ?
-                <></>
-                :
-                <div className="comment-bot">
-                  <button
-                    onClick={onPage}
-                  >
-                    {data.loadPage === true ? 'Đang tải...' : 'Xem thêm đánh giá'}
-                  </button>
-                </div>
+              data.comments.length < data.totalItem &&
+              <div className="comment-bot">
+                <ButtonLoading
+                  title="Xem thêm đánh giá"
+                  onClick={onPage}
+                  loading={data.loadPage}
+                />
+              </div>
             }
           </div>
         </div>

@@ -9,7 +9,6 @@ function ServiceBook(props: any) {
             { id: 1, title: 'Chưa đặt hẹn' },
             { id: 2, title: 'Đã đặt hẹn' }
       ]
-      const { orgAll, chooseOrg, servicesBook, setServicesBook } = props;
       const [activeBtn, setActiveBtn] = useState(1);
       return (
             <div
@@ -43,10 +42,6 @@ function ServiceBook(props: any) {
                         </div>
                   </div>
                   <ServiceNotBook
-                        servicesBook={servicesBook}
-                        setServicesBook={setServicesBook}
-                        chooseOrg={chooseOrg}
-                        orgAll={orgAll}
                         tab_id={activeBtn}
                   />
                   <ServiceBooked

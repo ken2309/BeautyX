@@ -5,9 +5,13 @@ import Month from "./components/Month";
 import Calendar from "./components/Calendar";
 import "./datePicker.css";
 
+interface IProp {
+  onChange: (e: string) => void
+}
+
 const todayObj = dayjs();
-function DatePicker(props: any) {
-  const { setChooseDate } = props;
+function DatePicker(props: IProp) {
+  const { onChange } = props;
   const { t } = useContext(AppContext);
   const weekDays = [
     t("Home.su"),
@@ -53,9 +57,10 @@ function DatePicker(props: any) {
       month: thisMonth + 1 < 10 ? `0${thisMonth + 1}` : `${thisMonth + 1}`,
       date: date + 1 < 10 ? `0${date + 1}` : `${date + 1}`,
     };
-    if (setChooseDate) {
-      setChooseDate(`${timeBook.year}-${timeBook.month}-${timeBook.date}`);
-    }
+    // if (onChange) {
+    //   setChooseDate(`${timeBook.year}-${timeBook.month}-${timeBook.date}`);
+    // }
+    onChange(`${timeBook.year}-${timeBook.month}-${timeBook.date}`);
   };
   //console.log(chooseMonth);
   return (

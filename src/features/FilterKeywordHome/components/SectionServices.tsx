@@ -11,7 +11,9 @@ function SectionServices(props: any) {
     const { services, setOpenSearch, hiddenFilter } = props;
     const history = useHistory();
     const gotoDetail = (service: IServicePromo) => {
-        hiddenFilter()
+        if(hiddenFilter){
+            hiddenFilter()
+        }
         if(setOpenSearch){
             setOpenSearch(false)
         }

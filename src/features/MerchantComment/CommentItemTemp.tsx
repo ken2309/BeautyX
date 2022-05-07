@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import icon from '../../constants/icon';
 
 
@@ -10,16 +11,16 @@ const now = `${day}/${month}/${year}`
 
 function CommentItemTemp(props: any) {
     const { body } = props;
-    const user = JSON.parse(`${window.localStorage.getItem("_WEB_US")}`)
+    const USER = useSelector((state:any) => state.USER.USER)
     return (
         <div>
             <div className="comment-item">
                 <div className="comment-user">
                     <div className="comment-user__avatar">
-                        T
+                        <img src={USER?.avatar} alt="" />
                     </div>
                     <div className="comment-user__info">
-                        <span className="comment-user__name">{user?.fullname}</span>
+                        <span className="comment-user__name">{USER?.fullname}</span>
                     </div>
                 </div>
                 <div className="comment-option">

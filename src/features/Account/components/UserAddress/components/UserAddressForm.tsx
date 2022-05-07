@@ -3,6 +3,7 @@ import { IProvince } from '../../../../../interface/provinces';
 import { IDistrict, IWard } from '../../../../../interface/district';
 import provincesApi from '../../../../../api/provinceApi';
 import { AppContext } from '../../../../../context/AppProvider';
+import ButtonLoading from '../../../../../components/ButtonLoading';
 
 interface IDataAdd {
     districts: IDistrict[],
@@ -26,7 +27,7 @@ const onToggleWard = () => {
 }
 function UserAddressForm(props: any) {
     const { provinces } = useContext(AppContext);
-    const { address, setAddress, handleSubmitForm } = props;
+    const { address, setAddress, handleSubmitForm, loading } = props;
     const [dataAdd, setDataAdd] = useState<IDataAdd>({
         districts: [],
         wards: []
@@ -251,9 +252,11 @@ function UserAddressForm(props: any) {
                     </div>
                 </div>
                 <div className="form-btn">
-                    <button onClick={onSubmitForm}>
-                        Thêm mới địa chỉ
-                    </button>
+                    <ButtonLoading
+                        loading={loading}
+                        onClick={onSubmitForm}
+                        title="Thêm mới địa chỉ"
+                    />
                 </div>
             </div>
         </div>

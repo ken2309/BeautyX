@@ -12,7 +12,8 @@ import { AppContext } from "../../../context/AppProvider";
 
 function CartBottom(props: any) {
   const { orgs, chooseOrg, chooseOrgClick } = props;
-  const { t, profile } = useContext(AppContext);
+  const { t } = useContext(AppContext);
+  const USER = useSelector((state: any) => state.USER.USER)
   const dispatch = useDispatch();
   const history = useHistory();
   const [popUp, setPopUp] = useState(false);
@@ -34,7 +35,7 @@ function CartBottom(props: any) {
     (item: any) => item.org_id === firstItem.org_id
   );
   const gotoPayment = () => {
-    if (profile) {
+    if (USER) {
       if (carts.cartAmount > 0 && cartFirstList.length === cartConfirm.length) {
         scrollTop();
         history.push("/payment");

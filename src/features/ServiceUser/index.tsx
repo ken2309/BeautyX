@@ -10,7 +10,7 @@ import Footer from '../Footer'
 function ServicesUser(props: any) {
       const { setOpen } = props;
       const [openNoti, setOpenNoti] = useState(true)
-      const [servicesBook, setServicesBook] = useState([])
+      //const [servicesBook, setServicesBook] = useState([])
 
       //mb
       return (
@@ -22,14 +22,14 @@ function ServicesUser(props: any) {
                         <div className="flex-row-sp my-ser">
                               <div className="my-ser__right">
                                     <ServiceBook
-                                          servicesBook={servicesBook}
-                                          setServicesBook={setServicesBook}
+                                          //servicesBook={servicesBook}
+                                          //setServicesBook={setServicesBook}
                                     />
                               </div>
                         </div>
                   </Container>
                   <ServiceBottom
-                        servicesBook={servicesBook}
+                        //servicesBook={servicesBook}
                         setOpenNoti={setOpenNoti}
                   />
                   <Footer />

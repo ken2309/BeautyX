@@ -1,21 +1,23 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import authentication from "../api/authApi";
 import dateNow from "../utils/dateExp";
 import tagsApi from "../api/tagApi";
 import provincesApi from "../api/provinceApi";
 // import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { fetchAsyncUser } from '../redux/userSlice'
+
+
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const lg = localStorage.getItem("i18nextLng");
   const [language, setLanguage] = useState();
   const [openModal, setOpenModal] = useState(false);
-  const [tk, setTk] = useState();
   const [userInfo, setUserInfo] = useState();
   const [sign, setSign] = useState();
-  const [profile, setProfile] = useState();
   const [tempCount, setTempleCount] = useState(0);
   const [tags, setTags] = useState([]);
   const [provinces, setProvinces] = useState([])
@@ -53,17 +55,8 @@ export default function AppProvider({ children }) {
   }, [sign]);
 
   useEffect(() => {
-    async function handleGetProfile() {
-      try {
-        const res = await authentication.getUserProfile();
-        setProfile(res.data);
-      } catch (err) {
-        setProfile(undefined);
-      }
-    }
-    handleGetProfile();
-    return () => { };
-  }, [sign]);
+    dispatch(fetchAsyncUser())
+  }, [sign, dispatch]);
   //get all tags
   async function handleGetAllTags() {
     try {
@@ -95,6 +88,11 @@ export default function AppProvider({ children }) {
     getUserLocation()
     handleGetAllTags();
     handleGetProvinces();
+    return function cleanup() {
+      getUserLocation()
+      handleGetAllTags();
+      handleGetProvinces();
+    }
   }, []);
   const value = {
     t,
@@ -104,12 +102,9 @@ export default function AppProvider({ children }) {
     openModal,
     setOpenModal,
     setLanguage,
-    tk,
     userInfo,
-    setTk,
     setUserInfo,
     setSign,
-    profile,
     tempCount,
     setTempleCount,
   };

@@ -16,8 +16,6 @@ class Auth {
   };
   getUserProfile = () => {
     const url = `/users/profile`;
-    //const session = window.sessionStorage.getItem("_WEB_TK");
-    //const local = localStorage.getItem("_WEB_TK")
     if (localStorage.getItem("_WEB_TK") || window.sessionStorage.getItem("_WEB_TK")) {
       return axiosClient.get(url, AUTH_HEADER());
     }
@@ -25,9 +23,13 @@ class Auth {
   forgotPassword = (values: any) => {
     const url = `/auth/forgot`;
     const params = values
-    console.log(params)
     return axiosClient.post(url, params)
+  };
+  putUserProfile = (params: any) => {
+    const url = `/users/profile`;
+    return axiosClient.put(url, params, AUTH_HEADER())
   }
+
 }
 const authentication = new Auth();
 export default authentication;

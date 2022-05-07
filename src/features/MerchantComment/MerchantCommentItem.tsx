@@ -35,7 +35,12 @@ export default function MerchantCommentItem(props: IProps) {
         <div className="comment-item">
           <div className="comment-user">
             <div className="comment-user__avatar">
-              {comment.user.fullname?.slice(0, 1) || "K"}
+              {
+                comment.user.avatar ?
+                  <img style={{width:'100%', height:'100%', borderRadius:'100%'}} src={comment.user.avatar} alt="" />
+                  :
+                  comment.user.fullname?.slice(0, 1) || "K"
+              }
             </div>
             <div className="comment-user__info">
               <span className="comment-user__name">{comment.user.fullname || "Khách"}</span>

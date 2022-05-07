@@ -17,7 +17,7 @@ import Notification from "../features/Notification/index";
 import PrivateRoute from "./PrivateRoute";
 import CartPaymentStatus from "../features/CartPaymentStatus";
 import ServicesUser from "../features/ServiceUser";
-import DatePicker from "../components/DatePicker"
+//import DatePicker from "../components/DatePicker"
 import { AppContext } from "../context/AppProvider";
 import SearchResults from '../features/SearchResults/index';
 import HomeTags from "../features/HomeResults/HomeTags";
@@ -25,6 +25,7 @@ import HomePromo from "../features/HomeResults/HomePromo";
 import HomeProvince from "../features/HomeResults/HomeProvince";
 import HomeListProvince from "../features/HomeResults/HomeListProvince";
 import HomeCardResult from "../features/HomeResults/HomeCardResult";
+import HomeDealBanner from "../features/HomeResults/HomeDealBanner";
 import Policy from "../features/Policy";
 import SellerCenter from "../features/SellerCenter";
 import CommentsDetail from "../features/Comments/CommentsDetail";
@@ -93,10 +94,10 @@ function RouterConfig(props: any) {
       path: "/merchant-comment",
       component: <MerchantComment />,
     },
-    {
-      path: "/date",
-      component: <DatePicker />
-    },
+    // {
+    //   path: "/date",
+    //   component: <DatePicker />
+    // },
     {
       path: "/org/:subdomain",
       component: <MerchantDetail />,
@@ -136,6 +137,10 @@ function RouterConfig(props: any) {
     {
       path:"/danh-gia/",
       component:<CommentsDetail/>
+    },
+    {
+      path:"/deal/:title",
+      component: <HomeDealBanner/>
     }
   ];
   const routesPrivate = [

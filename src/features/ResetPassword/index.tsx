@@ -20,6 +20,7 @@ function ResetPassword() {
         verification_id: ''
     })
     const [step, setStep] = useState(1)
+    const [load, setLoad] = useState(false);
     //send otp
     const handleRecapcha = () => {
         let verify = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
@@ -27,22 +28,27 @@ function ResetPassword() {
         });
         return verify
     }
-    const handlePostTelephone = (telephone: string) => {
-        const phoneNumber = formatTelephone(telephone)
-        if (phoneNumber === "") return;
-        const verify = handleRecapcha();
-        auth.signInWithPhoneNumber(phoneNumber, verify).then((result) => {
-            console.log(result)
+    const handleSignWithPhone = async (phoneNumber: any, verify: any, telephone: string) => {
+        try {
+            const result = await auth.signInWithPhoneNumber(phoneNumber, verify);
             setValues({
                 ...values,
                 telephone: telephone,
                 verification_id: result?.verificationId
             })
             setStep(2)
-        })
-            .catch((err) => {
-                console.log(err)
-            });
+            setLoad(false)
+        } catch (error) {
+            console.log(error)
+            setLoad(false)
+        }
+    }
+    const handlePostTelephone = (telephone: string) => {
+        setLoad(true)
+        const phoneNumber = formatTelephone(telephone)
+        if (phoneNumber === "") return;
+        const verify = handleRecapcha();
+        handleSignWithPhone(phoneNumber, verify, telephone);
     }
     const onSwitchStep = () => {
         switch (step) {
@@ -50,6 +56,7 @@ function ResetPassword() {
                 return <FormTelephone
                     setValues={setValues}
                     setStep={setStep}
+                    load={load}
                     handlePostTelephone={handlePostTelephone}
                 />;
             case 2:
