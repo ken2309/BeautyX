@@ -11,9 +11,12 @@ import { CircularProgress } from "@mui/material";
 import { AxiosError } from "axios";
 import PopupNoti from "./PopupNoti";
 import authentication from "../../../api/authApi";
+import { useDispatch } from 'react-redux';
+import { fetchAsyncUser } from '../../../redux/USER/userSlice'
 
 function SignIn(props: any) {
-  const { t, setSign, setTk } = useContext(AppContext);
+  const { t } = useContext(AppContext);
+  const dispatch = useDispatch();
   const { setActiveTabSign } = props;
   const history = useHistory();
   const [typePass, setTypePass] = useState("password");
@@ -27,14 +30,12 @@ function SignIn(props: any) {
   async function submitLogin(values: any) {
     try {
       const response = await authentication.login(values);
-      localStorage.setItem("_WEB_US", JSON.stringify(response.data.context));
-      setTk("_WEB_TK", response.data.context.token);
       if (remember === true) {
         localStorage.setItem("_WEB_TK", response.data.context.token);
       } else {
         window.sessionStorage.setItem("_WEB_TK", response.data.context.token)
       }
-      setSign(true);
+      dispatch(fetchAsyncUser())
       history.goBack() || history.push('/home');
       setLoading(false);
     } catch (error) {

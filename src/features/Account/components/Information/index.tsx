@@ -8,17 +8,21 @@ import Form from "./components/Form";
 import "./style.css";
 import { AppContext } from '../../../../context/AppProvider';
 import Address from "../UserAddress";
+import { useSelector } from 'react-redux'
+
+
 
 function Information(props: any) {
-  const { t, userInfo } = useContext(AppContext)
+  const { t } = useContext(AppContext)
+  const USER_DATA = useSelector((state: any) => state.USER.USER);
   const [openChangePass, setOpenChangePass] = useState(false);
   const [openNewPass, setOpenNewPass] = React.useState(false);
-  
+
   const formik = useFormik({
     initialValues: {
-      name: userInfo?.fullname,
-      gmail: userInfo?.email,
-      phone: userInfo?.telephone,
+      name: USER_DATA?.fullname,
+      gmail: USER_DATA?.email,
+      phone: USER_DATA?.telephone,
       address: "",
       address2: "",
       sex: "",

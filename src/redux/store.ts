@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./cartSlice";
 import orgReducer from "./orgSlice";
-import userReducer from './userSlice';
+import userReducer from './USER/userSlice';
 import servicesBookReducer from './servicesBookSlice';
 
 const rootReducer = {

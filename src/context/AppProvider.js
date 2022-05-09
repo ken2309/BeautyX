@@ -5,7 +5,7 @@ import tagsApi from "../api/tagApi";
 import provincesApi from "../api/provinceApi";
 // import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { fetchAsyncUser } from '../redux/userSlice'
+import { fetchAsyncUser } from '../redux/USER/userSlice'
 
 
 
@@ -44,15 +44,15 @@ export default function AppProvider({ children }) {
     }
   }, [lg]);
 
-  //const TK = localStorage.getItem('_WEB_TK')
-  useEffect(() => {
-    function handleGetToken() {
-      const res = JSON.parse(`${localStorage.getItem("_WEB_US")}`);
-      setUserInfo(res);
-    }
-    handleGetToken();
-    return () => { };
-  }, [sign]);
+  // //const TK = localStorage.getItem('_WEB_TK')
+  // useEffect(() => {
+  //   function handleGetToken() {
+  //     const res = JSON.parse(`${localStorage.getItem("_WEB_US")}`);
+  //     setUserInfo(res);
+  //   }
+  //   handleGetToken();
+  //   return () => { };
+  // }, [sign]);
 
   useEffect(() => {
     dispatch(fetchAsyncUser())

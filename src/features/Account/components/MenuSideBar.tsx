@@ -7,7 +7,7 @@ import mediaApi from "../../../api/mediaApi";
 import authentication from "../../../api/authApi";
 import { useDispatch, useSelector } from 'react-redux';
 import onErrorImg from "../../../utils/errorImg";
-import { putUser } from '../../../redux/userSlice'
+import { putUser } from '../../../redux/USER/userSlice'
 
 interface info {
   name?: string;

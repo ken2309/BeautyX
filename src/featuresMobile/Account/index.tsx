@@ -9,7 +9,7 @@ import DiscountUserMb from "./DiscountUser";
 import { AppContext } from "../../context/AppProvider";
 import mediaApi from "../../api/mediaApi";
 import authentication from "../../api/authApi";
-import { putUser } from '../../redux/userSlice'
+import { putUser } from '../../redux/USER/userSlice'
 import { useSelector, useDispatch } from "react-redux";
 
 
