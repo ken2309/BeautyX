@@ -19,6 +19,29 @@
 .home-result-ser-cnt{
     padding: 24px 0px;
 }
+/* home banner deal */
+.deal-banner{
+    padding: 48px 0px;
+}
+.deal-banner__img{
+    width: 100%;
+}
+.deal-banner__list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.deal-banner__list li{
+    width: 16.66%;
+    background-color: var(--bgWhite);
+    padding: 12px 8px;
+}
+.deal-banner__bot{
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+}
+/* end home banner deal */
 /* Mobile */
 @media only screen and (max-width: 767px) {
     .home-result-ser-cnt{
@@ -43,5 +66,13 @@
     .home-result-org-cnt__right{
         width: 100%;
         padding: 0px 20px;
+    }
+    .deal-banner{
+        padding: 0px 0px 32px 0px;
+    }
+    .deal-banner__list li{
+        width: 50%;
+        background-color: var(--bgWhite);
+        padding: 12px 8px;
     }
 }

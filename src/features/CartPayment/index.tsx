@@ -17,7 +17,7 @@ import userAddressApi from "../../api/userAddressApi";
 
 const isCart: boolean = true;
 function CartPayment(props: any) {
-  const { t, profile } = useContext(AppContext);
+  const { t} = useContext(AppContext);
   //const history = useHistory();
   const headerTitle = t("pm.payment");
   const [value, setValue] = React.useState("");
@@ -122,7 +122,6 @@ function CartPayment(props: any) {
         value={value}
         methodList={PAYMENT_METHOD}
         carts={carts}
-        profile={profile}
         chooseE_wall={chooseE_wall}
         data_cart={data_cart}
       />

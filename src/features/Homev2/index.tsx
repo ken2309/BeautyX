@@ -5,11 +5,9 @@ import HomeDeal from './components/HomeDeal';
 import HomeCard from './components/HomeCard';
 import HomeProvince from './components/HomeProvince';
 import HomeServicesRe from './components/HomeServicesRe';
-//import HomeLoggedCalendar from '../Home/components/HomeLogged/HomeLoggedCalendar';
 
 import { Container } from '@mui/material';
 import './home-se.css'
-//import { AppContext } from '../../context/AppProvider';
 
 function HomeSecond(props: any) {
     //const { profile } = useContext(AppContext)

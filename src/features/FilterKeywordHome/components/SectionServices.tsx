@@ -8,9 +8,12 @@ import scrollTop from '../../../utils/scrollTop';
 import { useHistory } from 'react-router-dom'
 
 function SectionServices(props: any) {
-    const { services, setOpenSearch } = props;
+    const { services, setOpenSearch, hiddenFilter } = props;
     const history = useHistory();
     const gotoDetail = (service: IServicePromo) => {
+        if(hiddenFilter){
+            hiddenFilter()
+        }
         if(setOpenSearch){
             setOpenSearch(false)
         }

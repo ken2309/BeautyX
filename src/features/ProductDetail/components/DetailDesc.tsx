@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 import SectionTitle from '../../SectionTitle';
 import icon from '../../../constants/icon';
-import {imgRotate} from '../../../utils/imgRotate'
+import { imgRotate } from '../../../utils/imgRotate'
 import { AppContext } from '../../../context/AppProvider';
 
-function DetailDesc(props:any) {
-      const {product} = props;
+function DetailDesc(props: any) {
+      const { product } = props;
       const [viewMore, setViewMore] = useState(false);
       const { t } = useContext(AppContext)
       return (
@@ -14,7 +14,17 @@ function DetailDesc(props:any) {
                         title={product?.product_name ? product?.product_name : product?.service_name}
                   />
                   <div
-                        style={viewMore === true ? {height:'fit-content', boxShadow:'unset'}:{}}
+                        style={viewMore === true ?
+                              {
+                                    height: 'max-content',
+                                    boxShadow: 'unset',
+                                    maxHeight: '1000px'
+                              }
+                              :
+                              {
+                                    height:'70px'
+                              }
+                        }
                         className="product-desc__text"
                   >
                         {product?.description}

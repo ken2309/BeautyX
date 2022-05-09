@@ -117,12 +117,13 @@
         padding: 4px 20px;
     }
     .re-sort-org{
-        height: 0px;
+        max-height: 0px;
         overflow: hidden;
-        transition: all .3s;
+        transition: max-height .7s ease-in-out;
         padding: 0px 12px;
     }
     .re-sort-org__ac{
-        height: max-content;
+        max-height: 1000px;
+        transition: max-height .7s ease-in-out;
     }
 }

@@ -11,7 +11,7 @@ interface IChooseMonth {
 }
 export default function HomeLoggedCalendarChooseMonth(props: IChooseMonth) {
   const { language } = useContext(AppContext);
-  const [, setLo] = useState(language);
+  const [lo, setLo] = useState('vi');
   const { handlePrev, handleNext, dayObj } = props;
   useEffect(() => {
     if (language === "vn") {
@@ -19,7 +19,7 @@ export default function HomeLoggedCalendarChooseMonth(props: IChooseMonth) {
     } else if (language === "en") {
       setLo("en");
     }
-  }, [language]);
+  }, [language]); 
   return (
     <div className={props.Class}>
       <div className="calendar-mounth">
@@ -27,8 +27,7 @@ export default function HomeLoggedCalendarChooseMonth(props: IChooseMonth) {
           <img className="calendar-mounth__icon" src={icon.pPrev} alt="" />
         </div>
         <span className="calendar-mounth__time text-white-color text-capitalize">
-          {/* {dayObj.locale(lo).format("MMMM - YYYY")} */}
-          {dayObj.format("MMMM - YYYY")}
+          {dayObj.locale(lo).format("MMMM - YYYY")}
         </span>
         <div onClick={handleNext} className="calendar-mounth__next">
           <img className="calendar-mounth__icon" src={icon.pNext} alt="" />

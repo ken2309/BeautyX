@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../context/AppProvider";
-// import HomeFilter from "./HomeFilter";
+//import HomeFilter from "./HomeFilter";
 import Slider from "react-slick";
 import bannerApi from "../../../api/bannerApi";
 import { useHistory } from "react-router-dom";
@@ -36,8 +36,8 @@ function HomeBanner(props: any) {
     arrows: false,
     slidesToShow: 1,
     slidesToScroll: 1,
-    // autoplay: true,
-    swipe: false,
+    //autoplay: true,
+    //swipe: true,
     autoplaySpeed: 3500,
     fade: true,
     responsive: [

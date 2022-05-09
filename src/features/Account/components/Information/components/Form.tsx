@@ -76,7 +76,10 @@ function Form(props: any) {
   // };
   const [value, setValue] = React.useState<Date | null>(new Date());
   return (
-    <>
+    <form
+      onSubmit={formik.handleSubmit}
+      autoComplete="off"
+    >
       <div className="title_section text-color-purple">
         <h1 className="title">{t("acc.my_profiles")}</h1>
         <span className="subtitle">{t("acc.update_acc")}</span>
@@ -112,7 +115,7 @@ function Form(props: any) {
             </div>
             <LocalizationProvider
               dateAdapter={AdapterDateFns}
-              //locale={viVN}
+            //locale={viVN}
             >
               <DatePicker
                 className="cus-date__picker"
@@ -236,7 +239,7 @@ function Form(props: any) {
           </div>
         </div>
       </div>
-    </>
+    </form>
   );
 }
 export default Form;

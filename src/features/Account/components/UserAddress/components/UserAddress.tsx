@@ -24,6 +24,7 @@ interface IAddress {
 function UserAddress(props: any) {
     const history = useHistory();
     const location = useLocation();
+    const [loading, setLoading] = useState(false);
     const addressDefault = location.state;
     const [address, setAddress] = useState<IAddress>({
         province: { code: null, name: null },
@@ -35,10 +36,13 @@ function UserAddress(props: any) {
     async function handlePostUserAddress(values: any) {
         const session = await window.sessionStorage.getItem("_WEB_TK");
         const local = await localStorage.getItem("_WEB_TK")
+        setLoading(true)
         try {
             await userAddressApi.postAddress(values, session, local)
+            setLoading(false)
             history.goBack()
         } catch (error) {
+            setLoading(false)
             console.log(error)
         }
     }
@@ -73,6 +77,7 @@ function UserAddress(props: any) {
             address={address}
             setAddress={setAddress}
             handleSubmitForm={handleSubmitForm}
+            loading={loading}
         />
     );
 }

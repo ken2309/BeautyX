@@ -7,29 +7,43 @@ import AccountForm from "./AccountForm/index";
 import ServicesUserMb from "./ServicesUser";
 import DiscountUserMb from "./DiscountUser";
 import { AppContext } from "../../context/AppProvider";
+import mediaApi from "../../api/mediaApi";
+import authentication from "../../api/authApi";
+import { putUser } from '../../redux/USER/userSlice'
+import { useSelector, useDispatch } from "react-redux";
 
-// function change() {
-//       const avtWrap = document.querySelector('.mb-ac__cnt-avt-wrap')
-//       avtWrap?.classList.add('mb-ac__cnt-avt-wrap-change')
-//       const avtImg = document.querySelector('.mb-ac__cnt-avt-box-img')
-//       avtImg?.classList.add('mb-ac__cnt-avt-box-img-change')
-//       document.querySelector('.mb-ac__cnt-avt-name')?.classList.add('mb-ac__cnt-avt-name-change')
-//       document.querySelector('.mb-ac__cnt-avt')?.classList.add('mb-ac__cnt-avt-ch')
-// }
-// function changeBack() {
-//       const avtWrap = document.querySelector('.mb-ac__cnt-avt-wrap')
-//       avtWrap?.classList.remove('mb-ac__cnt-avt-wrap-change')
-//       const avtImg = document.querySelector('.mb-ac__cnt-avt-box-img')
-//       avtImg?.classList.remove('mb-ac__cnt-avt-box-img-change')
-//       document.querySelector('.mb-ac__cnt-avt-name')?.classList.remove('mb-ac__cnt-avt-name-change')
-//       document.querySelector('.mb-ac__cnt-avt')?.classList.remove('mb-ac__cnt-avt-ch')
-// }
+
 function AccountMb() {
-  const { userInfo, t } = useContext(AppContext);
+  const { t } = useContext(AppContext);
   const [openOrder, setOpenOrder] = useState(false);
   const [openAcc, setOpenAcc] = useState(false);
   const [openSer, setOpenSer] = useState(false);
   const [openDiscount, setOpenDiscount] = useState(false)
+  const dispatch = useDispatch();
+  const USER = useSelector((state: any) => state.USER.USER);
+
+  //const [avatarMb, setAvatarMb] = useState();
+
+  const onFileChange = (e: any) => {
+    const form = e.target.files[0];
+    handlePostMedia(form)
+  }
+  const handlePostMedia = async (form: any) => {
+    let formData = new FormData();
+    formData.append('file', form);
+    try {
+      const res = await mediaApi.postMedia(formData);
+      const action = putUser({ ...USER, avatar: res.data.context.original_url })
+      dispatch(action)
+      const model_id = await res.data.context.model_id;
+      const params = {
+        media_id: model_id
+      }
+      await authentication.putUserProfile(params)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div className="mb-ac">
       <div className="mb-ac__cnt">
@@ -37,16 +51,26 @@ function AccountMb() {
           <div className="mb-ac__cnt-avt-wrap">
             <div className="mb-ac__cnt-avt-box">
               <img
-                src="https://picsum.photos/650/976?random=1"
+                src={USER?.avatar}
                 alt=""
                 className="mb-ac__cnt-avt-box-img"
               />
               <button>
-                <img src={icon.Camera_purple} alt="" />
+                <label htmlFor="file_mb">
+                  <img src={icon.Camera_purple} alt="" />
+                </label>
               </button>
+              <input
+                hidden
+                id="file_mb"
+                type="file"
+                name="file_mb"
+                accept="image/jpeg"
+                onChange={onFileChange}
+              />
             </div>
             <div className="flex-column mb-ac__cnt-avt-name">
-              {userInfo?.fullname}
+              {USER?.fullname}
               <div className="mb-ac__cnt-avt-rank">
                 <ul>
                   <li>

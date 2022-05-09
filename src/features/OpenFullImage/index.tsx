@@ -49,10 +49,10 @@ function FullImage(props: IProps) {
                 <div className="full-img-cnt__de">
                     <div className="flex-row full-img-cnt__de-info">
                         <div className="avatar">
-                            <span>{comment.user.fullname.slice(0, 1)}</span>
+                            <span>{comment.user.fullname?.slice(0, 1) || "K"}</span>
                         </div>
                         <span className="full-name">
-                            {comment.user.fullname}
+                            {comment.user.fullname || "Khách"}
                         </span>
                         <span className='create'>
                             {formatDate(comment.created_at)}

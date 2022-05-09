@@ -3,12 +3,18 @@ import { AppContext } from '../../../context/AppProvider';
 
 function OrgBranch(props: any) {
       const { t } = useContext(AppContext)
-      const { branches, openBranches, setChooseBranch, setOpenBranches } = props;
+      const { branches, dataBook, setDataBook, open, setOpen } = props;
+      const onChooseBranch = (item: any) => {
+            setDataBook({
+                  ...dataBook,
+                  branch: item
+            })
+      }
       return (
             <>
                   <div
                         style={
-                              openBranches === true ?
+                              open.oBranch === true ?
                                     { opacity: 1, top: '50px', visibility: 'visible' }
                                     :
                                     { opacity: 0, top: '80px', visibility: 'hidden' }
@@ -20,7 +26,7 @@ function OrgBranch(props: any) {
                                     branches && branches?.map((item: any, index: number) => (
                                           <li
                                                 key={index}
-                                                onClick={() => setChooseBranch(item)}
+                                                onClick={() => onChooseBranch(item)}
                                           >
                                                 <span className="name">
                                                       {t('my_ser.name_br')} : {item?.name}
@@ -34,8 +40,11 @@ function OrgBranch(props: any) {
                         </ul>
                   </div>
                   <div
-                        className={openBranches ? "back-drop_layout open" : "back-drop_layout"}
-                        onClick={() => setOpenBranches(!openBranches)}
+                        className={open.oBranch ? "back-drop_layout open" : "back-drop_layout"}
+                        onClick={() => setOpen({
+                              ...open,
+                              oBranch: false
+                        })}
                   ></div>
             </>
       );

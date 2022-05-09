@@ -4,9 +4,6 @@ import { AUTH_HEADER } from "../utils/authHeader";
 class Media {
     postMedia = (formData: any) => {
         const url = `media`;
-        // const params = {
-        //     file: ''
-        // }
         return axiosClient.post(url, formData, AUTH_HEADER())
     }
 }

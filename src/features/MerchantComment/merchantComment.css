@@ -33,15 +33,6 @@
   display: flex;
   justify-content: center;
 }
-.merchantComment-right .comment-bot button{
-  border: none;
-  outline: none;
-  background-color: transparent;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 500;
-  color: var(--purple);
-}
 .merchantComment .vote-star {
   font-size: 24px;
   font-weight: 700;
@@ -177,7 +168,7 @@
 }
 .comment-evalutes__img{
   margin-top: 8px;
-  width: 182px;
+  height: 200px;
   border-radius: 6px;
   cursor: pointer;
 }

@@ -711,7 +711,7 @@
 
   .my-ser {
     flex-direction: column;
-    padding: 12px;
+    padding: 12px 4px 12px 12px;
   }
   .my-ser-book__cnt-head {
     margin-top: -10px;

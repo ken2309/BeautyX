@@ -1,5 +1,7 @@
 import axiosClient from "./axios";
 import { AUTH_HEADER } from "../utils/authHeader";
+import { pickBy, identity } from 'lodash';
+import { AUTH_LOCATION } from "./authLocation";
 
 const location_user = JSON.parse(`${sessionStorage.getItem('USER_LOCATION')}`)
 
@@ -16,20 +18,21 @@ class Organization {
     return axiosClient.get(url, AUTH_HEADER());
   };
   getOrgByKeyword = (values: any) => {
-    const location = JSON.stringify(`${location_user?.lat},${location_user?.long}`)
     const url = `/organizations?page=1&limit=15`;
-    const params_string = `{
-      "page":${values.page},
-      "limit":15,
-      "filter[keyword]":"${values.keyword}"
-      ${values.tags.length > 0 ? `,"filter[tags]":${JSON.stringify(values.tags)}` : ''}
-      ${values.province > 0 ? `,"filter[province_code]":${values.province}` : ''}
-      ${values.price.min > 0 ? `,"filter[min_price]":${values.price.min}` : ''}
-      ${values.price.max > 0 ? `,"filter[max_price]":${values.price.max}` : ''},
-      ${!location_user || location_user === null ? '"include":"favorites_count|tags|branches"' : '"include":"favorites_count|tags"'}
-      ${location_user ? `,"filter[location]":${location}` : ''}
-    }`
-    const params = JSON.parse(`${params_string}`);
+    const LOCATION = AUTH_LOCATION();
+    const paramsOb = {
+      "page": values.page,
+      "limit": 15,
+      "filter[keyword]": values.keyword,
+      "sort": "-priority",
+      "filter[tags]": values.tags,
+      "filter[province_code]": values.province,
+      "filter[min_price]": values.price.min,
+      "filter[max_price]": values.price.max,
+      "include": "favorites_count|tags|branches",
+      "filter[location]": LOCATION
+    }
+    const params = pickBy(paramsOb, identity);
     return axiosClient.get(url, { params })
   };
   getOrgByFilter = (values: any) => {
@@ -62,69 +65,82 @@ class Organization {
     });
   };
   //
-  getOrgsByTrust = () => {
+  getOrgsByTrust = (values: any) => {
     const url = `/organizations`;
-    const params = {
-      page: 1,
-      limit: 15,
-      include: 'favorites_count|tags|branches'
-    }
-    return axiosClient.get(url, { params })
-  }
-  //
-  getOrgsByManyDealHot = () => {
-    const url = `/organizations`;
-    const params = {
+    const paramsOb = {
       page: 1,
       limit: 15,
       include: 'favorites_count|tags|branches',
-      sort: '-priority'
+      sort: "-priority",
+      "filter[tags]": values.tags,
+      "filter[province_code]": values.province_code,
+      "filter[min_price]": values.price?.min,
+      "filter[max_price]": values.price?.max
     }
+    const params = pickBy(paramsOb, identity)
     return axiosClient.get(url, { params })
   }
   //
-  getOrgsByDistance = () => {
+  getOrgsByManyDealHot = (values: any) => {
     const url = `/organizations`;
-    const params = {
-      page: 1,
+    const paramsOb = {
+      page: values.page,
       limit: 15,
       include: 'favorites_count|tags|branches',
-      "filter[location]": location_user ? `${location_user.lat},${location_user.long}` : ``
+      sort: '-priority',
+      "filter[tags]": values.tags,
+      "filter[province_code]": values.province_code,
+      "filter[min_price]": values.price?.min,
+      "filter[max_price]": values.price?.max
     }
+    const params = pickBy(paramsOb, identity)
+    return axiosClient.get(url, { params })
+  }
+  //
+  getOrgsByDistance = (values: any) => {
+    const url = `/organizations`;
+    const paramsOb = {
+      page: values.page,
+      limit: 15,
+      include: 'favorites_count|tags|branches',
+      "filter[tags]": values.tags,
+      "filter[min_price]": values.price?.min,
+      "filter[max_price]": values.price?.max,
+      "filter[location]": `${location_user.lat},${location_user.long}`,
+    }
+    const params = pickBy(paramsOb, identity)
     return axiosClient.get(url, { params })
   }
   //get by single tags
   getOrgsByTag = (values: any) => {
-    const location = JSON.stringify(`${location_user?.lat},${location_user?.long}`)
     const url = `organizations`;
-    const params_string = `{
-      "page":${values.page},
-      "limit":15,
-      "filter[tags]":"${values.tag}"
-      ${values.province > 0 ? `,"filter[province_code]":${values.province}` : ''}
-      ${values.price.min >= 0 ? `,"filter[min_price]":${values.price.min}` : ''}
-      ${values.price.max > 0 ? `,"filter[max_price]":${values.price.max}` : ''},
-      ${!location_user || location_user === null ? '"include":"favorites_count|tags|branches"' : '"include":"favorites_count|tags"'}
-      ${location_user ? `,"filter[location]":${location}` : ''}
-    }`
-    const params = JSON.parse(params_string)
+    const paramsOb = {
+      "page": values.page,
+      "limit": 15,
+      "filter[tags]": values.tag,
+      "filter[province_code]": values.province,
+      "filter[min_price]": values.price.min,
+      "filter[max_price]": values.price.max,
+      "filter[location]": `${location_user?.lat},${location_user?.long}`,
+      "include": "favorites_count|tags|branches"
+    }
+    const params = pickBy(paramsOb, identity)
     return axiosClient.get(url, { params })
   }
   //get by province code
   getOrgsByProvinceCode = (values: any) => {
-    const location = JSON.stringify(`${location_user?.lat},${location_user?.long}`)
     const url = `organizations`;
-    const params_string = `{
-      "page":${values.page},
-      "limit":15
-      ${values.tags.length > 0 ? `,"filter[tags]":${JSON.stringify(values.tags)}` : ''}
-      ${values.province > 0 ? `,"filter[province_code]":${values.province}` : ''}
-      ${values.price.min > 0 ? `,"filter[min_price]":${values.price.min}` : ''}
-      ${values.price.max > 0 ? `,"filter[max_price]":${values.price.max}` : ''},
-      ${!location_user || location_user === null ? '"include":"favorites_count|tags|branches"' : '"include":"favorites_count|tags"'}
-      ${location_user ? `,"filter[location]":${location}` : ''}
-    }`
-    const params = JSON.parse(params_string);
+    const paramsOb = {
+      "page": values.page,
+      "limit": 15,
+      "include": "favorites_count|tags|branches",
+      "filter[tags]": values.tags,
+      "filter[province_code]": values.province,
+      "filter[min_price]": values.price.min,
+      "filter[max_price]": values.price.max,
+      "filter[location]": `${location_user?.lat},${location_user?.long}`
+    }
+    const params = pickBy(paramsOb, identity);
     return axiosClient.get(url, { params })
   }
 }

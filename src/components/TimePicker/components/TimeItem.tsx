@@ -1,11 +1,14 @@
 import React from 'react';
 
-function TimeItem(props: any) {
-      const { Time, setChooseTime } = props;
+interface IProps {
+      onChangeItem: (e: string) => void,
+      Time: any
+}
+
+function TimeItem(props: IProps) {
+      const { Time, onChangeItem } = props;
       const chooseTimeClick = () => {
-            if (setChooseTime) {
-                  setChooseTime(Time.format('HH:mm'))
-            }
+            onChangeItem(Time.format('HH:mm'))
       }
       return (
             <div

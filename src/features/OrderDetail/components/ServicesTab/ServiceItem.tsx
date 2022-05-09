@@ -1,6 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Service } from "../../../../interface/service";
-import serviceApi from "../../../../api/serviceApi";
+import React, { useContext } from "react";
 import ButtonCus from "../../../../components/ButtonCus";
 import formatPrice from "../../../../utils/formatPrice";
 import { useHistory } from "react-router-dom";
@@ -12,14 +10,16 @@ import onErrorImg from "../../../../utils/errorImg";
 
 function ServiceItem(props: any) {
   const { t } = useContext(AppContext);
-  const { serviceItem, org, open } = props;
-  const [service, setService] = useState<Service>();
+  const { serviceItem, org } = props;
+  const service = serviceItem.productable;
+  //const [service, setService] = useState<Service>();
   const history = useHistory();
   const dispatch = useDispatch();
   const is_type = 2;
   const values = {
     id: service?.id,
     org_id: org.id,
+    org: org,
     org_name: org.name,
     cart_id: parseInt(`${is_type}${org.id}${service?.id}`), //is_type + org_id + id
     name: service?.service_name,
@@ -46,29 +46,14 @@ function ServiceItem(props: any) {
       state: { org, detail, name },
     });
   };
-  useEffect(() => {
-    async function handleGetSerDetail() {
-      try {
-        const res = await serviceApi.getDetailById({
-          org_id: org.id,
-          ser_id: serviceItem.productable_id,
-        });
-        setService(res.data.context);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    if (open === true) {
-      handleGetSerDetail();
-    }
-  }, [org.id, serviceItem.productable_id, open]);
+
   return (
     <li>
       <div className="order-de-list__item">
         <img
           src={service?.image ? service?.image_url : org?.image_url}
           alt=""
-          onError={(e)=>onErrorImg(e)}
+          onError={(e) => onErrorImg(e)}
           className="order-de-pr-item__img"
         />
         <div className="order-de-pr-item__cnt">

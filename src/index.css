@@ -9,6 +9,7 @@
   --bg-color: #eeedf2;
   --pink:#FFF3F1;
   --pink-2:#FBF3F7;
+  --pink-momo:#D82D8B
 }
 a {
   color: unset;
@@ -20,6 +21,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  touch-action: pan-x pan-y;
 }
 
 code {

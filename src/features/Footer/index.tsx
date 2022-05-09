@@ -6,7 +6,7 @@ import slugify from '../../utils/formatUrlString';
 import scrollTop from '../../utils/scrollTop';
 
 function Footer() {
-      const url_map = `https://maps.google.com/?q=10.800590217284448,106.68205401591362`;
+      const url_map = `https://maps.google.com/?q=10.79319953408399,106.69011243982503`;
       const data_footer = [
             {
                   id: 1,
@@ -96,8 +96,7 @@ function Footer() {
                               onClick={() => window.open(`${url_map}`, '_blank', 'noopener,noreferrer')}
                               className="address"
                         >
-
-                              Công ty CP MYSPA - Lầu 3, 27k Trần Nhật Duật, Phường Tân Định, Quận 1, TP.HCM, TP.HCM - GPĐKKD: 0314964245, cấp ngày:03/04/2018, bởi Phòng Đăng ký kinh doanh – Sở kế hoạch và Đầu tư TP.HCM
+                              Công ty CP MYSPA - Lầu 3, 27K Trần Nhật Duật, Phường Tân Định, Quận 1, TP.HCM - GPĐKKD: 0314964245, cấp ngày:03/04/2018, bởi Phòng Đăng ký kinh doanh – Sở kế hoạch và Đầu tư TP.HCM
                         </div>
                   </Container>
             </div>

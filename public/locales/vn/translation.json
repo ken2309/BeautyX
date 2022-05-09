@@ -248,7 +248,18 @@
     "is_not_registered": "chưa được đăng ký",
     "register_success": "Đăng ký tài khoản thành công",
     "email_already":"Email này đã được đăng ký",
-    "phone_already":"Số điện thoại này đã được đăng ký"
+    "phone_already":"Số điện thoại này đã được đăng ký",
+    "reset_password":"Đổi mật khẩu",
+    "continue":"Tiếp tục",
+    "send_your_code_text":"Mã xác minh của bạn sẽ được gửi bằng tin nhắn đến",
+    "verification_code":"Mã xác thực",
+    "please_wait":"Vui lòng chờ",
+    "to_get_the_verification_code_back":"Để nhận lại mã xác thực",
+    "resend_code":"Gửi lại mã",
+    "verification_invalid":"Mã xác thực không hợp lệ",
+    "verification_code_of_6_characters":"Mã xác thực gồm 6 ký tự",
+    "change_password_successfully":"Đổi mật khẩu thành công",
+    "sending":"Đang gửi..."
   },
   "partner": {
     "online_business": "Nền tảng kinh doanh online ngành làm đẹp",
@@ -320,6 +331,7 @@
     "rv_booked":"Bạn có thể xem lại dịch vụ đã đặt hẹn",
     "bk_fail_title":"Có lỗi xảy ra trong quá trình đặt hẹn",
     "code_err":"Mã lỗi"
+
   },
   "home_2":{
     "categories":"Danh mục",

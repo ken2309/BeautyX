@@ -6,18 +6,9 @@ import DetailComment from '../../../features/MerchantDetail/components/DetailCom
 import DetailBranchesList from './DetailBranchesList'
 import { utilsList } from '../../../features/MerchantDetail/components/DetailInfo';
 import { staffList } from '../../../features/MerchantDetail/components/DetailInfo';
-import { Slide, Dialog } from '@mui/material'
-import { TransitionProps } from '@mui/material/transitions';
+import { Drawer } from '@mui/material'
 import { IOrganization } from '../../../interface/organization'
 
-const Transition = React.forwardRef(function Transition(
-      props: TransitionProps & {
-            children: React.ReactElement;
-      },
-      ref: React.Ref<unknown>,
-) {
-      return <Slide direction="up" ref={ref} {...props} />;
-});
 
 interface IProps {
       open: boolean,
@@ -48,11 +39,10 @@ function MerchantWrap(props: IProps) {
             setOpen(false)
       }
       return (
-            <Dialog
+            <Drawer
                   open={open}
-                  fullScreen
                   onClose={onClose}
-                  TransitionComponent={Transition}
+                  anchor="bottom"
             >
                   <div className="mb-mer-cnt__box">
                         <div className="flex-row-sp mb-mer-cnt__box-head">
@@ -63,7 +53,7 @@ function MerchantWrap(props: IProps) {
                               {element}
                         </div>
                   </div>
-            </Dialog>
+            </Drawer>
       );
 }
 

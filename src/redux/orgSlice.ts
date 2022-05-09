@@ -3,7 +3,8 @@ import orgApi from '../api/organizationApi';
 
 export const fetchAsyncOrg: any = createAsyncThunk(
       "org/fetchAsyncOrg",
-      async () => {
+      async (a:any) => {
+            console.log(a)
             const res = await orgApi.getAll();
             return res.data.context.data;
       }

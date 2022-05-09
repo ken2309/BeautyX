@@ -350,6 +350,11 @@
   color: var(--bgWhite);
   font-weight: 700;
 }
+.mer-detail-cmt__box-item .cmt-head__user-avatar img{
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+}
 .mer-detail-cmt__box-item .cmt-head__user span {
   padding-left: 16px;
 }

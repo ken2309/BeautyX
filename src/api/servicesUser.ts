@@ -4,7 +4,7 @@ import { AUTH_HEADER_PARAM_GET } from "../utils/authHeader";
 
 
 class ServicesUser {
-    getServices = (session: any, local: any) => {
+    getServices = () => {
         const url = `/orders`;
         const params = {
             page: 1,

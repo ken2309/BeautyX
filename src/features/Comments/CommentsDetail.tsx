@@ -11,11 +11,13 @@ import { AppContext } from '../../context/AppProvider';
 import SignInUp from '../poupSignInUp';
 import CommentItemTemp from '../MerchantComment/CommentItemTemp';
 import mediaApi from '../../api/mediaApi';
+import ButtonLoading from '../../components/ButtonLoading';
 
 interface IData {
     comments: IComment[],
     page: number,
-    totalItem: number
+    totalItem: number,
+    loadPage: boolean
 }
 interface ICmtTemp {
     text: string,
@@ -34,7 +36,8 @@ function CommentsDetail() {
     const [data, setData] = useState<IData>({
         comments: [],
         page: 1,
-        totalItem: 1
+        totalItem: 1,
+        loadPage: false
     })
     const [cmt, setCmt] = useState({
         text: '', image_url: ''
@@ -51,11 +54,13 @@ function CommentsDetail() {
             })
             setData({
                 ...data,
-                comments: res.data.context.data,
-                totalItem: res.data.context.total
+                comments: [...data.comments, ...res.data.context.data],
+                totalItem: res.data.context.total,
+                loadPage: false
             })
         } catch (error) {
             console.log(error)
+            setData({ ...data, loadPage: false })
         }
     }
     useEffect(() => {
@@ -110,6 +115,13 @@ function CommentsDetail() {
         setCmt({
             ...cmt,
             image_url: ''
+        })
+    }
+    const onPage = () => {
+        setData({
+            ...data,
+            page: data.page + 1,
+            loadPage: true
         })
     }
     return (
@@ -213,17 +225,14 @@ function CommentsDetail() {
                             ))}
                         </div>
                         {
-                            data.comments.length === data.totalItem ?
-                                <></>
-                                :
-                                <div className="comment-bot">
-                                    <button
-                                    //onClick={onPage}
-                                    >
-                                        {/* {data.loadPage === true ? 'Đang tải...' : 'Xem thêm đánh giá'} */}
-                                        Xem thêm
-                                    </button>
-                                </div>
+                            data.comments.length < data.totalItem &&
+                            <div className="comment-bot">
+                                <ButtonLoading
+                                    title='Xem thêm đánh giá'
+                                    onClick={onPage}
+                                    loading={data.loadPage}
+                                />
+                            </div>
                         }
                     </div>
                 </div>
