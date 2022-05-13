@@ -2,7 +2,7 @@ import React from 'react';
 import { Slide, Dialog } from '@mui/material'
 import { TransitionProps } from '@mui/material/transitions';
 import Head from '../../../features/Head';
-import Information from '../../../features/Account/components/Information/index'
+import Information from '../../../features/Account/components/Information/index';
 
 const Transition = React.forwardRef(function Transition(
       props: TransitionProps & {
@@ -27,7 +27,9 @@ function AccountForm(props: any) {
                         <Head
                               setCloseDialog={setOpen}
                         />
-                        <Information />
+                        <Information
+                              setOpen={setOpen}
+                        />
                   </div>
             </Dialog>
       );

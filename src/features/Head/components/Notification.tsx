@@ -79,7 +79,7 @@ function Notification(props: any) {
                         border='solid 1px var(--purple)'
                         borderRadius='26px'
                         imgIcon={icon.next}
-                        onClick={() => history.push('/Notifications')}
+                        onClick={() => history.push('/notifications')}
                   />
             </div>
       );

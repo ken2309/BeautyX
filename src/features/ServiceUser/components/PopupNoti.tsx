@@ -20,7 +20,7 @@ function PopupNoti(props:any) {
                         <span
                               className="my-ser-popup__text"
                         >
-                              Để thuận lơi cho khâu đặt hẹn, quý khách hàng chỉ được chọn dịch vụ trong cùng một doanh nghiệp
+                              Để thuận lơi cho khâu đặt hẹn, quý khách hàng chỉ được chọn các dịch vụ trong cùng một gói dịch vụ
                         </span>
                         <ButtonCus
                               text='Đã hiểu'

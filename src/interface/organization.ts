@@ -20,4 +20,6 @@ export interface IOrganization {
   opening_time: any;
   favorites_count: number,
   is_favorite?: boolean | null,
+  distance: number | undefined,
+  tags:[],
 }

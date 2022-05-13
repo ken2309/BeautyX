@@ -11,7 +11,7 @@
   border-radius: 18px;
 }
 .payment-cnt {
-  padding-top: 64px;
+  padding-top: 32px;
 }
 .payment-form {
   align-items: flex-start;
@@ -19,11 +19,14 @@
 .cart-item__quantity button {
   flex-shrink: 0;
 }
+.payment-form__box{
+  align-items: flex-start;
+}
 .payment-form__left {
-  width: 58.1%;
+  width: 49.5%;
   box-shadow: 0px 6px 15px #dcd8ee;
   border-radius: 24px;
-  padding: 24px;
+  padding: 16px;
 }
 .payment-form__left input {
   width: 100%;
@@ -64,26 +67,94 @@
 .pm-form__bot {
   margin-top: 8px;
 }
-.payment-form__right {
-  padding-left: 36px;
-  width: calc(100% - 58.1%);
-}
-.payment-form__right textarea {
-  padding: 24px;
-  width: 100%;
-  height: 184px;
-  background-color: var(--bg-gray);
-  box-shadow: inset 0px 2px 6px rgba(113, 97, 186, 0.2);
+.payment-form__right{
+  width: 49.5%;
+  height: 196px;
   box-shadow: 0px 6px 15px #dcd8ee;
-  border-radius: 18px;
-  border: none;
-  outline: none;
+  border-radius: 24px;
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+/* org */
+.payment-form__right-avatar{
+  width: 64px;
+  height: 64px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+.payment-form__right-info{
+  width: calc(100% - 64px);
+  height: 100%;
+  padding-left: 12px;
+  display: flex;
+  flex-direction: column;
+}
+.payment-form__right-info .org-name{
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--purple);
+}
+.payment-form__right-info .org-address{
   font-size: 14px;
   line-height: 20px;
   font-weight: 700;
   color: var(--text-black);
-  resize: none;
+  margin: 4px 0px;
 }
+.payment-form__right-info button{
+  border: none;
+  outline: none;
+  background-color: var(--purple);
+  padding: 4px;
+  color: var(--bgWhite);
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 12px;
+  width: fit-content;
+}
+/* cart choose branch */
+.cart-list-branch{
+  background-color: var(--bgWhite);
+  padding: 24px 32px;
+}
+.cart-list-branch .branch-item{
+  display: flex;
+  flex-direction: column;
+}
+.cart-list-branch ul li{
+  padding: 12px 6px;
+  border-bottom: solid 1px var(--text-hover);
+  cursor: pointer;
+  transition: all .4s;
+}
+.cart-list-branch ul li:hover{
+  border-bottom: none;
+  border-radius: 8px;
+  background-color: var(--bg-color);
+  border-bottom: solid 1px var(--bg-color);
+  transition: all .4s;
+}
+.cart-list-branch .branch-item .br-name{
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--purple);
+}
+.cart-list-branch .branch-item .br-name img{
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+}
+.cart-list-branch .branch-item .br-address{
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 700;
+  color: var(--text-black);
+}
+
 /* cart */
 .cart-list__payment {
   padding: 68px 0px 48px 0px;
@@ -238,6 +309,38 @@
 .pm-method_child-item_box {
   font-size: 16px;
 }
+.payment-form__left-cnt .sec-title{
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  text-decoration: underline;
+}
+.payment-form__left-cnt .sec-item__label span{
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--text-black);
+}
+.payment-form__left-cnt .sec-item__label span:nth-child(2){
+  margin-left: 6px;
+  font-weight: bold;
+}
+.payment-form__left-cnt button{
+  border: none;
+  outline: none;
+  background-color: var(--purple);
+  padding: 4px;
+  color: var(--bgWhite);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.payment-form__left-cnt button img{
+  width: 14px;
+  height: 14px;
+  margin-right: 4px;
+}
+
+
 /* responsive */
 /* Tablet */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
@@ -312,16 +415,18 @@
   }
   .payment-form__left {
     width: 100%;
-    padding: 24;
+    padding: 8px;
+    border-radius: 12px;
   }
   .payment-form__left input {
-    margin: 14px 0;
+    margin: 12px 0;
   }
   .payment-form__right {
     width: 100%;
-    border-radius: 24px;
-    margin-top: 24px;
-    padding: 0;
+    border-radius: 12px;
+    margin-top: 12px;
+    padding: 12px;
+    height: fit-content;
   }
   .cart-list__payment {
     padding-top: 32px;

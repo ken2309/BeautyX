@@ -1,32 +1,139 @@
 import { Container } from "@mui/material";
-import React, { useEffect } from "react";
-import ButtonCus from "../../components/ButtonCus";
+import React, { useEffect, useState, KeyboardEvent } from "react";
 import icon from "../../constants/icon";
-import Bottom from "../../featuresMobile/Bottom";
-import scrollTop from "../../utils/scrollTop";
 import Footer from "../Footer";
 import Head from "../Head";
 import HeadTitle from "../HeadTitle";
 import "./merchantComment.css";
 import MerchantCommentItem from "./MerchantCommentItem";
+import CommentItemTemp from "./CommentItemTemp";
+import { useLocation } from 'react-router-dom';
+import { IComment } from '../../interface/comments';
+import commentsApi from '../../api/commentsApi'
+import SignInUp from '../poupSignInUp/index';
+import mediaApi from "../../api/mediaApi";
+import ButtonLoading from "../../components/ButtonLoading";
+import { useSelector } from "react-redux";
 
+interface IData {
+  comments: IComment[],
+  page: number,
+  totalItem: number,
+  loadPage: boolean
+}
+interface ICmtTemp {
+  text: string,
+  image_url: string
+}
 export default function MerchantComment() {
-  const dataComment: any = [
-    {
-      id: 1,
-    },
-    {
-      id: 2,
-    },
-    {
-      id: 3,
-    },
-  ];
+  const location: any = useLocation();
+  const USER = useSelector((state:any) => state.USER.USER)
+  const org_id = location.search.slice(1, location.search.length);
+  const [cmt, setCmt] = useState({
+    text: '',
+    image_url: ''
+  });
+  const [cmtTemp, setCmtTemp] = useState<ICmtTemp[]>([]);
+  const [data, setData] = useState<IData>({
+    comments: [],
+    page: 1,
+    totalItem: 1,
+    loadPage: false
+  })
+  const [open, setOpen] = useState(false)
+  async function handleGetCommentsOrg() {
+    try {
+      const res = await commentsApi.getCommentsOrg({
+        org_id: org_id,
+        page: data.page
+      })
+      setData({
+        ...data,
+        totalItem: res.data.context.total,
+        comments: [...data.comments, ...res.data.context.data],
+        loadPage: false
+      })
+    } catch (error) {
+      setData({
+        ...data,
+        loadPage: false
+      })
+      console.log(error)
+    }
+  }
   useEffect(() => {
-    scrollTop();
-  }, []);
+    handleGetCommentsOrg();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data.page])
+  const onPage = () => {
+    setData({
+      ...data,
+      page: data.page + 1,
+      loadPage: true
+    })
+  }
+  //handle post image
+  const handlePostImageMedia = async (form: any) => {
+    let formData = new FormData();
+    formData.append('file', form);
+    try {
+      const res = await mediaApi.postMedia(formData);
+      setCmt({
+        ...cmt,
+        image_url: res.data.context.original_url
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const onChangeMedia = (e: any) => {
+    const media = e.target.files[0];
+    if (USER) {
+      handlePostImageMedia(media)
+    } else {
+      setOpen(true)
+    }
+  }
+
+  async function handlePostComment() {
+    try {
+      await commentsApi.postCommentOrg({
+        org_id: org_id,
+        body: JSON.stringify(cmt)
+      })
+      setCmtTemp([...cmtTemp, cmt].reverse())
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
+      if (USER) {
+        handlePostComment();
+        setCmt({
+          text: '', image_url: ''
+        })
+        //console.log(JSON.stringify(cmt))
+      } else {
+        setOpen(true)
+      }
+    }
+  };
+  const onRemoveImageTemp = () => {
+    setCmt({
+      ...cmt,
+      image_url: ''
+    })
+  }
+
   return (
     <div>
+      <SignInUp
+        openSignIn={open}
+        setOpenSignIn={setOpen}
+        activeTabSign={1}
+      />
       <HeadTitle title={"Tất cả đánh giá"} />
       <Head />
       <Container>
@@ -72,17 +179,40 @@ export default function MerchantComment() {
             </div>
           </div>
           <div className="merchantComment-right">
-            <div className="sign-form__box">
+            <div className="flex-row-sp sign-form__box">
               <input
                 autoComplete="off"
-                // value={formikContact.values.business}
-                // onChange={formikContact.handleChange}
-                name="business"
-                id="business"
+                value={cmt.text}
+                onChange={(e) => setCmt({ ...cmt, text: e.target.value })}
+                onKeyDown={handleKeyDown}
                 placeholder="Nhập bình luận ..."
               />
+              <div title="Thêm hình" className="merchantComment-img">
+                <label htmlFor="file">
+                  <img src={icon.Camera_purple} alt="" />
+                </label>
+              </div>
+              <input
+                hidden
+                id="file"
+                type="file"
+                name="file"
+                accept="image/png, image/jpeg"
+                onChange={onChangeMedia}
+              />
             </div>
-            <div className="merchantComment-right__btn">
+            {
+              cmt.image_url?.length > 0 &&
+              <div className="input-image">
+                <img className="input-image__temp" src={cmt.image_url} alt="" />
+                <button
+                  onClick={onRemoveImageTemp}
+                >
+                  <img src={icon.closeCircle} alt="" />
+                </button>
+              </div>
+            }
+            {/* <div className="merchantComment-right__btn">
               <ButtonCus
                 text="Bộ lọc"
                 border="1px solid var(--purple)"
@@ -111,18 +241,37 @@ export default function MerchantComment() {
                 borderRadius="20px"
                 padding="6px 22px"
               />
-            </div>
+            </div> */}
             <div className="merchantComment-right__comment">
-              {dataComment.map((item: any) => (
-                <MerchantCommentItem key={item.id} />
+              {
+                cmtTemp.map((item: ICmtTemp, index: number) => (
+                  <CommentItemTemp
+                    key={index}
+                    body={item}
+                  />
+                ))
+              }
+              {data.comments.map((item: IComment, index: number) => (
+                <MerchantCommentItem
+                  key={index}
+                  comment={item}
+                />
               ))}
             </div>
+            {
+              data.comments.length < data.totalItem &&
+              <div className="comment-bot">
+                <ButtonLoading
+                  title="Xem thêm đánh giá"
+                  onClick={onPage}
+                  loading={data.loadPage}
+                />
+              </div>
+            }
           </div>
         </div>
       </Container>
-
       <Footer />
-      <Bottom />
     </div>
   );
 }

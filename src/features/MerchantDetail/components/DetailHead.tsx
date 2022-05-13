@@ -1,8 +1,7 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import { Container } from "@mui/material";
 import icon from "../../../constants/icon";
 import { AppContext } from "../../../context/AppProvider";
-//import { IOrganization } from "../../../interface/organization";
 import img from "../../../constants/img";
 import OrgCardLoading from "../../Loading/OrgCardLoading";
 import PopupDetailContact from "./PopupDetailContact";
@@ -10,8 +9,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import DetailHeadOpenTime from "../components/DetailHeadOpenTime";
+import { useHistory } from 'react-router-dom'
 import favorites from "../../../api/favorite";
-import SignInUp from "../../poupSignInUp/index";
+import onErrorImg from "../../../utils/errorImg";
+import orgApi from "../../../api/organizationApi";
 
 const settings = {
   dots: true,
@@ -30,53 +31,69 @@ const settings = {
     </div>
   ),
 };
-
-// interface IProps {
-//   org: IOrganization;
-//   loading: boolean;
-// }
-
 function DetailHead(props: any) {
-  const { org, loading, tempCount, setTempleCount, follow, setFollow } = props;
-  const [openSignIn, setOpenSignIn] = useState(false);
+  const { org, loading } = props;
+  const history = useHistory();
   const { t, profile } = useContext(AppContext);
   const infoBox = useRef(null);
   const [openPopupContact, setOpenPopupContact] = useState(false);
   const [openTime, setOpenTime] = useState(false);
 
+  const [orgFavorite, setOrgFavorite] = useState({
+    favorite: false,
+    count: 0
+  })
+
   const handleOpenPopupContact = () => {
     setOpenPopupContact(true);
   };
-
-  async function handlePostFavorites(org_id: number) {
+  const handleGetOrgFollow = async () => {
+    const org_id = (await org)?.id;
     try {
-      await favorites.postFavorite(org_id);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-  async function handleDeleteFavorite(org_id: number) {
-    try {
-      await favorites.deleteFavorite(org_id);
+      const res = await orgApi.getOrgById(org_id);
+      setOrgFavorite({
+        favorite: res.data.context.is_favorite,
+        count: res.data.context.favorites_count
+      })
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
-
-  const handleFollowClick = () => {
+  useEffect(() => {
+    if (org?.id) {
+      handleGetOrgFollow()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [org])
+  const handleRemoveFavorite = async () => {
+    setOrgFavorite({
+      favorite: false, count: orgFavorite.count - 1
+    })
+    try {
+      await favorites.deleteFavorite(org.id)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const handlePostFavorite = async () => {
+    setOrgFavorite({ favorite: true, count: orgFavorite.count + 1 })
+    try {
+      await favorites.postFavorite(org.id);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const onOrgFavorite = () => {
     if (profile) {
-      setFollow(!follow);
-      if (follow === true) {
-        setTempleCount(tempCount - 1);
-        handleDeleteFavorite(org.id);
+      if (orgFavorite.favorite === true) {
+        handleRemoveFavorite()
       } else {
-        setTempleCount(tempCount + 1);
-        handlePostFavorites(org.id);
+        handlePostFavorite()
       }
     } else {
-      setOpenSignIn(true);
+      history.push({ pathname: '/sign-in', search: '1' })
     }
-  };
+  }
   return (
     <div className="mer-detail">
       <Container>
@@ -87,7 +104,7 @@ function DetailHead(props: any) {
             ) : (
               <>
                 <div className="content-left__header">
-                  <img src={icon.logoBusiness} alt="" />
+                  <img className="content-left__header-avt" src={org?.image && org?.image_url} alt="" onError={(e) => onErrorImg(e)} />
                   <div className="content-left__header-name">
                     <span>{org?.name}</span>
                     <div className="mer-detail__rate">
@@ -95,7 +112,7 @@ function DetailHead(props: any) {
                       <img src={icon.star} alt="" />
                       <span>250</span>
                       <img src={icon.chatAll} alt="" />
-                      <span>{`${org?.favorites_count + tempCount}`}</span>
+                      <span>{orgFavorite.count}</span>
                       <img src={icon.Favorite} alt="" />
                     </div>
                   </div>
@@ -128,18 +145,17 @@ function DetailHead(props: any) {
                     {t("Mer_de.contact")}
                   </button>
                   <button
-                    disabled={profile ? false : true}
                     style={
-                      follow === true && profile
+                      orgFavorite.favorite === true && profile
                         ? {
-                            backgroundColor: "var(--purple)",
-                            color: "var(--bg-gray)",
-                          }
+                          backgroundColor: "var(--purple)",
+                          color: "var(--bg-gray)",
+                        }
                         : {}
                     }
-                    onClick={handleFollowClick}
+                    onClick={onOrgFavorite}
                   >
-                    {follow === true && profile
+                    {orgFavorite.favorite === true && profile
                       ? t("Mer_de.flowing")
                       : t("Mer_de.flow")}
                   </button>
@@ -169,11 +185,6 @@ function DetailHead(props: any) {
       <PopupDetailContact
         setOpenPopupContact={setOpenPopupContact}
         openPopupContact={openPopupContact}
-      />
-      <SignInUp
-        openSignIn={openSignIn}
-        setOpenSignIn={setOpenSignIn}
-        activeTabSign={1}
       />
     </div>
   );

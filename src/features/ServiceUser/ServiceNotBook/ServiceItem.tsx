@@ -1,64 +1,74 @@
+import { Checkbox } from "@mui/material";
 import React, { useContext } from "react";
 import icon from "../../../constants/icon";
 import { AppContext } from "../../../context/AppProvider";
-import formatPrice from "../../../utils/formatPrice";
+//import formatPrice from "../../../utils/formatPrice";
+import { IUser_Service } from '../../../interface/servicesUser';
+import onErrorImg from "../../../utils/errorImg";
+import { useSelector } from 'react-redux';
 
-function ServiceItem(props: any) {
+interface IProps {
+  service: IUser_Service,
+  handleServiceBook: any,
+  order_id: number
+}
+
+function ServiceItem(props: IProps) {
   const { t } = useContext(AppContext);
-  const { service, orgAll, servicesBook, setServicesBook } = props;
-  const org = orgAll.find((item: any) => item.id === service.organization_id);
-  const handleServiceBook = () => {
-    setServicesBook((prev: any) => [...prev, service]);
-  };
-  const handleCancelServices = () => {
-    setServicesBook(servicesBook.filter((item: any) => item !== service));
-  };
+  const { service, handleServiceBook, order_id } = props;
+  const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
+  const servicesBook = servicesBookSlice.servicesBook;
+  const servicesBook_id = servicesBook.map((item: any) => item.ser_book_id);
+  const handleAddService = () => {
+    // check service has order_id same
+    if (handleServiceBook) {
+      handleServiceBook(service)
+    }
+  }
+
+
   return (
-    <li key={service.id}>
-      <div className="my-ser-book__list-item">
-        <img
-          className="order-item__img"
-          src={"https://picsum.photos/650/976?random=1" + service.id}
-          alt=""
+    <>
+      <div
+        className="treatment-ser-item"
+        onClick={handleAddService}
+      >
+        <Checkbox
+          size='small'
+          sx={{
+            color: "#7161BA",
+            "&.Mui-checked": {
+              color: "#7161BA",
+            },
+            marginLeft: '-10px'
+          }}
+          checked={servicesBook_id.includes(parseInt(`${order_id}${service.id}`))}
         />
-        <div className="__list-item__cnt">
-          <div className="top">
-            <span className="name">{service.service_name}</span>
-            <span className="org-name">{org?.name}</span>
-            <div className="flex-row quantity">
-              <img src={icon.DeskAlt} alt="" />
-              <div className="quantity-text">
-                <span>{t("my_ser.count_unused")}</span>
-                <span>2/3</span>
-              </div>
-            </div>
-          </div>
-          <div className="flex-row-sp bottom">
-            <span className="bottom-price">{formatPrice(service.price)}đ</span>
-            <div className="flex-row bottom-btn">
-              {servicesBook.includes(service) === true ? (
-                <>
-                  <span className="flex-row">
-                    <img src={icon.checkGreen} alt="" />
-                    {t("my_ser.selected")}
-                  </span>
-                  <button
-                    onClick={handleCancelServices}
-                    style={{ backgroundColor: "var(--red-cl)" }}
-                  >
-                    {t("cart.cancel")}
-                  </button>
-                </>
-              ) : (
-                <button onClick={handleServiceBook}>
-                  {t("my_ser.choose")}
-                </button>
-              )}
+        <div className="treatment-ser-item__img">
+          <img
+            style={{ width: '100%', height: '100%' }}
+            src={service.image && service?.image_url}
+            onError={(e) => onErrorImg(e)}
+            alt=""
+          />
+        </div>
+        <div className="treatment-ser-item__cnt">
+          <span className="ser-name">
+            {service?.service_name}
+          </span>
+          <span className="ser-desc">
+            {service.description !== null && service.description}
+          </span>
+          <div className="flex-row quantity">
+            <img src={icon.DeskAlt} alt="" />
+            <div className="quantity-text">
+              <span>{t("my_ser.count_unused")}</span>
+              <span>{service.times-service.remain_time}/{service.times}</span>
             </div>
           </div>
         </div>
       </div>
-    </li>
+    </>
   );
 }
 

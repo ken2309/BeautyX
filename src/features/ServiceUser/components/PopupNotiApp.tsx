@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import { Dialog } from '@mui/material';
 import icon from '../../../constants/icon';
-import { AppContext } from "../../../context/AppProvider"
+import { AppContext } from "../../../context/AppProvider";
+import {useHistory} from 'react-router-dom'
 
 function PopupNotiApp(props: any) {
       const { t } = useContext(AppContext)
       const { open, setOpen, errCode } = props;
+      const history = useHistory();
       return (
             <Dialog
                   open={open}
@@ -19,7 +21,10 @@ function PopupNotiApp(props: any) {
                                           <span className="flex-column-sp ser-book-noti__title">
                                                 {t('my_ser.bk_success')}
                                           </span>
-                                          <span className="ser-book-noti__text">
+                                          <span 
+                                                onClick={()=>history.push('/Calendar')}
+                                                className="ser-book-noti__text"
+                                          >
                                                 {t('my_ser.rv_booked')}
                                                 <h4 style={{ color: 'var(--purple)', cursor: 'pointer' }} >{t('booking.here')}</h4>
                                           </span>

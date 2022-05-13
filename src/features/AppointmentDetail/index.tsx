@@ -5,6 +5,9 @@ import "./appointment-detail.css";
 import { TransitionProps } from "@mui/material/transitions";
 import icon from "../../constants/icon";
 import formatPrice from "../../utils/formatPrice";
+import onErrorImg from "../../utils/errorImg";
+import {Service} from '../../interface/service';
+import useFullScreen from "../../utils/useFullScreen";
 
 const view = window.screen.width;
 const Transition = React.forwardRef(function Transition(
@@ -18,12 +21,14 @@ const Transition = React.forwardRef(function Transition(
 
 function AppointmentDetail(props: any) {
   const { openPopupDetail, setOpenPopupDetail, datingList, org } = props;
-  const [services, setServices] = useState([]);
+  const fullScreen = useFullScreen();
+  
+  const [services, setServices] = useState<Service[]>([]);
   useEffect(() => {
     async function handleSetDetail() {
       try {
         const res = await apointmentApi.getAppointmentById(datingList.id);
-        setServices(res?.data.context.service_ids);
+        setServices(res?.data.context.services);
       } catch (error) {
         console.log(error);
       }
@@ -38,7 +43,7 @@ function AppointmentDetail(props: any) {
   }
   return (
     <Dialog
-      fullScreen={view < 768 ? true : false}
+      fullScreen={fullScreen}
       TransitionComponent={Transition}
       keepMounted
       onClose={handleClosePopupDetail}
@@ -61,7 +66,7 @@ function AppointmentDetail(props: any) {
             <div className="flex-row app-de__head-status">
               <div className="flex-row app-de__head-status-it">
                 <span></span>
-                Chờ xác nhận
+                {datingList.status?.length === 0 ? "Chưa xác nhận": datingList.status}
               </div>
             </div>
             <div className="flex-row">
@@ -78,11 +83,12 @@ function AppointmentDetail(props: any) {
               Dịch vụ: ({services?.length} dịch vụ)
             </span>
             <ul className="app-de__ser-list">
-              {services?.map((item: any, index: number) => (
+              {services?.map((item: Service, index: number) => (
                 <li key={index} className="app-de__ser-item">
                   <div className="item">
                     <img
-                      src={"https://picsum.photos/650/976?random=" + item.id}
+                      src={item.image ? item?.image_url : org?.image_url}
+                      onError={(e)=>onErrorImg(e)}
                       alt=""
                       className="item-img"
                     />
@@ -107,9 +113,8 @@ function AppointmentDetail(props: any) {
             <span className="app-de__ser-head">Địa chỉ</span>
             <div className="app-de__address-txt">
               {datingList.branch_id
-                ? org.branches.find((i: any) => i.id === datingList.branch_id)
-                  .full_address
-                : org.full_address}
+                ? org.branches.find((i: any) => i.id === datingList.branch_id)?.full_address
+                : org?.full_address}
             </div>
           </div>
           <div className="app-de__address">

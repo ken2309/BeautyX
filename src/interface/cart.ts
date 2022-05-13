@@ -1,3 +1,8 @@
+import {IOrganization} from './organization';
+import {Product} from './product';
+import {Service} from './service';
+import {Combo} from './combo'
+
 export interface Cart {
       cart_id: number,
       id: number,
@@ -7,5 +12,7 @@ export interface Cart {
       org_id: number,
       org_name: string,
       price: number,
-      quantity: number
+      quantity: number,
+      org: IOrganization,
+      cart_item: Product | Service | Combo
 }

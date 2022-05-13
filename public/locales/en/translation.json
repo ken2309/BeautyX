@@ -7,6 +7,7 @@
   },
   "Header": {
     "1": "Become a partner",
+    "seller_center":"Seller Center",
     "my_acc": "My account",
     "my_order": "My orders",
     "my_codes": "List of promo codes",
@@ -23,7 +24,7 @@
     "search": "Search"
   },
   "Banner": {
-    "1": "Explore and experience \n Beauty paradise right near you \n Booking Flatform Myspa"
+    "1": "Explore and experience \n Beauty paradise right near you \n Beautyx.vn"
   },
   "Home": {
     "home": "Home",
@@ -89,7 +90,8 @@
     "cancel": "Cancel",
     "favorite_list": "Favorite beauty spots",
     "pr_ser_purchased": "Products/Services purchased",
-    "sale_for_me": "Special offer just for me"
+    "sale_for_me": "Special offer just for you",
+    "appointment":"My appointments"
   },
   "Search_result": {
     "text_result": "search results",
@@ -244,7 +246,21 @@
     "password_confirm_invalid": "Confirm password invalid",
     "now": "now",
     "is_not_registered": "is not registered",
-    "register_success": "Successful account registration"
+    "register_success": "Successful account registration",
+    "email_already":"The email has already been taken.",
+    "phone_already":"The telephone has already been taken.",
+    "reset_password":"Reset password",
+    "continue":"Continue",
+    "send_your_code_text":"Your verification code will be sent by text message to",
+    "verification_code":"Verification codes",
+    "please_wait":"Please wait",
+    "to_get_the_verification_code_back":"to get the verification code back",
+    "resend_code":"Resend code",
+    "please_enter_your_verification_code":"Please enter your verification code",
+    "verification_invalid":"Verification code invalid",
+    "verification_code_of_6_characters":"Verification code of 6 characters",
+    "change_password_successfully":"Change password successfully",
+    "sending":"Sending..."
   },
   "partner": {
     "online_business": "Online business platform for the beauty industry",
@@ -316,5 +332,36 @@
     "rv_booked":"You can review your booked services",
     "bk_fail_title":"An error occurred during the booking process",
     "code_err":"Code error"
+  },
+  "home_2":{
+    "categories":"Categories",
+    "clinic":"Clinic",
+    "beauty_salon":"Beauty Salon",
+    "hot_beauty_deal":"HOT beauty Deal",
+    "hot_promotion":"HOT Promotion",
+    "places_near_you":"Places near you",
+    "selling":"Selling",
+    "name":"Name",
+    "hot_deal_locations":"HOT Deal locations",
+    "trusted_place":"Trusted place",
+    "places_near_you_2":"Places near you",
+    "places_you_are_interested_in":"Places you are interested in",
+    "beauty_places":"Beauty places"
+  },
+  "se":{
+    "search_results_for_keyword":"Search results for keyword",
+    "filters":"Filters",
+    "price_range":"Price range",
+    "from":"from",
+    "to":"to",
+    "invalid":"invalid",
+    "apply":"Apply"
+  },
+  "Contact":{
+    "success":"submit success"
+  },
+  "sell_center":{
+    "next":"Next",
+    "enter_your_subdomain":"Enter your subdomain"
   }
 }

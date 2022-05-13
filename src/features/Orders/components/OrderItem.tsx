@@ -3,20 +3,19 @@ import formatPrice from "../../../utils/formatPrice";
 import icon from "../../../constants/icon";
 import { IOrganization } from "../../../interface/organization";
 import orgApi from "../../../api/organizationApi";
-// import { useHistory } from 'react-router-dom';
-// import slugify from '../../../utils/formatUrlString';
 import OrderDetail from "../../OrderDetail";
 import { AppContext } from "../../../context/AppProvider";
+import { IOrderV2 } from '../../../interface/orderv2';
+import onErrorImg from "../../../utils/errorImg";
 
-function OrderItem(props: any) {
-  // const history = useHistory();
+interface IProp {
+  order: IOrderV2
+}
+
+function OrderItem(props: IProp) {
   const { t } = useContext(AppContext);
   const { order } = props;
-  const status = order.status;
-  const countItem =
-    order.items_product.length +
-    order.items_service.length +
-    order.items_treatment_combo.length;
+  const countItem = order.items_count
   const [org, setOrg] = useState<IOrganization>();
   const [openDetail, setOpenDetail] = useState(false);
   useEffect(() => {
@@ -77,7 +76,8 @@ function OrderItem(props: any) {
         <div className="order-item">
           <img
             className="order-item__img"
-            src={"https://picsum.photos/650/976?random=1" + order.id}
+            src={org?.image_url}
+            onError={(e) => onErrorImg(e)}
             alt=""
           />
           <div className="order-item__cnt">
@@ -96,7 +96,7 @@ function OrderItem(props: any) {
                 {formatPrice(order.amount)} đ
               </span>
               <div className="flex-row order-item__status">
-                {checkStatus(status)}
+                {checkStatus(order.status)}
                 <button onClick={() => setOpenDetail(true)}>
                   {t("app.details")}
                 </button>

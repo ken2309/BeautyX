@@ -7,6 +7,7 @@
   },
   "Header": {
     "1": "Trở thành đối tác",
+    "seller_center":"Kênh người bán",
     "my_acc": "Tài khoản của tôi",
     "my_order": "Lịch sử đơn hàng",
     "my_codes": "Danh sách mã ưu đãi",
@@ -23,7 +24,7 @@
     "search": "Tìm kiếm"
   },
   "Banner": {
-    "1": "Khám phá và trải nghiệm \n thiên đường làm đẹp ngay gần bạn với \n Booking Flatform Myspa"
+    "1": "Khám phá và trải nghiệm \n thiên đường làm đẹp ngay gần bạn với \n Beautyx.vn"
   },
   "Home": {
     "home": "Trang chủ",
@@ -89,7 +90,8 @@
     "cancel": "Hủy",
     "favorite_list": "Các địa điểm làm đẹp yêu thích",
     "pr_ser_purchased": "Sản phẩm/Dịch vụ đã sử dụng",
-    "sale_for_me": "Ưu đãi nổi bật dành riêng cho bạn"
+    "sale_for_me": "Ưu đãi nổi bật dành riêng cho bạn",
+    "appointment":"Lịch hẹn"
   },
   "Search_result": {
     "text_result": "kết quả tìm kiếm",
@@ -244,7 +246,20 @@
     "password_confirm_invalid": "Mật khẩu không khớp",
     "now": "ngay",
     "is_not_registered": "chưa được đăng ký",
-    "register_success": "Đăng ký tài khoản thành công"
+    "register_success": "Đăng ký tài khoản thành công",
+    "email_already":"Email này đã được đăng ký",
+    "phone_already":"Số điện thoại này đã được đăng ký",
+    "reset_password":"Đổi mật khẩu",
+    "continue":"Tiếp tục",
+    "send_your_code_text":"Mã xác minh của bạn sẽ được gửi bằng tin nhắn đến",
+    "verification_code":"Mã xác thực",
+    "please_wait":"Vui lòng chờ",
+    "to_get_the_verification_code_back":"Để nhận lại mã xác thực",
+    "resend_code":"Gửi lại mã",
+    "verification_invalid":"Mã xác thực không hợp lệ",
+    "verification_code_of_6_characters":"Mã xác thực gồm 6 ký tự",
+    "change_password_successfully":"Đổi mật khẩu thành công",
+    "sending":"Đang gửi..."
   },
   "partner": {
     "online_business": "Nền tảng kinh doanh online ngành làm đẹp",
@@ -316,5 +331,37 @@
     "rv_booked":"Bạn có thể xem lại dịch vụ đã đặt hẹn",
     "bk_fail_title":"Có lỗi xảy ra trong quá trình đặt hẹn",
     "code_err":"Mã lỗi"
+
+  },
+  "home_2":{
+    "categories":"Danh mục",
+    "clinic":"Phòng khám",
+    "beauty_salon":"Thẩm mỹ viện",
+    "hot_beauty_deal":"Deal làm đẹp cực HOT",
+    "hot_promotion":"Khuyến mãi HOT",
+    "places_near_you":"Gần bạn",
+    "selling":"Bán chạy",
+    "name":"Tên",
+    "hot_deal_locations":"Địa điểm nhiều Deal HOT",
+    "trusted_place":"Địa điểm đáng tin cậy",
+    "places_near_you_2":"Địa điểm gần bạn",
+    "places_you_are_interested_in":"Địa điểm bạn quan tâm",
+    "beauty_places":"Địa điểm làm đẹp"
+  },
+  "se":{
+    "search_results_for_keyword":"Kết quả tìm kiếm cho từ khóa",
+    "filters":"Bộ lọc tìm kiếm",
+    "price_range":"Khoảng giá",
+    "form":"từ",
+    "to":"đến",
+    "invalid":"Không hợp lệ",
+    "apply":"Áp dụng khoảng giá"
+  },
+  "Contact":{
+    "success":"Đã nhận thông tin"
+  },
+  "sell_center":{
+    "next":"Tiếp tục",
+    "enter_your_subdomain":"Nhập đia chỉ Subdomain"
   }
 }

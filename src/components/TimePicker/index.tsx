@@ -3,8 +3,12 @@ import dayjs from "dayjs";
 import TimeItem from './components/TimeItem';
 import './timePicker.css';
 
-function TimePicker(props: any) {
-      const {setChooseTime} = props;
+interface IProps {
+      onChange: (e: string) => void
+}
+
+function TimePicker(props: IProps) {
+      const { onChange } = props;
       let times = 25;
       var rows = [];
       var hours = dayjs().set("hour", 8).set("minute", 0).set("second", 0);
@@ -14,11 +18,11 @@ function TimePicker(props: any) {
                         <TimeItem
                               key={i}
                               Time={hours}
-                              setChooseTime={setChooseTime}
-                              // Now={now}
-                              // handleClick={handleTime}
-                              // activeTime={activeTime}
-                              // activeDate={activeDate}
+                              onChangeItem={(e) => onChange(e)}
+                        // Now={now}
+                        // handleClick={handleTime}
+                        // activeTime={activeTime}
+                        // activeDate={activeDate}
                         />
                   );
             }

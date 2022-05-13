@@ -2,6 +2,9 @@ import React, { useContext } from "react";
 import { RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import SectionTitle from "../../SectionTitle";
 import { AppContext } from "../../../context/AppProvider";
+import { IPaymentMethod } from "../../../interface/paymentMethod";
+
+
 function PaymentMethod(props: any) {
   const { t } = useContext(AppContext);
   const { methodList, value, setValue, chooseE_wall, setChooseE_wall } = props;
@@ -42,35 +45,36 @@ function PaymentMethod(props: any) {
                 className="pm-method_child"
               >
                 <ul>
-                  {item.method_list?.map((item: any) => (
-                    <li
-                      className="pm-method_child-item"
-                      key={item.id}
-                      onClick={() => setChooseE_wall(item)}
-                    >
-                      <div
-                        className="pm-method_child-item_box"
-                        style={
-                          chooseE_wall === item
-                            ? {
+                  {item.method_list?.filter((item: IPaymentMethod) => item.name_key === "MOMO")
+                    .map((item: IPaymentMethod) => (
+                      <li
+                        className="pm-method_child-item"
+                        key={item.id}
+                        onClick={() => setChooseE_wall(item)}
+                      >
+                        <div
+                          className="pm-method_child-item_box"
+                          style={
+                            chooseE_wall === item
+                              ? {
                                 backgroundColor: "#7161BA",
                                 color: "white",
                               }
-                            : {
+                              : {
                                 backgroundColor: "",
                                 color: "#7161BA",
                               }
-                        }
-                      >
-                        {/* {chooseE_wall === item ? (
+                          }
+                        >
+                          {/* {chooseE_wall === item ? (
                           <img src={icon.success} alt="" />
                         ) : (
                           ""
                         )} */}
-                        {item.name_key}
-                      </div>
-                    </li>
-                  ))}
+                          {item.name_key}
+                        </div>
+                      </li>
+                    ))}
                 </ul>
               </div>
             </li>

@@ -1,4 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useState,useEffect } from "react";
 import "./head.css";
 import { Container } from "@mui/material";
 import ButtonCus from "../../components/ButtonCus";
@@ -9,18 +10,20 @@ import img from "../../constants/img";
 import Notification from "./components/Notification";
 import Language from "./components/Language";
 import Menu from "./components/Menu";
-import SectionTitle from "../SectionTitle";
 import { useSelector, useDispatch } from "react-redux";
 import { getTotal } from "../../redux/cartSlice";
 import MbMenu from "../../featuresMobile/Menu";
 import scrollTop from "../../utils/scrollTop";
 import HomeFilter from '../Home/components/HomeFilter';
+import SearchFilter from "../../featuresMobile/SearchResult/SearchFilter";
+
+
 
 const styleFilter = {
-  width: '66.66%',
+  width: '41.5%',
   boxShadow: "rgb(0 0 0 / 14%) -2px 1px 16px 0px",
-  padding: "36px",
-  transform:'translateX(0%)'
+  padding: "12px",
+  transform: 'translateX(0%)'
 }
 
 function openFilter() {
@@ -38,26 +41,34 @@ window.addEventListener("scroll", function () {
 //////
 
 function Head(props: any) {
-  const { t, profile, userInfo } = useContext(AppContext);
-  const { isCart, title, setCloseDialog, headerStyle } = props;
+  const {
+    t,
+    //profile,
+    //userInfo
+  } = useContext(AppContext);
+  const { IN_HOME, setCloseDialog, headerStyle } = props;
   const dispatch = useDispatch();
   const [openNo, setOpenNo] = useState(false);
   const [openLang, setOpenLang] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [openMbMenu, setOpenMbMenu] = useState(false);
+  const [openSearch, setOpenSearch] = useState(false);
   const [unit, setUnit] = useState("VND");
   const history = useHistory();
 
   //get total amount cart
+
   const carts = useSelector((state: any) => state.carts);
+  const USER = useSelector((state:any) => state.USER.USER);
+  
   useEffect(() => {
     dispatch(getTotal());
   }, [dispatch, carts]);
   const gotoPartner = () => {
-    if (isCart) {
-      history.goBack();
+    if (IN_HOME === true) {
+      history.push("/kenh-nguoi-ban");
     } else {
-      history.push("/Partner");
+      history.goBack();
     }
   };
   const gotoPageSignUp = () => {
@@ -103,15 +114,11 @@ function Head(props: any) {
       <Container>
         <div className="flex-row-sp hd-cnt">
           <div className="hd-logo">
-            {isCart ? (
-              <SectionTitle title={title} />
-            ) : (
-              <img onClick={() => history.push("/")} src={img.beautyX} alt="" />
-            )}
+            <img onClick={() => history.push("/")} src={img.beautyX} alt="" />
           </div>
           <div className="hd-cnt__left">
             <ButtonCus
-              text={isCart ? t("Header.back") : t("Header.1")}
+              text={IN_HOME === true ? t("Header.seller_center") : t("Header.back")}
               borderRadius="18px"
               lineHeight="20px"
               color="var(--purple)"
@@ -127,7 +134,7 @@ function Head(props: any) {
           />
           <div
             style={
-              profile
+              USER
                 ? { justifyContent: "space-between" }
                 : { justifyContent: "flex-end" }
             }
@@ -143,11 +150,12 @@ function Head(props: any) {
                 <div className="header-filter__wrap">
                   <HomeFilter
                     styleFilter={styleFilter}
+                    hiddenFilter={hiddenFilter}
                   />
                 </div>
               </div>
             </div>
-            {!profile ? (
+            {!USER ? (
               <>
                 <div className="flex-row hd-cnt__sign-btn">
                   <ButtonCus
@@ -179,10 +187,17 @@ function Head(props: any) {
                   className="hd-cnt__right-user-name"
                   onClick={() => history.push("/tai-khoan/thong-tin-ca-nhan")}
                 >
-                  {userInfo?.fullname}
+                  {USER?.fullname}
                 </span>
-                <div className="hd-cnt__right-avatar">
-                  <img onClick={openNotiClick} src={img.Avatar} alt="" />
+                <div onClick={openNotiClick} className="hd-cnt__right-avatar">
+                  {
+                    USER ?
+                      <img style={{ borderRadius: '100%' }} onClick={openNotiClick} src={USER?.avatar} alt="" />
+                      :
+                      <div className="blank-avatar">
+                        {USER?.fullname?.slice(0, 1)}
+                      </div>
+                  }
                   <div className="hd-cnt__right-avatar-dot"></div>
                   <Notification openNo={openNo} />
                 </div>
@@ -190,21 +205,28 @@ function Head(props: any) {
             )}
             {/* menu for mobile */}
             <div className="mb-hd-cnt__right">
-              <div className="flex-row">
-                <div
-                  onClick={() => history.push("/cart")}
-                  className="hd-cnt__right-cart"
+              <div className="flex-row-sp">
+                <button
+                  onClick={() => setOpenSearch(true)}
                 >
-                  <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                  <div className="hd-cnt__right-cart-total">
-                    {carts.cartQuantity}
+                  <img src={icon.search} alt="" />
+                </button>
+                <div className="flex-row">
+                  <div
+                    onClick={() => history.push("/cart")}
+                    className="hd-cnt__right-cart"
+                  >
+                    <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                    <div className="hd-cnt__right-cart-total">
+                      {carts.cartQuantity}
+                    </div>
                   </div>
+                  <img
+                    onClick={() => setOpenMbMenu(true)}
+                    src={icon.menuWhite}
+                    alt=""
+                  />
                 </div>
-                <img
-                  onClick={() => setOpenMbMenu(true)}
-                  src={icon.menuWhite}
-                  alt=""
-                />
               </div>
             </div>
             <MbMenu openMbMenu={openMbMenu} setOpenMbMenu={setOpenMbMenu} />
@@ -221,12 +243,16 @@ function Head(props: any) {
             <div className="hd-cnt__right-menu">
               <img onClick={openMenuClick} src={icon.Menu} alt="" />
               <Menu
-                profile={profile}
+                //profile={profile}
+                USER={USER}
                 openMenu={openMenu}
                 setOpenMenu={setOpenMenu}
               />
             </div>
-            <div onClick={openLangClick} className="hd-cnt__right-lang">
+            <div
+              onClick={openLangClick}
+              className="hd-cnt__right-lang"
+            >
               <div className="flex-row">
                 <img src={icon.Money} alt="" />
                 {unit}
@@ -241,6 +267,10 @@ function Head(props: any) {
           </div>
         </div>
       </Container>
+      <SearchFilter
+        openSearch={openSearch}
+        setOpenSearch={setOpenSearch}
+      />
     </div>
   );
 }

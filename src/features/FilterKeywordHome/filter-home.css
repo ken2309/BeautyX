@@ -1,0 +1,75 @@
+.filter-home-sec-item .sec-title{
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    color: var(--purple);
+}
+.filter-home-sec-item .org-lits{
+    margin-top: 12px;
+}
+.filter-home-sec-item .org-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 6px 0px;
+    border-bottom: solid 1px var(--bg-color);
+    cursor: pointer;
+    transition: all .3s;
+}
+.filter-home-sec-item .org-item:hover{
+    margin-left: 8px;
+}
+.filter-home-sec-item .org-item .org-item__img{
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.filter-home-sec-item .org-item__cnt{
+    width: calc(100% - 64px);
+    padding-left: 6px;
+}
+.filter-home-sec-item .org-name{
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 700;
+    color: var(--text-black);
+}
+.filter-home-sec-item .org-address{
+    margin-top: 3px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-start;
+}
+.filter-home-sec-item .org-address img{
+    width: 16px;
+    height: 16px;
+}
+.filter-home-sec-item .org-address span{
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    color: var(--black);
+}
+.filter-home-sec-item .org-address .dot{
+    width: 6px;
+    height: 6px;
+    background-color: var(--purple);
+    border-radius: 100%;
+    margin: 4px 8px 0px 4px;
+}
+.filter-home-sec-item .org-item .ser-price span:nth-child(1){
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    color: var(--red-cl);
+}
+.filter-home-sec-item .org-item .ser-price span:nth-child(2){
+    font-size: 12px;
+    line-height: 16px;
+    margin-left: 6px;
+    font-weight: 700;
+    color: var(--text-black);
+    text-decoration: line-through;
+}

@@ -23,6 +23,6 @@ export interface Service {
       service_group_id: number | null
       service_name: string | null
       service_order: boolean | null
-      special_price: number | null
+      special_price: number
       status: boolean | null
 }

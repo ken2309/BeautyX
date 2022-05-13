@@ -5,14 +5,14 @@ import {AppContext} from '../../../context/AppProvider';
 import MenuBox from './MenuBox';
 
 function Menu(props:any) {
-      const { openMenu, setOpenMenu, profile } = props;
+      const { openMenu, setOpenMenu, USER } = props;
       const { t, setSign } = useContext(AppContext)
       const handleSignOut = () => {
             setSign(false);
-            const token = '';
+            //const token = null;
             setOpenMenu(!openMenu)
-            localStorage.setItem('_WEB_TK', token)
-            window.sessionStorage.setItem('_WEB_TK', token)
+            localStorage.removeItem('_WEB_TK')
+            window.sessionStorage.removeItem('_WEB_TK')
       }
       return (
             <div
@@ -22,7 +22,7 @@ function Menu(props:any) {
                   <div className="hd-menu__title">Menu</div>
                   <MenuBox/>
                   {
-                        profile ?
+                        USER ?
                               <div className="hd-menu-box__bot">
                                     <img src={icon.signOut} alt="" />
                                     <ButtonCus

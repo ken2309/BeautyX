@@ -1,108 +1,131 @@
 import React, { useContext, useState } from 'react';
 import icon from '../../../constants/icon';
-import PopupSuccess from '../../PopupSuccess/index'
-import {useFormik} from 'formik';
-import * as Yup from 'yup'
+import PopupSuccess from '../../PopupSuccess/index';
+import { useHistory } from 'react-router-dom'
 import { AppContext } from '../../../context/AppProvider';
+import onErrorImg from '../../../utils/errorImg';
+import PaymentBranch from './PaymentBranch';
 
-const phoneFormat = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+//const phoneFormat = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 function PaymentForm(props: any) {
-      const { t } = useContext(AppContext)
-      const { setUserInfo } = props;
+      const { setNote, list, chooseBr, setChooseBr } = props;
+      const org = list[0]?.org;
+      const [open, setOpen] = useState(false);
+      const { t } = useContext(AppContext);
+      const history = useHistory();
+      const { address } = props;
       const [popup, setPopup] = useState(false);
-      const user = JSON.parse(`${localStorage.getItem('user-payment-wb')}`);
-      const formik = useFormik({
-            initialValues: {
-                  cus_name: user ? user.cus_name : '',
-                  cus_address: user ? user.cus_address : '',
-                  cus_phone: user ? user.cus_phone : '',
-                  cus_note: user ? user.cus_note : ''
-            },
-            validationSchema: Yup.object({
-                  cus_name: Yup.string()
-                        .required(`${t('pm.please_enter')}${t('pm.full_name')} !`),
-                  cus_address: Yup.string()
-                        .required(`${t('pm.please_enter')}${t('Mer_de.address')} !`),
-                  cus_phone: Yup.string()
-                        .matches(phoneFormat, t('pm.phone_invalid'))
-                        .required(`${t('pm.please_enter')}${t('pm.phone_number')} !`)
-            }),
-            onSubmit: (values: any) => {
-                  setUserInfo(values);
-                  localStorage.setItem('user-payment-wb', JSON.stringify(values));
-                  setPopup(true)
-            }
-      });
-
+      const user = JSON.parse(`${localStorage.getItem('_WEB_US')}`);
       return (
             <>
-                  <form
-                        onSubmit={formik.handleSubmit}
-                        autoComplete="off"
+                  <PaymentBranch
+                        open={open}
+                        setOpen={setOpen}
+                        org={org}
+                        chooseBr={chooseBr}
+                        setChooseBr={setChooseBr}
+                  />
+                  <div
                         className="flex-column payment-form"
                   >
                         <div style={{ width: '100%' }} className="flex-row-sp payment-form__box">
                               <div className="payment-form__left">
                                     <span>{t('pm.payment_info')}</span>
-                                    <div className="flex-row-sp pm-form__top">
-                                          <div className="pm-form__top-item">
-                                                <div className="pm-form__top-item_ip">
-                                                      <img src={icon.User} alt="" />
-                                                      <input
-                                                            name="cus_name"
-                                                            value={formik.values.cus_name}
-                                                            onChange={formik.handleChange}
-                                                            type="text"
-                                                            placeholder={t('pm.full_name')}
-                                                      />
+                                    <div className="payment-form__left-cnt">
+                                          <span className="flex-row-sp sec-title">
+                                                Thông tin người nhận
+                                                <button
+                                                      className='flex-row'
+                                                      onClick={() => history.push('/tai-khoan/thong-tin-ca-nhan')}
+                                                >
+                                                      <img src={icon.editWhite} alt="" />
+                                                      Thay đổi
+                                                </button>
+                                          </span>
+                                          <div className="sec-item">
+                                                <div className="sec-item__label">
+                                                      <span>Họ và tên:</span>
+                                                      <span>{user?.fullname}</span>
                                                 </div>
-                                                {formik.errors.cus_name && formik.touched.cus_name && (
-                                                      <span className="pm-form__top-item_err">{formik.errors.cus_name}</span>
-                                                )}
-                                          </div>
-                                          <div className="pm-form__top-item">
-                                                <div className="pm-form__top-item_ip">
-                                                      <img src={icon.phone} alt="" />
-                                                      <input
-                                                            name="cus_phone"
-                                                            value={formik.values.cus_phone}
-                                                            onChange={formik.handleChange}
-                                                            type="text"
-                                                            placeholder={t('pm.phone_number')}
-                                                      />
+                                                <div className="sec-item__label">
+                                                      <span>Email:</span>
+                                                      <span>{user?.email}</span>
                                                 </div>
-                                                {formik.errors.cus_phone && formik.touched.cus_phone && (
-                                                      <span className="pm-form__top-item_err">{formik.errors.cus_phone}</span>
-                                                )}
+                                                <div className="sec-item__label">
+                                                      <span>Số điện thoại:</span>
+                                                      <span>{user?.telephone}</span>
+                                                </div>
                                           </div>
-                                    </div>
-                                    <div className="pm-form__bot">
-                                          <div className="pm-form__top-item_ip">
-                                                <img src={icon.Location} alt="" />
-                                                <input
-                                                      name="cus_address"
-                                                      value={formik.values.cus_address}
-                                                      onChange={formik.handleChange}
-                                                      type="text"
-                                                      placeholder={t('Mer_de.address')}
-                                                />
+                                          <span
+                                                style={{ marginTop: '6px' }}
+                                                className="flex-row-sp sec-title"
+                                          >
+                                                Địa chỉ giao hàng
+                                                <button
+                                                      className='flex-row'
+                                                      onClick={() => history.push('/tai-khoan/thong-tin-ca-nhan')}
+                                                >
+                                                      <img src={icon.editWhite} alt="" />
+                                                      Thay đổi
+                                                </button>
+                                          </span>
+                                          <div className="sec-item__label">
+                                                <span>Đia chỉ:</span>
+                                                <span>{address?.address}</span>
                                           </div>
-                                          {formik.errors.cus_address && formik.touched.cus_address && (
-                                                <span className="pm-form__top-item_err">{formik.errors.cus_address}</span>
-                                          )}
+                                          <input
+                                                onChange={(e) => setNote(e.target.value)}
+                                                type="text"
+                                                placeholder='Ghi chú cho doanh nghiệp...'
+                                          />
                                     </div>
                               </div>
                               <div className="payment-form__right">
-                                    <textarea
-                                          name="cus_note"
-                                          value={formik.values.cus_note}
-                                          onChange={formik.handleChange}
-                                          placeholder={t('pm.note')}
-                                    ></textarea>
+                                    <img
+                                          src={org?.image_url}
+                                          alt=""
+                                          className="payment-form__right-avatar"
+                                          onError={(e) => onErrorImg(e)}
+                                    />
+                                    <div className="payment-form__right-info">
+                                          {
+                                                chooseBr ?
+                                                      <>
+                                                            <span className="org-name">
+                                                                  {chooseBr?.name}
+                                                            </span>
+                                                            <span className='org-address'>
+                                                                  Đia chỉ:{chooseBr?.full_address}
+                                                            </span>
+                                                            <span className="org-address">
+                                                                  Liên hệ : {chooseBr?.telephone}
+                                                            </span>
+                                                      </>
+                                                      :
+                                                      <>
+                                                            <span className="org-name">
+                                                                  {org?.name}
+                                                            </span>
+                                                            <span className='org-address'>
+                                                                  Đia chỉ:{org?.full_address}
+                                                            </span>
+                                                            <span className="org-address">
+                                                                  Liên hệ : {org?.telephone[0]}
+                                                            </span>
+                                                      </>
+                                          }
+                                          {
+                                                org && org.branches?.length > 0 &&
+                                                <button
+                                                      onClick={() => setOpen(true)}
+                                                >
+                                                      Chọn chi nhánh
+                                                </button>
+                                          }
+                                    </div>
                               </div>
                         </div>
-                        <button className="payment-submit" type="submit" >{t('pm.save_info')}</button>
-                  </form>
+                  </div>
                   <PopupSuccess
                         popup={popup}
                         setPopup={setPopup}

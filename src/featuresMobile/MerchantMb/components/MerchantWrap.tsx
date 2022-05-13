@@ -6,39 +6,30 @@ import DetailComment from '../../../features/MerchantDetail/components/DetailCom
 import DetailBranchesList from './DetailBranchesList'
 import { utilsList } from '../../../features/MerchantDetail/components/DetailInfo';
 import { staffList } from '../../../features/MerchantDetail/components/DetailInfo';
-import { Slide, Dialog } from '@mui/material'
-import { TransitionProps } from '@mui/material/transitions';
-import { IBranch } from '../../../interface/branch'
+import { Drawer } from '@mui/material'
+import { IOrganization } from '../../../interface/organization'
 
-const Transition = React.forwardRef(function Transition(
-      props: TransitionProps & {
-            children: React.ReactElement;
-      },
-      ref: React.Ref<unknown>,
-) {
-      return <Slide direction="up" ref={ref} {...props} />;
-});
 
 interface IProps {
       open: boolean,
       display: number,
       setOpen: (open: boolean) => void,
-      branches: IBranch[]
+      org: IOrganization
 }
 
 function MerchantWrap(props: IProps) {
-      const { open, setOpen, display, branches } = props;
+      const { open, setOpen, display,org } = props;
       const [element, setElement] = useState(<DetailInfoUtil utilsList={utilsList} />);
       useEffect(() => {
             switch (display) {
                   case 1:
                         return setElement(<DetailInfoUtil utilsList={utilsList} />);
                   case 2:
-                        return setElement(<DetailBranchesList branches={branches} />);
+                        return setElement(<DetailBranchesList branches={org.branches} />);
                   case 3:
                         return setElement(<DetailPersonnel list={staffList} />);
                   case 4:
-                        return setElement(<DetailComment />)
+                        return setElement(<DetailComment org={org} />)
                   default:
                         break;
             }
@@ -48,11 +39,10 @@ function MerchantWrap(props: IProps) {
             setOpen(false)
       }
       return (
-            <Dialog
+            <Drawer
                   open={open}
-                  fullScreen
                   onClose={onClose}
-                  TransitionComponent={Transition}
+                  anchor="bottom"
             >
                   <div className="mb-mer-cnt__box">
                         <div className="flex-row-sp mb-mer-cnt__box-head">
@@ -63,21 +53,7 @@ function MerchantWrap(props: IProps) {
                               {element}
                         </div>
                   </div>
-            </Dialog>
-            // <div
-            //       style={open === true ? { marginTop: '0px' } : { marginTop: '100vh' }}
-            //       className="mb-mer-cnt"
-            // >
-            //       <div className="mb-mer-cnt__box">
-            //             <div className="flex-row-sp mb-mer-cnt__box-head">
-            //                   <div></div>
-            //                   <img onClick={onClose} src={icon.x} alt="" />
-            //             </div>
-            //             <div className="mb-mer-cnt__box-content">
-            //                   {element}
-            //             </div>
-            //       </div>
-            // </div>
+            </Drawer>
       );
 }
 

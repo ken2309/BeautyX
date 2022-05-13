@@ -32,7 +32,7 @@ function ComboItem(props: any) {
     scrollTop();
     const action = addCart(values);
     history.push({
-      pathname: `/Cart`,
+      pathname: `/cart`,
     });
     dispatch(action);
   };

@@ -13,10 +13,10 @@ function DetailTab(props: IProps) {
       const { t } = useContext(AppContext)
       const tabList = [
             { id: 1, name: t('Mer_de.about') },
+            { id: 5, name: t('Mer_de.sale') },
             { id: 2, name: t('Mer_de.services') },
             { id: 3, name: t('Mer_de.products') },
             { id: 4, name: 'Combo' },
-            { id: 5, name: t('Mer_de.sale') }
       ]
       const chooseTabClick = (id: number) => {
             setActiveTab(id)

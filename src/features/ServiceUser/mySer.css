@@ -15,7 +15,7 @@
   top: 0;
 }
 .my-ser__right {
-  width: 75%;
+  width: 100%;
   height: max-content;
 }
 .my-ser-submit__btn {
@@ -99,20 +99,128 @@
   transition: all 0.3s;
 }
 /* service item */
-.my-ser-book__list li {
+.my-ser-book__list{
   width: 100%;
-  margin: 16px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
+.my-ser-book__list li {
+  width: 50%;
+  background-color: var(--bgWhite);
+  padding:12px 8px;
+}
+.treat-card-item{
+  box-shadow: 0 6px 15px #dcd8ee;
+  border-radius: 12px;
+  padding: 12px;
+  background-color: var(--bgWhite);
+}
+.treat-card-item__head{
+  display: flex;
+  justify-content: space-between;
+}
+.treat-card-item__head .org-name{
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 700;
+  color: var(--purple);
+}
+.treat-card-item__head .time,
+.treat-card-item__head .code{
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+}
+.treat-card-item__head .time span,
+.treat-card-item__head .code span{
+  font-weight: 700;
+  margin-left: 4px;
+}
+.treat-card-item__ser-count .title{
+  font-size: 14px;
+  font-weight: 700;
+}
+.treatment-ser-item{
+  display: flex;
+  flex-direction: row;
+  padding: 8px 0px;
+  border-bottom: 1px solid var(--bgGray);
+  cursor: pointer;
+}
+.treatment-ser-item__img{
+  width: 86px;
+  height: 86px;
+}
+.treatment-ser-item__img img{
+  border-radius: 8px;
+  object-fit: cover;
+}
+.treatment-ser-item__cnt{
+  padding-left: 6px;
+  width: calc(100% - 128px);
+  display: flex;
+  flex-direction: column;
+}
+.treatment-ser-item__cnt .ser-name{
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 700;
+  color: var(--purple);
+}
+.treatment-ser-item__cnt .ser-desc{
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-hover);
+  margin: 4px 0px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+.treatment-ser-item .quantity{
+  padding: 4px 8px;
+  background-color: var(--grey);
+  width: fit-content;
+  border-radius: 8px;
+}
+.treatment-ser-item .quantity .quantity-text{
+  display: flex;
+  flex-direction: column;
+}
+.treatment-ser-item .quantity .quantity-text span:nth-child(1){
+  font-size: 9px;
+  line-height: 12px;
+  font-weight: 700;
+  color: var(--text-hover);
+}
+.treatment-ser-item .quantity .quantity-text span:nth-child(2){
+  font-size: 11px;
+  line-height: 12px;
+  font-weight: bold;
+  color: var(--text-black);
+}
+
+
+
+
+
+
+
 .my-ser-book__list-item {
   background-color: var(--bgWhite);
-  padding: 8px;
+  padding: 12px 8px;
   display: flex;
   justify-content: space-between;
   height: 176px;
 }
-.my-ser-book__list li:not(:last-child) {
+/* .my-ser-book__list li:not(:last-child) {
   border-bottom: 1px solid var(--bgGray);
-}
+} */
 .__list-item__cnt {
   width: calc(100% - 234px);
   padding-left: 16px;
@@ -574,12 +682,39 @@
 /* res-mobile */
 /* Mobile */
 @media only screen and (max-width: 767px) {
+  .my-ser-book__list{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+  .my-ser-book__list li{
+    width: 100%;
+  }
+  .treat-card-item{
+    padding: 8px;
+  }
+  .treat-card-item__head .org-name {
+    font-size: 12px;
+    line-height: 14px;
+  }
+  .treat-card-item__head .time, 
+  .treat-card-item__head .code{
+    font-size: 10px;
+    line-height: 12px;
+  }
+  .treat-card-item__ser-count .title{
+    font-size: 10px;
+  }
+
+
+
+
   .my-ser {
     flex-direction: column;
-    padding: 12px;
+    padding: 12px 4px 12px 12px;
   }
   .my-ser-book__cnt-head {
-    margin-top: 24px;
+    margin-top: -10px;
   }
   .my-ser__left {
     padding: 12px;
@@ -610,8 +745,8 @@
     padding: 0px;
   }
   .my-ser .my-ser-book__cnt-head {
-    margin-bottom: 24px;
-    padding-bottom: 24px;
+    margin-bottom: -22px;
+    padding-bottom: 26px;
   }
   .my-ser-book__cnt-head-btn span {
     display: none;
@@ -649,14 +784,12 @@
   .my-ser-bot__cnt {
     padding: 0 24px;
   }
-  .my-ser-book__list li {
-    margin: 24px 0;
-  }
   .my-ser-bot__check {
-    padding: 0 20px;
+    padding: 0 20px 20px 20px;
     flex-direction: column;
     height: calc(100vh - 55px);
     overflow-y: scroll;
+    margin-top: 8px;
   }
   .my-ser-bot__check-left,
   .my-ser-bot__check-right {
@@ -679,7 +812,7 @@
   }
   .my-ser-bot__up {
     z-index: 4;
-    /* height: 100%; */
+    padding: 10px 0px;
   }
   .my-ser-submit__btn {
     margin-top: 16px;

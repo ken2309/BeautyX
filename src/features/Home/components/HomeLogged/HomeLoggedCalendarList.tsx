@@ -19,15 +19,16 @@ export default function HomeLoggedCalendarList(props: any) {
     daysInWeek,
     dotAppoint,
   } = props;
-  const fixed = document.querySelector(".week-container__right");
-  document.addEventListener("scroll", () => {
-    let scrollY = window.scrollY;
-    if (scrollY >= 300) {
-      fixed?.classList.add("week-container__right-ac");
-    } else {
-      fixed?.classList.remove("week-container__right-ac");
-    }
-  });
+  // const fixed = document.querySelector(".week-container__right");
+  // document.addEventListener("scroll", () => {
+  //   let scrollY = window.scrollY;
+  //   if (scrollY >= 300) {
+  //     fixed?.classList.add("week-container__right-ac");
+  //   } else {
+  //     fixed?.classList.remove("week-container__right-ac");
+  //   }
+  // });
+  
   const { t } = useContext(AppContext);
   const checkdate = (
     i: number,

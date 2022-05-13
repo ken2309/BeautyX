@@ -6,7 +6,8 @@ import LanguageBox from '../../features/Head/components/LanguageBox';
 import './mbMenu.css';
 import icon from '../../constants/icon';
 import { AppContext } from '../../context/AppProvider';
-import {useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom';
+import {useSelector} from 'react-redux'
 
 const Transition = React.forwardRef(function Transition(
       props: TransitionProps & {
@@ -19,7 +20,13 @@ const Transition = React.forwardRef(function Transition(
 
 function MbMenu(props: any) {
       const history = useHistory();
-      const { t, profile, userInfo, setSign } = useContext(AppContext)
+      const USER = useSelector((state:any) => state.USER.USER);
+      const { 
+            t, 
+            //profile, 
+            //userInfo, 
+            setSign 
+      } = useContext(AppContext)
       const { openMbMenu, setOpenMbMenu } = props;
       const onSignIn = () => {
             setOpenMbMenu(false)
@@ -48,12 +55,12 @@ function MbMenu(props: any) {
                   <div className="mb-hd-menu">
                         <div>
                               <div
-                                    style={!profile ? { padding: '14px 24px' } : {}}
+                                    style={!USER ? { padding: '14px 24px' } : {}}
                                     className="mb-hd-menu__btn"
                               >
                                     {
-                                          profile ?
-                                                <span>{userInfo?.fullname}</span>
+                                          USER ?
+                                                <span>{USER?.fullname}</span>
                                                 :
                                                 <div className="mb-hd-menu__btn-sign">
                                                       <span
@@ -81,7 +88,7 @@ function MbMenu(props: any) {
                         </div>
                         <div className="mb-hd-menu__sign-out">
                               {
-                                    profile ?
+                                    USER ?
                                           <button
                                                 onClick={handleSignOut}
                                           >

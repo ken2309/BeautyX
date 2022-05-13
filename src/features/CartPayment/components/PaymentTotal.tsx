@@ -1,70 +1,67 @@
 import React, { useContext, useState } from "react";
 import { Container } from "@mui/material";
 import formatPrice from "../../../utils/formatPrice";
-import ButtonCus from "../../../components/ButtonCus";
 import PopupSuccess from "../../PopupSuccess/index";
 import { AppContext } from "../../../context/AppProvider";
 import order from '../../../api/orderApi';
-import { Cart } from '../../../interface/cart'
+import { useHistory } from 'react-router-dom';
+import ButtonLoading from "../../../components/ButtonLoading";
+import { pickBy, identity } from 'lodash'
+import { useSelector } from "react-redux";
+import REDUCER_CART from "../../../utils/reducerCart";
 
 const useInPayment: boolean = true;
 function PaymentTotal(props: any) {
   const { t } = useContext(AppContext);
-  const { 
-      methodList, 
-      value, 
-      list, 
-      carts, 
-      userInfo, 
-      profile, 
-      chooseE_wall,
-      products,
-      services,
-      combos 
-    } =props;
+  const USER = useSelector((state: any) => state.USER.USER);
+  const {
+    methodList,
+    value,
+    chooseE_wall,
+    data_cart,
+  } = props;
+  const history = useHistory();
   const pmMethod = methodList.find((item: any) => item.method === value);
   const [popup, setPopup] = useState(false);
-  const [disableBtn, setDisableBtn] = useState(false);
-  const org_id = list[0].org_id;
+  const [loading, setLoading] = useState(false);
+  const org_id = data_cart.list[0].org_id;
 
-  const productsPost = products.map((item: Cart) => ({ id: item.id, quantity: item.quantity }))
-  const servicesPost = services.map((item: Cart) => ({ id: item.id, quantity: item.quantity }))
-  const combosPost = combos.map((item:Cart) => ({id:item.id, quantity: item.quantity}))
-
-  const params = {
-    products: productsPost,
-    services: servicesPost,
-    treatment_combo: combosPost,
+  const { products, services, combos } = REDUCER_CART(data_cart);
+  const params_string = {
+    products: products,
+    services: services,
+    treatment_combo: combos,
     payment_method_id: chooseE_wall?.id,
-    prepay_cards: [],
-    branch_id: 0,
-    coupon_code: "string",
-    description: "string"
-  };
- 
+    coupon_code: [],
+    user_address_id: data_cart.address?.id,
+    description: data_cart.note,
+    branch_id: data_cart.chooseBr?.id
+  }
   async function handlePostOrder(org_id: number, params: object) {
+    setLoading(true)
     try {
       const response = await order.postOrder(org_id, params);
-      console.log(response)
-      const payUrl = await response.data.context.payment_gateway.extra_data.payUrl;
-      //const deepUrl = await response.data.context.payment_gateway.extra_data.deeplinkMiniApp;
-      const newWindow = window.open(`${payUrl}`, '_blank', 'noopener,noreferrer')
-      setDisableBtn(true)
-      if (newWindow) newWindow.opener = null
+      const state_payment = await response.data.context
+      const desc = await state_payment.payment_gateway.description;
+      const transaction_uuid = state_payment.payment_gateway.transaction_uuid;
+      history.push({
+        pathname: `/trang-thai-don-hang/${desc}`,
+        search: transaction_uuid,
+        state: state_payment
+      })
+      setLoading(false);
     } catch (err) {
       console.log(err)
-      setDisableBtn(false)
+      setLoading(false);
     }
   }
   const handleSubmitPayment = () => {
-    if (disableBtn === false) {
-      if (profile) {
-        if (value && userInfo && chooseE_wall?.id === 1) {
-          //console.log(params)
-          handlePostOrder(org_id, params)
-        } else {
-          console.log("Trang web chỉ chấp nhận thanh toán qua ví điện tử Momo");
-        }
+    if (USER) {
+      if (data_cart.address && value && chooseE_wall?.id === 1) {
+        const params = pickBy(params_string, identity);
+        handlePostOrder(org_id, params)
+      } else {
+        console.log("Trang web chỉ chấp nhận thanh toán qua ví điện tử Momo");
       }
     }
   };
@@ -88,20 +85,17 @@ function PaymentTotal(props: any) {
                 ? `${pmMethod?.title}: ${chooseE_wall?.name_key}`
                 : t("pm.choose_payment_method")}
             </p>
-            <p>{formatPrice(carts.cartAmount)} đ</p>
+            <p>{formatPrice(data_cart.carts.cartAmount)} đ</p>
             <p>0 đ</p>
-            <p>{formatPrice(carts.cartAmount)} đ</p>
+            <p>{formatPrice(data_cart.carts.cartAmount)} đ</p>
           </div>
         </div>
         <div className="flex-row-sp payment-total__body-submit">
           <span>{t("pm.enter_to_payment")}</span>
-          <ButtonCus
-            text={t("pm.payment_2")}
-            color="var(--purple)"
-            border="solid 1px var(--purple)"
-            borderRadius="16px"
+          <ButtonLoading
+            title={t("pm.payment_2")}
+            loading={loading}
             onClick={handleSubmitPayment}
-            opacity={disableBtn === false ? '1' : '0.4'}
           />
         </div>
       </Container>

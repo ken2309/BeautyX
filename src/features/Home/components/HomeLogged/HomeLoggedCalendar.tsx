@@ -18,22 +18,22 @@ export default function HomeLoggedCalendar() {
   const [appoiment, setAppoiment] = useState<Appointment[]>([]);
   const [chooseMonth, setChooseMonth] = useState(dayjs().format("YYYY-MM"));
   // console.log(`appoiment`, appoiment);
-  const [, setActive] = useState(false);
+  //const [, setActive] = useState(false);
   const { t } = useContext(AppContext);
 
-  useEffect(() => {
-    document.addEventListener("scroll", () => {
-      const scrollY = window.scrollY;
-      if (scrollY >= 120) {
-        setActive(true);
-      } else {
-        setActive(false);
-      }
-    });
-    return () => {
-      cleanup();
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener("scroll", () => {
+  //     const scrollY = window.scrollY;
+  //     if (scrollY >= 120) {
+  //       setActive(true);
+  //     } else {
+  //       setActive(false);
+  //     }
+  //   });
+  //   return () => {
+  //     cleanup();
+  //   };
+  // }, []);
 
   const weekDays = [
     t("Home.su"),
@@ -167,6 +167,7 @@ export default function HomeLoggedCalendar() {
       );
     });
     setdatingList(dateList);
+    
   }
 
   // hiển thị status ở calendar dựa api

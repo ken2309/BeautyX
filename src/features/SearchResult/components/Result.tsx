@@ -1,5 +1,5 @@
 import React from "react";
-import HomeFilter from "../../Home/components/HomeFilter";
+//import HomeFilter from "../../Home/components/HomeFilter";
 import icon from "../../../constants/icon";
 import "../../Home/home.css";
 import { Pagination } from "@mui/material";
@@ -45,9 +45,9 @@ function Result(props: any) {
   };
   return (
     <div className="result-detail">
-      <div className="result-detail__filter">
+      {/* <div className="result-detail__filter">
         <HomeFilter setData={setData} />
-      </div>
+      </div> */}
       <SearchResultMb setData={setData} />
       <div className="result-detail__title">
         <div className="result-detail__result">

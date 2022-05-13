@@ -13,11 +13,10 @@ function DetailCard(props: any) {
   const { product, org, is_type, loading } = props;
   const { t } = useContext(AppContext);
   const popupTitle = `${t("pr.added")} 
-            "${
-              product?.product_name
-                ? product?.product_name
-                : product?.service_name
-            }" 
+            "${product?.product_name
+      ? product?.product_name
+      : product?.service_name
+    }" 
             ${t("pr.to_cart")}`;
   const [old_price, setOld_price] = useState(0);
   const [sale_price, setSale_price] = useState(0);
@@ -59,6 +58,8 @@ function DetailCard(props: any) {
     is_type: is_type,
     isConfirm: false,
     price: sale_price,
+    org: org,
+    cart_item: product
   };
   const handleAddCart = () => {
     setPopup(true);

@@ -2,12 +2,13 @@ import React from 'react';
 import './cardItem.css';
 import icon from '../../constants/icon';
 import formatPrice from '../../utils/formatPrice';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import scrollTop from '../../utils/scrollTop';
 import slugify from '../../utils/formatUrlString';
+import onErrorImg from '../../utils/errorImg';
 
 //note: product : is_type = 1, service: is_type = 2
-function CardItem(props:any) {
+function CardItem(props: any) {
       const {
             detail,
             style,
@@ -31,22 +32,22 @@ function CardItem(props:any) {
             //console.log(is_type);   
             if (is_type === 1) {
                   history.push({
-                        pathname: `/Product-detail/${slugify(name)}`,
+                        pathname: `/product-detail/${slugify(name)}`,
                         search: `${org.id},${detail.id},${is_type}`,
                         state: { org, detail, name },
                   })
             } else if (is_type === 2) {
                   history.push({
-                        pathname: `/Service-detail/${slugify(name)}`,
+                        pathname: `/dich-vu/${slugify(name)}`,
                         search: `${org.id},${detail.id},${is_type}`,
                         state: { org, detail, name }
                   })
             }
       }
       return (
-            <div 
+            <div
                   onClick={gotoDetail}
-                  style={{ width: style?.width }} 
+                  style={{ width: style?.width }}
                   className="card"
             >
                   <div
@@ -54,10 +55,15 @@ function CardItem(props:any) {
                         className="card-discount">
                         Giảm {discount.toFixed()}%
                   </div>
-                  <img src={"https://picsum.photos/650/976?random=" + detail.id} alt="" className="card-img" />
+                  <img
+                        src={`${detail.image ? detail?.image_url : org?.image_url}`}
+                        alt=""
+                        onError={(e) => onErrorImg(e)}
+                        className="card-img"
+                  />
                   <div className="card-info">
                         <div className="card-name">
-                              {detail.id} - {name}
+                              {name}
                         </div>
                         <span className="card-spa-name">
                               {org?.name}

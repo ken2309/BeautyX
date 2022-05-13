@@ -2,14 +2,14 @@ import React from 'react';
 import icon from '../../../constants/icon';
 
 function ServiceCateMb(props: any) {
-      const { categories, chooseCate, setChooseCate, setPage } = props;
+      const { categories, chooseCate, setChooseCate, dataServices, setDataServices } = props;
       const onCateAll = () => {
             setChooseCate();
-            setPage(1);
+            setDataServices({ ...dataServices, page: 1 })
       }
       const handleActiveCateClick = (cate: any) => {
             setChooseCate(cate.id);
-            setPage(1);
+            setDataServices({ ...dataServices, page: 1 })
       }
       return (
             <div className="mb-cate-wrapper">
@@ -37,8 +37,8 @@ function ServiceCateMb(props: any) {
                                           <li key={item.id} >
                                                 <button
                                                       style={chooseCate === item.id ?
-                                                            { 
-                                                                  backgroundColor: 'var(--purple)', 
+                                                            {
+                                                                  backgroundColor: 'var(--purple)',
                                                                   color: 'var(--bgWhite)'
                                                             }
                                                             :

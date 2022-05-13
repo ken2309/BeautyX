@@ -75,6 +75,8 @@
 }
 .detail-mer {
   padding-left: 18px;
+  width: calc(100% - 96px);
+  align-items: flex-start;
 }
 .pr-de-mer__content-info {
   width: 100%;

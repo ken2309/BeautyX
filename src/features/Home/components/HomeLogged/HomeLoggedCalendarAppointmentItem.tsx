@@ -5,6 +5,7 @@ import { IOrganization } from "../../../../interface/organization";
 import { AppContext } from "../../../../context/AppProvider";
 //import CalendarPopupDetail from "./CalendarPopupDetail";
 import AppointmentDetail from "../../../AppointmentDetail/index";
+import { STATUS } from '../../../../utils/statusApp'
 
 export default function HomeLoggedCalendarAppointmentItem(props: any) {
   const { t } = useContext(AppContext);
@@ -16,13 +17,12 @@ export default function HomeLoggedCalendarAppointmentItem(props: any) {
   function handleOpenPopupDetail() {
     setOpenPopupDetail(true);
   }
+  //console.log(datingList)
   useEffect(() => {
     async function handleGetOrg_Br() {
       try {
         const res = await Organization.getOrgBrById({ id: datingList.org_id });
         const data = await res.data.context;
-        // console.log("data :>> ", data);
-        // console.log(`res`, res);
         setOrg(data);
         setBranch(
           data.branches.find((item: any) => item.id === datingList.branch_id)
@@ -38,22 +38,16 @@ export default function HomeLoggedCalendarAppointmentItem(props: any) {
   // console.log(`branch`, branch);
   const checkdotstt = (stt: any) => {
     switch (stt) {
-      case "CONFIRMED":
+      case STATUS.ARRIVED:
         return <span className="appointment-status status-dot-green" />;
-      case "ARRIVED":
-        return <span className="appointment-status status-dot-green" />;
-      case "NEW":
+      case STATUS.CONFIRMED:
         return <span className="appointment-status status-dot-blue" />;
-      case "ONLINE_BOOKING":
-        return <span className="appointment-status status-dot-blue" />;
-      case "DONE":
+      case STATUS.DONE:
         return <span className="appointment-status status-dot-pink" />;
-      case "CANCEL":
-        return <span className="appointment-status status-dot-red" />;
-      case "NOT COME":
+      case STATUS.CANCEL:
         return <span className="appointment-status status-dot-red" />;
       default:
-        break;
+        return <span className="appointment-status status-dot-red" />;
     }
   };
   return (

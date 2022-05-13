@@ -9,8 +9,15 @@ import PopupConfirm from '../../popupConfirm/index';
 import slugify from '../../../utils/formatUrlString';
 import { useHistory } from 'react-router-dom';
 import scrollTop from '../../../utils/scrollTop';
+import onErrorImg from '../../../utils/errorImg';
+import { Cart } from '../../../interface/cart';
 
-function CartItem(props: any) {
+interface IProps {
+      inPayment: boolean,
+      cartItem: Cart
+}
+
+function CartItem(props: IProps) {
       const { cartItem, inPayment } = props;
       const dispatch = useDispatch();
       const history = useHistory();
@@ -49,7 +56,7 @@ function CartItem(props: any) {
                   })
             } else if (cartItem.is_type === 2) {
                   history.push({
-                        pathname: `/Service-detail/${slugify(cartItem.name)}`,
+                        pathname: `/dich-vu/${slugify(cartItem.name)}`,
                         search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`
                   })
             } else if (cartItem.is_type === 3) {
@@ -68,14 +75,20 @@ function CartItem(props: any) {
                                     "&.Mui-checked": {
                                           color: "#7161BA",
                                     },
-                                    marginLeft:'-10px'
+                                    marginLeft: '-10px'
                               }}
                               checked={cartItem.isConfirm}
                               onChange={handleConfirm}
                         />
                         <img
                               className="cart-item__name-img"
-                              src={"https://picsum.photos/650/976?random=" + cartItem.cart_id}
+                              src={
+                                    cartItem?.cart_item?.image_url ?
+                                          cartItem?.cart_item?.image_url
+                                          :
+                                          cartItem?.org?.image_url
+                              }
+                              onError={(e) => onErrorImg(e)}
                               alt=""
                         />
                         <span onClick={goBackDetail} className="cart-item__name-text">

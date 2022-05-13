@@ -13,11 +13,11 @@ import Bottom from "../../featuresMobile/Bottom";
 import HeadTitle from "../HeadTitle";
 // import img from '../../constants/img';
 
-interface IData{
+interface IData {
   orgs: IOrganization[],
   loading: boolean,
   totalItem: number,
-  total:number,
+  total: number,
   curPage: number
 }
 
@@ -35,28 +35,53 @@ function SearchResult(props: any) {
     curPage: 1
   })
 
+  const paramsFilter = location.state;
+  async function handleGetOrgs() {
+    setData({ ...data, loading: true })
+    try {
+      const res = await orgApi.getOrgByKeyword({
+        page: data.curPage,
+        keySearch: keySearch,
+      });
+      setData({
+        ...data,
+        orgs: res.data.context.data,
+        totalItem: res.data.context.last_page,
+        total: res.data.context.total,
+        loading: false
+      })
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function handleGetOrgsByFilter() {
+    try {
+      const res = await orgApi.getOrgByFilter({
+        page: 1,
+        limit: 15,
+        params: paramsFilter
+      })
+      setData({
+        ...data,
+        orgs: res.data.context.data,
+        totalItem: res.data.context.last_page,
+        total: res.data.context.total,
+        loading: false
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
-    async function handleGetOrgs() {
-      setData({ ...data, loading: true })
-      try {
-        const res = await orgApi.getOrgByKeyword({
-          page: data.curPage,
-          keySearch: keySearch,
-        });
-        setData({
-          ...data,
-          orgs: res.data.context.data,
-          totalItem: res.data.context.last_page,
-          total: res.data.context.total,
-          loading: false
-        })
-      } catch (err) {
-        console.log(err);
-      }
+    if (paramsFilter) {
+      handleGetOrgsByFilter();
+    } else {
+      handleGetOrgs()
     }
-    handleGetOrgs();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    //handleGetOrgs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keySearch, data.curPage]);
   return (
     <div

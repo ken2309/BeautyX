@@ -1,0 +1,37 @@
+.filter-ser-cnt{
+    width: 100%;
+    background-color: var(--bgWhite);
+    overflow-x: scroll;
+    padding: 6px 0px;
+}
+.filter-ser-list li{
+    /* background-color: var(--pink); */
+    padding: 6px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    color: var(--text-black);
+    margin-right: 12px;
+    border: solid 1px var(--bgWhite);
+    border-radius: 16px;
+    transition: all .4s;
+}
+/* Mobile */
+@media only screen and (max-width: 767px) {
+    .filter-ser-cnt{
+        padding: 6px 20px;
+        overflow-x: scroll;
+    }
+    .filter-ser-list{
+        width: max-content;
+    }
+    .home-promo-ser{
+        width: 100%;
+        overflow-x: scroll;
+    }
+    .home-promo-ser .ser-list{
+        flex-wrap: nowrap;
+        width: max-content;
+    }
+}

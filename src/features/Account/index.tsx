@@ -12,65 +12,75 @@ import Service from "./components/HistoryService";
 import ComboList from "./components/HistoryCombo/components/Combolist";
 import AccountMb from "../../featuresMobile/Account";
 import OrderDetail from "../OrderDetail";
+import UserAddress from "./components/UserAddress/components/UserAddress";
+import UserDiscounts from "./components/UserDiscounts";
 import Footer from "../Footer";
 import HeadTitle from "../HeadTitle";
 const routes = [
-  {
-    path: `/tai-khoan/phuong-thuc-thanh-toan`,
-    component: <PaymentMethod />,
-  },
-  {
-    path: `/tai-khoan/thong-tin-ca-nhan`,
-    component: <Information />,
-  },
-  {
-    path: `/tai-khoan/san-pham`,
-    component: <Product />,
-  },
-  {
-    path: `/tai-khoan/goi-dich-vu`,
-    component: <Service />,
-  },
-  {
-    path: `/tai-khoan/combo`,
-    component: <ComboList />,
-  },
-  {
-    path: "/tai-khoan/lich-su-mua",
-    component: <Orders />,
-  },
-  {
-    path: "/tai-khoan/chi-tiet-don-hang",
-    component: <OrderDetail />,
-  },
+    {
+        path: `/tai-khoan/phuong-thuc-thanh-toan`,
+        component: <PaymentMethod />,
+    },
+    {
+        path: `/tai-khoan/thong-tin-ca-nhan`,
+        component: <Information />,
+    },
+    {
+        path: `/tai-khoan/san-pham`,
+        component: <Product />,
+    },
+    {
+        path: `/tai-khoan/goi-dich-vu`,
+        component: <Service />,
+    },
+    {
+        path: `/tai-khoan/combo`,
+        component: <ComboList />,
+    },
+    {
+        path: "/tai-khoan/lich-su-mua",
+        component: <Orders />,
+    },
+    {
+        path: "/tai-khoan/chi-tiet-don-hang",
+        component: <OrderDetail />,
+    },
+    {
+        path: "/tai-khoan/dia-chi",
+        component: <UserAddress />,
+    },
+    {
+        path: "/tai-khoan/ma-uu-dai",
+        component: <UserDiscounts />,
+    },
 ];
 function Account() {
-  const headerTitle = "Thông tin cá nhân";
-  const RouterPage = (
-    props: { pageComponent: JSX.Element } & RouteComponentProps
-  ) => props.pageComponent;
-  return (
-    <>
-      <HeadTitle title={headerTitle} />
-      <Head />
-      <div className="wrapper account_section">
-        <SideBar />
-        <div className="display_section">
-          <Switch>
-            {routes.map((item, index) => (
-              <RouterPage
-                key={index}
-                path={`${item.path}`}
-                pageComponent={item.component}
-              />
-            ))}
-          </Switch>
-        </div>
-      </div>
-      {/* for mobile */}
-      <AccountMb />
-      <Footer />
-    </>
-  );
+    const headerTitle = "Thông tin cá nhân";
+    const RouterPage = (
+        props: { pageComponent: JSX.Element } & RouteComponentProps
+    ) => props.pageComponent;
+    return (
+        <>
+            <HeadTitle title={headerTitle} />
+            <Head />
+            <div className="wrapper account_section">
+                <SideBar />
+                <div className="display_section">
+                    <Switch>
+                        {routes.map((item, index) => (
+                            <RouterPage
+                                key={index}
+                                path={`${item.path}`}
+                                pageComponent={item.component}
+                            />
+                        ))}
+                    </Switch>
+                </div>
+            </div>
+            {/* for mobile */}
+            <AccountMb />
+            <Footer />
+        </>
+    );
 }
 export default Account;
