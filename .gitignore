@@ -53,3 +53,4 @@ firebase.json
 package-lock.json
 .firebase/hosting.YnVpbGQ.cache
 build/index.html
+prod/
