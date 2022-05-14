@@ -1,4 +1,4 @@
-import React, { useEffect, useState, KeyboardEvent, useContext } from 'react';
+import React, { useEffect, useState, KeyboardEvent } from 'react';
 import Head from '../Head';
 import { useLocation } from 'react-router-dom'
 import { IComment } from '../../interface/comments';
@@ -7,11 +7,11 @@ import '../MerchantComment/merchantComment.css'
 import icon from '../../constants/icon';
 import { Container } from '@mui/material';
 import MerchantCommentItem from '../MerchantComment/MerchantCommentItem';
-import { AppContext } from '../../context/AppProvider';
 import SignInUp from '../poupSignInUp';
 import CommentItemTemp from '../MerchantComment/CommentItemTemp';
 import mediaApi from '../../api/mediaApi';
 import ButtonLoading from '../../components/ButtonLoading';
+import { useSelector } from 'react-redux';
 
 interface IData {
     comments: IComment[],
@@ -26,7 +26,8 @@ interface ICmtTemp {
 
 function CommentsDetail() {
     const location: any = useLocation();
-    const { profile } = useContext(AppContext);
+    const USER = useSelector((state: any) => state.USER);
+    const profile = USER.USER;
     const search = location.search.slice(1, location.search.length);
     const params = {
         comment_type: search.split(',')[0],

@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { IServiceUser, IUser_Items } from '../../../interface/servicesUser';
 import ServiceSoldItem from './ServiceSoldItem';
-import {IOrganization} from '../../../interface/organization';
-import orgApi from '../../../api/organizationApi';
 
 interface IProps {
     card_items: IServiceUser
@@ -10,19 +8,7 @@ interface IProps {
 
 function TreatmentCardItem(props: IProps) {
     const { card_items } = props;
-    const [org, setOrg] = useState<IOrganization>()
-    async function handleGetOrg() {
-        try {
-            const res = await orgApi.getOrgById(card_items.organization_id)
-            setOrg(res.data.context)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    useEffect(()=>{
-        handleGetOrg()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    const org = card_items.organization;
     return (
         <div
             className='treat-card-item'

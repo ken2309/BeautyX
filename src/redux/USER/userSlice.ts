@@ -8,6 +8,14 @@ export const fetchAsyncUser: any = createAsyncThunk(
         return res?.data.context
     }
 )
+export const updateAsyncUser: any = createAsyncThunk(
+    "USER/fetchAsyncUser",
+    async (params) => {
+        const res = await authentication.putUserProfile(params);
+        const payload = res.data.context
+        return payload
+    }
+)
 const initialState = {
     USER: null,
     loading: true
@@ -25,6 +33,13 @@ const userSlice = createSlice({
             return { ...state, loading: true }
         },
         [fetchAsyncUser.fulfilled]: (state, { payload }) => {
+            return { ...state, USER: payload, loading: false }
+        },
+
+        [updateAsyncUser.pending]: (state) => {
+            return { ...state, loading: true }
+        },
+        [updateAsyncUser.fulfilled]: (state, { payload }) => {
             return { ...state, USER: payload, loading: false }
         }
     }

@@ -48,7 +48,7 @@ function Comments(props: IProps) {
     useEffect(() => {
         handleGetComments()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [id])
     const handleSeeAllFeedback = () => {
         const name = detail.product_name || detail.service_name
         history.push({

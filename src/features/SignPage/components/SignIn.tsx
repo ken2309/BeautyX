@@ -36,8 +36,8 @@ function SignIn(props: any) {
         window.sessionStorage.setItem("_WEB_TK", response.data.context.token)
       }
       dispatch(fetchAsyncUser())
-      history.goBack() || history.push('/home');
       setLoading(false);
+      history.goBack() || history.push('/home') ;
     } catch (error) {
       setLoading(false);
       const err = error as AxiosError;

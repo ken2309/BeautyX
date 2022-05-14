@@ -1,3 +1,4 @@
+import { User } from './user'
 export interface IComment {
     id: number,
     body: string,
@@ -10,13 +11,5 @@ export interface IComment {
     updated_at: string,
     deleted_at: null | string,
     rate: null | number,
-    user: {
-        avatar: string,
-        email: string,
-        fullname: string,
-        id: number
-        media: [],
-        platform: null | string,
-        telephone: string
-    }
+    user: User
 }

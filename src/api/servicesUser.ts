@@ -11,7 +11,7 @@ class ServicesUser {
             limit: 15,
             "filter[status]": "PAID",
             "filter[withServicesSold]": true,
-            "include": "items|items_count",
+            "include": "items|items_count|organization",
             "sort": "-created_at",
             'filter[platform]': 'BEAUTYX'
         }

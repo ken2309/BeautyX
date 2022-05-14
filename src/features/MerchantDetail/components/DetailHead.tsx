@@ -13,6 +13,7 @@ import { useHistory } from 'react-router-dom'
 import favorites from "../../../api/favorite";
 import onErrorImg from "../../../utils/errorImg";
 import orgApi from "../../../api/organizationApi";
+import { useSelector } from "react-redux";
 
 const settings = {
   dots: true,
@@ -34,7 +35,8 @@ const settings = {
 function DetailHead(props: any) {
   const { org, loading } = props;
   const history = useHistory();
-  const { t, profile } = useContext(AppContext);
+  const { t } = useContext(AppContext);
+  const { USER } = useSelector((state: any) => state.USER);
   const infoBox = useRef(null);
   const [openPopupContact, setOpenPopupContact] = useState(false);
   const [openTime, setOpenTime] = useState(false);
@@ -84,7 +86,7 @@ function DetailHead(props: any) {
     }
   }
   const onOrgFavorite = () => {
-    if (profile) {
+    if (USER) {
       if (orgFavorite.favorite === true) {
         handleRemoveFavorite()
       } else {
@@ -146,7 +148,7 @@ function DetailHead(props: any) {
                   </button>
                   <button
                     style={
-                      orgFavorite.favorite === true && profile
+                      orgFavorite.favorite === true && USER
                         ? {
                           backgroundColor: "var(--purple)",
                           color: "var(--bg-gray)",
@@ -155,7 +157,7 @@ function DetailHead(props: any) {
                     }
                     onClick={onOrgFavorite}
                   >
-                    {orgFavorite.favorite === true && profile
+                    {orgFavorite.favorite === true && USER
                       ? t("Mer_de.flowing")
                       : t("Mer_de.flow")}
                   </button>
