@@ -1,11 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import dateNow from "../utils/dateExp";
-import tagsApi from "../api/tagApi";
-import provincesApi from "../api/provinceApi";
-// import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { fetchAsyncUser } from '../redux/USER/userSlice'
+import { fetchAsyncUser } from '../redux/USER/userSlice';
+import { fetchAsyncHome } from '../redux/home/homeSlice'
 
 
 
@@ -19,10 +17,6 @@ export default function AppProvider({ children }) {
   const [userInfo, setUserInfo] = useState();
   const [sign, setSign] = useState();
   const [tempCount, setTempleCount] = useState(0);
-  const [tags, setTags] = useState([]);
-  const [provinces, setProvinces] = useState([])
-
-  // Check if token expires and logout user
   if (localStorage.getItem("_WEB_US")) {
     const tokenDecoded = JSON.parse(`${localStorage.getItem("_WEB_US")}`);
     let exp = tokenDecoded?.token_expired_at;
@@ -43,38 +37,13 @@ export default function AppProvider({ children }) {
       setLanguage("vn");
     }
   }, [lg]);
-
-  // //const TK = localStorage.getItem('_WEB_TK')
-  // useEffect(() => {
-  //   function handleGetToken() {
-  //     const res = JSON.parse(`${localStorage.getItem("_WEB_US")}`);
-  //     setUserInfo(res);
-  //   }
-  //   handleGetToken();
-  //   return () => { };
-  // }, [sign]);
-
   useEffect(() => {
     dispatch(fetchAsyncUser())
   }, [sign, dispatch]);
-  //get all tags
-  async function handleGetAllTags() {
-    try {
-      const res = await tagsApi.getAll();
-      setTags(res.data.context.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  async function handleGetProvinces() {
-    try {
-      const res = await provincesApi.getAll();
-      const temp = await res.data.context.data;
-      setProvinces(temp.filter(item => item.organizations_count >= 0))
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  useEffect(() => {
+    dispatch(fetchAsyncHome())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const getUserLocation = () => {
     navigator.geolocation.getCurrentPosition(function (position) {
       const user_location = {
@@ -86,18 +55,14 @@ export default function AppProvider({ children }) {
   }
   useEffect(() => {
     getUserLocation()
-    handleGetAllTags();
-    handleGetProvinces();
     return function cleanup() {
       getUserLocation()
-      handleGetAllTags();
-      handleGetProvinces();
     }
   }, []);
   const value = {
     t,
-    tags,
-    provinces,
+    //tags,
+    //provinces,
     language,
     openModal,
     setOpenModal,

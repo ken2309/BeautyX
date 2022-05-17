@@ -244,11 +244,16 @@
         display: none;
     }
     .home-se-cnt{
-        margin-top: 124px;
+        margin-top: 28px;
     }
     .home-se-sec-title{
         margin-left: 8px;
         margin-bottom: 12px;
+        padding: 6px 18px;
+        border-radius: 8px 12px 0px 0px;
+    }
+    .home-se-sec-title::after {
+        height: 29px;
     }
     .home-tags{
         width: 100%;

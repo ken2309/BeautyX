@@ -1,12 +1,15 @@
 import axiosClient from "./axios";
+import { pickBy, identity } from 'lodash'
 
 class ServiceApi {
   getByOrg_id = (values: any) => {
     const url = `/organizations/${values.org_id}/services`;
-    const params = {
+    const paramsOb = {
       page: values.page,
-      limit: 15
+      limit: 15,
+      "filter[service_group_id]": values.cate_id,
     }
+    const params = pickBy(paramsOb, identity)
     return axiosClient.get(url, { params });
   };
   getByOrgId_cateId = (values: any) => {

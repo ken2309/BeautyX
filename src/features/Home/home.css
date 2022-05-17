@@ -27,11 +27,13 @@ img {
   display: flex;
 }
 .home-banner {
-  margin-top: 48px;
+  margin-top: 32px;
   position: relative;
+  height: 572px;
+  overflow: hidden;
 }
 .home-banner__img {
-  height: 480px;
+  height: fit-content;
   width: 100%;
   cursor: pointer;
 }
@@ -1832,9 +1834,6 @@ img {
   }
   .home-banner__img > img {
     border-radius: unset;
-  }
-  .home-banner__img {
-    height: 240px;
   }
   .homebanner__popup-video {
     width: 100%;

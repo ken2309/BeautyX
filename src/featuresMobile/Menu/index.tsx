@@ -6,8 +6,9 @@ import LanguageBox from '../../features/Head/components/LanguageBox';
 import './mbMenu.css';
 import icon from '../../constants/icon';
 import { AppContext } from '../../context/AppProvider';
-import {useHistory} from 'react-router-dom';
-import {useSelector} from 'react-redux'
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutUser } from '../../redux/USER/userSlice'
 
 const Transition = React.forwardRef(function Transition(
       props: TransitionProps & {
@@ -20,13 +21,9 @@ const Transition = React.forwardRef(function Transition(
 
 function MbMenu(props: any) {
       const history = useHistory();
-      const USER = useSelector((state:any) => state.USER.USER);
-      const { 
-            t, 
-            //profile, 
-            //userInfo, 
-            setSign 
-      } = useContext(AppContext)
+      const dispatch = useDispatch();
+      const USER = useSelector((state: any) => state.USER.USER);
+      const { t } = useContext(AppContext)
       const { openMbMenu, setOpenMbMenu } = props;
       const onSignIn = () => {
             setOpenMbMenu(false)
@@ -42,9 +39,9 @@ function MbMenu(props: any) {
       }
       const handleSignOut = () => {
             setOpenMbMenu(false)
-            setSign(false);
-            const token = '';
-            localStorage.setItem('_WEB_TK', token)
+            // setSign(false);
+            dispatch(logoutUser())
+            localStorage.removeItem('_WEB_TK')
       }
       return (
             <Dialog

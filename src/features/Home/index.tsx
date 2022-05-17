@@ -10,15 +10,8 @@ import HeadTitle from "../HeadTitle";
 import Bottom from "../../featuresMobile/Bottom";
 import HomeSecond from "../Homev2";
 
-//import { useDispatch, useSelector } from 'react-redux';
-//import { getAllOrg, fetchAsyncOrg } from '../../redux/orgSlice'
-
 function Home() {
   const { t } = useContext(AppContext);
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(fetchAsyncOrg())
-  // }, [dispatch])
   return (
     <div className="home">
       <HeadTitle title={t("Home.home")} />

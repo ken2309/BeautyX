@@ -18,11 +18,14 @@ import {
   clearPrevState,
 } from '../../redux/org/orgCommentsSlice'
 import { STATUS } from '../../redux/status'
+import { formatOrgParam } from "../../utils/formatParams";
 
 export default function MerchantComment() {
   const location: any = useLocation();
+  const sub_domain = formatOrgParam(location.pathname);
   const dispatch = useDispatch();
   const USER = useSelector((state: any) => state.USER.USER)
+  const ORG = useSelector((state: any) => state.ORG)
   const ORG_COMMENTS = useSelector((state: any) => state.ORG_COMMENTS);
   const { comments, page, totalItem, status } = ORG_COMMENTS;
   const org_id = location.search.slice(1, location.search.length);
@@ -31,15 +34,23 @@ export default function MerchantComment() {
     image_url: ''
   });
   const [open, setOpen] = useState(false)
-  useEffect(() => {
-    const values = {
-      org_id: org_id,
-      page: 1
+  const callOrgComments = () => {
+    if (sub_domain !== ORG.org?.subdomain
+      && ORG.status === STATUS.SUCCESS
+      && status !== STATUS.SUCCESS
+    ) {
+      const values = {
+        org_id: ORG.org?.id,
+        page: 1
+      }
+      dispatch(clearPrevState())
+      dispatch(fetchAsyncOrgComments(values))
     }
-    dispatch(clearPrevState())
-    dispatch(fetchAsyncOrgComments(values))
+  }
+  useEffect(() => {
+    callOrgComments()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [ORG.org?.status, sub_domain])
   const onPage = () => {
     const values = {
       org_id,
