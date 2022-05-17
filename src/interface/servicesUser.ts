@@ -1,3 +1,5 @@
+import { IOrganization } from './organization'
+
 export interface IUser_Service {
     id: number,
     service_name: string,
@@ -43,6 +45,7 @@ export interface IServiceUser {
     description: null | string,
     payment_method_id: number,
     organization_id: number,
+    organization: IOrganization,
     user_id: number,
     origin_id: number,
     branch_id: null | number,

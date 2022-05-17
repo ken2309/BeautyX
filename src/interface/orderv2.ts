@@ -1,5 +1,6 @@
 import { Service } from './service';
-import { Product } from './product'
+import { Product } from './product';
+import { IOrganization } from './organization'
 
 export interface ITems {
     id: number,
@@ -23,6 +24,7 @@ export interface IOrderV2 {
     description: string,
     payment_method_id: number,
     organization_id: number,
+    organization: IOrganization,
     user_id: number,
     origin_id: null | number,
     branch_id: null | number,

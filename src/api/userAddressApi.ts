@@ -24,7 +24,7 @@ class UserAddress {
         }
         return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params));
     }
-    postAddress = (values: any, session: any, local: any) => {
+    postAddress = (values: any) => {
         const url = `/useraddresses`;
         const params = {
             "address": values.address,

@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.94cf38e2.chunk.css",
-    "main.js": "/static/js/main.17b268d8.chunk.js",
-    "main.js.map": "/static/js/main.17b268d8.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.c954529c.js",
-    "runtime-main.js.map": "/static/js/runtime-main.c954529c.js.map",
+    "main.css": "/static/css/main.bba46d4d.chunk.css",
+    "main.js": "/static/js/main.d6b06a15.chunk.js",
+    "main.js.map": "/static/js/main.d6b06a15.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.2c2fea05.js",
+    "runtime-main.js.map": "/static/js/runtime-main.2c2fea05.js.map",
     "static/css/2.82234743.chunk.css": "/static/css/2.82234743.chunk.css",
-    "static/js/2.60cd194a.chunk.js": "/static/js/2.60cd194a.chunk.js",
-    "static/js/2.60cd194a.chunk.js.map": "/static/js/2.60cd194a.chunk.js.map",
-    "static/js/3.44119307.chunk.js": "/static/js/3.44119307.chunk.js",
-    "static/js/3.44119307.chunk.js.map": "/static/js/3.44119307.chunk.js.map",
+    "static/js/2.09ff049c.chunk.js": "/static/js/2.09ff049c.chunk.js",
+    "static/js/2.09ff049c.chunk.js.map": "/static/js/2.09ff049c.chunk.js.map",
+    "static/js/3.226453b5.chunk.js": "/static/js/3.226453b5.chunk.js",
+    "static/js/3.226453b5.chunk.js.map": "/static/js/3.226453b5.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.82234743.chunk.css.map": "/static/css/2.82234743.chunk.css.map",
-    "static/css/main.94cf38e2.chunk.css.map": "/static/css/main.94cf38e2.chunk.css.map",
-    "static/js/2.60cd194a.chunk.js.LICENSE.txt": "/static/js/2.60cd194a.chunk.js.LICENSE.txt",
+    "static/css/main.bba46d4d.chunk.css.map": "/static/css/main.bba46d4d.chunk.css.map",
+    "static/js/2.09ff049c.chunk.js.LICENSE.txt": "/static/js/2.09ff049c.chunk.js.LICENSE.txt",
     "static/media/style.css": "/static/media/Quicksand-SemiBold.66199d9b.woff",
     "static/media/arrow-down-white.5fb3ac88.svg": "/static/media/arrow-down-white.5fb3ac88.svg",
     "static/media/arrowPurple.a79e0f16.svg": "/static/media/arrowPurple.a79e0f16.svg",
@@ -164,10 +164,10 @@
     "static/media/yoga.21a84d5f.svg": "/static/media/yoga.21a84d5f.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.c954529c.js",
+    "static/js/runtime-main.2c2fea05.js",
     "static/css/2.82234743.chunk.css",
-    "static/js/2.60cd194a.chunk.js",
-    "static/css/main.94cf38e2.chunk.css",
-    "static/js/main.17b268d8.chunk.js"
+    "static/js/2.09ff049c.chunk.js",
+    "static/css/main.bba46d4d.chunk.css",
+    "static/js/main.d6b06a15.chunk.js"
   ]
 }

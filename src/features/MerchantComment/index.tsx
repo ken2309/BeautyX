@@ -6,71 +6,46 @@ import Head from "../Head";
 import HeadTitle from "../HeadTitle";
 import "./merchantComment.css";
 import MerchantCommentItem from "./MerchantCommentItem";
-import CommentItemTemp from "./CommentItemTemp";
 import { useLocation } from 'react-router-dom';
 import { IComment } from '../../interface/comments';
-import commentsApi from '../../api/commentsApi'
 import SignInUp from '../poupSignInUp/index';
 import mediaApi from "../../api/mediaApi";
 import ButtonLoading from "../../components/ButtonLoading";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  fetchAsyncOrgComments,
+  postAsyncOrgComments,
+  clearPrevState,
+} from '../../redux/org/orgCommentsSlice'
+import { STATUS } from '../../redux/status'
 
-interface IData {
-  comments: IComment[],
-  page: number,
-  totalItem: number,
-  loadPage: boolean
-}
-interface ICmtTemp {
-  text: string,
-  image_url: string
-}
 export default function MerchantComment() {
   const location: any = useLocation();
-  const USER = useSelector((state:any) => state.USER.USER)
+  const dispatch = useDispatch();
+  const USER = useSelector((state: any) => state.USER.USER)
+  const ORG_COMMENTS = useSelector((state: any) => state.ORG_COMMENTS);
+  const { comments, page, totalItem, status } = ORG_COMMENTS;
   const org_id = location.search.slice(1, location.search.length);
   const [cmt, setCmt] = useState({
     text: '',
     image_url: ''
   });
-  const [cmtTemp, setCmtTemp] = useState<ICmtTemp[]>([]);
-  const [data, setData] = useState<IData>({
-    comments: [],
-    page: 1,
-    totalItem: 1,
-    loadPage: false
-  })
   const [open, setOpen] = useState(false)
-  async function handleGetCommentsOrg() {
-    try {
-      const res = await commentsApi.getCommentsOrg({
-        org_id: org_id,
-        page: data.page
-      })
-      setData({
-        ...data,
-        totalItem: res.data.context.total,
-        comments: [...data.comments, ...res.data.context.data],
-        loadPage: false
-      })
-    } catch (error) {
-      setData({
-        ...data,
-        loadPage: false
-      })
-      console.log(error)
-    }
-  }
   useEffect(() => {
-    handleGetCommentsOrg();
+    const values = {
+      org_id: org_id,
+      page: 1
+    }
+    dispatch(clearPrevState())
+    dispatch(fetchAsyncOrgComments(values))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data.page])
+  }, [])
   const onPage = () => {
-    setData({
-      ...data,
-      page: data.page + 1,
-      loadPage: true
-    })
+    const values = {
+      org_id,
+      page: page + 1
+    }
+    dispatch(fetchAsyncOrgComments(values))
   }
   //handle post image
   const handlePostImageMedia = async (form: any) => {
@@ -94,27 +69,18 @@ export default function MerchantComment() {
       setOpen(true)
     }
   }
-
-  async function handlePostComment() {
-    try {
-      await commentsApi.postCommentOrg({
-        org_id: org_id,
-        body: JSON.stringify(cmt)
-      })
-      setCmtTemp([...cmtTemp, cmt].reverse())
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
       if (USER) {
-        handlePostComment();
+        const values = {
+          org_id: org_id,
+          body: JSON.stringify(cmt),
+          user: USER
+        }
+        dispatch(postAsyncOrgComments(values))
         setCmt({
           text: '', image_url: ''
         })
-        //console.log(JSON.stringify(cmt))
       } else {
         setOpen(true)
       }
@@ -148,7 +114,7 @@ export default function MerchantComment() {
                 <img src={icon.star} alt="" />
                 <img src={icon.star} alt="" />
               </div>
-              <span className="evaluate">189 đánh giá</span>
+              <span className="evaluate">{totalItem} đánh giá</span>
             </div>
             <div className="merchantComment-left__evaluates">
               <div className="merchantComment-left__item">
@@ -243,15 +209,7 @@ export default function MerchantComment() {
               />
             </div> */}
             <div className="merchantComment-right__comment">
-              {
-                cmtTemp.map((item: ICmtTemp, index: number) => (
-                  <CommentItemTemp
-                    key={index}
-                    body={item}
-                  />
-                ))
-              }
-              {data.comments.map((item: IComment, index: number) => (
+              {comments.map((item: IComment, index: number) => (
                 <MerchantCommentItem
                   key={index}
                   comment={item}
@@ -259,12 +217,12 @@ export default function MerchantComment() {
               ))}
             </div>
             {
-              data.comments.length < data.totalItem &&
+              comments.length < totalItem &&
               <div className="comment-bot">
                 <ButtonLoading
                   title="Xem thêm đánh giá"
                   onClick={onPage}
-                  loading={data.loadPage}
+                  loading={status === STATUS.LOADING ? true : false}
                 />
               </div>
             }

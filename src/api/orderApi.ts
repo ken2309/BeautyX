@@ -11,7 +11,7 @@ class Order {
             const params = {
                   page: page,
                   limit: 10,
-                  include: 'items|items_count',
+                  include: 'items|items_count|organization',
                   sort: '-created_at',
                   'filter[platform]': 'BEAUTYX',
                   'filter[productable]': true,

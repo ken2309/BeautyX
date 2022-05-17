@@ -2,72 +2,57 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from '../../../../context/AppProvider';
 import { IUserAddress } from '../../../../interface/userAddress';
-import userAddressApi from '../../../../api/userAddressApi';
 import AddressItem from './components/AddressItem';
 import icon from '../../../../constants/icon';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+    fetchAsyncUserAddress,
+    removeAsyncUserAddress,
+    updateAsyncAddress,
+    removeDefaultItem
+} from '../../../../redux/USER/userAddressSlice';
+import { STATUS } from '../../../../redux/status';
+import ModalLoad from '../../../../components/ModalLoad';
+import UserAddressMoba from './components/UserAddressMoba';
 
 function Address(props: any) {
     //console.log(session, local)
     const history = useHistory();
+    const dispatch = useDispatch();
+    const ADDRESS = useSelector((state: any) => state.ADDRESS);
+    const { address, status, status_up } = ADDRESS;
+    const [openMbAddress, setOpenMbAddress] = useState(false);
+    const address_default = address.find((item: any) => item.is_default === true);
+    const callUserAddress = () => {
+        if (status !== STATUS.SUCCESS) {
+            dispatch(fetchAsyncUserAddress())
+        }
+    }
     const { t } = useContext(AppContext)
-    //const [isDefault, setIsDefault] = useState(false)
-    const [chooseAdd, setChooseAdd] = useState()
-    const [addressList, setAddressList] = useState<IUserAddress[]>([])
-    async function getListUserAddress() {
-        try {
-            const res = await userAddressApi.getAddress();
-            const addressList = res?.data.context
-            setChooseAdd(addressList?.find((item: IUserAddress) => item.is_default === true))
-            setAddressList(addressList)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    async function deleteUserAddress(id: number) {
-        try {
-            await userAddressApi.deleteAddress(id)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    async function onUpdateAddress(values: IUserAddress) {
-        try {
-            await userAddressApi.updateAddress(values)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    async function handleUpdateCancelDefault(values: any) {
-        try {
-            await userAddressApi.updateAddressCancelDefault(values)
-        } catch (error) {
-            console.log(error)
-        }
-    }
     useEffect(() => {
-        getListUserAddress()
-    }, [])
-    const handleRemoveAddress = (address: IUserAddress) => {
-        deleteUserAddress(address.id)
-        setAddressList(addressList.filter((item: IUserAddress) => item.id !== address.id))
+        callUserAddress()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch])
+    const handleRemoveAddress =  (address: IUserAddress) => {
+         dispatch(removeAsyncUserAddress(address.id))
     }
     const handleUpdateAddress = (address: any) => {
-        onUpdateAddress(address)
-        setChooseAdd(address)
-        if (chooseAdd) {
-            handleUpdateCancelDefault(chooseAdd)
-        }
+        dispatch(updateAsyncAddress(address))
+        const action = removeDefaultItem(address_default);
+        dispatch(action)
     }
 
     const gotoAddNewAddress = () => {
         history.push({
             pathname: '/tai-khoan/dia-chi',
-            state: chooseAdd
         })
     }
 
     return (
         <>
+            {
+                status_up === STATUS.LOADING && <ModalLoad />
+            }
             <div className="title_section text-color-purple">
                 <h1 className="title">{t("acc.order_address")}</h1>
                 <span
@@ -76,22 +61,26 @@ function Address(props: any) {
                 >
                     {t("acc.add_other_address")}
                 </span>
-                <button className="acc-add__btn">
+                <button onClick={() => setOpenMbAddress(true)} className="acc-add__btn">
                     <img src={icon.plus} alt="" />
                 </button>
             </div>
             {
-                addressList.map((item: IUserAddress, index: number) => (
+                address.map((item: IUserAddress, index: number) => (
                     <AddressItem
                         key={index}
                         index={index}
                         item={item}
                         handleRemoveAddress={handleRemoveAddress}
                         handleUpdateAddress={handleUpdateAddress}
-                        chooseAdd={chooseAdd}
+                    //chooseAdd={chooseAdd}
                     />
                 ))
             }
+            <UserAddressMoba
+                open={openMbAddress}
+                setOpen={setOpenMbAddress}
+            />
         </>
     );
 }

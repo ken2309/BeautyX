@@ -5,17 +5,19 @@ import './style.css';
 interface IProps {
     loading: boolean,
     title: string,
-    onClick: () => void
+    onClick?: () => void,
+    type?: any
 }
 
 function ButtonLoading(props: IProps) {
-    const { loading, title, onClick } = props;
+    const { loading, title, onClick, type } = props;
     //const loading = true
     return (
         <button
             disabled={loading === true}
             className='btn-loading'
             onClick={onClick}
+            type={type}
         >
             {
                 loading === true &&
