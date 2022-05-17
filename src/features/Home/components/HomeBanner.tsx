@@ -85,6 +85,7 @@ function HomeBanner(props: any) {
       }
     }
   };
+  console.log(chooseBanner);
   return (
     <div className="home-banner">
       <Slider {...settings}>

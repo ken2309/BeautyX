@@ -57,6 +57,7 @@ function MerchantDetail() {
   useEffect(() => {
     callOrgDetail()
   }, [sub_domain])
+  console.log(sub_domain);
   return (
     <div className="mb-cnt">
       <HeadTitle title={org?.name ? org.name : 'Đang tải...'} />
