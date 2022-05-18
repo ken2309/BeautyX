@@ -115,6 +115,7 @@ import pinMapGreen from '../assets/icon/pinMapGreen.svg';
 import closeCircleWhite from '../assets/icon/closeCircleWhite.svg';
 import sucessGreen from '../assets/icon/sucessGreen.svg';
 import xCircleRed from '../assets/icon/xCircleRed.svg';
+import loginReq from '../assets/icon/loginReq.svg';
 
 const icon = {
   Favorite,
@@ -232,6 +233,7 @@ const icon = {
   pinMapGreen,
   closeCircleWhite,
   sucessGreen,
-  xCircleRed
+  xCircleRed,
+  loginReq,
 };
 export default icon;

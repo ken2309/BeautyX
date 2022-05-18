@@ -46,7 +46,7 @@ function DetailHead(props: any) {
     arrows: false,
     responsive: [],
     afterChange: function (index: any) {
-      setImgThumb(GALLERIES.galleries[index]);
+      setImgThumb(GALLERIES.galleries[index - 1]);
     },
     appendDots: (dots: any) => (
       <div>
@@ -66,10 +66,10 @@ function DetailHead(props: any) {
     }
   }
   const onOpenGalleries = () => {
-    if (!imgThumb) {
+    if (imgThumb) {
+      setOpenGalleries(true)
       setImgThumb(GALLERIES.galleries[0])
     }
-    setOpenGalleries(true)
   }
   return (
     <div className="mer-detail">
@@ -161,6 +161,30 @@ function DetailHead(props: any) {
                           <img src={icon.chatAll} alt="" />
                           <span>{org?.favorites_count}</span>
                           <img src={icon.Favorite} alt="" />
+                        </div>
+                        <span className="address">
+                          {org?.full_address}
+                        </span>
+                        <div className="content-left__follow banner-content-left__follow ">
+                          <button onClick={handleOpenPopupContact}>
+                            {t("Mer_de.contact")}
+                          </button>
+                          <button
+                            style={
+                              org?.is_favorite === true && USER
+                                ? {
+                                  backgroundColor: "var(--purple)",
+                                  color: "var(--bg-gray)",
+                                  border: "solid 1px var(--purple)"
+                                }
+                                : {}
+                            }
+                            onClick={onOrgFavorite}
+                          >
+                            {org?.is_favorite === true && USER
+                              ? t("Mer_de.flowing")
+                              : t("Mer_de.flow")}
+                          </button>
                         </div>
                       </div>
                     </div>

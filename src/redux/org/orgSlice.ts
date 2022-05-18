@@ -21,7 +21,10 @@ export const fetchOrgGalleries: any = createAsyncThunk(
     async (org_id: any) => {
         try {
             const res = await galleriesApi.getByOrgId(org_id);
-            const payload = res.data.context.data;
+            const payload = {
+                org_id: org_id,
+                galleries: res.data.context.data
+            };
             return payload
         } catch (error) {
             console.log(error)
@@ -50,6 +53,7 @@ const initialState = {
     tab: 1,
     GALLERIES: {
         galleries: [],
+        org_id: null,
         status: ''
     }
 }
@@ -89,7 +93,8 @@ const orgSlice = createSlice({
             return {
                 ...state,
                 GALLERIES: {
-                    galleries: payload,
+                    galleries: payload.galleries,
+                    org_id: payload.org_id,
                     status: STATUS.SUCCESS
                 }
             }

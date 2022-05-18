@@ -29,7 +29,10 @@ function MerchantDetail() {
   const dispatch = useDispatch();
   const sub_domain = formatOrgParam(location.pathname);
   const ORG = useSelector((state: any) => state.ORG);
-  const { org, status, tab } = ORG;
+  const ORG_SPECIALS = useSelector((state: any) => state.ORG_SPECIALS);
+  const { SERVICES_SPECIAL, PRODUCTS_SPECIAL } = ORG_SPECIALS;
+
+  const { org, status, tab, GALLERIES } = ORG;
   const callOrgDetail = () => {
     if (sub_domain !== org?.subdomain) {
       dispatch(fetchAsyncOrg(sub_domain))
@@ -37,7 +40,9 @@ function MerchantDetail() {
   }
   const callGalleriesOrg = () => {
     if (status === STATUS.SUCCESS) {
-      dispatch(fetchOrgGalleries(org?.id))
+      if (GALLERIES.org_id !== org?.id || GALLERIES.status !== STATUS.SUCCESS) {
+        dispatch(fetchOrgGalleries(org?.id))
+      }
     }
   }
   const callOrgSpecial = () => {
@@ -53,7 +58,7 @@ function MerchantDetail() {
   useEffect(() => {
     callGalleriesOrg()
     callOrgSpecial()
-  }, [sub_domain, status])
+  }, [status])
   useEffect(() => {
     callOrgDetail()
   }, [sub_domain])
@@ -67,7 +72,7 @@ function MerchantDetail() {
         org={org}
       />
       <DetailTab tab={tab} />
-      <DetailTabMb />
+      <DetailTabMb tab={tab} />
       <div
         className="tabMer-detail"
         style={{ backgroundColor: "var(--bg-gray)", paddingBottom: "64px" }}
@@ -79,7 +84,11 @@ function MerchantDetail() {
               <DetailMer org={org} />
               <MerchantMb org={org} />
               <DetailBranchList branches={org?.branches} />
-              <DetailSaleList org={org} />
+              {
+                SERVICES_SPECIAL.totalItem > 0 &&
+                PRODUCTS_SPECIAL.totalItem > 0 &&
+                <DetailSaleList org={org} />
+              }
             </>
           }
           <SaleByMerchant activeTab={tab} org={org} />

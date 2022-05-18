@@ -54,36 +54,46 @@ function DetailSaleList(props: any) {
           ))}
         </div> */}
       </div>
-      <span className="mer-sale-list__title">
-        Dịch vụ
-      </span>
-      <ul className="mer-sale-list">
-        {
-          services_special.map((item: Service, index: number) => (
-            <li key={index} className="mer-sale-list__item">
-              <ServiceItem
-                org={org}
-                service={item}
-              />
-            </li>
-          ))
-        }
-      </ul>
-      <span className="mer-sale-list__title">
-        Sản phẩm
-      </span>
-      <ul className="mer-sale-list">
-        {
-          products_special.map((item: Product, index: number) => (
-            <li key={index} className="mer-sale-list__item">
-              <ProductItem
-                org={org}
-                product={item}
-              />
-            </li>
-          ))
-        }
-      </ul>
+      {
+        services_special.length > 0 &&
+        <>
+          <span className="mer-sale-list__title">
+            Dịch vụ
+          </span>
+          <ul className="mer-sale-list">
+            {
+              services_special.map((item: Service, index: number) => (
+                <li key={index} className="mer-sale-list__item">
+                  <ServiceItem
+                    org={org}
+                    service={item}
+                  />
+                </li>
+              ))
+            }
+          </ul>
+        </>
+      }
+      {
+        products_special.length > 0 &&
+        <>
+          <span className="mer-sale-list__title">
+            Sản phẩm
+          </span>
+          <ul className="mer-sale-list">
+            {
+              products_special.map((item: Product, index: number) => (
+                <li key={index} className="mer-sale-list__item">
+                  <ProductItem
+                    org={org}
+                    product={item}
+                  />
+                </li>
+              ))
+            }
+          </ul>
+        </>
+      }
     </div>
   );
 }

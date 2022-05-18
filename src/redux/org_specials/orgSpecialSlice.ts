@@ -13,7 +13,8 @@ export const fetchAsyncServicesSpecial: any = createAsyncThunk(
         const payload = {
             services_special: res.data.context.data,
             page: values.page,
-            totalItem: res.data.context.total
+            totalItem: res.data.context.total,
+            org_id: values.org_id
         }
         return payload
     }
@@ -34,6 +35,7 @@ export const fetchProductsSpecial: any = createAsyncThunk(
     }
 )
 const initialState = {
+    org_id: null,
     SERVICES_SPECIAL: {
         services_special: [],
         page: 1,
@@ -61,6 +63,7 @@ const orgSpecialSlice = createSlice({
         [fetchAsyncServicesSpecial.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
+                org_id: payload.org_id,
                 SERVICES_SPECIAL: {
                     services_special: payload.services_special,
                     page: payload.page,

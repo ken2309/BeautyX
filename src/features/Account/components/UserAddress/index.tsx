@@ -22,7 +22,7 @@ function Address(props: any) {
     const ADDRESS = useSelector((state: any) => state.ADDRESS);
     const { address, status, status_up } = ADDRESS;
     const [openMbAddress, setOpenMbAddress] = useState(false);
-    const address_default = address.find((item: any) => item.is_default === true);
+    const address_default = address?.find((item: any) => item.is_default === true);
     const callUserAddress = () => {
         if (status !== STATUS.SUCCESS) {
             dispatch(fetchAsyncUserAddress())
@@ -66,7 +66,7 @@ function Address(props: any) {
                 </button>
             </div>
             {
-                address.map((item: IUserAddress, index: number) => (
+                address?.map((item: IUserAddress, index: number) => (
                     <AddressItem
                         key={index}
                         index={index}

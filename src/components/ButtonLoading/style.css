@@ -26,3 +26,10 @@
     left: 0;
     padding-top: 4px;
 }
+@media only screen and (max-width: 1023px){
+    .btn-loading{
+        /* width: 100%; */
+        padding: 8px 38px;
+        border-radius: 6px;
+    }
+}
