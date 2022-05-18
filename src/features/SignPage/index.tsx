@@ -7,9 +7,13 @@ import { Container } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import BackButton from "../../components/BackButton";
 import SignUps from "./components/SignUps";
+import { EXTRA_FLAT_FORM } from '../../api/extraFlatForm';
+import { FLAT_FORM_TYPE } from '../../rootComponents/flatForm';
+import LoginFlatFormRequest from "../../rootComponents/loginFlatFormRequest/LoginFlatFormRequest";
 
 function SignPage(props: any) {
   const { t } = useContext(AppContext);
+  const FLAT_FORM = EXTRA_FLAT_FORM();
   const location = useLocation();
   const [activeTabSign, setActiveTabSign] = useState(
     location.search
@@ -42,47 +46,54 @@ function SignPage(props: any) {
     <>
       <BackButton />
       <div className="page-sign">
-        <Container>
-          <div className="flex-row-sp sign-content page-sign__cnt">
-            <img
-              src={icon.Logo}
-              alt=""
-              className="sign-content__left-logo-mb"
-            />
-            <div
-              className="flex-column sign-content__left"
-              style={{ justifyContent: "center" }}
-            >
-              <img className="sign-content__left-logo" src={icon.Logo} alt="" />
-              <img
-                className="sign-content__left-partner"
-                src={img.Partner}
-                alt=""
-              />
-            </div>
-            <div className="sign-content__right">
-              <div className="sign-content__right-tab">
-                {buttons.map((item) => (
-                  <button
-                    onClick={() => chooseTab(item.id)}
-                    style={
-                      item.id === activeTabSign
-                        ? {
-                          color: "var(--purple)",
-                          borderBottom: "solid 1px var(--purple)",
+        {
+          FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX ?
+            <Container>
+              <div className="flex-row-sp sign-content page-sign__cnt">
+                <img
+                  src={icon.Logo}
+                  alt=""
+                  className="sign-content__left-logo-mb"
+                />
+                <div
+                  className="flex-column sign-content__left"
+                  style={{ justifyContent: "center" }}
+                >
+                  <img className="sign-content__left-logo" src={icon.Logo} alt="" />
+                  <img
+                    className="sign-content__left-partner"
+                    src={img.Partner}
+                    alt=""
+                  />
+                </div>
+                <div className="sign-content__right">
+                  <div className="sign-content__right-tab">
+                    {buttons.map((item) => (
+                      <button
+                        onClick={() => chooseTab(item.id)}
+                        style={
+                          item.id === activeTabSign
+                            ? {
+                              color: "var(--purple)",
+                              borderBottom: "solid 1px var(--purple)",
+                            }
+                            : {}
                         }
-                        : {}
-                    }
-                    key={item.id}
-                  >
-                    {item.title}
-                  </button>
-                ))}
+                        key={item.id}
+                      >
+                        {item.title}
+                      </button>
+                    ))}
+                  </div>
+                  {switchTab()}
+                </div>
               </div>
-              {switchTab()}
-            </div>
-          </div>
-        </Container>
+            </Container>
+            :
+            <Container>
+              <LoginFlatFormRequest />
+            </Container>
+        }
       </div>
     </>
   );

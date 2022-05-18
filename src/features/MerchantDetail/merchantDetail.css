@@ -960,7 +960,10 @@
   }
 
   .content-left__header {
-    padding-bottom: 16px;
+    display: none;
+  }
+  .content-left__info-detail {
+    display: none;
   }
 
   .content-left__header-name span {
@@ -992,7 +995,7 @@
   }
 
   .detail-sale {
-    padding: 12px;
+    padding: 0px;
   }
 
   .mer-sale-list__item {
@@ -1017,12 +1020,14 @@
   .mer-detail__content-right div {
     border-radius: 0px;
   }
-
+  .content-left__info{
+    margin: 0px;
+  }
   .mer-detail__content-left {
-    width: 100%;
-    margin-top: 16px;
-    padding: 0px 20px;
-    height: fit-content;
+    padding: 0px 20px 6px;
+  }
+  .content-left__info:nth-child(2){
+    margin: 0px;
   }
 
   .content-left__header img:nth-child(1) {
@@ -1059,9 +1064,7 @@
   }
 
   .content-left__follow {
-    margin-top: 16px;
-    display: flex;
-    justify-content: center;
+    display: none;
   }
 
   .content-left__follow button {
@@ -1069,8 +1072,7 @@
   }
 
   .mer-detail__content-desc {
-    flex-direction: column;
-    padding: 12px 24px;
+    display: none;
   }
 
   .mer-detail__content-info {
@@ -1196,7 +1198,7 @@
     right: 0;
     height: 100%;
     backdrop-filter: blur(6px);
-    background-color:#0000001f;
+    background-color:#00000042;
   }
 
   .banner-clone__cnt img {
@@ -1228,18 +1230,35 @@
     font-size: 18px;
     line-height: 24px;
     font-weight: 700;
-    color: var(--purple);
+    color: var(--bgWhite);
   }
 
   .banner-org-head__rate span {
     font-size: 12px;
     line-height: 16px;
     font-weight: 600;
+    color: var(--bgWhite);
   }
 
   .banner-org-head__rate img {
     width: 20px;
     height: 20px;
     margin: 0px 8px 0px 2px;
+  }
+  .banner-org-head .org-de .address{
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
+    color: var(--bgWhite);
+  }
+  .banner-content-left__follow{
+    display: block;
+    margin-top: 12px;
+    justify-content: flex-start;
+  }
+  .banner-content-left__follow button{
+    border: solid 1px var(--bgWhite);
+    color: var(--bgWhite);
+    border-radius: 6px;
   }
 }

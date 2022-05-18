@@ -47,20 +47,28 @@ function RouterConfig(props: any) {
       component: <Home />,
     },
     {
+      path: `/MOMO`,
+      component: <Home />
+    },
+    {
+      path: '/TIKI',
+      component: <Home />
+    },
+    {
       path: `/otp`,
       component: <Otp />,
     },
     {
-      path:'/doi-mat-khau',
-      component: <ResetPassword/>
+      path: '/doi-mat-khau',
+      component: <ResetPassword />
     },
     {
       path: "/search-result/",
       component: <SearchResult />,
     },
     {
-      path:'/ket-qua-tim-kiem/',
-      component:<SearchResults/>
+      path: '/ket-qua-tim-kiem/',
+      component: <SearchResults />
     },
     {
       path: "/cart",
@@ -103,50 +111,50 @@ function RouterConfig(props: any) {
       component: <MerchantDetail />,
     },
     {
-      path:'/danh-muc/',
-      component: <HomeTags/>
+      path: '/danh-muc/',
+      component: <HomeTags />
     },
     {
-      path:'/deal-lam-dep-cuc-HOT',
-      component: <HomePromo/>
+      path: '/deal-lam-dep-cuc-HOT',
+      component: <HomePromo />
     },
     {
-      path:'/khu-vuc/',
-      component: <HomeProvince/>
+      path: '/khu-vuc/',
+      component: <HomeProvince />
     },
     {
-      path:'/dia-diem-quan-tam',
-      component: <HomeListProvince/>
+      path: '/dia-diem-quan-tam',
+      component: <HomeListProvince />
     },
     {
-      path:'/doanh-nghiep/:title',
-      component: <HomeCardResult/>
+      path: '/doanh-nghiep/:title',
+      component: <HomeCardResult />
     },
     {
-      path:'/chinh-sach/',
-      component: <Policy/>
+      path: '/chinh-sach/',
+      component: <Policy />
     },
     {
       path: "/partner",
-      component: <Partner/>,
+      component: <Partner />,
     },
     {
-      path:"/kenh-nguoi-ban",
-      component:<SellerCenter/>
+      path: "/kenh-nguoi-ban",
+      component: <SellerCenter />
     },
     {
-      path:"/danh-gia/",
-      component:<CommentsDetail/>
+      path: "/danh-gia/",
+      component: <CommentsDetail />
     },
     {
-      path:"/deal/:title",
-      component: <HomeDealBanner/>
+      path: "/deal/:title",
+      component: <HomeDealBanner />
     }
   ];
   const routesPrivate = [
     {
-      path:'/goi-dich-vu',
-      component:ServicesUser
+      path: '/goi-dich-vu',
+      component: ServicesUser
     },
     {
       path: "/tai-khoan",
@@ -165,7 +173,7 @@ function RouterConfig(props: any) {
       component: Notification,
     },
     {
-      path:'/trang-thai-don-hang/:desc',
+      path: '/trang-thai-don-hang/:desc',
       component: CartPaymentStatus
     }
   ];

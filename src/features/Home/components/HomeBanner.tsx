@@ -55,7 +55,7 @@ function HomeBanner(props: any) {
       </div>
     ),
     afterChange: function (index: number) {
-      setChooseBanner(banners[index - 1]);
+      setChooseBanner(banners[index]);
     },
   };
   // const bannerImg = [
@@ -75,10 +75,8 @@ function HomeBanner(props: any) {
         case "PROMOTION":
           return console.log("PROMOTION");
         case "ORGANIZATION":
-          //return console.log(chooseBanner)
           return history.push({
-            pathname: `/org/${chooseBanner.name}`,
-            search: `${chooseBanner.origin_id}`
+            pathname: `/org/${chooseBanner.origin_id}`
           });
         default:
           break;
