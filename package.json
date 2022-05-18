@@ -2,7 +2,6 @@
   "name": "web-booking",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ken2309.github.io/beautyX/",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.6.0",
