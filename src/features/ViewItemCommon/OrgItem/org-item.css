@@ -7,6 +7,7 @@
 
 .re-org-item:hover {
     box-shadow: 0 6px 15px #dcd8ee;
+    transform: translateY(-10px);
 }
 
 .re-org-item .org-img-cnt {
@@ -44,7 +45,7 @@
 .re-org-item .re-org-item__img {
     width: 100%;
     height: auto;
-    /* min-height: 182px; */
+    min-height: 182px;
     border-radius: 8px;
 }
 

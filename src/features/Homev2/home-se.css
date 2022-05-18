@@ -91,16 +91,17 @@
     justify-content: space-between;
 }
 .deal-first{
-    padding: 4px;
-    width: 50%;
+    width: calc(50% - 16px);
     cursor: pointer;
+    overflow: hidden;
+    border-radius: 12px;
+
 }
 .deal-first img,
 .home-deal-cnt .deal-second__item img{
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 12px;
 }
 .deal-second{
     display: flex;
@@ -109,8 +110,16 @@
     cursor: pointer;
 }
 .home-deal-cnt .deal-second__item{
-    padding: 4px;
-    width: 50%;
+    width: calc(50% - 8px);
+    overflow: hidden;
+}
+.deal-first>img,
+.home-deal-cnt .deal-second__item>img{
+    transition: all .3s ;
+}
+.deal-first:hover>img,
+.home-deal-cnt .deal-second__item:hover>img{
+    transform: scale(1.06);
 }
 /* home card */
 .home-card-cnt{
@@ -120,7 +129,7 @@
     justify-content: space-between;
 }
 .home-card-cnt__left{
-    width: 33.2%;
+    width: 20%;
     height: 100%;
     padding-right: 8px;
 }
@@ -140,22 +149,27 @@
 }
 .home-card-cnt__left .card-item-cnt img{
     margin-right: 12px;
+    width: 20px;
 }
 .home-card-cnt__left .card-item-cnt span{
-    font-size: 18px;
+    font-size: 14px;
     line-height: 20px;
     font-weight: bold;
     color: var(--text-black);
 }
 .home-card-cnt__left .card-list li button{
-    border: solid 1px var(--text-hover);
+    /* border: solid 1px var(--text-hover); */
+    border: none;
     outline: none;
     border-radius: 100%;
     background-color: var(--bgWhite);
 }
+.home-card-cnt__left .card-list li button>img{
+    width: 20px;
+}
 .home-card-cnt__right{
     padding-left: 8px;
-    width: 66.4%;
+    width: 80%;
     /* background-color: burlywood; */
     border: solid 1px var(--bgGray);
     border-radius: 12px;
@@ -167,7 +181,7 @@
     flex-wrap: wrap;
 }
 .home-card-list-org .org-list li{
-    width: 25%;
+    width: 20%;
     padding: 12px 8px;
 }
 /* home province */
@@ -191,6 +205,12 @@
 }
 .home-province .home-province_item:hover{
     box-shadow: 0px 10px 31px rgba(76, 62, 142, 0.3);
+}
+.home-province .home-province_item>img{
+    transition: all .3s ease-in-out;
+}
+.home-province .home-province_item:hover>img{
+    transform: scale(1.06);
 }
 .home-province .province-item-cnt{
     position: absolute;

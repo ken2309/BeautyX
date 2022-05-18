@@ -34,11 +34,11 @@ function HomeCard(props: any) {
     const switchTab = () => {
         switch (acTab) {
             case 1:
-                return <TabDealHot />;
+                return <TabDealHot  card={cards[0]}/>;
             case 2:
-                return <TabTrust />
+                return <TabTrust  card={cards[1]}/>
             case 3:
-                return <TabDistance />
+                return <TabDistance  card={cards[2]}/>
             default:
                 break
         }

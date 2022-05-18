@@ -1,12 +1,13 @@
 .ser-pro-item{
     cursor: pointer;
     width: 100%;
-    background-color: var(--bgWhite);
+    background-color: white;
     border-radius: 8px;
-    transition: all .4s;
+    transition: all .3s ease-in-out;
 }
 .ser-pro-item:hover{
     box-shadow: 0 6px 15px #dcd8ee;
+    transform: translateY(-10px);
 }
 .ser-pro-item .ser-img{
     width: 100%;
