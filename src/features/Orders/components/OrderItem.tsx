@@ -1,41 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import icon from "../../../constants/icon";
-import { IOrganization } from "../../../interface/organization";
-import orgApi from "../../../api/organizationApi";
-// import { useHistory } from 'react-router-dom';
-// import slugify from '../../../utils/formatUrlString';
 import OrderDetail from "../../OrderDetail";
 import { AppContext } from "../../../context/AppProvider";
-import {IOrderV2} from '../../../interface/orderv2'
+import { IOrderV2 } from '../../../interface/orderv2';
+import onErrorImg from "../../../utils/errorImg";
 
-interface IProp{
-  order : IOrderV2
+interface IProp {
+  order: IOrderV2
 }
 
 function OrderItem(props: IProp) {
-  // const history = useHistory();
   const { t } = useContext(AppContext);
   const { order } = props;
   const countItem = order.items_count
-  // const status = order.status;
-  // const countItem =
-  //   order.items_product.length +
-  //   order.items_service.length +
-  //   order.items_treatment_combo.length;
-  const [org, setOrg] = useState<IOrganization>();
   const [openDetail, setOpenDetail] = useState(false);
-  useEffect(() => {
-    async function getOrgById() {
-      try {
-        const response = await orgApi.getOrgById(order.organization_id);
-        setOrg(response.data.context);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getOrgById();
-  }, [order.organization_id]);
   const checkStatus = (status: string) => {
     switch (status) {
       case "CANCELED":
@@ -83,13 +62,14 @@ function OrderItem(props: IProp) {
         <div className="order-item">
           <img
             className="order-item__img"
-            src={"https://picsum.photos/650/976?random=1" + order.id}
+            src={order?.organization?.image_url}
+            onError={(e) => onErrorImg(e)}
             alt=""
           />
           <div className="order-item__cnt">
             <div className="order-item__cnt-head">
-              <span className="org-name">{org?.name}</span>
-              <span className="org-address">{org?.full_address}</span>
+              <span className="org-name">{order?.organization?.name}</span>
+              <span className="org-address">{order?.organization?.full_address}</span>
               <div className="order-at">
                 <span className="flex-row">
                   {t("booking.date")}:<h4>{order.created_at}</h4>
@@ -114,7 +94,7 @@ function OrderItem(props: IProp) {
       <OrderDetail
         open={openDetail}
         setOpen={setOpenDetail}
-        org={org}
+        org={order?.organization}
         order={order}
         countItem={countItem}
       />

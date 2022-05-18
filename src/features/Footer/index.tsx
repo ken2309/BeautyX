@@ -6,7 +6,7 @@ import slugify from '../../utils/formatUrlString';
 import scrollTop from '../../utils/scrollTop';
 
 function Footer() {
-      const url_map = `https://maps.google.com/?q=10.800590217284448,106.68205401591362`;
+      const url_map = `https://maps.google.com/?q=10.79319953408399,106.69011243982503`;
       const data_footer = [
             {
                   id: 1,
@@ -72,9 +72,9 @@ function Footer() {
                                     data_footer.map((item, index) => (
                                           <div key={index} className="wrap">
                                                 <div className="footer-cnt__item">
-                                                      <span className="footer-cnt__item-title">
+                                                      <div className="footer-cnt__item-title">
                                                             {item.title}
-                                                      </span>
+                                                      </div>
                                                       <ul>
                                                             {
                                                                   item.items.map((a, i) => (
@@ -96,7 +96,7 @@ function Footer() {
                               onClick={() => window.open(`${url_map}`, '_blank', 'noopener,noreferrer')}
                               className="address"
                         >
-                              Công ty CP MYSPA - Lầu 4, Nam Giao building 261-263 Phan Xích Long, Phường 2, Quận Phú Nhuận, TP.HCM, TP.HCM - GPĐKKD: 0314964245, cấp ngày:03/04/2018, bởi Phòng Đăng ký kinh doanh – Sở kế hoạch và Đầu tư TP.HCM
+                              Công ty CP MYSPA - Lầu 3, 27K Trần Nhật Duật, Phường Tân Định, Quận 1, TP.HCM - GPĐKKD: 0314964245, cấp ngày:03/04/2018, bởi Phòng Đăng ký kinh doanh – Sở kế hoạch và Đầu tư TP.HCM
                         </div>
                   </Container>
             </div>

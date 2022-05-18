@@ -4,22 +4,23 @@ import HomeTitleSection from '../HomeTitleSection/index';
 import { IProvince } from '../../../../interface/provinces';
 import { Container } from '@mui/material'
 import icon from '../../../../constants/icon';
-import {useHistory} from 'react-router-dom';
-//import slugify from '../../../../utils/formatUrlString';
+import { useHistory } from 'react-router-dom';
 import scrollTop from '../../../../utils/scrollTop';
+import { useSelector } from 'react-redux';
 
 function HomeProvince(props: any) {
-    const { provinces } = useContext(AppContext);
-    const {t} = useContext(AppContext)
+    const HOME = useSelector((state: any) => state.HOME);
+    const { provinces_org } = HOME;
+    const { t } = useContext(AppContext)
     const history = useHistory()
-    const gotoResult=(province:IProvince)=>{
+    const gotoResult = (province: IProvince) => {
         history.push({
-            pathname:`/khu-vuc/`,
-            search:`${province.name},${province.province_code}`
+            pathname: `/khu-vuc/`,
+            search: `${province.name},${province.province_code}`
         })
         scrollTop()
     }
-    const gotoListProvince=()=>{
+    const gotoListProvince = () => {
         history.push('/dia-diem-quan-tam');
         scrollTop()
     }
@@ -39,9 +40,9 @@ function HomeProvince(props: any) {
                 </div>
                 <div className="home-province_list">
                     {
-                        provinces?.slice(0, 6).map((item: IProvince, index: number) => (
+                        provinces_org?.slice(0, 6).map((item: IProvince, index: number) => (
                             <div
-                                onClick={()=>gotoResult(item)}
+                                onClick={() => gotoResult(item)}
                                 key={index}
                                 className="home-province_item"
                             >

@@ -8,12 +8,12 @@ import FilterServices from '../../FilterServices';
 import servicePromoApi from '../../../api/servicePromoApi';
 import ServicePromoItem from '../../ViewItemCommon/ServicePromoItem';
 import { IServicePromo } from '../../../interface/servicePromo';
-import {Pagination} from '@mui/material';
+import { Pagination } from '@mui/material';
 import scrollTop from '../../../utils/scrollTop';
 import { AppContext } from '../../../context/AppProvider';
 
 function HomePromo(props: any) {
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const [dataSort, setDataSort] = useState('-discount_percent')
     const [data, setData] = useState({
         services: [],
@@ -35,30 +35,11 @@ function HomePromo(props: any) {
             console.log(error)
         }
     }
-    async function getServicesPromoByLocation() {
-        try {
-            const res = await servicePromoApi.getServicesPromoLocation({
-                page: data.page,
-                sort: dataSort
-            });
-            setData({
-                ...data,
-                services: res.data.data.hits,
-                lastPage: res?.data.last_page
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
     useEffect(() => {
-        if (dataSort === 'none') {
-            getServicesPromoByLocation()
-        } else {
-            getServicesPromo()
-        }
+        getServicesPromo()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data.page, dataSort])
-    const onPageChange=(e:any, value:any)=>{
+    const onPageChange = (e: any, value: any) => {
         setData({
             ...data,
             page: value

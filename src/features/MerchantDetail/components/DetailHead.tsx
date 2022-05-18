@@ -2,88 +2,81 @@ import React, { useRef, useState, useContext } from "react";
 import { Container } from "@mui/material";
 import icon from "../../../constants/icon";
 import { AppContext } from "../../../context/AppProvider";
-//import { IOrganization } from "../../../interface/organization";
-import img from "../../../constants/img";
 import OrgCardLoading from "../../Loading/OrgCardLoading";
 import PopupDetailContact from "./PopupDetailContact";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import DetailHeadOpenTime from "../components/DetailHeadOpenTime";
-import favorites from "../../../api/favorite";
-import SignInUp from "../../poupSignInUp/index";
+import { useHistory } from 'react-router-dom'
 import onErrorImg from "../../../utils/errorImg";
-
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  focusOnSelect: true,
-  autoplay: true,
-  autoplaySpeed: 3000,
-  arrows: false,
-  responsive: [],
-  appendDots: (dots: any) => (
-    <div>
-      <ul>{dots}</ul>
-    </div>
-  ),
-};
-
-// interface IProps {
-//   org: IOrganization;
-//   loading: boolean;
-// }
+import { useSelector, useDispatch } from "react-redux";
+import { STATUS } from '../../../redux/status';
+import { onDeleteFavoriteOrg, onFavoriteOrg } from '../../../redux/org/orgSlice';
+import DetailGalleries from "./DetailGalleries";
+import useFullScreen from '../../../utils/useFullScreen';
 
 function DetailHead(props: any) {
-  const { org, loading, tempCount, setTempleCount, follow, setFollow } = props;
-  const [openSignIn, setOpenSignIn] = useState(false);
-  const { t, profile } = useContext(AppContext);
+  const { org, status } = props;
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { t } = useContext(AppContext);
+  const fullScreen = useFullScreen();
+  const { USER } = useSelector((state: any) => state.USER);
+  const { GALLERIES } = useSelector((state: any) => state.ORG);
+  const ORG_COMMENTS = useSelector((state: any) => state.ORG_COMMENTS);
+  const { totalItem } = ORG_COMMENTS;
   const infoBox = useRef(null);
   const [openPopupContact, setOpenPopupContact] = useState(false);
+  const [openGalleries, setOpenGalleries] = useState(false);
   const [openTime, setOpenTime] = useState(false);
-
+  const [imgThumb, setImgThumb] = useState(GALLERIES.galleries[0])
   const handleOpenPopupContact = () => {
     setOpenPopupContact(true);
   };
-
-  async function handlePostFavorites(org_id: number) {
-    try {
-      await favorites.postFavorite(org_id);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-  async function handleDeleteFavorite(org_id: number) {
-    try {
-      await favorites.deleteFavorite(org_id);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const handleFollowClick = () => {
-    if (profile) {
-      setFollow(!follow);
-      if (follow === true) {
-        setTempleCount(tempCount - 1);
-        handleDeleteFavorite(org.id);
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    focusOnSelect: true,
+    //autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: false,
+    responsive: [],
+    afterChange: function (index: any) {
+      setImgThumb(GALLERIES.galleries[index]);
+    },
+    appendDots: (dots: any) => (
+      <div>
+        <ul>{dots}</ul>
+      </div>
+    ),
+  };
+  const onOrgFavorite = () => {
+    if (USER) {
+      if (org?.is_favorite === true) {
+        dispatch(onDeleteFavoriteOrg(org))
       } else {
-        setTempleCount(tempCount + 1);
-        handlePostFavorites(org.id);
+        dispatch(onFavoriteOrg(org))
       }
     } else {
-      setOpenSignIn(true);
+      history.push({ pathname: '/sign-in', search: '1' })
     }
-  };
+  }
+  const onOpenGalleries = () => {
+    if (!imgThumb) {
+      setImgThumb(GALLERIES.galleries[0])
+    }
+    setOpenGalleries(true)
+  }
   return (
     <div className="mer-detail">
       <Container>
         <div className="mer-detail__content">
           <div ref={infoBox} className="mer-detail__content-left">
-            {loading === true ? (
+            {status === STATUS.LOADING ? (
               <OrgCardLoading />
             ) : (
               <>
@@ -94,9 +87,9 @@ function DetailHead(props: any) {
                     <div className="mer-detail__rate">
                       <span>4.5</span>
                       <img src={icon.star} alt="" />
-                      <span>250</span>
+                      <span>{totalItem}</span>
                       <img src={icon.chatAll} alt="" />
-                      <span>{`${org?.favorites_count + tempCount}`}</span>
+                      <span>{org?.favorites_count}</span>
                       <img src={icon.Favorite} alt="" />
                     </div>
                   </div>
@@ -129,18 +122,17 @@ function DetailHead(props: any) {
                     {t("Mer_de.contact")}
                   </button>
                   <button
-                    disabled={profile ? false : true}
                     style={
-                      follow === true && profile
+                      org?.is_favorite === true && USER
                         ? {
                           backgroundColor: "var(--purple)",
                           color: "var(--bg-gray)",
                         }
                         : {}
                     }
-                    onClick={handleFollowClick}
+                    onClick={onOrgFavorite}
                   >
-                    {follow === true && profile
+                    {org?.is_favorite === true && USER
                       ? t("Mer_de.flowing")
                       : t("Mer_de.flow")}
                   </button>
@@ -148,21 +140,40 @@ function DetailHead(props: any) {
               </>
             )}
           </div>
-
-          <div className="merchant-slider mer-detail__content-right">
+          <div
+            onClick={onOpenGalleries}
+            className="merchant-slider mer-detail__content-right"
+          >
             <Slider lazyLoad="progressive" {...settings}>
-              <div className="merchant-slider__img">
-                <img src={img.slider} alt="" />
-              </div>
-              <div className="merchant-slider__img">
-                <img src={img.slider4} alt="" />
-              </div>
-              <div className="merchant-slider__img">
-                <img src={img.slider} alt="" />
-              </div>
-              <div className="merchant-slider__img">
-                <img src={img.slider4} alt="" />
-              </div>
+              {
+                fullScreen &&
+                <div className="banner-clone__cnt">
+                  <img src={org?.image_url} alt="" />
+                  <div className="banner-clone__org">
+                    <div className="banner-org-head">
+                      <img src={org?.image_url} alt="" className="org-avatar" />
+                      <div className="org-de">
+                        <span className="name">{org?.name}</span>
+                        <div className="flex-row banner-org-head__rate">
+                          <span>4.5</span>
+                          <img src={icon.star} alt="" />
+                          <span>{totalItem}</span>
+                          <img src={icon.chatAll} alt="" />
+                          <span>{org?.favorites_count}</span>
+                          <img src={icon.Favorite} alt="" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              {
+                GALLERIES.galleries.map((item: any, index: number) => (
+                  <div key={index} className="merchant-slider__img">
+                    <img src={item.image_url} alt="" />
+                  </div>
+                ))
+              }
             </Slider>
           </div>
         </div>
@@ -171,13 +182,16 @@ function DetailHead(props: any) {
         setOpenPopupContact={setOpenPopupContact}
         openPopupContact={openPopupContact}
       />
-      <SignInUp
-        openSignIn={openSignIn}
-        setOpenSignIn={setOpenSignIn}
-        activeTabSign={1}
+      <DetailGalleries
+        open={openGalleries}
+        setOpen={setOpenGalleries}
+        imgThumb={imgThumb}
+        setImgThumb={setImgThumb}
+        GALLERIES={GALLERIES}
       />
     </div>
   );
 }
 
 export default DetailHead;
+

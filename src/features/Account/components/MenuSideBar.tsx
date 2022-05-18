@@ -1,8 +1,13 @@
 import icon from "../../../constants/icon";
 import { useHistory } from "react-router-dom";
 import { useContext } from "react";
-import CheckNotification from "./CheckNotification";
+//import CheckNotification from "./CheckNotification";
 import { AppContext } from "../../../context/AppProvider";
+import mediaApi from "../../../api/mediaApi";
+import authentication from "../../../api/authApi";
+import { useDispatch, useSelector } from 'react-redux';
+import onErrorImg from "../../../utils/errorImg";
+import { putUser } from '../../../redux/USER/userSlice'
 
 interface info {
   name?: string;
@@ -13,42 +18,82 @@ interface info {
   rank?: string;
 }
 function MenuSideBar(props: info) {
-  const { t, setSign, userInfo } = useContext(AppContext);
+
+  const {
+    t,
+    setSign,
+  } = useContext(AppContext);
+
+  const dispatch = useDispatch();
+  const USER = useSelector((state: any) => state.USER.USER)
+
   const data: info = {
-    name: userInfo?.fullname,
-    avatar: "https://picsum.photos/650/976?random=1",
     point: 200,
     amount: 200,
     rank: "Vàng",
   };
   const history = useHistory();
 
-  const handleDropdown = (e: any) => {
-    if (e.target.classList.value.indexOf("active") !== -1) {
-      e.target.classList.remove("active");
-    } else {
-      e.target.classList.add("active");
-    }
-  };
+  // const handleDropdown = (e: any) => {
+  //   if (e.target.classList.value.indexOf("active") !== -1) {
+  //     e.target.classList.remove("active");
+  //   } else {
+  //     e.target.classList.add("active");
+  //   }
+  // };
   const handleSignOut = () => {
     setSign(false);
     const token = "";
     localStorage.setItem("_WEB_TK", token);
   };
+  const onFileChange = (e: any) => {
+    const form = e.target.files[0];
+    handlePostMedia(form)
+  }
+  const handlePostMedia = async (form: any) => {
+    let formData = new FormData();
+    formData.append('file', form);
+    try {
+      const res = await mediaApi.postMedia(formData);
+      const action = putUser({ ...USER, avatar: res.data.context.original_url })
+      dispatch(action)
+      const model_id = await res.data.context.model_id;
+      const params = {
+        media_id: model_id
+      }
+      await authentication.putUserProfile(params)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div>
       <div className="infor_section">
         <div className="avatar">
           <div className="img_mask">
-            <img src={data.avatar} alt="img" />
+            <img src={USER?.avatar}
+              onError={(e) => onErrorImg(e)}
+              alt="img"
+            />
           </div>
           <div className="camera_icon">
-            <img src={icon.Camera_purple} alt="icon" />
+            <label htmlFor="file">
+              <img src={icon.Camera_purple} alt="icon" />
+            </label>
           </div>
+          <input
+            hidden
+            id="file"
+            type="file"
+            name="file"
+            accept="image/jpeg"
+            onChange={onFileChange}
+          />
         </div>
         <div className="info">
           <p className="quicksand-xl">
-            <b>{data.name}</b>
+            <b>{USER?.fullname}</b>
           </p>
           <div className="other_stuff text-bold quicksand-md">
             <div className="point">
@@ -154,7 +199,7 @@ function MenuSideBar(props: info) {
             </li>
           </ul>
         </div> */}
-        <div className="tab">
+        <div onClick={() => history.push('/tai-khoan/ma-uu-dai')} className="tab">
           <div className="icon">
             <img src={icon.Ticket} alt="" />
           </div>
@@ -166,7 +211,7 @@ function MenuSideBar(props: info) {
           </div>
           <span className="quicksand-md text-bold">{t("Header.noti")}</span>
         </div>
-        <div className="dropdown">
+        {/* <div className="dropdown">
           <div className="tab" onClick={handleDropdown}>
             <div className="icon">
               <img src={icon.Union} alt="" />
@@ -189,7 +234,7 @@ function MenuSideBar(props: info) {
               </div>
             </li>
           </ul>
-        </div>
+        </div> */}
         <div className="tab">
           <div className="icon">
             <img src={icon.Headphones_purple} alt="" />

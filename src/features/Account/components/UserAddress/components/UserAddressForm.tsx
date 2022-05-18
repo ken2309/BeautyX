@@ -1,12 +1,32 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IProvince } from '../../../../../interface/provinces';
 import { IDistrict, IWard } from '../../../../../interface/district';
 import provincesApi from '../../../../../api/provinceApi';
-import { AppContext } from '../../../../../context/AppProvider';
+import ButtonLoading from '../../../../../components/ButtonLoading';
+import { useDispatch, useSelector } from 'react-redux';
+import { postAsyncAddress, removeDefaultItem } from '../../../../../redux/USER/userAddressSlice';
+import { STATUS } from '../../../../../redux/status';
+import { useHistory } from 'react-router-dom';
+import useFullScreen from '../../../../../utils/useFullScreen';
 
 interface IDataAdd {
     districts: IDistrict[],
     wards: IWard[]
+}
+interface IAddress {
+    province: {
+        code: null | number,
+        name: null | string
+    },
+    district: {
+        code: null | number,
+        name: null | string
+    },
+    ward: {
+        code: null | number,
+        name: null | string,
+    },
+    short_address: string
 }
 const $ = document.querySelector.bind(document);
 const onToggleProvince = () => {
@@ -25,8 +45,20 @@ const onToggleWard = () => {
     $('.us_address-cnt .from-label__list-district')?.classList.remove('lis-province-ac')
 }
 function UserAddressForm(props: any) {
-    const { provinces } = useContext(AppContext);
-    const { address, setAddress, handleSubmitForm } = props;
+    const { setOpen } = props;
+    const ADDRESS = useSelector((state: any) => state.ADDRESS);
+    const { provinces } = useSelector((state: any) => state.HOME);
+    const fullScreen = useFullScreen();
+    const { status_up } = ADDRESS;
+    const address_default = ADDRESS.address.find((item: any) => item.is_default === true);
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const [address, setAddress] = useState<IAddress>({
+        province: { code: null, name: null },
+        district: { code: null, name: null },
+        ward: { code: null, name: null },
+        short_address: ''
+    })
     const [dataAdd, setDataAdd] = useState<IDataAdd>({
         districts: [],
         wards: []
@@ -108,9 +140,22 @@ function UserAddressForm(props: any) {
         }
     }
 
-    const onSubmitForm = () => {
-        if (handleSubmitForm) {
-            handleSubmitForm()
+    const handleSubmitForm = async () => {
+        if (
+            address.district.code &&
+            address.province.code &&
+            address.ward.code &&
+            address.short_address.length > 0
+        ) {
+            const values = {
+                address: `${address.short_address},${address.ward.name},${address.district.name},${address.province.name}`,
+                is_default: true
+            }
+            await dispatch(postAsyncAddress(values))
+            const action = removeDefaultItem(address_default);
+            dispatch(action)
+            if (fullScreen === false) return history.goBack();
+            if (setOpen && fullScreen === true) return setOpen(false)
         }
     }
     return (
@@ -251,9 +296,11 @@ function UserAddressForm(props: any) {
                     </div>
                 </div>
                 <div className="form-btn">
-                    <button onClick={onSubmitForm}>
-                        Thêm mới địa chỉ
-                    </button>
+                    <ButtonLoading
+                        loading={status_up === STATUS.LOADING ? true : false}
+                        onClick={handleSubmitForm}
+                        title="Thêm mới địa chỉ"
+                    />
                 </div>
             </div>
         </div>

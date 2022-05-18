@@ -1,4 +1,6 @@
 export interface User {
+      avatar: string,
+      media: [],
       email: string
       fullname: string
       id: number

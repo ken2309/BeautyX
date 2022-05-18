@@ -1,14 +1,16 @@
 import React, { useContext, useState } from 'react';
 import icon from '../../../constants/icon';
 import PopupSuccess from '../../PopupSuccess/index';
-import {useHistory} from 'react-router-dom'
-//import {useFormik} from 'formik';
-//import * as Yup from 'yup'
+import { useHistory } from 'react-router-dom'
 import { AppContext } from '../../../context/AppProvider';
+import onErrorImg from '../../../utils/errorImg';
+import PaymentBranch from './PaymentBranch';
 
 //const phoneFormat = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 function PaymentForm(props: any) {
-      const {setNote} = props;
+      const { setNote, list, chooseBr, setChooseBr } = props;
+      const org = list[0]?.org;
+      const [open, setOpen] = useState(false);
       const { t } = useContext(AppContext);
       const history = useHistory();
       const { address } = props;
@@ -16,6 +18,13 @@ function PaymentForm(props: any) {
       const user = JSON.parse(`${localStorage.getItem('_WEB_US')}`);
       return (
             <>
+                  <PaymentBranch
+                        open={open}
+                        setOpen={setOpen}
+                        org={org}
+                        chooseBr={chooseBr}
+                        setChooseBr={setChooseBr}
+                  />
                   <div
                         className="flex-column payment-form"
                   >
@@ -27,7 +36,7 @@ function PaymentForm(props: any) {
                                                 Thông tin người nhận
                                                 <button
                                                       className='flex-row'
-                                                      onClick={()=>history.push('/tai-khoan/thong-tin-ca-nhan')}
+                                                      onClick={() => history.push('/tai-khoan/thong-tin-ca-nhan')}
                                                 >
                                                       <img src={icon.editWhite} alt="" />
                                                       Thay đổi
@@ -54,7 +63,7 @@ function PaymentForm(props: any) {
                                                 Địa chỉ giao hàng
                                                 <button
                                                       className='flex-row'
-                                                      onClick={()=>history.push('/tai-khoan/thong-tin-ca-nhan')}
+                                                      onClick={() => history.push('/tai-khoan/thong-tin-ca-nhan')}
                                                 >
                                                       <img src={icon.editWhite} alt="" />
                                                       Thay đổi
@@ -64,16 +73,56 @@ function PaymentForm(props: any) {
                                                 <span>Đia chỉ:</span>
                                                 <span>{address?.address}</span>
                                           </div>
+                                          <input
+                                                onChange={(e) => setNote(e.target.value)}
+                                                type="text"
+                                                placeholder='Ghi chú cho doanh nghiệp...'
+                                          />
                                     </div>
                               </div>
                               <div className="payment-form__right">
-                                    <textarea
-                                          name="cus_note"
-                                          onChange={(e)=> setNote(e.target.value)}
-                                          //value={formik.values.cus_note}
-                                          //onChange={formik.handleChange}
-                                          placeholder={t('pm.note')}
-                                    ></textarea>
+                                    <img
+                                          src={org?.image_url}
+                                          alt=""
+                                          className="payment-form__right-avatar"
+                                          onError={(e) => onErrorImg(e)}
+                                    />
+                                    <div className="payment-form__right-info">
+                                          {
+                                                chooseBr ?
+                                                      <>
+                                                            <span className="org-name">
+                                                                  {chooseBr?.name}
+                                                            </span>
+                                                            <span className='org-address'>
+                                                                  Đia chỉ:{chooseBr?.full_address}
+                                                            </span>
+                                                            <span className="org-address">
+                                                                  Liên hệ : {chooseBr?.telephone}
+                                                            </span>
+                                                      </>
+                                                      :
+                                                      <>
+                                                            <span className="org-name">
+                                                                  {org?.name}
+                                                            </span>
+                                                            <span className='org-address'>
+                                                                  Đia chỉ:{org?.full_address}
+                                                            </span>
+                                                            <span className="org-address">
+                                                                  Liên hệ : {org?.telephone[0]}
+                                                            </span>
+                                                      </>
+                                          }
+                                          {
+                                                org && org.branches?.length > 0 &&
+                                                <button
+                                                      onClick={() => setOpen(true)}
+                                                >
+                                                      Chọn chi nhánh
+                                                </button>
+                                          }
+                                    </div>
                               </div>
                         </div>
                   </div>

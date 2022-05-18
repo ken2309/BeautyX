@@ -1,16 +1,34 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import icon from '../../../constants/icon';
+import { clearServices, fetchAsyncServices } from '../../../redux/org_services/orgServivesSlice';
 
 function ServiceCateMb(props: any) {
-      const { categories, chooseCate, setChooseCate, setPage } = props;
-      const onCateAll = () => {
-            setChooseCate();
-            setPage(1);
-      }
+      const { chooseCate, setChooseCate } = props;
+      const dispatch = useDispatch();
+      const ORG = useSelector((state: any) => state.ORG);
+      const { org } = ORG;
+      const { categories } = useSelector((state: any) => state.ORG_SERVICES.CATE);
+      const allCate = () => {
+            dispatch(clearServices());
+            const values = {
+                  cate_id: undefined,
+                  org_id: org?.id,
+                  page: 1
+            }
+            dispatch(fetchAsyncServices(values))
+            setChooseCate(undefined);
+      };
       const handleActiveCateClick = (cate: any) => {
+            dispatch(clearServices());
+            const values = {
+                  cate_id: cate.id,
+                  org_id: org?.id,
+                  page: 1
+            }
+            dispatch(fetchAsyncServices(values))
             setChooseCate(cate.id);
-            setPage(1);
-      }
+      };
       return (
             <div className="mb-cate-wrapper">
                   <div className="flex-row-sp mb-cate__filter">
@@ -22,7 +40,7 @@ function ServiceCateMb(props: any) {
                         <ul className="mb-cate__list">
                               <li>
                                     <button
-                                          onClick={onCateAll}
+                                          onClick={allCate}
                                           style={!chooseCate ?
                                                 { backgroundColor: 'var(--purple)', color: 'var(--bgWhite)' }
                                                 :
@@ -37,8 +55,8 @@ function ServiceCateMb(props: any) {
                                           <li key={item.id} >
                                                 <button
                                                       style={chooseCate === item.id ?
-                                                            { 
-                                                                  backgroundColor: 'var(--purple)', 
+                                                            {
+                                                                  backgroundColor: 'var(--purple)',
                                                                   color: 'var(--bgWhite)'
                                                             }
                                                             :

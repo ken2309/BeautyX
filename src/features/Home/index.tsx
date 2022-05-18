@@ -3,52 +3,20 @@ import "./home.css";
 import "../poupSignInUp/popupSignInUp.css";
 import { Container } from "@mui/material";
 import HomeBanner from "./components/HomeBanner";
-//import HomeMap from "./components/HomeMap";
-//import HomeMiniMap from "./components/HomeMiniMap";
-//import HomeOrder from "./components/HomeOrder";
-//import HomeCalendar from "./components/HomeCalendar";
-//import HomeFlatForm from "./components/HomeFlatForm";
-//import HomeSignIn from "./components/HomeSignIn";
-//import HomeSlider from "./components/HomeSlider";
 import Footer from "../Footer/index";
-//import HomeLoggedCalendar from "./components/HomeLogged/HomeLoggedCalendar";
-//import HomeLoggedLocation from "../Home/components/HomeLogged/HomeLoggedLocation";
-//import HomeLoggedProduct from "../Home/components/HomeLogged/HomeLoggedProduct";
-//import HomeLoggedForYou from "../Home/components/HomeLogged/HomeLoggedForYou";
 import { AppContext } from "../../context/AppProvider";
 import Head from "../Head/index";
 import HeadTitle from "../HeadTitle";
 import Bottom from "../../featuresMobile/Bottom";
 import HomeSecond from "../Homev2";
 
-//import HomeBanner from '../HomeBanner';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getAllOrg, fetchAsyncOrg } from '../../redux/orgSlice'
-
-// const logged: boolean = true;
-// const headerStyle = {
-//   position: 'fixed',
-//   top: 0,
-//   left: 0,
-//   right: 0,
-//   backgroundColor: 'transparent',
-//   zIndex:10
-// }
 function Home() {
-  const {t } = useContext(AppContext);
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(fetchAsyncOrg())
-  // }, [dispatch])
-
-  // const org = useSelector(getAllOrg);
-  // console.log(org);
-
-
+  const { t } = useContext(AppContext);
   return (
     <div className="home">
       <HeadTitle title={t("Home.home")} />
       <Head
+        IN_HOME={true}
       // headerStyle={headerStyle}
       />
       {/* <HomeBanner /> */}
@@ -62,10 +30,6 @@ function Home() {
           :
           <></>
       } */}
-
-
-
-
       {/* {profile ? (
         <>
           <HomeSecond />

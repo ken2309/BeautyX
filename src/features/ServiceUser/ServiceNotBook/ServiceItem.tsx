@@ -1,12 +1,11 @@
 import { Checkbox } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import icon from "../../../constants/icon";
 import { AppContext } from "../../../context/AppProvider";
 //import formatPrice from "../../../utils/formatPrice";
 import { IUser_Service } from '../../../interface/servicesUser';
 import onErrorImg from "../../../utils/errorImg";
 import { useSelector } from 'react-redux';
-import PopupNoti from "../components/PopupNoti";
 
 interface IProps {
   service: IUser_Service,
@@ -16,20 +15,14 @@ interface IProps {
 
 function ServiceItem(props: IProps) {
   const { t } = useContext(AppContext);
-  const [open, setOpen] = useState(false);
   const { service, handleServiceBook, order_id } = props;
   const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
-  const order_id_slice = servicesBookSlice.order_id;
   const servicesBook = servicesBookSlice.servicesBook;
   const servicesBook_id = servicesBook.map((item: any) => item.ser_book_id);
   const handleAddService = () => {
     // check service has order_id same
-    if (order_id_slice === null || order_id_slice === order_id) {
-      if (handleServiceBook) {
-        handleServiceBook(service)
-      }
-    } else {
-      setOpen(true)
+    if (handleServiceBook) {
+      handleServiceBook(service)
     }
   }
 
@@ -70,15 +63,11 @@ function ServiceItem(props: IProps) {
             <img src={icon.DeskAlt} alt="" />
             <div className="quantity-text">
               <span>{t("my_ser.count_unused")}</span>
-              <span>{service?.times - service?.remain_time}/{service?.times}</span>
+              <span>{service.times-service.remain_time}/{service.times}</span>
             </div>
           </div>
         </div>
       </div>
-      <PopupNoti
-        open={open}
-        setOpen={setOpen}
-      />
     </>
   );
 }

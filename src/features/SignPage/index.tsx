@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import img from "../../constants/img";
 import icon from "../../constants/icon";
 import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
 import { AppContext } from "../../context/AppProvider";
 import { Container } from "@mui/material";
 import { useLocation } from "react-router-dom";
@@ -24,6 +23,21 @@ function SignPage(props: any) {
   const chooseTab = (id: any) => {
     setActiveTabSign(id);
   };
+  const switchTab = () => {
+    switch (activeTabSign) {
+      case 1:
+        return <SignIn
+          activeTabSign={activeTabSign}
+          setActiveTabSign={setActiveTabSign}
+          t={t}
+        />
+      case 2:
+        return <SignUps
+          activeTabSign={activeTabSign}
+          setActiveTabSign={setActiveTabSign}
+        />
+    }
+  }
   return (
     <>
       <BackButton />
@@ -65,20 +79,7 @@ function SignPage(props: any) {
                   </button>
                 ))}
               </div>
-              <SignIn
-                // setOpenSignIn={setOpenSignIn}
-                activeTabSign={activeTabSign}
-                setActiveTabSign={setActiveTabSign}
-                t={t}
-              />
-              {/* <SignUp
-                activeTabSign={activeTabSign}
-                setActiveTabSign={setActiveTabSign}
-              /> */}
-              <SignUps
-                activeTabSign={activeTabSign}
-                setActiveTabSign={setActiveTabSign}
-              />
+              {switchTab()}
             </div>
           </div>
         </Container>

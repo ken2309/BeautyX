@@ -1,5 +1,5 @@
 .home-se-cnt{
-    margin: 72px 0px;
+    margin: 28px 0px;
 }
 .home-se-sec-title{
     background-color: var(--red-cl);
@@ -10,7 +10,7 @@
     font-weight: 700;
     color: var(--bgWhite);
     border-radius: 12px 12px 0px 0px;
-    margin-bottom: 32px;
+    margin-bottom: 12px;
     position: relative;
 }
 .home-se-sec-title::after{
@@ -63,7 +63,7 @@
 }
 /* home promo */
 .home-se-promo{
-    margin: 42px 0px;
+    margin: 28px 0px;
 }
 .home-promo-ser .ser-list{
     width: 100%;
@@ -114,7 +114,7 @@
 }
 /* home card */
 .home-card-cnt{
-    margin: 48px 0px;
+    margin: 24px 0px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -172,9 +172,9 @@
 }
 /* home province */
 .home-province{
-    margin: 42px 0px;
-    background-color: var(--pink-2);
-    padding: 32px 0px;
+    margin: 28px 0px;
+    /* background-color: var(--pink-2); */
+    /* padding: 32px 0px; */
 }
 .home-province_list{
     display: grid;
@@ -244,11 +244,16 @@
         display: none;
     }
     .home-se-cnt{
-        margin-top: 124px;
+        margin-top: 28px;
     }
     .home-se-sec-title{
         margin-left: 8px;
         margin-bottom: 12px;
+        padding: 6px 18px;
+        border-radius: 8px 12px 0px 0px;
+    }
+    .home-se-sec-title::after {
+        height: 29px;
     }
     .home-tags{
         width: 100%;

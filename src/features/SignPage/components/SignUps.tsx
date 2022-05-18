@@ -5,30 +5,39 @@ import icon from '../../../constants/icon';
 import { FormControl, RadioGroup, FormControlLabel, Radio, Checkbox, CircularProgress } from '@mui/material'
 import { AppContext } from '../../../context/AppProvider';
 import { AxiosError } from "axios";
-import auth from '../../../api/authApi';
+import authentication from '../../../api/authApi';
 import PopupNoti from './PopupNoti';
+import validateForm from '../../../utils/validateForm';
+import SignVeriOtp from './SignVeriOtp';
+//import useCountDown from '../../../utils/useCountDown';
 
 function SignUps(props: any) {
+    //const sec = useCountDown(90)
     const { t } = useContext(AppContext)
-    const { activeTabSign, setActiveTabSign } = props;
+    const { setActiveTabSign } = props;
     const [errAlready, setErrAlready] = useState({
         errMail: '',
         errPhone: ''
     })
     const [loading, setLoading] = useState(false);
     const [popup, setPopup] = useState(false);
-
-
+    const [openOtp, setOpenOtp] = useState(true);
+    const [dataOtp, setDataOtp] = useState({
+        telephone: '',
+        verification_id: ''
+    })
     async function handleSubmitForm(values: any) {
         const params = {
             fullname: values.name,
             email: values.email,
-            telephone: values.phone,
+            telephone: dataOtp.telephone,
+            code: values.code,
+            verification_id: dataOtp.verification_id,
             password: values.password,
             platform: 'BEAUTYX'
         }
         try {
-            await auth.register(params);
+            await authentication.register(params);
             setLoading(false);
             setPopup(true)
         } catch (error) {
@@ -36,8 +45,8 @@ function SignUps(props: any) {
             const err = error as AxiosError;
             if (err.response?.status === 400) {
                 setErrAlready({
-                    errMail: err.response.data.context.email ? `${err.response.data.context.email}` : ``,
-                    errPhone: err.response.data.context.telephone ? `${err.response.data.context.telephone}` : ``
+                    errMail: err.response.data.context.email ? t("form.email_already") : ``,
+                    errPhone: err.response.data.context.telephone ? t("form.phone_already") : ``
                 })
             }
         }
@@ -49,7 +58,7 @@ function SignUps(props: any) {
         initialValues: {
             name: '',
             email: '',
-            phone: '',
+            code: '',
             password: '',
             confirm_password: '',
             sex: '',
@@ -60,7 +69,7 @@ function SignUps(props: any) {
                 .min(2, "Tên lớn hơn 2 ký tự")
                 .required("Vui lòng nhập họ và tên")
                 .matches(
-                    /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/,
+                    validateForm.fullname,
                     "Tên không đúng định dạng"
                 ),
             sex: Yup.string().required("Vui lòng chọn giới tính"),
@@ -68,15 +77,14 @@ function SignUps(props: any) {
                 .required("Vui lòng nhập Email hoặc Số điện thoại")
                 .matches(
                     // eslint-disable-next-line no-useless-escape
-                    /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/i,
+                    validateForm.email,
                     "Vui lòng nhập đúng định dạng Example@gmail.com"
                 ),
-            phone: Yup.string()
-                .required(`${t("pm.please_enter")} ${t("pm.phone_number")}`),
-            // .matches(
-            //     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-            //     'Số điện thoại không đúng định dạng'
-            // ),
+            code: Yup.string()
+                .required("Vui lòng nhập mã xác thực")
+                .matches(/^[0-9]+$/, "Mã xác thực không hợp lệ")
+                .min(6, 'Mã xác thực gồm 6 ký tự')
+                .max(6, 'Mã xác thực gồm 6 ký tự'),
             password: Yup.string()
                 .min(8, "Mật khẩu lớn hơn 8 ký tự")
                 .max(32, "Mật khẩu tối đa 32 kí tự")
@@ -95,9 +103,13 @@ function SignUps(props: any) {
         }
     })
     return (
-        <div
-            style={activeTabSign === 2 ? { display: "block" } : { display: "none" }}
-        >
+        <div>
+            <SignVeriOtp
+                open={openOtp}
+                setOpen={setOpenOtp}
+                dataOtp={dataOtp}
+                setDataOtp={setDataOtp}
+            />
             <form
                 onSubmit={formik.handleSubmit}
                 autoComplete='off'
@@ -112,7 +124,7 @@ function SignUps(props: any) {
                                 onChange={formik.handleChange}
                                 name="name"
                                 type="text"
-                                placeholder="Họ và tên"
+                                placeholder={t("pm.full_name")}
                             />
                         </div>
 
@@ -136,7 +148,7 @@ function SignUps(props: any) {
                                             }}
                                         />
                                     }
-                                    label="Nam"
+                                    label={t("form.male")}
                                 />
                                 <FormControlLabel
                                     value="female"
@@ -150,7 +162,7 @@ function SignUps(props: any) {
                                             }}
                                         />
                                     }
-                                    label="Nữ"
+                                    label={t("form.female")}
                                 />
                                 <FormControlLabel
                                     value="other"
@@ -164,7 +176,7 @@ function SignUps(props: any) {
                                             }}
                                         />
                                     }
-                                    label="Khác"
+                                    label={t("form.other")}
                                 />
                             </RadioGroup>
                         </FormControl>
@@ -199,18 +211,34 @@ function SignUps(props: any) {
                     <p className="err-text">{errAlready.errMail}</p>
                 </div>
                 <div className="flex-column w-100">
-                    <div className="sign-form__box  mb-16 ">
-                        <img className="sign-form__box-icon" src={icon.Message} alt="" />
-                        <input
-                            value={formik.values.phone}
-                            onChange={formik.handleChange}
-                            name="phone"
-                            type="text"
-                            placeholder={t("pm.phone_number")}
-                        />
+                    <div
+                        className='flex-row-sp sign-up-ip-otp'
+                    >
+                        <div className="sign-form__box mb-16 sign-form__box-otp">
+                            <img className="sign-form__box-icon" src={icon.Lock} alt="" />
+                            <input
+                                className='sign-form__box-otp__ip'
+                                value={formik.values.code}
+                                onChange={formik.handleChange}
+                                name="code"
+                                type="text"
+                                placeholder="Mã xác thực"
+                            />
+                        </div>
+                        <div className='flex-row-sp sign-form__box-otp-right'>
+                            <span
+                                onClick={() => setOpenOtp(true)}
+                                className='sign-form__box-otp__ch'
+                            >
+                                Đổi số điện thoại
+                            </span>
+                            {/* <span>
+                                Hết hạn sau {sec}s
+                            </span> */}
+                        </div>
                     </div>
-                    {formik.errors.phone && formik.touched.phone && (
-                        <p className="err-text">{formik.errors.phone}</p>
+                    {formik.errors.code && formik.touched.code && (
+                        <p className="err-text">{formik.errors.code}</p>
                     )}
                     <p className="err-text">{errAlready.errPhone}</p>
                 </div>
@@ -222,7 +250,7 @@ function SignUps(props: any) {
                             onChange={formik.handleChange}
                             name="password"
                             type={typePass}
-                            placeholder="Mật khẩu"
+                            placeholder={t("Home.Sign_in_pl_password")}
                         />
                         <img
                             onMouseEnter={() => setTypePass("text")}
@@ -244,7 +272,7 @@ function SignUps(props: any) {
                             onChange={formik.handleChange}
                             name="confirm_password"
                             type={typePass}
-                            placeholder="Nhập lại mật khẩu"
+                            placeholder={t("form.confirm_password")}
                         />
                         <img
                             onMouseEnter={() => setTypePass("text")}
@@ -273,8 +301,8 @@ function SignUps(props: any) {
                         }}
                     />
                     <p className="sign-other-setup">
-                        Tôi đã đọc và đồng ý với
-                        <span>Điều khoản & Điều kiện của Myspa</span>
+                        {t("form.i_agree")}
+                        <span>{t("form.myspa_s_terms")}</span>
                     </p>
                 </div>
                 {formik.errors.agree && formik.touched.agree && (
@@ -299,11 +327,11 @@ function SignUps(props: any) {
                     )}
                     {t("Home.Sign_up")}
                 </button>
-                <p className="sign-or">Hoặc đăng kí với</p>
+                {/* <p className="sign-or">{t("Home.Sign_or")}</p>
                 <div className="flex-row sign-other-social">
                     <img src={icon.google} alt="" />
                     <img src={icon.facebook} alt="" />
-                </div>
+                </div> */}
             </form>
             <PopupNoti
                 popup={popup}

@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Head from "../Head/index";
 import "./merchantDetail.css";
@@ -10,122 +11,84 @@ import DetailSaleList from "./components/DetailSaleList";
 import ServiceByMerchant from "../ServiceByMerchant/index";
 import ProductByMerchant from "../ProductByMerchant/index";
 import ComboByMerchant from "../ComboByMerchant/index";
+import SaleByMerchant from "../SaleByMerchant";
 import Footer from "../Footer";
-import orgApi from "../../api/organizationApi";
-//import branchApi from "../../api/branchApi";
 import DetailTab from "./components/DetailTab";
 import DetailTabMb from "../../featuresMobile/DetailTabMb";
 import MerchantMb from "../../featuresMobile/MerchantMb";
-import Bottom from "../../featuresMobile/Bottom";
 import HeadTitle from "../HeadTitle/index";
-import { Product } from "../../interface/product";
-import productApi from "../../api/productApi";
-import { IOrganization } from "../../interface/organization";
-import { IBranch } from "../../interface/branch";
-// view for mobile
-import RecommendListMb from "../../featuresMobile/RecomendList";
-import { AppContext } from "../../context/AppProvider";
-//import * as Sentry from '@sentry/react'
+import { fetchAsyncOrg, fetchOrgGalleries } from '../../redux/org/orgSlice';
+import { fetchAsyncServicesSpecial, fetchProductsSpecial } from '../../redux/org_specials/orgSpecialSlice'
+import { useDispatch, useSelector } from 'react-redux';
+import { formatOrgParam } from "../../utils/formatParams";
+import { STATUS } from '../../redux/status';
 
-const id_tab = 1;
+
 function MerchantDetail() {
-  //const scope = new Sentry.Scope();
-  const { tempCount, setTempleCount } = useContext(AppContext);
   const location: any = useLocation();
-  const mer_id = parseInt(
-    `${location.search.slice(1, location.search.length)}`
-  );
-  const [loading, setLoading] = useState(false);
-  const [org, setOrg] = useState<IOrganization>();
-  const [branches, setBranches] = useState<IBranch[]>([]);
-  const [productsSale, setProductsSale] = useState<Product[]>([]);
-  const [activeTab, setActiveTab] = useState<number>(1);
-  const [follow, setFollow] = useState(false);
-  useEffect(() => {
-    async function handleGetOrgById() {
-      setLoading(true);
-      if (location.state) {
-        setOrg(location.state);
-        setBranches(location.state.branches);
-        if (location.state.is_favorite === true) {
-          setFollow(true);
-        } else {
-          setFollow(false);
-        }
-        setLoading(false);
-      } else {
-        try {
-          const res = await orgApi.getOrgById(mer_id);
-          setOrg(res.data.context);
-          setBranches(res.data.context.branches);
-          if (res.data.context.is_favorite === true) {
-            setFollow(true);
-          } else {
-            setFollow(false);
-          }
-          setLoading(false);
-        } catch (err) {
-          console.log(err);
-          // scope.setTag("section", "articles");
-          // Sentry.setUser({ email: "john.doe@example.com" });
-          // Sentry.captureException(new Error("something went wrong"), () => scope);
-        }
+  const dispatch = useDispatch();
+  const sub_domain = formatOrgParam(location.pathname);
+  const ORG = useSelector((state: any) => state.ORG);
+  const { org, status, tab } = ORG;
+  const callOrgDetail = () => {
+    if (sub_domain !== org?.subdomain) {
+      dispatch(fetchAsyncOrg(sub_domain))
+    }
+  }
+  const callGalleriesOrg = () => {
+    if (status === STATUS.SUCCESS) {
+      dispatch(fetchOrgGalleries(org?.id))
+    }
+  }
+  const callOrgSpecial = () => {
+    if (status === STATUS.SUCCESS) {
+      const values = {
+        org_id: org?.id,
+        page: 1
       }
+      dispatch(fetchAsyncServicesSpecial(values));
+      dispatch(fetchProductsSpecial(values))
     }
-    async function handleGetProductSale() {
-      const res = await productApi.getByOrgId({
-        org_id: mer_id,
-        page: 1,
-      });
-      setProductsSale(res.data.context.data);
-    }
-    handleGetProductSale();
-    handleGetOrgById();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.state, mer_id]);
+  }
+  useEffect(() => {
+    callGalleriesOrg()
+    callOrgSpecial()
+  }, [sub_domain, status])
+  useEffect(() => {
+    callOrgDetail()
+  }, [sub_domain])
+  console.log(sub_domain);
   return (
     <div className="mb-cnt">
-      <HeadTitle title={org?.name ? org.name : "Loading..."} />
+      <HeadTitle title={org?.name ? org.name : 'Đang tải...'} />
       <Head />
       <DetailHead
-        follow={follow}
-        setFollow={setFollow}
-        tempCount={tempCount}
-        setTempleCount={setTempleCount}
-        loading={loading}
+        status={status}
         org={org}
       />
-      <DetailTab setActiveTab={setActiveTab} activeTab={activeTab} />
-      {/* for mobile */}
-      <DetailTabMb setActiveTab={setActiveTab} activeTab={activeTab} />
-      {/* ---------- */}
+      <DetailTab tab={tab} />
+      <DetailTabMb />
       <div
         className="tabMer-detail"
         style={{ backgroundColor: "var(--bg-gray)", paddingBottom: "64px" }}
       >
         <Container>
-          <div
-            style={
-              id_tab === activeTab ? { display: "block" } : { display: "none" }
-            }
-          >
-            <DetailMer merDetail={org} />
-            {/* for mobile */}
-            <MerchantMb branches={branches} />
-            {/* ---------- */}
-            <DetailBranchList branches={branches} />
-            <DetailSaleList productsSale={productsSale} merDetail={org} />
-            {/* for mobile */}
-            <RecommendListMb productsSale={productsSale} org={org} />
-            {/* ----- */}
-          </div>
-          <ServiceByMerchant activeTab={activeTab} mer_id={mer_id} org={org} />
-          <ProductByMerchant mer_id={mer_id} activeTab={activeTab} org={org} />
-          <ComboByMerchant org={org} org_id={mer_id} activeTab={activeTab} />
+          {
+            tab === 1 &&
+            <>
+              <DetailMer org={org} />
+              <MerchantMb org={org} />
+              <DetailBranchList branches={org?.branches} />
+              <DetailSaleList org={org} />
+            </>
+          }
+          <SaleByMerchant activeTab={tab} org={org} />
+          <ServiceByMerchant activeTab={tab} />
+          <ProductByMerchant activeTab={tab} />
+          <ComboByMerchant org={org} org_id={769} activeTab={tab} />
         </Container>
       </div>
       <Footer />
-      <Bottom />
     </div>
   );
 }

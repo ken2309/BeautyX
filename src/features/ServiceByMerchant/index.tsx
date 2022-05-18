@@ -1,77 +1,53 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/AppProvider";
 import ServiceCate from "./components/ServiceCate";
 import ServiceCateMb from "./components/ServiceCateMb";
 import ServiceList from "./components/ServiceList";
-import servicesApi from "../../api/serviceApi";
-import { Service } from "../../interface/service";
-import categoryApi from "../../api/categoryApi";
-import {IOrganization} from '../../interface/organization'
 import "./serviceByMerchant.css";
+import { useSelector, useDispatch } from "react-redux";
+import { STATUS } from '../../redux/status';
+import {
+  fetchAsyncCateServices,
+  fetchAsyncServices,
+  clearServices
+} from '../../redux/org_services/orgServivesSlice'
 
-interface IProps{
-  activeTab:number,
-  mer_id:number,
-  org:IOrganization | undefined
+interface IProps {
+  activeTab: number,
 }
 
 const tab_id = 2;
 function ServiceByMerchant(props: IProps) {
   const { t } = useContext(AppContext);
-  const { activeTab, mer_id, org } = props;
-  const [services, setServices] = useState<Service[]>([]);
-  const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(1);
-  const [categories, setCategories] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [chooseCate, setChooseCate] = useState();
-  const [loading, setLoading] = useState(false);
-  const [loading_cate, setLoading_cate] = useState(false);
-  useEffect(() => {
-    async function handleGetServices() {
-      setLoading(true);
-      try {
-        if (!chooseCate) {
-          const res = await servicesApi.getByOrg_id({
-            org_id: mer_id,
-            page: page,
-          });
-          setServices(res.data.context.data);
-          setTotalPage(res.data.context.last_page);
-        } else {
-          const resByCate = await servicesApi.getByOrgId_cateId({
-            cate_id: chooseCate,
-            page: page,
-            org_id: mer_id,
-          });
-          setServices(resByCate.data.context.data);
-          setTotalPage(resByCate.data.context.last_page);
-        }
-        setLoading(false);
-      } catch (err) {
-        console.log(err);
-      }
+  const dispatch = useDispatch();
+  const { ORG, ORG_SERVICES } = useSelector((state: any) => state);
+  const { SERVICES } = ORG_SERVICES;
+  const { page } = SERVICES;
+  const { org, status } = ORG;
+  const { activeTab } = props;
+  //const [searchTerm, setSearchTerm] = useState("");
+  const [chooseCate, setChooseCate] = useState<any>();
+  const callCategories = () => {
+    if (status === STATUS.SUCCESS) {
+      dispatch(fetchAsyncCateServices(org?.id))
     }
-    handleGetServices();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mer_id, page, chooseCate]);
-  useEffect(() => {
-    setLoading_cate(true);
-    async function handleGetCategories() {
-      try {
-        const resCate = await categoryApi.getByOrgId_services({
-          org_id: mer_id,
-        });
-        setCategories(resCate.data.context.data);
-        setLoading_cate(false);
-      } catch (err) {
-        console.log(err);
+  }
+  const callServices = () => {
+    dispatch(clearServices())
+    if (status === STATUS.SUCCESS) {
+      const values = {
+        cate_id: undefined,
+        org_id: org?.id,
+        page: page
       }
+      dispatch(fetchAsyncServices(values))
     }
-    handleGetCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mer_id]);
-  //console.log(services);
+  }
+  useEffect(() => {
+    callCategories()
+    callServices()
+  }, [status])
   return (
     <div
       style={tab_id === activeTab ? { display: "block" } : { display: "none" }}
@@ -81,32 +57,18 @@ function ServiceByMerchant(props: IProps) {
         style={{ alignItems: "flex-start" }}
       >
         <ServiceCate
-          t={t}
-          categories={categories}
           chooseCate={chooseCate}
           setChooseCate={setChooseCate}
-          setPage={setPage}
-          loading_cate={loading_cate}
         />
         {/* for mobile */}
         <ServiceCateMb
-          categories={categories}
           chooseCate={chooseCate}
           setChooseCate={setChooseCate}
-          setPage={setPage}
         />
-        {/* ----- */}
         <ServiceList
-          loading={loading}
-          services={services}
-          setServices={setServices}
           t={t}
-          mer_id={mer_id}
+          cate_id={chooseCate}
           org={org}
-          totalPage={totalPage}
-          setPage={setPage}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
         />
       </div>
     </div>

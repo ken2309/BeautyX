@@ -10,6 +10,7 @@ import scrollTop from "../../../utils/scrollTop";
 import { AppContext } from "../../../context/AppProvider";
 import slugify from "../../../utils/formatUrlString";
 import { Dialog } from "@mui/material";
+import onErrorImg from "../../../utils/errorImg";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -19,7 +20,7 @@ function DetailMer(props: any) {
   const history = useHistory();
   const gotoMerDetail = (item: any) => {
     history.push({
-      pathname: `/org/${slugify(org.name)}`,
+      pathname: `/org/${slugify(org.subdomain)}`,
       search: `${org.id}`,
       state: org,
     });
@@ -76,9 +77,10 @@ function DetailMer(props: any) {
       <SectionTitle title={t("pr.merchant_detail")} />
       <div className="flex-row-sp pr-de-mer__content">
         <img
-          src={"https://picsum.photos/650/650?random=" + org.id}
+          src={org?.image_url}
           alt=""
           className="pr-de-mer__content-avt"
+          onError={(e) => onErrorImg(e)}
         />
         <div className="flex-column detail-mer">
           <div className="flex-row-sp pr-de-mer__content-info">

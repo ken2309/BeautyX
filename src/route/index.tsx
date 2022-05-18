@@ -16,17 +16,21 @@ import SignPageRequest from "../features/SignPageRequest/index";
 import Notification from "../features/Notification/index";
 import PrivateRoute from "./PrivateRoute";
 import CartPaymentStatus from "../features/CartPaymentStatus";
-//import CountDown from "../features/CountDown";
 import ServicesUser from "../features/ServiceUser";
-import DatePicker from "../components/DatePicker"
+//import DatePicker from "../components/DatePicker"
 import { AppContext } from "../context/AppProvider";
 import SearchResults from '../features/SearchResults/index';
 import HomeTags from "../features/HomeResults/HomeTags";
 import HomePromo from "../features/HomeResults/HomePromo";
 import HomeProvince from "../features/HomeResults/HomeProvince";
 import HomeListProvince from "../features/HomeResults/HomeListProvince";
+import HomeCardResult from "../features/HomeResults/HomeCardResult";
+import HomeDealBanner from "../features/HomeResults/HomeDealBanner";
 import Policy from "../features/Policy";
 import SellerCenter from "../features/SellerCenter";
+import CommentsDetail from "../features/Comments/CommentsDetail";
+import Otp from "../features/Otp";
+import ResetPassword from "../features/ResetPassword";
 
 // feature mobile
 import Calendar from "../featuresMobile/Calendar";
@@ -42,10 +46,14 @@ function RouterConfig(props: any) {
       path: `/home`,
       component: <Home />,
     },
-    // {
-    //   path: `/beta`,
-    //   component: <Home />,
-    // },
+    {
+      path: `/otp`,
+      component: <Otp />,
+    },
+    {
+      path:'/doi-mat-khau',
+      component: <ResetPassword/>
+    },
     {
       path: "/search-result/",
       component: <SearchResult />,
@@ -82,32 +90,13 @@ function RouterConfig(props: any) {
       path: "/sign-request",
       component: <SignPageRequest />,
     },
-    // {
-    //   path: "/tai-khoan",
-    //   component: <Account />,
-    // },
-    // {
-    //   path: "/Partner",
-    //   component: <Partner />,
-    // },
     {
       path: "/merchant-comment",
       component: <MerchantComment />,
     },
-    {
-      path: "/date",
-      component: <DatePicker />
-    },
     // {
-    //   path:''
-    // }
-    // {
-    //   path: "/Calendar",
-    //   component: <Calendar />,
-    // },
-    // {
-    //   path: '/goi-dich-vu',
-    //   component: <ServicesUser />
+    //   path: "/date",
+    //   component: <DatePicker />
     // },
     {
       path: "/org/:subdomain",
@@ -130,6 +119,10 @@ function RouterConfig(props: any) {
       component: <HomeListProvince/>
     },
     {
+      path:'/doanh-nghiep/:title',
+      component: <HomeCardResult/>
+    },
+    {
       path:'/chinh-sach/',
       component: <Policy/>
     },
@@ -140,6 +133,14 @@ function RouterConfig(props: any) {
     {
       path:"/kenh-nguoi-ban",
       component:<SellerCenter/>
+    },
+    {
+      path:"/danh-gia/",
+      component:<CommentsDetail/>
+    },
+    {
+      path:"/deal/:title",
+      component: <HomeDealBanner/>
     }
   ];
   const routesPrivate = [

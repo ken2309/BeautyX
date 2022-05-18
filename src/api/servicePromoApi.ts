@@ -1,4 +1,6 @@
 import axiosClient from "./axios";
+import { pickBy, identity } from 'lodash';
+import { AUTH_LOCATION } from './authLocation'
 
 const location_user = JSON.parse(`${sessionStorage.getItem('USER_LOCATION')}`)
 
@@ -21,6 +23,7 @@ class ServicePromo {
             limit: 20,
             "filter[keyword]": values.keyword,
             "filter[special_price]": true,
+            "filter[is_momo_ecommerce_enable]": true,
             "sort": values.dataSort
         }
         return axiosClient.get(url, { params })
@@ -46,31 +49,35 @@ class ServicePromo {
             "filter[is_momo_ecommerce_enable]": true,
             "filter[location]": location_user ? `${location_user.lat},${location_user.long}` : ``
         }
-        console.log(params, values)
         return axiosClient.get(url, { params })
     }
     //services promo
     getServicesPromo = (values: any) => {
         const url = `/services`;
-        const params = {
+        const LOCATION = AUTH_LOCATION();
+        const paramsOb = {
             page: values.page,
             limit: 24,
             "filter[special_price]": true,
+            "filter[is_momo_ecommerce_enable]": true,
+            "filter[location]": values.sort === null ? LOCATION : null,
             "sort": values.sort
         }
+        const params = pickBy(paramsOb, identity)
         return axiosClient.get(url, { params })
     }
     //
-    getServicesPromoLocation = (values: any) => {
-        const url = `/services`;
-        const params = {
-            page: values.page,
-            limit: 30,
-            "filter[special_price]": true,
-            "filter[location]": location_user ? `${location_user.lat},${location_user.long}` : ``
-        }
-        return axiosClient.get(url, { params })
-    }
+    // getServicesPromoLocation = (values: any) => {
+    //     const url = `/services`;
+    //     const params = {
+    //         page: values.page,
+    //         limit: 30,
+    //         "filter[special_price]": true,
+    //         "filter[is_momo_ecommerce_enable]": true,
+    //         "filter[location]": location_user ? `${location_user.lat},${location_user.long}` : ``
+    //     }
+    //     return axiosClient.get(url, { params })
+    // }
     //services recommend user
     getServicesRe = () => {
         const url = `/services`;
@@ -78,8 +85,26 @@ class ServicePromo {
             page: 1,
             limit: 30,
             "filter[is_featured]": true,
-            "sort": "-modified_date",
+            "filter[is_momo_ecommerce_enable]": true,
+            "sort": "random",
         }
+        return axiosClient.get(url, { params })
+    }
+    //servives deal banner
+    getServicesDealBanner = (values: any) => {
+        const LOCATION = AUTH_LOCATION();
+        const url = `/services`;
+        const paramsOb = {
+            page: values.page,
+            limit: 30,
+            "filter[is_momo_ecommerce_enable]": true,
+            "filter[min_price]": values.min_price,
+            "filter[max_price]": values.max_price,
+            "filter[discount_percent]": values.percent,
+            "filter[location]": values.sort === null ? LOCATION : null,
+            "sort": values.sort
+        }
+        const params = pickBy(paramsOb, identity)
         return axiosClient.get(url, { params })
     }
 }

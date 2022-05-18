@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import icon from "../../../constants/icon";
 import DetailCommentItem from "./DetailCommentItem";
@@ -6,51 +7,43 @@ import SectionTitle from "../../SectionTitle";
 import ButtonCus from "../../../components/ButtonCus/index";
 import { AppContext } from "../../../context/AppProvider";
 import { IComment } from "../../../interface/comments";
-import commentsApi from "../../../api/commentsApi";
+import slugify from "../../../utils/formatUrlString";
+import scrollTop from "../../../utils/scrollTop";
+import { useDispatch, useSelector } from "react-redux";
+import { STATUS } from "../../../redux/status";
+import { clearPrevState, fetchAsyncOrgComments } from "../../../redux/org/orgCommentsSlice";
 
-interface IData {
-  comments: IComment[] | any,
-  page: number,
-  totalItem: number
-}
 
 function DetailComment(props: any) {
   const history = useHistory();
-  function handleSeeAllFeedback() {
-    history.push({
-      pathname: `/merchant-comment`,
-      state: data
-    });
-  }
-  const { styleCmt, org } = props;
+  const { styleCmt } = props;
   const { t } = useContext(AppContext);
-  const [data, setData] = useState<IData>({
-    comments: [],
-    page: 1,
-    totalItem: 1
-  })
-
-  const handleGetCommentsArg = async () => {
-    const ORG = await org;
-    try {
-      const res = await commentsApi.getCommentsOrg({
-        org_id: ORG?.id, page: data.page
-      });
-      setData({
-        ...data,
-        comments: res.data.context.data,
-        totalItem: res.data.context.total
-      })
-    } catch (error) {
-      console.log(error)
+  const dispatch = useDispatch();
+  const ORG_COMMENTS = useSelector((state: any) => state.ORG_COMMENTS);
+  const ORG = useSelector((state: any) => state.ORG);
+  const { comments, totalItem } = ORG_COMMENTS;
+  const callOrgComments = () => {
+    if (
+      ORG.status === STATUS.SUCCESS
+    ) {
+      const values = {
+        org_id: ORG.org?.id,
+        page: 1
+      }
+      dispatch(clearPrevState())
+      dispatch(fetchAsyncOrgComments(values))
     }
   }
   useEffect(() => {
-    if (org) {
-      handleGetCommentsArg()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [org])
+    callOrgComments()
+  }, [ORG.status])
+  function handleSeeAllFeedback() {
+    scrollTop();
+    history.push({
+      pathname: `/merchant-comment/${slugify(ORG.org?.name)}`,
+      search: `${ORG.org?.id}`
+    });
+  }
   return (
     <div style={{ width: styleCmt?.width }} className="mer-detail__content-cmt">
       <div className="flex-row-sp mer-detail-cmt__head">
@@ -62,32 +55,29 @@ function DetailComment(props: any) {
           </h1>
         </span>
         <div className="mer-detail-cmt__head-total">
-          <span>{data.totalItem}</span> {t("Mer_de.feedbacks")}
+          <span>{totalItem}</span> {t("Mer_de.feedbacks")}
         </div>
       </div>
       <ul className="mer-detail-cmt__box">
         {
-          data.comments.slice(0,7).map((item:IComment, index:number) => (
+          comments.slice(0, 7).map((item: IComment, index: number) => (
             <DetailCommentItem
               key={index}
-              comment = {item}
+              comment={item}
             />
           ))
         }
       </ul>
-      {
-        data.comments.length > 7 &&
-        <ButtonCus
-          text={t("Mer_de.view_all_feedback")}
-          imgIcon={icon.next}
-          color="var(--purple)"
-          border="solid 1px var(--purple)"
-          borderRadius="18px"
-          onClick={() => {
-            handleSeeAllFeedback();
-          }}
-        />
-      }
+      <ButtonCus
+        text={t("Mer_de.view_all_feedback")}
+        imgIcon={icon.next}
+        color="var(--purple)"
+        border="solid 1px var(--purple)"
+        borderRadius="18px"
+        onClick={() => {
+          handleSeeAllFeedback();
+        }}
+      />
     </div>
   );
 }

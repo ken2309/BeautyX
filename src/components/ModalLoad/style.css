@@ -1,0 +1,26 @@
+.modal-cnt{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    background-color: #00000052;
+    display: flex;
+    justify-content: center;
+}
+.modal-cnt__body{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.modal-cnt__body .text{
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 700;
+    color: var(--purple);
+    margin-top: 18px;
+}

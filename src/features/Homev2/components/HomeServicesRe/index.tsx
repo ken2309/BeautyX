@@ -16,7 +16,6 @@ function HomeServicesRe(props: any) {
     async function getServicesRecommend() {
         try {
             const res = await servicePromoApi.getServicesRe();
-            console.log(res)
             setData({
                 ...data,
                 services: res.data.data.hits,

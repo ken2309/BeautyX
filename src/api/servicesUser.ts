@@ -1,25 +1,21 @@
 import axiosClient from "./axios";
+import { AUTH_HEADER_PARAM_GET } from "../utils/authHeader";
 
 
 
 class ServicesUser {
-    getServices = (session: any, local: any) => {
+    getServices = () => {
         const url = `/orders`;
         const params = {
             page: 1,
             limit: 15,
             "filter[status]": "PAID",
             "filter[withServicesSold]": true,
-            "include": "items|items_count",
+            "include": "items|items_count|organization",
             "sort": "-created_at",
             'filter[platform]': 'BEAUTYX'
         }
-        return axiosClient.get(url, {
-            params,
-            headers: {
-                Authorization: `Bearer ${session ? session : local}`,
-            },
-        })
+        return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params))
     }
 }
 const servicesUserApi = new ServicesUser();

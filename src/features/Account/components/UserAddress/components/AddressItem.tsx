@@ -1,6 +1,5 @@
 import React from 'react';
 import icon from '../../../../../constants/icon';
-//import { IUserAddress } from '../../../../../interface/userAddress'
 
 
 function AddressItem(props: any) {
@@ -9,8 +8,8 @@ function AddressItem(props: any) {
         handleRemoveAddress,
         index,
         handleUpdateAddress,
-        chooseAdd
     } = props;
+
     const onRemoveAddress = () => {
         if (handleRemoveAddress) {
             handleRemoveAddress(item)
@@ -22,33 +21,35 @@ function AddressItem(props: any) {
         }
     }
     return (
-        <div className='us-add_item'>
-            <div className="flex-row-sp us-add_item-header">
-                <span className="title">
-                    Địa chỉ {index + 1}
-                </span>
-                <div className="flex-row us-add_item-header_left">
-                    {
-                        chooseAdd === item ?
-                            <span className="default">
-                                Mặc định
-                            </span>
-                            :
-                            <>
-                                <span onClick={onUpdateAddress} className='se-default'>
-                                    Đặt làm địa chỉ mặc định
+        <>
+            <div className='us-add_item'>
+                <div className="flex-row-sp us-add_item-header">
+                    <span className="title">
+                        Địa chỉ {index + 1}
+                    </span>
+                    <div className="flex-row us-add_item-header_left">
+                        {
+                            item.is_default === true ?
+                                <span className="default">
+                                    Mặc định
                                 </span>
-                                <button onClick={onRemoveAddress}>
-                                    <img src={icon.TrashOrange} alt="" />
-                                </button>
-                            </>
-                    }
+                                :
+                                <>
+                                    <span onClick={onUpdateAddress} className='se-default'>
+                                        Đặt làm địa chỉ mặc định
+                                    </span>
+                                    <button onClick={onRemoveAddress}>
+                                        <img src={icon.TrashOrange} alt="" />
+                                    </button>
+                                </>
+                        }
+                    </div>
+                </div>
+                <div className="content">
+                    {item?.address}
                 </div>
             </div>
-            <div className="content">
-                {item?.address}
-            </div>
-        </div>
+        </>
     );
 }
 

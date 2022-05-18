@@ -1,31 +1,24 @@
-import React, { useState } from "react";
-import CardItem from "../../CardItem";
-// import useFilterPro from "../../../utils/useFilterPro";
-import { Pagination } from "@mui/material";
-import scrollTop_2 from "../../../utils/scrollTop_2";
-import { useLocation } from "react-router-dom";
-import GridLoading from "../../Loading/GridLoading";
-import InputProByMerSearch from "./InputProByMerSearch";
+import React, { useContext, useState } from "react";
+import ProductItem from "../../ViewItemCommon/ProductItem";
+import { Product } from '../../../interface/product'
+import { AppContext } from "../../../context/AppProvider";
+import { useDispatch, useSelector } from "react-redux";
+import ButtonLoading from "../../../components/ButtonLoading";
+import { fetchAsyncProducts } from '../../../redux/org_products/orgProductsSlice'
 
-const cardStyle = {
-  width: "100%",
-};
 interface ActiveFilter {
   id: number;
   title: string;
 }
 function ProductList(props: any) {
-  const location = useLocation();
+  const { t } = useContext(AppContext)
   const {
-    t,
-    products,
-    setPage,
-    loading,
-    pageLength,
     org,
-    mer_id,
-    setProducts,
+    cate_id,
   } = props;
+  const dispatch = useDispatch();
+  const { PRODUCTS } = useSelector((state: any) => state.ORG_PRODUCTS);
+  const { products, page, totalItem } = PRODUCTS
   const buttons = [
     { id: 1, title: t("Mer_de.popular") },
     { id: 2, title: t("Mer_de.selling") },
@@ -36,36 +29,6 @@ function ProductList(props: any) {
     id: 0,
     title: "",
   });
-  // const [serviceSort, setServiceSort] = useState<Product[]>([]);
-  // const [sort, setSort] = useState({
-  //   _sortPrice: products,
-  // });
-  // const [searchTerm, setSearchTerm] = useState("");
-  // const handleSearchOnChange = (e: any) => {
-  //   setSearchTerm(e.target.value);
-  //   setActiveFilter({ id: 0, title: "" });
-  // };
-  // const productFilter = useFilterPro(searchTerm, products);
-  // useEffect(() => {
-  //   function handleSort() {
-  //     setServiceSort(productFilter);
-  //   }
-  //   handleSort();
-  // }, [sort, productFilter, serviceSort]);
-  // const ascPrice = () => {
-  //   const asc = productFilter.sort((a, b) => a.retail_price - b.retail_price);
-  //   setSort({
-  //     ...sort,
-  //     _sortPrice: asc,
-  //   });
-  // };
-  // const descPrice = () => {
-  //   const desc = productFilter.sort((a, b) => b.retail_price - a.retail_price);
-  //   setSort({
-  //     ...sort,
-  //     _sortPrice: desc,
-  //   });
-  // };
   const handleActiveFilter = (item: any) => {
     setActiveFilter(item);
     if (item.id === 1) {
@@ -81,9 +44,13 @@ function ProductList(props: any) {
       // descPrice();
     }
   };
-  const pageChange = (event: any, value: any) => {
-    setPage(value);
-    scrollTop_2(500);
+  const pageChange = () => {
+    const values = {
+      page: page + 1,
+      cate_id: cate_id,
+      org_id: org?.id
+    }
+    dispatch(fetchAsyncProducts(values))
   };
   return (
     <div className="ser-list">
@@ -96,9 +63,9 @@ function ProductList(props: any) {
                 style={
                   activeFilter.id === item.id
                     ? {
-                        backgroundColor: "var(--purple)",
-                        color: "var(--bg-gray)",
-                      }
+                      backgroundColor: "var(--purple)",
+                      color: "var(--bg-gray)",
+                    }
                     : {}
                 }
                 onClick={() => handleActiveFilter(item)}
@@ -109,37 +76,34 @@ function ProductList(props: any) {
             ))}
           </div>
         </div>
-        <div className="flex-row list-filter__right">
-          <InputProByMerSearch mer_id={mer_id} setProducts={setProducts} />
-        </div>
+        {/* <div className="flex-row list-filter__right">
+          <InputProByMerSearch org_id={org?.id} setDataProducts={setDataProducts} />
+        </div> */}
       </div>
       <div className="flex-column ser-list__content">
         <ul className="ser-list__content-list">
-          {loading === true ? (
-            <GridLoading />
-          ) : (
-            products?.map((item: any, index: any) => (
-              <li key={index} className="ser-list__content-list-item">
-                <CardItem
+          {
+            products.map((item: Product, index: number) => (
+              <li
+                key={index}
+                className="ser-list__content-list-item"
+              >
+                <ProductItem
+                  product={item}
                   org={org}
-                  org_id={location.search.slice(1, location.search.length)}
-                  name={item.product_name}
-                  detail={item}
-                  retail_price={item.retail_price}
-                  special_price={item.special_price}
-                  style={cardStyle}
-                  is_type={1}
                 />
               </li>
             ))
-          )}
+          }
         </ul>
-        <Pagination
-          color="secondary"
-          shape="rounded"
-          count={pageLength}
-          onChange={pageChange}
-        />
+        {
+          products.length < totalItem &&
+          <ButtonLoading
+            loading={false}
+            title="Xem thêm"
+            onClick={pageChange}
+          />
+        }
       </div>
     </div>
   );

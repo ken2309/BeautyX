@@ -4,27 +4,32 @@ import { Checkbox } from '@mui/material'
 import { AppContext } from '../../context/AppProvider';
 import scrollTop from '../../utils/scrollTop';
 import icon from '../../constants/icon';
+import { useSelector } from 'react-redux';
 
 const tags = ['Nail', 'Phòng khám', 'Salon', 'Spa', 'Thẩm mỹ viện']
 
-const toggleFilter =()=>{
+const toggleFilter = () => {
     document.querySelector('.re-sort-org')?.classList.toggle('re-sort-org__ac')
 }
-const removeFilter =()=>{
+const removeFilter = () => {
     document.querySelector('.re-sort-org')?.classList.remove('re-sort-org__ac')
 }
 
 function FilterOrgs(props: any) {
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const {
         orgFilter,
         setOrgFilter,
         setData,
+        //optional
         handleOrgsByKeyword,
-
+        handleGetOrgsDealLocation,
+        handleGetOrgsDistance,
+        handleGetOrgsByTrust,
+        //
         hideTags, hideProvinces
     } = props;
-    const { provinces } = useContext(AppContext);
+    const { provinces } = useSelector((state: any) => state.HOME);
     const onChooseTags = (tag_item: any) => {
         if (setData) {
             setData({
@@ -83,13 +88,37 @@ function FilterOrgs(props: any) {
                 })
                 removeFilter()
                 handleOrgsByKeyword()
+            } else if (handleGetOrgsDealLocation) {
+                setData({
+                    orgs: [],
+                    page: 1,
+                    lastPage: 1
+                })
+                removeFilter()
+                handleGetOrgsDealLocation()
+            } else if (handleGetOrgsDistance) {
+                setData({
+                    orgs: [],
+                    page: 1,
+                    lastPage: 1
+                })
+                removeFilter()
+                handleGetOrgsDistance()
+            } else if (handleGetOrgsByTrust) {
+                setData({
+                    orgs: [],
+                    page: 1,
+                    lastPage: 1
+                })
+                removeFilter()
+                handleGetOrgsByTrust()
             }
         }
     }
     // console.log(orgFilter)
     return (
         <div className="se-re-cnt__left-sort">
-            <span 
+            <span
                 onClick={toggleFilter}
                 className="se-re-cnt__left-sort__title"
             >
@@ -145,7 +174,7 @@ function FilterOrgs(props: any) {
                             <div className="list list-provinces">
                                 <ul className="list-tags">
                                     {
-                                        provinces.map((item: any, index: number) => (
+                                        provinces?.map((item: any, index: number) => (
                                             <li
                                                 onClick={() => onChooseProvince(item.province_code)}
                                                 key={index}

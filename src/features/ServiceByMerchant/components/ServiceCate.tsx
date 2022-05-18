@@ -1,18 +1,38 @@
-import React from "react";
+import React, { useContext } from "react";
 import SectionTitle from "../../SectionTitle/index";
 import icon from "../../../constants/icon";
 import Skeleton from "react-loading-skeleton";
+import { AppContext } from "../../../context/AppProvider";
+import { useSelector, useDispatch } from "react-redux";
+import { STATUS } from '../../../redux/status';
+import { fetchAsyncServices, clearServices } from '../../../redux/org_services/orgServivesSlice'
 
 function ServiceCate(props: any) {
-  const { t, chooseCate, categories, setChooseCate, setPage, loading_cate } =
-    props;
+  const { t } = useContext(AppContext)
+  const { chooseCate, setChooseCate } = props;
+  const dispatch = useDispatch();
+  const ORG = useSelector((state: any) => state.ORG);
+  const { org } = ORG;
+  const { categories, status } = useSelector((state: any) => state.ORG_SERVICES.CATE);
   const allCate = () => {
-    setChooseCate();
-    setPage(1);
+    dispatch(clearServices());
+    const values = {
+      cate_id: undefined,
+      org_id: org?.id,
+      page: 1
+    }
+    dispatch(fetchAsyncServices(values))
+    setChooseCate(undefined);
   };
   const handleActiveCateClick = (cate: any) => {
+    dispatch(clearServices());
+    const values = {
+      cate_id: cate.id,
+      org_id: org?.id,
+      page: 1
+    }
+    dispatch(fetchAsyncServices(values))
     setChooseCate(cate.id);
-    setPage(1);
   };
   return (
     <div className="ser-category">
@@ -22,7 +42,7 @@ function ServiceCate(props: any) {
       </div>
       <div className="ser-category-box">
         <ul className="ser-category-box__list">
-          {loading_cate === true ? (
+          {status === STATUS.LOADING ? (
             <Skeleton
               count={8}
               style={{

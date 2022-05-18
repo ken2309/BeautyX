@@ -4,7 +4,7 @@ import SectionServices from './components/SectionServices';
 import './filter-home.css'
 
 function FilterKeywordHome(props: any) {
-    const { searchText, dataSearch } = props;
+    const { searchText, dataSearch, hiddenFilter } = props;
     return (
         <div
             style={{
@@ -16,6 +16,7 @@ function FilterKeywordHome(props: any) {
                     <SectionOrgs
                         keyword={searchText}
                         orgs={dataSearch?.orgs}
+                        hiddenFilter={hiddenFilter}
                     />
                     :
                     <></>
@@ -25,6 +26,7 @@ function FilterKeywordHome(props: any) {
                     <SectionServices
                         keyword={searchText}
                         services={dataSearch?.services}
+                        hiddenFilter={hiddenFilter}
                     />
                     :
                     <></>

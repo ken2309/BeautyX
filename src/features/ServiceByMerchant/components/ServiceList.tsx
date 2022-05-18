@@ -1,23 +1,26 @@
 import React, { useState } from "react";
-// import icon from "../../../constants/icon";
-import CardItem from "../../CardItem";
-import { Pagination } from "@mui/material";
-// import useSearchTerm from "../../../utils/useSearchTerm";
-// import { Service } from "../../../interface/service";
+import { Service } from "../../../interface/service";
 import GridLoading from "../../Loading/GridLoading";
-import scrollTop_2 from "../../../utils/scrollTop_2";
-import InputSearch from "./InputSearch";
+//import InputSearch from "./InputSearch";
+import ServiceItem from "../../ViewItemCommon/ServiceItem";
+import { useSelector, useDispatch } from "react-redux";
+import { STATUS } from '../../../redux/status'
+import ButtonLoading from "../../../components/ButtonLoading";
+import { fetchAsyncServices } from '../../../redux/org_services/orgServivesSlice'
 
-const cardStyle = {
-  width: "100%",
-};
 interface ActiveFilter {
   id: number;
   title: string;
 }
 function ServiceList(props: any) {
-  const { t, mer_id, org, services, setServices, totalPage, setPage, loading } =
-    props;
+  const {
+    t,
+    cate_id,
+    org,
+  } = props;
+  const dispatch = useDispatch();
+  const SERVICES = useSelector((state: any) => state.ORG_SERVICES.SERVICES);
+  const { services, page, totalItem, status_ser } = SERVICES;
   const buttons = [
     { id: 1, title: t("Mer_de.popular") },
     { id: 2, title: t("Mer_de.selling") },
@@ -28,37 +31,6 @@ function ServiceList(props: any) {
     id: 0,
     title: "",
   });
-  // const [serviceSort, setServiceSort] = useState<Service[]>([]);
-  // // const [state, setstate] = useState(initialState)
-  // const [sort, setSort] = useState({
-  //   _sortPrice: services,
-  // });
-  // const [searchTerm, setSearchTerm] = useState("");
-  // const handleSearchOnChange = (e: any) => {
-  //   setSearchTerm(e.target.value);
-  //   setActiveFilter({ id: 0, title: "" });
-  // };
-  // const serviceByFilter = useSearchTerm(searchTerm, services);
-  // useEffect(() => {
-  //   function handleSort() {
-  //     setServiceSort(serviceByFilter);
-  //   }
-  //   handleSort();
-  // }, [sort, serviceByFilter, serviceSort]);
-  // const ascPrice = () => {
-  //   const asc = serviceByFilter.sort((a, b) => a.price - b.price);
-  //   setSort({
-  //     ...sort,
-  //     _sortPrice: asc,
-  //   });
-  // };
-  // const descPrice = () => {
-  //   const desc = serviceByFilter.sort((a, b) => b.price - a.price);
-  //   setSort({
-  //     ...sort,
-  //     _sortPrice: desc,
-  //   });
-  // };
   const handleActiveFilter = (item: any) => {
     setActiveFilter(item);
     if (item.id === 1) {
@@ -73,15 +45,13 @@ function ServiceList(props: any) {
       // descPrice();
     }
   };
-  //Add values is product: false
-  // const servicesIs = [];
-  // for (var item of serviceByFilter) {
-  //   const service = { ...item, is_product: false };
-  //   servicesIs.push(service);
-  // }
-  const pageChange = (event: any, value: any) => {
-    setPage(value);
-    scrollTop_2(500);
+  const pageChange = () => {
+    const values = {
+      cate_id: cate_id,
+      org_id: org?.id,
+      page: page + 1
+    }
+    dispatch(fetchAsyncServices(values))
   };
   return (
     <div className="ser-list">
@@ -94,9 +64,9 @@ function ServiceList(props: any) {
                 style={
                   activeFilter.id === item.id
                     ? {
-                        backgroundColor: "var(--purple)",
-                        color: "var(--bg-gray)",
-                      }
+                      backgroundColor: "var(--purple)",
+                      color: "var(--bg-gray)",
+                    }
                     : {}
                 }
                 onClick={() => handleActiveFilter(item)}
@@ -108,36 +78,36 @@ function ServiceList(props: any) {
           </div>
         </div>
         <div className="flex-row list-filter__right">
-          <InputSearch mer_id={mer_id} setServices={setServices} />
+          {/* <InputSearch
+            mer_id={mer_id}
+            dataServices={dataServices}
+            setDataServices={setDataServices}
+          /> */}
         </div>
       </div>
       <div className="flex-column ser-list__content">
         <ul className="ser-list__content-list">
-          {loading === true ? (
+          {status_ser === STATUS.LOADING ? (
             <GridLoading />
           ) : (
-            services.map((item: any) => (
-              <li key={item.id} className="ser-list__content-list-item">
-                <CardItem
-                  org_id={mer_id}
+            services.map((item: Service, index:number) => (
+              <li key={index} className="ser-list__content-list-item">
+                <ServiceItem
+                  service={item}
                   org={org}
-                  name={item.service_name}
-                  retail_price={item.price}
-                  special_price={item.special_price}
-                  detail={item}
-                  style={cardStyle}
-                  is_type={2}
                 />
               </li>
             ))
           )}
         </ul>
-        <Pagination
-          color="secondary"
-          shape="rounded"
-          count={totalPage}
-          onChange={pageChange}
-        />
+        {
+          services.length < totalItem &&
+          <ButtonLoading
+            loading={false}
+            title="Xem thêm"
+            onClick={pageChange}
+          />
+        }
       </div>
     </div>
   );

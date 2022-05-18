@@ -10,19 +10,16 @@ import { useHistory } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import { AxiosError } from "axios";
 import PopupNoti from "./PopupNoti";
-import auth from "../../../api/authApi";
-import PopupForgot from "./PopupForgot";
-import PopupVerification from "./PopupVerification";
-import PopupNewPass from "./PopupNewPass";
+import authentication from "../../../api/authApi";
+import { useDispatch } from 'react-redux';
+import { fetchAsyncUser } from '../../../redux/USER/userSlice'
 
 function SignIn(props: any) {
-  const { t, setSign, setTk } = useContext(AppContext);
-  const { activeTabSign, setActiveTabSign } = props;
+  const { t } = useContext(AppContext);
+  const dispatch = useDispatch();
+  const { setActiveTabSign } = props;
   const history = useHistory();
   const [typePass, setTypePass] = useState("password");
-  const [openForgotPass, setOpenForgotPass] = React.useState(false);
-  const [openVerification, setOpenVerification] = React.useState(false);
-  const [openNewPass, setOpenNewPass] = React.useState(false);
   const [loading, setLoading] = useState(false);
   const [errPass, setErrPass] = useState("");
   const [display_email, setDisplay_email] = useState("");
@@ -32,17 +29,15 @@ function SignIn(props: any) {
   //handle submit login form
   async function submitLogin(values: any) {
     try {
-      const response = await auth.login(values);
-      localStorage.setItem("_WEB_US", JSON.stringify(response.data.context));
-      setTk("_WEB_TK", response.data.context.token);
+      const response = await authentication.login(values);
       if (remember === true) {
         localStorage.setItem("_WEB_TK", response.data.context.token);
       } else {
         window.sessionStorage.setItem("_WEB_TK", response.data.context.token)
       }
-      setSign(true);
-      history.push('/home');
+      dispatch(fetchAsyncUser())
       setLoading(false);
+      history.goBack()
     } catch (error) {
       setLoading(false);
       const err = error as AxiosError;
@@ -61,14 +56,6 @@ function SignIn(props: any) {
     setLoading(true);
     setDisplay_email(values.email);
     submitLogin(values);
-  };
-  // mở popup forgot
-  const handleClickOpenForgotPass = () => {
-    setOpenForgotPass(true);
-  };
-  // mở popup New Pass
-  const handleClickOpenNewPass = () => {
-    setOpenNewPass(true);
   };
   const formik = useFormik({
     initialValues: {
@@ -92,9 +79,7 @@ function SignIn(props: any) {
   });
 
   return (
-    <div
-      style={activeTabSign === 1 ? { display: "block" } : { display: "none" }}
-    >
+    <div>
       <form
         onSubmit={formik.handleSubmit}
         autoComplete="off"
@@ -156,7 +141,7 @@ function SignIn(props: any) {
             />
             <span>{t("Home.Sign_remember")}</span>
           </div>
-          <span onClick={handleClickOpenForgotPass}>
+          <span onClick={() => history.push('/doi-mat-khau')}>
             {t("Home.Sign_forgot")} ?
           </span>
         </div>
@@ -178,26 +163,15 @@ function SignIn(props: any) {
           {t("Home.Sign_in")}
         </button>
       </form>
-      <p className="sign-or">{t("Home.Sign_or")}</p>
+      {/* <p className="sign-or">{t("Home.Sign_or")}</p>
       <div className="flex-row sign-other-social">
         <img src={icon.google} alt="" />
         <img src={icon.facebook} alt="" />
-      </div>
+      </div> */}
       <p className="sign-other-setup">
         {t("Home.Sign_no_acc")}?
         <span onClick={() => setActiveTabSign(2)}>{t("Home.Sign_up_now")}</span>
       </p>
-      <PopupForgot
-        openForgotPass={openForgotPass}
-        setOpenVerification={setOpenVerification}
-        setOpenForgotPass={setOpenForgotPass}
-      />
-      <PopupVerification
-        setOpenVerification={setOpenVerification}
-        openVerification={openVerification}
-        handleClickOpenNewPass={handleClickOpenNewPass}
-      />
-      <PopupNewPass openNewPass={openNewPass} setOpenNewPass={setOpenNewPass} />
       <PopupNoti
         setActiveTabSign={setActiveTabSign}
         popup={popup}

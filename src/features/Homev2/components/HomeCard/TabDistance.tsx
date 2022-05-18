@@ -16,7 +16,9 @@ function TabDistance(props: any) {
     })
     async function getOrgsByTrust() {
         try {
-            const res = await orgApi.getOrgsByDistance();
+            const res = await orgApi.getOrgsByDistance({
+                page:1
+            });
             setData({
                 ...data,
                 orgs: res.data.context.data
