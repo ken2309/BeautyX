@@ -102,7 +102,7 @@ function Head(props: any) {
     if (setCloseDialog) {
       setCloseDialog(false);
     } else {
-      history.goBack();
+      history.goBack() || history.push('/home');
     }
     scrollTop();
   };
@@ -116,7 +116,7 @@ function Head(props: any) {
           <div className="hd-logo">
             <img onClick={() => history.push("/")} src={img.beautyX} alt="" />
           </div>
-          <div className="hd-cnt__left">
+          <div className="flex-row hd-cnt__left">
             <ButtonCus
               text={IN_HOME === true ? t("Header.seller_center") : t("Header.back")}
               borderRadius="18px"
@@ -125,6 +125,17 @@ function Head(props: any) {
               border="solid 1px var(--purple)"
               onClick={gotoPartner}
             />
+            <button
+              onClick={() => history.push('/beautyx-videos')}
+              className="flex-row hd-cnt__left-btn"
+            >
+              <img src={icon.playCirclePurple} alt="" />
+              Video
+            </button>
+            <button onClick={() => history.push('/tin-tuc')} className="flex-row hd-cnt__left-btn">
+              <img src={icon.newsPurple} alt="" />
+              Tin tức
+            </button>
           </div>
           <img
             onClick={handleBack}

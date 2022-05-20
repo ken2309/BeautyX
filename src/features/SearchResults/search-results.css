@@ -69,6 +69,7 @@
 
     .se-re-cnt__left {
         width: 100%;
+        /* display: none; */
     }
 
     .se-re-cnt__left-top {

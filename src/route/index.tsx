@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import Home from "../features/Home/index";
 import SearchResult from "../features/SearchResult/index";
 import { BrowserRouter, Switch, Redirect } from "react-router-dom";
@@ -18,7 +18,6 @@ import PrivateRoute from "./PrivateRoute";
 import CartPaymentStatus from "../features/CartPaymentStatus";
 import ServicesUser from "../features/ServiceUser";
 //import DatePicker from "../components/DatePicker"
-import { AppContext } from "../context/AppProvider";
 import SearchResults from '../features/SearchResults/index';
 import HomeTags from "../features/HomeResults/HomeTags";
 import HomePromo from "../features/HomeResults/HomePromo";
@@ -31,16 +30,19 @@ import SellerCenter from "../features/SellerCenter";
 import CommentsDetail from "../features/Comments/CommentsDetail";
 import Otp from "../features/Otp";
 import ResetPassword from "../features/ResetPassword";
+import Videos from "../features/Videos";
+import Blog from "../features/Blog";
 
 // feature mobile
 import Calendar from "../featuresMobile/Calendar";
 import MerchantComment from "../features/MerchantComment";
+import { useSelector } from "react-redux";
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps
 ) => props.pageComponent;
 function RouterConfig(props: any) {
-  const { profile } = useContext(AppContext)
+  const USER = useSelector((state:any) => state.USER);
   const routes = [
     {
       path: `/home`,
@@ -149,6 +151,13 @@ function RouterConfig(props: any) {
     {
       path: "/deal/:title",
       component: <HomeDealBanner />
+    },
+    {
+      path: "/beautyx-videos",
+      component: <Videos />
+    }, {
+      path: "/tin-tuc",
+      component: <Blog />
     }
   ];
   const routesPrivate = [
@@ -190,7 +199,7 @@ function RouterConfig(props: any) {
         ))}
         {routesPrivate.map((item, index) => (
           <PrivateRoute
-            profile={profile}
+            USER={USER}
             key={index}
             path={`${item.path}`}
             component={item.component}

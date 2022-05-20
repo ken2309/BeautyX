@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import icon from "../../../constants/icon";
 import { AppContext } from "../../../context/AppProvider";
 //import formatPrice from "../../../utils/formatPrice";
-import { IUser_Service } from '../../../interface/servicesUser';
+import { IUser_Service, IServiceSold } from '../../../interface/servicesUser';
 import onErrorImg from "../../../utils/errorImg";
 import { useSelector } from 'react-redux';
 
@@ -11,11 +11,17 @@ interface IProps {
   service: IUser_Service,
   handleServiceBook: any,
   order_id: number
+  service_sold: IServiceSold
 }
 
 function ServiceItem(props: IProps) {
   const { t } = useContext(AppContext);
-  const { service, handleServiceBook, order_id } = props;
+  const {
+    service,
+    handleServiceBook,
+    order_id,
+    //service_sold
+  } = props;
   const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
   const servicesBook = servicesBookSlice.servicesBook;
   const servicesBook_id = servicesBook.map((item: any) => item.ser_book_id);
@@ -63,7 +69,7 @@ function ServiceItem(props: IProps) {
             <img src={icon.DeskAlt} alt="" />
             <div className="quantity-text">
               <span>{t("my_ser.count_unused")}</span>
-              <span>{service.times-service.remain_time}/{service.times}</span>
+              <span>{service.times - service.remain_time}/{service.times}</span>
             </div>
           </div>
         </div>

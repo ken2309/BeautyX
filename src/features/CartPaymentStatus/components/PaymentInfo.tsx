@@ -62,6 +62,16 @@ function PaymentInfo(props: any) {
                         Về trang chủ
                     </button>
                 </div>
+            case "CANCELED":
+                return <div className='flex-column st-cancel__cnt' >
+                    <span>Đã hủy thanh toán</span>
+                    <button
+                        onClick={() => history.push('/Home')}
+                        className='st-pm-info__btn'
+                    >
+                        Về trang chủ
+                    </button>
+                </div>
             default:
                 break
         }

@@ -9,10 +9,14 @@ import ButtonLoading from "../../../components/ButtonLoading";
 import { pickBy, identity } from 'lodash'
 import { useSelector } from "react-redux";
 import REDUCER_CART from "../../../utils/reducerCart";
+import { EXTRA_FLAT_FORM } from "../../../api/extraFlatForm";
+import { FLAT_FORM_TYPE } from "../../../rootComponents/flatForm";
+import PaymentCreateFail from "./PaymentCreateFail";
 
 const useInPayment: boolean = true;
 function PaymentTotal(props: any) {
   const { t } = useContext(AppContext);
+  const FLAT_FORM = EXTRA_FLAT_FORM();
   const USER = useSelector((state: any) => state.USER.USER);
   const {
     methodList,
@@ -20,18 +24,35 @@ function PaymentTotal(props: any) {
     chooseE_wall,
     data_cart,
   } = props;
+  const { payments_method } = useSelector((state: any) => state.PAYMENT.PAYMENT);
   const history = useHistory();
   const pmMethod = methodList.find((item: any) => item.method === value);
   const [popup, setPopup] = useState(false);
+  const [popupFail, setPopUpFail] = useState(false);
   const [loading, setLoading] = useState(false);
   const org_id = data_cart.list[0].org_id;
+
+  let payment_method_id;
+  switch (FLAT_FORM) {
+    case FLAT_FORM_TYPE.BEAUTYX:
+      payment_method_id = chooseE_wall?.id
+      break
+    case FLAT_FORM_TYPE.MOMO:
+      payment_method_id = payments_method.find((item: any) => item.name_key === FLAT_FORM_TYPE.MOMO)?.id
+      break
+    case FLAT_FORM_TYPE.TIKI:
+      payment_method_id = payments_method.find((item: any) => item.name_key === FLAT_FORM_TYPE.TIKI)?.id
+      break
+    default:
+      break
+  }
 
   const { products, services, combos } = REDUCER_CART(data_cart);
   const params_string = {
     products: products,
     services: services,
     treatment_combo: combos,
-    payment_method_id: chooseE_wall?.id,
+    payment_method_id: payment_method_id,
     coupon_code: [],
     user_address_id: data_cart.address?.id,
     description: data_cart.note,
@@ -44,11 +65,15 @@ function PaymentTotal(props: any) {
       const state_payment = await response.data.context
       const desc = await state_payment.payment_gateway.description;
       const transaction_uuid = state_payment.payment_gateway.transaction_uuid;
-      history.push({
-        pathname: `/trang-thai-don-hang/${desc}`,
-        search: transaction_uuid,
-        state: state_payment
-      })
+      if (response.data.context.status !== "CANCELED") {
+        history.push({
+          pathname: `/trang-thai-don-hang/${desc}`,
+          search: transaction_uuid,
+          state: state_payment
+        })
+      } else {
+        setPopUpFail(true)
+      }
       setLoading(false);
     } catch (err) {
       console.log(err)
@@ -57,21 +82,27 @@ function PaymentTotal(props: any) {
   }
   const handleSubmitPayment = () => {
     if (USER) {
-      if (data_cart.address && value && chooseE_wall?.id === 1) {
-        const params = pickBy(params_string, identity);
-        handlePostOrder(org_id, params)
+      const params = pickBy(params_string, identity);
+      if (FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX) {
+        if (data_cart.address && value && chooseE_wall?.id === 1) {
+          handlePostOrder(org_id, params)
+        } else {
+          console.log("Trang web chỉ chấp nhận thanh toán qua ví điện tử Momo");
+        }
       } else {
-        console.log("Trang web chỉ chấp nhận thanh toán qua ví điện tử Momo");
+        if (data_cart.address) {
+          handlePostOrder(org_id, params)
+        }
       }
     }
   };
   return (
     <div className="payment-total">
       <Container>
-        <div className="flex-row payment-total__head">
+        {/* <div className="flex-row payment-total__head">
           <span>{t("pr.enter_sale_code")}</span>
           <input type="text" placeholder={t("pr.enter_sale_code")} />
-        </div>
+        </div> */}
         <div className="flex-row payment-total__body">
           <div className="payment-total__body-item">
             <p>{t("pm.payment_method")}</p>
@@ -104,6 +135,10 @@ function PaymentTotal(props: any) {
         setPopup={setPopup}
         useInPayment={useInPayment}
         title={t("pm.payment_success")}
+      />
+      <PaymentCreateFail
+        popupFail={popupFail}
+        setPopUpFail={setPopUpFail}
       />
     </div>
   );

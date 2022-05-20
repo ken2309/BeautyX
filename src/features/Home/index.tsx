@@ -11,6 +11,7 @@ import Bottom from "../../featuresMobile/Bottom";
 import HomeSecond from "../Homev2";
 import ExtraFlatForm from "../../rootComponents/extraFlatForm";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
+import HomeSearchInput from "./components/HomeSearchInput";
 
 function Home() {
   const { t } = useContext(AppContext);
@@ -27,6 +28,10 @@ function Home() {
       }
       <Container>
         <HomeBanner />
+        {
+          FLAT_FORM !== "BEAUTYX" &&
+          <HomeSearchInput />
+        }
       </Container>
       <HomeSecond />
       <Footer />

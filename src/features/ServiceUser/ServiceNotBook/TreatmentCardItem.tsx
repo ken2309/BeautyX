@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IServiceUser, IUser_Items } from '../../../interface/servicesUser';
 import ServiceSoldItem from './ServiceSoldItem';
 
@@ -9,9 +9,11 @@ interface IProps {
 function TreatmentCardItem(props: IProps) {
     const { card_items } = props;
     const org = card_items.organization;
+    const [enableCart, setEnableCart] = useState(true)
     return (
         <div
             className='treat-card-item'
+            style={enableCart === true ? { opacity: 0.4 } : {}}
         >
             <div className="treat-card-item__head">
                 <span className="org-name">
@@ -31,14 +33,22 @@ function TreatmentCardItem(props: IProps) {
                 <span className="title">
                     Danh sách dịch vụ
                 </span>
-                <div className="title">
-                    Số lượng: <span>{card_items?.items_count}</span>
-                </div>
+                {
+                    enableCart === false ?
+                        <div className="title">
+                            Số lượng: <span>{card_items?.items_count}</span>
+                        </div>
+                        :
+                        <div style={{ color: "var(--red-cl)" }} className="title">
+                            Hết lần sử dụng
+                        </div>
+                }
             </span>
             {
                 card_items?.items?.map((items: IUser_Items, index: number) => (
                     <ServiceSoldItem
                         key={index}
+                        setEnableCart={setEnableCart}
                         card_items={card_items}
                         org={org}
                         service_sold={items.services_sold}

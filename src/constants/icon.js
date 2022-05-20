@@ -116,6 +116,8 @@ import closeCircleWhite from '../assets/icon/closeCircleWhite.svg';
 import sucessGreen from '../assets/icon/sucessGreen.svg';
 import xCircleRed from '../assets/icon/xCircleRed.svg';
 import loginReq from '../assets/icon/loginReq.svg';
+import playCirclePurple from '../assets/icon/playCirclePurple.svg';
+import newsPurple from '../assets/icon/newsPurple.svg'
 
 const icon = {
   Favorite,
@@ -235,5 +237,7 @@ const icon = {
   sucessGreen,
   xCircleRed,
   loginReq,
+  playCirclePurple,
+  newsPurple
 };
 export default icon;

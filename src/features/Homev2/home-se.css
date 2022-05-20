@@ -244,16 +244,19 @@
         display: none;
     }
     .home-se-cnt{
-        margin-top: 28px;
+        margin-top: 10px;
     }
     .home-se-sec-title{
         margin-left: 8px;
         margin-bottom: 12px;
         padding: 6px 18px;
-        border-radius: 8px 12px 0px 0px;
+        border-radius: 8px 10px 0px 0px;
+        font-size: 14px;
+        line-height: 18px;
     }
     .home-se-sec-title::after {
-        height: 29px;
+        height: 25px;
+        margin: 5px 0px 0px 17px;
     }
     .home-tags{
         width: 100%;
@@ -274,6 +277,9 @@
         line-height: 16px;
         font-weight: 600;
         text-align: center;
+    }
+    .home-se-promo{
+        margin: 0px;
     }
     .home-se-promo__header{
         padding-right: 20px;

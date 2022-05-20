@@ -11,6 +11,8 @@ import Footer from '../Footer';
 import TabOrgs from './components/TabOrgs';
 import TabLocation from './components/TabLocation';
 import orgApi from '../../api/organizationApi';
+import icon from '../../constants/icon';
+import { Drawer } from '@mui/material'
 
 interface ITabs {
     id: number,
@@ -24,6 +26,7 @@ function SearchResults(props: any) {
     const searchKey = decodeURI(location.search.slice(1, location.search.length));
     const [tabs, setTabs] = useState<ITabs[]>([]);
     const [acTab, setAcTab] = useState(0);
+    const [openFilter, setOpenFilter] = useState(false);
     const onActiveTab = (tab: any) => {
         setAcTab(tab.id)
     }
@@ -104,12 +107,35 @@ function SearchResults(props: any) {
                         </div>
                         {
                             acTab === 3 ?
-                                <FilterOrgs
-                                    orgFilter={orgFilter}
-                                    setOrgFilter={setOrgFilter}
-                                    setData={setData}
-                                    handleOrgsByKeyword={handleOrgsByKeyword}
-                                />
+                                <>
+                                    <FilterOrgs
+                                        orgFilter={orgFilter}
+                                        setOrgFilter={setOrgFilter}
+                                        setData={setData}
+                                        handleOrgsByKeyword={handleOrgsByKeyword}
+                                    />
+                                    <div className="home-result-org-cnt__mb">
+                                        <div className="flex-row-sp cnt">
+                                            <span className="title">Bộ lọc tìm kiếm</span>
+                                            <button onClick={() => setOpenFilter(true)} className="filter-btn">
+                                                <img src={icon.filter} alt="" />
+                                            </button>
+                                            <Drawer
+                                                anchor='right'
+                                                open={openFilter}
+                                                onClose={() => setOpenFilter(false)}
+                                            >
+                                                <FilterOrgs
+                                                    orgFilter={orgFilter}
+                                                    setOrgFilter={setOrgFilter}
+                                                    setData={setData}
+                                                    handleOrgsByKeyword={handleOrgsByKeyword}
+                                                    setOpenFilter={setOpenFilter}
+                                                />
+                                            </Drawer>
+                                        </div>
+                                    </div>
+                                </>
                                 :
                                 <></>
                         }
