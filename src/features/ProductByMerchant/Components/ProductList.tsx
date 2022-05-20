@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import { Pagination } from "@mui/material";
-import scrollTop_2 from "../../../utils/scrollTop_2";
-import InputProByMerSearch from "./InputProByMerSearch";
 import ProductItem from "../../ViewItemCommon/ProductItem";
 import { Product } from '../../../interface/product'
 import { AppContext } from "../../../context/AppProvider";
+import { useDispatch, useSelector } from "react-redux";
+import ButtonLoading from "../../../components/ButtonLoading";
+import { fetchAsyncProducts } from '../../../redux/org_products/orgProductsSlice'
 
 interface ActiveFilter {
   id: number;
@@ -13,16 +13,12 @@ interface ActiveFilter {
 function ProductList(props: any) {
   const { t } = useContext(AppContext)
   const {
-    //t,
-    //products,
-    //setPage,
-    //loading,
-    //pageLength,
     org,
-    mer_id,
-    //setProducts,
-    dataProducts, setDataProducts
+    cate_id,
   } = props;
+  const dispatch = useDispatch();
+  const { PRODUCTS } = useSelector((state: any) => state.ORG_PRODUCTS);
+  const { products, page, totalItem } = PRODUCTS
   const buttons = [
     { id: 1, title: t("Mer_de.popular") },
     { id: 2, title: t("Mer_de.selling") },
@@ -48,12 +44,13 @@ function ProductList(props: any) {
       // descPrice();
     }
   };
-  const pageChange = (event: any, value: any) => {
-    setDataProducts({
-      ...dataProducts,
-      page: value
-    })
-    scrollTop_2(500);
+  const pageChange = () => {
+    const values = {
+      page: page + 1,
+      cate_id: cate_id,
+      org_id: org?.id
+    }
+    dispatch(fetchAsyncProducts(values))
   };
   return (
     <div className="ser-list">
@@ -79,14 +76,14 @@ function ProductList(props: any) {
             ))}
           </div>
         </div>
-        <div className="flex-row list-filter__right">
-          <InputProByMerSearch mer_id={mer_id} setDataProducts={setDataProducts} />
-        </div>
+        {/* <div className="flex-row list-filter__right">
+          <InputProByMerSearch org_id={org?.id} setDataProducts={setDataProducts} />
+        </div> */}
       </div>
       <div className="flex-column ser-list__content">
         <ul className="ser-list__content-list">
           {
-            dataProducts.products.map((item: Product, index: number) => (
+            products.map((item: Product, index: number) => (
               <li
                 key={index}
                 className="ser-list__content-list-item"
@@ -99,12 +96,14 @@ function ProductList(props: any) {
             ))
           }
         </ul>
-        <Pagination
-          color="secondary"
-          shape="rounded"
-          count={dataProducts.page_count}
-          onChange={pageChange}
-        />
+        {
+          products.length < totalItem &&
+          <ButtonLoading
+            loading={false}
+            title="Xem thêm"
+            onClick={pageChange}
+          />
+        }
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import axiosClient from "./axios";
+import { pickBy, identity } from 'lodash'
 
 class ProductApi {
   getByOrgId = (values: any) => {
@@ -11,11 +12,12 @@ class ProductApi {
   };
   getByOrgId_cateId = (values: any) => {
     const url = `/organizations/${values.org_id}/products`;
-    const params = {
+    const paramsOb = {
       page: values.page,
       limit: 15,
       "filter[product_category_id]": values.cate_id
     }
+    const params = pickBy(paramsOb, identity)
     return axiosClient.get(url, { params });
   };
   getDetailById = (params: any) => {

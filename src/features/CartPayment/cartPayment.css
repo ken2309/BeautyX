@@ -339,7 +339,24 @@
   height: 14px;
   margin-right: 4px;
 }
-
+.cnt-fail{
+  background-color: var(--bgWhite);
+  width: 90vw;
+  padding: 24px 0px;
+}
+.cnt-fail span{
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+  color: var(--purple);
+}
+.cnt-fail .content{
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--text-black);
+  margin-bottom: 12px;
+}
 
 /* responsive */
 /* Tablet */

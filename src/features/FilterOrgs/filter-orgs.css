@@ -113,10 +113,15 @@
         background-color: transparent;
     }
     .se-re-cnt__left-sort{
+        height: 100%;
+        background-color: var(--bgWhite);
         margin: 0px;
         padding: 4px 20px;
     }
-    .re-sort-org{
+    .se-re-cnt__left .se-re-cnt__left-sort{
+        display: none;
+    }
+    /* .re-sort-org{
         max-height: 0px;
         overflow: hidden;
         transition: max-height .7s ease-in-out;
@@ -125,5 +130,5 @@
     .re-sort-org__ac{
         max-height: 1000px;
         transition: max-height .7s ease-in-out;
-    }
+    } */
 }

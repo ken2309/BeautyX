@@ -26,6 +26,10 @@ const userSlice = createSlice({
     reducers: {
         putUser: (state, action) => {
             state.USER = action.payload
+        },
+        logoutUser:(state)=>{
+            state.USER = null;
+            state.loading = false
         }
     },
     extraReducers: {
@@ -46,5 +50,5 @@ const userSlice = createSlice({
 })
 // export const getUserProfile = (state: any) => state
 const { actions } = userSlice;
-export const { putUser } = actions;
+export const { putUser, logoutUser } = actions;
 export default userSlice.reducer

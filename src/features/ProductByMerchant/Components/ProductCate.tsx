@@ -1,39 +1,28 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import SectionTitle from "../../SectionTitle/index";
 import icon from "../../../constants/icon";
-import categoryApi from "../../../api/categoryApi";
 import Skeleton from "react-loading-skeleton";
 import { AppContext } from "../../../context/AppProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { STATUS } from '../../../redux/status';
+import { fetchAsyncProducts, clearProducts } from '../../../redux/org_products/orgProductsSlice'
 
 function ProductCate(props: any) {
   const { t } = useContext(AppContext)
-  const { mer_id, cate_id, setCate_id, dataCates, setDataCates, dataProducts, setDataProducts } = props;
+  const { cate_id, setCate_id, org } = props;
+  const dispatch = useDispatch();
+  const { CATE } = useSelector((state: any) => state.ORG_PRODUCTS);
+  const { categories, status } = CATE
   const handleActiveCateClick = (cate: any) => {
     setCate_id(cate.id);
-    setDataProducts({
-      ...dataProducts,
-      page: 1
-    })
-  };
-  useEffect(() => {
-    async function getCateByOrgId() {
-      try {
-        const res = await categoryApi.getByOrgId(mer_id);
-        setDataCates({
-          cates: res.data.context.data,
-          loading: false
-        })
-      } catch (err) {
-        setDataCates({
-          ...dataCates,
-          loading: true
-        })
-        console.log(err);
-      }
+    const values = {
+      page: 1,
+      cate_id: cate.id,
+      org_id: org?.id
     }
-    getCateByOrgId();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mer_id]);
+    dispatch(clearProducts())
+    dispatch(fetchAsyncProducts(values))
+  };
   return (
     <div className="ser-category">
       <div className="flex-row">
@@ -42,19 +31,19 @@ function ProductCate(props: any) {
       </div>
       <div className="ser-category-box">
         <ul className="ser-category-box__list">
-          <li onClick={() => setCate_id(0)} className="ser-category-box__item">
+          <li onClick={() => setCate_id(null)} className="ser-category-box__item">
             <div
               style={
-                cate_id === 0
+                !cate_id
                   ? { color: "var(--purple)" }
                   : { color: "var(--text-hover)" }
               }
               className="flex-row-sp">
-              Tất cả
+              {t("cart.all")}
               <img src={icon.next} alt="" />
             </div>
           </li>
-          {dataCates.loading === true ? (
+          {status === STATUS.LOADING ? (
             <Skeleton
               count={8}
               style={{
@@ -64,7 +53,7 @@ function ProductCate(props: any) {
               }}
             />
           ) : (
-            dataCates.cates.map((item: any) => (
+            categories.map((item: any) => (
               <li
                 onClick={() => handleActiveCateClick(item)}
                 key={item.id}

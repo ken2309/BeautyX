@@ -37,7 +37,7 @@ function SignIn(props: any) {
       }
       dispatch(fetchAsyncUser())
       setLoading(false);
-      history.goBack() || history.push('/home') ;
+      history.goBack()
     } catch (error) {
       setLoading(false);
       const err = error as AxiosError;
@@ -163,11 +163,11 @@ function SignIn(props: any) {
           {t("Home.Sign_in")}
         </button>
       </form>
-      <p className="sign-or">{t("Home.Sign_or")}</p>
+      {/* <p className="sign-or">{t("Home.Sign_or")}</p>
       <div className="flex-row sign-other-social">
         <img src={icon.google} alt="" />
         <img src={icon.facebook} alt="" />
-      </div>
+      </div> */}
       <p className="sign-other-setup">
         {t("Home.Sign_no_acc")}?
         <span onClick={() => setActiveTabSign(2)}>{t("Home.Sign_up_now")}</span>

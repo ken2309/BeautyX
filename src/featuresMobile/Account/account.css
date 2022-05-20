@@ -5,7 +5,8 @@
 @media only screen and (max-width: 767px) {
   .mb-ac {
     display: block;
-    padding: 24px;
+    padding: 20px;
+    padding-bottom: 84px;
     background-color: var(--bgWhite);
   }
   .err-text {
@@ -154,7 +155,7 @@
   /* orders */
   .mb-order {
     width: 100%;
-    min-height: max-content;
+    /* min-height: max-content; */
     height: 100%;
     background-color: var(--bgWhite);
     overflow-y: scroll;

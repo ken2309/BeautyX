@@ -41,7 +41,7 @@
 /* Mobile */
 @media only screen and (max-width: 769px) {
       .footer{
-            padding-bottom: 84px;
+            display: none;
       }
       .footer-cnt{
             flex-direction: column;

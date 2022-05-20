@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom'
 import { AppContext } from '../../../context/AppProvider';
 import onErrorImg from '../../../utils/errorImg';
 import PaymentBranch from './PaymentBranch';
+import { useSelector } from 'react-redux';
 
 //const phoneFormat = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 function PaymentForm(props: any) {
@@ -15,7 +16,7 @@ function PaymentForm(props: any) {
       const history = useHistory();
       const { address } = props;
       const [popup, setPopup] = useState(false);
-      const user = JSON.parse(`${localStorage.getItem('_WEB_US')}`);
+      const {USER} = useSelector((state:any) => state.USER);
       return (
             <>
                   <PaymentBranch
@@ -45,15 +46,15 @@ function PaymentForm(props: any) {
                                           <div className="sec-item">
                                                 <div className="sec-item__label">
                                                       <span>Họ và tên:</span>
-                                                      <span>{user?.fullname}</span>
+                                                      <span>{USER?.fullname}</span>
                                                 </div>
                                                 <div className="sec-item__label">
                                                       <span>Email:</span>
-                                                      <span>{user?.email}</span>
+                                                      <span>{USER?.email}</span>
                                                 </div>
                                                 <div className="sec-item__label">
                                                       <span>Số điện thoại:</span>
-                                                      <span>{user?.telephone}</span>
+                                                      <span>{USER?.telephone}</span>
                                                 </div>
                                           </div>
                                           <span

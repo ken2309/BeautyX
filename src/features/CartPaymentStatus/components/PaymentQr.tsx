@@ -3,23 +3,36 @@ import formatPrice from '../../../utils/formatPrice';
 import icon from '../../../constants/icon';
 import img from '../../../constants/img';
 import onErrorImg from '../../../utils/errorImg';
-
-// interface IProps {
-//     dataStatus: string,
-//     pay_url: string
-// }
+import { EXTRA_PAYMENT } from '../../../rootComponents/extraPayment';
+import { FLAT_FORM_TYPE } from '../../../rootComponents/flatForm';
+import { EXTRA_FLAT_FORM } from '../../../api/extraFlatForm';
+import doPostMakePaymentMessageTiki from '../../../rootComponents/tiki/doPostMessageTiki';
 
 function PaymentQr(props: any) {
-    const { orderStatus, pay_url, res } = props;
-    const org = res.organization;
-    // console.log(org)
-
-    const deepLink = res.payment_gateway.extra_data.deeplink;
-    const openDeepLink = () => {
-        const newWindow = window.open(`${deepLink}`, '_blank', 'noopener,noreferrer');
-        if (newWindow) newWindow.opener = null
+    const { orderStatus, res } = props;
+    const org = res?.organization;
+    const EX_PAYMENT = EXTRA_PAYMENT(res);
+    const FLAT_FORM = EXTRA_FLAT_FORM();
+    const deepLink = EX_PAYMENT?.deepLink;
+    const pay_url = EX_PAYMENT?.qrCode;
+    const EXTRA_PAYMENT_ID = EX_PAYMENT?.EXTRA_PAYMENT_ID;
+    const openDeepLinkPayment = () => {
+        if (FLAT_FORM) {
+            switch (FLAT_FORM) {
+                case FLAT_FORM_TYPE.MOMO:
+                    return window.location.assign(EXTRA_PAYMENT_ID);
+                case FLAT_FORM_TYPE.TIKI:
+                    return doPostMakePaymentMessageTiki({
+                        TYPE: "ORDER",
+                        params: EXTRA_PAYMENT_ID
+                    })
+                default:
+                    const newWindow = window.open(`${deepLink}`, '_blank', 'noopener,noreferrer');
+                    if (newWindow) newWindow.opener = null
+                    break
+            }
+        }
     }
-
     const checkStatus = () => {
         switch (orderStatus) {
             case "PENDING":
@@ -32,7 +45,7 @@ function PaymentQr(props: any) {
                             </div>
                             <div className="flex-row-sp pay-view-mb__amount">
                                 <span>Số tiền</span>
-                                <span>{formatPrice(res.payment_gateway.amount)}đ</span>
+                                <span>{formatPrice(res?.payment_gateway?.amount)}đ</span>
                             </div>
                             <div className="pay-view-mb__org">
                                 <img
@@ -48,9 +61,9 @@ function PaymentQr(props: any) {
                                 </div>
                             </div>
                             <button
-                                onClick={openDeepLink}
+                                onClick={openDeepLinkPayment}
                                 className='payment-mb-ewall__btn' >
-                                Mở ví momo
+                                Thanh toán với {FLAT_FORM === FLAT_FORM_TYPE.TIKI ? FLAT_FORM : FLAT_FORM_TYPE.MOMO}
                             </button>
                         </div>
                     </div>
@@ -89,6 +102,28 @@ function PaymentQr(props: any) {
                     </div>
                 </div>;
             case "CANCELED_BY_USER":
+                return <div className='pm-success-cnt' >
+                    <div className="flex-row-sp pm-success-cnt__head">
+                        <span>Tổng tiền</span>
+                        <span>{formatPrice(res.payment_gateway.amount)}đ</span>
+                    </div>
+                    <div className="flex-column pm-success-cnt__body">
+                        <div className="flex-column pm-success-cnt__body-top">
+                            <img src={icon.xCircleRed} alt="" />
+                            <span className="title" style={{ color: 'var(--red-cl)' }} >
+                                Giao dịch thất bại
+                            </span>
+                            <span className="amount">
+                                {formatPrice(res.payment_gateway.amount)}đ
+                            </span>
+                        </div>
+                        <div className="pm-success-cnt__body-cnt">
+                            Đã hủy thanh toán thành công sô tiền <span>{formatPrice(res.payment_gateway.amount)}đ</span>
+                            cho dịch vụ <span>Công ty cổ phần Myspa</span>
+                        </div>
+                    </div>
+                </div>;
+            case "CANCELED":
                 return <div className='pm-success-cnt' >
                     <div className="flex-row-sp pm-success-cnt__head">
                         <span>Tổng tiền</span>

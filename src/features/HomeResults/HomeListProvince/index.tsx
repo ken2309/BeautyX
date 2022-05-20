@@ -8,9 +8,12 @@ import Head from '../../Head';
 import HeadTitle from '../../HeadTitle';
 import scrollTop from '../../../utils/scrollTop';
 import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
 function HomeListProvince(props: any) {
-    const { provinces, t } = useContext(AppContext)
+    const { t } = useContext(AppContext)
+    const HOME = useSelector((state:any) => state.HOME);
+    const {provinces_org} = HOME;
     const history = useHistory()
     const gotoResult = (province: IProvince) => {
         history.push({
@@ -34,7 +37,7 @@ function HomeListProvince(props: any) {
                     </div>
                     <div className="home-province_list">
                         {
-                            provinces?.map((item: IProvince, index: number) => (
+                            provinces_org?.map((item: IProvince, index: number) => (
                                 <div
                                     onClick={() => gotoResult(item)}
                                     key={index}

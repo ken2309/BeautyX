@@ -6,10 +6,11 @@ import { Container } from '@mui/material';
 import useCountDown from '../../utils/useCountDown';
 import { useLocation } from 'react-router-dom';
 import paymentGatewayApi from '../../api/paymentGatewayApi';
-import { useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import PaymentQr from './components/PaymentQr';
 import PaymentInfo from './components/PaymentInfo';
 import PaymentConfirm from './components/PaymentConfirm';
+import useGetMessageTiki from '../../rootComponents/tiki/useGetMessageTiki';
 
 const timerRender = [0];
 const ORDER_STATUS = ['PENDING', 'PAID', 'CANCELED_BY_USER']
@@ -24,12 +25,7 @@ function CartPaymentStatus() {
     const location = useLocation();
     const res: any = location?.state;
     const intervalRef = useRef<any>();
-    const pay_url = res.payment_gateway.extra_data.payUrl
-    
-
-
     const transaction_uuid = res?.payment_gateway?.transaction_uuid;
-
     window.onbeforeunload = function () {
         return 'Are you sure you want to leave?';
     };
@@ -50,6 +46,10 @@ function CartPaymentStatus() {
                     setOrderStatus(status)
                     break;
                 case "CANCELED_BY_USER":
+                    setOrderStatus(status)
+                    timerRender[0] = -1;
+                    break;
+                case "CANCELED":
                     setOrderStatus(status)
                     timerRender[0] = -1;
                     break;
@@ -92,12 +92,18 @@ function CartPaymentStatus() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sec])
+    //cancel payment TIKI
+    const response = useGetMessageTiki();
+    if (response?.requestId && response?.result.status === "fail") {
+        handleCancelPayment()
+        //setOpenFail(true)
+    }
     return (
         <>
             <HeadTitle
                 title={orderStatus === "PAID" ? 'Thanh toán thành công' : 'Thanh toán đơn hàng'}
             />
-            <Head/>
+            <Head />
             <Container>
                 <div
                     className='pm-st-cnt'
@@ -105,7 +111,7 @@ function CartPaymentStatus() {
                     <PaymentQr
                         res={res}
                         orderStatus={orderStatus}
-                        pay_url={pay_url}
+                    //pay_url={pay_url}
                     />
                     <div className="pm-st-cnt__body">
                         <PaymentInfo

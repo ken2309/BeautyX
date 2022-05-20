@@ -4,9 +4,10 @@ import { useLocation } from 'react-router-dom';
 import { IOrganization } from '../../../interface/organization';
 import orgApi from '../../../api/organizationApi';
 import '../../SearchResults/search-results.css';
-import { Container } from '@mui/material';
+import { Container, Drawer } from '@mui/material';
 import FilterOrgs from '../../FilterOrgs';
 import OrgItem from '../../ViewItemCommon/OrgItem';
+import icon from '../../../constants/icon';
 
 interface IData {
     orgs: IOrganization[],
@@ -17,6 +18,7 @@ interface IData {
 function HomeCardResult() {
     const location = useLocation();
     const KEY = parseInt(location.search.slice(1, location.search.length));
+    const [openFilter, setOpenFilter] = useState(false);
     let hideProvinces;
     if (KEY === 3) {
         hideProvinces = true
@@ -37,10 +39,10 @@ function HomeCardResult() {
         try {
             const res = await orgApi.getOrgsByManyDealHot({
                 page: data.page,
-                limit:15,
+                limit: 15,
                 province_code: orgFilter.province_code,
                 tags: orgFilter.tags.join('|'),
-                price:{min:orgFilter.min_price, max:orgFilter.max_price}
+                price: { min: orgFilter.min_price, max: orgFilter.max_price }
             });
             setData({
                 ...data,
@@ -111,6 +113,32 @@ function HomeCardResult() {
                             handleGetOrgsDistance={handleGetOrgsDistance}
                             handleGetOrgsByTrust={handleGetOrgsByTrust}
                         />
+                    </div>
+                    <div className="home-result-org-cnt__mb">
+                        <div className="flex-row-sp cnt">
+                            <span className="title">Bộ lọc tìm kiếm</span>
+                            <button onClick={() => setOpenFilter(true)} className="filter-btn">
+                                <img src={icon.filter} alt="" />
+                            </button>
+                            <Drawer
+                                anchor='right'
+                                open={openFilter}
+                                onClose={() => setOpenFilter(false)}
+                            >
+                                <FilterOrgs
+                                    // props hide sort
+                                    hideProvinces={hideProvinces}
+                                    //
+                                    orgFilter={orgFilter}
+                                    setOrgFilter={setOrgFilter}
+                                    setData={setData}
+                                    handleGetOrgsDealLocation={handleGetOrgsDealLocation}
+                                    handleGetOrgsDistance={handleGetOrgsDistance}
+                                    handleGetOrgsByTrust={handleGetOrgsByTrust}
+                                    setOpenFilter={setOpenFilter}
+                                />
+                            </Drawer>
+                        </div>
                     </div>
                     <div className="se-re-cnt__right">
                         <ul className="re-ser-list">

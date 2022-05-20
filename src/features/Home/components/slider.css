@@ -111,6 +111,9 @@
   .homelogged-foryou .slick-slide {
     margin-top: 0;
   }
+  .home-banner .slick-dots {
+    bottom: 20px;
+  }
   .homelogged-location .slick-slide {
     margin-bottom: 50px;
     padding: 0;

@@ -1,24 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AppContext } from "../../../context/AppProvider";
-//import HomeFilter from "./HomeFilter";
+import React, { useState } from "react";
 import Slider from "react-slick";
-import bannerApi from "../../../api/bannerApi";
 import { useHistory } from "react-router-dom";
 import { IBanner } from "../../../interface/banner";
 import HomeBannerPopup from "./HomeBannerPopup";
 import ReactPlayer from "react-player";
-import { banner_default } from "../../../constants/img";
+import { useSelector } from "react-redux";
 
-// const styleFilter = {
-//   position: "absolute",
-//   width: "66.66%",
-//   boxShadow: "0px 6px 37px rgba(113, 97, 186, 0.1)",
-//   padding: "36px",
-// };
 function HomeBanner(props: any) {
     const history = useHistory();
+    const HOME = useSelector((state: any) => state.HOME);
+    const { banners } = HOME;
     const [chooseBanner, setChooseBanner] = useState<IBanner>();
-    const [banners, setBanners] = useState([]);
     const [open, setOpen] = useState(false);
     const [openVideo, setOpenVideo] = useState(false);
     function openWeb() {
@@ -28,18 +20,18 @@ function HomeBanner(props: any) {
     function closePopupVideo() {
         setOpenVideo(false);
     }
-    const { t } = useContext(AppContext);
+    //const { t } = useContext(AppContext);
     const settings = {
         dots: true,
         infinite: true,
-        speed: 250,
+        speed: 800,
         arrows: false,
         slidesToShow: 1,
         slidesToScroll: 1,
         //autoplay: true,
-        //swipe: true,
-        autoplaySpeed: 3500,
-        fade: true,
+        swipe: true,
+        autoplaySpeed: 2000,
+        //fade: true,
         responsive: [
             {
                 breakpoint: 1024,
@@ -57,19 +49,19 @@ function HomeBanner(props: any) {
             },
         ],
         appendDots: (dots: any) => (
-            <div>
+            <div className="banner-dot">
                 <ul>{dots}</ul>
             </div>
         ),
         afterChange: function (index: number) {
-            setChooseBanner(banners[index - 1]);
+            setChooseBanner(banners[index]);
         },
     };
-    const bannerImg = [
-        {
-            url: banner_default,
-        },
-    ];
+    // const bannerImg = [
+    //   {
+    //     url: banner_default,
+    //   },
+    // ];
     const handleClick = () => {
         if (chooseBanner) {
             switch (chooseBanner.type) {
@@ -82,35 +74,22 @@ function HomeBanner(props: any) {
                 case "PROMOTION":
                     return console.log("PROMOTION");
                 case "ORGANIZATION":
-                    //return console.log(chooseBanner)
                     return history.push({
-                        pathname: `/org/${chooseBanner.name}`,
-                        search: `${chooseBanner.origin_id}`,
+                        pathname: `/org/${chooseBanner.origin_id}`,
                     });
                 default:
                     break;
             }
         }
     };
-    useEffect(() => {
-        async function getBanners() {
-            try {
-                const res = await bannerApi.getAll();
-                setBanners(res.data.context.data);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getBanners();
-    }, []);
     return (
         <div className="home-banner">
             <Slider {...settings}>
-                {bannerImg.map((item: any, index: number) => (
-                    <div key={index + item.url} className="home-banner__img">
-                        <img src={item.url} alt="" />
-                    </div>
-                ))}
+                {/* {bannerImg.map((item: any, index: number) => (
+          <div key={index + item.url} className="home-banner__img">
+            <img src={item.url} alt="" />
+          </div>
+        ))} */}
                 {banners.map((item: any, index: number) => (
                     <div
                         onClick={handleClick}
@@ -147,7 +126,7 @@ function HomeBanner(props: any) {
                 ""
             )}
 
-            <span className="home-banner__slogan">{t("Banner.1")}</span>
+            {/* <span className="home-banner__slogan">{t("Banner.1")}</span> */}
             {/* <HomeFilter styleFilter={styleFilter} /> */}
         </div>
     );

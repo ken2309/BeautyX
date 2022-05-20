@@ -22,6 +22,21 @@
 .hd-cnt__left {
   z-index: 1;
 }
+.hd-cnt__left-btn{
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 700;
+  color: var(--purple);
+  margin: 0px 12px;
+}
+.hd-cnt__left-btn img{
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
 .hd-cnt__right {
   z-index: 1;
 }

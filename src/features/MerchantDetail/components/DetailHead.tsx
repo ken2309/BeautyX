@@ -1,8 +1,7 @@
-import React, { useRef, useState, useContext, useEffect } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { Container } from "@mui/material";
 import icon from "../../../constants/icon";
 import { AppContext } from "../../../context/AppProvider";
-import img from "../../../constants/img";
 import OrgCardLoading from "../../Loading/OrgCardLoading";
 import PopupDetailContact from "./PopupDetailContact";
 import "slick-carousel/slick/slick.css";
@@ -10,90 +9,66 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import DetailHeadOpenTime from "../components/DetailHeadOpenTime";
 import { useHistory } from 'react-router-dom'
-import favorites from "../../../api/favorite";
 import onErrorImg from "../../../utils/errorImg";
-import orgApi from "../../../api/organizationApi";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { STATUS } from '../../../redux/status';
+import { onDeleteFavoriteOrg, onFavoriteOrg } from '../../../redux/org/orgSlice';
+import DetailGalleries from "./DetailGalleries";
+import useFullScreen from '../../../utils/useFullScreen';
 
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  focusOnSelect: true,
-  autoplay: true,
-  autoplaySpeed: 3000,
-  arrows: false,
-  responsive: [],
-  appendDots: (dots: any) => (
-    <div>
-      <ul>{dots}</ul>
-    </div>
-  ),
-};
 function DetailHead(props: any) {
-  const { org, loading } = props;
+  const { org, status } = props;
   const history = useHistory();
+  const dispatch = useDispatch();
   const { t } = useContext(AppContext);
+  const fullScreen = useFullScreen();
   const { USER } = useSelector((state: any) => state.USER);
+  const { GALLERIES } = useSelector((state: any) => state.ORG);
+  const ORG_COMMENTS = useSelector((state: any) => state.ORG_COMMENTS);
+  const { totalItem } = ORG_COMMENTS;
   const infoBox = useRef(null);
   const [openPopupContact, setOpenPopupContact] = useState(false);
+  const [openGalleries, setOpenGalleries] = useState(false);
   const [openTime, setOpenTime] = useState(false);
-
-  const [orgFavorite, setOrgFavorite] = useState({
-    favorite: false,
-    count: 0
-  })
-
+  const [imgThumb, setImgThumb] = useState(GALLERIES.galleries[0])
   const handleOpenPopupContact = () => {
     setOpenPopupContact(true);
   };
-  const handleGetOrgFollow = async () => {
-    const org_id = (await org)?.id;
-    try {
-      const res = await orgApi.getOrgById(org_id);
-      setOrgFavorite({
-        favorite: res.data.context.is_favorite,
-        count: res.data.context.favorites_count
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  useEffect(() => {
-    if (org?.id) {
-      handleGetOrgFollow()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [org])
-  const handleRemoveFavorite = async () => {
-    setOrgFavorite({
-      favorite: false, count: orgFavorite.count - 1
-    })
-    try {
-      await favorites.deleteFavorite(org.id)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  const handlePostFavorite = async () => {
-    setOrgFavorite({ favorite: true, count: orgFavorite.count + 1 })
-    try {
-      await favorites.postFavorite(org.id);
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    focusOnSelect: true,
+    //autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: false,
+    responsive: [],
+    afterChange: function (index: any) {
+      setImgThumb(GALLERIES.galleries[index - 1]);
+    },
+    appendDots: (dots: any) => (
+      <div>
+        <ul>{dots}</ul>
+      </div>
+    ),
+  };
   const onOrgFavorite = () => {
     if (USER) {
-      if (orgFavorite.favorite === true) {
-        handleRemoveFavorite()
+      if (org?.is_favorite === true) {
+        dispatch(onDeleteFavoriteOrg(org))
       } else {
-        handlePostFavorite()
+        dispatch(onFavoriteOrg(org))
       }
     } else {
       history.push({ pathname: '/sign-in', search: '1' })
+    }
+  }
+  const onOpenGalleries = () => {
+    if (imgThumb) {
+      setOpenGalleries(true)
+      setImgThumb(GALLERIES.galleries[0])
     }
   }
   return (
@@ -101,7 +76,7 @@ function DetailHead(props: any) {
       <Container>
         <div className="mer-detail__content">
           <div ref={infoBox} className="mer-detail__content-left">
-            {loading === true ? (
+            {status === STATUS.LOADING ? (
               <OrgCardLoading />
             ) : (
               <>
@@ -112,9 +87,9 @@ function DetailHead(props: any) {
                     <div className="mer-detail__rate">
                       <span>4.5</span>
                       <img src={icon.star} alt="" />
-                      <span>250</span>
+                      <span>{totalItem}</span>
                       <img src={icon.chatAll} alt="" />
-                      <span>{orgFavorite.count}</span>
+                      <span>{org?.favorites_count}</span>
                       <img src={icon.Favorite} alt="" />
                     </div>
                   </div>
@@ -148,7 +123,7 @@ function DetailHead(props: any) {
                   </button>
                   <button
                     style={
-                      orgFavorite.favorite === true && USER
+                      org?.is_favorite === true && USER
                         ? {
                           backgroundColor: "var(--purple)",
                           color: "var(--bg-gray)",
@@ -157,7 +132,7 @@ function DetailHead(props: any) {
                     }
                     onClick={onOrgFavorite}
                   >
-                    {orgFavorite.favorite === true && USER
+                    {org?.is_favorite === true && USER
                       ? t("Mer_de.flowing")
                       : t("Mer_de.flow")}
                   </button>
@@ -165,21 +140,64 @@ function DetailHead(props: any) {
               </>
             )}
           </div>
-
-          <div className="merchant-slider mer-detail__content-right">
+          <div
+            onClick={onOpenGalleries}
+            className="merchant-slider mer-detail__content-right"
+          >
             <Slider lazyLoad="progressive" {...settings}>
-              <div className="merchant-slider__img">
-                <img src={img.slider} alt="" />
-              </div>
-              <div className="merchant-slider__img">
-                <img src={img.slider4} alt="" />
-              </div>
-              <div className="merchant-slider__img">
-                <img src={img.slider} alt="" />
-              </div>
-              <div className="merchant-slider__img">
-                <img src={img.slider4} alt="" />
-              </div>
+              {
+                fullScreen &&
+                <div className="banner-clone__cnt">
+                  <img src={org?.image_url} alt="" />
+                  <div className="banner-clone__org">
+                    <div className="banner-org-head">
+                      <img src={org?.image_url} alt="" className="org-avatar" />
+                      <div className="org-de">
+                        <span className="name">{org?.name}</span>
+                        <div className="flex-row banner-org-head__rate">
+                          <span>4.5</span>
+                          <img src={icon.star} alt="" />
+                          <span>{totalItem}</span>
+                          <img src={icon.chatAll} alt="" />
+                          <span>{org?.favorites_count}</span>
+                          <img src={icon.Favorite} alt="" />
+                        </div>
+                        <span className="address">
+                          {org?.full_address}
+                        </span>
+                        <div className="content-left__follow banner-content-left__follow ">
+                          <button onClick={handleOpenPopupContact}>
+                            {t("Mer_de.contact")}
+                          </button>
+                          <button
+                            style={
+                              org?.is_favorite === true && USER
+                                ? {
+                                  backgroundColor: "var(--purple)",
+                                  color: "var(--bg-gray)",
+                                  border: "solid 1px var(--purple)"
+                                }
+                                : {}
+                            }
+                            onClick={onOrgFavorite}
+                          >
+                            {org?.is_favorite === true && USER
+                              ? t("Mer_de.flowing")
+                              : t("Mer_de.flow")}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              {
+                GALLERIES.galleries.map((item: any, index: number) => (
+                  <div key={index} className="merchant-slider__img">
+                    <img src={item.image_url} alt="" />
+                  </div>
+                ))
+              }
             </Slider>
           </div>
         </div>
@@ -188,8 +206,16 @@ function DetailHead(props: any) {
         setOpenPopupContact={setOpenPopupContact}
         openPopupContact={openPopupContact}
       />
+      <DetailGalleries
+        open={openGalleries}
+        setOpen={setOpenGalleries}
+        imgThumb={imgThumb}
+        setImgThumb={setImgThumb}
+        GALLERIES={GALLERIES}
+      />
     </div>
   );
 }
 
 export default DetailHead;
+

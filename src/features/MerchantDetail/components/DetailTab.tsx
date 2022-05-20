@@ -2,15 +2,13 @@ import React, { useContext } from 'react';
 import '../merchantDetail.css';
 import { Container } from '@mui/material'
 import { AppContext } from '../../../context/AppProvider';
+import { useDispatch } from 'react-redux';
+import { onActiveTab } from '../../../redux/org/orgSlice'
 
-interface IProps {
-      activeTab: number,
-      setActiveTab: (activeTab: number) => void
-}
-
-function DetailTab(props: IProps) {
-      const { activeTab, setActiveTab } = props;
+function DetailTab(props: any) {
+      const { tab } = props;
       const { t } = useContext(AppContext)
+      const dispatch = useDispatch();
       const tabList = [
             { id: 1, name: t('Mer_de.about') },
             { id: 5, name: t('Mer_de.sale') },
@@ -19,7 +17,7 @@ function DetailTab(props: IProps) {
             { id: 4, name: 'Combo' },
       ]
       const chooseTabClick = (id: number) => {
-            setActiveTab(id)
+            dispatch(onActiveTab(id))
       }
       return (
             <div className="mer-detail__cnt">
@@ -30,7 +28,7 @@ function DetailTab(props: IProps) {
                                           <li key={item.id}>
                                                 <div
                                                       style={
-                                                            activeTab === item.id ?
+                                                            tab === item.id ?
                                                                   { color: 'var(--bg-gray)', borderBottom: 'solid 2px var(--text-op)' }
                                                                   :
                                                                   {}

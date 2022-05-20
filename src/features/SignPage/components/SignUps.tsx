@@ -327,11 +327,11 @@ function SignUps(props: any) {
                     )}
                     {t("Home.Sign_up")}
                 </button>
-                <p className="sign-or">{t("Home.Sign_or")}</p>
+                {/* <p className="sign-or">{t("Home.Sign_or")}</p>
                 <div className="flex-row sign-other-social">
                     <img src={icon.google} alt="" />
                     <img src={icon.facebook} alt="" />
-                </div>
+                </div> */}
             </form>
             <PopupNoti
                 popup={popup}

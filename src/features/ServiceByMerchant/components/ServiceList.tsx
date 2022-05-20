@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Pagination } from "@mui/material";
 import { Service } from "../../../interface/service";
 import GridLoading from "../../Loading/GridLoading";
-import scrollTop_2 from "../../../utils/scrollTop_2";
-import InputSearch from "./InputSearch";
+//import InputSearch from "./InputSearch";
 import ServiceItem from "../../ViewItemCommon/ServiceItem";
+import { useSelector, useDispatch } from "react-redux";
+import { STATUS } from '../../../redux/status'
+import ButtonLoading from "../../../components/ButtonLoading";
+import { fetchAsyncServices } from '../../../redux/org_services/orgServivesSlice'
 
 interface ActiveFilter {
   id: number;
@@ -13,15 +15,12 @@ interface ActiveFilter {
 function ServiceList(props: any) {
   const {
     t,
-    mer_id,
+    cate_id,
     org,
-    //services,
-    //setServices,
-    //totalPage,
-    //setPage,
-    //loading,
-    dataServices, setDataServices
   } = props;
+  const dispatch = useDispatch();
+  const SERVICES = useSelector((state: any) => state.ORG_SERVICES.SERVICES);
+  const { services, page, totalItem, status_ser } = SERVICES;
   const buttons = [
     { id: 1, title: t("Mer_de.popular") },
     { id: 2, title: t("Mer_de.selling") },
@@ -46,12 +45,13 @@ function ServiceList(props: any) {
       // descPrice();
     }
   };
-  const pageChange = (event: any, value: any) => {
-    setDataServices({
-      ...dataServices,
-      page: value
-    })
-    scrollTop_2(500);
+  const pageChange = () => {
+    const values = {
+      cate_id: cate_id,
+      org_id: org?.id,
+      page: page + 1
+    }
+    dispatch(fetchAsyncServices(values))
   };
   return (
     <div className="ser-list">
@@ -78,20 +78,20 @@ function ServiceList(props: any) {
           </div>
         </div>
         <div className="flex-row list-filter__right">
-          <InputSearch
+          {/* <InputSearch
             mer_id={mer_id}
             dataServices={dataServices}
             setDataServices={setDataServices}
-          />
+          /> */}
         </div>
       </div>
       <div className="flex-column ser-list__content">
         <ul className="ser-list__content-list">
-          {dataServices.loading === true ? (
+          {status_ser === STATUS.LOADING ? (
             <GridLoading />
           ) : (
-            dataServices.services.map((item: Service) => (
-              <li key={item.id} className="ser-list__content-list-item">
+            services.map((item: Service, index:number) => (
+              <li key={index} className="ser-list__content-list-item">
                 <ServiceItem
                   service={item}
                   org={org}
@@ -100,12 +100,14 @@ function ServiceList(props: any) {
             ))
           )}
         </ul>
-        <Pagination
-          color="secondary"
-          shape="rounded"
-          count={dataServices.page_count}
-          onChange={pageChange}
-        />
+        {
+          services.length < totalItem &&
+          <ButtonLoading
+            loading={false}
+            title="Xem thêm"
+            onClick={pageChange}
+          />
+        }
       </div>
     </div>
   );

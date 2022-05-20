@@ -4,6 +4,7 @@ import { Checkbox } from '@mui/material'
 import { AppContext } from '../../context/AppProvider';
 import scrollTop from '../../utils/scrollTop';
 import icon from '../../constants/icon';
+import { useSelector } from 'react-redux';
 
 const tags = ['Nail', 'Phòng khám', 'Salon', 'Spa', 'Thẩm mỹ viện']
 
@@ -25,11 +26,12 @@ function FilterOrgs(props: any) {
         handleGetOrgsDealLocation,
         handleGetOrgsDistance,
         handleGetOrgsByTrust,
-
         //
-        hideTags, hideProvinces
+        hideTags, hideProvinces,
+        //
+        setOpenFilter
     } = props;
-    const { provinces } = useContext(AppContext);
+    const { provinces } = useSelector((state: any) => state.HOME);
     const onChooseTags = (tag_item: any) => {
         if (setData) {
             setData({
@@ -80,6 +82,9 @@ function FilterOrgs(props: any) {
     }
     const onApplyFilter = () => {
         if (orgFilter.min_price > -1 && orgFilter.max_price >= 0 && orgFilter.min_price <= orgFilter.max_price) {
+            if(setOpenFilter){
+                setOpenFilter(false)
+            }
             if (handleOrgsByKeyword) {
                 setData({
                     orgs: [],
@@ -174,7 +179,7 @@ function FilterOrgs(props: any) {
                             <div className="list list-provinces">
                                 <ul className="list-tags">
                                     {
-                                        provinces.map((item: any, index: number) => (
+                                        provinces?.map((item: any, index: number) => (
                                             <li
                                                 onClick={() => onChooseProvince(item.province_code)}
                                                 key={index}

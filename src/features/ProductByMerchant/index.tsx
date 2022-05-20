@@ -1,53 +1,42 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import productsApi from "../../api/productApi";
 import ProductCate from "./Components/ProductCate";
 import ProductList from "./Components/ProductList";
-import ServiceCateMb from "../ServiceByMerchant/components/ServiceCateMb";
+import ProductsCateMb from "./Components/ProductsCateMb";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  fetchAsyncCateProducts,
+  fetchAsyncProducts,
+  clearProducts
+} from '../../redux/org_products/orgProductsSlice';
+import { STATUS } from '../../redux/status';
 
 function ProductByMerchant(props: any) {
-  const { activeTab, mer_id, org } = props;
-  const [dataCates, setDataCates] = useState({
-    cates: [],
-    loading: true
-  })
-  const [dataProducts, setDataProducts] = useState({
-    products: [],
-    page: 1,
-    page_count: 1
-  })
-  const [cate_id, setCate_id] = useState(0);
-  useEffect(() => {
-    async function handleGetPrByOrgId() {
-      try {
-        if (!cate_id || cate_id === 0) {
-          const res = await productsApi.getByOrgId({
-            org_id: mer_id,
-            page: dataProducts.page
-          });
-          setDataProducts({
-            ...dataProducts,
-            products: res.data.context.data,
-            page_count: res.data.context.last_page
-          })
-        } else {
-          const resByCate_id = await productsApi.getByOrgId_cateId({
-            org_id: mer_id,
-            cate_id: cate_id,
-            page: dataProducts.page,
-          });
-          setDataProducts({
-            ...dataProducts,
-            products: resByCate_id.data.context.data,
-            page_count: resByCate_id.data.context.last_page
-          })
-        }
-      } catch (err) {
-        console.log(err);
-      }
+  const { activeTab } = props;
+  const dispatch = useDispatch();
+  const { ORG } = useSelector((state: any) => state);
+  const { org, status } = ORG;
+  const [cate_id, setCate_id] = useState(null);
+  const callCategories = () => {
+    if (status === STATUS.SUCCESS) {
+      dispatch(fetchAsyncCateProducts(org?.id))
     }
-    handleGetPrByOrgId();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cate_id, mer_id, dataProducts.page]);
+  }
+  const callProducts = () => {
+    dispatch(clearProducts())
+    if (status === STATUS.SUCCESS) {
+      const values = {
+        page: 1,
+        cate_id: null,
+        org_id: org?.id
+      }
+      dispatch(fetchAsyncProducts(values))
+    }
+  }
+  useEffect(() => {
+    callCategories()
+    callProducts()
+  }, [status])
   return (
     <div style={activeTab === 3 ? { display: "block" } : { display: "none" }}>
       <div
@@ -55,28 +44,19 @@ function ProductByMerchant(props: any) {
         style={{ alignItems: "flex-start" }}
       >
         <ProductCate
-          mer_id={mer_id}
+          org={org}
           cate_id={cate_id}
           setCate_id={setCate_id}
-          dataCates={dataCates}
-          setDataCates={setDataCates}
-          dataProducts={dataProducts}
-          setDataProducts={setDataProducts}
         />
-        {/* for mobile */}
-        <ServiceCateMb
-          categories={dataCates.cates}
-          chooseCate={cate_id}
-          setChooseCate={setCate_id}
-          dataServices={dataProducts}
-          setDataServices={setDataProducts}
+        <ProductsCateMb
+          org={org}
+          cate_id={cate_id}
+          setCate_id={setCate_id}
         />
         {/* ----- */}
         <ProductList
           org={org}
-          mer_id={mer_id}
-          dataProducts={dataProducts}
-          setDataProducts={setDataProducts}
+          cate_id={cate_id}
         />
       </div>
     </div>

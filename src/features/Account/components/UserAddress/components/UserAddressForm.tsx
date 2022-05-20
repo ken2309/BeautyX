@@ -1,8 +1,7 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IProvince } from '../../../../../interface/provinces';
 import { IDistrict, IWard } from '../../../../../interface/district';
 import provincesApi from '../../../../../api/provinceApi';
-import { AppContext } from '../../../../../context/AppProvider';
 import ButtonLoading from '../../../../../components/ButtonLoading';
 import { useDispatch, useSelector } from 'react-redux';
 import { postAsyncAddress, removeDefaultItem } from '../../../../../redux/USER/userAddressSlice';
@@ -47,8 +46,8 @@ const onToggleWard = () => {
 }
 function UserAddressForm(props: any) {
     const { setOpen } = props;
-    const { provinces } = useContext(AppContext);
     const ADDRESS = useSelector((state: any) => state.ADDRESS);
+    const { provinces } = useSelector((state: any) => state.HOME);
     const fullScreen = useFullScreen();
     const { status_up } = ADDRESS;
     const address_default = ADDRESS.address.find((item: any) => item.is_default === true);
