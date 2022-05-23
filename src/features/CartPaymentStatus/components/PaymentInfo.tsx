@@ -40,7 +40,10 @@ function PaymentInfo(props: any) {
                         {
                             data.services.length > 0 &&
                             <button
-                                onClick={() => history.push('/goi-dich-vu')}
+                                onClick={() => history.push({
+                                    pathname:'/goi-dich-vu',
+                                    state:'/home'
+                                })}
                             >
                                 Đặt hẹn ngay
                             </button>

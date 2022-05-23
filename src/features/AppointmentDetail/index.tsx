@@ -22,6 +22,7 @@ const Transition = React.forwardRef(function Transition(
 function AppointmentDetail(props: any) {
   const { openPopupDetail, setOpenPopupDetail, datingList, org } = props;
   const fullScreen = useFullScreen();
+  console.log(datingList)
   
   const [services, setServices] = useState<Service[]>([]);
   useEffect(() => {

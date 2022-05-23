@@ -54,8 +54,9 @@
 }
 .mb-mer-cnt__box {
   width: 100%;
-  max-height: 95%;
-  height: max-content;
+  height: fit-content;
+  max-height: 95vh;
+  overflow-y: scroll;
   background-color: var(--bgWhite);
   border-radius: 24px 24px 0px 0px;
   padding: 24px 24px 60px 24px;

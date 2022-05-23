@@ -86,6 +86,7 @@ export default function HomeLoggedCalendar() {
     const timeEnd = dateTimeEndString[1].slice(0, 5);
 
     const app = {
+      ...item,
       id: item.id,
       date: date,
       org_id: item.organization_id,

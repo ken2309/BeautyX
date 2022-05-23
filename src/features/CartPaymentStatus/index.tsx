@@ -62,7 +62,7 @@ function CartPaymentStatus() {
     }
     const dataCartInfo = { res, orderStatus, sec, services }
     const setInter = () => {
-        timerRender[0] = 150;
+        timerRender[0] = 200;
         intervalRef.current = setInterval(() => {
             if (timerRender[0] > 0) {
                 timerRender[0] -= 1;
@@ -70,7 +70,7 @@ function CartPaymentStatus() {
             } else {
                 return clearInterval(intervalRef.current);
             }
-        }, 5000);
+        }, 3000);
     };
     useEffect(() => {
         if (transaction_uuid) {
@@ -103,7 +103,9 @@ function CartPaymentStatus() {
             <HeadTitle
                 title={orderStatus === "PAID" ? 'Thanh toán thành công' : 'Thanh toán đơn hàng'}
             />
-            <Head />
+            <Head
+                handleCancelPayment={handleCancelPayment}
+            />
             <Container>
                 <div
                     className='pm-st-cnt'
