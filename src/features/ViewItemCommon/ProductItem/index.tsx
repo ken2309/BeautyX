@@ -1,17 +1,17 @@
-import React from 'react';
-import '../ServicePromoItem/service-promo-item.css'
-import { Product } from '../../../interface/product';
-import { IOrganization } from '../../../interface/organization';
-import icon from '../../../constants/icon';
-import formatPrice from '../../../utils/formatPrice';
-import onErrorImg from '../../../utils/errorImg';
-import { useHistory } from 'react-router-dom';
-import slugify from '../../../utils/formatUrlString';
-import scrollTop from '../../../utils/scrollTop';
+import React from "react";
+import "../ServicePromoItem/service-promo-item.css";
+import { Product } from "../../../interface/product";
+import { IOrganization } from "../../../interface/organization";
+import icon from "../../../constants/icon";
+import formatPrice from "../../../utils/formatPrice";
+import onErrorImg from "../../../utils/errorImg";
+import { useHistory } from "react-router-dom";
+import slugify from "../../../utils/formatUrlString";
+import scrollTop from "../../../utils/scrollTop";
 
 interface IProps {
-    product: Product,
-    org: IOrganization
+    product: Product;
+    org: IOrganization;
 }
 
 function ProductItem(props: IProps) {
@@ -20,30 +20,31 @@ function ProductItem(props: IProps) {
     const detail = product;
     const history = useHistory();
     const onDetail = () => {
-        scrollTop()
+        scrollTop();
         history.push({
             pathname: `/product-detail/${slugify(product?.product_name)}`,
             search: `${org.id},${product.id},1`,
             state: { org, detail, name },
-        })
-    }
-    const percent = Math.round(100 - product?.special_price / product?.retail_price * 100)
+        });
+    };
+    const percent = Math.round(
+        100 - (product?.special_price / product?.retail_price) * 100
+    );
     return (
-        <div onClick={onDetail} className='ser-pro-item'>
+        <div onClick={onDetail} className="ser-pro-item">
             <div className="ser-img-cnt">
                 <img
-                    className='ser-img'
+                    className="ser-img"
                     src={product?.image ? product.image_url : org?.image_url}
                     alt=""
                     onError={(e) => onErrorImg(e)}
                 />
                 <div className="ser-promo">
-                    {
-                        product?.special_price > 0 &&
+                    {product?.special_price > 0 && (
                         <div className="ser-promo__percent">
                             Giảm <br /> {percent} %
                         </div>
-                    }
+                    )}
                     {/* <div className="flex-row ser-promo__bot">
                         <div className="flex-row ser-promo__bot-start">
                             5
@@ -57,19 +58,18 @@ function ProductItem(props: IProps) {
                 </div>
             </div>
             <div className="ser-pro-item__cnt">
-                <span className="ser-name">
-                    {product?.product_name}
-                </span>
+                <span className="ser-name">{product?.product_name}</span>
                 <div className="ser-price">
-                    {
-                        product?.special_price === -1 ?
-                            <span style={{ color: 'var(--purple)' }}>{formatPrice(product?.retail_price)}đ</span>
-                            :
-                            <>
-                                <span>{formatPrice(product?.special_price)}đ</span>
-                                <span>{formatPrice(product?.retail_price)}đ</span>
-                            </>
-                    }
+                    {product?.special_price === -1 ? (
+                        <span style={{ color: "var(--purple)" }}>
+                            {formatPrice(product?.retail_price)}đ
+                        </span>
+                    ) : (
+                        <>
+                            <span>{formatPrice(product?.special_price)}đ</span>
+                            <span>{formatPrice(product?.retail_price)}đ</span>
+                        </>
+                    )}
                 </div>
                 {/* {
                     service._geoDistance ?
@@ -87,10 +87,10 @@ function ProductItem(props: IProps) {
                         :
                         <></>
                 } */}
-                <span className="ser-org-address">
-                    <img src={icon.mapPinRed} alt="" />
-                    {org?.address}
-                </span>
+                <div className="ser-org-address">
+                    <img src={icon.location} alt="" />
+                    <p>{org?.address}</p>
+                </div>
             </div>
         </div>
     );

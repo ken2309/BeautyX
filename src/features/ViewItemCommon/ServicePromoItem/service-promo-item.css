@@ -1,37 +1,45 @@
-.ser-pro-item{
+.ser-pro-item {
     cursor: pointer;
     width: 100%;
     background-color: white;
     border-radius: 8px;
     transition: all .3s ease-in-out;
 }
-.ser-pro-item:hover{
+.ser-pro-item:hover {
     box-shadow: 0 6px 15px #dcd8ee;
     transform: translateY(-10px);
 }
-.ser-pro-item .ser-img{
+.ser-pro-item .ser-img {
     width: 100%;
     height: 182px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 8px 8px 0 0;
 }
-.ser-pro-item__cnt{
-    padding: 4px;
+.ser-pro-item__cnt {
+    gap: 4px 0;
+    padding: 8px;
+    background-color: #fff;
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    flex-shrink: 0;
 }
-.ser-pro-item .ser-img-cnt{
+.ser-pro-item .ser-img-cnt {
     position: relative;
 }
-.ser-pro-item .ser-promo{
+.ser-pro-item .ser-promo {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
-    padding: 0px 4px 4px 4px;
+    /* padding: 0px 4px 4px 4px; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-.ser-pro-item .ser-promo__percent{
+.ser-pro-item .ser-promo__percent {
     width: 50px;
     height: 46px;
     background-color: var(--red-cl);
@@ -43,7 +51,7 @@
     border-radius: 4px;
 }
 .ser-pro-item .ser-promo__bot-start,
-.ser-pro-item .ser-promo__bot-bought{
+.ser-pro-item .ser-promo__bot-bought {
     background-color: var(--bgWhite);
     padding: 2px 8px;
     font-size: 12px;
@@ -51,71 +59,86 @@
     margin-right: 6px;
     border-radius: 6px;
 }
-.ser-pro-item .ser-promo__bot-bought{
+.ser-pro-item .ser-promo__bot-bought {
     padding: 4.5px 8px;
 }
-.ser-pro-item .ser-promo__bot-bought span{
+.ser-pro-item .ser-promo__bot-bought span {
     color: var(--red-cl);
     margin-left: 4;
 }
-.ser-pro-item .ser-name{
+.ser-pro-item .ser-name {
     font-size: 14px;
     line-height: 16px;
     font-weight: 700;
     color: var(--text-black);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
 }
-.ser-pro-item .ser-price{
+.ser-pro-item .ser-price {
     display: flex;
     flex-direction: column;
+    margin-top: auto;
 }
-.ser-pro-item .ser-price span:nth-child(1){
+.ser-pro-item .ser-price span:nth-child(1) {
     font-size: 16px;
     line-height: 18px;
     font-weight: 700;
     color: var(--red-cl);
 }
-.ser-pro-item .ser-price span:nth-child(2){
+.ser-pro-item .ser-price span:nth-child(2) {
     font-size: 12px;
     line-height: 14px;
     color: var(--text-hover);
     font-weight: 700;
     text-decoration: line-through;
 }
-.ser-pro-item .ser-distance{
+.ser-pro-item .ser-distance {
     margin: 4px 0px;
 }
-.ser-pro-item .ser-distance div{
+.ser-pro-item .ser-distance div {
     width: 6px;
     height: 6px;
     background-color: var(--purple);
-    margin-right: 8px;
+    margin: 4px 8px 0 4px;
     border-radius: 100%;
 }
-.ser-pro-item .ser-distance span{
+.ser-pro-item .ser-distance span {
     font-size: 12px;
     line-height: 14px;
     font-weight: 700;
 }
-.ser-pro-item .ser-org-address{
+.ser-pro-item .ser-org-address {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+}
+.ser-pro-item .ser-org-address p {
     font-size: 12px;
     line-height: 18px;
     font-weight: 700;
     color: var(--text-black);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
 }
-.ser-pro-item .ser-org-address img{
+.ser-pro-item .ser-org-address img {
     width: 14px;
     height: 14px;
-    margin-top: 2px;
+    margin-right: 4px;
 }
 /* Mobile */
 @media only screen and (max-width: 767px) {
-    .ser-pro-item .ser-img{
+    .ser-pro-item .ser-img {
         height: auto;
     }
-    .ser-pro-item .ser-name{
+    .ser-pro-item .ser-name {
         text-transform: capitalize;
         font-size: 14px;
         line-height: 16px;
@@ -128,18 +151,13 @@
         overflow: hidden;
         text-overflow: ellipsis;
         word-break: break-word;
-        margin-bottom: 4px;
     }
-    .ser-pro-item .ser-org-address {
-        font-size: 10px;
-        line-height: 14px;
-        margin-top: 4px;
-    }
+
     .ser-pro-item .ser-promo__bot-start,
-    .ser-pro-item .ser-promo__bot-bought{
+    .ser-pro-item .ser-promo__bot-bought {
         padding: 4px;
     }
-    .ser-pro-item .ser-promo__bot-start img{
+    .ser-pro-item .ser-promo__bot-start img {
         width: 14px;
         height: 14px;
     }
