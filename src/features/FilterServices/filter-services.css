@@ -1,12 +1,11 @@
-.filter-ser-cnt{
+.filter-ser-cnt {
     width: 100%;
-    background-color: var(--bgWhite);
     overflow-x: scroll;
-    padding: 6px 0px;
+    padding: 8px 0px;
 }
-.filter-ser-list li{
-    /* background-color: var(--pink); */
-    padding: 6px 16px;
+.filter-ser-list li {
+    background-color: #fff;
+    padding: 8px 16px;
     cursor: pointer;
     font-size: 14px;
     line-height: 20px;
@@ -15,23 +14,32 @@
     margin-right: 12px;
     border: solid 1px var(--bgWhite);
     border-radius: 16px;
-    transition: all .4s;
+    transition: all 0.4s;
 }
 /* Mobile */
 @media only screen and (max-width: 767px) {
-    .filter-ser-cnt{
-        padding: 6px 20px;
+    .filter-ser-list li {
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+
+    .filter-ser-cnt {
+        padding: 16px;
         overflow-x: scroll;
     }
-    .filter-ser-list{
+    .filter-ser-list {
         width: max-content;
     }
-    .home-promo-ser{
+    .home-promo-ser {
         width: 100%;
         overflow-x: scroll;
+        margin-top: 16px;
     }
-    .home-promo-ser .ser-list{
+    .home-promo-ser .ser-list {
         flex-wrap: nowrap;
         width: max-content;
+        display: flex;
+        gap: 0 16px;
+        padding: 0px 16px 16px;
+        margin-top: 0;
     }
 }
