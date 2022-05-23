@@ -33,7 +33,7 @@ img {
 }
 
 .home-banner {
-  margin-top: 32px;
+  /* margin-top: 32px; */
   position: relative;
   height: 572px;
   overflow: hidden;
@@ -1785,7 +1785,7 @@ img {
   }
 
   .home-map {
-    margin-top: 225px;
+    margin-top: 40px;
   }
 
   .home-map .section-title {

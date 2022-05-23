@@ -129,160 +129,203 @@ export default function CountDown() {
   });
 
   return (
-    <div>
-      <Dialog className="countDownSection" fullScreen open={countDown}>
-        <div className="countdown">
-          <div className="wraper">
-            <h1 className="countdown-title">happy lunar new year</h1>
-            <span className="countdown-desc">
-              Our website is under construction
-            </span>
-            <div className="countdown-list">
-              <div className="countdown-item">
-                <span>{timeDay < 10 ? `0${timeDay}` : timeDay}</span>
-                <span>DAYS</span>
+      <div>
+          <Dialog className="countDownSection" fullScreen open={countDown}>
+              <div className="countdown">
+                  <div className="wraper">
+                      <h1 className="countdown-title">happy lunar new year</h1>
+                      <span className="countdown-desc">
+                          Our website is under construction
+                      </span>
+                      <div className="countdown-list">
+                          <div className="countdown-item">
+                              <span>
+                                  {timeDay < 10 ? `0${timeDay}` : timeDay}
+                              </span>
+                              <span>DAYS</span>
+                          </div>
+                          <div className="countdown-item">
+                              <span className="hours">
+                                  {timeHour < 10 ? `0${timeHour}` : timeHour}
+                              </span>
+                              <span>HOURS</span>
+                          </div>
+                          <div className="countdown-item">
+                              <span className="minutes">
+                                  {timeMinute < 10
+                                      ? `0${timeMinute}`
+                                      : timeMinute}
+                              </span>
+                              <span>MINITES</span>
+                          </div>
+                          <div className="countdown-item">
+                              <span className="seconds">
+                                  {timeSecond < 10
+                                      ? `0${timeSecond}`
+                                      : timeSecond}
+                              </span>
+                              <span>SECONDS</span>
+                          </div>
+                      </div>
+                      <div
+                          onClick={handleOpenContact}
+                          className="countdown-btn"
+                      >
+                          Follow us for update now
+                      </div>
+                  </div>
               </div>
-              <div className="countdown-item">
-                <span className="hours">
-                  {timeHour < 10 ? `0${timeHour}` : timeHour}
-                </span>
-                <span>HOURS</span>
-              </div>
-              <div className="countdown-item">
-                <span className="minutes">
-                  {timeMinute < 10 ? `0${timeMinute}` : timeMinute}
-                </span>
-                <span>MINITES</span>
-              </div>
-              <div className="countdown-item">
-                <span className="seconds">
-                  {timeSecond < 10 ? `0${timeSecond}` : timeSecond}
-                </span>
-                <span>SECONDS</span>
-              </div>
-            </div>
-            <div onClick={handleOpenContact} className="countdown-btn">
-              Follow us for update now
-            </div>
+          </Dialog>
+          <div className="form-contact">
+              <Dialog
+                  keepMounted
+                  open={popupContact}
+                  onClose={handleCloseContact}
+                  aria-describedby="alert-dialog-slide-description"
+              >
+                  <div className="form-contact">
+                      <h2 className="form-contact__title">
+                          Liên hệ với chúng tôi
+                      </h2>
+                      <span className="form-contact__desc">
+                          Vui lòng cho chúng tôi biết thông tin của bạn
+                      </span>
+
+                      <div className="wrap-btn">
+                          <div className="sign-form__box">
+                              <img
+                                  className="sign-form__box-icon "
+                                  src={icon.User}
+                                  alt=""
+                              />
+                              <input
+                                  autoComplete="off"
+                                  value={formikContact.values.name}
+                                  onChange={formikContact.handleChange}
+                                  name="name"
+                                  id="name"
+                                  placeholder="Họ và tên"
+                              />
+                          </div>
+                          {formikContact.errors.name &&
+                              formikContact.touched.name && (
+                                  <p className="err-text">
+                                      {formikContact.errors.name}
+                                  </p>
+                              )}
+
+                          <div className="sign-form__box">
+                              <img
+                                  className="sign-form__box-icon "
+                                  src={icon.Message}
+                                  alt=""
+                              />
+                              <input
+                                  autoComplete="off"
+                                  value={formikContact.values.gmail}
+                                  onChange={formikContact.handleChange}
+                                  name="gmail"
+                                  id="gmail"
+                                  placeholder="Email"
+                              />
+                          </div>
+                          {formikContact.errors.gmail &&
+                              formikContact.touched.gmail && (
+                                  <p className="err-text">
+                                      {formikContact.errors.gmail}
+                                  </p>
+                              )}
+
+                          <div className="sign-form__box">
+                              <img
+                                  className="sign-form__box-icon "
+                                  src={icon.Phone}
+                                  alt=""
+                              />
+                              <input
+                                  autoComplete="off"
+                                  value={formikContact.values.phone}
+                                  onChange={formikContact.handleChange}
+                                  name="phone"
+                                  id="phone"
+                                  placeholder="Số điện thọai"
+                              />
+                          </div>
+                          {formikContact.errors.phone &&
+                              formikContact.touched.phone && (
+                                  <p className="err-text">
+                                      {formikContact.errors.phone}
+                                  </p>
+                              )}
+
+                          <div className="sign-form__box">
+                              <img
+                                  className="sign-form__box-icon "
+                                  src={icon.DeskAlt}
+                                  alt=""
+                              />
+                              <input
+                                  autoComplete="off"
+                                  value={formikContact.values.business}
+                                  onChange={formikContact.handleChange}
+                                  name="business"
+                                  id="business"
+                                  placeholder="Loại kinh doanh"
+                              />
+                          </div>
+                          {formikContact.errors.business &&
+                              formikContact.touched.business && (
+                                  <p className="err-text">
+                                      {formikContact.errors.business}
+                                  </p>
+                              )}
+
+                          <div className="sign-form__box">
+                              <img
+                                  className="sign-form__box-icon "
+                                  src={icon.Location}
+                                  alt=""
+                              />
+                              <input
+                                  autoComplete="off"
+                                  value={formikContact.values.address}
+                                  onChange={formikContact.handleChange}
+                                  name="address"
+                                  id="address"
+                                  placeholder="Địa chỉ"
+                              />
+                          </div>
+                          {formikContact.errors.address &&
+                              formikContact.touched.address && (
+                                  <p className="err-text">
+                                      {formikContact.errors.address}
+                                  </p>
+                              )}
+                      </div>
+
+                      <div className="dialog-forgot__password-btn">
+                          <ButtonCus
+                              onClick={handleCloseContact}
+                              text="Hủy"
+                              backColor="var(--bg-color)"
+                              color="var(--purple)"
+                              fontSize="20px"
+                              lineHeight="24px"
+                              borderRadius="20px"
+                          />
+                          <ButtonCus
+                              onClick={formikContact.handleSubmit}
+                              text="Xác nhận"
+                              backColor="var(--purple)"
+                              color="var(--bg-color)"
+                              fontSize="20px"
+                              lineHeight="24px"
+                              borderRadius="20px"
+                          />
+                      </div>
+                  </div>
+              </Dialog>
           </div>
-        </div>
-      </Dialog>
-      <Dialog
-        keepMounted
-        open={popupContact}
-        onClose={handleCloseContact}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <div className="form-contact">
-          <h2 className="form-contact__title">Liên hệ với chúng tôi</h2>
-          <span className="form-contact__desc">
-            Vui lòng cho chúng tôi biết thông tin của bạn
-          </span>
-
-          <div className="wrap-btn">
-            <div className="sign-form__box">
-              <img className="sign-form__box-icon " src={icon.User} alt="" />
-              <input
-                autoComplete="off"
-                value={formikContact.values.name}
-                onChange={formikContact.handleChange}
-                name="name"
-                id="name"
-                placeholder="Họ và tên"
-              />
-            </div>
-            {formikContact.errors.name && formikContact.touched.name && (
-              <p className="err-text">{formikContact.errors.name}</p>
-            )}
-
-            <div className="sign-form__box">
-              <img className="sign-form__box-icon " src={icon.Message} alt="" />
-              <input
-                autoComplete="off"
-                value={formikContact.values.gmail}
-                onChange={formikContact.handleChange}
-                name="gmail"
-                id="gmail"
-                placeholder="Email"
-              />
-            </div>
-            {formikContact.errors.gmail && formikContact.touched.gmail && (
-              <p className="err-text">{formikContact.errors.gmail}</p>
-            )}
-
-            <div className="sign-form__box">
-              <img className="sign-form__box-icon " src={icon.Phone} alt="" />
-              <input
-                autoComplete="off"
-                value={formikContact.values.phone}
-                onChange={formikContact.handleChange}
-                name="phone"
-                id="phone"
-                placeholder="Số điện thọai"
-              />
-            </div>
-            {formikContact.errors.phone && formikContact.touched.phone && (
-              <p className="err-text">{formikContact.errors.phone}</p>
-            )}
-
-            <div className="sign-form__box">
-              <img className="sign-form__box-icon " src={icon.DeskAlt} alt="" />
-              <input
-                autoComplete="off"
-                value={formikContact.values.business}
-                onChange={formikContact.handleChange}
-                name="business"
-                id="business"
-                placeholder="Loại kinh doanh"
-              />
-            </div>
-            {formikContact.errors.business &&
-              formikContact.touched.business && (
-                <p className="err-text">{formikContact.errors.business}</p>
-              )}
-
-            <div className="sign-form__box">
-              <img
-                className="sign-form__box-icon "
-                src={icon.Location}
-                alt=""
-              />
-              <input
-                autoComplete="off"
-                value={formikContact.values.address}
-                onChange={formikContact.handleChange}
-                name="address"
-                id="address"
-                placeholder="Địa chỉ"
-              />
-            </div>
-            {formikContact.errors.address && formikContact.touched.address && (
-              <p className="err-text">{formikContact.errors.address}</p>
-            )}
-          </div>
-
-          <div className="dialog-forgot__password-btn">
-            <ButtonCus
-              onClick={handleCloseContact}
-              text="Hủy"
-              backColor="var(--bg-color)"
-              color="var(--purple)"
-              fontSize="20px"
-              lineHeight="24px"
-              borderRadius="20px"
-            />
-            <ButtonCus
-              onClick={formikContact.handleSubmit}
-              text="Xác nhận"
-              backColor="var(--purple)"
-              color="var(--bg-color)"
-              fontSize="20px"
-              lineHeight="24px"
-              borderRadius="20px"
-            />
-          </div>
-        </div>
-      </Dialog>
-    </div>
+      </div>
   );
 }
