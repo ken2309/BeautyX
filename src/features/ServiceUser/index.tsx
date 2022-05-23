@@ -31,10 +31,6 @@ function ServicesUser(props: any) {
                 </div>
             </Container>
             <ServiceBottom
-            //servicesBook={servicesBook}
-            //setServicesBook={setServicesBook}
-            />
-            <ServiceBottom
                 //servicesBook={servicesBook}
                 setOpenNoti={setOpenNoti}
             />

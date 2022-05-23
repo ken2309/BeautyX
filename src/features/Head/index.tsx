@@ -116,13 +116,9 @@ function Head(props: any) {
       handleCancelPayment()
     }
     if (setCloseDialog) {
-      return setCloseDialog(false);
-    }
-    if (prev_url) {
-      history.push(`${prev_url}`)
-    }
-    else {
-      history.goBack(-1)
+      setCloseDialog(false);
+    } else {
+      history.goBack() || history.push('/home');
     }
     scrollTop();
   };

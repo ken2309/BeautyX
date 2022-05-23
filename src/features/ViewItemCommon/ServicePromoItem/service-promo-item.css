@@ -3,11 +3,17 @@
     width: 100%;
     background-color: white;
     border-radius: 8px;
-    transition: all .3s ease-in-out;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid transparent;
+    height: 100%;
+    flex: 1;
 }
 .ser-pro-item:hover {
     box-shadow: 0 6px 15px #dcd8ee;
-    transform: translateY(-10px);
+    transform: translateY(-7px);
+    /* border: 1px solid #ccc; */
 }
 .ser-pro-item .ser-img {
     width: 100%;
