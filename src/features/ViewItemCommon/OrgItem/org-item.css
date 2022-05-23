@@ -1,12 +1,18 @@
 .re-org-item {
     cursor: pointer;
-    transition: all .4s;
+    transition: all 0.4s;
     border-radius: 8px;
+    overflow: hidden;
     background-color: var(--bgWhite);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid transparent;
 }
 
 .re-org-item:hover {
-    box-shadow: 0 6px 15px #dcd8ee;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border: 1px solid #ccc;
 }
 
 .re-org-item .org-img-cnt {
@@ -17,17 +23,17 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    top: 0;
+    bottom: 4px;
+    left: 4px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 0px 4px 4px 4px;
 }
 
 .org-img-cnt__rate-item {
     background-color: var(--bgWhite);
-    margin: 0px 4px;
-    padding: 0px 8px;
+    margin: 4px;
+    padding: 0px 4px;
     border-radius: 4px;
 }
 
@@ -43,13 +49,18 @@
 
 .re-org-item .re-org-item__img {
     width: 100%;
-    height: auto;
-    /* min-height: 182px; */
-    border-radius: 8px;
+    height: 180px;
 }
 
 .re-org-item__cnt {
-    padding: 4px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px 0;
+    flex: 1;
+    flex-shrink: 0;
+    height: 100%;
+    background-color: #fff;
 }
 
 .re-org-item__cnt .org_name {
@@ -73,15 +84,17 @@
     line-height: 18px;
     font-weight: 700;
     color: var(--text-black);
-    padding: 1.5px 0px;
 }
-.re-org-item__cnt .org_address span{
+.re-org-item__cnt .org_address span {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-word;
+}
+.re-org-item__cnt .org_address {
+    margin-top: auto;
 }
 .re-org-item__cnt .org_address img,
 .re-org-item__cnt .org_tag img {

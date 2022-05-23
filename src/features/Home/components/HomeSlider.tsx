@@ -26,6 +26,8 @@ function HomeSlider(props: any) {
           slidesToScroll: 1,
           initialSlide: 1,
           autoplay: true,
+          fade: true,
+          speed: 250,
         },
       },
     ],
