@@ -45,6 +45,12 @@
     display: none;
 }
 /* end home banner deal */
+.ser-list__mb {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    padding: 0 16px;
+}
 /* Mobile */
 @media only screen and (max-width: 767px) {
     .home-result-ser-cnt {
