@@ -59,6 +59,7 @@
   padding-bottom: calc(100% * 3 / 3);
 }
 .img_mask > img {
+  height: 100%;
   position: absolute;
   object-fit: cover;
   object-position: center;

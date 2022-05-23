@@ -41,6 +41,9 @@
     display: flex;
     justify-content: center;
 }
+.home-result-org-cnt__mb{
+    display: none;
+}
 /* end home banner deal */
 /* Mobile */
 @media only screen and (max-width: 767px) {
@@ -59,9 +62,10 @@
     }
     .home-result-org-cnt {
         flex-direction: column;
+        padding: 12px 0px;
     }
     .home-result-org-cnt__left{
-        width: 100%;
+        display: none;
     }
     .home-result-org-cnt__right{
         width: 100%;
@@ -74,5 +78,22 @@
         width: 50%;
         background-color: var(--bgWhite);
         padding: 12px 8px;
+    }
+    .home-result-org-cnt__mb{
+        display: block;
+        background-color: var(--bgWhite);
+    }
+    .home-result-org-cnt__mb .cnt{
+        padding: 0px 12px;
+    }
+    .home-result-org-cnt__mb .cnt span{
+        font-size: 12px;
+        line-height: 14px;
+        font-weight: 700;
+    }
+    .home-result-org-cnt__mb .cnt button{
+        border: none;
+        outline: none;
+        background-color: transparent;
     }
 }

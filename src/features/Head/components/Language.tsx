@@ -11,9 +11,21 @@ function Language(props: any) {
       return (
             <div
                   style={openLang === true ?
-                        { top: '3rem', opacity: '1', visibility: 'visible' }
+                        { 
+                              top: '3rem',
+                              opacity: '1', 
+                              visibility: 'visible',
+                              width: 'max-content',
+                              borderRadius: '10px',
+                              padding: '10px'
+                        }
                         :
-                        { top: '5rem', opacity: '0', visibility: 'hidden' }}
+                        { 
+                              top: '5rem', 
+                              opacity: '0', 
+                              visibility: 'hidden',
+                              width: 'max-content',
+                        }}
                   className="flex-row hd-lang-box"
             >
                   <LanguageBox />

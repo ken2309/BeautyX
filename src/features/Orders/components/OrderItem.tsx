@@ -73,6 +73,7 @@ function OrderItem(props: IProp) {
               <div className="order-at">
                 <span className="flex-row">
                   {t("booking.date")}:<h4>{order.created_at}</h4>
+                  <h4>{order?.platform}</h4>
                 </span>
               </div>
               <div className="order-item__cnt-count">{countItem} (items)</div>

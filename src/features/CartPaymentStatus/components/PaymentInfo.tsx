@@ -40,7 +40,10 @@ function PaymentInfo(props: any) {
                         {
                             data.services.length > 0 &&
                             <button
-                                onClick={() => history.push('/goi-dich-vu')}
+                                onClick={() => history.push({
+                                    pathname:'/goi-dich-vu',
+                                    state:'/home'
+                                })}
                             >
                                 Đặt hẹn ngay
                             </button>
@@ -53,6 +56,16 @@ function PaymentInfo(props: any) {
                     </div>
                 </div>
             case "CANCELED_BY_USER":
+                return <div className='flex-column st-cancel__cnt' >
+                    <span>Đã hủy thanh toán</span>
+                    <button
+                        onClick={() => history.push('/Home')}
+                        className='st-pm-info__btn'
+                    >
+                        Về trang chủ
+                    </button>
+                </div>
+            case "CANCELED":
                 return <div className='flex-column st-cancel__cnt' >
                     <span>Đã hủy thanh toán</span>
                     <button

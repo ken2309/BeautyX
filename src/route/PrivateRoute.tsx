@@ -3,7 +3,8 @@ import { Route, Redirect } from "react-router-dom";
 
 
 const PrivateRoute = (props: any) => {
-      const { component: Component, profile, ...rest } = props;
+      const { component: Component, USER, ...rest } = props;
+      //console.log(USER)
       const local = localStorage.getItem("_WEB_TK");
       const sess = window.sessionStorage.getItem("_WEB_TK")
       return (

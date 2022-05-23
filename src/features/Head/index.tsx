@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useState,useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./head.css";
 import { Container } from "@mui/material";
 import ButtonCus from "../../components/ButtonCus";
@@ -16,8 +16,7 @@ import MbMenu from "../../featuresMobile/Menu";
 import scrollTop from "../../utils/scrollTop";
 import HomeFilter from '../Home/components/HomeFilter';
 import SearchFilter from "../../featuresMobile/SearchResult/SearchFilter";
-
-
+import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 
 const styleFilter = {
   width: '41.5%',
@@ -46,7 +45,14 @@ function Head(props: any) {
     //profile,
     //userInfo
   } = useContext(AppContext);
-  const { IN_HOME, setCloseDialog, headerStyle } = props;
+  const FLAT_FORM = EXTRA_FLAT_FORM();
+  const {
+    IN_HOME,
+    setCloseDialog,
+    headerStyle,
+    handleCancelPayment,
+    prev_url
+  } = props;
   const dispatch = useDispatch();
   const [openNo, setOpenNo] = useState(false);
   const [openLang, setOpenLang] = useState(false);
@@ -59,8 +65,8 @@ function Head(props: any) {
   //get total amount cart
 
   const carts = useSelector((state: any) => state.carts);
-  const USER = useSelector((state:any) => state.USER.USER);
-  
+  const USER = useSelector((state: any) => state.USER.USER);
+
   useEffect(() => {
     dispatch(getTotal());
   }, [dispatch, carts]);
@@ -68,7 +74,14 @@ function Head(props: any) {
     if (IN_HOME === true) {
       history.push("/kenh-nguoi-ban");
     } else {
-      history.goBack();
+      if (handleCancelPayment) {
+        handleCancelPayment()
+      }
+      if (prev_url) {
+        history.push(`${prev_url}`)
+      } else {
+        history.goBack() || history.push('/');
+      }
     }
   };
   const gotoPageSignUp = () => {
@@ -99,13 +112,26 @@ function Head(props: any) {
     setOpenNo(false);
   };
   const handleBack = () => {
+    if (handleCancelPayment) {
+      handleCancelPayment()
+    }
     if (setCloseDialog) {
-      setCloseDialog(false);
-    } else {
-      history.goBack();
+      return setCloseDialog(false);
+    }
+    if (prev_url) {
+      history.push(`${prev_url}`)
+    }
+    else {
+      history.goBack(-1)
     }
     scrollTop();
   };
+  const onBackHome = () => {
+    if (handleCancelPayment) {
+      handleCancelPayment()
+    }
+    history.push("/")
+  }
   return (
     <div
       style={headerStyle}
@@ -114,9 +140,9 @@ function Head(props: any) {
       <Container>
         <div className="flex-row-sp hd-cnt">
           <div className="hd-logo">
-            <img onClick={() => history.push("/")} src={img.beautyX} alt="" />
+            <img onClick={onBackHome} src={img.beautyX} alt="" />
           </div>
-          <div className="hd-cnt__left">
+          <div className="flex-row hd-cnt__left">
             <ButtonCus
               text={IN_HOME === true ? t("Header.seller_center") : t("Header.back")}
               borderRadius="18px"
@@ -125,6 +151,17 @@ function Head(props: any) {
               border="solid 1px var(--purple)"
               onClick={gotoPartner}
             />
+            {/* <button
+              onClick={() => history.push('/beautyx-videos')}
+              className="flex-row hd-cnt__left-btn"
+            >
+              <img src={icon.playCirclePurple} alt="" />
+              Video
+            </button>
+            <button onClick={() => history.push('/tin-tuc')} className="flex-row hd-cnt__left-btn">
+              <img src={icon.newsPurple} alt="" />
+              Tin tức
+            </button> */}
           </div>
           <img
             onClick={handleBack}
@@ -221,15 +258,21 @@ function Head(props: any) {
                       {carts.cartQuantity}
                     </div>
                   </div>
-                  <img
-                    onClick={() => setOpenMbMenu(true)}
-                    src={icon.menuWhite}
-                    alt=""
-                  />
+                  {
+                    FLAT_FORM === "BEAUTYX" &&
+                    <img
+                      onClick={() => setOpenMbMenu(true)}
+                      src={icon.menuWhite}
+                      alt=""
+                    />
+                  }
                 </div>
               </div>
             </div>
-            <MbMenu openMbMenu={openMbMenu} setOpenMbMenu={setOpenMbMenu} />
+            {
+              FLAT_FORM === "BEAUTYX" &&
+              <MbMenu openMbMenu={openMbMenu} setOpenMbMenu={setOpenMbMenu} />
+            }
             {/* --- */}
             <div
               onClick={() => history.push("/cart")}

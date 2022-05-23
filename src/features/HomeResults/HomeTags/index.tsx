@@ -8,11 +8,13 @@ import FilterOrgs from '../../FilterOrgs';
 import orgApi from '../../../api/organizationApi';
 import OrgItem from '../../ViewItemCommon/OrgItem';
 import { IOrganization } from '../../../interface/organization';
-import { Pagination } from '@mui/material'
+import { Pagination, Drawer } from '@mui/material'
 import scrollTop from '../../../utils/scrollTop';
+import icon from '../../../constants/icon';
 
 function HomeTags(props: any) {
     const location = useLocation();
+    const [openFilter, setOpenFilter] = useState(false);
     const [orgFilter, setOrgFilter] = useState({
         tags: [],
         province_code: 0,
@@ -73,6 +75,28 @@ function HomeTags(props: any) {
                             setData={setData}
                             handleOrgsByKeyword={handleGetOrgsSingleTag}
                         />
+                    </div>
+                    <div className="home-result-org-cnt__mb">
+                        <div className="flex-row-sp cnt">
+                            <span className="title">Bộ lọc tìm kiếm</span>
+                            <button onClick={() => setOpenFilter(true)} className="filter-btn">
+                                <img src={icon.filter} alt="" />
+                            </button>
+                            <Drawer
+                                anchor='right'
+                                open={openFilter}
+                                onClose={() => setOpenFilter(false)}
+                            >
+                                <FilterOrgs
+                                    hideTags={true}
+                                    orgFilter={orgFilter}
+                                    setOrgFilter={setOrgFilter}
+                                    setData={setData}
+                                    handleOrgsByKeyword={handleGetOrgsSingleTag}
+                                    setOpenFilter={setOpenFilter}
+                                />
+                            </Drawer>
+                        </div>
                     </div>
                     <div className="home-result-org-cnt__right">
                         <span className="se-re-cnt-title">

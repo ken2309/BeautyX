@@ -1,5 +1,6 @@
 import axiosClient from "./axios";
 import { AUTH_HEADER_PARAM_GET, AUTH_HEADER } from "../utils/authHeader";
+import { EXTRA_FLAT_FORM } from "./extraFlatForm";
 
 class ApointmentApi {
   sendApointment = (props: any) => {
@@ -27,12 +28,13 @@ class ApointmentApi {
     }
   };
   getAppoitment = (time: any) => {
+    const FLAT_FORM = EXTRA_FLAT_FORM();
     const url = 'appointments';
     const params = {
       page: 1,
       limit: 300,
       "filter[time_start]": time,
-      "filter[platform]": "BEAUTYX",
+      "filter[platform]": FLAT_FORM,
       "append": "services",
       "sort": "-id"
     }

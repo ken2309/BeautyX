@@ -1,10 +1,11 @@
 import axiosClient from "./axios";
 import { AUTH_HEADER_PARAM_GET } from "../utils/authHeader";
-
+import { EXTRA_FLAT_FORM } from "./extraFlatForm";
 
 
 class ServicesUser {
     getServices = () => {
+        const FLAT_FORM = EXTRA_FLAT_FORM();
         const url = `/orders`;
         const params = {
             page: 1,
@@ -13,7 +14,7 @@ class ServicesUser {
             "filter[withServicesSold]": true,
             "include": "items|items_count|organization",
             "sort": "-created_at",
-            'filter[platform]': 'BEAUTYX'
+            'filter[platform]': FLAT_FORM
         }
         return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params))
     }

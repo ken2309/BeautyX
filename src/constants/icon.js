@@ -115,6 +115,10 @@ import pinMapGreen from '../assets/icon/pinMapGreen.svg';
 import closeCircleWhite from '../assets/icon/closeCircleWhite.svg';
 import sucessGreen from '../assets/icon/sucessGreen.svg';
 import xCircleRed from '../assets/icon/xCircleRed.svg';
+import loginReq from '../assets/icon/loginReq.svg';
+import playCirclePurple from '../assets/icon/playCirclePurple.svg';
+import newsPurple from '../assets/icon/newsPurple.svg';
+import languagePurple from '../assets/icon/languagePurple.svg';
 
 const icon = {
   Favorite,
@@ -232,6 +236,10 @@ const icon = {
   pinMapGreen,
   closeCircleWhite,
   sucessGreen,
-  xCircleRed
+  xCircleRed,
+  loginReq,
+  playCirclePurple,
+  newsPurple,
+  languagePurple
 };
 export default icon;

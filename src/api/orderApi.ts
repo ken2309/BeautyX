@@ -1,5 +1,6 @@
 import axiosClient from './axios';
 import { AUTH_HEADER_PARAM_GET, AUTH_HEADER } from '../utils/authHeader';
+import { EXTRA_FLAT_FORM } from './extraFlatForm';
 
 class Order {
       getOrder = (page: number) => {
@@ -7,13 +8,14 @@ class Order {
             return axiosClient.get(url, AUTH_HEADER())
       }
       getOrders = (page: number) => {
+            const FLAT_FORM = EXTRA_FLAT_FORM();
             const url = '/orders'
             const params = {
                   page: page,
                   limit: 10,
                   include: 'items|items_count|organization',
                   sort: '-created_at',
-                  'filter[platform]': 'BEAUTYX',
+                  'filter[platform]': FLAT_FORM,
                   'filter[productable]': true,
             }
             return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params))

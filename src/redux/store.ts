@@ -9,10 +9,14 @@ import orgCommentsReducer from './org/orgCommentsSlice';
 import orgServicesReducer from './org_services/orgServivesSlice';
 import orgProductsReducer from './org_products/orgProductsSlice';
 import orgSpecialReducer from './org_specials/orgSpecialSlice';
+import loginFlatFromReducer from "./loginFlatForm/loginFlatFrom";
+import paymentsReducer from "./payments/paymentSlice";
+import blogReducer from "./blog/blogSlice";
 
 const rootReducer = {
   carts: cartReducer,
   HOME: homeReducer,
+  LOGIN: loginFlatFromReducer,
   ORG_COMMENTS: orgCommentsReducer,
   SERVICES_BOOK: servicesBookReducer,
   USER: userReducer,
@@ -20,7 +24,9 @@ const rootReducer = {
   ORG_SERVICES: orgServicesReducer,
   ORG_PRODUCTS: orgProductsReducer,
   ORG_SPECIALS: orgSpecialReducer,
-  ADDRESS: userAddressReducer
+  ADDRESS: userAddressReducer,
+  PAYMENT: paymentsReducer,
+  BLOG: blogReducer
 };
 const store = configureStore({
   reducer: rootReducer,
