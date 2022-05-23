@@ -17,7 +17,6 @@ export default function HomeLoggedCalendarAppointmentItem(props: any) {
   function handleOpenPopupDetail() {
     setOpenPopupDetail(true);
   }
-  //console.log(datingList)
   useEffect(() => {
     async function handleGetOrg_Br() {
       try {

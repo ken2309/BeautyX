@@ -11,6 +11,7 @@ import mediaApi from "../../api/mediaApi";
 import authentication from "../../api/authApi";
 import { putUser } from '../../redux/USER/userSlice'
 import { useSelector, useDispatch } from "react-redux";
+import Settings from "./Setting";
 
 
 function AccountMb() {
@@ -18,7 +19,8 @@ function AccountMb() {
   const [openOrder, setOpenOrder] = useState(false);
   const [openAcc, setOpenAcc] = useState(false);
   const [openSer, setOpenSer] = useState(false);
-  const [openDiscount, setOpenDiscount] = useState(false)
+  const [openDiscount, setOpenDiscount] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false);
   const dispatch = useDispatch();
   const USER = useSelector((state: any) => state.USER.USER);
 
@@ -160,7 +162,7 @@ function AccountMb() {
               </div>
             </li>
             <li>
-              <div className="flex-column mb-ac__cnt-private-item">
+              <div onClick={()=>setOpenSettings(true)} className="flex-column mb-ac__cnt-private-item">
                 <img src={icon.Setting} alt="" />
                 <span>{t("Header.settings")}</span>
               </div>
@@ -180,6 +182,7 @@ function AccountMb() {
       <ServicesUserMb open={openSer} setOpen={setOpenSer} />
       <AccountForm open={openAcc} setOpen={setOpenAcc} />
       <DiscountUserMb open={openDiscount} setOpen={setOpenDiscount} />
+      <Settings open={openSettings} setOpen={setOpenSettings} />
     </div>
   );
 }

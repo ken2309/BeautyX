@@ -46,7 +46,13 @@ function Head(props: any) {
     //userInfo
   } = useContext(AppContext);
   const FLAT_FORM = EXTRA_FLAT_FORM();
-  const { IN_HOME, setCloseDialog, headerStyle } = props;
+  const {
+    IN_HOME,
+    setCloseDialog,
+    headerStyle,
+    handleCancelPayment,
+    prev_url
+  } = props;
   const dispatch = useDispatch();
   const [openNo, setOpenNo] = useState(false);
   const [openLang, setOpenLang] = useState(false);
@@ -68,7 +74,14 @@ function Head(props: any) {
     if (IN_HOME === true) {
       history.push("/kenh-nguoi-ban");
     } else {
-      history.goBack();
+      if (handleCancelPayment) {
+        handleCancelPayment()
+      }
+      if (prev_url) {
+        history.push(`${prev_url}`)
+      } else {
+        history.goBack() || history.push('/');
+      }
     }
   };
   const gotoPageSignUp = () => {
@@ -99,13 +112,26 @@ function Head(props: any) {
     setOpenNo(false);
   };
   const handleBack = () => {
+    if (handleCancelPayment) {
+      handleCancelPayment()
+    }
     if (setCloseDialog) {
-      setCloseDialog(false);
-    } else {
-      history.goBack() || history.push('/home');
+      return setCloseDialog(false);
+    }
+    if (prev_url) {
+      history.push(`${prev_url}`)
+    }
+    else {
+      history.goBack(-1)
     }
     scrollTop();
   };
+  const onBackHome = () => {
+    if (handleCancelPayment) {
+      handleCancelPayment()
+    }
+    history.push("/")
+  }
   return (
     <div
       style={headerStyle}
@@ -114,7 +140,7 @@ function Head(props: any) {
       <Container>
         <div className="flex-row-sp hd-cnt">
           <div className="hd-logo">
-            <img onClick={() => history.push("/")} src={img.beautyX} alt="" />
+            <img onClick={onBackHome} src={img.beautyX} alt="" />
           </div>
           <div className="flex-row hd-cnt__left">
             <ButtonCus

@@ -8,7 +8,6 @@ import DetailPersonnel from "../../MerchantDetail/components/DetailPersonnel";
 import { useHistory } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import { AppContext } from "../../../context/AppProvider";
-import slugify from "../../../utils/formatUrlString";
 import { Dialog } from "@mui/material";
 import onErrorImg from "../../../utils/errorImg";
 import { useFormik } from "formik";
@@ -20,8 +19,7 @@ function DetailMer(props: any) {
     const history = useHistory();
     const gotoMerDetail = (item: any) => {
         history.push({
-            pathname: `/org/${slugify(org.name)}`,
-            search: `${org.id}`,
+            pathname: `/org/${org?.subdomain}`,
             state: org,
         });
         scrollTop();

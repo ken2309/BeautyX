@@ -425,7 +425,7 @@
     pointer-events: none;
   }
   .payment-cnt {
-    padding: 24px;
+    padding: 20px;
   }
   .payment-form__box {
     flex-direction: column;
@@ -442,11 +442,11 @@
     width: 100%;
     border-radius: 12px;
     margin-top: 12px;
-    padding: 12px;
+    padding: 6px;
     height: fit-content;
   }
   .cart-list__payment {
-    padding-top: 32px;
+    padding: 12px 0px;
   }
   .pm-form__top-item {
     width: 100%;
@@ -524,5 +524,14 @@
     width: 64px;
     height: 48px;
     flex-shrink: 0;
+  }
+  .payment-total__body-submit span{
+    display: none;
+  }
+  .payment-total__body-submit{
+    justify-content: center;
+  }
+  .payment-total__body-submit button{
+    width: 100%;
   }
 }
