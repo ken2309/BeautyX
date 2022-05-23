@@ -5,6 +5,7 @@ import OrderItem from "./components/OrderItem";
 import HeadTitle from "../HeadTitle";
 import { AppContext } from "../../context/AppProvider";
 import { IOrderV2 } from '../../interface/orderv2'
+import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 
 
 interface IData {
@@ -15,6 +16,7 @@ interface IData {
 
 function Orders() {
   const { t } = useContext(AppContext);
+  const FLAT_FORM = EXTRA_FLAT_FORM();
   const [data, setData] = useState<IData>({
     orders: [],
     page: 1,
@@ -50,6 +52,7 @@ function Orders() {
         <span>{t("order.order_his")}</span>
       </div>
       <div className="order-list">
+        <span>{FLAT_FORM}</span>
         <ul className="order-list__cnt">
           {
             data.orders.map((order: IOrderV2, index: number) => (

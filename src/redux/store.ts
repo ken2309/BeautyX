@@ -10,6 +10,8 @@ import orgServicesReducer from './org_services/orgServivesSlice';
 import orgProductsReducer from './org_products/orgProductsSlice';
 import orgSpecialReducer from './org_specials/orgSpecialSlice';
 import loginFlatFromReducer from "./loginFlatForm/loginFlatFrom";
+import paymentsReducer from "./payments/paymentSlice";
+import blogReducer from "./blog/blogSlice";
 
 const rootReducer = {
   carts: cartReducer,
@@ -23,6 +25,8 @@ const rootReducer = {
   ORG_PRODUCTS: orgProductsReducer,
   ORG_SPECIALS: orgSpecialReducer,
   ADDRESS: userAddressReducer,
+  PAYMENT: paymentsReducer,
+  BLOG: blogReducer
 };
 const store = configureStore({
   reducer: rootReducer,

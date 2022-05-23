@@ -14,7 +14,8 @@ import LoginFlatFormRequest from "../../rootComponents/loginFlatFormRequest/Logi
 function SignPage(props: any) {
   const { t } = useContext(AppContext);
   const FLAT_FORM = EXTRA_FLAT_FORM();
-  const location = useLocation();
+  const location: any = useLocation();
+  const pathname = location?.state?.from?.pathname;
   const [activeTabSign, setActiveTabSign] = useState(
     location.search
       ? parseInt(location.search.slice(1, location.search.length))
@@ -91,7 +92,9 @@ function SignPage(props: any) {
             </Container>
             :
             <Container>
-              <LoginFlatFormRequest />
+              <LoginFlatFormRequest
+                pathname={pathname}
+              />
             </Container>
         }
       </div>

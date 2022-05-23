@@ -27,7 +27,9 @@ function FilterOrgs(props: any) {
         handleGetOrgsDistance,
         handleGetOrgsByTrust,
         //
-        hideTags, hideProvinces
+        hideTags, hideProvinces,
+        //
+        setOpenFilter
     } = props;
     const { provinces } = useSelector((state: any) => state.HOME);
     const onChooseTags = (tag_item: any) => {
@@ -80,6 +82,9 @@ function FilterOrgs(props: any) {
     }
     const onApplyFilter = () => {
         if (orgFilter.min_price > -1 && orgFilter.max_price >= 0 && orgFilter.min_price <= orgFilter.max_price) {
+            if(setOpenFilter){
+                setOpenFilter(false)
+            }
             if (handleOrgsByKeyword) {
                 setData({
                     orgs: [],
