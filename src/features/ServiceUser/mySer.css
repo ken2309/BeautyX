@@ -175,6 +175,16 @@
   border-bottom: 1px solid var(--bgGray);
   cursor: pointer;
 }
+.treatment-ser-item__out{
+  background-color: var(--red-cl);
+  padding: 2px 4px;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 700;
+  color: var(--bgWhite);
+  border-radius: 4px;
+}
 
 .treatment-ser-item__img {
   width: 86px;

@@ -18,7 +18,6 @@ function OrgItem(props: IProps) {
         scrollTop()
         history.push({
             pathname: `/org/${org.subdomain}`,
-            search: `${org.id}`,
             state: org,
         })
     }

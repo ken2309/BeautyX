@@ -5,6 +5,7 @@ import { IBanner } from "../../../interface/banner";
 import HomeBannerPopup from "./HomeBannerPopup";
 import ReactPlayer from "react-player";
 import { useSelector } from "react-redux";
+import icon from "../../../constants/icon";
 
 function HomeBanner(props: any) {
     const history = useHistory();
@@ -24,11 +25,13 @@ function HomeBanner(props: any) {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 800,
-        arrows: false,
+        speed: 500,
+        arrows: true,
         slidesToShow: 1,
         slidesToScroll: 1,
         //autoplay: true,
+        nextArrow: <NextButton/>,
+        prevArrow:<PrevButton/>,
         swipe: true,
         autoplaySpeed: 2000,
         //fade: true,
@@ -133,3 +136,26 @@ function HomeBanner(props: any) {
 }
 
 export default HomeBanner;
+
+const PrevButton = (props:any) => {
+    const {onClick} = props;
+    return (
+        <button
+            onClick={onClick}
+            className="home-banner__btn-prev"
+        >
+            <img src={icon.chevronLeft} alt="" />
+        </button>
+    )
+}
+const NextButton = (props:any) => {
+    const {onClick} = props;
+    return (
+        <button
+            onClick={onClick}
+            className="home-banner__btn-next"
+        >
+           <img src={icon.chevronRight} alt="" />
+        </button>
+    )
+}

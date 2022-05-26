@@ -4,11 +4,12 @@ import TimeItem from './components/TimeItem';
 import './timePicker.css';
 
 interface IProps {
-      onChange: (e: string) => void
+      onChange: (e: string) => void,
+      disablePrev?: boolean
 }
 
 function TimePicker(props: IProps) {
-      const { onChange } = props;
+      const { onChange, disablePrev } = props;
       let times = 25;
       var rows = [];
       var hours = dayjs().set("hour", 8).set("minute", 0).set("second", 0);
@@ -19,6 +20,7 @@ function TimePicker(props: IProps) {
                               key={i}
                               Time={hours}
                               onChangeItem={(e) => onChange(e)}
+                              disablePrev={disablePrev}
                         // Now={now}
                         // handleClick={handleTime}
                         // activeTime={activeTime}

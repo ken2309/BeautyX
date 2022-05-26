@@ -21,6 +21,7 @@ function OrgTime(props: any) {
             >
                   <TimePicker
                         onChange={(e) => onChangeChooseTime(e)}
+                        disablePrev={true}
                   />
             </div>
       );

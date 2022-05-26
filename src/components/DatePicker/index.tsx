@@ -7,6 +7,7 @@ import "./datePicker.css";
 
 interface IProp {
   onChange: (e: string) => void
+  disablePrev?: boolean
 }
 
 const todayObj = dayjs();
