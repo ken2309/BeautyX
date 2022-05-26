@@ -34,8 +34,17 @@ function ServiceItem(props: IProps) {
 
 
   return (
-    <>
+    <div>
+      {
+        service.remain_time === 0 &&
+        <span className="treatment-ser-item__out" >
+          Dịch vụ đã hết lượt
+        </span>
+      }
       <div
+        style={
+          service.remain_time === 0 ? { opacity: 0.6 } : {}
+        }
         className="treatment-ser-item"
         onClick={handleAddService}
       >
@@ -74,7 +83,7 @@ function ServiceItem(props: IProps) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

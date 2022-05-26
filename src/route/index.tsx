@@ -33,6 +33,7 @@ import ResetPassword from "../features/ResetPassword";
 import Videos from "../features/Videos";
 import Blog from "../features/Blog";
 
+
 // feature mobile
 import Calendar from "../featuresMobile/Calendar";
 import MerchantComment from "../features/MerchantComment";
@@ -155,10 +156,11 @@ function RouterConfig(props: any) {
     {
       path: "/beautyx-videos",
       component: <Videos />
-    }, {
+    }, 
+    {
       path: "/tin-tuc",
       component: <Blog />
-    }
+    },
   ];
   const routesPrivate = [
     {

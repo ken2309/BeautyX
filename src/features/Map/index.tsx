@@ -3,6 +3,7 @@ import MapGoogle from './components/MapGoogle';
 import OrgItemMap from './components/OrgItemMap';
 import './map.css';
 import { IOrganization } from '../../interface/organization';
+import WrapperMap from './MapWarraper/WrapperMap';
 
 
 function Map(props: any) {
@@ -28,6 +29,7 @@ function Map(props: any) {
         <div
             className='map-cnt'
         >
+            {/* <WrapperMap/> */}
             <MapGoogle
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${key}`}
                 loadingElement={<div style={{ height: `100%` }} />}
