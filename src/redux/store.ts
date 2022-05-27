@@ -9,6 +9,7 @@ import orgCommentsReducer from './org/orgCommentsSlice';
 import orgServicesReducer from './org_services/orgServivesSlice';
 import orgProductsReducer from './org_products/orgProductsSlice';
 import orgSpecialReducer from './org_specials/orgSpecialSlice';
+import combosReducer from './org_combos/orgCombosSlice';
 import loginFlatFromReducer from "./loginFlatForm/loginFlatFrom";
 import paymentsReducer from "./payments/paymentSlice";
 import blogReducer from "./blog/blogSlice";
@@ -22,6 +23,7 @@ const rootReducer = {
   USER: userReducer,
   ORG: orgReducer,
   ORG_SERVICES: orgServicesReducer,
+  ORG_COMBOS: combosReducer,
   ORG_PRODUCTS: orgProductsReducer,
   ORG_SPECIALS: orgSpecialReducer,
   ADDRESS: userAddressReducer,

@@ -20,3 +20,22 @@ export default function slugify(string: any) {
             .replace(/^-+/, '')
             .replace(/-+$/, '')
 }
+export const formatParam = (url: string) => {
+      const params = url.split("?");
+      return params
+}
+export const shareLink = () => {
+      const string = window.location.search;
+      if (string) {
+            const queryString = string.split("?");
+            const result =
+                  queryString.length > 2
+                        ? "?" +
+                        queryString[1] +
+                        "&" +
+                        queryString[queryString.length - 1]
+                        : "?" + queryString[1];
+            const urlSearchParams = new URLSearchParams(result);
+            return Object.fromEntries(urlSearchParams.entries());
+      }
+}
