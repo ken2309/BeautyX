@@ -32,6 +32,7 @@ import Otp from "../features/Otp";
 import ResetPassword from "../features/ResetPassword";
 import Videos from "../features/Videos";
 import Blog from "../features/Blog";
+import ComboDetail from "../features/ComboDetail";
 
 
 // feature mobile
@@ -80,6 +81,10 @@ function RouterConfig(props: any) {
     {
       path: "/product-detail/:name",
       component: <ProductDetail />,
+    },
+    {
+      path:"/combo-detail/:name",
+      component: <ComboDetail/>
     },
     {
       path: "/dich-vu/",

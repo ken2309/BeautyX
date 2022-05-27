@@ -1,69 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import comboApi from '../../api/comboApi';
-import {Container} from '@mui/material';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
+import { Container } from '@mui/material';
 import ComboItem from './components/ComboItem';
-import {Pagination} from '@mui/material';
-import GridLoading2 from '../Loading/GridLoading2';
-import scrollTop_2 from '../../utils/scrollTop_2';
-import'./comboByMerchant.css'
+import './comboByMerchant.css'
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchAsyncCombosOrg } from '../../redux/org_combos/orgCombosSlice';
+import { STATUS } from '../../redux/status'
 
 const tab_id = 4
 function ComboByMerchant(props: any) {
-      const { org, org_id, activeTab } = props;
-      const [combos, setCombos] = useState([])
-      const [page, setPage] = useState(1)
-      const [pageTotal, setPageTotal] = useState(0);
-      const [loading, setLoading] = useState(false)
-      useEffect(() => {
-            async function handleGetCombos() {
-                  setLoading(true)
-                  try {
-                        const res = await comboApi.getByOrg_id({
-                              org_id: org_id, page: page
-                        });
-                        setCombos(res.data.context.data);
-                        setPageTotal(res.data.context.last_page);
-                        setLoading(false)
-                  } catch (err) {
-                        console.log(err)
-                  }
+    const { activeTab } = props;
+    const dispatch = useDispatch();
+    const { org, status } = useSelector((state: any) => state.ORG);
+    const { combos } = useSelector((state: any) => state.ORG_COMBOS);
+    const callCombosByOrg = () => {
+        if (status === STATUS.SUCCESS) {
+            const values = {
+                page: 1,
+                org_id: org?.id
             }
-            handleGetCombos();
-      }, [ org_id, page])
-      const pageChange = (e: any, value: any) => {
-            setPage(value);
-            scrollTop_2(500)
-      }
-      return (
-            <div
-                  style={tab_id === activeTab ? { display: 'block' } : { display: 'none' }}
-            >
-                  <Container>
-                        <div className="flex-column cmb-cnt">
-                              <ul className="cmb-list">
-                                    {
-                                          loading === true ?
-                                                <GridLoading2 />
-                                                :
-                                                combos.map((item: any) => (
-                                                      <ComboItem
-                                                            key={item.id}
-                                                            detail={item}
-                                                            org={org}
-                                                      />
-                                                ))
-                                    }
-                              </ul>
-                              <Pagination
-                                    color='secondary'
-                                    shape="rounded"
-                                    count={pageTotal}
-                                    onChange={pageChange}
-                              />
-                        </div>
-                  </Container>
-            </div>
-      );
+            dispatch(fetchAsyncCombosOrg(values))
+        }
+    }
+
+    useEffect(() => {
+        callCombosByOrg()
+    }, [status])
+    return (
+        <div
+            style={tab_id === activeTab ? { display: 'block' } : { display: 'none' }}
+        >
+            <Container>
+                <div className="flex-column cmb-cnt">
+                    <ul className="cmb-list">
+                        {
+                            combos.map((item: any) => (
+                                <ComboItem
+                                    key={item.id}
+                                    detail={item}
+                                    org={org}
+                                />
+                            ))
+                        }
+                    </ul>
+                </div>
+            </Container>
+        </div>
+    );
 }
 
 export default ComboByMerchant;
