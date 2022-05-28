@@ -5,7 +5,7 @@ class Discounts {
         const url = `/discounts`;
         const params = {
             "page": values.page,
-            "limit": 14,
+            "limit": 12,
             "filter[platform]": "MOMO", // update change platform "BEAUTYX"
             "append": "user_available_purchase_count",
             "sort": "discount_value|created_at"

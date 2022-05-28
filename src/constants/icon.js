@@ -119,6 +119,7 @@ import loginReq from '../assets/icon/loginReq.svg';
 import playCirclePurple from '../assets/icon/playCirclePurple.svg';
 import newsPurple from '../assets/icon/newsPurple.svg';
 import languagePurple from '../assets/icon/languagePurple.svg';
+import sendWhite from '../assets/icon/sendWhite.svg';
 
 const icon = {
   Favorite,
@@ -240,6 +241,7 @@ const icon = {
   loginReq,
   playCirclePurple,
   newsPurple,
-  languagePurple
+  languagePurple,
+  sendWhite
 };
 export default icon;

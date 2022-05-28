@@ -177,6 +177,9 @@ export default function MerchantComment() {
                 accept="image/png, image/jpeg"
                 onChange={onChangeMedia}
               />
+              <button className="submit-merchantComment" >
+                <img src={icon.sendWhite} alt="" />
+              </button>
             </div>
             {
               cmt.image_url?.length > 0 &&

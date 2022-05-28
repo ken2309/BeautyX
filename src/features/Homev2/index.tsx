@@ -5,6 +5,7 @@ import HomeDeal from './components/HomeDeal';
 import HomeCard from './components/HomeCard';
 import HomeProvince from './components/HomeProvince';
 import HomeServicesRe from './components/HomeServicesRe';
+import HomeDiscount from '../HomeDiscounts';
 
 import { Container } from '@mui/material';
 import './home-se.css'
@@ -15,6 +16,9 @@ function HomeSecond(props: any) {
         <div className="home-se-cnt">
             <Container>
                 <HomeTags />
+            </Container>
+            <HomeDiscount />
+            <Container>
                 <HomePromo />
                 <HomeDeal />
                 <HomeCard />
