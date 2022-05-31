@@ -50,10 +50,27 @@ function SuggestionList(props: any) {
                             <div className="suggest-cnt__list-tem__detail">
                                 <div className="flex-row-sp suggest-cnt__list-tem__top">
                                     <span>{item.service_name}</span>
-                                    <span>
+                                </div>
+                                <div className="suggest-price">
+                                    <span
+                                        style={{
+                                            color: "var(--purple)",
+                                            fontWeight: "bold",
+                                        }}
+                                    >
                                         {item.special_price > 0
                                             ? formatPrice(item.special_price)
                                             : formatPrice(item.price)}
+                                    </span>
+                                    <span
+                                        style={
+                                            item.special_price < 0
+                                                ? { display: "none" }
+                                                : {}
+                                        }
+                                        className="suggest__retail-pr"
+                                    >
+                                        {formatPrice(item.price)}
                                     </span>
                                 </div>
                                 <div className="flex-row-sp suggest-cnt__list-tem__bot">
@@ -68,16 +85,6 @@ function SuggestionList(props: any) {
                                         69
                                         <img src={icon.chatAll} alt="" />
                                     </div>
-                                    <span
-                                        style={
-                                            item.special_price < 0
-                                                ? { display: "none" }
-                                                : {}
-                                        }
-                                        className="suggest__retail-pr"
-                                    >
-                                        {formatPrice(item.price)}
-                                    </span>
                                 </div>
                             </div>
                             <img

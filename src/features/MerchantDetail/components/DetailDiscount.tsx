@@ -30,9 +30,9 @@ function DetailDiscount(props: IProps) {
     }, [org?.id]);
 
     return discounts.length > 0 ? (
-        <div className="org-dis-cnt">
+        <div className="org-dis-cnt org-dis-list">
             {discounts.map((discount: IDiscountPar, index: number) => (
-                <ul className="org-dis-list" key={index}>
+                <>
                     {discount.items.map((item: IITEMS_DISCOUNT, i: number) => (
                         <DiscountItem
                             key={i}
@@ -40,7 +40,7 @@ function DetailDiscount(props: IProps) {
                             discountItem={item}
                         />
                     ))}
-                </ul>
+                </>
             ))}
         </div>
     ) : (
