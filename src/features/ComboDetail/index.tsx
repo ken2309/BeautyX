@@ -17,6 +17,7 @@ import { AppContext } from "../../context/AppProvider";
 import DetailRight from "./components/DetailRight";
 import TabDetail from "./components/TabDetail";
 import DetailMer from "../ProductDetail/components/DetailMer";
+import Comments from "../Comments";
 
 function ComboDetail() {
     const { t } = useContext(AppContext);
@@ -106,7 +107,14 @@ function ComboDetail() {
                                                 org={org}
                                             />
                                         </TabPanel>
-                                        <TabPanel value="2"></TabPanel>
+                                        <TabPanel value="2">
+                                            <Comments
+                                                org={org}
+                                                id={combo?.id}
+                                                detail={combo}
+                                                comment_type={"TREATMENT_COMBO"}
+                                            />
+                                        </TabPanel>
                                         {/* <TabPanel value="3"></TabPanel> */}
                                         <TabPanel value="4">
                                             <DetailMer org={org} />

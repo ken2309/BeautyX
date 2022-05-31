@@ -62,22 +62,27 @@ function HomePromo(props: any) {
                     />
                 </div>
                 <div className="home-promo-ser home-promo-ser__mb">
-                    <ul className="ser-list__mb">
+                    <ul className="ser-list ser-list__mb home-result__cus">
                         {data.services.map(
                             (item: IServicePromo, index: number) => (
-                                <li key={index} className="ser-list-item__mb">
+                                <li
+                                    key={index}
+                                    className="ser-list-item__mb ser-item__cus"
+                                >
                                     <ServicePromoItem service={item} />
                                 </li>
                             )
                         )}
                     </ul>
                 </div>
-                <Pagination
-                    color="secondary"
-                    shape="rounded"
-                    count={data.lastPage}
-                    onChange={onPageChange}
-                />
+                <div style={{ marginBottom: "24px" }}>
+                    <Pagination
+                        color="secondary"
+                        shape="rounded"
+                        count={data.lastPage}
+                        onChange={onPageChange}
+                    />
+                </div>
             </Container>
         </>
     );
