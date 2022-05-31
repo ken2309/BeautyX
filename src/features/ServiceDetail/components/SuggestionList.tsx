@@ -59,7 +59,10 @@ function SuggestionList(props: any) {
                                 <div className="flex-row-sp suggest-cnt__list-tem__bot">
                                     <div className="flex-row">
                                         <span>200</span>
-                                        {t("pr.purchases")}
+                                        <img
+                                            src={icon.ShoppingCartSimple}
+                                            alt=""
+                                        />
                                         <span>4.5</span>
                                         <img src={icon.star} alt="" />
                                         69

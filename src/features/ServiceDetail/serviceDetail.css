@@ -82,10 +82,10 @@
         flex-direction: column;
     }
     .product-cnt__left {
-        width: 100%;
+        width: 50%;
     }
     .product-cnt__right {
-        width: 100%;
+        width: 50%;
         padding: 36px 16px;
     }
     .mer-sale-head {
@@ -106,7 +106,13 @@
     }
 }
 
-/* res-mobile */
+/* Tablet */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+    .recomment-list {
+        grid-template-columns: repeat(4, 1fr);
+        padding: 24px;
+    }
+}
 /* Mobile */
 @media only screen and (max-width: 767px) {
     .recomment-cnt {
