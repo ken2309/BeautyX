@@ -1,4 +1,6 @@
 import axiosClient from "./axios";
+import { AUTH_HEADER_PARAM_GET } from "../utils/authHeader";
+
 
 class Discounts {
     getAll = (values: any) => {
@@ -23,6 +25,14 @@ class Discounts {
             "filter[organization_id]": values.org_id
         }
         return axiosClient.get(url, { params })
+    }
+    getById = (values: any) => {
+        const url = `/discounts/${values.id}`
+        const params = {
+            "filter[organization_id]": values.org_id,
+            "append": "user_available_purchase_count"
+        }
+        return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params))
     }
 }
 const discountApi = new Discounts();

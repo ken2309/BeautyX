@@ -9,7 +9,7 @@ export interface IUser_Service {
     image_url: string,
     times: number,
     remain_time: number,
-    time_expired: null | string,
+    time_expired: any,
     unlimited: boolean
 }
 export interface IServiceSold {

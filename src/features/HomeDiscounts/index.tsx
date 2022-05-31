@@ -8,7 +8,6 @@ import './style.css'
 function HomeDiscount() {
     const { DISCOUNTS } = useSelector((state: any) => state.HOME);
     const { discounts } = DISCOUNTS;
-    console.log(discounts)
     return (
         <div className='home-discounts'>
             <Container>

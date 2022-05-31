@@ -76,7 +76,7 @@ function CartBottom(props: any) {
                 {t("cart.total_payment")} ({carts.cartQuantity}{" "}
                 {t("Mer_de.services")}/{t("Mer_de.products")})
               </span>
-              <span>{formatPrice(carts.cartAmount)} đ</span>
+              <span>{formatPrice(carts.cartAmount - carts.cartAmountDiscount)} đ</span>
             </div>
             <div style={{ marginLeft: "auto" }}>
               <ButtonCus

@@ -31,6 +31,11 @@ function PaymentTotal(props: any) {
   const [popupFail, setPopUpFail] = useState(false);
   const [loading, setLoading] = useState(false);
   const org_id = data_cart.list[0].org_id;
+  const listDiscount = data_cart.carts.cartList
+    .filter((item: any) => item.isConfirm === true)
+    .map((item: any) => item.discount);
+  const listCouponCode = listDiscount.map((item: any) => item?.coupon_code).filter(Boolean);
+  console.log(listCouponCode)
 
   let payment_method_id;
   switch (FLAT_FORM) {
@@ -53,7 +58,7 @@ function PaymentTotal(props: any) {
     services: services,
     treatment_combo: combos,
     payment_method_id: payment_method_id,
-    coupon_code: [],
+    coupon_code: listCouponCode.length > 0 ? listCouponCode : [],
     user_address_id: data_cart.address?.id,
     description: data_cart.note,
     branch_id: data_cart.chooseBr?.id
@@ -117,8 +122,8 @@ function PaymentTotal(props: any) {
                 : t("pm.choose_payment_method")}
             </p>
             <p>{formatPrice(data_cart.carts.cartAmount)} đ</p>
-            <p>0 đ</p>
-            <p>{formatPrice(data_cart.carts.cartAmount)} đ</p>
+            <p>-{formatPrice(data_cart.carts.cartAmountDiscount)} đ</p>
+            <p>{formatPrice(data_cart.carts.cartAmount - data_cart.carts.cartAmountDiscount)} đ</p>
           </div>
         </div>
         <div className="flex-row-sp payment-total__body-submit">
