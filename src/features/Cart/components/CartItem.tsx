@@ -15,15 +15,16 @@ import slugify from "../../../utils/formatUrlString";
 import { useHistory } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import onErrorImg from "../../../utils/errorImg";
-import { Cart } from "../../../interface/cart";
+import PopupDiscountQuantity from "./PopupDiscountQuantity";
 
 interface IProps {
     inPayment: boolean;
-    cartItem: Cart;
+    cartItem: any;
 }
 
 function CartItem(props: IProps) {
     const { cartItem, inPayment } = props;
+    const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
     const [isCheck, setIsCheck] = useState(cartItem.isConfirm);
@@ -35,6 +36,9 @@ function CartItem(props: IProps) {
         dispatch(action);
     };
     const handleAscCart = () => {
+        if (cartItem.discount && cartItem.quantity === 1) {
+            setOpen(true);
+        }
         const action = ascItem(cartItem);
         dispatch(action);
     };
@@ -60,15 +64,32 @@ function CartItem(props: IProps) {
                 search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`,
             });
         } else if (cartItem.is_type === 2) {
-            history.push({
-                pathname: `/dich-vu/${slugify(cartItem.name)}`,
-                search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`,
-            });
+            if (cartItem.discount) {
+                history.push({
+                    pathname: `/chi-tiet-giam-gia/${slugify(
+                        cartItem.discount.items[0].productable.service_name
+                    )}`,
+                    search: `org_id=${cartItem.org_id}&id=${cartItem.discount?.id}`,
+                });
+            } else {
+                history.push({
+                    pathname: `/dich-vu/${slugify(cartItem.name)}`,
+                    search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`,
+                });
+            }
+            // history.push({
+            //     pathname: `/dich-vu/${slugify(cartItem.name)}`,
+            //     search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`
+            // })
         } else if (cartItem.is_type === 3) {
             //page combo detail
         }
         scrollTop();
     };
+    console.log(cartItem);
+    //when quantity discount > 1
+    const total = cartItem.price * cartItem.quantity;
+    const discount_value = cartItem.discount?.discount_value;
     return (
         <div className="flex-row-sp cart-item">
             <div className="flex-row cart-item__name">
@@ -120,14 +141,37 @@ function CartItem(props: IProps) {
                     style={inPayment === true ? { width: "16.6%" } : {}}
                     className="flex-row cart-item__price"
                 >
-                    {formatPrice(cartItem.price)} đ
+                    {cartItem.discount && cartItem.quantity === 1
+                        ? formatPrice(cartItem.price_discount)
+                        : formatPrice(cartItem.price)}{" "}
+                    đ
                 </div>
-                <div
-                    style={inPayment === true ? { width: "16.6%" } : {}}
-                    className="flex-row cart-item__total"
-                >
-                    {formatPrice(cartItem.price * cartItem.quantity)} đ
-                </div>
+                {cartItem.discount ? (
+                    cartItem.quantity === 1 ? (
+                        <div
+                            style={inPayment === true ? { width: "16.6%" } : {}}
+                            className="flex-row cart-item__total"
+                        >
+                            {formatPrice(cartItem.price_discount)} đ
+                        </div>
+                    ) : (
+                        <div
+                            style={inPayment === true ? { width: "16.6%" } : {}}
+                            className="flex-column cart-item__total"
+                        >
+                            <span>{formatPrice(total)}đ</span>
+                            <span>-{formatPrice(discount_value)}đ</span>
+                            <span>{formatPrice(total - discount_value)}đ</span>
+                        </div>
+                    )
+                ) : (
+                    <div
+                        style={inPayment === true ? { width: "16.6%" } : {}}
+                        className="flex-row cart-item__total"
+                    >
+                        {formatPrice(cartItem.price * cartItem.quantity)} đ
+                    </div>
+                )}
                 <div
                     style={inPayment === true ? { display: "none" } : {}}
                     className="flex-row cart-item__control"
@@ -141,6 +185,16 @@ function CartItem(props: IProps) {
                     />
                 </div>
             </div>
+            {cartItem.discount && (
+                <PopupDiscountQuantity
+                    open={open}
+                    price_display={
+                        cartItem.discount?.items[0]?.view_price +
+                        cartItem.discount?.discount_value
+                    }
+                    setOpen={setOpen}
+                />
+            )}
             <PopupConfirm
                 openConfirm={openConfirm}
                 setOpenConfirm={setOpenConfirm}

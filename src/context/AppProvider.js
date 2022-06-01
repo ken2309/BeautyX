@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import dateNow from "../utils/dateExp";
 import { useDispatch } from 'react-redux';
 import { fetchAsyncUser } from '../redux/USER/userSlice';
-import { fetchAsyncHome } from '../redux/home/homeSlice';
-import { fetchAsyncNews, fetchAsyncVideos } from '../redux/blog/blogSlice'
+import { fetchAsyncHome, fetchAsyncDiscounts } from '../redux/home/homeSlice';
+import { fetchAsyncNews, fetchAsyncVideos } from '../redux/blog/blogSlice';
 
 
 
@@ -43,6 +43,9 @@ export default function AppProvider({ children }) {
   }, [sign, dispatch]);
   useEffect(() => {
     dispatch(fetchAsyncHome())
+    dispatch(fetchAsyncDiscounts({
+      page:1
+    }))
     dispatch(fetchAsyncNews())
     dispatch(fetchAsyncVideos())
     // eslint-disable-next-line react-hooks/exhaustive-deps

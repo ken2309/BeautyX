@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React, { useContext } from "react";
 import "./home.css";
 import "../poupSignInUp/popupSignInUp.css";
@@ -16,6 +17,7 @@ import HomeSearchInput from "./components/HomeSearchInput";
 function Home() {
   const { t } = useContext(AppContext);
   const FLAT_FORM = EXTRA_FLAT_FORM();
+
   return (
     <div className="home">
       <ExtraFlatForm />

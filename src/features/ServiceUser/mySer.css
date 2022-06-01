@@ -668,7 +668,12 @@
     overflow: hidden;
     margin: 0 auto;
 }
-
+.date-time_expired{
+    font-size: 11px;
+    line-height: 18px;
+    font-weight: 600;
+    color: var(--text-black);
+}
 /* res-tablet */
 /* Tablet */
 @media only screen and (min-width: 768px) and (max-width: 1023px) {

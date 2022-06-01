@@ -206,6 +206,13 @@
     display: flex;
     flex-direction: column;
 }
+.user-available-cnt{
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    color: var(--red-cl);
+    margin-bottom: 6px;
+}
 .product-cnt__right-body-item span {
     font-size: 20px;
     line-height: 24px;
@@ -269,6 +276,7 @@
     border-radius: 18px;
 }
 .product-cnt__right-bot__total {
+    align-items: flex-start;
     font-size: 20px;
     line-height: 24px;
     font-weight: 700;

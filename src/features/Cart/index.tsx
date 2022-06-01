@@ -12,7 +12,7 @@ import scrollTop from '../../utils/scrollTop';
 import HeadTitle from '../HeadTitle';
 import './cart.css'
 import { AppContext } from '../../context/AppProvider';
-import _ from 'lodash';
+//import _ from 'lodash';
 
 interface Org {
 	id: number, name: string
@@ -23,13 +23,13 @@ function Cart(props: any) {
 	const headerTitle = t('cart.cart')
 	const dispatch = useDispatch();
 	const carts = useSelector((state: any) => state.carts);
-	const list = carts.cartList;
+	//const list = carts.cartList;
 
-	const listGroup = _(list)
-		.groupBy(x => x.org_name)
-		.map((value, key) => ({ org_name: key, cartOrg: value }))
-		.value();
-	console.log(listGroup)
+	// const listGroup = _(list)
+	// 	.groupBy(x => x.org_name)
+	// 	.map((value, key) => ({ org_name: key, cartOrg: value }))
+	// 	.value();
+	// console.log(listGroup)
 
 	const [showOrg, setShowOrg] = useState(false);
 	const orgCart: any[] = []

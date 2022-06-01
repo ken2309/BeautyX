@@ -1,0 +1,57 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
+import Head from '../Head';
+import { extraParamsUrl } from '../../utils/extraParamsUrl';
+import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAsyncDiscountDetail } from '../../redux/org_discounts/orgDiscountsSlice';
+import HeadTitle from '../HeadTitle';
+import { IDiscountPar } from '../../interface/discount';
+import { Container } from '@mui/material'
+import '../ProductDetail/product.css';
+import DetailLeft from './components/DetailLeft';
+import DetailRight from './components/DetailRight';
+import { STATUS } from '../../redux/status'
+
+function DiscountDetail() {
+    const location: any = useLocation();
+    const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
+    const discount: IDiscountPar = DISCOUNT.discount;
+    const status_detail = DISCOUNT.status
+
+    const dispatch = useDispatch();
+    const params: any = extraParamsUrl();
+    const values = {
+        org_id: params.org_id,
+        id: params.id
+    }
+    const callDiscountDetail = () => {
+        dispatch(fetchAsyncDiscountDetail(values))
+    }
+    useEffect(() => {
+        callDiscountDetail()
+    }, [])
+    return (
+        <>
+            <HeadTitle
+                title={status_detail === "LOADING" ? 'Loading...' : discount?.title}
+            />
+            <Head />
+            {
+                status_detail === STATUS.SUCCESS &&
+                <Container>
+                    <div className="product-cnt">
+                        <DetailLeft
+                            discount={discount}
+                        />
+                        <DetailRight
+                            discount={discount}
+                        />
+                    </div>
+                </Container>
+            }
+        </>
+    );
+}
+
+export default DiscountDetail;
