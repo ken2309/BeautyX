@@ -266,6 +266,7 @@
         grid-template-columns: repeat(2, 1fr);
         display: grid;
         margin: 0;
+        width: unset;
     }
 
     .home-title__tag {
@@ -338,7 +339,7 @@
         margin: 16px 0;
     }
     .home-promo-ser .ser-list li {
-        width: 164px;
+        /* width: 164px; */
         flex-shrink: 0;
     }
     .home-deal-cnt {
