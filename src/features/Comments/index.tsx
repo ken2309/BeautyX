@@ -37,7 +37,6 @@ function Comments(props: IProps) {
                 id: id,
                 org_id: org?.id,
             });
-            console.log("res", res);
             setData({
                 comments: res.data.context.data,
                 totalItem: res.data.context.total,
@@ -51,7 +50,12 @@ function Comments(props: IProps) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
     const handleSeeAllFeedback = () => {
-        const name = detail.product_name || detail.service_name || detail.name;
+        const name =
+            detail.product_name ||
+            detail.service_name ||
+            detail.name ||
+            detail.description ||
+            detail.title;
         history.push({
             pathname: `/danh-gia/${slugify(name)}`,
             search: `${comment_type},${org.id},${id}`,

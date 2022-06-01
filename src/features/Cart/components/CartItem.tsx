@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
-import { Checkbox } from '@mui/material';
-import ButtonCus from '../../../components/ButtonCus';
-import { checkConfirm, descItem, removeItem, ascItem } from '../../../redux/cartSlice'
-import { useDispatch } from 'react-redux'
-import icon from '../../../constants/icon';
-import formatPrice from '../../../utils/formatPrice';
-import PopupConfirm from '../../popupConfirm/index';
-import slugify from '../../../utils/formatUrlString';
-import { useHistory } from 'react-router-dom';
-import scrollTop from '../../../utils/scrollTop';
-import onErrorImg from '../../../utils/errorImg';
-import PopupDiscountQuantity from './PopupDiscountQuantity';
+import React, { useState } from "react";
+import { Checkbox } from "@mui/material";
+import ButtonCus from "../../../components/ButtonCus";
+import {
+    checkConfirm,
+    descItem,
+    removeItem,
+    ascItem,
+} from "../../../redux/cartSlice";
+import { useDispatch } from "react-redux";
+import icon from "../../../constants/icon";
+import formatPrice from "../../../utils/formatPrice";
+import PopupConfirm from "../../popupConfirm/index";
+import slugify from "../../../utils/formatUrlString";
+import { useHistory } from "react-router-dom";
+import scrollTop from "../../../utils/scrollTop";
+import onErrorImg from "../../../utils/errorImg";
+import PopupDiscountQuantity from "./PopupDiscountQuantity";
 
 interface IProps {
-    inPayment: boolean,
-    cartItem: any
+    inPayment: boolean;
+    cartItem: any;
 }
 
 function CartItem(props: IProps) {
@@ -22,53 +27,55 @@ function CartItem(props: IProps) {
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
-    const [isCheck, setIsCheck] = useState(cartItem.isConfirm)
-    const [openConfirm, setOpenConfirm] = useState(false)
-    const isConfirm = isCheck
+    const [isCheck, setIsCheck] = useState(cartItem.isConfirm);
+    const [openConfirm, setOpenConfirm] = useState(false);
+    const isConfirm = isCheck;
     const handleConfirm = (e: any) => {
-        setIsCheck(e.target.checked)
+        setIsCheck(e.target.checked);
         const action = checkConfirm({ ...cartItem, isConfirm });
-        dispatch(action)
-    }
+        dispatch(action);
+    };
     const handleAscCart = () => {
         if (cartItem.discount && cartItem.quantity === 1) {
-            setOpen(true)
+            setOpen(true);
         }
         const action = ascItem(cartItem);
-        dispatch(action)
-    }
+        dispatch(action);
+    };
     const handleDesc = () => {
         if (cartItem.quantity === 1) {
             setOpenConfirm(true);
         } else {
             const action = descItem(cartItem);
-            dispatch(action)
+            dispatch(action);
         }
-    }
+    };
     const handleRemoveItemCart = () => {
         const action = removeItem(cartItem);
         dispatch(action);
-    }
+    };
     const openConfirmClick = () => {
         setOpenConfirm(true);
-    }
+    };
     const goBackDetail = () => {
         if (cartItem.is_type === 1) {
             history.push({
                 pathname: `/Product-detail/${slugify(cartItem.name)}`,
-                search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`
-            })
+                search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`,
+            });
         } else if (cartItem.is_type === 2) {
             if (cartItem.discount) {
                 history.push({
-                    pathname: `/chi-tiet-giam-gia/${slugify(cartItem.discount.items[0].productable.service_name)}`,
+                    pathname: `/chi-tiet-giam-gia/${slugify(
+                        cartItem.discount.items[0].productable.service_name
+                    )}`,
                     search: `org_id=${cartItem.org_id}&id=${cartItem.discount?.id}`,
-                })
+                });
             } else {
                 history.push({
                     pathname: `/dich-vu/${slugify(cartItem.name)}`,
-                    search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`
-                })
+                    search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`,
+                });
             }
             // history.push({
             //     pathname: `/dich-vu/${slugify(cartItem.name)}`,
@@ -78,23 +85,23 @@ function CartItem(props: IProps) {
             //page combo detail
         }
         scrollTop();
-    }
-    console.log(cartItem)
+    };
+    console.log(cartItem);
     //when quantity discount > 1
     const total = cartItem.price * cartItem.quantity;
-    const discount_value = cartItem.discount?.discount_value
+    const discount_value = cartItem.discount?.discount_value;
     return (
         <div className="flex-row-sp cart-item">
             <div className="flex-row cart-item__name">
                 <Checkbox
-                    size='small'
-                    style={inPayment === true ? { display: 'none' } : {}}
+                    size="small"
+                    style={inPayment === true ? { display: "none" } : {}}
                     sx={{
                         color: "#7161BA",
                         "&.Mui-checked": {
                             color: "#7161BA",
                         },
-                        marginLeft: '-10px'
+                        marginLeft: "-10px",
                     }}
                     checked={cartItem.isConfirm}
                     onChange={handleConfirm}
@@ -102,10 +109,9 @@ function CartItem(props: IProps) {
                 <img
                     className="cart-item__name-img"
                     src={
-                        cartItem?.cart_item?.image_url ?
-                            cartItem?.cart_item?.image_url
-                            :
-                            cartItem?.org?.image_url
+                        cartItem?.cart_item?.image_url
+                            ? cartItem?.cart_item?.image_url
+                            : cartItem?.org?.image_url
                     }
                     onError={(e) => onErrorImg(e)}
                     alt=""
@@ -116,52 +122,58 @@ function CartItem(props: IProps) {
             </div>
             <div className="flex-row cart-item__info">
                 <div
-                    style={inPayment === true ? { width: '25%' } : {}}
+                    style={inPayment === true ? { width: "25%" } : {}}
                     className="flex-row cart-item__quantity"
                 >
-                    <button onClick={handleDesc} style={{ backgroundColor: 'var(--bg-gray)', color: 'var(--purple)' }}>-</button>
+                    <button
+                        onClick={handleDesc}
+                        style={{
+                            backgroundColor: "var(--bg-gray)",
+                            color: "var(--purple)",
+                        }}
+                    >
+                        -
+                    </button>
                     <span>{cartItem.quantity}</span>
                     <button onClick={handleAscCart}>+</button>
                 </div>
                 <div
-                    style={inPayment === true ? { width: '16.6%' } : {}}
+                    style={inPayment === true ? { width: "16.6%" } : {}}
                     className="flex-row cart-item__price"
                 >
-                    {
-                        cartItem.discount && cartItem.quantity === 1 ?
-                            formatPrice(cartItem.price_discount)
-                            :
-                            formatPrice(cartItem.price)
-                    } đ
+                    {cartItem.discount && cartItem.quantity === 1
+                        ? formatPrice(cartItem.price_discount)
+                        : formatPrice(cartItem.price)}{" "}
+                    đ
                 </div>
-                {
-                    cartItem.discount ?
-                        cartItem.quantity === 1 ?
-                            <div
-                                style={inPayment === true ? { width: '16.6%' } : {}}
-                                className="flex-row cart-item__total"
-                            >
-                                {formatPrice(cartItem.price_discount)} đ
-                            </div>
-                            :
-                            <div
-                                style={inPayment === true ? { width: '16.6%' } : {}}
-                                className="flex-column cart-item__total"
-                            >
-                                <span>{formatPrice(total)}đ</span>
-                                <span>-{formatPrice(discount_value)}đ</span>
-                                <span>{formatPrice(total - discount_value)}đ</span>
-                            </div>
-                        :
+                {cartItem.discount ? (
+                    cartItem.quantity === 1 ? (
                         <div
-                            style={inPayment === true ? { width: '16.6%' } : {}}
+                            style={inPayment === true ? { width: "16.6%" } : {}}
                             className="flex-row cart-item__total"
                         >
-                            {formatPrice(cartItem.price * cartItem.quantity)} đ
+                            {formatPrice(cartItem.price_discount)} đ
                         </div>
-                }
+                    ) : (
+                        <div
+                            style={inPayment === true ? { width: "16.6%" } : {}}
+                            className="flex-column cart-item__total"
+                        >
+                            <span>{formatPrice(total)}đ</span>
+                            <span>-{formatPrice(discount_value)}đ</span>
+                            <span>{formatPrice(total - discount_value)}đ</span>
+                        </div>
+                    )
+                ) : (
+                    <div
+                        style={inPayment === true ? { width: "16.6%" } : {}}
+                        className="flex-row cart-item__total"
+                    >
+                        {formatPrice(cartItem.price * cartItem.quantity)} đ
+                    </div>
+                )}
                 <div
-                    style={inPayment === true ? { display: 'none' } : {}}
+                    style={inPayment === true ? { display: "none" } : {}}
                     className="flex-row cart-item__control"
                 >
                     <ButtonCus
@@ -173,21 +185,22 @@ function CartItem(props: IProps) {
                     />
                 </div>
             </div>
-            {
-                cartItem.discount &&
+            {cartItem.discount && (
                 <PopupDiscountQuantity
                     open={open}
-                    price_display={cartItem.discount?.items[0]?.view_price + cartItem.discount?.discount_value}
+                    price_display={
+                        cartItem.discount?.items[0]?.view_price +
+                        cartItem.discount?.discount_value
+                    }
                     setOpen={setOpen}
                 />
-            }
+            )}
             <PopupConfirm
                 openConfirm={openConfirm}
                 setOpenConfirm={setOpenConfirm}
                 handleRemoveItemCart={handleRemoveItemCart}
                 title={cartItem.name}
             />
-
         </div>
     );
 }
