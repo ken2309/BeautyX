@@ -905,10 +905,6 @@
     .mer-sale-list__item {
         width: 100%;
     }
-}
-
-/* res-mobile */
-@media only screen and (min-width: 767px) and (max-width: 1023px) {
     .mer-detail__cnt {
         padding: 20px 16px 16px 16px;
     }
@@ -917,6 +913,7 @@
         box-shadow: none;
     }
 }
+
 /* Mobile */
 @media only screen and (max-width: 767px) {
     .time-block__list ul li {
@@ -1179,15 +1176,14 @@
 
     /* org discount */
     .org-dis-cnt {
-        padding: 16px 16px 8px 16px;
-        overflow-y: scroll;
+        padding: 16px;
+        overflow-x: scroll;
         margin: 16px 0 0 0;
+        width: 100%;
     }
 
     .org-dis-list {
         display: flex;
-        flex-wrap: nowrap;
-        width: fit-content;
         gap: 0 16px;
     }
 

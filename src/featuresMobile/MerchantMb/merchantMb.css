@@ -107,7 +107,7 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
-        margin: 16px 0;
+        margin: 0px 0 48px 0;
     }
     .mb-mer li {
         width: 100%;
