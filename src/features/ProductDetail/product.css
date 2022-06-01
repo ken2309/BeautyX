@@ -374,7 +374,7 @@
         width: 100%;
     }
     .product-desc .section-title {
-        display: none;
+        /* display: none; */
     }
     /* product detail mer */
     .pr-de-mer__content {
