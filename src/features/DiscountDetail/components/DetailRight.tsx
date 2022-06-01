@@ -16,7 +16,6 @@ function DetailRight(props: IProps) {
     const { t } = useContext(AppContext);
     const dispatch = useDispatch();
     const { discount } = props;
-    console.log(discount)
     const org: IOrganization = discount?.organizations[0];
     const discount_item_child: IITEMS_DISCOUNT = discount?.items[0];
     const percent = Math.round(100 - discount_item_child.view_price / discount_item_child.productable.price * 100)

@@ -1,23 +1,24 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import Head from '../../Head';
+import HeadTitle from '../../HeadTitle';
 import { Container } from '@mui/material';
-import { IDiscountPar, IITEMS_DISCOUNT } from '../../interface/discount';
-import DiscountItem from './DiscountItem';
-import './style.css'
-import { useHistory } from 'react-router-dom';
+import '../../HomeDiscounts/style.css'
+import { useSelector } from 'react-redux';
+import { IDiscountPar, IITEMS_DISCOUNT } from '../../../interface/discount';
+import DiscountItem from '../../HomeDiscounts/DiscountItem';
+import './style.css';
 
-function HomeDiscount() {
+function HomeDiscountList() {
     const { DISCOUNTS } = useSelector((state: any) => state.HOME);
     const { discounts } = DISCOUNTS;
-    const history = useHistory()
     return (
-        <div className='home-discounts'>
+        <>
+            <HeadTitle
+                title="Giá tốt, Ưu đãi khủng"
+            />
+            <Head />
             <Container>
-                <div className="flex-row-sp home-discounts__title">
-                    <span>KHUYỄN MÃI HOT</span>
-                    <span onClick={() => history.push('/giam-gia')} >Xem thêm</span>
-                </div>
-                <div className="home-discounts__list-wrap">
+                <div className="home-discounts__list-wrap discount-list-cnt">
                     <ul className="home-discounts__list">
                         {
                             discounts.map((discount: IDiscountPar, index: number) => (
@@ -40,8 +41,8 @@ function HomeDiscount() {
                     </ul>
                 </div>
             </Container>
-        </div>
+        </>
     );
 }
 
-export default HomeDiscount;
+export default HomeDiscountList;

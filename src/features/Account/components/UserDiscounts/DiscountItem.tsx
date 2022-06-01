@@ -2,6 +2,8 @@ import React from "react";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../../../interface/discount";
 import formatDate from "../../../../utils/formatDate";
 import formatPrice from "../../../../utils/formatPrice";
+import { useHistory } from 'react-router-dom'
+import slugify from "../../../../utils/formatUrlString";
 
 interface IProps {
     discountPar: IDiscountPar;
@@ -9,9 +11,18 @@ interface IProps {
 }
 
 function DiscountItem(props: IProps) {
+    const history = useHistory();
     const { discountPar, discountItem } = props;
+    const org = discountItem?.organization;
+    const onDetail = () => {
+        history.push({
+            pathname: `/chi-tiet-giam-gia/${slugify(discountItem.productable.service_name)}`,
+            search: `org_id=${org?.id}&id=${discountPar?.id}`,
+            state: org
+        })
+    }
     return (
-        <li className="discount-item">
+        <li onClick={onDetail} className="discount-item">
             <div className="img">
                 <img
                     className="discount-item__img"

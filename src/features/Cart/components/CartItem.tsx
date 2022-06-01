@@ -19,7 +19,6 @@ interface IProps {
 
 function CartItem(props: IProps) {
     const { cartItem, inPayment } = props;
-    console.log(cartItem)
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -60,10 +59,21 @@ function CartItem(props: IProps) {
                 search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`
             })
         } else if (cartItem.is_type === 2) {
-            history.push({
-                pathname: `/dich-vu/${slugify(cartItem.name)}`,
-                search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`
-            })
+            if (cartItem.discount) {
+                history.push({
+                    pathname: `/chi-tiet-giam-gia/${slugify(cartItem.discount.items[0].productable.service_name)}`,
+                    search: `org_id=${cartItem.org_id}&id=${cartItem.discount?.id}`,
+                })
+            } else {
+                history.push({
+                    pathname: `/dich-vu/${slugify(cartItem.name)}`,
+                    search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`
+                })
+            }
+            // history.push({
+            //     pathname: `/dich-vu/${slugify(cartItem.name)}`,
+            //     search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`
+            // })
         } else if (cartItem.is_type === 3) {
             //page combo detail
         }

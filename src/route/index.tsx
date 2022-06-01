@@ -34,6 +34,7 @@ import Videos from "../features/Videos";
 import Blog from "../features/Blog";
 import ComboDetail from "../features/ComboDetail";
 import DiscountDetail from "../features/DiscountDetail";
+import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 
 
 // feature mobile
@@ -170,6 +171,10 @@ function RouterConfig(props: any) {
     {
       path: "/chi-tiet-giam-gia/:name",
       component: <DiscountDetail />
+    },
+    {
+      path: "/giam-gia",
+      component: <HomeDiscountList />
     }
   ];
   const routesPrivate = [

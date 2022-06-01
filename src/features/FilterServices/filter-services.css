@@ -32,6 +32,8 @@
     .home-promo-ser {
         width: 100%;
         overflow-x: scroll;
+    }
+    .home-se-re .home-promo-ser {
         margin-top: 16px;
     }
     .home-promo-ser .ser-list {

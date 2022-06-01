@@ -17,6 +17,12 @@
     color: var(--bgWhite);
     margin-bottom: 16px;
 }
+.home-discounts__title span:nth-child(2){
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 700;
+}
 .home-discounts__list .item-cnt {
     padding: 8px;
     width: 16.666%;
@@ -100,7 +106,6 @@
     position: absolute;
     background-color: var(--red-cl);
     height: 100%;
-    z-index: 1;
     width: 50%;
     top: 0;
     left: 0;

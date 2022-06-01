@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import icon from "../../../constants/icon";
 import formatPrice from "../../../utils/formatPrice";
-import SuggestionPush from "../../ServiceDetail/components/SuggestionPush";
+//import SuggestionPush from "../../ServiceDetail/components/SuggestionPush";
 import { addCart } from "../../../redux/cartSlice";
 import { useDispatch } from "react-redux";
 import PopupSuccess from "../../PopupSuccess/index";
@@ -20,7 +20,7 @@ function DetailCard(props: any) {
     }" 
             ${t("pr.to_cart")}`;
   const dispatch = useDispatch();
-  const [sum, setSum] = useState(0);
+  //const [sum, setSum] = useState(0);
   const [popup, setPopup] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const handleDesc = () => {
@@ -29,6 +29,7 @@ function DetailCard(props: any) {
     }
   };
   //add cart
+  console.log(product)
   let sale_price;
   let old_price;
   if (is_type === 1) {
@@ -46,6 +47,7 @@ function DetailCard(props: any) {
       sale_price = product?.price;
     }
   }
+  console.log()
   const percent = Math.round((sale_price / old_price) * 100);
   const values = formatAddCart(product, org, is_type, quantity, sale_price);
   const handleAddCart = () => {
@@ -92,16 +94,11 @@ function DetailCard(props: any) {
                 placeholder={t("pr.enter_sale_code")}
               />
             </div>
-            {is_type === 2 ? (
-              <SuggestionPush org={org} product={product} setSum={setSum} />
-            ) : (
-              ""
-            )}
           </div>
           <div className="product-cnt__right-bot">
             <div className="flex-row-sp product-cnt__right-bot__total">
               <span>{t("pr.total")}</span>
-              <span>{formatPrice(quantity * sale_price + sum)} đ</span>
+              <span>{formatPrice(quantity * sale_price)} đ</span>
             </div>
             <div className="flex-row" style={{ justifyContent: "flex-end" }}>
               <button
