@@ -7,7 +7,6 @@ import { IOrganization } from "../../../interface/organization";
 import onErrorImg from "../../../utils/errorImg";
 import Comments from "../../Comments";
 import DetailMer from "../../ProductDetail/components/DetailMer";
-import SuggestionList from "../../ServiceDetail/components/SuggestionList";
 import DetailDesc from "../components/DetailDesc";
 import DetailNameMb from "../DetailNameMb/index";
 interface IProps {
@@ -66,9 +65,7 @@ function DetailLeft(props: IProps) {
                             <TabPanel value="1">
                                 <>
                                     <DetailNameMb
-                                        detail={discount_item_child}
-                                        is_type={discount?.discount_type}
-                                        org={org}
+                                        discount={discount}
                                     />
                                 </>
                                 <DetailDesc discount={discount_item_child} />

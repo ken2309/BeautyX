@@ -7,7 +7,7 @@ class Discounts {
         const url = `/discounts`;
         const params = {
             "page": values.page,
-            "limit": 12,
+            "limit": 30,
             "filter[platform]": "MOMO", // update change platform "BEAUTYX"
             "append": "user_available_purchase_count",
             "sort": "discount_value|created_at"
@@ -18,7 +18,7 @@ class Discounts {
         const url = `/discounts`;
         const params = {
             "page": 1,
-            "limit": 14,
+            "limit": 30,
             "filter[platform]": "MOMO", // update change platform "BEAUTYX"
             "append": "user_available_purchase_count",
             "sort": "discount_value|created_at",

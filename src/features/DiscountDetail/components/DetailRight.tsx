@@ -69,12 +69,12 @@ function DetailRight(props: IProps) {
             </div>
             <div className="product-cnt__right-body">
                 <div className="product-cnt__right-body-item">
-                    {/* <div className="flex-row user-available-cnt">
+                    <div className="flex-row user-available-cnt">
                         Lượt mua còn lại :
                         <h4 className="user_available-text">
                             {discount?.user_available_purchase_count}
                         </h4>
-                    </div> */}
+                    </div>
                     <span>{t("pr.quantity")}</span>
                     <div className="flex-row product-quantity">
                         <button onClick={handleDesc}>-</button>

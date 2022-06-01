@@ -29,7 +29,6 @@ function DetailCard(props: any) {
     }
   };
   //add cart
-  console.log(product)
   let sale_price;
   let old_price;
   if (is_type === 1) {
@@ -47,7 +46,6 @@ function DetailCard(props: any) {
       sale_price = product?.price;
     }
   }
-  console.log()
   const percent = Math.round((sale_price / old_price) * 100);
   const values = formatAddCart(product, org, is_type, quantity, sale_price);
   const handleAddCart = () => {

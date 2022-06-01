@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import Head from '../Head';
 import { extraParamsUrl } from '../../utils/extraParamsUrl';
-import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAsyncDiscountDetail } from '../../redux/org_discounts/orgDiscountsSlice';
 import HeadTitle from '../HeadTitle';
@@ -14,7 +13,6 @@ import DetailRight from './components/DetailRight';
 import { STATUS } from '../../redux/status'
 
 function DiscountDetail() {
-    const location: any = useLocation();
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
     const discount: IDiscountPar = DISCOUNT.discount;
     const status_detail = DISCOUNT.status
@@ -26,7 +24,9 @@ function DiscountDetail() {
         id: params.id
     }
     const callDiscountDetail = () => {
-        dispatch(fetchAsyncDiscountDetail(values))
+        if (status_detail !== STATUS.SUCCESS || discount.id !== parseInt(params.id)) {
+            dispatch(fetchAsyncDiscountDetail(values))
+        }
     }
     useEffect(() => {
         callDiscountDetail()
