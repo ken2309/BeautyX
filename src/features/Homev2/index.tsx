@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import HomeTags from './components/HomeTags';
 import HomePromo from './components/HomePromo';
 import HomeDeal from './components/HomeDeal';
@@ -24,14 +24,6 @@ function HomeSecond(props: any) {
                 <HomeCard />
             </Container>
             <HomeProvince />
-            {/* <div className="home-ca-cnt">
-                {
-                    profile ?
-                        <HomeLoggedCalendar />
-                        :
-                        <></>
-                }
-            </div> */}
             <Container>
                 <HomeServicesRe />
             </Container>

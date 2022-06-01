@@ -356,7 +356,7 @@
         gap: 0 8px;
     }
     .hd-cnt__right-user-name {
-        /* background-color: var(--bgWhite); */
+       color: var(--bgWhite);
     }
     .hd-cnt__right-cart {
         display: none;

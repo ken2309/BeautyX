@@ -4,45 +4,17 @@ import DiscountItem from './DiscountItem';
 import './discount.css'
 import Head from '../../../Head';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchAsyncDiscounts } from '../../../../redux/home/homeSlice'
+import { fetchAsyncDiscountsUser } from '../../../../redux/USER/userSlice';
 
 function UserDiscounts(props: any) {
     const { setOpen } = props;
     const dispatch = useDispatch();
-    const { DISCOUNTS } = useSelector((state: any) => state.HOME);
-    const { discounts, page, totalItem } = DISCOUNTS;
-    // console.log(DISCOUNTS)
-    // const [data, setData] = useState<IData>({
-    //     discounts: [],
-    //     page: 1,
-    //     total: 1
-    // })
-    // const handleGetDiscounts = async () => {
-    //     try {
-    //         const res = await discountApi.getAll({
-    //             page: data.page
-    //         });
-    //         setData({
-    //             ...data,
-    //             discounts: [...data.discounts, ...res.data.context.data],
-    //             total: res.data.context.total
-    //         })
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-    // useEffect(() => {
-    //     handleGetDiscounts()
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [data.page])
+    const { DISCOUNTS_USER } = useSelector((state: any) => state.USER);
+    const { discounts, page, totalItem } = DISCOUNTS_USER;
     const onViewMore = () => {
-        dispatch(fetchAsyncDiscounts({
+        dispatch(fetchAsyncDiscountsUser({
             page: page + 1
         }))
-        // setData({
-        //     ...data,
-        //     page: data.page + 1
-        // })
     }
     return (
         <>

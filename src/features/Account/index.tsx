@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { RouteComponentProps } from "@reach/router";
 import { Switch } from "react-router-dom";
 // import CheckNoti from "./components/CheckNotification";
@@ -16,6 +17,10 @@ import UserAddress from "./components/UserAddress/components/UserAddress";
 import UserDiscounts from "./components/UserDiscounts";
 import Footer from "../Footer";
 import HeadTitle from "../HeadTitle";
+import { useEffect } from "react";
+import { fetchAsyncDiscountsUser } from '../../redux/USER/userSlice'
+import { useDispatch, useSelector } from "react-redux";
+import { STATUS } from '../../redux/status'
 const routes = [
     {
         path: `/tai-khoan/phuong-thuc-thanh-toan`,
@@ -59,6 +64,17 @@ function Account() {
     const RouterPage = (
         props: { pageComponent: JSX.Element } & RouteComponentProps
     ) => props.pageComponent;
+    const dispatch = useDispatch();
+    const { DISCOUNTS_USER } = useSelector((state: any) => state.USER);
+    const { status_discount } = DISCOUNTS_USER;
+    const callDiscountsUser = () => {
+        if (status_discount !== STATUS.SUCCESS) {
+            dispatch(fetchAsyncDiscountsUser({ page: 1 }))
+        }
+    }
+    useEffect(() => {
+        callDiscountsUser()
+    }, [])
     return (
         <>
             <HeadTitle title={headerTitle} />
