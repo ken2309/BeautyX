@@ -18,14 +18,15 @@ interface IProps {
 }
 
 const tab_id = 2;
-function ServiceByMerchant(props: IProps) {
+function ServiceByMerchant(props: any) {
   const { t } = useContext(AppContext);
   const dispatch = useDispatch();
   const { ORG, ORG_SERVICES } = useSelector((state: any) => state);
   const { SERVICES } = ORG_SERVICES;
   const { page } = SERVICES;
   const { org, status } = ORG;
-  const { activeTab } = props;
+  //const { activeTab } = props;
+  const activeTab = 2;
   //const [searchTerm, setSearchTerm] = useState("");
   const [chooseCate, setChooseCate] = useState<any>();
   const callCategories = () => {
@@ -49,29 +50,32 @@ function ServiceByMerchant(props: IProps) {
     callServices()
   }, [status])
   return (
-    <div
-      style={tab_id === activeTab ? { display: "block" } : { display: "none" }}
-    >
-      <div
-        className="flex-row-sp ser-content"
-        style={{ alignItems: "flex-start" }}
-      >
-        <ServiceCate
-          chooseCate={chooseCate}
-          setChooseCate={setChooseCate}
-        />
-        {/* for mobile */}
-        <ServiceCateMb
-          chooseCate={chooseCate}
-          setChooseCate={setChooseCate}
-        />
-        <ServiceList
-          t={t}
-          cate_id={chooseCate}
-          org={org}
-        />
-      </div>
+    <div>
+      DV
     </div>
+    // <div
+    //   style={tab_id === activeTab ? { display: "block" } : { display: "none" }}
+    // >
+    //   <div
+    //     className="flex-row-sp ser-content"
+    //     style={{ alignItems: "flex-start" }}
+    //   >
+    //     <ServiceCate
+    //       chooseCate={chooseCate}
+    //       setChooseCate={setChooseCate}
+    //     />
+    //     {/* for mobile */}
+    //     <ServiceCateMb
+    //       chooseCate={chooseCate}
+    //       setChooseCate={setChooseCate}
+    //     />
+    //     <ServiceList
+    //       t={t}
+    //       cate_id={chooseCate}
+    //       org={org}
+    //     />
+    //   </div>
+    // </div>
   );
 }
 

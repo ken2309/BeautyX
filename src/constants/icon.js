@@ -101,11 +101,12 @@ import orderCancel from "../assets/icon/order_cancel.svg";
 import orderFinish from "../assets/icon/order_finish.svg";
 import orderPending from "../assets/icon/order_pending.svg";
 import backWhite from "../assets/icon/back_white.svg";
-import checkGreen from '../assets/icon/check_green.svg'; 
+import checkGreen from '../assets/icon/check_green.svg';
 import chevronUpWhite from '../assets/icon/chevron-up-white.svg';
 import chevronDownWhite from '../assets/icon/chevron-down-white.svg';
 import mapPinRed from '../assets/icon/mapPinRed.svg';
 import heart from '../assets/icon/heart.svg';
+import unHeart from '../assets/icon/unHeart.svg';
 import chevronRightBlack from '../assets/icon/chevronRightBlack.svg';
 import distance from '../assets/icon/distance.svg';
 import fire from '../assets/icon/fire.svg';
@@ -229,6 +230,7 @@ const icon = {
   chevronUpWhite,
   mapPinRed,
   heart,
+  unHeart,
   chevronRightBlack,
   distance,
   fire,

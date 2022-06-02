@@ -1,0 +1,53 @@
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import icon from '../../../constants/icon';
+import { IOrganization } from '../../../interface/organization';
+import { onDeleteFavoriteOrg, onFavoriteOrg } from '../../../redux/org/orgSlice';
+
+interface IProps {
+    org: IOrganization
+}
+
+function HeadOrg(props: IProps) {
+    const { org } = props;
+    const dispatch = useDispatch();
+    const handleFavoriteOrg = () => {
+        if (org?.is_favorite) {
+            dispatch(onDeleteFavoriteOrg(org))
+        } else {
+            dispatch(onFavoriteOrg(org))
+        }
+    }
+    return (
+        <div className='flex-row-sp mb-head-org-cnt' >
+            <div className="mb-head-org-cnt__left">
+                <button>
+                    <div className="icon-btn">
+                        <img src={icon.chevronLeft} alt="" />
+                    </div>
+                </button>
+            </div>
+            <div className="mb-head-org-cnt__right">
+                <button>
+                    <div className="icon-btn">
+                        <img src={icon.searchPurple} alt="" />
+                    </div>
+                </button>
+                <button>
+                    <div className="icon-btn">
+                        <img src={icon.ShoppingCartSimple} alt="" />
+                    </div>
+                </button>
+                <button
+                    onClick={handleFavoriteOrg}
+                >
+                    <div className="icon-btn">
+                        <img src={org?.is_favorite ? icon.heart : icon.unHeart} alt="" />
+                    </div>
+                </button>
+            </div>
+        </div>
+    );
+}
+
+export default HeadOrg;

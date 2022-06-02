@@ -1,5 +1,5 @@
 import React from 'react';
-import DetailSaleList from '../MerchantDetail/components/DetailSaleList';
+//import DetailSaleList from '../MerchantDetail/components/DetailSaleList';
 import './sale.css';
 
 function SaleByMerchant(props: any) {
@@ -9,7 +9,7 @@ function SaleByMerchant(props: any) {
             <div
                 className='flex-row-sp sale-content'
             >
-                <DetailSaleList org={org} />
+                {/* <DetailSaleList org={org} /> */}
             </div>
             :
             <></>

@@ -6,7 +6,6 @@ import { AppContext } from "../../context/AppProvider";
 import icon from "../../constants/icon";
 import SectionTitle from "../SectionTitle";
 import ButtonCus from "../../components/ButtonCus";
-import DetailCommentItem from "../MerchantDetail/components/DetailCommentItem";
 import { useHistory } from "react-router-dom";
 import slugify from "../../utils/formatUrlString";
 
@@ -75,13 +74,13 @@ function Comments(props: IProps) {
                     <span>{data.totalItem}</span> {t("Mer_de.feedbacks")}
                 </div>
             </div>
-            <ul className="mer-detail-cmt__box">
+            {/* <ul className="mer-detail-cmt__box">
                 {data.comments
                     .slice(0, 7)
                     .map((item: IComment, index: number) => (
                         <DetailCommentItem key={index} comment={item} />
                     ))}
-            </ul>
+            </ul> */}
             <ButtonCus
                 text={t("Mer_de.view_all_feedback")}
                 imgIcon={icon.next}
