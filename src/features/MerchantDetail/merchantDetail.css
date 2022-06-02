@@ -919,7 +919,10 @@
     .time-block__list ul li {
         padding: unset;
     }
-
+    .org-dis-list ul {
+        display: flex;
+        grid-gap: 0 16px;
+    }
     .mer-detail {
         padding: 0px;
         background-color: var(--bgWhite);
