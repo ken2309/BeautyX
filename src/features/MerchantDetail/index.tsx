@@ -4,8 +4,16 @@ import { useLocation } from "react-router-dom";
 import Head from "../Head/index";
 import Footer from "../Footer";
 import HeadTitle from "../HeadTitle/index";
-import { fetchAsyncOrg, fetchOrgGalleries, onActiveTab } from '../../redux/org/orgSlice';
-import { fetchAsyncServicesSpecial, fetchProductsSpecial } from '../../redux/org_specials/orgSpecialSlice'
+import {
+  fetchAsyncOrg,
+  fetchOrgGalleries,
+  onActiveTab
+} from '../../redux/org/orgSlice';
+import {
+  fetchAsyncServicesSpecial,
+  fetchProductsSpecial
+} from '../../redux/org_specials/orgSpecialSlice';
+import { fetchAsyncOrgDiscounts } from '../../redux/org_discounts/orgDiscountsSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import { formatOrgParam } from "../../utils/formatParams";
 import { STATUS } from '../../redux/status';
@@ -15,7 +23,6 @@ import OrgDetail from "./components/OrgDetail";
 import OrgContainer from "./components/OrgContainer";
 import './style.css';
 import { Container } from '@mui/material';
-import { extraParamsUrl } from "../../utils/extraParamsUrl";
 
 
 function MerchantDetail() {
@@ -25,10 +32,8 @@ function MerchantDetail() {
   const param = formatOrgParam(location.pathname);
   const { sub_domain } = param;
 
-
   const ORG = useSelector((state: any) => state.ORG);
-  const ORG_SPECIALS = useSelector((state: any) => state.ORG_SPECIALS);
-  const { SERVICES_SPECIAL, PRODUCTS_SPECIAL } = ORG_SPECIALS;
+  const ORG_DISCOUNTS = useSelector((state: any) => state.ORG_DISCOUNTS);
 
   const { org, status, tab, GALLERIES } = ORG;
   const callOrgDetail = () => {
@@ -37,10 +42,14 @@ function MerchantDetail() {
       dispatch(onActiveTab(1))
     }
   }
-  const callGalleriesOrg = () => {
+  const callGalleriesOrg_DiscountsOrg = () => {
     if (status === STATUS.SUCCESS) {
       if (GALLERIES.org_id !== org?.id || GALLERIES.status !== STATUS.SUCCESS) {
         dispatch(fetchOrgGalleries(org?.id))
+      }
+      if (ORG_DISCOUNTS.org_id !== org?.id || ORG_DISCOUNTS.DISCOUNTS.status_list !== STATUS.SUCCESS) {
+        const values = { org_id: org?.id }
+        dispatch(fetchAsyncOrgDiscounts(values))
       }
     }
   }
@@ -55,7 +64,7 @@ function MerchantDetail() {
     }
   }
   useEffect(() => {
-    callGalleriesOrg()
+    callGalleriesOrg_DiscountsOrg()
     callOrgSpecial()
   }, [status])
   useEffect(() => {

@@ -35,7 +35,9 @@ class ServiceApi {
       limit: 15,
       page: values.page,
       "filter[special]": true,
-      "filter[is_momo_ecommerce_enable]": true
+      "filter[is_momo_ecommerce_enable]": true,
+      "include": "category|favorites_count",
+      "append": "is_favorite|rating|bought_count"
     }
     return axiosClient.get(url, { params })
   }

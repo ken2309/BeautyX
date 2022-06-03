@@ -121,6 +121,7 @@ import playCirclePurple from '../assets/icon/playCirclePurple.svg';
 import newsPurple from '../assets/icon/newsPurple.svg';
 import languagePurple from '../assets/icon/languagePurple.svg';
 import sendWhite from '../assets/icon/sendWhite.svg';
+import cartCheckPurple from "../assets/icon/cartCheckPurple.svg";
 
 const icon = {
   Favorite,
@@ -244,6 +245,7 @@ const icon = {
   playCirclePurple,
   newsPurple,
   languagePurple,
-  sendWhite
+  sendWhite,
+  cartCheckPurple
 };
 export default icon;

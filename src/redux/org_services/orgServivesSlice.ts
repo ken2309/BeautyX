@@ -15,6 +15,7 @@ interface ICATE {
     status: string
 }
 interface IINITIALSTATE {
+    org_id: any,
     CATE: ICATE,
     SERVICES: ISERVICES
 }
@@ -25,7 +26,10 @@ export const fetchAsyncCateServices: any = createAsyncThunk(
         const params = { org_id };
         try {
             const res = await categoryApi.getByOrgId_services(params);
-            const payload = res.data.context.data
+            const payload = {
+                categories: res.data.context.data,
+                org_id: org_id
+            }
             return payload
         } catch (error) {
             console.log(error)
@@ -46,6 +50,7 @@ export const fetchAsyncServices: any = createAsyncThunk(
     }
 )
 const initialState: IINITIALSTATE = {
+    org_id: null,
     CATE: {
         categories: [],
         status: ''
@@ -80,7 +85,8 @@ const orgServicesSlice = createSlice({
         [fetchAsyncCateServices.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
-                CATE: { categories: payload, status: STATUS.SUCCESS }
+                org_id: payload.org_id,
+                CATE: { categories: payload.categories, status: STATUS.SUCCESS }
             }
         },
         [fetchAsyncCateServices.rejected]: (state) => {

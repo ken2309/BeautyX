@@ -1,7 +1,4 @@
 import React from 'react';
-import ProductByMerchant from '../../ProductByMerchant';
-import ServiceByMerchant from '../../ServiceByMerchant';
-//import SaleByMerchant from '../../SaleByMerchant';
 import { IOrganization } from '../../../interface/organization';
 import { onActiveTab } from '../../../redux/org/orgSlice';
 import { useDispatch } from 'react-redux';
@@ -21,7 +18,8 @@ function OrgContainer(props: IProps) {
         { id: 2, title: "Dịch vụ" },
         { id: 3, title: "Sản phẩm" },
         { id: 4, title: "Đánh giá" },
-        { id: 5, title: "Chi tiết doanh nghiệp" },
+        { id: 5, title: "Chi tiết" },
+        { id: 6, title: " Hình ảnh" }
     ]
     const handleActiveTab = (id: number) => {
         dispatch(onActiveTab(id))
@@ -36,35 +34,37 @@ function OrgContainer(props: IProps) {
         }
     }
     return (
-        <div className="org-container">
-            <div className="org-container__tab-cnt">
-                <ul className="flex-row org-tab-list">
-                    {
-                        tabs.map(item => (
-                            <li
-                                onClick={() => handleActiveTab(item.id)}
-                                key={item.id}
-                            >
-                                <span
-                                    style={
-                                        tab === item.id ?
-                                            {
-                                                color: "var(--purple)",
-                                                borderBottom: "solid 1px var(--purple)"
-                                            }
-                                            :
-                                            {}
-                                    }
-                                    className="org-tab-list__item">
-                                    {item.title}
-                                </span>
-                            </li>
-                        ))
-                    }
-                </ul>
+        <>
+            <div className="org-container">
+                <div className="org-container__tab-cnt">
+                    <ul className="flex-row org-tab-list">
+                        {
+                            tabs.map(item => (
+                                <li
+                                    onClick={() => handleActiveTab(item.id)}
+                                    key={item.id}
+                                >
+                                    <span
+                                        style={
+                                            tab === item.id ?
+                                                {
+                                                    color: "var(--purple)",
+                                                    borderBottom: "solid 1px var(--purple)"
+                                                }
+                                                :
+                                                {}
+                                        }
+                                        className="org-tab-list__item">
+                                        {item.title}
+                                    </span>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
             </div>
             {onSwitchTab()}
-        </div>
+        </>
     );
 }
 
