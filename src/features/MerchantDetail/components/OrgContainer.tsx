@@ -4,6 +4,8 @@ import { onActiveTab } from '../../../redux/org/orgSlice';
 import { useDispatch } from 'react-redux';
 import OrgDealHot from './OrgPages/OrgDealHot';
 import OrgServices from './OrgPages/OrgServices';
+import OrgProducts from './OrgPages/OrgProducts';
+import OrgCombos from './OrgPages/OrgCombos';
 import OrgInformation from './OrgPages/OrgInformation';
 import OrgReviews from './OrgPages/OrgReviews';
 import useFullScreen from '../../../utils/useFullScreen';
@@ -13,6 +15,7 @@ interface IProps {
     tab: number
 }
 
+
 function OrgContainer(props: IProps) {
     const is_mb = useFullScreen();
     const { org, tab } = props;
@@ -21,6 +24,7 @@ function OrgContainer(props: IProps) {
         { id: 1, title: "Deal Hot" },
         { id: 2, title: "Dịch vụ" },
         { id: 3, title: "Sản phẩm" },
+        { id: 7, title: "Combos" },
         { id: 4, title: is_mb ? "Chi tiết" : "Doanh nghiệp" },
         { id: 5, title: "Đánh giá" },
         { id: 6, title: " Hình ảnh" }
@@ -37,6 +41,10 @@ function OrgContainer(props: IProps) {
                 return <OrgDealHot />;
             case 2:
                 return <OrgServices org={org} />
+            case 3:
+                return <OrgProducts org={org} />
+            case 7:
+                return <OrgCombos org={org} />
             case 4:
                 return <div className='org-information-cnt'>
                     <OrgInformation org={org} />

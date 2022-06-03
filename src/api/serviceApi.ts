@@ -8,6 +8,8 @@ class ServiceApi {
       page: values.page,
       limit: 15,
       "filter[service_group_id]": values.cate_id,
+      "include": "category|favorites_count",
+      "append": "is_favorite|rating|bought_count"
     }
     const params = pickBy(paramsOb, identity)
     return axiosClient.get(url, { params });

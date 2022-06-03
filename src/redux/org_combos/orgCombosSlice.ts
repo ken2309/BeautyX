@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import comboApi from '../../api/comboApi';
-import { STATUS } from '../status'
+import { STATUS } from '../status';
+import { Combo } from '../../interface/combo'
 
 export const fetchAsyncCombosOrg: any = createAsyncThunk(
     "ORG_COMBOS/fetchAsyncCombosOrg",
@@ -9,7 +10,8 @@ export const fetchAsyncCombosOrg: any = createAsyncThunk(
             const res = await comboApi.getByOrg_id(values);
             const payload = {
                 combos: res.data.context.data,
-                totalItem: res.data.context.total
+                totalItem: res.data.context.total,
+                org_id: values.org_id
             }
             return payload
         } catch (error) {
@@ -28,7 +30,19 @@ export const fetchAsyncComboDetail: any = createAsyncThunk(
         }
     }
 )
-const initialState = {
+interface IState {
+    org_id: any,
+    combos: Combo[],
+    totalItem: number,
+    COMBO_DETAIL: {
+        combo: any,
+        status_detail: string
+    },
+    page: number,
+    status: string
+}
+const initialState: IState = {
+    org_id: null,
     combos: [],
     totalItem: 1,
     COMBO_DETAIL: {
@@ -49,7 +63,8 @@ const combosOrgSlice = createSlice({
         [fetchAsyncCombosOrg.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
-                combos: payload.combos,
+                org_id: payload.org_id,
+                combos: [...state.combos, ...payload.combos],
                 totalItem: payload.totalItem,
                 status: STATUS.SUCCESS
             }

@@ -37,36 +37,42 @@ function OrgDealHot() {
                     </ul>
                 </div>
             }
-            <div className="org-deal-hot__section">
-                <span className="org-deal-hot__section-title">Dịch vụ</span>
-                <ul className="org-special__list">
-                    {
-                        SERVICES_SPECIAL.services_special.map((item: Service, index: number) => (
-                            <li key={index}>
-                                <OrgServiceItem
-                                    org={ORG.org}
-                                    service={item}
-                                />
-                            </li>
-                        ))
-                    }
-                </ul>
-            </div>
-            <div className="org-deal-hot__section">
-                <span className="org-deal-hot__section-title">Sản phẩm</span>
-                <ul className="org-special__list">
-                    {
-                        PRODUCTS_SPECIAL.products_special.map((item: Product, index: number) => (
-                            <li key={index}>
-                                <OrgProductItem
-                                    org={ORG.org}
-                                    product={item}
-                                />
-                            </li>
-                        ))
-                    }
-                </ul>
-            </div>
+            {
+                SERVICES_SPECIAL.services_special.length > 0 &&
+                <div className="org-deal-hot__section">
+                    <span className="org-deal-hot__section-title">Dịch vụ</span>
+                    <ul className="org-special__list">
+                        {
+                            SERVICES_SPECIAL.services_special.map((item: Service, index: number) => (
+                                <li key={index}>
+                                    <OrgServiceItem
+                                        org={ORG.org}
+                                        service={item}
+                                    />
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+            }
+            {
+                PRODUCTS_SPECIAL.products_special.length > 0 &&
+                <div className="org-deal-hot__section">
+                    <span className="org-deal-hot__section-title">Sản phẩm</span>
+                    <ul className="org-special__list">
+                        {
+                            PRODUCTS_SPECIAL.products_special.map((item: Product, index: number) => (
+                                <li key={index}>
+                                    <OrgProductItem
+                                        org={ORG.org}
+                                        product={item}
+                                    />
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+            }
         </div>
     );
 }

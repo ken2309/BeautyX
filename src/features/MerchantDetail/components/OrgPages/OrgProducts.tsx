@@ -1,46 +1,46 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Product } from '../../../../interface/product';
 import { IOrganization } from '../../../../interface/organization';
-import {
-    fetchAsyncCateServices,
-    fetchAsyncServices,
-    onChooseCateServices,
-    clearServices
-} from '../../../../redux/org_services/orgServivesSlice'
-import { Service } from '../../../../interface/service'
-import OrgServiceItem from './OrgServiceItem';
 import { STATUS } from '../../../../redux/status';
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    fetchAsyncCateProducts,
+    fetchAsyncProducts,
+    clearProducts,
+    onChooseCateServices
+} from '../../../../redux/org_products/orgProductsSlice';
+import OrgProductItem from './OrgProductItem';
 
 interface IProps {
     org: IOrganization
 }
 
-function OrgServices(props: IProps) {
-    const dispatch = useDispatch();
-    const { CATE, SERVICES, choose_cate, org_id } = useSelector((state: any) => state.ORG_SERVICES);
-    const { categories, status } = CATE;
-    const { services, page, totalItem, status_ser } = SERVICES;
+function OrgProducts(props: IProps) {
     const { org } = props;
-    const callServicesCate = () => {
+    const { CATE, PRODUCTS, choose_cate, org_id } = useSelector((state: any) => state.ORG_PRODUCTS);
+    const { categories, status } = CATE;
+    const { products, page, totalItem, status_pr } = PRODUCTS;
+    const dispatch = useDispatch();
+    const callCategories = () => {
         if (org_id !== org?.id || status !== STATUS.SUCCESS) {
-            dispatch(fetchAsyncCateServices(org?.id))
+            dispatch(fetchAsyncCateProducts(org?.id))
         }
     }
-    const callServicesOrg = () => {
-        if (org_id !== org?.id || status_ser !== STATUS.SUCCESS) {
+    const callProducts = () => {
+        if (org_id !== org?.id || status_pr !== STATUS.SUCCESS) {
             const values = {
                 org_id: org?.id,
                 page: 1,
                 cate_id: choose_cate
             }
-            dispatch(fetchAsyncServices(values))
+            dispatch(fetchAsyncProducts(values))
         }
     }
     useEffect(() => {
-        callServicesOrg()
-        callServicesCate()
+        callCategories()
+        callProducts()
     }, [])
     const handleChooseCate = (id: any) => {
         const values = {
@@ -48,21 +48,20 @@ function OrgServices(props: IProps) {
             page: 1,
             cate_id: id
         }
-        dispatch(clearServices())
+        dispatch(clearProducts());
         dispatch(onChooseCateServices(id))
-        dispatch(fetchAsyncServices(values))
+        dispatch(fetchAsyncProducts(values))
     }
     const onViewMore = () => {
-        if (totalItem >= 15 && services.length < totalItem) {
+        if (totalItem >= 15 && products.length < totalItem) {
             const values = {
                 org_id: org?.id,
                 page: page + 1,
                 cate_id: choose_cate
             }
-            dispatch(fetchAsyncServices(values))
+            dispatch(fetchAsyncProducts(values))
         }
     }
-
     return (
         <div className="org-services-cnt">
             <div className="org-services-cnt__left">
@@ -98,20 +97,20 @@ function OrgServices(props: IProps) {
             </div>
             <div className="org-services-cnt__right">
                 <InfiniteScroll
-                    dataLength={services.length}
+                    dataLength={products.length}
                     hasMore={true}
                     next={onViewMore}
                     loader={<></>}
                 >
                     <ul className="org-services-cnt__right-list">
                         {
-                            services.map((item: Service, index: number) => (
+                            products.map((item: Product, index: number) => (
                                 <li
                                     key={index}
                                 >
-                                    <OrgServiceItem
+                                    <OrgProductItem
                                         org={org}
-                                        service={item}
+                                        product={item}
                                     />
                                 </li>
                             ))
@@ -123,4 +122,4 @@ function OrgServices(props: IProps) {
     );
 }
 
-export default OrgServices;
+export default OrgProducts;
