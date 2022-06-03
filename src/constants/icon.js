@@ -122,6 +122,9 @@ import newsPurple from '../assets/icon/newsPurple.svg';
 import languagePurple from '../assets/icon/languagePurple.svg';
 import sendWhite from '../assets/icon/sendWhite.svg';
 import cartCheckPurple from "../assets/icon/cartCheckPurple.svg";
+import wifiBlack from '../assets/icon/wifiBlack.svg';
+import carBlack from '../assets/icon/carBlack.svg';
+import creditCardBlack from '../assets/icon/creditCardBlack.svg'; 
 
 const icon = {
   Favorite,
@@ -246,6 +249,9 @@ const icon = {
   newsPurple,
   languagePurple,
   sendWhite,
-  cartCheckPurple
+  cartCheckPurple,
+  wifiBlack,
+  carBlack,
+  creditCardBlack,
 };
 export default icon;

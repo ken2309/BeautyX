@@ -15,25 +15,28 @@ function OrgDealHot() {
     const discounts: IDiscountPar[] = DISCOUNTS.discounts;
     return (
         <div className="org-deal-hot">
-            <div className="org-deal-hot__discounts">
-                <ul className="list">
-                    {
-                        discounts.map((discount: any, index: number) => (
-                            <li key={index} className="org-discount__item">
-                                {
-                                    discount.items.map((item: IITEMS_DISCOUNT, i: number) => (
-                                        <DiscountItem
-                                            key={i}
-                                            discountItem={item}
-                                            discountPar={discount}
-                                        />
-                                    ))
-                                }
-                            </li>
-                        ))
-                    }
-                </ul>
-            </div>
+            {
+                discounts.length > 0 &&
+                <div className="org-deal-hot__discounts">
+                    <ul className="list">
+                        {
+                            discounts.map((discount: any, index: number) => (
+                                <li key={index} className="org-discount__item">
+                                    {
+                                        discount.items.map((item: IITEMS_DISCOUNT, i: number) => (
+                                            <DiscountItem
+                                                key={i}
+                                                discountItem={item}
+                                                discountPar={discount}
+                                            />
+                                        ))
+                                    }
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+            }
             <div className="org-deal-hot__section">
                 <span className="org-deal-hot__section-title">Dịch vụ</span>
                 <ul className="org-special__list">

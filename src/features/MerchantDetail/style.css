@@ -8,7 +8,8 @@
     z-index: 100;
     transition: all .5s;
 }
-.mb-head-act{
+
+.mb-head-act {
     background-color: var(--bgWhite);
     transition: all .5s;
 }
@@ -199,7 +200,7 @@
     position: sticky;
     background-color: var(--bgWhite);
     z-index: 20;
-    top:0px
+    top: 0px
 }
 
 .org-tab-list {
@@ -314,6 +315,179 @@
 .org-special-item__detail .item-price {
     display: flex;
     flex-direction: column;
+}
+
+/* org information cnt */
+.org-information-cnt {
+    padding: 28px 0px;
+}
+
+.org-information-cnt {
+    display: flex;
+    justify-content: space-between;
+}
+
+.org-information {
+    width: 50%;
+    padding-right: 12px;
+}
+
+.org-information__map-cnt {
+    width: 100%;
+    height: 348px;
+    position: relative;
+}
+
+.org-information__map-cnt .map-cnt {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.org-information__map-cnt .map-org-detail {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    height: 132px;
+    padding: 12px;
+}
+
+.org-information__map-cnt .map-org-detail__slide {
+    height: 100%;
+}
+
+.org-information__map-cnt .map-org-detail__item {
+    width: 100%;
+    height: 108px;
+    background-color: var(--bgWhite);
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: flex !important;
+}
+
+.map-org-detail__item .branch-avatar {
+    height: 100%;
+    border-radius: 100%;
+    width: fit-content;
+}
+
+.map-org-detail__item .branch-detail {
+    padding-left: 8px;
+}
+
+.map-org-detail__item .branch-detail .name {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--purple);
+}
+
+.map-org-detail__item .branch-detail .icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+}
+
+.map-org-detail__item .address {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
+    color: var(--text-black);
+}
+
+.map-org-detail__item .rate-item {
+    margin-right: 12px;
+}
+
+.map-org-detail__item .rate-item .rate-item__text {
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 600;
+    color: var(--text-hover);
+}
+
+.org-information__branches {
+    margin: 20px 0px;
+}
+
+.org-information__branches .title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--text-black);
+}
+
+.org-information__branches .branches-list-cnt {
+    margin-top: 8px;
+    background-color: var(--grey);
+    padding: 8px;
+    border-radius: 8px;
+    height: 32px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all .4s;
+}
+
+.branches-list-cnt__drop {
+    height: 100px !important;
+    transition: all .4s !important;
+}
+
+.org-information__branches .branches-list-cnt .list-item {
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
+    color: var(--text-hover);
+    margin-bottom: 8px;
+}
+
+.org-time-list {
+    margin-top: 8px;
+}
+
+.org-time-list__item {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: var(--text-hover);
+}
+
+.org-time-list__item .org-time-list__left {
+    width: 72px;
+    margin-right: 12px;
+    border-right: solid 1px var(--text-hover);
+}
+
+.org-information__about {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+    color: var(--text-black);
+}
+
+.org-information-utils {
+    margin-top: 8px;
+}
+
+.org-information-utils .utils-item {
+    margin-bottom: 4px;
+}
+
+.org-information-utils .utils-item .icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+}
+
+.org-information-utils .utils-item span {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: var(--text-black);
 }
 
 @media only screen and (max-width: 1023px) {
@@ -501,5 +675,63 @@
         font-size: 12px;
         line-height: 14px;
         color: var(--text-hover);
+    }
+
+    .org-information-cnt {
+        display: flex;
+        flex-direction: column;
+        padding: 0px 12px;
+    }
+
+    .org-information {
+        width: 100%;
+        padding: 0px;
+    }
+
+    .org-information__map-cnt {
+        height: 184px;
+    }
+
+    .org-information__map-cnt .map-org-detail {
+        height: 92px;
+    }
+
+    .org-information__map-cnt .map-org-detail__item {
+        height: 68px;
+    }
+
+    .map-org-detail__item .branch-detail .name {
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 20px;
+        color: var(--purple);
+    }
+
+    .map-org-detail__item .branch-detail .icon {
+        width: 10px;
+        height: 10px;
+    }
+
+    .map-org-detail__item .rate-item .rate-item__text {
+        font-size: 10px;
+        line-height: 12px;
+        font-weight: 500;
+    }
+
+    .org-information__about {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .org-information-utils .utils-item .icon {
+        width: 12px;
+        height: 12px;
+    }
+
+    .org-information-utils .utils-item span {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
     }
 }
