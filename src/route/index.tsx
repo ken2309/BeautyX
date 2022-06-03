@@ -169,10 +169,6 @@ function RouterConfig(props: any) {
       component: <Blog />
     },
     {
-      path: "/chi-tiet-giam-gia/:name",
-      component: <DiscountDetail />
-    },
-    {
       path: "/giam-gia",
       component: <HomeDiscountList />
     }
@@ -201,6 +197,10 @@ function RouterConfig(props: any) {
     {
       path: '/trang-thai-don-hang/:desc',
       component: CartPaymentStatus
+    },
+    {
+      path: "/chi-tiet-giam-gia/:name",
+      component: DiscountDetail
     }
   ];
   return (
