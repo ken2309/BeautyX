@@ -30,7 +30,7 @@ import Message from "../assets/icon/message.svg";
 import Phone from "../assets/icon/phone.svg";
 import Storefront from "../assets/icon/storefront.svg";
 import User from "../assets/icon/user.svg";
-import User_1 from "../assets/icon/user_1.svg"
+import User_1 from "../assets/icon/user_1.svg";
 import User_purple from "../assets/icon/user_box.svg";
 import Location from "../assets/icon/location.svg";
 import ArrowDownWhite from "../assets/icon/arrow-down-white.svg";
@@ -101,157 +101,162 @@ import orderCancel from "../assets/icon/order_cancel.svg";
 import orderFinish from "../assets/icon/order_finish.svg";
 import orderPending from "../assets/icon/order_pending.svg";
 import backWhite from "../assets/icon/back_white.svg";
-import checkGreen from '../assets/icon/check_green.svg';
-import chevronUpWhite from '../assets/icon/chevron-up-white.svg';
-import chevronDownWhite from '../assets/icon/chevron-down-white.svg';
-import mapPinRed from '../assets/icon/mapPinRed.svg';
-import heart from '../assets/icon/heart.svg';
-import unHeart from '../assets/icon/unHeart.svg';
-import chevronRightBlack from '../assets/icon/chevronRightBlack.svg';
-import distance from '../assets/icon/distance.svg';
-import fire from '../assets/icon/fire.svg';
-import shield from '../assets/icon/sheild.svg';
-import editWhite from '../assets/icon/editWhite.svg';
-import pinMapGreen from '../assets/icon/pinMapGreen.svg';
-import closeCircleWhite from '../assets/icon/closeCircleWhite.svg';
-import sucessGreen from '../assets/icon/sucessGreen.svg';
-import xCircleRed from '../assets/icon/xCircleRed.svg';
-import loginReq from '../assets/icon/loginReq.svg';
-import playCirclePurple from '../assets/icon/playCirclePurple.svg';
-import newsPurple from '../assets/icon/newsPurple.svg';
-import languagePurple from '../assets/icon/languagePurple.svg';
-import sendWhite from '../assets/icon/sendWhite.svg';
+import checkGreen from "../assets/icon/check_green.svg";
+import chevronUpWhite from "../assets/icon/chevron-up-white.svg";
+import chevronDownWhite from "../assets/icon/chevron-down-white.svg";
+import mapPinRed from "../assets/icon/mapPinRed.svg";
+import heart from "../assets/icon/heart.svg";
+import unHeart from "../assets/icon/unHeart.svg";
+import chevronRightBlack from "../assets/icon/chevronRightBlack.svg";
+import distance from "../assets/icon/distance.svg";
+import fire from "../assets/icon/fire.svg";
+import shield from "../assets/icon/sheild.svg";
+import editWhite from "../assets/icon/editWhite.svg";
+import pinMapGreen from "../assets/icon/pinMapGreen.svg";
+import closeCircleWhite from "../assets/icon/closeCircleWhite.svg";
+import sucessGreen from "../assets/icon/sucessGreen.svg";
+import xCircleRed from "../assets/icon/xCircleRed.svg";
+import loginReq from "../assets/icon/loginReq.svg";
+import playCirclePurple from "../assets/icon/playCirclePurple.svg";
+import newsPurple from "../assets/icon/newsPurple.svg";
+import languagePurple from "../assets/icon/languagePurple.svg";
+import sendWhite from "../assets/icon/sendWhite.svg";
 import cartCheckPurple from "../assets/icon/cartCheckPurple.svg";
-import wifiBlack from '../assets/icon/wifiBlack.svg';
-import carBlack from '../assets/icon/carBlack.svg';
-import creditCardBlack from '../assets/icon/creditCardBlack.svg'; 
-
+import wifiBlack from "../assets/icon/wifiBlack.svg";
+import carBlack from "../assets/icon/carBlack.svg";
+import creditCardBlack from "../assets/icon/creditCardBlack.svg";
+import sendComment from "../assets/icon/send-comment.svg";
+import addImg from "../assets/icon/add-img.svg";
+import tickBlue from "../assets/icon/tickBlue.png";
 const icon = {
-  Favorite,
-  Tumer,
-  DeskAlt,
-  edit,
-  SignOutPurple,
-  TrashOrange,
-  Exclude,
-  Exclude2,
-  Exclude3,
-  Exclude4,
-  Info,
-  CloseRing,
-  TicketHome,
-  success,
-  Avatar,
-  Logo,
-  Menu,
-  ShoppingCartSimple,
-  Check,
-  Check2,
-  dotPurple,
-  next,
-  Expand_right_2,
-  down,
-  search,
-  down_2,
-  miniMapIcon,
-  pinMap,
-  star,
-  chatAll,
-  location,
-  car,
-  bed,
-  time,
-  door,
-  pPrev,
-  pNext,
-  logoBusiness,
-  phone,
-  gps,
-  dashboard,
-  Buildings,
-  Message,
-  Phone,
-  Storefront,
-  User,
-  User_purple,
-  Location,
-  Lock,
-  eye,
-  facebook,
-  google,
-  warning,
-  arrowDown,
-  box,
-  bag,
-  trash,
-  VietnamFlat,
-  EngFlat,
-  Money,
-  Camera,
-  Ticket,
-  Wallet,
-  Crown,
-  Camera_purple,
-  Credit_card,
-  Clock_purple,
-  Bell,
-  Bell_1,
-  Union,
-  Headphones_purple,
-  plus,
-  ArrowDownWhite,
-  SearchWhite,
-  checkWhite,
-  Calendar,
-  Calendar_1,
-  onedot,
-  Setting,
-  arrowPurple,
-  userCircle,
-  signOut,
-  home,
-  chevronLeft,
-  chevronRight,
-  searchPurple,
-  pinMap_2,
-  x,
-  staff,
-  branches,
-  chevronRight_2,
-  filter,
-  menuWhite,
-  ShoppingCartSimpleWhite,
-  closeCircle,
-  home_1,
-  pPrev_purple,
-  User_1,
-  orderCancel,
-  orderFinish,
-  orderPending,
-  backWhite,
-  checkGreen,
-  chevronDownWhite,
-  chevronUpWhite,
-  mapPinRed,
-  heart,
-  unHeart,
-  chevronRightBlack,
-  distance,
-  fire,
-  shield,
-  editWhite,
-  pinMapGreen,
-  closeCircleWhite,
-  sucessGreen,
-  xCircleRed,
-  loginReq,
-  playCirclePurple,
-  newsPurple,
-  languagePurple,
-  sendWhite,
-  cartCheckPurple,
-  wifiBlack,
-  carBlack,
-  creditCardBlack,
+    tickBlue,
+    sendComment,
+    addImg,
+    Favorite,
+    Tumer,
+    DeskAlt,
+    edit,
+    SignOutPurple,
+    TrashOrange,
+    Exclude,
+    Exclude2,
+    Exclude3,
+    Exclude4,
+    Info,
+    CloseRing,
+    TicketHome,
+    success,
+    Avatar,
+    Logo,
+    Menu,
+    ShoppingCartSimple,
+    Check,
+    Check2,
+    dotPurple,
+    next,
+    Expand_right_2,
+    down,
+    search,
+    down_2,
+    miniMapIcon,
+    pinMap,
+    star,
+    chatAll,
+    location,
+    car,
+    bed,
+    time,
+    door,
+    pPrev,
+    pNext,
+    logoBusiness,
+    phone,
+    gps,
+    dashboard,
+    Buildings,
+    Message,
+    Phone,
+    Storefront,
+    User,
+    User_purple,
+    Location,
+    Lock,
+    eye,
+    facebook,
+    google,
+    warning,
+    arrowDown,
+    box,
+    bag,
+    trash,
+    VietnamFlat,
+    EngFlat,
+    Money,
+    Camera,
+    Ticket,
+    Wallet,
+    Crown,
+    Camera_purple,
+    Credit_card,
+    Clock_purple,
+    Bell,
+    Bell_1,
+    Union,
+    Headphones_purple,
+    plus,
+    ArrowDownWhite,
+    SearchWhite,
+    checkWhite,
+    Calendar,
+    Calendar_1,
+    onedot,
+    Setting,
+    arrowPurple,
+    userCircle,
+    signOut,
+    home,
+    chevronLeft,
+    chevronRight,
+    searchPurple,
+    pinMap_2,
+    x,
+    staff,
+    branches,
+    chevronRight_2,
+    filter,
+    menuWhite,
+    ShoppingCartSimpleWhite,
+    closeCircle,
+    home_1,
+    pPrev_purple,
+    User_1,
+    orderCancel,
+    orderFinish,
+    orderPending,
+    backWhite,
+    checkGreen,
+    chevronDownWhite,
+    chevronUpWhite,
+    mapPinRed,
+    heart,
+    unHeart,
+    chevronRightBlack,
+    distance,
+    fire,
+    shield,
+    editWhite,
+    pinMapGreen,
+    closeCircleWhite,
+    sucessGreen,
+    xCircleRed,
+    loginReq,
+    playCirclePurple,
+    newsPurple,
+    languagePurple,
+    sendWhite,
+    cartCheckPurple,
+    wifiBlack,
+    carBlack,
+    creditCardBlack,
 };
 export default icon;
