@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import icon from "../../../constants/icon";
 import formatPrice from "../../../utils/formatPrice";
-import SuggestionPush from "../../ServiceDetail/components/SuggestionPush";
+//import SuggestionPush from "../../ServiceDetail/components/SuggestionPush";
 import { addCart } from "../../../redux/cartSlice";
 import { useDispatch } from "react-redux";
 import PopupSuccess from "../../PopupSuccess/index";
 import { AppContext } from "../../../context/AppProvider";
 import PrCardLoading from "../../Loading/PrCardLoading";
 import DetailCardHead from "./DetailCardHead";
+import { formatAddCart } from "../../../utils/cart/formatAddCart";
 
 function DetailCard(props: any) {
   const { product, org, is_type, loading } = props;
@@ -18,29 +19,9 @@ function DetailCard(props: any) {
       : product?.service_name
     }" 
             ${t("pr.to_cart")}`;
-  const [old_price, setOld_price] = useState(0);
-  const [sale_price, setSale_price] = useState(0);
   const dispatch = useDispatch();
-  const [sum, setSum] = useState(0);
+  //const [sum, setSum] = useState(0);
   const [popup, setPopup] = useState(false);
-  useEffect(() => {
-    if (is_type === 1) {
-      if (product?.special_price > 0) {
-        setSale_price(product?.special_price);
-        setOld_price(product?.retail_price);
-      } else {
-        setSale_price(product?.retail_price);
-      }
-    } else if (is_type === 2) {
-      if (product?.special_price > 0) {
-        setSale_price(product?.special_price);
-        setOld_price(product?.price);
-      } else {
-        setSale_price(product?.price);
-      }
-    }
-  }, [is_type, product?.price, product?.retail_price, product?.special_price]);
-  const discount = Math.round((sale_price / old_price) * 100);
   const [quantity, setQuantity] = useState(1);
   const handleDesc = () => {
     if (quantity > 1) {
@@ -48,19 +29,25 @@ function DetailCard(props: any) {
     }
   };
   //add cart
-  const values = {
-    id: product?.id,
-    org_id: org.id,
-    org_name: org.name,
-    cart_id: parseInt(`${is_type}${org.id}${product?.id}`), //is_type + org_id + id
-    name: product?.product_name ? product?.product_name : product?.service_name,
-    quantity: quantity,
-    is_type: is_type,
-    isConfirm: false,
-    price: sale_price,
-    org: org,
-    cart_item: product
-  };
+  let sale_price;
+  let old_price;
+  if (is_type === 1) {
+    if (product?.special_price > 0) {
+      sale_price = product?.special_price;
+      old_price = product?.retail_price
+    } else {
+      sale_price = product?.retail_price;
+    }
+  } else if (is_type === 2) {
+    if (product?.special_price > 0) {
+      sale_price = product?.special_price;
+      old_price = product?.price;
+    } else {
+      sale_price = product?.price;
+    }
+  }
+  const percent = Math.round((sale_price / old_price) * 100);
+  const values = formatAddCart(product, org, is_type, quantity, sale_price);
   const handleAddCart = () => {
     setPopup(true);
     const action = addCart(values);
@@ -77,7 +64,7 @@ function DetailCard(props: any) {
               org={org}
               product={product}
               old_price={old_price}
-              discount={discount}
+              discount={percent}
               sale_price={sale_price}
             />
           </div>
@@ -105,16 +92,11 @@ function DetailCard(props: any) {
                 placeholder={t("pr.enter_sale_code")}
               />
             </div>
-            {is_type === 2 ? (
-              <SuggestionPush org={org} product={product} setSum={setSum} />
-            ) : (
-              ""
-            )}
           </div>
           <div className="product-cnt__right-bot">
             <div className="flex-row-sp product-cnt__right-bot__total">
               <span>{t("pr.total")}</span>
-              <span>{formatPrice(quantity * sale_price + sum)} đ</span>
+              <span>{formatPrice(quantity * sale_price)} đ</span>
             </div>
             <div className="flex-row" style={{ justifyContent: "flex-end" }}>
               <button

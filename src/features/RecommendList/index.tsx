@@ -139,24 +139,24 @@ function RecommendList(props: any) {
                     ))}
                 </div>
             </div>
-            <div className="mer-sale-list">
-                <Slider {...settings}>
-                    {list.map((item: any) => (
-                        <CardItem
-                            key={item.id}
-                            is_type={is_type}
-                            style={cardStyle}
-                            detail={item}
-                            name={item.product_name}
-                            org_name={org.name}
-                            org={org}
-                            org_id={org.id}
-                            retail_price={item.retail_price}
-                            special_price={item.special_price}
-                        />
-                    ))}
-                </Slider>
-            </div>
+            <ul className="mer-sale-list">
+                {/* <Slider {...settings}> */}
+                {list.map((item: any) => (
+                    <CardItem
+                        key={item.id}
+                        is_type={is_type}
+                        style={cardStyle}
+                        detail={item}
+                        name={item.product_name}
+                        org_name={org.name}
+                        org={org}
+                        org_id={org.id}
+                        retail_price={item.retail_price}
+                        special_price={item.special_price}
+                    />
+                ))}
+                {/* </Slider> */}
+            </ul>
         </div>
     );
 }

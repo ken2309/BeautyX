@@ -10,7 +10,7 @@ import './style.css'
 import { useDispatch } from 'react-redux';
 
 function LoginFlatFormRequest(props: any) {
-    const { pathname } = props;
+    const { pathname, setClose } = props;
     const history = useHistory();
     const [load, setLoad] = useState(false);
     const dispatch = useDispatch();
@@ -27,6 +27,7 @@ function LoginFlatFormRequest(props: any) {
             const res = await tikiAuthApi.login(params);
             window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
             await dispatch(fetchAsyncUser())
+            if(setClose) return setClose(false)
             if (pathname && pathname === "/tai-khoan/thong-tin-ca-nhan") {
                 history.push('/home')
             } else {

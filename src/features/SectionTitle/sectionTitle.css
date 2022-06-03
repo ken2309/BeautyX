@@ -12,7 +12,12 @@
         padding: 0px;
         font-size: 18px;
         line-height: 32px;
-        padding: 0 16px;
-        text-align: center !important;
+        padding: 0;
+    }
+    .mer-sale-list__title {
+        font-size: 18px;
+    }
+    .mer-sale-list {
+        margin-bottom: 16px;
     }
 }

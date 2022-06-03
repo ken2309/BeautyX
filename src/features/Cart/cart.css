@@ -294,6 +294,17 @@
   width: 100px;
   justify-content: center;
 }
+.cart-discount-notification{
+  background-color: var(--bgWhite);
+  padding: 36px;
+}
+.cart-discount-notification span{
+  text-align: center;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
 /* responsive */
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
   .cart-list {

@@ -37,9 +37,7 @@ function DetailDesc(props: any) {
                             Mô tả: <br /> <span>{product?.description}</span>
                         </p>
                     ) : (
-                        <p style={{ fontSize: "14px", marginTop: "8px" }}>
-                            Mô tả: Đang cập nhật
-                        </p>
+                        <p style={{ fontSize: "14px" }}>Mô tả: Đang cập nhật</p>
                     )}
                 </div>
             </div>

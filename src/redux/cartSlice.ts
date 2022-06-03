@@ -1,10 +1,11 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const storageName = 'web-booking-cart'
 const storage = JSON.parse(`${localStorage.getItem(storageName)}`);
 const initialState = {
       cartList: localStorage.getItem(storageName) ? storage : [],
       cartQuantity: 0,
+      cartAmountDiscount: 0,
       cartAmount: 0
 }
 const cart = createSlice({
@@ -12,19 +13,19 @@ const cart = createSlice({
       initialState,
       reducers: {
             addCart: (state, action) => {
-                  const iIndex = state.cartList.findIndex((item:any) =>
+                  const iIndex = state.cartList.findIndex((item: any) =>
                         item.cart_id === action.payload.cart_id
                   );
-                  if(iIndex >= 0){
+                  if (iIndex >= 0) {
                         state.cartList[iIndex].quantity += action.payload.quantity;
-                  }else{
+                  } else {
                         const templeCart = { ...action.payload, quantity: action.payload.quantity };
                         state.cartList.push(templeCart);
                   }
                   localStorage.setItem(storageName, JSON.stringify(state.cartList))
             },
-            ascItem :(state, action)=>{
-                  const iIndex = state.cartList.findIndex((item:any)=>
+            ascItem: (state, action) => {
+                  const iIndex = state.cartList.findIndex((item: any) =>
                         item.cart_id === action.payload.cart_id
                   );
                   if (state.cartList[iIndex].quantity >= 1) {
@@ -32,8 +33,8 @@ const cart = createSlice({
                   }
                   localStorage.setItem(storageName, JSON.stringify(state.cartList))
             },
-            descItem :(state, action)=>{
-                  const iIndex = state.cartList.findIndex((item:any)=>
+            descItem: (state, action) => {
+                  const iIndex = state.cartList.findIndex((item: any) =>
                         item.cart_id === action.payload.cart_id
                   );
                   if (state.cartList[iIndex].quantity > 1) {
@@ -59,8 +60,8 @@ const cart = createSlice({
                   state.cartList[iIndex].isConfirm = false;
                   localStorage.setItem(storageName, JSON.stringify(state.cartList))
             },
-            removeItem:(state, action)=>{
-                  const nextItem = state.cartList.filter((item:any) =>
+            removeItem: (state, action) => {
+                  const nextItem = state.cartList.filter((item: any) =>
                         item.cart_id !== action.payload.cart_id
                   )
                   state.cartList = nextItem;
@@ -74,7 +75,7 @@ const cart = createSlice({
                         if (item.org_id === action.payload) {
                               arr = { ...item, isConfirm: true }
                               cartTrue.push(arr);
-                        }else if(item.org_id !== action.payload){
+                        } else if (item.org_id !== action.payload) {
                               arr = { ...item, isConfirm: true }
                               cartFalse.push(arr);
                         }
@@ -83,10 +84,18 @@ const cart = createSlice({
                   localStorage.setItem(storageName, JSON.stringify(state.cartList))
             },
             getTotal: (state) => {
-                  let{total, quantity} = state.cartList.reduce(
-                        (cartTotal:any, cartItem:any )=>{
-                              const {quantity, price, isConfirm} = cartItem;
+                  const cartListDiscounts = state.cartList
+                        .filter((item: any) => item.isConfirm === true)
+                        .map(
+                              (item: any) => item.discount?.discount_value
+                        ).filter(Boolean);
+                  state.cartAmountDiscount = cartListDiscounts.length > 0
+                        && cartListDiscounts.reduce((pre: number, cur: number) => pre + cur)
+                  let { total, quantity } = state.cartList.reduce(
+                        (cartTotal: any, cartItem: any) => {
+                              const { quantity, price, isConfirm } = cartItem;
                               if (isConfirm === true) {
+                                    console.log('xxx')
                                     const itemTotal = price * quantity;
                                     cartTotal.total += itemTotal;
                                     cartTotal.quantity += quantity;
@@ -94,14 +103,14 @@ const cart = createSlice({
                               return cartTotal;
                         },
                         {
-                              total:0, quantity: 0
+                              total: 0, quantity: 0
                         }
                   );
                   state.cartAmount = total;
                   state.cartQuantity = quantity
             },
-            clearAllCart:(state)=>{
-                  state.cartList=[];
+            clearAllCart: (state) => {
+                  state.cartList = [];
                   localStorage.setItem(storageName, JSON.stringify(state.cartList))
             },
             clearByCheck: (state, action) => {

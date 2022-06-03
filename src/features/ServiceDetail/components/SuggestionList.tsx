@@ -50,21 +50,18 @@ function SuggestionList(props: any) {
                             <div className="suggest-cnt__list-tem__detail">
                                 <div className="flex-row-sp suggest-cnt__list-tem__top">
                                     <span>{item.service_name}</span>
-                                    <span>
+                                </div>
+                                <div className="suggest-price">
+                                    <span
+                                        style={{
+                                            color: "var(--purple)",
+                                            fontWeight: "bold",
+                                        }}
+                                    >
                                         {item.special_price > 0
                                             ? formatPrice(item.special_price)
                                             : formatPrice(item.price)}
                                     </span>
-                                </div>
-                                <div className="flex-row-sp suggest-cnt__list-tem__bot">
-                                    <div className="flex-row">
-                                        <span>200</span>
-                                        {t("pr.purchases")}
-                                        <span>4.5</span>
-                                        <img src={icon.star} alt="" />
-                                        69
-                                        <img src={icon.chatAll} alt="" />
-                                    </div>
                                     <span
                                         style={
                                             item.special_price < 0
@@ -75,6 +72,19 @@ function SuggestionList(props: any) {
                                     >
                                         {formatPrice(item.price)}
                                     </span>
+                                </div>
+                                <div className="flex-row-sp suggest-cnt__list-tem__bot">
+                                    <div className="flex-row">
+                                        <span>200</span>
+                                        <img
+                                            src={icon.ShoppingCartSimple}
+                                            alt=""
+                                        />
+                                        <span>4.5</span>
+                                        <img src={icon.star} alt="" />
+                                        69
+                                        <img src={icon.chatAll} alt="" />
+                                    </div>
                                 </div>
                             </div>
                             <img

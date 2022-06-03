@@ -32,14 +32,19 @@
     .home-promo-ser {
         width: 100%;
         overflow-x: scroll;
+    }
+    .home-se-re .home-promo-ser {
         margin-top: 16px;
     }
     .home-promo-ser .ser-list {
-        flex-wrap: nowrap;
-        width: max-content;
-        display: flex;
-        gap: 0 16px;
+        /* flex-wrap: nowrap; */
+        /* width: max-content; */
+        /* display: flex; */
+        grid-gap: 16px;
         padding: 0px 16px 16px;
         margin-top: 0;
+        grid-template-columns: repeat(2, 1fr);
+        display: grid;
+        margin: 0;
     }
 }

@@ -99,7 +99,7 @@ function DetailMer(props: any) {
                     </div>
                     <div className="flex-row detail-time">
                         <img src={icon.Clock_purple} alt="" />
-                        {t("pr.open_time")}
+                        {/* {t("pr.open_time")} */}
                         <span>09.00 - 21.00</span>
                     </div>
                     <div className="flex-row detail-btn">

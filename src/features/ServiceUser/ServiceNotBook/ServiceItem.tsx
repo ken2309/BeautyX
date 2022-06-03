@@ -6,6 +6,7 @@ import { AppContext } from "../../../context/AppProvider";
 import { IUser_Service, IServiceSold } from '../../../interface/servicesUser';
 import onErrorImg from "../../../utils/errorImg";
 import { useSelector } from 'react-redux';
+import { formatDate, checkTimeExpired } from "../../../utils/format";
 
 interface IProps {
   service: IUser_Service,
@@ -25,17 +26,30 @@ function ServiceItem(props: IProps) {
   const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
   const servicesBook = servicesBookSlice.servicesBook;
   const servicesBook_id = servicesBook.map((item: any) => item.ser_book_id);
+  const dateExpired = checkTimeExpired(service?.time_expired)
   const handleAddService = () => {
-    // check service has order_id same
-    if (handleServiceBook) {
+    if (handleServiceBook && dateExpired === false) {
       handleServiceBook(service)
     }
   }
-
-
   return (
-    <>
+    <div>
+      {
+        service.remain_time === 0 &&
+        <span className="treatment-ser-item__out" >
+          Dịch vụ đã hết lượt
+        </span>
+      }
+      {
+        dateExpired &&
+        <span className="treatment-ser-item__out" >
+          Dịch vụ đã hết hạn
+        </span>
+      }
       <div
+        style={
+          service.remain_time === 0 || dateExpired ? { opacity: 0.6 } : {}
+        }
         className="treatment-ser-item"
         onClick={handleAddService}
       >
@@ -65,16 +79,27 @@ function ServiceItem(props: IProps) {
           <span className="ser-desc">
             {service.description !== null && service.description}
           </span>
-          <div className="flex-row quantity">
-            <img src={icon.DeskAlt} alt="" />
-            <div className="quantity-text">
-              <span>{t("my_ser.count_unused")}</span>
-              <span>{service.times - service.remain_time}/{service.times}</span>
+          <div className="flex-row-sp">
+            <div className="flex-row quantity">
+              <img src={icon.DeskAlt} alt="" />
+              <div className="quantity-text">
+                <span>{t("my_ser.count_unused")}</span>
+                {
+                  service.unlimited === true ?
+                    <span>Không giới hạn</span>
+                    :
+                    <span>{service.times - service.remain_time}/{service.times}</span>
+                }
+              </div>
             </div>
+            {
+              service?.time_expired?.slice(0, 5) > 0 &&
+              <span className="date-time_expired">HSD:{formatDate(service?.time_expired)}</span>
+            }
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

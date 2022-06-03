@@ -19,7 +19,6 @@ function SectionOrgs(props: any) {
         //console.log(org)
         history.push({
             pathname: `/org/${org.subdomain}`,
-            search: `${org.id}`,
             state: org,
         })
     }

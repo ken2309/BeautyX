@@ -7,7 +7,7 @@
     padding: 24px 0 0;
 }
 .product .mer-sale-list {
-    padding: 46px 15px 64px 15px;
+    padding: 46px 0 64px 0;
 }
 .product-cnt {
     display: flex;
@@ -116,9 +116,9 @@
     width: 24px;
     height: 24px;
 }
-.pr-de-mer__content .detail-time span {
+/* .pr-de-mer__content .detail-time span {
     margin-left: 12px;
-}
+} */
 .pr-de-mer__content .detail-btn {
     margin-top: 16px;
     width: 100%;
@@ -206,6 +206,13 @@
     display: flex;
     flex-direction: column;
 }
+.user-available-cnt {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    color: var(--red-cl);
+    margin-bottom: 6px;
+}
 .product-cnt__right-body-item span {
     font-size: 20px;
     line-height: 24px;
@@ -269,6 +276,7 @@
     border-radius: 18px;
 }
 .product-cnt__right-bot__total {
+    align-items: flex-start;
     font-size: 20px;
     line-height: 24px;
     font-weight: 700;
@@ -307,6 +315,29 @@
     .product-cnt__right {
         border-radius: 0;
     }
+    .pr-de-mer__content-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .content-left__info-detail {
+        gap: 0 8px;
+    }
+    .detail-time {
+        gap: 0 8px;
+    }
+    .detail-btn {
+        flex-direction: column;
+        gap: 16px 0;
+        align-items: flex-start;
+    }
+    .detail-btn button {
+        margin: 0 !important;
+        width: 130px;
+    }
+    .detail-btn button p {
+        text-align: center;
+        width: 100%;
+    }
 }
 /* res-mobile */
 /* Mobile */
@@ -333,7 +364,8 @@
     .product-cnt__left-tabs {
         width: 100%;
         overflow-x: scroll;
-        padding: 0px 12px;
+        padding: 0px 16px;
+        margin-bottom: 88px;
     }
     /* .product-cnt__left-tabs .css-13xfq8m-MuiTabPanel-root {
         padding: 24px 12px !important;

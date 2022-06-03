@@ -94,7 +94,7 @@ function MerchantDetail() {
           <SaleByMerchant activeTab={tab} org={org} />
           <ServiceByMerchant activeTab={tab} />
           <ProductByMerchant activeTab={tab} />
-          <ComboByMerchant org={org} org_id={769} activeTab={tab} />
+          <ComboByMerchant activeTab={tab} />
         </Container>
       </div>
       <Footer />

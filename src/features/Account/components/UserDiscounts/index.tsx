@@ -1,46 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import discountApi from '../../../../api/discountApi';
+import React from 'react';
 import { IDiscountPar, IITEMS_DISCOUNT } from '../../../../interface/discount';
 import DiscountItem from './DiscountItem';
 import './discount.css'
 import Head from '../../../Head';
-
-interface IData {
-    discounts: IDiscountPar[],
-    page: number,
-    total: number
-}
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchAsyncDiscountsUser } from '../../../../redux/USER/userSlice';
 
 function UserDiscounts(props: any) {
     const { setOpen } = props;
-    const [data, setData] = useState<IData>({
-        discounts: [],
-        page: 1,
-        total: 1
-    })
-    const handleGetDiscounts = async () => {
-        try {
-            const res = await discountApi.getAll({
-                page: data.page
-            });
-            setData({
-                ...data,
-                discounts: [...data.discounts, ...res.data.context.data],
-                total: res.data.context.total
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    useEffect(() => {
-        handleGetDiscounts()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data.page])
+    const dispatch = useDispatch();
+    const { DISCOUNTS_USER } = useSelector((state: any) => state.USER);
+    const { discounts, page, totalItem } = DISCOUNTS_USER;
     const onViewMore = () => {
-        setData({
-            ...data,
-            page: data.page + 1
-        })
+        dispatch(fetchAsyncDiscountsUser({
+            page: page + 1
+        }))
     }
     return (
         <>
@@ -57,7 +31,7 @@ function UserDiscounts(props: any) {
                         className='dis-cnt__list'
                     >
                         {
-                            data.discounts.map((discount: IDiscountPar, index: number) => (
+                            discounts.map((discount: IDiscountPar, index: number) => (
                                 <li
                                     className='dis-cnt__list-item'
                                     key={index}
@@ -76,7 +50,7 @@ function UserDiscounts(props: any) {
                         }
                     </ul>
                     {
-                        data.discounts.length < data.total &&
+                        discounts.length < totalItem &&
                         <button
                             onClick={onViewMore}
                             className='dis-cnt__list-btn'

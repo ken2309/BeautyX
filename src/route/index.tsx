@@ -32,6 +32,10 @@ import Otp from "../features/Otp";
 import ResetPassword from "../features/ResetPassword";
 import Videos from "../features/Videos";
 import Blog from "../features/Blog";
+import ComboDetail from "../features/ComboDetail";
+import DiscountDetail from "../features/DiscountDetail";
+import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
+
 
 // feature mobile
 import Calendar from "../featuresMobile/Calendar";
@@ -42,7 +46,7 @@ const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps
 ) => props.pageComponent;
 function RouterConfig(props: any) {
-  const USER = useSelector((state:any) => state.USER);
+  const USER = useSelector((state: any) => state.USER);
   const routes = [
     {
       path: `/home`,
@@ -79,6 +83,10 @@ function RouterConfig(props: any) {
     {
       path: "/product-detail/:name",
       component: <ProductDetail />,
+    },
+    {
+      path: "/combo-detail/:name",
+      component: <ComboDetail />
     },
     {
       path: "/dich-vu/",
@@ -155,9 +163,18 @@ function RouterConfig(props: any) {
     {
       path: "/beautyx-videos",
       component: <Videos />
-    }, {
+    },
+    {
       path: "/tin-tuc",
       component: <Blog />
+    },
+    {
+      path: "/chi-tiet-giam-gia/:name",
+      component: <DiscountDetail />
+    },
+    {
+      path: "/giam-gia",
+      component: <HomeDiscountList />
     }
   ];
   const routesPrivate = [
