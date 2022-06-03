@@ -62,11 +62,12 @@ const orgSlice = createSlice({
     name: "ORG",
     reducers: {
         onActiveTab: (state, action) => {
+            console.log('x')
             return {
                 ...state,
                 tab: action.payload
             }
-        }
+        },
     },
     extraReducers: {
         [fetchAsyncOrg.pending]: (state) => {

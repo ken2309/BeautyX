@@ -39,7 +39,7 @@ import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 
 // feature mobile
 import Calendar from "../featuresMobile/Calendar";
-import MerchantComment from "../features/MerchantComment";
+//import MerchantComment from "../features/MerchantComment";
 import { useSelector } from "react-redux";
 
 const RouterPage = (
@@ -108,14 +108,6 @@ function RouterConfig(props: any) {
       path: "/sign-request",
       component: <SignPageRequest />,
     },
-    {
-      path: "/merchant-comment",
-      component: <MerchantComment />,
-    },
-    // {
-    //   path: "/date",
-    //   component: <DatePicker />
-    // },
     {
       path: "/org/:subdomain",
       component: <MerchantDetail />,

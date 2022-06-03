@@ -2,9 +2,6 @@ import React, { useContext, useState } from "react";
 import SectionTitle from "../../SectionTitle/index";
 import icon from "../../../constants/icon";
 import ButtonCus from "../../../components/ButtonCus";
-import { utilsList } from "../../MerchantDetail/components/DetailInfo";
-import { staffList } from "../../MerchantDetail/components/DetailInfo";
-import DetailPersonnel from "../../MerchantDetail/components/DetailPersonnel";
 import { useHistory } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import { AppContext } from "../../../context/AppProvider";
@@ -129,23 +126,6 @@ function DetailMer(props: any) {
             </div>
             <div className="mer__content-info__util">
                 <SectionTitle title={t("Mer_de.utilities")} />
-                <ul className="mer__content-info__util-list">
-                    {utilsList.map((item, index) => (
-                        <li key={index}>
-                            <div className="flex-row-sp mer__content-info__util-item">
-                                <img src={item.icon} alt="" />
-                                <span>
-                                    <h5>{item.text}</h5>
-                                    <p>{item.count}</p>
-                                </span>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className="mer__content-info__util">
-                {/* <SectionTitle title={t("Mer_de.staff")} /> */}
-                <DetailPersonnel t={t} list={staffList} />
             </div>
             <Dialog open={openContact} onClose={handleCloseContact}>
                 <div className="form-contact">

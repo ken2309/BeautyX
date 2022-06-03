@@ -3,12 +3,9 @@ import Head from '../Head';
 import { useLocation } from 'react-router-dom'
 import { IComment } from '../../interface/comments';
 import commentsApi from '../../api/commentsApi';
-import '../MerchantComment/merchantComment.css'
 import icon from '../../constants/icon';
 import { Container } from '@mui/material';
-import MerchantCommentItem from '../MerchantComment/MerchantCommentItem';
 import SignInUp from '../poupSignInUp';
-import CommentItemTemp from '../MerchantComment/CommentItemTemp';
 import mediaApi from '../../api/mediaApi';
 import ButtonLoading from '../../components/ButtonLoading';
 import { useSelector } from 'react-redux';
@@ -209,22 +206,6 @@ function CommentsDetail() {
                                 </button>
                             </div>
                         }
-                        <div className="merchantComment-right__comment">
-                            {
-                                cmtTemp.map((item: ICmtTemp, index: number) => (
-                                    <CommentItemTemp
-                                        key={index}
-                                        body={item}
-                                    />
-                                ))
-                            }
-                            {data.comments.map((item: IComment, index: number) => (
-                                <MerchantCommentItem
-                                    key={index}
-                                    comment={item}
-                                />
-                            ))}
-                        </div>
                         {
                             data.comments.length < data.totalItem &&
                             <div className="comment-bot">

@@ -1,4 +1,7 @@
 export const formatOrgParam = (pathname: string) => {
-    const sub_domain = pathname.slice(5, pathname.length);
-    return sub_domain
+    const query = pathname.split("?");
+    const urlParam = new URLSearchParams(`?${query[1]}`);
+    const tab = Object.fromEntries(urlParam.entries());
+    const sub_domain = query[0].slice(5, pathname.length);
+    return { sub_domain, tab }
 }
