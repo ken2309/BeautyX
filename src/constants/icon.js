@@ -128,7 +128,9 @@ import creditCardBlack from "../assets/icon/creditCardBlack.svg";
 import sendComment from "../assets/icon/send-comment.svg";
 import addImg from "../assets/icon/add-img.svg";
 import tickBlue from "../assets/icon/tickBlue.png";
+import userNotSign from "../assets/icon/userNotSign.svg";
 const icon = {
+    userNotSign,
     tickBlue,
     sendComment,
     addImg,
