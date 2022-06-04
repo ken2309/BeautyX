@@ -2,7 +2,7 @@ import React from "react";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../../../interface/discount";
 import formatDate from "../../../../utils/formatDate";
 import formatPrice from "../../../../utils/formatPrice";
-import { useHistory } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 import slugify from "../../../../utils/formatUrlString";
 
 interface IProps {
@@ -16,11 +16,13 @@ function DiscountItem(props: IProps) {
     const org = discountItem?.organization;
     const onDetail = () => {
         history.push({
-            pathname: `/chi-tiet-giam-gia/${slugify(discountItem.productable.service_name)}`,
+            pathname: `/chi-tiet-giam-gia/${slugify(
+                discountItem.productable.service_name
+            )}`,
             search: `org_id=${org?.id}&id=${discountPar?.id}`,
-            state: org
-        })
-    }
+            state: org,
+        });
+    };
     return (
         <li onClick={onDetail} className="discount-item">
             <div className="img">
@@ -31,9 +33,7 @@ function DiscountItem(props: IProps) {
                 />
                 {discountPar.valid_util && (
                     <div className="vail_util">
-                        <span>
-                            Hết hạn:{formatDate(discountPar.valid_util)}{" "}
-                        </span>
+                        <span>HSD:{formatDate(discountPar.valid_util)} </span>
                     </div>
                 )}
             </div>
