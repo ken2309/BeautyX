@@ -148,9 +148,6 @@
         width: max-content;
         flex-wrap: nowrap;
     }
-    .home-discount-item__cnt {
-        width: 164px;
-    }
     .home-discounts__title {
         margin: 0 16px;
     }

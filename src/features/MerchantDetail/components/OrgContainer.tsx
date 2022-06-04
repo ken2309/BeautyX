@@ -8,6 +8,7 @@ import OrgProducts from './OrgPages/OrgProducts';
 import OrgCombos from './OrgPages/OrgCombos';
 import OrgInformation from './OrgPages/OrgInformation';
 import OrgReviews from './OrgPages/OrgReviews';
+import OrgGalleries from './OrgPages/OrgGalleries/OrgGalleries';
 import useFullScreen from '../../../utils/useFullScreen';
 
 interface IProps {
@@ -55,6 +56,8 @@ function OrgContainer(props: IProps) {
                     <OrgInformation org={org} />
                     <OrgReviews org={org} />
                 </div>
+            case 6:
+                return <OrgGalleries />
         }
     }
     return (

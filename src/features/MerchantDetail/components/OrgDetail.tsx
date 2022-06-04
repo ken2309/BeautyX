@@ -4,8 +4,9 @@ import { IOrganization } from '../../../interface/organization';
 import onErrorImg from '../../../utils/errorImg';
 import icon from '../../../constants/icon';
 import Slider from "react-slick";
-import { onDeleteFavoriteOrg, onFavoriteOrg } from '../../../redux/org/orgSlice'
-import { useDispatch } from 'react-redux';
+import { onActiveTab, onDeleteFavoriteOrg, onFavoriteOrg } from '../../../redux/org/orgSlice'
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 interface IProps {
     org: IOrganization,
@@ -15,11 +16,17 @@ interface IProps {
 function OrgDetail(props: IProps) {
     const { org, galleries } = props;
     const dispatch = useDispatch();
+    const history = useHistory();
+    const { USER } = useSelector((state: any) => state.USER);
     const handleFavoriteOrg = () => {
-        if (org?.is_favorite) {
-            dispatch(onDeleteFavoriteOrg(org))
+        if (USER) {
+            if (org?.is_favorite) {
+                dispatch(onDeleteFavoriteOrg(org))
+            } else {
+                dispatch(onFavoriteOrg(org))
+            }
         } else {
-            dispatch(onFavoriteOrg(org))
+            history.push('/sign-in?1')
         }
     }
     const settings = {
@@ -50,11 +57,14 @@ function OrgDetail(props: IProps) {
             },
         ],
     };
+    const onActiveTabGallery = () => {
+        dispatch(onActiveTab(6))
+    }
     return (
         <div className="org-detail">
             <Container>
                 <div className="org-detail__cnt">
-                    <div className="org-detail__cnt-top">
+                    <div onClick={onActiveTabGallery} className="org-detail__cnt-top">
                         <Slider {...settings}>
                             {
                                 galleries.map((item: any, index: number) => (
