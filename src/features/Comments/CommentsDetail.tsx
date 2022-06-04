@@ -1,24 +1,24 @@
-import React, { useEffect, useState, KeyboardEvent } from 'react';
-import Head from '../Head';
-import { useLocation } from 'react-router-dom'
-import { IComment } from '../../interface/comments';
-import commentsApi from '../../api/commentsApi';
-import icon from '../../constants/icon';
-import { Container } from '@mui/material';
-import SignInUp from '../poupSignInUp';
-import mediaApi from '../../api/mediaApi';
-import ButtonLoading from '../../components/ButtonLoading';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState, KeyboardEvent } from "react";
+import Head from "../Head";
+import { useLocation } from "react-router-dom";
+import { IComment } from "../../interface/comments";
+import commentsApi from "../../api/commentsApi";
+import icon from "../../constants/icon";
+import { Container } from "@mui/material";
+import SignInUp from "../poupSignInUp";
+import mediaApi from "../../api/mediaApi";
+import ButtonLoading from "../../components/ButtonLoading";
+import { useSelector } from "react-redux";
 
 interface IData {
-    comments: IComment[],
-    page: number,
-    totalItem: number,
-    loadPage: boolean
+    comments: IComment[];
+    page: number;
+    totalItem: number;
+    loadPage: boolean;
 }
 interface ICmtTemp {
-    text: string,
-    image_url: string
+    text: string;
+    image_url: string;
 }
 
 function CommentsDetail() {
@@ -27,62 +27,63 @@ function CommentsDetail() {
     const profile = USER.USER;
     const search = location.search.slice(1, location.search.length);
     const params = {
-        comment_type: search.split(',')[0],
-        org_id: search.split(',')[1],
-        id: search.split(',')[2]
-    }
+        comment_type: search.split(",")[0],
+        org_id: search.split(",")[1],
+        id: search.split(",")[2],
+    };
     const [data, setData] = useState<IData>({
         comments: [],
         page: 1,
         totalItem: 1,
-        loadPage: false
-    })
+        loadPage: false,
+    });
     const [cmt, setCmt] = useState({
-        text: '', image_url: ''
+        text: "",
+        image_url: "",
     });
     const [cmtTemp, setCmtTemp] = useState<ICmtTemp[]>([]);
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false);
     const handleGetComments = async () => {
         try {
             const res = await commentsApi.getComments({
                 type: params.comment_type,
                 id: params.id,
                 org_id: params.org_id,
-                page: data.page
-            })
+                page: data.page,
+            });
             setData({
                 ...data,
                 comments: [...data.comments, ...res.data.context.data],
                 totalItem: res.data.context.total,
-                loadPage: false
-            })
+                loadPage: false,
+            });
         } catch (error) {
-            console.log(error)
-            setData({ ...data, loadPage: false })
+            console.log(error);
+            setData({ ...data, loadPage: false });
         }
-    }
+    };
     useEffect(() => {
-        handleGetComments()
+        handleGetComments();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data.page])
+    }, [data.page]);
     //handle post image
     const handlePostImageMedia = async (form: any) => {
         let formData = new FormData();
-        formData.append('file', form);
+        formData.append("file", form);
         try {
             const res = await mediaApi.postMedia(formData);
             setCmt({
                 ...cmt,
-                image_url: res.data.context.original_url
-            })
+                image_url: res.data.context.original_url,
+            });
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
     const onChangeMedia = (e: any) => {
         const media = e.target.files[0];
-        handlePostImageMedia(media)
-    }
+        handlePostImageMedia(media);
+    };
 
     const handlePostComment = async () => {
         try {
@@ -90,38 +91,39 @@ function CommentsDetail() {
                 type: params.comment_type,
                 id: params.id,
                 org_id: params.org_id,
-                body: JSON.stringify(cmt)
-            })
-            setCmtTemp([...cmtTemp, cmt].reverse())
+                body: JSON.stringify(cmt),
+            });
+            setCmtTemp([...cmtTemp, cmt].reverse());
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
             if (profile) {
                 handlePostComment();
                 setCmt({
-                    text: '', image_url: ''
-                })
+                    text: "",
+                    image_url: "",
+                });
             } else {
-                setOpen(true)
+                setOpen(true);
             }
         }
     };
     const onRemoveImageTemp = () => {
         setCmt({
             ...cmt,
-            image_url: ''
-        })
-    }
+            image_url: "",
+        });
+    };
     const onPage = () => {
         setData({
             ...data,
             page: data.page + 1,
-            loadPage: true
-        })
-    }
+            loadPage: true,
+        });
+    };
     return (
         <>
             <SignInUp
@@ -177,11 +179,16 @@ function CommentsDetail() {
                             <input
                                 autoComplete="off"
                                 value={cmt.text}
-                                onChange={(e) => setCmt({ ...cmt, text: e.target.value })}
+                                onChange={(e) =>
+                                    setCmt({ ...cmt, text: e.target.value })
+                                }
                                 onKeyDown={handleKeyDown}
                                 placeholder="Nhập bình luận ..."
                             />
-                            <div title="Thêm hình" className="merchantComment-img">
+                            <div
+                                title="Thêm hình"
+                                className="merchantComment-img"
+                            >
                                 <label htmlFor="file">
                                     <img src={icon.Camera_purple} alt="" />
                                 </label>
@@ -195,27 +202,27 @@ function CommentsDetail() {
                                 onChange={onChangeMedia}
                             />
                         </div>
-                        {
-                            cmt.image_url?.length > 0 &&
+                        {cmt.image_url?.length > 0 && (
                             <div className="input-image">
-                                <img className="input-image__temp" src={cmt.image_url} alt="" />
-                                <button
-                                    onClick={onRemoveImageTemp}
-                                >
+                                <img
+                                    className="input-image__temp"
+                                    src={cmt.image_url}
+                                    alt=""
+                                />
+                                <button onClick={onRemoveImageTemp}>
                                     <img src={icon.closeCircle} alt="" />
                                 </button>
                             </div>
-                        }
-                        {
-                            data.comments.length < data.totalItem &&
+                        )}
+                        {data.comments.length < data.totalItem && (
                             <div className="comment-bot">
                                 <ButtonLoading
-                                    title='Xem thêm đánh giá'
+                                    title="Xem thêm đánh giá"
                                     onClick={onPage}
                                     loading={data.loadPage}
                                 />
                             </div>
-                        }
+                        )}
                     </div>
                 </div>
             </Container>

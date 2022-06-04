@@ -4,18 +4,29 @@ import { STATUS } from '../status'
 
 export const fetchAsyncNews: any = createAsyncThunk(
     "BLOG/fetchAsyncNews",
-    async () => {
+    async (cate:Number) => {
+        let res,payload:any=[];
         try {
-            const res = await newsApi.getAll();
-            const payload = res.data
-            return payload
+            switch(cate){
+                case 8:
+                    res = await newsApi.getAll();
+                    payload = res.data
+                    return payload;
+                case 7:
+                    res = await newsApi.getVideo();
+                    return res.data
+                default:
+                    res = await newsApi.getAll();
+                    payload = res.data
+                    return payload;
+            }
         } catch (error) {
             console.log(error)
         }
     }
 )
 export const fetchAsyncVideos: any = createAsyncThunk(
-    "BLOG/fetchAsyncNews",
+    "BLOG/fetchAsyncVideos",
     async () => {
         try {
             const res = await newsApi.getVideo();
@@ -43,20 +54,21 @@ const blogSlice = createSlice({
         [fetchAsyncNews.pending]: (state) => {
             return { ...state, NEWS: { ...state.NEWS, status: STATUS.LOADING } }
         },
-        [fetchAsyncNews.fulfilled]: (state, { payload }) => {
+        [fetchAsyncNews.fulfilled]: (state, { payloads }) => {
+            // console.log('NEWS',payload)
             return {
                 ...state,
-                NEWS: { news: payload, status: STATUS.SUCCESS }
+                NEWS: { news: payloads, status: STATUS.SUCCESS }
             }
         },
         [fetchAsyncNews.rejected]: (state) => {
             return { ...state, NEWS: { ...state.NEWS, status: STATUS.LOADING } }
         },
-
         [fetchAsyncVideos.pending]: (state) => {
             return { ...state, VIDEOS: { ...state.VIDEOS, status: STATUS.LOADING } }
         },
         [fetchAsyncVideos.fulfilled]: (state, { payload }) => {
+            // console.log(payload)
             return {
                 ...state,
                 VIDEOS: { videos: payload, status: STATUS.SUCCESS }
@@ -65,6 +77,7 @@ const blogSlice = createSlice({
         [fetchAsyncVideos.rejected]: (state) => {
             return { ...state, VIDEOS: { ...state.VIDEOS, status: STATUS.LOADING } }
         },
+       
     }
 })
 export default blogSlice.reducer;

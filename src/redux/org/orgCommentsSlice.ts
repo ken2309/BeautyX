@@ -4,7 +4,7 @@ import { STATUS } from "../status";
 import { IComment } from "../../interface/comments";
 
 interface IInitialState {
-    org_id: any,
+    org_id: any;
     comments: IComment[];
     page: number;
     totalItem: number;
@@ -36,10 +36,7 @@ export const postAsyncOrgComments: any = createAsyncThunk(
     "ORG_COMMENTS/postAsyncOrgComments",
     async (values: any) => {
         try {
-            const res = await commentsApi.postCommentOrg({
-                org_id: values.org_id,
-                body: values.body,
-            });
+            const res = await commentsApi.postCommentOrg(values.values);
             const payload = {
                 comment: {
                     ...res.data.context,

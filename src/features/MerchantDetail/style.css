@@ -6,12 +6,12 @@
     left: 0;
     right: 0;
     z-index: 100;
-    transition: all .5s;
+    transition: all 0.5s;
 }
 
 .mb-head-act {
     background-color: var(--bgWhite);
-    transition: all .5s;
+    transition: all 0.5s;
 }
 
 .mb-head-org-cnt button {
@@ -124,7 +124,7 @@
     font-weight: 700;
     color: var(--bgWhite);
     border-radius: 6px;
-    transition: all .3s;
+    transition: all 0.3s;
 }
 
 .org-detail__cnt-bot .right button:nth-child(1) {
@@ -200,7 +200,7 @@
     position: sticky;
     background-color: var(--bgWhite);
     z-index: 20;
-    top: 0px
+    top: 0px;
 }
 
 .org-tab-list {
@@ -217,7 +217,7 @@
     font-weight: 700;
     color: var(--black);
     cursor: pointer;
-    transition: all .3s;
+    transition: all 0.3s;
 }
 
 /* org discounts */
@@ -279,7 +279,7 @@
 
 .org-special-item__detail {
     padding: 8px;
-    background-color: #FFF;
+    background-color: #fff;
     border-radius: 0px 0px 8px 8px;
 }
 
@@ -319,7 +319,8 @@
 
 /* org information cnt */
 .org-information-cnt {
-    padding: 28px 0px;
+    padding: 24px 0px;
+    grid-gap: 0 48px;
 }
 
 .org-information-cnt {
@@ -329,7 +330,6 @@
 
 .org-information {
     width: 50%;
-    padding-right: 12px;
 }
 
 .org-information__map-cnt {
@@ -429,12 +429,12 @@
     height: 32px;
     overflow: hidden;
     cursor: pointer;
-    transition: all .4s;
+    transition: all 0.4s;
 }
 
 .branches-list-cnt__drop {
     height: 100px !important;
-    transition: all .4s !important;
+    transition: all 0.4s !important;
 }
 
 .org-information__branches .branches-list-cnt .list-item {
@@ -547,6 +547,9 @@
 }
 
 @media only screen and (max-width: 1023px) {
+    .org-information-cnt {
+        grid-gap: 24px 0;
+    }
     .org-detail {
         padding: 0px;
         height: 296px;
