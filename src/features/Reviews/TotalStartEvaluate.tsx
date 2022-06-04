@@ -1,6 +1,5 @@
 import React from "react";
 import Rating from "@mui/material/Rating";
-import icon from "../../constants/icon";
 
 export default function TotalStartEvaluate() {
     const [value, setValue] = React.useState<number | null>(4);

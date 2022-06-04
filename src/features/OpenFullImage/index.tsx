@@ -1,13 +1,13 @@
-import React from 'react';
-import { Dialog } from '@mui/material';
-import { IComment } from '../../interface/comments';
-import formatDate from '../../utils/formatDate';
-import './full-img.css';
-import icon from '../../constants/icon';
-import useFullScreen from '../../utils/useFullScreen';
+import React from "react";
+import { Dialog } from "@mui/material";
+import { IComment } from "../../interface/comments";
+import formatDate from "../../utils/formatDate";
+import "./full-img.css";
+import icon from "../../constants/icon";
+import useFullScreen from "../../utils/useFullScreen";
 
 interface IProps {
-    open: boolean,
+    open: boolean;
     setOpen: (open: boolean) => void;
     comment?: IComment,
     image_url?: string,
@@ -21,8 +21,8 @@ function FullImage(props: IProps) {
         const cmt = JSON.parse(`${comment?.body}`)
         body = {
             text: cmt.text,
-            image_url: cmt.image_url
-        }
+            image_url: cmt.image_url,
+        };
     } catch (error) {
         body = {
             text: comment?.body,

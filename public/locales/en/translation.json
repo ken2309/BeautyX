@@ -363,5 +363,10 @@
   "sell_center":{
     "next":"Next",
     "enter_your_subdomain":"Enter your subdomain"
+  },
+  "trending":{
+    "trend": "Reels",
+    "watch_all": "Watch All"
   }
+
 }

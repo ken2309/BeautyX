@@ -363,5 +363,9 @@
   "sell_center":{
     "next":"Tiếp tục",
     "enter_your_subdomain":"Nhập đia chỉ Subdomain"
+  },
+  "trending":{
+    "trend": "Xu hướng",
+    "watch_all": "Xem thêm"
   }
 }
