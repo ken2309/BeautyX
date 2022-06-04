@@ -148,3 +148,12 @@
 .react-btn>div:last-child{
     margin-right: 0;
 }
+@media only screen and (min-width: 1023px){
+    .video-item-pc__wr{
+        width: 100%;
+        padding-bottom: calc(100% * 0.5);
+    }
+    .video-item_product_list{
+        padding-bottom: calc(100% * 0.5);
+    }   
+}
