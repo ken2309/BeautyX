@@ -29,12 +29,24 @@
     position: relative;
 }
 .video-item__pc{
-    object-fit: cover;
+    object-fit: contain;
     object-position: top;
     width: 100%;
     height: 100%;
     position: absolute;
     border-radius: 8px;
+    z-index: 3;
+}
+.blur{
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(10px);
+    z-index: 2;
+}
+.back-drop__vid{
+    object-fit: cover;
+    object-position: center;
+    z-index: 1;
 }
 .video-item-pc header, 
 .video-item-header_ava{
