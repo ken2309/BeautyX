@@ -79,7 +79,9 @@ function VideoItemPc(props: any) {
                 </span>
             </div>
         <div className="video-item_body">
-            <div className="video-item_body-image">
+            <div className="video-item_body-image"
+                
+            >
                 <div
                     onMouseEnter={onHoverVideoItem}
                     className='video-item-pc__wr'
@@ -90,6 +92,16 @@ function VideoItemPc(props: any) {
                         controls
                         // autoPlay={true}
                         loop
+                    >
+                        <source src={vd_url} type="video/mp4" />
+                    </video>
+                    <div className="blur"></div>
+                    <video 
+                         ref={videoRef}
+                         className='video-item__pc back-drop__vid'
+                         controls
+                         // autoPlay={true}
+                         loop
                     >
                         <source src={vd_url} type="video/mp4" />
                     </video>

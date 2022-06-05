@@ -67,7 +67,7 @@ export default function Video(props:any){
                     <div className="video-control__info-label">
                         <img
                         // onClick={onOrgDetail}
-                        src={data.org.image_url}
+                        src={data.org?.image_url}
                         alt=""
                         className="org_avt org_avt-spin"
                         onError={(e) => onErrorImg(e)}
