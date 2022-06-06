@@ -60,16 +60,19 @@ export default function CommentItem(props: IProps) {
             </div>
 
             <div className="evaluate-comment__body">
-                <span>Phân loại: Name of Service/Product</span>
-
+                {/* <span>Phân loại: Name of Service/Product</span> */}
                 <span>{body.text}</span>
-                <div className="comment-img">
-                    <img
-                        onClick={() => setOpen(true)}
-                        src={body.image_url}
-                        alt=""
-                    />
-                </div>
+                {body.image_url ? (
+                    <>
+                        <div className="comment-img">
+                            <img
+                                onClick={() => setOpen(true)}
+                                src={body.image_url}
+                                alt=""
+                            />
+                        </div>
+                    </>
+                ) : null}
                 <span>{comment.created_at}</span>
             </div>
             <FullImage open={open} setOpen={setOpen} comment={comment} />

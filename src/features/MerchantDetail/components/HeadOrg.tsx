@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import icon from '../../../constants/icon';
 import { IOrganization } from '../../../interface/organization';
@@ -20,14 +20,19 @@ window.addEventListener("scroll", function () {
 });
 
 function HeadOrg(props: IProps) {
+    const { USER } = useSelector((state: any) => state.USER);
     const history = useHistory();
     const { org } = props;
     const dispatch = useDispatch();
     const handleFavoriteOrg = () => {
-        if (org?.is_favorite) {
-            dispatch(onDeleteFavoriteOrg(org))
+        if (USER) {
+            if (org?.is_favorite) {
+                dispatch(onDeleteFavoriteOrg(org))
+            } else {
+                dispatch(onFavoriteOrg(org))
+            }
         } else {
-            dispatch(onFavoriteOrg(org))
+            history.push('/sign-in?1')
         }
     }
     return (
@@ -48,7 +53,7 @@ function HeadOrg(props: IProps) {
                     </div>
                 </button>
                 <button
-                    onClick={()=>history.push('/cart')}
+                    onClick={() => history.push('/cart')}
                 >
                     <div className="icon-btn">
                         <img src={icon.ShoppingCartSimple} alt="" />

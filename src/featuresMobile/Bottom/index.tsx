@@ -39,6 +39,15 @@ function Bottom(props: any) {
                   is_badge: false,
             },
             {
+                  id: 5,
+                  title: "Video",
+                  icon_active: icon.playCirclePurple,
+                  icon: icon.playCircle,
+                  path: '/beautyx-videos',
+                  is_badge: false,
+                  count: notifications.filter((item: any) => item.isRead === false).length
+            },
+            {
                   id: 4,
                   title: t('Bottom.account'),
                   icon_active: icon.User,

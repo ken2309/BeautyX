@@ -25,7 +25,7 @@ function DiscountItem(props: IProps) {
         });
     };
     return (
-        <li onClick={onDetail} className="home-discount-item__cnt">
+        <div onClick={onDetail} className="home-discount-item__cnt">
             <img
                 className="home-discount-item__img"
                 src={
@@ -75,7 +75,7 @@ function DiscountItem(props: IProps) {
                     </span>
                 </div>
             </div>
-        </li>
+        </div>
     );
 }
 

@@ -7,11 +7,12 @@ import HeadTitle from "../HeadTitle/index";
 import {
   fetchAsyncOrg,
   fetchOrgGalleries,
-  onActiveTab
+  onActiveTab,
 } from '../../redux/org/orgSlice';
 import {
   fetchAsyncServicesSpecial,
-  fetchProductsSpecial
+  fetchProductsSpecial,
+  onSaveOrgId
 } from '../../redux/org_specials/orgSpecialSlice';
 import { fetchAsyncOrgDiscounts } from '../../redux/org_discounts/orgDiscountsSlice'
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,6 +34,10 @@ function MerchantDetail() {
   const { sub_domain } = param;
 
   const ORG = useSelector((state: any) => state.ORG);
+  const ORG_SPECIALS = useSelector((state: any) => state.ORG_SPECIALS);
+  const { SERVICES_SPECIAL, PRODUCTS_SPECIAL, org_id } = ORG_SPECIALS;
+  const { status_ser } = SERVICES_SPECIAL;
+  const { status_pr } = PRODUCTS_SPECIAL;
   const ORG_DISCOUNTS = useSelector((state: any) => state.ORG_DISCOUNTS);
 
   const { org, status, tab, GALLERIES } = ORG;
@@ -59,8 +64,13 @@ function MerchantDetail() {
         org_id: org?.id,
         page: 1
       }
-      dispatch(fetchAsyncServicesSpecial(values));
-      dispatch(fetchProductsSpecial(values))
+      dispatch(onSaveOrgId(org?.id))
+      if (org?.id !== org_id || status_ser !== STATUS.SUCCESS) {
+        dispatch(fetchAsyncServicesSpecial(values));
+      }
+      if (org?.id !== org_id || status_pr !== STATUS.SUCCESS) {
+        dispatch(fetchProductsSpecial(values))
+      }
     }
   }
   useEffect(() => {

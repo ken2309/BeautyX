@@ -80,7 +80,7 @@ function Head(props: any) {
       if (prev_url) {
         history.push(`${prev_url}`)
       } else {
-        history.goBack() || history.push('/');
+        history.goBack()
       }
     }
   };

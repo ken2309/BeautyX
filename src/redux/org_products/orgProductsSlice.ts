@@ -16,17 +16,27 @@ interface ICATE {
 }
 interface IINITIALSTATE {
     CATE: ICATE,
-    PRODUCTS: IPRODUCTS
+    PRODUCTS: IPRODUCTS,
+    org_id: any,
+    choose_cate: any,
 }
 
 export const fetchAsyncCateProducts: any = createAsyncThunk(
     "ORG_PRODUCTS/fetchAsyncCateProducts",
     async (org_id: any) => {
-        const res = await categoryApi.getByOrgId(org_id);
-        const payload = res.data.context.data
-        return payload
+        try {
+            const res = await categoryApi.getByOrgId(org_id);
+            const payload = {
+                org_id: org_id,
+                categories: res.data.context.data
+            }
+            return payload
+        } catch (error) {
+            console.log(error)
+        }
     }
 )
+
 export const fetchAsyncProducts: any = createAsyncThunk(
     "ORG_PRODUCTS/fetchAsyncProducts",
     async (values: any) => {
@@ -40,6 +50,8 @@ export const fetchAsyncProducts: any = createAsyncThunk(
     }
 )
 const initialState: IINITIALSTATE = {
+    org_id: null,
+    choose_cate: null,
     CATE: {
         categories: [],
         status: ''
@@ -64,17 +76,21 @@ const orgProductsSlice = createSlice({
                     page: 1
                 }
             }
-        }
+        },
+        onChooseCateServices: (state, { payload }) => {
+            state.choose_cate = payload
+        },
     },
     extraReducers: {
         //get services cate org
-        [fetchAsyncCateProducts.pending]: (state) => {
+        [fetchAsyncCateProducts.pending]: (state, { payload }) => {
             return { ...state, CATE: { ...state.CATE, status: STATUS.LOADING } }
         },
         [fetchAsyncCateProducts.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
-                CATE: { categories: payload, status: STATUS.SUCCESS }
+                org_id: payload.org_id,
+                CATE: { categories: payload.categories, status: STATUS.SUCCESS }
             }
         },
         [fetchAsyncCateProducts.rejected]: (state) => {
@@ -111,5 +127,5 @@ const orgProductsSlice = createSlice({
     }
 })
 const { actions } = orgProductsSlice;
-export const { clearProducts } = actions;
+export const { clearProducts, onChooseCateServices } = actions;
 export default orgProductsSlice.reducer;

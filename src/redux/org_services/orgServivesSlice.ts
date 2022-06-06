@@ -15,6 +15,7 @@ interface ICATE {
     status: string
 }
 interface IINITIALSTATE {
+    choose_cate: null,
     org_id: any,
     CATE: ICATE,
     SERVICES: ISERVICES
@@ -50,6 +51,7 @@ export const fetchAsyncServices: any = createAsyncThunk(
     }
 )
 const initialState: IINITIALSTATE = {
+    choose_cate: null,
     org_id: null,
     CATE: {
         categories: [],
@@ -66,6 +68,9 @@ const orgServicesSlice = createSlice({
     name: "ORG_SERVICES",
     initialState,
     reducers: {
+        onChooseCateServices: (state, { payload }) => {
+            state.choose_cate = payload
+        },
         clearServices: (state) => {
             return {
                 ...state,
@@ -123,5 +128,5 @@ const orgServicesSlice = createSlice({
     }
 })
 const { actions } = orgServicesSlice;
-export const { clearServices } = actions
+export const { clearServices, onChooseCateServices } = actions
 export default orgServicesSlice.reducer;

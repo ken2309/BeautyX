@@ -107,6 +107,7 @@ import chevronDownWhite from "../assets/icon/chevron-down-white.svg";
 import mapPinRed from "../assets/icon/mapPinRed.svg";
 import heart from "../assets/icon/heart.svg";
 import unHeart from "../assets/icon/unHeart.svg";
+import unHeartWhite from "../assets/icon/unHeartWhite.svg";
 import chevronRightBlack from "../assets/icon/chevronRightBlack.svg";
 import distance from "../assets/icon/distance.svg";
 import fire from "../assets/icon/fire.svg";
@@ -118,6 +119,7 @@ import sucessGreen from "../assets/icon/sucessGreen.svg";
 import xCircleRed from "../assets/icon/xCircleRed.svg";
 import loginReq from "../assets/icon/loginReq.svg";
 import playCirclePurple from "../assets/icon/playCirclePurple.svg";
+import playCircle from "../assets/icon/playCircle.svg";
 import newsPurple from "../assets/icon/newsPurple.svg";
 import languagePurple from "../assets/icon/languagePurple.svg";
 import sendWhite from "../assets/icon/sendWhite.svg";
@@ -125,15 +127,18 @@ import cartCheckPurple from "../assets/icon/cartCheckPurple.svg";
 import wifiBlack from "../assets/icon/wifiBlack.svg";
 import carBlack from "../assets/icon/carBlack.svg";
 import creditCardBlack from "../assets/icon/creditCardBlack.svg";
+import watchMore from "../assets/icon/watch_more.svg";
+import comment from "../assets/icon/comment_light.svg";
+import comment_bold from "../assets/icon/comment_bold.svg";
+import share from "../assets/icon/shareReels.svg";
 import sendComment from "../assets/icon/send-comment.svg";
 import addImg from "../assets/icon/add-img.svg";
 import tickBlue from "../assets/icon/tickBlue.png";
 import userNotSign from "../assets/icon/userNotSign.svg";
+import arrowDownPurple from "../assets/icon/arrow_drop_down_purple.svg";
+
 const icon = {
-    userNotSign,
-    tickBlue,
-    sendComment,
-    addImg,
+    arrowDownPurple,
     Favorite,
     Tumer,
     DeskAlt,
@@ -242,6 +247,7 @@ const icon = {
     mapPinRed,
     heart,
     unHeart,
+    unHeartWhite,
     chevronRightBlack,
     distance,
     fire,
@@ -253,6 +259,7 @@ const icon = {
     xCircleRed,
     loginReq,
     playCirclePurple,
+    playCircle,
     newsPurple,
     languagePurple,
     sendWhite,
@@ -260,5 +267,12 @@ const icon = {
     wifiBlack,
     carBlack,
     creditCardBlack,
+    watchMore,
+    comment,
+    share,
+    sendComment,
+    addImg,
+    tickBlue,
+    userNotSign,
 };
 export default icon;
