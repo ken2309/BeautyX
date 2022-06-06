@@ -5,8 +5,9 @@ class ServiceApi {
   getByOrg_id = (values: any) => {
     const url = `/organizations/${values.org_id}/services`;
     const paramsOb = {
-      page: values.page,
+      page: values.page || 1,
       limit: 15,
+      "filter[keyword]": values.keyword,
       "filter[service_group_id]": values.cate_id,
       "include": "category|favorites_count",
       "append": "is_favorite|rating|bought_count"

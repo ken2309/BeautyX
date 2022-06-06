@@ -1,59 +1,49 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import Head from "../Head";
 import { Container } from "@mui/material";
 import DetailCard from "../ProductDetail/components/DetailCard";
 import { useLocation } from "react-router-dom";
-import orgApi from "../../api/organizationApi";
-import serviceApi from "../../api/serviceApi";
 import DetailHead from "../ProductDetail/components/DetailHead";
-import RecommendList from "./components/RecommendList";
 import "./serviceDetail.css";
-import { Service } from "../../interface/service";
 import HeadTitle from "../HeadTitle";
 import Footer from "../Footer";
+import { extraParamsUrl } from "../../utils/extraParamsUrl";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAsyncServiceDetail } from '../../redux/org_services/serviceSlice';
+import { fetchAsyncOrg } from '../../redux/org/orgSlice'
+import { STATUS } from '../../redux/status'
 
 function ServiceDetail(props: any) {
     const location: any = useLocation();
-    const search = location.search.slice(1, location.search.length);
-    const params = search.split(",");
-    const is_type = parseInt(params[2]);
-    // console.log(is_type)
-    const [org, setOrg] = useState<any>({});
-    const [service, setService] = useState<Service>();
-    const [services, setServices] = useState<Service[]>([]);
-    const [loading, setLoading] = useState(false);
-    // const url = location.search.slice(1, location.search.length);
-    // const param = JSON.parse(decodeURI(url))
-    useEffect(() => {
-        async function handleGetOrg_Ser() {
-            try {
-                if (location.state) {
-                    setOrg(location.state.org);
-                    setService(location.state.detail);
-                } else {
-                    setLoading(true);
-                    const resOrg = await orgApi.getOrgById(params[0]);
-                    setOrg(resOrg.data.context);
-                    const resSer = await serviceApi.getDetailById({
-                        org_id: params[0],
-                        ser_id: params[1],
-                    });
-                    setService(resSer.data.context);
-                    setLoading(false);
-                }
-                const resListSer = await serviceApi.getByOrg_id({
-                    org_id: params[0],
-                    page: 1,
-                });
-                setServices(resListSer.data.context.data);
-            } catch (err) {
-                console.log(err);
-                setLoading(false);
+    const dispatch = useDispatch();
+    const ORG = useSelector((state: any) => state.ORG);
+    const { SERVICE } = useSelector((state: any) => state.SERVICE);
+    const params: any = extraParamsUrl();
+    const callServiceDetail = () => {
+        if (parseInt(params.id) !== SERVICE.service.id || SERVICE.status !== STATUS.SUCCESS) {
+            const values = {
+                org_id: params.org,
+                ser_id: params.id
             }
+            dispatch(fetchAsyncServiceDetail(values))
         }
-        handleGetOrg_Ser();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.state, params[0]]);
+    }
+    const callOrgDetail = () => {
+        if (parseInt(params.org) !== ORG.org?.id || ORG.status !== STATUS.SUCCESS) {
+            dispatch(fetchAsyncOrg(params.org))
+        }
+    }
+    useEffect(() => {
+        if (!location.state) {
+            callServiceDetail()
+            callOrgDetail()
+        }
+    }, [])
+
+    const service = location.state ? location.state.service : SERVICE.service;
+    const org = location.state ? location.state.org : ORG.org;
+
     return (
         <div className="dealhot-service__detail">
             <div className="product">
@@ -70,21 +60,21 @@ function ServiceDetail(props: any) {
                         <DetailHead
                             product={service}
                             org={org}
-                            listServices={services}
-                            is_type={is_type}
+                            //listServices={services}
+                            is_type={2}
                         />
                         <DetailCard
                             org={org}
                             product={service}
-                            is_type={is_type}
-                            loading={loading}
+                            is_type={2}
+                            loading={false}
                         />
                     </div>
-                    <RecommendList
+                    {/* <RecommendList
                         org={org}
-                        list={services}
-                        is_type={is_type}
-                    />
+                        //list={services}
+                        is_type={2}
+                    /> */}
                 </Container>
                 <Footer />
             </div>

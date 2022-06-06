@@ -1,6 +1,5 @@
 import React from "react";
 import onErrorImg from "../../../utils/errorImg";
-import icon from "../../../constants/icon";
 import formatPrice from "../../../utils/formatPrice";
 import "../ServicePromoItem/service-promo-item.css";
 import { Service } from "../../../interface/service";
@@ -12,29 +11,28 @@ import scrollTop from "../../../utils/scrollTop";
 interface IProps {
     service: Service;
     org: IOrganization;
+    changeStyle?: boolean
 }
 
 function ServiceItem(props: IProps) {
-    const { service, org } = props;
+    const { service, org, changeStyle } = props;
     const history = useHistory();
-    const name = service?.service_name;
-    const detail = service;
     const percent = Math.round(
         100 - (service?.special_price / service?.price) * 100
     );
     const onDetail = () => {
         scrollTop();
         history.push({
-            pathname: `/dich-vu/${slugify(name)}`,
-            search: `${org.id},${detail.id},2`,
-            state: { org, detail, name },
+            pathname: `/dich-vu/${slugify(service?.service_name)}`,
+            search: `id=${service.id}?org=${org?.id}`,
+            state: { org, service },
         });
     };
     return (
-        <div onClick={onDetail} className="ser-pro-item">
-            <div className="ser-img-cnt">
+        <div onClick={onDetail} className={changeStyle ? "ser-pro-item ser-pro-item__change" : "ser-pro-item"}>
+            <div className={changeStyle ? "ser-img-cnt ser-img-cnt__change" : "ser-img-cnt"}>
                 <img
-                    className="ser-img"
+                    className={changeStyle ? "ser-img ser-img__change" : "ser-img"}
                     src={
                         service?.image_url ? service.image_url : org?.image_url
                     }
@@ -44,7 +42,7 @@ function ServiceItem(props: IProps) {
                 <div className="ser-promo">
                     {service.special_price > 0 && (
                         <div className="ser-promo__percent">
-                            Giảm <br /> {percent} %
+                            Giảm {percent} %
                         </div>
                     )}
                     {/* <div className="flex-row ser-promo__bot">
@@ -61,7 +59,9 @@ function ServiceItem(props: IProps) {
             </div>
             <div className="ser-pro-item__cnt">
                 <span className="ser-name">{service?.service_name}</span>
-                <div className="ser-price">
+                <div
+                    className={changeStyle ? "ser-price ser-price__change" : "ser-price"}
+                >
                     {service?.special_price === -1 ? (
                         <span style={{ color: "var(--purple)" }}>
                             {formatPrice(service?.price)}đ
@@ -90,7 +90,7 @@ function ServiceItem(props: IProps) {
                         <></>
                 } */}
                 <div className="ser-org-address">
-                    <img src={icon.mapPinRed} alt="" />
+                    <img onError={(e) => onErrorImg(e)} src={org?.image_url} alt="" />
                     <p>{org?.address}</p>
                 </div>
             </div>

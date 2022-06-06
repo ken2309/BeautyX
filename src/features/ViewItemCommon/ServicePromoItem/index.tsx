@@ -23,10 +23,11 @@ function ServicePromoItem(props: IProps) {
     //     full_address: service.org_full_address
     // }
     const gotoDetail = () => {
+        //console.log(service)
         scrollTop();
         history.push({
-            pathname: `/dich-vu/${slugify(service.service_name)}`,
-            search: `${service.org_id},${service.service_id},2`,
+            pathname: `/dich-vu/${slugify(service?.service_name)}`,
+            search: `id=${service.service_id}&org=${service.org_id}`,
         });
     };
     return (
@@ -45,7 +46,7 @@ function ServicePromoItem(props: IProps) {
                 <div className="ser-promo">
                     {service.discount_percent > 0 ? (
                         <div className="ser-promo__percent">
-                            Giảm <br /> {Math.round(service?.discount_percent)}{" "}
+                            Giảm {Math.round(service?.discount_percent)}
                             %
                         </div>
                     ) : (
@@ -85,8 +86,8 @@ function ServicePromoItem(props: IProps) {
                             {service._geoDistance < 1000
                                 ? `${service._geoDistance}(m)`
                                 : `${Math.round(
-                                      service._geoDistance / 1000
-                                  )}(km)`}
+                                    service._geoDistance / 1000
+                                )}(km)`}
                         </span>
                     </div>
                 ) : (

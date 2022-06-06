@@ -13,9 +13,12 @@ class ProductApi {
   getByOrgId_cateId = (values: any) => {
     const url = `/organizations/${values.org_id}/products`;
     const paramsOb = {
-      page: values.page,
+      page: values.page || 1,
       limit: 15,
-      "filter[product_category_id]": values.cate_id
+      "filter[keyword]": values.keyword,
+      "filter[product_category_id]": values.cate_id,
+      "include": "favorites_count",
+      "append": "is_favorite|rating"
     }
     const params = pickBy(paramsOb, identity)
     return axiosClient.get(url, { params });

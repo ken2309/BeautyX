@@ -2,7 +2,6 @@ import React from "react";
 import "../ServicePromoItem/service-promo-item.css";
 import { Product } from "../../../interface/product";
 import { IOrganization } from "../../../interface/organization";
-import icon from "../../../constants/icon";
 import formatPrice from "../../../utils/formatPrice";
 import onErrorImg from "../../../utils/errorImg";
 import { useHistory } from "react-router-dom";
@@ -12,10 +11,11 @@ import scrollTop from "../../../utils/scrollTop";
 interface IProps {
     product: Product;
     org: IOrganization;
+    changeStyle?: boolean,
 }
 
 function ProductItem(props: IProps) {
-    const { product, org } = props;
+    const { product, org, changeStyle } = props;
     const name = product?.product_name;
     const detail = product;
     const history = useHistory();
@@ -31,10 +31,10 @@ function ProductItem(props: IProps) {
         100 - (product?.special_price / product?.retail_price) * 100
     );
     return (
-        <div onClick={onDetail} className="ser-pro-item">
-            <div className="ser-img-cnt">
+        <div onClick={onDetail} className={changeStyle ? "ser-pro-item ser-pro-item__change" : "ser-pro-item"}>
+            <div className={changeStyle ? "ser-img-cnt ser-img-cnt__change" : "ser-img-cnt"}>
                 <img
-                    className="ser-img"
+                    className={changeStyle ? "ser-img ser-img__change":"ser-img"}
                     src={product?.image ? product.image_url : org?.image_url}
                     alt=""
                     onError={(e) => onErrorImg(e)}
@@ -59,7 +59,9 @@ function ProductItem(props: IProps) {
             </div>
             <div className="ser-pro-item__cnt">
                 <span className="ser-name">{product?.product_name}</span>
-                <div className="ser-price">
+                <div
+                    className={changeStyle ? "ser-price ser-price__change" : "ser-price"}
+                >
                     {product?.special_price === -1 ? (
                         <span style={{ color: "var(--purple)" }}>
                             {formatPrice(product?.retail_price)}đ
@@ -88,7 +90,7 @@ function ProductItem(props: IProps) {
                         <></>
                 } */}
                 <div className="ser-org-address">
-                    <img src={icon.location} alt="" />
+                    <img src={org?.image_url} onError={(e)=>onErrorImg(e)} alt="" />
                     <p>{org?.address}</p>
                 </div>
             </div>

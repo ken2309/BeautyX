@@ -7,7 +7,6 @@ import icon from '../../../../constants/icon';
 import scrollTop from '../../../../utils/scrollTop';
 import slugify from '../../../../utils/formatUrlString';
 import { Link } from 'react-router-dom';
-
 interface IProps {
     service: Service,
     org: IOrganization
@@ -15,14 +14,12 @@ interface IProps {
 
 function OrgServiceItem(props: IProps) {
     const { org, service } = props;
-    const name = service?.service_name;
-    const detail = service;
     return (
         <Link
             to={{
-                pathname: `/dich-vu/${slugify(name)}`,
-                search: `${org.id},${detail.id},2`,
-                state: { org, detail, name },
+                pathname: `/dich-vu/${slugify(service?.service_name)}`,
+                search: `id=${service.id}&org=${org?.id}`,
+                state: { org, service },
             }}
             onClick={() => scrollTop()}
         >
