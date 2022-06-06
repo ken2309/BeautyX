@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router";
 import { IOrganization } from "../../../../interface/organization";
 import { fetchAsyncOrgComments } from "../../../../redux/org/orgCommentsSlice";
 import { STATUS } from "../../../../redux/status";
