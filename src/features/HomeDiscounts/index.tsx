@@ -24,7 +24,9 @@ function HomeDiscount() {
                         {discounts
                             .slice(0, 12)
                             .map((discount: IDiscountPar, index: number) => (
-                                <>
+                                <li
+                                    key={index}
+                                >
                                     {discount.items.map(
                                         (item: IITEMS_DISCOUNT, i: number) => (
                                             <DiscountItem
@@ -34,7 +36,7 @@ function HomeDiscount() {
                                             />
                                         )
                                     )}
-                                </>
+                                </li>
                             ))}
                     </ul>
                 </div>

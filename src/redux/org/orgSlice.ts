@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import orgApi from '../../api/organizationApi';
 import galleriesApi from '../../api/moboGalleriesApi';
+import serviceApi from '../../api/serviceApi';
 import favorites from '../../api/favorite';
+import productsApi from '../../api/productApi';
 import { STATUS } from '../status'
 
 export const fetchAsyncOrg: any = createAsyncThunk(
@@ -47,6 +49,25 @@ export const onDeleteFavoriteOrg: any = createAsyncThunk(
         return payload
     }
 )
+export const fetchAsyncByKeyword: any = createAsyncThunk(
+    "ORG/fetchAsyncByKeyword",
+    async (values: any) => {
+        try {
+            const res = await serviceApi.getByOrg_id(values);
+            const res_products = await productsApi.getByOrgId_cateId(values);
+            const payload = {
+                services: res.data.context.data,
+                totalServices: res.data.context.total,
+                totalProducts: res_products.data.context.total,
+                products: res_products.data.context.data,
+
+            }
+            return payload
+        } catch (error) {
+            console.log(error)
+        }
+    }
+)
 const initialState = {
     org: {},
     status: '',
@@ -55,6 +76,16 @@ const initialState = {
         galleries: [],
         org_id: null,
         status: ''
+    },
+    SERVICES_KEYWORD: {
+        services_keyword: [],
+        status: "",
+        total_services: 1,
+    },
+    PRODUCTS_KEYWORD: {
+        products_keyword: [],
+        status: "",
+        total_products: 1
     }
 }
 const orgSlice = createSlice({
@@ -138,6 +169,37 @@ const orgSlice = createSlice({
         },
         [onDeleteFavoriteOrg.rejected]: (state) => {
             return state
+        },
+        //fetch by keyword
+        [fetchAsyncByKeyword.pending]: (state) => {
+            return {
+                ...state,
+                SERVICES_KEYWORD: { ...state.SERVICES_KEYWORD, status: STATUS.LOADING },
+                PRODUCTS_KEYWORD: { ...state.PRODUCTS_KEYWORD, status: STATUS.LOADING }
+            }
+        },
+        [fetchAsyncByKeyword.fulfilled]: (state, { payload }) => {
+            const { services, products, totalServices, totalProducts } = payload;
+            return {
+                ...state,
+                SERVICES_KEYWORD: {
+                    services_keyword: services,
+                    status: STATUS.SUCCESS,
+                    total_services: totalServices
+                },
+                PRODUCTS_KEYWORD: {
+                    products_keyword: products,
+                    status: STATUS.SUCCESS,
+                    total_products: totalProducts
+                }
+            }
+        },
+        [fetchAsyncByKeyword.rejected]: (state) => {
+            return {
+                ...state,
+                SERVICES_KEYWORD: { ...state.SERVICES_KEYWORD, status: STATUS.FAIL },
+                PRODUCTS_KEYWORD: { ...state.PRODUCTS_KEYWORD, status: STATUS.FAIL }
+            }
         }
     }
 })

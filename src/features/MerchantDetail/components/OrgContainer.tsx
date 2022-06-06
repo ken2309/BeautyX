@@ -65,9 +65,9 @@ function OrgContainer(props: IProps) {
     };
     function handleScroll() {
         if (value === 5 || value === 6) {
-            if (window.scrollY - 190 <= scrollReview) {
+            if (window.scrollY - 170 <= scrollReview) {
                 setValue(5);
-            } else if (window.scrollY >= scrollMap + 180) {
+            } else if (window.scrollY >= scrollMap) {
                 setValue(6);
             }
         }

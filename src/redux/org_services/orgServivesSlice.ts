@@ -62,7 +62,7 @@ const initialState: IINITIALSTATE = {
         page: 1,
         totalItem: 1,
         status_ser: ''
-    }
+    },
 }
 const orgServicesSlice = createSlice({
     name: "ORG_SERVICES",

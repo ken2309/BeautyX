@@ -154,7 +154,7 @@
     .home-discounts__title span:nth-child(1) {
         font-size: 16px;
     }
-    .home-discounts__list .item-cnt {
+    .home-discounts__list li {
         width: 164px;
     }
 }
