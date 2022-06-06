@@ -51,7 +51,7 @@ function OrgContainer(props: IProps) {
                 top = is_mb && 0;
                 break;
             case 6:
-                top = refReview?.current?.offsetTop + 170;
+                top = refReview?.current?.offsetTop + 180;
                 break;
             default:
                 break;
@@ -65,7 +65,7 @@ function OrgContainer(props: IProps) {
     };
     function handleScroll() {
         if (value === 5 || value === 6) {
-            if (window.scrollY - 137 <= scrollReview) {
+            if (window.scrollY - 190 <= scrollReview) {
                 setValue(5);
             } else if (window.scrollY >= scrollMap + 180) {
                 setValue(6);

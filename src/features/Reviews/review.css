@@ -188,6 +188,7 @@
 .org-evaluate .evaluate-input__upload {
     max-width: 200px;
     max-height: 200px;
+    height: 200px;
     padding: 0 0 24px 24px;
     position: relative;
 }

@@ -975,7 +975,8 @@
         overflow-x: scroll;
         position: sticky;
         z-index: 10;
-        top: 113px;
+        top: 96px;
+        padding: 12px 0;
         background-color: var(--bgWhite);
         /* background-color: var(--bgWhite);
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
@@ -1053,10 +1054,8 @@
         left: 0;
         background-color: var(--bgWhite);
         z-index: 999;
-        padding: 8px 0;
+        padding: 0;
         border-bottom: none;
         border-top: none;
-    }
-    .org-container .MuiTabs-flexContainer {
     }
 }
