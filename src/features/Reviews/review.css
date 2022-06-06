@@ -90,7 +90,7 @@
     outline: none;
     border: none;
     font-size: 14px;
-    border-radius: 60px;
+    border-radius: 8px;
     border: 1px solid #8c8c8c;
     color: var(--purple);
     font-weight: bold;
@@ -112,6 +112,7 @@
 }
 .evaluate-input__wrap input:focus {
     border-color: var(--purple);
+    border: 1px solid #8c8c8c;
     color: var(--purple);
     -webkit-box-shadow: 0 0 0 4px rgba(222, 225, 255, 0.712);
     box-shadow: 0 0 0 4px rgba(227, 222, 255, 0.712);

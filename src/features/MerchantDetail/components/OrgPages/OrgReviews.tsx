@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router";
 import { IOrganization } from "../../../../interface/organization";
 import { fetchAsyncOrgComments } from "../../../../redux/org/orgCommentsSlice";
 import { STATUS } from "../../../../redux/status";
@@ -9,10 +8,11 @@ import Review from "../../../Reviews";
 
 interface IProps {
     org: IOrganization;
+    refReview: any;
 }
 
 function OrgReviews(props: IProps) {
-    const { org } = props;
+    const { org, refReview } = props;
     const dispatch = useDispatch();
     const { org_id, comments, page, totalItem, status } = useSelector(
         (state: any) => state.ORG_COMMENTS
@@ -33,7 +33,7 @@ function OrgReviews(props: IProps) {
         callOrgComments();
     }, []);
     return (
-        <div className="org-evaluate">
+        <div ref={refReview} className="org-evaluate">
             <Review
                 comments={comments}
                 totalItem={totalItem}

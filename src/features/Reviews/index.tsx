@@ -5,14 +5,9 @@ import CommentItem from "./CommentItem";
 import EvaluateInput from "./EvaluateInput";
 import TotalStartEvaluate from "./TotalStartEvaluate";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    fetchAsyncOrgComments,
-    postAsyncOrgComments,
-} from "../../redux/org/orgCommentsSlice";
+import { postAsyncOrgComments } from "../../redux/org/orgCommentsSlice";
 import SignInUp from "../poupSignInUp";
 import mediaApi from "../../api/mediaApi";
-import img from "../../constants/img";
-import icon from "../../constants/icon";
 interface IProps {
     comments: IComment[];
     totalItem: number;
@@ -32,7 +27,6 @@ function Review(props: IProps) {
         used: true,
         star: 5,
     });
-    console.log("comment.text", comment.text);
 
     const handleOnchange = (e: any) => {
         setComment({
@@ -115,7 +109,6 @@ function Review(props: IProps) {
                     onChangeMedia={onChangeMedia}
                     onRemoveImgTemp={onRemoveImgTemp}
                 />
-
                 <span className="total-comment">Tổng {totalItem} đánh giá</span>
                 {comments.map((item: IComment, index: number) => (
                     <CommentItem key={index} comment={item} user={user} />
