@@ -33,7 +33,7 @@ function Bottom(props: any) {
             title: t('Home.cate'),
             icon: ICON.cate,
             iconAct: ICON.cateAct,
-            path: "/",
+            path: "/-danh-muc",
         },
         {
             id: 4,

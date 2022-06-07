@@ -119,8 +119,8 @@ class Organization {
       "limit": 15,
       "filter[tags]": values.tag,
       "filter[province_code]": values.province,
-      "filter[min_price]": values.price.min,
-      "filter[max_price]": values.price.max,
+      "filter[min_price]": values.price?.min,
+      "filter[max_price]": values.price?.max,
       "filter[location]": `${location_user?.lat},${location_user?.long}`,
       "include": "favorites_count|tags|branches"
     }
@@ -134,10 +134,10 @@ class Organization {
       "page": values.page,
       "limit": 15,
       "include": "favorites_count|tags|branches",
-      "filter[tags]": values.tags,
-      "filter[province_code]": values.province,
-      "filter[min_price]": values.price.min,
-      "filter[max_price]": values.price.max,
+      "filter[tags]": values?.tags,
+      "filter[province_code]": values?.province,
+      "filter[min_price]": values?.price?.min,
+      "filter[max_price]": values?.price?.max,
       "filter[location]": `${location_user?.lat},${location_user?.long}`
     }
     const params = pickBy(paramsOb, identity);
