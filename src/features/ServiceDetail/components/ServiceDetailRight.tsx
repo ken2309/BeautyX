@@ -1,12 +1,55 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import icon from "../../../constants/icon";
+import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
+import {
+    onFavoriteOrg,
+    onDeleteFavoriteOrg,
+} from "../../../redux/org/orgSlice";
+import { useHistory } from "react-router-dom";
+import {
+    fetchAsyncCancelFavoriteService,
+    fetchAsyncFavoriteService,
+} from "../../../redux/org_services/serviceSlice";
 
 export default function ServiceDetailRight(props: any) {
     const { org, service } = props;
+    console.log("service", service);
+    const dispatch = useDispatch();
+    const history = useHistory();
     const percent = service
         ? Math.round(100 - (service.special_price / service?.price) * 100)
         : null;
+    const USER = useSelector((state: any) => state.USER);
+    const ORG = useSelector((state: any) => state.ORG);
+    const onFavoriteOrganization = async () => {
+        if (USER) {
+            if (org.is_favorite === false) {
+                await dispatch(onFavoriteOrg(org));
+            } else {
+                await dispatch(onDeleteFavoriteOrg(org));
+            }
+        } else {
+            history.push("/sign-in");
+        }
+    };
+    const valueService = {
+        org_id: org?.id,
+        detail: service,
+        type: "SERVICE",
+    };
+    const onFavorite = async () => {
+        if (USER) {
+            if (service.is_favorite === false) {
+                await dispatch(fetchAsyncFavoriteService(valueService));
+            } else {
+                await dispatch(fetchAsyncCancelFavoriteService(valueService));
+            }
+        } else {
+            history.push("/sign-in");
+        }
+    };
     return (
         <div className="service-detail__right">
             <div className="detail-right__head">
@@ -16,7 +59,7 @@ export default function ServiceDetailRight(props: any) {
                 </div>
                 <div className="detail-right__name">
                     <p>{service.service_name}</p>
-                    <div className="favorite">
+                    <div onClick={onFavorite} className="favorite">
                         <img src={icon.favoriteStroke} alt="" />
                     </div>
                 </div>
@@ -100,7 +143,11 @@ export default function ServiceDetailRight(props: any) {
                 <div className="detail-right__infoMer">
                     <div className="infoMer-top">
                         <div className="infoMer-top__img">
-                            <img src={org.image_url} alt="" />
+                            <img
+                                onError={(e) => onErrorImg(e)}
+                                src={org.image_url}
+                                alt=""
+                            />
                         </div>
                         <div className="infoMer-top__right">
                             <p className="infoMer-top__name">{org.name}</p>
@@ -119,7 +166,7 @@ export default function ServiceDetailRight(props: any) {
                         </div>
                         <div className="infoMer-item">
                             <div className="infoMer-item__wrap flexX-gap-4">
-                                <p>{"5"}</p>
+                                <p>{ORG.org?.favorites_count}</p>
                                 <img src={icon.Favorite} alt="" />
                             </div>
                             <p className="infoMer-item__text">Yêu thích</p>
@@ -137,10 +184,27 @@ export default function ServiceDetailRight(props: any) {
                             <img src={icon.archive} alt="" />
                             <p>Xem Spa</p>
                         </button>
-                        <button className="infoMer-bottom__right">
-                            <img src={icon.rss} alt="" />
-                            <p>Theo Dõi</p>
-                        </button>
+
+                        {org?.is_favorite === true ? (
+                            <button
+                                onClick={onFavoriteOrganization}
+                                className="infoMer-bottom__right infoMer-bottom__right-active"
+                            >
+                                <p className="infoMer-bottom__right-active">
+                                    Đang Theo Dõi
+                                </p>
+                            </button>
+                        ) : (
+                            <>
+                                <button
+                                    onClick={onFavoriteOrganization}
+                                    className="infoMer-bottom__right"
+                                >
+                                    <img src={icon.rss} alt="" />
+                                    <p>Theo Dõi</p>
+                                </button>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

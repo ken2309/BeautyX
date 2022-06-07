@@ -10,15 +10,16 @@ import HeadTitle from "../HeadTitle";
 import Footer from "../Footer";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    fetchAsyncComments,
-    fetchAsyncServiceDetail,
-} from "../../redux/org_services/serviceSlice";
-import { fetchAsyncOrg } from "../../redux/org/orgSlice";
-import { STATUS } from "../../redux/status";
+
 import ServiceDetailLeft from "./components/ServiceDetailLeft";
 import ServiceDetailRight from "./components/ServiceDetailRight";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
+import {
+    fetchAsyncServiceDetail,
+    fetchAsyncServiceCmt,
+} from "../../redux/org_services/serviceSlice";
+import { fetchAsyncOrg } from "../../redux/org/orgSlice";
+import { STATUS } from "../../redux/status";
 import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
 import Review from "../Reviews";
 import OrgReviews from "../MerchantDetail/components/OrgPages/OrgReviews";
@@ -27,7 +28,7 @@ function ServiceDetail(props: any) {
     const location: any = useLocation();
     const dispatch = useDispatch();
     const ORG = useSelector((state: any) => state.ORG);
-    const { SERVICE } = useSelector((state: any) => state.SERVICE);
+    const { SERVICE, COMMENTS } = useSelector((state: any) => state.SERVICE);
     const params: any = extraParamsUrl();
     const callServiceDetail = () => {
         if (
@@ -49,21 +50,27 @@ function ServiceDetail(props: any) {
             dispatch(fetchAsyncOrg(params.org));
         }
     };
-    const callComments = () => {
-        const values = {
-            org_id: params.org,
-            id: params.id,
-            page: 1,
-            type: "SERVICE",
-        };
-        dispatch(fetchAsyncComments(values));
+    const callServiceComments = () => {
+        if (
+            parseInt(params.id) !== COMMENTS.service_id ||
+            COMMENTS.status_cmt !== STATUS.SUCCESS
+        ) {
+            const values = {
+                type: "SERVICE",
+                page: 1,
+                id: params.id,
+                org_id: params.org,
+            };
+            dispatch(fetchAsyncServiceCmt(values));
+        }
     };
+
     useEffect(() => {
         if (!location.state) {
             callServiceDetail();
             callOrgDetail();
-            callComments();
         }
+        callServiceComments();
     }, []);
 
     const service = location.state ? location.state.service : SERVICE.service;
@@ -144,21 +151,26 @@ function ServiceDetail(props: any) {
                                     <TabPanel value={value}>
                                         {/* {onSwitchTab(value)} */}
                                         <div className="service-detail__description">
-                                            <p>{service.description}</p>
+                                            <p>
+                                                Mô tả:{" "}
+                                                {service.description
+                                                    ? service.description
+                                                    : "Đang cập nhật"}
+                                            </p>
                                         </div>
                                     </TabPanel>
                                     <TabPanel value={value}>
                                         <div className="service-detail__comment">
-                                            {/* <Review
-                                                comments={comments}
-                                                totalItem={totalItem}
+                                            <Review
+                                                comments={COMMENTS.comments}
+                                                totalItem={COMMENTS.totalItem}
                                                 commentable_type={"SERVICE"}
-                                                id={org_id}
-                                            /> */}
+                                                id={ORG.org?.id}
+                                                detail_id={service?.id}
+                                            />
                                         </div>
                                     </TabPanel>
                                     <TabPanel value={value}>
-                                        {/* {onSwitchTab(value)} */}
                                         <div className="org-information-cnt">
                                             {/* <OrgInformation
                                                 // refMap={refMap}
@@ -171,8 +183,7 @@ function ServiceDetail(props: any) {
                                         </div>
                                     </TabPanel>
                                     <TabPanel value={value}>
-                                        {/* {onSwitchTab(value)} */}
-                                        <>1</>
+                                        <>tab 3</>
                                     </TabPanel>
                                 </div>
                             </TabContext>

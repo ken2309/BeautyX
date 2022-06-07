@@ -15,14 +15,12 @@ interface IProps {
 
 function OrgProductItem(props: IProps) {
     const { product, org } = props;
-    const name = product?.product_name;
-    const detail = product;
     return (
         <Link
             to={{
                 pathname: `/product-detail/${slugify(product?.product_name)}`,
-                search: `${org.id},${product.id},1`,
-                state: { org, detail, name },
+                search: `id=${product.id}&org=${org.id}`,
+                state: { org, product },
             }}
             onClick={() => scrollTop()}
         >

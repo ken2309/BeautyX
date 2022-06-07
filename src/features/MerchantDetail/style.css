@@ -821,7 +821,7 @@
 @media only screen and (max-width: 1023px) {
     .org-container .org-information-cnt {
         grid-gap: 16px 0;
-        padding: 16px 0 16px 0;
+        padding: 16px 12px;
         display: flex;
         flex-direction: column;
     }
@@ -905,8 +905,7 @@
     }
 
     .org-container__tab-cnt {
-        width: 100%;
-        padding-right: 20px;
+        padding: 0px;
     }
 
     .org-tab-list {
@@ -927,7 +926,7 @@
 
     /* org discounts */
     .org-deal-hot {
-        padding: 0px;
+        padding: 16px 12px;
     }
 
     .org-deal-hot__discounts {
@@ -1068,7 +1067,7 @@
     }
 
     .org-services-cnt__left {
-        padding: 0px;
+        padding: 8px 12px;
         width: 100%;
         overflow-x: scroll;
         position: sticky;
@@ -1076,8 +1075,7 @@
         top: 96px;
         padding: 12px 0;
         background-color: var(--bgWhite);
-        /* background-color: var(--bgWhite);
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .org-services-cnt__left .cates-list {
@@ -1092,7 +1090,7 @@
 
     .org-services-cnt__right {
         width: 100%;
-        padding: 8px 0 16px 0;
+        padding: 8px 12px;
     }
 
     .org-services-cnt__right-list {
@@ -1119,7 +1117,7 @@
         margin: 0px;
     }
     .org-container .org-galleries-cnt {
-        padding: 0px;
+        padding: 16px 12px;
     }
     .org-galleries__images-section {
         margin: 0px;
@@ -1139,7 +1137,7 @@
     .org-galleries__images-section .title {
         position: fixed;
         z-index: 2;
-        top: 48px;
+        top: 0px;
         left: 0;
         right: 0;
         background-color: var(--bgWhite);
@@ -1165,7 +1163,7 @@
         left: 0;
         background-color: var(--bgWhite);
         z-index: 999;
-        padding: 0;
+        padding: 0px 12px !important;
         border-bottom: none;
         border-top: none;
     }

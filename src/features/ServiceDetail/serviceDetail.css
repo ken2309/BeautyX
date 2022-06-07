@@ -201,6 +201,7 @@
 }
 .service-detail__head {
     display: flex;
+    align-items: center;
     width: 100%;
     height: 100%;
     background-color: #fff;
@@ -485,6 +486,19 @@
 
 .service-detail .service-detail__tabitem {
     padding: 24px 0;
+}
+
+.service-detail .service-detail__description {
+    margin-bottom: 24px;
+}
+
+.service-detail .service-detail__comment {
+    width: 50%;
+}
+.service-detail .infoMer-bottom__right-active {
+    border: 1px solid transparent;
+    background-color: var(--purple);
+    color: #fff;
 }
 
 /* cus tab MUI */

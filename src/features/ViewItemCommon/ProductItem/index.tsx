@@ -4,7 +4,7 @@ import { Product } from "../../../interface/product";
 import { IOrganization } from "../../../interface/organization";
 import formatPrice from "../../../utils/formatPrice";
 import onErrorImg from "../../../utils/errorImg";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import slugify from "../../../utils/formatUrlString";
 import scrollTop from "../../../utils/scrollTop";
 
@@ -16,25 +16,21 @@ interface IProps {
 
 function ProductItem(props: IProps) {
     const { product, org, changeStyle } = props;
-    const name = product?.product_name;
-    const detail = product;
-    const history = useHistory();
-    const onDetail = () => {
-        scrollTop();
-        history.push({
-            pathname: `/product-detail/${slugify(product?.product_name)}`,
-            search: `${org.id},${product.id},1`,
-            state: { org, detail, name },
-        });
-    };
     const percent = Math.round(
         100 - (product?.special_price / product?.retail_price) * 100
     );
     return (
-        <div onClick={onDetail} className={changeStyle ? "ser-pro-item ser-pro-item__change" : "ser-pro-item"}>
+        <Link
+            to={{
+                pathname: `/product-detail/${slugify(product?.product_name)}`,
+                search: `id=${product.id}&org=${org.id}`,
+                state: { org, product },
+            }}
+            onClick={() => scrollTop()}
+            className={changeStyle ? "ser-pro-item ser-pro-item__change" : "ser-pro-item"}>
             <div className={changeStyle ? "ser-img-cnt ser-img-cnt__change" : "ser-img-cnt"}>
                 <img
-                    className={changeStyle ? "ser-img ser-img__change":"ser-img"}
+                    className={changeStyle ? "ser-img ser-img__change" : "ser-img"}
                     src={product?.image ? product.image_url : org?.image_url}
                     alt=""
                     onError={(e) => onErrorImg(e)}
@@ -42,7 +38,7 @@ function ProductItem(props: IProps) {
                 <div className="ser-promo">
                     {product?.special_price > 0 && (
                         <div className="ser-promo__percent">
-                            Giảm <br /> {percent} %
+                            Giảm {percent} %
                         </div>
                     )}
                     {/* <div className="flex-row ser-promo__bot">
@@ -90,11 +86,11 @@ function ProductItem(props: IProps) {
                         <></>
                 } */}
                 <div className="ser-org-address">
-                    <img src={org?.image_url} onError={(e)=>onErrorImg(e)} alt="" />
+                    <img src={org?.image_url} onError={(e) => onErrorImg(e)} alt="" />
                     <p>{org?.address}</p>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 }
 

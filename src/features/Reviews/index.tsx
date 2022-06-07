@@ -8,15 +8,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { postAsyncOrgComments } from "../../redux/org/orgCommentsSlice";
 import SignInUp from "../poupSignInUp";
 import mediaApi from "../../api/mediaApi";
+import { postAsyncComment } from "../../redux/org_services/serviceSlice";
+import { pickBy, identity } from "lodash";
 interface IProps {
     comments: IComment[];
     totalItem: number;
     commentable_type: string;
     id: number;
+    detail_id?: number;
 }
 
 function Review(props: IProps) {
-    const { comments, totalItem, commentable_type, id } = props;
+    const { comments, totalItem, commentable_type, id, detail_id } = props;
     const USER = useSelector((state: any) => state.USER);
     const user = USER.USER;
     const dispatch = useDispatch();
@@ -35,21 +38,32 @@ function Review(props: IProps) {
         });
     };
 
-    const values = {
+    const valuesStr = {
         page: 1,
         type: commentable_type,
         org_id: id,
         body: JSON.stringify(comment),
+        id: detail_id,
     };
+    const values = pickBy(valuesStr, identity);
 
     const handlePostComment = () => {
         if (comment.text.length > 0 && user) {
-            dispatch(
-                postAsyncOrgComments({
-                    values: values,
-                    user: user,
-                })
-            );
+            if (commentable_type === "ORGANIZATION") {
+                dispatch(
+                    postAsyncOrgComments({
+                        values: values,
+                        user: user,
+                    })
+                );
+            } else if (commentable_type === "SERVICE") {
+                dispatch(
+                    postAsyncComment({
+                        values: values,
+                        user: user,
+                    })
+                );
+            }
             setComment({ text: "", image_url: null });
         } else if (!user) {
             console.log("comments not found");

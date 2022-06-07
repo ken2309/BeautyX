@@ -50,7 +50,7 @@
     font-size: 18px;
     line-height: 24px;
 }
-.org-evaluate .progess-bar {
+.progess-bar {
     height: 7px;
     width: 80%;
     background-color: var(--purple);
@@ -185,21 +185,21 @@
     color: #8c8c8c;
     padding: 24px;
 }
-.org-evaluate .evaluate-input__upload {
+.evaluate-input__upload {
     max-width: 200px;
     max-height: 200px;
     height: 200px;
     padding: 0 0 24px 24px;
     position: relative;
 }
-.org-evaluate .evaluate-input__upload img {
+.evaluate-input__upload img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 16px;
     overflow: hidden;
 }
-.org-evaluate .btn-close {
+.btn-close {
     position: absolute;
     top: -10px;
     right: -10px;
