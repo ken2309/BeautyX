@@ -1,37 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { IITEMS_DISCOUNT } from "../../../interface/discount";
 import formatPrice from "../../../utils/formatPrice";
 import DetailControl from "./DetailControl";
 import "./detailNameMb.css";
 
 function DetailNameMb(props: any) {
-    const { discount, is_type } = props;
-    const [old_price, setOld_price] = useState(0);
-    const [sale_price, setSale_price] = useState(0);
+    const { discount } = props;
+    const discount_item_child: IITEMS_DISCOUNT = discount?.items[0];
     const detailDiscountItem = discount.productable;
+    const percent = Math.round(100 - discount_item_child.view_price / discount_item_child.productable.price * 100)
     const [open, setOpen] = useState(false);
-    useEffect(() => {
-        if (is_type === 1 || is_type === "SERVICE") {
-            if (discount?.view_price > 0) {
-                setSale_price(discount?.view_price);
-                setOld_price(detailDiscountItem?.price);
-            } else {
-                setSale_price(discount?.price);
-            }
-        } else if (is_type === 2 || is_type === "PRODUCT") {
-            if (discount?.view_price > 0) {
-                setSale_price(discount?.view_price);
-                setOld_price(detailDiscountItem?.price);
-            } else {
-                setSale_price(discount?.price);
-            }
-        }
-    }, [
-        is_type,
-        detailDiscountItem.price,
-        detailDiscountItem?.view_price,
-        discount?.view_price,
-        discount?.price,
-    ]);
     return (
         <>
             <div className="detail-name-mb">
@@ -40,26 +18,17 @@ function DetailNameMb(props: any) {
                 </div>
                 <div className="detail-name-mb__price">
                     <span
-                        style={old_price === 0 ? { display: "none" } : {}}
                         className="price-old"
                     >
-                        {formatPrice(old_price)}đ
+                        {formatPrice(discount_item_child.productable.price)}đ
                     </span>
                     <div className="flex-row price-sale">
-                        <span
-                            style={old_price === 0 ? { display: "none" } : {}}
-                        >
-                            Giảm{" "}
-                            {Math.round(100 - (sale_price / old_price) * 100)}%
+                        <span>
+                            Giảm
+                            {percent}%
                         </span>
-                        <span
-                            style={
-                                old_price === 0
-                                    ? { color: "var(--purple)" }
-                                    : {}
-                            }
-                        >
-                            {formatPrice(sale_price)}đ
+                        <span>
+                            {formatPrice(discount_item_child?.view_price)}đ
                         </span>
                     </div>
                 </div>
