@@ -15,6 +15,7 @@ import serviceReducer from './org_services/serviceSlice';
 import productReducer from './org_products/productSlice';
 import loginFlatFromReducer from "./loginFlatForm/loginFlatFrom";
 import paymentsReducer from "./payments/paymentSlice";
+import searchReducer from './search/searchSlice';
 import blogReducer from "./blog/blogSlice";
 
 const rootReducer = {
@@ -34,7 +35,8 @@ const rootReducer = {
   ORG_DISCOUNTS: orgDiscountsReducer,
   ADDRESS: userAddressReducer,
   PAYMENT: paymentsReducer,
-  BLOG: blogReducer
+  BLOG: blogReducer,
+  SEARCH: searchReducer
 };
 const store = configureStore({
   reducer: rootReducer,
