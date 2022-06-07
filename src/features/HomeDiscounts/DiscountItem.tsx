@@ -21,7 +21,7 @@ function DiscountItem(props: IProps) {
                 discountItem.productable.service_name
             )}`,
             search: `org_id=${org?.id}&id=${discountPar?.id}`,
-            state: org,
+            state: {org, discountPar},
         });
     };
     return (
