@@ -78,8 +78,7 @@ export default function Video(props:any){
                             @{data.org?.name?.split(' ').length>46?data.org?.name.slice(0, 50)+'...':data.org?.name}
                         </span>
                     </div>
-                    <span className="ser__name">
-                        {video?.title?.rendered}
+                    <span className="ser__name" dangerouslySetInnerHTML={{__html: video.title.rendered}}>
                         {/* {video?.title?.rendered?.split(' ').length>6?video?.title?.rendered.slice(0, 50)+'...':video?.title?.rendered} */}
                     </span>
                 </div>

@@ -10,6 +10,7 @@ function HomeDiscount() {
     const { DISCOUNTS } = useSelector((state: any) => state.HOME);
     const { discounts } = DISCOUNTS;
     const history = useHistory();
+    console.log(discounts);
     return (
         <div className="home-discounts">
             <Container>
@@ -21,23 +22,25 @@ function HomeDiscount() {
                 </div>
                 <div className="home-discounts__list-wrap">
                     <ul className="home-discounts__list">
+                        
                         {discounts
                             .slice(0, 12)
-                            .map((discount: IDiscountPar, index: number) => (
-                                <li
-                                    key={index}
-                                >
-                                    {discount.items.map(
+                            .map((discount: IDiscountPar, index: number) => 
+                                <>
+                                {discount.items.map(
                                         (item: IITEMS_DISCOUNT, i: number) => (
-                                            <DiscountItem
-                                                key={i}
+                                            <li key={i}>
+                                                <DiscountItem
+                                                
                                                 discountItem={item}
                                                 discountPar={discount}
-                                            />
+                                                />
+                                            </li>
                                         )
-                                    )}
-                                </li>
-                            ))}
+                                    )
+                                }
+                                </>
+                            )}
                     </ul>
                 </div>
             </Container>

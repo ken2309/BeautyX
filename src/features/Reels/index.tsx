@@ -13,6 +13,7 @@ export default function Reels(props:any){
             open={open}
             anchor='right'
             onClose={() => setOpen(false)}
+            style={{inset: 0, margin: 'auto'}}
         >
         <div className="reel-head">
             <button
