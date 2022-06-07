@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import productsApi from "../../api/productApi";
@@ -13,59 +14,55 @@ import { Product } from "../../interface/product";
 import { AppContext } from "../../context/AppProvider";
 import HeadTitle from "../HeadTitle";
 import scrollTop from "../../utils/scrollTop";
+import { extraParamsUrl } from "../../utils/extraParamsUrl";
+import { STATUS } from '../../redux/status';
+import { fetchAsyncProductDetail, fetchAsyncProductCmt } from '../../redux/org_products/productSlice'
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 
 function ProductDetail(props: any) {
   const { t } = useContext(AppContext);
+  const dispatch = useDispatch();
+  const ORG = useSelector((state: any) => state.ORG);
+  const { PRODUCT, COMMENTS } = useSelector((state: any) => state.PRODUCT);
   const location: any = useLocation();
-  const search = location.search.slice(1, location.search.length);
-  const params = search.split(",");
-  const is_type = parseInt(params[2]);
-  const [product, setProduct] = useState<Product>();
-  const [products, setProducts] = useState<Product[]>([]);
-  const [org, setOrg] = useState<any>({});
-  const [loading, setLoading] = useState(false);
-  const values = useMemo(
-    () => ({
-      org_id: params[0],
-      id: params[1],
-    }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [params[1]]
-  );
-  useEffect(() => {
-    async function handleGetOrg_Products() {
-      setLoading(true);
-      scrollTop();
-      try {
-        if (location.state) {
-          setOrg(location.state.org);
-          setProduct(location.state.detail);
-        } else {
-          const resOrg = await orgApi.getOrgById(params[0]);
-          setOrg(resOrg.data.context);
-          const res = await productsApi.getDetailById(values);
-          setProduct(res.data.context);
-        }
-        const resProducts = await productsApi.getByOrgId({
-          org_id: params[0],
-          page: 1,
-        });
-        setProducts(resProducts.data.context.data);
-        setLoading(false);
-      } catch (err) {
-        console.log(err);
+  const params: any = extraParamsUrl();
+  const callProductDetail = () => {
+    if (parseInt(params.id) !== PRODUCT.product.id || PRODUCT.status !== STATUS.SUCCESS) {
+      const values = {
+        id: params.id,
+        org_id: params.org
       }
+      dispatch(fetchAsyncProductDetail(values))
     }
-    handleGetOrg_Products();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.state, params[0]]);
-
-  //ad values is product:true
-  const productsIs = [];
-  for (var item of products) {
-    const product = { ...item, is_product: true };
-    productsIs.push(product);
   }
+  const callOrgDetail = () => {
+    if (parseInt(params.org) !== ORG.org?.id || ORG.status !== STATUS.SUCCESS) {
+      dispatch(fetchAsyncOrg(params.org))
+    }
+  }
+  const callProductComments = () => {
+    console.log(parseInt(params.id), COMMENTS.product_id, COMMENTS.status_cmt)
+    if (parseInt(params.id) !== COMMENTS.product_id || COMMENTS.status_cmt !== STATUS.SUCCESS) {
+      const values = {
+        type: "PRODUCT",
+        page: 1,
+        id: params.id,
+        org_id: params.org
+      }
+      dispatch(fetchAsyncProductCmt(values))
+    }
+  }
+  useEffect(() => {
+    if (!location.state) {
+      callProductDetail()
+      callOrgDetail()
+    }
+    callProductComments()
+  }, [])
+  const product = location.state ? location.state.product : PRODUCT.product;
+  const org = location.state ? location.state.org : ORG.org;
+
   return (
     <div className="product">
       <HeadTitle
@@ -78,19 +75,17 @@ function ProductDetail(props: any) {
             t={t}
             product={product}
             org={org}
-            is_type={is_type}
-            loading={loading}
+            is_type={1}
+            loading={false}
           />
           <DetailCard
             org={org}
             product={product}
-            is_type={is_type}
-            loading={loading}
+            is_type={1}
+            loading={false}
           />
         </div>
-        <RecommendList org={org} list={products} is_type={is_type} />
-        {/* for mobile */}
-        {/* <RecommendListMb org={org} productsSale={products} /> */}
+        {/* <RecommendList org={org} list={products} is_type={is_type} /> */}
       </Container>
       <Footer />
     </div>

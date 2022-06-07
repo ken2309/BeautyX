@@ -62,7 +62,7 @@ function OrgDetail(props: IProps) {
         ],
     };
     const onActiveTabGallery = () => {
-        dispatch(onActiveTab(6));
+        dispatch(onActiveTab(7));
     };
     return (
         <div className="org-detail">

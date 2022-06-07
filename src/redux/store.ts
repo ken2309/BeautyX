@@ -12,6 +12,7 @@ import orgSpecialReducer from './org_specials/orgSpecialSlice';
 import combosReducer from './org_combos/orgCombosSlice';
 import orgDiscountsReducer from './org_discounts/orgDiscountsSlice';
 import serviceReducer from './org_services/serviceSlice';
+import productReducer from './org_products/productSlice';
 import loginFlatFromReducer from "./loginFlatForm/loginFlatFrom";
 import paymentsReducer from "./payments/paymentSlice";
 import blogReducer from "./blog/blogSlice";
@@ -26,6 +27,7 @@ const rootReducer = {
   ORG: orgReducer,
   ORG_SERVICES: orgServicesReducer,
   SERVICE: serviceReducer,
+  PRODUCT: productReducer,
   ORG_COMBOS: combosReducer,
   ORG_PRODUCTS: orgProductsReducer,
   ORG_SPECIALS: orgSpecialReducer,

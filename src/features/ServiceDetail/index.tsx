@@ -10,7 +10,7 @@ import HeadTitle from "../HeadTitle";
 import Footer from "../Footer";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAsyncServiceDetail } from '../../redux/org_services/serviceSlice';
+import { fetchAsyncServiceDetail, fetchAsyncServiceCmt } from '../../redux/org_services/serviceSlice';
 import { fetchAsyncOrg } from '../../redux/org/orgSlice'
 import { STATUS } from '../../redux/status'
 
@@ -18,7 +18,7 @@ function ServiceDetail(props: any) {
     const location: any = useLocation();
     const dispatch = useDispatch();
     const ORG = useSelector((state: any) => state.ORG);
-    const { SERVICE } = useSelector((state: any) => state.SERVICE);
+    const { SERVICE, COMMENTS } = useSelector((state: any) => state.SERVICE);
     const params: any = extraParamsUrl();
     const callServiceDetail = () => {
         if (parseInt(params.id) !== SERVICE.service.id || SERVICE.status !== STATUS.SUCCESS) {
@@ -34,11 +34,23 @@ function ServiceDetail(props: any) {
             dispatch(fetchAsyncOrg(params.org))
         }
     }
+    const callServiceComments = () => {
+        if (parseInt(params.id) !== COMMENTS.service_id || COMMENTS.status_cmt !== STATUS.SUCCESS) {
+            const values = {
+                type: "SERVICE",
+                page: 1,
+                id: params.id,
+                org_id: params.org
+            }
+            dispatch(fetchAsyncServiceCmt(values))
+        }
+    }
     useEffect(() => {
         if (!location.state) {
             callServiceDetail()
             callOrgDetail()
         }
+        callServiceComments()
     }, [])
 
     const service = location.state ? location.state.service : SERVICE.service;

@@ -1,67 +1,67 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import serviceApi from '../../api/serviceApi';
+import productsApi from '../../api/productApi';
 import commentsApi from '../../api/commentsApi';
-import { STATUS } from '../status';
+import { STATUS } from '../status'
 
-export const fetchAsyncServiceDetail: any = createAsyncThunk(
-    "SERVICE/fetchAsyncServiceDetail",
+export const fetchAsyncProductDetail: any = createAsyncThunk(
+    "PRODUCT/fetchAsyncProductDetail",
     async (values: any) => {
-        const res = await serviceApi.getDetailById(values);
+        const res = await productsApi.getDetailById(values);
         return res.data.context
     }
 )
-export const fetchAsyncServiceCmt: any = createAsyncThunk(
-    "SERVICE/fetchAsyncServiceCmt",
+export const fetchAsyncProductCmt: any = createAsyncThunk(
+    "PRODUCT/fetchAsyncProductCmt",
     async (values: any) => {
         const res = await commentsApi.getComments(values);
         const payload = {
-            service_id: parseInt(values.id),
             comments: res.data.context.data,
             totalItem: res.data.context.total,
-            page: values.page
+            page: values.page,
+            product_id: parseInt(values.id)
         }
         return payload
     }
 )
 const initialState = {
-    SERVICE: {
-        service: {},
+    PRODUCT: {
+        product: {},
         status: ""
     },
     COMMENTS: {
-        service_id:null,
+        product_id: null,
         comments: [],
         page: 1,
         totalItem: 1,
         status_cmt: ""
     }
 }
-const serviceSlice = createSlice({
+const productSlice = createSlice({
     initialState,
-    name: "SERVICE",
+    name: "PRODUCT",
     reducers: {},
     extraReducers: {
-        [fetchAsyncServiceDetail.pending]: (state) => {
-            return { ...state, SERVICE: { ...state.SERVICE, status: STATUS.LOADING } }
+        [fetchAsyncProductDetail.pending]: (state) => {
+            return { ...state, PRODUCT: { ...state.PRODUCT, status: STATUS.LOADING } }
         },
-        [fetchAsyncServiceDetail.fulfilled]: (state, { payload }) => {
+        [fetchAsyncProductDetail.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
-                SERVICE: {
-                    service: payload,
+                PRODUCT: {
+                    product: payload,
                     status: STATUS.SUCCESS
                 }
             }
         },
-        [fetchAsyncServiceDetail.rejected]: (state) => {
-            return { ...state, SERVICE: { ...state.SERVICE, status: STATUS.FAIL } }
+        [fetchAsyncProductDetail.rejected]: (state) => {
+            return { ...state, PRODUCT: { ...state.PRODUCT, status: STATUS.FAIL } }
         },
 
-        [fetchAsyncServiceCmt.pending]: (state) => {
+        [fetchAsyncProductCmt.pending]: (state) => {
             return { ...state, COMMENTS: { ...state.COMMENTS, status_cmt: STATUS.LOADING } }
         },
-        [fetchAsyncServiceCmt.fulfilled]: (state, { payload }) => {
-            const { comments, totalItem, page, service_id } = payload;
+        [fetchAsyncProductCmt.fulfilled]: (state, { payload }) => {
+            const { comments, totalItem, page, product_id } = payload;
             return {
                 ...state,
                 COMMENTS: {
@@ -69,14 +69,14 @@ const serviceSlice = createSlice({
                     comments: comments,
                     totalItem: totalItem,
                     page: page,
-                    service_id: service_id,
+                    product_id: product_id,
                     status_cmt: STATUS.SUCCESS
                 }
             }
         },
-        [fetchAsyncServiceCmt.rejected]: (state) => {
+        [fetchAsyncProductCmt.rejected]: (state) => {
             return { ...state, COMMENTS: { ...state.COMMENTS, status_cmt: STATUS.FAIL } }
         }
     }
 })
-export default serviceSlice.reducer;
+export default productSlice.reducer;
