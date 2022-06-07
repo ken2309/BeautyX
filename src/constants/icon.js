@@ -136,8 +136,18 @@ import addImg from "../assets/icon/add-img.svg";
 import tickBlue from "../assets/icon/tickBlue.png";
 import userNotSign from "../assets/icon/userNotSign.svg";
 import arrowDownPurple from "../assets/icon/arrow_drop_down_purple.svg";
+import favoriteStroke from "../assets/icon/favorite-stroke.svg";
+import rss from "../assets/icon/rss.svg";
+import archive from "../assets/icon/archive.svg";
+import addBtn from "../assets/icon/add-btn.svg";
+import removeBtn from "../assets/icon/remove-btn.svg";
 
 const icon = {
+    addBtn,
+    removeBtn,
+    rss,
+    archive,
+    favoriteStroke,
     arrowDownPurple,
     Favorite,
     Tumer,

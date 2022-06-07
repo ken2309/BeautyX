@@ -127,30 +127,6 @@ function OrgContainer(props: IProps) {
                         </TabList>
                         <TabPanel value={value}>{onSwitchTab(value)}</TabPanel>
                     </TabContext>
-                    {/* <ul className="flex-row org-tab-list">
-                        {
-                            tabs.map(item => (
-                                <li
-                                    onClick={() => handleActiveTab(item.id)}
-                                    key={item.id}
-                                >
-                                    <span
-                                        style={
-                                            tab === item.id ?
-                                                {
-                                                    color: "var(--purple)",
-                                                    borderBottom: "solid 1px var(--purple)"
-                                                }
-                                                :
-                                                {}
-                                        }
-                                        className="org-tab-list__item">
-                                        {item.title}
-                                    </span>
-                                </li>
-                            ))
-                        }
-                    </ul> */}
                 </div>
             </div>
         </>

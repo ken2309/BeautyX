@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "../Head";
-import { Container } from "@mui/material";
+import { Container, Tab } from "@mui/material";
 import DetailCard from "../ProductDetail/components/DetailCard";
 import { useLocation } from "react-router-dom";
 import DetailHead from "../ProductDetail/components/DetailHead";
@@ -10,9 +10,18 @@ import HeadTitle from "../HeadTitle";
 import Footer from "../Footer";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAsyncServiceDetail } from '../../redux/org_services/serviceSlice';
-import { fetchAsyncOrg } from '../../redux/org/orgSlice'
-import { STATUS } from '../../redux/status'
+import {
+    fetchAsyncComments,
+    fetchAsyncServiceDetail,
+} from "../../redux/org_services/serviceSlice";
+import { fetchAsyncOrg } from "../../redux/org/orgSlice";
+import { STATUS } from "../../redux/status";
+import ServiceDetailLeft from "./components/ServiceDetailLeft";
+import ServiceDetailRight from "./components/ServiceDetailRight";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
+import Review from "../Reviews";
+import OrgReviews from "../MerchantDetail/components/OrgPages/OrgReviews";
 
 function ServiceDetail(props: any) {
     const location: any = useLocation();
@@ -21,64 +30,158 @@ function ServiceDetail(props: any) {
     const { SERVICE } = useSelector((state: any) => state.SERVICE);
     const params: any = extraParamsUrl();
     const callServiceDetail = () => {
-        if (parseInt(params.id) !== SERVICE.service.id || SERVICE.status !== STATUS.SUCCESS) {
+        if (
+            parseInt(params.id) !== SERVICE.service.id ||
+            SERVICE.status !== STATUS.SUCCESS
+        ) {
             const values = {
                 org_id: params.org,
-                ser_id: params.id
-            }
-            dispatch(fetchAsyncServiceDetail(values))
+                ser_id: params.id,
+            };
+            dispatch(fetchAsyncServiceDetail(values));
         }
-    }
+    };
     const callOrgDetail = () => {
-        if (parseInt(params.org) !== ORG.org?.id || ORG.status !== STATUS.SUCCESS) {
-            dispatch(fetchAsyncOrg(params.org))
+        if (
+            parseInt(params.org) !== ORG.org?.id ||
+            ORG.status !== STATUS.SUCCESS
+        ) {
+            dispatch(fetchAsyncOrg(params.org));
         }
-    }
+    };
+    const callComments = () => {
+        const values = {
+            org_id: params.org,
+            id: params.id,
+            page: 1,
+            type: "SERVICE",
+        };
+        dispatch(fetchAsyncComments(values));
+    };
     useEffect(() => {
         if (!location.state) {
-            callServiceDetail()
-            callOrgDetail()
+            callServiceDetail();
+            callOrgDetail();
+            callComments();
         }
-    }, [])
+    }, []);
 
     const service = location.state ? location.state.service : SERVICE.service;
     const org = location.state ? location.state.org : ORG.org;
 
+    const [value, setValue] = useState<any>(1);
+    let tabs = [
+        { id: 1, title: "Mô tả" },
+        { id: 2, title: "Đánh giá" },
+        { id: 3, title: "Doanh nghiệp" },
+    ];
+    const handleChange = (event: React.SyntheticEvent, value: any) => {
+        setValue(value);
+        // let top;
+        // switch (value) {
+        //     case 1:
+        //         top =  0;
+        //         break;
+        //     case 6:
+        //         top = refReview?.current?.offsetTop + 180;
+        //         break;
+        //     default:
+        //         break;
+        // }
+        // if (is_mb) {
+        //     window.scrollTo({
+        //         top: top,
+        //         behavior: "smooth",
+        //     });
+        // }
+    };
+    // const onSwitchTab = (value: any) => {
+    //     switch (value) {
+    //         case 1:
+    //             return <p>tab 1</p>;
+    //         case 2:
+    //             return <OrgInformation org={org} />;
+    //         case 3:
+    //             return (
+    //                 // <Review
+    //                 //     comments={comments}
+    //                 //     totalItem={totalItem}
+    //                 //     commentable_type={"SERVICE"}
+    //                 //     id={org.id}
+    //                 // />
+    //                 <></>
+    //             );
+    //     }
+    // };
     return (
-        <div className="dealhot-service__detail">
-            <div className="product">
-                <HeadTitle
-                    title={
-                        service?.service_name
-                            ? service.service_name
-                            : "Loading..."
-                    }
-                />
-                <Head />
-                <Container>
-                    <div className="product-cnt">
-                        <DetailHead
-                            product={service}
-                            org={org}
-                            //listServices={services}
-                            is_type={2}
-                        />
-                        <DetailCard
-                            org={org}
-                            product={service}
-                            is_type={2}
-                            loading={false}
-                        />
+        <>
+            <HeadTitle
+                title={
+                    service?.service_name ? service.service_name : "Loading..."
+                }
+            />
+            <Head />
+            <Container>
+                <div className="service-detail">
+                    <div className="service-detail__head">
+                        <ServiceDetailLeft org={org} service={service} />
+                        <ServiceDetailRight org={org} service={service} />
                     </div>
-                    {/* <RecommendList
-                        org={org}
-                        //list={services}
-                        is_type={2}
-                    /> */}
-                </Container>
-                <Footer />
-            </div>
-        </div>
+
+                    <div className="service-detail__body">
+                        <div className="service-detail__tab">
+                            <TabContext value={value}>
+                                <TabList onChange={handleChange}>
+                                    {tabs.map((item: any, i: number) => (
+                                        <Tab
+                                            key={i}
+                                            label={item.title}
+                                            value={item.id}
+                                        />
+                                    ))}
+                                </TabList>
+                                <div className="service-detail__tabitem">
+                                    <TabPanel value={value}>
+                                        {/* {onSwitchTab(value)} */}
+                                        <div className="service-detail__description">
+                                            <p>{service.description}</p>
+                                        </div>
+                                    </TabPanel>
+                                    <TabPanel value={value}>
+                                        <div className="service-detail__comment">
+                                            {/* <Review
+                                                comments={comments}
+                                                totalItem={totalItem}
+                                                commentable_type={"SERVICE"}
+                                                id={org_id}
+                                            /> */}
+                                        </div>
+                                    </TabPanel>
+                                    <TabPanel value={value}>
+                                        {/* {onSwitchTab(value)} */}
+                                        <div className="org-information-cnt">
+                                            {/* <OrgInformation
+                                                // refMap={refMap}
+                                                org={org}
+                                            /> */}
+                                            {/* <OrgReviews
+                                                // refReview={refReview}
+                                                org={org}
+                                            /> */}
+                                        </div>
+                                    </TabPanel>
+                                    <TabPanel value={value}>
+                                        {/* {onSwitchTab(value)} */}
+                                        <>1</>
+                                    </TabPanel>
+                                </div>
+                            </TabContext>
+                        </div>
+                    </div>
+                </div>
+            </Container>
+            <Footer />
+        </>
     );
 }
 

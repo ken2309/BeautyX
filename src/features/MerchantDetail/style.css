@@ -235,7 +235,6 @@
     line-height: 20px;
     font-weight: 700;
     color: var(--black);
-    margin-top: 4px;
 }
 .org-left-detail {
     margin-top: auto;
@@ -760,14 +759,6 @@
     align-items: flex-end;
 }
 
-.org-container .MuiTabs-root {
-    min-height: 48px;
-    position: sticky;
-    top: 0;
-    left: 0;
-    background-color: var(--bgWhite);
-    z-index: 999;
-}
 .org-time-work__right-list {
     font-size: 12px;
     padding: 4px 8px;
@@ -786,7 +777,14 @@
 .org-container {
     padding: 0;
 }
-
+.org-container .MuiTabs-root {
+    min-height: 48px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: var(--bgWhite);
+    z-index: 999;
+}
 .MuiContainer-root .org-container .MuiTabs-scroller {
     overflow-x: scroll !important;
     border-bottom: 1px solid #ccc;
@@ -795,7 +793,7 @@
     color: var(--purple) !important;
 }
 .org-container .MuiTab-root {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     text-transform: capitalize;
     font-family: inherit;
@@ -890,7 +888,6 @@
     }
 
     .org-time-work {
-        padding: 8px 0px 0px 0px;
         width: 100%;
         margin: 0px;
     }
