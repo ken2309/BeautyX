@@ -65,7 +65,7 @@ function DetailLeft(props: IProps) {
                             <TabPanel value="1">
                                 <>
                                     <DetailNameMb
-                                        discount={discount_item_child}
+                                        discount={discount}
                                         is_type={discount.discount_type}
                                     />
                                 </>

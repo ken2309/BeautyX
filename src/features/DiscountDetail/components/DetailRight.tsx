@@ -16,7 +16,9 @@ function DetailRight(props: IProps) {
     const { t } = useContext(AppContext);
     const dispatch = useDispatch();
     const { discount } = props;
-    const org: IOrganization = discount?.organizations[0];
+    console.log(discount?.organizations[0], discount)
+    const org: IOrganization = discount?.organizations[0] ;
+    
     const discount_item_child: IITEMS_DISCOUNT = discount?.items[0];
     const percent = Math.round(100 - discount_item_child.view_price / discount_item_child.productable.price * 100)
     const [quantity, setQuantity] = useState(1);
@@ -36,6 +38,7 @@ function DetailRight(props: IProps) {
     )
     const handleAddCart = () => {
         dispatch(addCart(values))
+        //console.log(discount)
     }
     //when quantity discount > 1
     const total = discount_item_child.productable.price * quantity;
