@@ -2,16 +2,27 @@ import React from "react";
 import { Drawer } from "@mui/material";
 import DetailRight from "../components/DetailRight";
 import DetailCard from "../../ProductDetail/components/DetailCard";
+import { IDiscountPar } from "../../../interface/discount";
 
-function DetailControl(props: any) {
+interface IProps {
+    discount: IDiscountPar,
+    open: boolean,
+    setOpen: (open: boolean) => void
+}
+
+function DetailControl(props: IProps) {
     const { open, setOpen, discount } = props;
+    console.log(discount)
     return (
         <Drawer open={open} anchor="bottom" onClose={() => setOpen(false)}>
             <div className="mb-de-control">
                 <div className="mb-de-control_x"></div>
-                <DetailRight
-                    discount={discount}
-                />
+                {
+                    open &&
+                    <DetailRight
+                        discount={discount}
+                    />
+                }
             </div>
         </Drawer>
     );

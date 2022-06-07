@@ -11,10 +11,13 @@ import '../ProductDetail/product.css';
 import DetailLeft from './components/DetailLeft';
 import DetailRight from './components/DetailRight';
 import { STATUS } from '../../redux/status'
+import { useLocation } from 'react-router-dom';
 
 function DiscountDetail() {
+    const location: any = useLocation();
+    console.log(location.state)
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
-    const discount: IDiscountPar = DISCOUNT.discount;
+    //const discount: IDiscountPar = DISCOUNT.discount;
     const status_detail = DISCOUNT.status
 
     const dispatch = useDispatch();
@@ -24,13 +27,16 @@ function DiscountDetail() {
         id: params.id
     }
     const callDiscountDetail = () => {
-        if (status_detail !== STATUS.SUCCESS || discount.id !== parseInt(params.id)) {
+        if (status_detail !== STATUS.SUCCESS || DISCOUNT.discount?.id !== parseInt(params.id)) {
             dispatch(fetchAsyncDiscountDetail(values))
         }
     }
     useEffect(() => {
-        callDiscountDetail()
+        if (!location.state) {
+            callDiscountDetail()
+        }
     }, [])
+    const discount: IDiscountPar = location.state ? location.state.discountPar : DISCOUNT.discount
     return (
         <>
             <HeadTitle
@@ -38,7 +44,7 @@ function DiscountDetail() {
             />
             <Head />
             {
-                status_detail === STATUS.SUCCESS &&
+                (status_detail === STATUS.SUCCESS || location.state) &&
                 <Container>
                     <div className="product-cnt">
                         <DetailLeft
