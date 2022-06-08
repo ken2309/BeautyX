@@ -9,14 +9,14 @@ import { postAsyncOrgComments } from "../../redux/org/orgCommentsSlice";
 import SignInUp from "../poupSignInUp";
 import mediaApi from "../../api/mediaApi";
 interface IProps {
-    comments: IComment[];
-    totalItem: number;
-    commentable_type: string;
-    id: number;
+    comments: IComment[]|undefined;
+    totalItem: number|undefined;
+    id: number|undefined;
+    focus?:Boolean
 }
 
 function Review(props: IProps) {
-    const { comments, totalItem, commentable_type, id } = props;
+    const { comments, totalItem, id  } = props;
     const USER = useSelector((state: any) => state.USER);
     const user = USER.USER;
     const dispatch = useDispatch();
@@ -37,7 +37,6 @@ function Review(props: IProps) {
 
     const values = {
         page: 1,
-        type: commentable_type,
         org_id: id,
         body: JSON.stringify(comment),
     };
@@ -110,7 +109,7 @@ function Review(props: IProps) {
                     onRemoveImgTemp={onRemoveImgTemp}
                 />
                 <span className="total-comment">Tổng {totalItem} đánh giá</span>
-                {comments.map((item: IComment, index: number) => (
+                {comments?.map((item: IComment, index: number) => (
                     <CommentItem key={index} comment={item} user={user} />
                 ))}
             </div>

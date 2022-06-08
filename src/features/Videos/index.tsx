@@ -7,6 +7,7 @@ import ContainerPc from './components/ContainerPc';
 import Trends from '../Trends';
 import './style.css'
 
+
 function Videos() {
     const { videos } = useSelector((state: any) => state.BLOG.VIDEOS);
     return (

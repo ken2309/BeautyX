@@ -7,6 +7,7 @@ interface IProps {
     handlePostComment: any;
     onChangeMedia: any;
     onRemoveImgTemp: any;
+    InputRef?: any
 }
 export default function EvaluateInput(props: IProps) {
     const {

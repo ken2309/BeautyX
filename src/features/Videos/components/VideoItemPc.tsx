@@ -1,29 +1,36 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Avatar from '@mui/material/Avatar';
-import { Drawer } from "@mui/material";
+import { Dialog } from "@mui/material";
 import { useHistory } from 'react-router-dom';
-import icon from "../../../constants/icon";
 import serviceApi from "../../../api/serviceApi";
 import scrollTop from "../../../utils/scrollTop";
-import formatPrice from '../../../utils/formatPrice';
-import EvaluateInput from '../../Reviews/EvaluateInput';
-import errorImg from '../../../utils/errorImg';
+import Review from '../../Reviews/index';
+import icon from '../../../constants/icon';
+// post
+import PostHead from './post/PostHead';
+import PostReaction from './post/PostReaction';
+import PostVideo from './post/PostVideo';
+import PostProductList from './post/PostProductList';
+// interface
 import { IOrganization } from '../../../interface/organization';
 import { IComment } from '../../../interface/comments';
 import { Service } from '../../../interface/service';
 // api
 import { fetchAsyncOrg, onFavoriteOrg, onDeleteFavoriteOrg } from '../../../redux/org/orgSlice';
 import { fetchAsyncOrgComments, postAsyncOrgComments } from '../../../redux/org/orgCommentsSlice';
+import mediaApi from '../../../api/mediaApi';
+import PostComment from './post/PostCmt';
 
 function VideoItemPc(props: any) {
     const { video, videoCur, setVideoCur } = props;
     const sess = window.sessionStorage.getItem("_WEB_TK");
     const history = useHistory();
     const dispatch = useDispatch();
-    const videoRef = useRef<any>();
+  
+    
     const USER = useSelector((state: any) => state.USER);
-    const [cmtDialog,setOpen]
+    const [cmtDialog,setOpenCmtDialog] = useState<any>();
+    const [focus,setFocus] = useState<Boolean>();
     const user = USER.USER;
     // ---- interface ----
         interface IReact {
@@ -32,16 +39,17 @@ function VideoItemPc(props: any) {
         }
         interface ICmt {
             text: String;
-            url?: String
+            url?: String;
+            image_url?: String|null
         }
         interface Comments {
-            comments:any;
-            totalItem:number
+            comments?:IComment[];
+            totalItem?:number
         }
         interface IData {
             org?: IOrganization | null;
-            ser?: Array<Service>|null;
-            cmt?: Comments|null
+            ser?: Service[]|null;
+            cmt?: Comments|undefined
         }
     // ---- video ----
         const vd_url = video?.excerpt?.rendered?.slice(10, video?.excerpt?.rendered?.length - 12);
@@ -53,10 +61,9 @@ function VideoItemPc(props: any) {
         const sers = ser_params.split('_');
     // ---- end ----
     // ---- org - service - comments ---- 
-        const [data, setData] = useState<IData>({
+        const [data, setData] = useState<IData|undefined>({
             org: null,
-            ser: null,
-            cmt: null
+            ser: null
         });
         const [reaction, setReaction] = useState<IReact>({
             favoriteCount: 0,
@@ -64,7 +71,8 @@ function VideoItemPc(props: any) {
         })
         const [comment, setComment] = useState<ICmt>({
             text: '',
-            url: video.link
+            url: video.link,
+            image_url: ''
         });
     // ---- end ---- 
         const getComments = async () => {
@@ -95,7 +103,6 @@ function VideoItemPc(props: any) {
                 cmt: resCmt.payload
             };
             setData(resData);
-            console.log(resCmt);
             if (resData.org.is_favorite) {
                 setReaction({
                     ...reaction,
@@ -105,34 +112,15 @@ function VideoItemPc(props: any) {
 
             }
         }
-        useEffect(() => {
-            if (videoCur?.id === video?.id) {
-                videoRef.current.play()
-            } else {
-                videoRef.current.pause()
-            }
+        useEffect(()=>{
             getInitData();
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        },[])
     // handle func
-        const onHoverVideoItem = () => {
-            setVideoCur(video)
-        }
         const handleGoOrgDetail = () => {
             goSignIn();
         }
-        const handleReact = async () => {
-            if (reaction.isFavorite) {
-                const res = dispatch(onDeleteFavoriteOrg(data.org))
-                console.log(res);
-                setReaction({ favoriteCount: reaction.favoriteCount-1 ,isFavorite: false })
-            } else {
-                const res = await dispatch(onFavoriteOrg(data.org))
-                console.log(res);
-                setReaction({ favoriteCount: reaction.favoriteCount+1 ,isFavorite: true })
-            }
-        }
-        const handleComment: any = (e: any) => {
+        const handleComment = (e: any) => {
             if (!sess) {
                 goSignIn();
             }
@@ -172,47 +160,43 @@ function VideoItemPc(props: any) {
                 }
             }
         };
-        const onChangeMedia = () => {
-
-        }
-        const onRemoveImgTemp = () => {
-
-        }
-    // === end ===
-        const PreviewComment = ({ index, val }: any) => {
-            let body
-            try {
-                const cmt = JSON.parse(`${val.body}`);
-                body = {
-                    text: cmt.text,
-                    image_url: cmt.image_url,
-                    url: cmt.url
-                };
-            } catch (error) {
-                body = {
-                    text: val.body,
-                    image_url: "",
-                    url: ''
-                };
+        const onChangeMedia = (e: any) => {
+            const media = e.target.files[0];
+            if (user && media) {
+                handlePostMedia(media);
+            } else if (!user) {
+                console.log("comments not found");
+                goSignIn();
             }
-            return (
-                (body.url && body.url !== '')
-                    ?
-                    (body.url === video.link)
-                        ?
-                        <div className="video-item-comments-preview_item">
-                            <span className="cmt_name">{val?.user?.fullname}</span>
-                            <span className="cmt_body">{body.text}</span>
-                        </div>
-                        :
-                        <>
-                        </>
-                    :
-                    <div className="video-item-comments-preview_item">
-                        <span className="cmt_name">{val?.user?.fullname}</span>
-                        <span className="cmt_body">{body.text}</span>
-                    </div>
-            )
+        };
+        const handlePostMedia = async (media: any) => {
+            let formData = new FormData();
+            formData.append("file", media);
+            try {
+                const res = await mediaApi.postMedia(formData);
+                setComment({
+                    ...comment,
+                    image_url: res.data.context.original_url,
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        };
+    
+        const onRemoveImgTemp = () => {
+            setComment({ ...comment, image_url: null });
+        };
+    // === end ===
+        const handleReact = async () => {
+            if (reaction.isFavorite) {
+                const res = dispatch(onDeleteFavoriteOrg(data?.org))
+                console.log(res);
+                setReaction({ favoriteCount: reaction.favoriteCount-1 ,isFavorite: false })
+            } else {
+                const res = await dispatch(onFavoriteOrg(data?.org))
+                console.log(res);
+                setReaction({ favoriteCount: reaction.favoriteCount+1 ,isFavorite: true })
+            }
         }
         const goSignIn = () => {
             scrollTop();
@@ -222,142 +206,88 @@ function VideoItemPc(props: any) {
                 state: { from: '/beautyx-videos' }
             })
         }
+        const handleViewAllCmt = () => {
+            setOpenCmtDialog(true);
+            setFocus(true)
+        }
     console.log('render: ' + id,reaction)
 
     return (
         <>
-            <header>
-                <div className="video-item-header_ava"
-                    onClick={handleGoOrgDetail}
-                >
-                    <Avatar
-                        alt={data.org?.name}
-                        src={data.org?.image_url}
-                        sx={{ width: 32, height: 32 }} />
-                    <div className='video-item-header_name'>
-                        <span>{data.org?.name}</span>
-                        <span className="video-item-header_time">Đã đămg 5 giờ trước</span>
-                    </div>
-                </div>
-            </header>
-            <div className="video-item_body-status">
-                <span>
-                    <span dangerouslySetInnerHTML={{ __html: video.title.rendered }}></span> <br />
-                    <span className="hastag">#tagline1 #tagline2</span>
-                </span>
-            </div>
+            <PostHead
+                data={data}
+                video={video}
+                handleGoOrgDetail={handleGoOrgDetail}
+            />
             <div className="video-item_body">
-                <div className="video-item_body-image"
-
-                >
-                    <div
-                        onMouseEnter={onHoverVideoItem}
-                        className='video-item-pc__wr'
-                    >
-                        <video
-                            ref={videoRef}
-                            className='video-item__pc'
-                            controls
-                            // autoPlay={true}
-                            loop
-                        >
-                            <source src={vd_url} type="video/mp4" />
-                        </video>
-                        <div className="blur"></div>
-                        <video
-                            ref={videoRef}
-                            className='video-item__pc back-drop__vid'
-                            controls
-                            // autoPlay={true}
-                            loop
-                        >
-                            <source src={vd_url} type="video/mp4" />
-                        </video>
-                    </div>
-                    <div className="video-item_product_list">
-                        {/* {
-                    data.ser.map((item))
-                    } */}
-                        <div>
-                            {
-                                data.ser?.map((item: any, index: any) => (
-                                    <div key={index} className="video-item_product_item">
-                                        <div className="video-item_product_item-img">
-                                            <img src={(item?.image_url) ? item?.image_url : ''} onError={(e) => errorImg(e)} alt="" />
-                                        </div>
-                                        <div className="video-item_product_item-title">
-                                            {item?.service_name}
-                                        </div>
-                                        <div className="video-item_product_item-price">
-                                            {formatPrice(item?.price)} đ
-                                    </div>
-                                        <div className="video-item_product_item-special_price">
-                                            {formatPrice(item?.price)} đ
-                                    </div>
-                                        <div className="video-item_product_item-add_cart">
-                                            <img src={icon.shopingCartAddBlack} alt="" />
-                                        </div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className="video-item_react-ctn">
-                    <div className="react-btn">
-                        <div className="like" onClick={handleReact}>
-                            {
-                                reaction.isFavorite
-                                    ?
-                                    <img className="icon" src={icon.heart} alt="" />
-                                    :
-                                    <img className="icon" src={icon.unHeartWhite} alt="" />
-                            }
-                            <span>{reaction.favoriteCount}</span>
-                        </div>
-                        <div className="comment">
-                            <img className="icon" src={icon.comment} alt="" />
-                            <span>{data.cmt?.totalItem}</span>
-                        </div>
-                        <div className="share_link">
-                            <img className="icon" src={icon.share} alt="" />
-                        </div>
-                    </div>
-                </div>
-                <div className="video-item_comments">
-                    {
-                        data.cmt?.comments.length > 0 && (
-                            <>
-                                <div className="video-item-comments-preview">
-                                    {
-                                        data.cmt?.comments?.map((item: any, index: any) => <PreviewComment key={index} val={item} />).slice(0, 2)
-                                    }
-                                </div>
-                                <div className="video-item-comments-read_all">
-                                    xem toàn bộ {data.cmt?.totalItem} <img src={icon.vector_down} alt="icon" />
-                                </div>
-                            </>
-                        )
-                    }
-                    <EvaluateInput
-                        handleOnchange={handleComment}
-                        comment={comment}
-                        handleKeyDown={handleKeyDown}
-                        user={user}
-                        handlePostComment={handlePostComment}
-                        onChangeMedia={onChangeMedia}
-                        onRemoveImgTemp={onRemoveImgTemp}
+                <div className="video-item_body-image">
+                    <PostVideo
+                        vd_url={vd_url}
+                        video={video}
+                        videoCur={videoCur}
+                        setVideoCur={setVideoCur}
+                    />
+                    <PostProductList
+                        data={data}
                     />
                 </div>
+                <PostReaction
+                    data={data}
+                    reaction={reaction}
+                    handleReact={handleReact}
+                    handleViewAllCmt={handleViewAllCmt}
+                />
+                <PostComment
+                    data={data}
+                    video={video}
+                    handleComment={handleComment}
+                    comment={comment}
+                    handleViewAllCmt={handleViewAllCmt}
+                    handleKeyDown={handleKeyDown}
+                    user={user}
+                    handlePostComment={handlePostComment}
+                    onChangeMedia={onChangeMedia}
+                    onRemoveImgTemp={onRemoveImgTemp}
+                />
             </div>
-            <Drawer
-            open={open}
-            anchor='right'
-            onClose={() => setOpen(false)}
-            style={{inset: 0, margin: 'auto'}}
-            >
-        
-            </Drawer>
+            
+            <Dialog
+                open={cmtDialog}
+                onClose={() => setOpenCmtDialog(false)}
+            >   
+                <div 
+                    className="close_btn"
+                    onClick={() => setOpenCmtDialog(false)}
+                >
+                   <img src={icon.closeCircleWhite} alt=""/>
+                </div>
+                <div className="video-item_dialog">
+                    <PostVideo
+                        vd_url={vd_url}
+                        video={video}
+                        videoCur={videoCur}
+                        setVideoCur={setVideoCur}
+                    />
+                    <div className="video-item_dialog-body">
+                        <PostHead
+                            data={data}
+                            video={video}
+                            handleGoOrgDetail={handleGoOrgDetail}
+                        />
+                        <PostReaction
+                            data={data}
+                            reaction={reaction}
+                            handleReact={handleReact}
+                            handleViewAllCmt={handleViewAllCmt}
+                        />
+                        <Review
+                            comments={data?.cmt?.comments}
+                            totalItem={data?.cmt?.totalItem}
+                            id={data?.org?.id}
+                        />
+                    </div>
+                </div>
+            </Dialog>
         </>
     );
 }

@@ -37,7 +37,6 @@ function OrgReviews(props: IProps) {
             <Review
                 comments={comments}
                 totalItem={totalItem}
-                commentable_type={"ORGANIZATION"}
                 id={org_id}
             />
         </div>
