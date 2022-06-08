@@ -10,7 +10,6 @@ function HomeDiscount() {
     const { DISCOUNTS } = useSelector((state: any) => state.HOME);
     const { discounts } = DISCOUNTS;
     const history = useHistory();
-    console.log(discounts);
     return (
         <div className="home-discounts">
             <Container>
@@ -22,23 +21,21 @@ function HomeDiscount() {
                 </div>
                 <div className="home-discounts__list-wrap">
                     <ul className="home-discounts__list">
-                        
                         {discounts
                             .slice(0, 12)
-                            .map((discount: IDiscountPar, index: number) => 
+                            .map((discount: IDiscountPar, index: number) =>
                                 <>
-                                {discount.items.map(
+                                    {discount.items.map(
                                         (item: IITEMS_DISCOUNT, i: number) => (
                                             <li key={i}>
                                                 <DiscountItem
-                                                
-                                                discountItem={item}
-                                                discountPar={discount}
+                                                    discountItem={item}
+                                                    discountPar={discount}
                                                 />
                                             </li>
                                         )
                                     )
-                                }
+                                    }
                                 </>
                             )}
                     </ul>

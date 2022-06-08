@@ -3,11 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import icon from "../../../constants/icon";
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
-import {
-    onFavoriteOrg,
-    onDeleteFavoriteOrg,
-} from "../../../redux/org/orgSlice";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
     fetchAsyncCancelFavoriteService,
     fetchAsyncFavoriteService,
@@ -15,6 +11,7 @@ import {
 import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import { addCart } from "../../../redux/cartSlice";
 import PopupSuccess from "../../PopupSuccess";
+import DetailOrgCard from "./DetailOrgCard";
 
 export default function ServiceDetailRight(props: any) {
     const { org, service } = props;
@@ -25,18 +22,7 @@ export default function ServiceDetailRight(props: any) {
         ? Math.round(100 - (service.special_price / service?.price) * 100)
         : null;
     const { USER } = useSelector((state: any) => state.USER);
-    const ORG = useSelector((state: any) => state.ORG);
-    const onFavoriteOrganization = async () => {
-        if (USER) {
-            if (org.is_favorite === false) {
-                await dispatch(onFavoriteOrg(org));
-            } else {
-                await dispatch(onDeleteFavoriteOrg(org));
-            }
-        } else {
-            history.push("/sign-in");
-        }
-    };
+
     const valueService = {
         org_id: org?.id,
         detail: service,
@@ -152,82 +138,8 @@ export default function ServiceDetailRight(props: any) {
                         </div>
                     </div>
                 </div>
-
-                <div className="detail-right__infoMer">
-                    <div className="infoMer-top">
-                        <div className="infoMer-top__img">
-                            <img
-                                onError={(e) => onErrorImg(e)}
-                                src={org.image_url}
-                                alt=""
-                            />
-                        </div>
-                        <div className="infoMer-top__right">
-                            <p className="infoMer-top__name">{org.name}</p>
-                            <p className="infoMer-top__address">
-                                {org.address ? org.address : org.full_address}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="infoMer-mid">
-                        <div className="infoMer-item">
-                            <div className="infoMer-item__wrap flexX-gap-4">
-                                <p>{"4.5/5"}</p>
-                                <img src={icon.star} alt="" />
-                            </div>
-                            <p className="infoMer-item__text">Đánh giá</p>
-                        </div>
-                        <div className="infoMer-item">
-                            <div className="infoMer-item__wrap flexX-gap-4">
-                                <p>{ORG.org?.favorites_count}</p>
-                                <img src={icon.Favorite} alt="" />
-                            </div>
-                            <p className="infoMer-item__text">Yêu thích</p>
-                        </div>
-                        <div className="infoMer-item">
-                            <div className="infoMer-item__wrap flexX-gap-4">
-                                <p>{"5"}</p>
-                                <img src={icon.chatAll} alt="" />
-                            </div>
-                            <p className="infoMer-item__text">Bình luận</p>
-                        </div>
-                    </div>
-
-                    <div className="infoMer-bottom">
-                        <button className="infoMer-bottom__left">
-                            <Link
-                                className="flex-row"
-                                to={{ pathname: `/org/${org.subdomain}` }}
-                            >
-                                <img src={icon.archive} alt="" />
-                                <p>Xem Spa</p>
-                            </Link>
-                        </button>
-                        {org?.is_favorite === true ? (
-                            <button
-                                onClick={onFavoriteOrganization}
-                                className="infoMer-bottom__right infoMer-bottom__right-active"
-                            >
-                                <p className="infoMer-bottom__right-active">
-                                    Đang Theo Dõi
-                                </p>
-                            </button>
-                        ) : (
-                            <>
-                                <button
-                                    onClick={onFavoriteOrganization}
-                                    className="infoMer-bottom__right"
-                                >
-                                    <img src={icon.rss} alt="" />
-                                    <p>Theo Dõi</p>
-                                </button>
-                            </>
-                        )}
-                    </div>
-                </div>
+                <DetailOrgCard org={org} />
             </div>
-
             <div className="detail-right__bottom">
                 <div className="bottom-quantity">
                     <p className="bottom-quantity__text">Số lượng:</p>

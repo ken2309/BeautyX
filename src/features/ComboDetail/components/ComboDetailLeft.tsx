@@ -1,7 +1,9 @@
 import React from 'react';
+import icon from '../../../constants/icon';
 import { Combo } from '../../../interface/combo';
 import { IOrganization } from '../../../interface/organization';
 import onErrorImg from '../../../utils/errorImg';
+import formatPrice from '../../../utils/formatPrice';
 
 interface IProps {
     combo: Combo,
@@ -10,6 +12,11 @@ interface IProps {
 
 function ComboDetailLeft(props: IProps) {
     const { combo, org } = props;
+    const list_price = [combo?.price, combo?.use_value].sort((a, b) => b - a);
+    const price = list_price[0];
+    const special_price = list_price[1];
+    const percent = Math.round(100 - special_price / price * 100);
+
     return (
         <>
             <div className="service-detail__left">
@@ -23,6 +30,39 @@ function ComboDetailLeft(props: IProps) {
                         alt=""
                         onError={(e) => onErrorImg(e)}
                     />
+                </div>
+                <div className="service-detail__mobile">
+                    <div className="service-detail__mobile-top">
+                        <p className="service-detail__mobile-name">
+                            {combo?.name}
+                        </p>
+                        <div
+                            //onClick={onFavorite}
+                            className="service-detail__mobile-favorite"
+                        >
+                            <img src={icon.heart} alt="" />
+                        </div>
+                    </div>
+
+                    {/* <div className="service-detail__mobile-mid">
+                        <img src={icon.alarmClock} alt="" />
+                        <p className="service-detail__mobile-duration">
+                            {service.duration} phút
+                        </p>
+                    </div> */}
+
+                    <div className="service-detail__mobile-bottom">
+                        {
+                            percent > 0 &&
+                            <div className="service-detail__mobile-percent">
+                                Giảm {percent}%
+                            </div>
+                        }
+                        <div className="service-detail__mobile-price">
+                            <span>{formatPrice(special_price)}đ</span>
+                            <span>{formatPrice(price)}đ</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

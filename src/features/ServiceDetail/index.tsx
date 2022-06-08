@@ -7,7 +7,6 @@ import HeadTitle from "../HeadTitle";
 import Footer from "../Footer";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import { useDispatch, useSelector } from "react-redux";
-
 import ServiceDetailLeft from "./components/ServiceDetailLeft";
 import ServiceDetailRight from "./components/ServiceDetailRight";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
@@ -21,6 +20,7 @@ import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation
 import Review from "../Reviews";
 //import OrgReviews from "../MerchantDetail/components/OrgPages/OrgReviews";
 import icon from "../../constants/icon";
+import DetailOrgCard from "./components/DetailOrgCard";
 
 function ServiceDetail(props: any) {
     const dispatch = useDispatch();
@@ -196,7 +196,12 @@ function ServiceDetail(props: any) {
                                             className="service-detail__org"
                                         >
                                             {ORG.status === STATUS.SUCCESS && (
-                                                <OrgInformation org={org} />
+                                                <>
+                                                    <div className="service-detail__org-mb">
+                                                        <DetailOrgCard org={org} />
+                                                    </div>
+                                                    <OrgInformation org={org} />
+                                                </>
                                             )}
                                         </div>
                                     </TabPanel>

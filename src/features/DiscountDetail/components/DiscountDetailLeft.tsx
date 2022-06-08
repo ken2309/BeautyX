@@ -4,24 +4,49 @@ import { IDiscountPar, IITEMS_DISCOUNT } from '../../../interface/discount';
 import { IOrganization } from '../../../interface/organization'
 import onErrorImg from '../../../utils/errorImg';
 import formatPrice from '../../../utils/formatPrice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import {
+    fetchAsyncCancelFavoriteService,
+    fetchAsyncFavoriteService
+} from '../../../redux/org_services/serviceSlice';
 
 interface IProps {
     discount: IDiscountPar,
-    org: IOrganization
+    org: IOrganization,
+    detail: any
 }
 
 function DiscountDetailLeft(props: IProps) {
-    const { discount, org } = props;
-    console.log(discount);
-    const discount_item_child: IITEMS_DISCOUNT = discount?.items[0];
-    const percent = Math.round(100 - discount_item_child?.view_price / discount_item_child.productable.price)
+    const { org, detail, discount } = props;
+    const ITEM_DISCOUNT: IITEMS_DISCOUNT = useSelector((state: any) => state.ORG_DISCOUNTS.ITEM_DISCOUNT);
+    const percent = Math.round(100 - ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price * 100)
+
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const { USER } = useSelector((state: any) => state.USER);
+    const onFavorite = async () => {
+        if (USER) {
+            const valueService = {
+                org_id: org?.id,
+                detail: detail,
+            };
+            if (detail.is_favorite === false) {
+                await dispatch(fetchAsyncFavoriteService(valueService));
+            } else {
+                await dispatch(fetchAsyncCancelFavoriteService(valueService));
+            }
+        } else {
+            history.push("/sign-in");
+        }
+    };
     return (
         <div className="service-detail__left">
             <div className="detail-left__img">
                 <img
                     src={
-                        discount_item_child.productable.image
-                            ? discount_item_child?.productable?.image_url
+                        ITEM_DISCOUNT?.productable.image
+                            ? ITEM_DISCOUNT?.productable?.image_url
                             : org?.image_url
                     }
                     alt=""
@@ -32,13 +57,13 @@ function DiscountDetailLeft(props: IProps) {
             <div className="service-detail__mobile">
                 <div className="service-detail__mobile-top">
                     <p className="service-detail__mobile-name">
-                        {discount?.title}
+                        {detail?.service_name}
                     </p>
                     <div
-                        //onClick={onFavorite}
+                        onClick={onFavorite}
                         className="service-detail__mobile-favorite"
                     >
-                        <img src={icon.unHeart} alt="" />
+                        <img src={detail?.is_favorite ? icon.heart : icon.unHeart} alt="" />
                     </div>
                 </div>
 
@@ -51,9 +76,12 @@ function DiscountDetailLeft(props: IProps) {
                         Giảm {percent}%
                     </div>
                     <div className="service-detail__mobile-price">
-                        <span>{formatPrice(discount_item_child.view_price)}đ</span>
-                        <span>{formatPrice(discount_item_child.productable.price)}</span>
+                        <span>{formatPrice(ITEM_DISCOUNT?.view_price)}đ</span>
+                        <span>{formatPrice(ITEM_DISCOUNT?.productable.price)}</span>
                     </div>
+                </div>
+                <div className="service-detail__mobile-avi">
+                    Lượt mua còn lại : {discount?.user_available_purchase_count}
                 </div>
             </div>
         </div>

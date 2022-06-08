@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 import { Product } from "../../../interface/product";
 import { IOrganization } from "../../../interface/organization";
-import onErrorImg from "../../../utils/errorImg";
 import icon from "../../../constants/icon";
 import formatPrice from "../../../utils/formatPrice";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    onFavoriteOrg,
-    onDeleteFavoriteOrg,
-} from "../../../redux/org/orgSlice";
 import { useHistory } from "react-router-dom";
 import {
     onFavoriteProduct,
     onDeleteFavorite,
 } from "../../../redux/org_products/productSlice";
-import { Link } from "react-router-dom";
 import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import { addCart } from "../../../redux/cartSlice";
+import DetailOrgCard from '../../ServiceDetail/components/DetailOrgCard';
+import onErrorImg from "../../../utils/errorImg";
 
 interface IProps {
     product: Product;
@@ -40,17 +36,6 @@ function ProductDetailRight(props: IProps) {
                 dispatch(onDeleteFavorite(values));
             } else {
                 dispatch(onFavoriteProduct(values));
-            }
-        } else {
-            history.push("/sign-in?1");
-        }
-    };
-    const onClickFavoriteOrg = () => {
-        if (USER) {
-            if (org?.is_favorite) {
-                dispatch(onDeleteFavoriteOrg(org));
-            } else {
-                dispatch(onFavoriteOrg(org));
             }
         } else {
             history.push("/sign-in?1");
@@ -81,33 +66,46 @@ function ProductDetailRight(props: IProps) {
     return (
         <div className="service-detail__right">
             <div className="detail-right__head">
-                <div className="detail-right__org">
-                    <p>{org?.name}</p>
-                    <p>{"Đang mở cửa"}</p>
+                <div className="detail-right__head-img">
+                    <img
+                        src={
+                            product?.image_url
+                                ? product?.image_url
+                                : org.image_url
+                        }
+                        alt=""
+                        onError={(e) => onErrorImg(e)}
+                    />
                 </div>
-                <div className="detail-right__name">
-                    <p>{product?.product_name}</p>
-                    <div onClick={onFavorite} className="favorite">
-                        <img
-                            src={
-                                product?.is_favorite ? icon.heart : icon.unHeart
-                            }
-                            alt=""
-                        />
+                <div className="detail-right__head-info">
+                    <div className="detail-right__org">
+                        <p>{org?.name}</p>
+                        <p>{"Đang mở cửa"}</p>
                     </div>
-                </div>
-                <div className="detail-right__evaluate">
-                    <div className="evaluate-item">
-                        <p>5</p>
-                        <img src={icon.star} alt="" />
+                    <div className="detail-right__name">
+                        <p>{product?.product_name}</p>
+                        <div onClick={onFavorite} className="favorite">
+                            <img
+                                src={
+                                    product?.is_favorite ? icon.heart : icon.unHeart
+                                }
+                                alt=""
+                            />
+                        </div>
                     </div>
-                    <div className="evaluate-item">
-                        <p>{product?.favorites_count}</p>
-                        <img src={icon.Favorite} alt="" />
-                    </div>
-                    <div className="evaluate-item">
-                        <p>10</p>
-                        <img src={icon.ShoppingCartSimple} alt="" />
+                    <div className="detail-right__evaluate">
+                        <div className="evaluate-item">
+                            <p>5</p>
+                            <img src={icon.star} alt="" />
+                        </div>
+                        <div className="evaluate-item">
+                            <p>{product?.favorites_count}</p>
+                            <img src={icon.Favorite} alt="" />
+                        </div>
+                        <div className="evaluate-item">
+                            <p>10</p>
+                            <img src={icon.ShoppingCartSimple} alt="" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -147,69 +145,7 @@ function ProductDetailRight(props: IProps) {
                         </div>
                     </div> */}
                 </div>
-
-                <div className="detail-right__infoMer">
-                    <div className="infoMer-top">
-                        <div className="infoMer-top__img">
-                            <img
-                                onError={(e) => onErrorImg(e)}
-                                src={org.image_url}
-                                alt=""
-                            />
-                        </div>
-                        <div className="infoMer-top__right">
-                            <p className="infoMer-top__name">{org.name}</p>
-                            <p className="infoMer-top__address">
-                                {org.address ? org.address : org.full_address}
-                            </p>
-                        </div>
-                    </div>
-                    <div className="infoMer-mid">
-                        <div className="infoMer-item">
-                            <div className="infoMer-item__wrap flexX-gap-4">
-                                <p>{"4.5/5"}</p>
-                                <img src={icon.star} alt="" />
-                            </div>
-                            <p className="infoMer-item__text">Đánh giá</p>
-                        </div>
-                        <div className="infoMer-item">
-                            <div className="infoMer-item__wrap flexX-gap-4">
-                                <p>{org?.favorites_count}</p>
-                                <img src={icon.Favorite} alt="" />
-                            </div>
-                            <p className="infoMer-item__text">Yêu thích</p>
-                        </div>
-                        <div className="infoMer-item">
-                            <div className="infoMer-item__wrap flexX-gap-4">
-                                <p>{"5"}</p>
-                                <img src={icon.chatAll} alt="" />
-                            </div>
-                            <p className="infoMer-item__text">Bình luận</p>
-                        </div>
-                    </div>
-                    <div className="infoMer-bottom">
-                        <button className="infoMer-bottom__left">
-                            <Link
-                                className="flex-row"
-                                to={{ pathname: `/org/${org.subdomain}` }}
-                            >
-                                <img src={icon.archive} alt="" />
-                                <p>Xem Spa</p>
-                            </Link>
-                        </button>
-                        <button
-                            onClick={onClickFavoriteOrg}
-                            className="infoMer-bottom__right"
-                        >
-                            {org?.is_favorite && <img src={icon.rss} alt="" />}
-                            <p>
-                                {org?.is_favorite
-                                    ? "Đang theo dõi"
-                                    : "Theo dõi"}
-                            </p>
-                        </button>
-                    </div>
-                </div>
+                <DetailOrgCard org={org} />
             </div>
             <div className="detail-right__bottom">
                 <div className="bottom-quantity">

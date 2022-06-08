@@ -376,6 +376,9 @@
 .service-detail .detail-right__duration-wrap p {
     font-weight: bold;
 }
+.service-detail__org-mb{
+    display: none;
+}
 
 /* end cus tab MUI */
 
@@ -643,5 +646,19 @@
     }
     .active-mb .detail-right__percent p {
         font-size: 14px;
+    }
+    .service-detail__org-mb{
+        display: block;
+    }
+    .service-detail .detail-right__infoMer{
+        width: 100%;
+        background-color: #FFF;
+        border-radius: 8px;
+        margin: 12px 0px;
+        padding: 12px;
+        box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+    }
+    .service-detail .infoMer-mid {
+        padding: 0px;
     }
 }

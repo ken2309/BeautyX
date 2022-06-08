@@ -14,12 +14,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import '../ServiceDetail/serviceDetail.css';
 import './product.css'
-import { Container, Tab } from "@mui/material";
+import { Container, Drawer, Tab } from "@mui/material";
 import ProductDetailLeft from "./components/ProductDetailLeft";
 import ProductDetailRight from "./components/ProductDetailRight";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import Review from "../Reviews";
 import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
+import icon from "../../constants/icon";
+import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
 
 function ProductDetail(props: any) {
   const dispatch = useDispatch();
@@ -65,6 +67,7 @@ function ProductDetail(props: any) {
     { id: 2, title: "Đánh giá" },
     { id: 3, title: "Doanh nghiệp" },
   ];
+  const [open, setOpen] = useState(false);
   const handleChange = (event: React.SyntheticEvent, value: any) => {
     setValue(value);
   }
@@ -123,10 +126,14 @@ function ProductDetail(props: any) {
                   <TabPanel value={value}>
                     <div className="org-information-cnt">
                       <div className="service-detail__org">
-                        {
-                          ORG.status === STATUS.SUCCESS &&
-                          <OrgInformation org={org} />
-                        }
+                        {ORG.status === STATUS.SUCCESS && (
+                          <>
+                            <div className="service-detail__org-mb">
+                              <DetailOrgCard org={org} />
+                            </div>
+                            <OrgInformation org={org} />
+                          </>
+                        )}
                       </div>
                     </div>
                   </TabPanel>
@@ -137,6 +144,34 @@ function ProductDetail(props: any) {
               </TabContext>
             </div>
           </div>
+          <div className="service-detail__button">
+            <button>
+              <p>Buy now</p>
+            </button>
+            <button
+              onClick={() => {
+                setOpen(true);
+              }}
+              className="btn-addcart"
+            >
+              <p>Add to cart</p>
+              <img src={icon.ShoppingCartSimpleWhite} alt="" />
+            </button>
+          </div>
+          <Drawer
+            open={open}
+            anchor="bottom"
+            onClose={() => setOpen(false)}
+          >
+            <div className="active-mb">
+              <div className="service-detail">
+                <ProductDetailRight
+                  product={product}
+                  org={org}
+                />
+              </div>
+            </div>
+          </Drawer>
         </div>
       </Container>
       <Footer />

@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { shareLink } from "../../utils/formatUrlString";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Container } from "@mui/material";
+import { Container, Drawer } from "@mui/material";
 import HeadTitle from "../HeadTitle";
 import Head from "../Head";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
@@ -18,6 +18,8 @@ import Review from "../Reviews";
 import '../ServiceDetail/serviceDetail.css';
 import "./style.css";
 import "../ProductDetail/product.css";
+import icon from "../../constants/icon";
+import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
 
 function ComboDetail() {
     const { t } = useContext(AppContext);
@@ -68,6 +70,7 @@ function ComboDetail() {
     }
     const org = ORG.org;
     const combo = COMBO.combo;
+    const [open, setOpen] = useState(false);
 
     return (
         <div className="product">
@@ -116,10 +119,14 @@ function ComboDetail() {
                                     <TabPanel value={value}>
                                         <div className="org-information-cnt">
                                             <div className="service-detail__org">
-                                                {
-                                                    ORG.status === STATUS.SUCCESS &&
-                                                    <OrgInformation org={org} />
-                                                }
+                                                {ORG.status === STATUS.SUCCESS && (
+                                                    <>
+                                                        <div className="service-detail__org-mb">
+                                                            <DetailOrgCard org={org} />
+                                                        </div>
+                                                        <OrgInformation org={org} />
+                                                    </>
+                                                )}
                                             </div>
                                         </div>
                                     </TabPanel>
@@ -130,6 +137,34 @@ function ComboDetail() {
                             </TabContext>
                         </div>
                     </div>
+                    <div className="service-detail__button">
+                        <button>
+                            <p>Buy now</p>
+                        </button>
+                        <button
+                            onClick={() => {
+                                setOpen(true);
+                            }}
+                            className="btn-addcart"
+                        >
+                            <p>Add to cart</p>
+                            <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                        </button>
+                    </div>
+                    <Drawer
+                        open={open}
+                        anchor="bottom"
+                        onClose={() => setOpen(false)}
+                    >
+                        <div className="active-mb">
+                            <div className="service-detail">
+                                <ComboDetailRight
+                                    combo={combo}
+                                    org={org}
+                                />
+                            </div>
+                        </div>
+                    </Drawer>
                 </div>
             </Container>
         </div>
