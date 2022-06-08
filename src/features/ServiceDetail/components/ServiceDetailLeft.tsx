@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import icon from "../../../constants/icon";
 import {
     fetchAsyncCancelFavoriteService,
-    fetchAsyncFavoriteService
+    fetchAsyncFavoriteService,
 } from "../../../redux/org_services/serviceSlice";
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
@@ -51,7 +51,12 @@ export default function ServiceDetailLeft(props: any) {
                         onClick={onFavorite}
                         className="service-detail__mobile-favorite"
                     >
-                        <img src={service?.is_favorite ? icon.heart : icon.unHeart} alt="" />
+                        <img
+                            src={
+                                service?.is_favorite ? icon.heart : icon.unHeart
+                            }
+                            alt=""
+                        />
                     </div>
                 </div>
 
@@ -63,58 +68,25 @@ export default function ServiceDetailLeft(props: any) {
                 </div>
 
                 <div className="service-detail__mobile-bottom">
-                    {
-                        service?.special_price > 0 &&
+                    {service?.special_price > 0 && (
                         <div className="service-detail__mobile-percent">
                             Giảm {percent}%
                         </div>
-                    }
+                    )}
                     <div className="service-detail__mobile-price">
-                        {service.special_price > 0 ? (
-                            <span
-                                className="price"
-                                style={{
-                                    color: "var(--red-cl)",
-                                    fontWeight: "700",
-                                    fontSize: "20px",
-                                }}
-                            >
-                                {formatPrice(service.special_price)}đ
-                            </span>
+                        {service?.special_price > 0 ? (
+                            <>
+                                <span>
+                                    {formatPrice(service?.special_price)}đ
+                                </span>
+                                <span>{formatPrice(service?.price)}đ</span>
+                            </>
                         ) : (
-                            <span
-                                style={{
-                                    color: "var(--purple)",
-                                    fontWeight: "700",
-                                    fontSize: "20px",
-                                }}
-                            >
-                                {formatPrice(service.price)}đ
-                            </span>
+                            <span>{formatPrice(service?.price)}đ</span>
                         )}
-                        <span
-                            style={
-                                service.special_price < 0
-                                    ? { display: "none" }
-                                    : {}
-                            }
-                        >
-                            <span
-                                style={{
-                                    color: "#8C8C8C",
-                                    fontSize: "12px",
-                                    textDecoration: "line-through",
-                                    marginLeft: "8px",
-                                    fontWeight: "500",
-                                }}
-                            >
-                                {formatPrice(service.price)}đ
-                            </span>
-                        </span>
                     </div>
                 </div>
             </div>
         </div>
     );
 }
-

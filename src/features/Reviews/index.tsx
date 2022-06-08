@@ -9,7 +9,7 @@ import { postAsyncOrgComments } from "../../redux/org/orgCommentsSlice";
 import SignInUp from "../poupSignInUp";
 import mediaApi from "../../api/mediaApi";
 import { postAsyncComment } from "../../redux/org_services/serviceSlice";
-import { postAsyncProductComment } from '../../redux/org_products/productSlice'
+import { postAsyncProductComment } from "../../redux/org_products/productSlice";
 import { pickBy, identity } from "lodash";
 interface IProps {
     comments: IComment[];
@@ -17,10 +17,12 @@ interface IProps {
     commentable_type: string;
     id: number;
     detail_id?: number;
+    refReview?: any;
 }
 
 function Review(props: IProps) {
-    const { comments, totalItem, commentable_type, id, detail_id } = props;
+    const { comments, totalItem, commentable_type, id, detail_id, refReview } =
+        props;
     const USER = useSelector((state: any) => state.USER);
     const user = USER.USER;
     const dispatch = useDispatch();
@@ -120,7 +122,7 @@ function Review(props: IProps) {
                 setOpenSignIn={setPopUpLogin}
                 activeTabSign={1}
             />
-            <div className="org-evaluate__cnt">
+            <div ref={refReview} className="org-evaluate__cnt">
                 <TotalStartEvaluate />
                 <EvaluateInput
                     handleOnchange={handleOnchange}
