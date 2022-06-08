@@ -1,31 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router-dom";
-import productsApi from "../../api/productApi";
-import orgApi from "../../api/organizationApi";
-import { Container } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import "./product.css";
 import Head from "../Head";
-import DetailCard from "./components/DetailCard";
-import DetailHead from "./components/DetailHead";
 import Footer from "../Footer";
-import RecommendList from "../RecommendList/index";
-import { Product } from "../../interface/product";
-import { AppContext } from "../../context/AppProvider";
 import HeadTitle from "../HeadTitle";
-import scrollTop from "../../utils/scrollTop";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import { STATUS } from '../../redux/status';
-import { fetchAsyncProductDetail, fetchAsyncProductCmt } from '../../redux/org_products/productSlice'
+import {
+  fetchAsyncProductDetail,
+  fetchAsyncProductCmt
+} from '../../redux/org_products/productSlice'
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
+import '../ServiceDetail/serviceDetail.css';
+import './product.css'
+import { Container, Tab } from "@mui/material";
+import ProductDetailLeft from "./components/ProductDetailLeft";
+import ProductDetailRight from "./components/ProductDetailRight";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import Review from "../Reviews";
 
 function ProductDetail(props: any) {
-  const { t } = useContext(AppContext);
   const dispatch = useDispatch();
   const ORG = useSelector((state: any) => state.ORG);
   const { PRODUCT, COMMENTS } = useSelector((state: any) => state.PRODUCT);
-  const location: any = useLocation();
   const params: any = extraParamsUrl();
   const callProductDetail = () => {
     if (parseInt(params.id) !== PRODUCT.product.id || PRODUCT.status !== STATUS.SUCCESS) {
@@ -54,14 +52,22 @@ function ProductDetail(props: any) {
     }
   }
   useEffect(() => {
-    if (!location.state) {
-      callProductDetail()
-      callOrgDetail()
-    }
+    callProductDetail()
+    callOrgDetail()
     callProductComments()
   }, [])
-  const product = location.state ? location.state.product : PRODUCT.product;
-  const org = location.state ? location.state.org : ORG.org;
+  const product = PRODUCT.product;
+  const org = ORG.org
+
+  const [value, setValue] = useState<any>(1);
+  let tabs = [
+    { id: 1, title: "Mô tả" },
+    { id: 2, title: "Đánh giá" },
+    { id: 3, title: "Doanh nghiệp" },
+  ];
+  const handleChange = () => {
+
+  }
 
   return (
     <div className="product">
@@ -70,22 +76,70 @@ function ProductDetail(props: any) {
       />
       <Head />
       <Container>
-        <div className="product-cnt">
-          <DetailHead
-            t={t}
-            product={product}
-            org={org}
-            is_type={1}
-            loading={false}
-          />
-          <DetailCard
-            org={org}
-            product={product}
-            is_type={1}
-            loading={false}
-          />
+        <div className="service-detail">
+          <div className="service-detail__head">
+            <ProductDetailLeft
+              org={org} product={product}
+            />
+            <ProductDetailRight
+              org={org} product={product}
+            />
+          </div>
+          <div className="service-detail__body">
+            <div className="service-detail__tab">
+              <TabContext value={value}>
+                <TabList onChange={handleChange}>
+                  {tabs.map((item: any, i: number) => (
+                    <Tab
+                      key={i}
+                      label={item.title}
+                      value={item.id}
+                    />
+                  ))}
+                </TabList>
+                <div className="service-detail__tabitem">
+                  <TabPanel value={value}>
+                    {/* {onSwitchTab(value)} */}
+                    <div className="service-detail__description">
+                      <p>
+                        Mô tả:{" "}
+                        {product?.description
+                          ? product.description
+                          : "Đang cập nhật"}
+                      </p>
+                    </div>
+                  </TabPanel>
+                  <TabPanel value={value}>
+                    <div className="service-detail__comment">
+                      <Review
+                        comments={COMMENTS.comments}
+                        totalItem={COMMENTS.totalItem}
+                        commentable_type={"PRODUCT"}
+                        id={ORG.org?.id}
+                        detail_id={product?.id}
+                      />
+                    </div>
+                  </TabPanel>
+                  <TabPanel value={value}>
+                    <div className="org-information-cnt">
+                      {/* <OrgInformation
+                                                // refMap={refMap}
+                                                org={org}
+                                            /> */}
+                      {/* <OrgReviews
+                                                // refReview={refReview}
+                                                org={org}
+                                            /> */}
+                    </div>
+                  </TabPanel>
+                  <TabPanel value={value}>
+                    <>tab 3</>
+                  </TabPanel>
+                </div>
+              </TabContext>
+            </div>
+          </div>
         </div>
-        {/* <RecommendList org={org} list={products} is_type={is_type} /> */}
       </Container>
       <Footer />
     </div>

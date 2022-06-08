@@ -43,14 +43,14 @@ function OrgContainer(props: IProps) {
     const scrollMap = refMap?.current?.offsetTop;
     const scrollReview = refReview?.current?.offsetTop;
     const handleChange = (event: React.SyntheticEvent, value: any) => {
-        dispatch(onActiveTab(value))
+        dispatch(onActiveTab(value));
         let top;
         switch (value) {
             case 5:
                 top = is_mb && 0;
                 break;
             case 6:
-                top = refReview?.current?.offsetTop + 170;
+                top = refReview?.current?.offsetTop + 180;
                 break;
             default:
                 break;
@@ -64,10 +64,10 @@ function OrgContainer(props: IProps) {
     };
     function handleScroll() {
         if (tab === 5 || tab === 6) {
-            if (window.scrollY - 137 <= scrollReview) {
-                dispatch(onActiveTab(5))
-            } else if (window.scrollY >= scrollMap + 180) {
-                dispatch(onActiveTab(6))
+            if (window.scrollY - 170 <= scrollReview) {
+                dispatch(onActiveTab(5));
+            } else if (window.scrollY >= scrollMap) {
+                dispatch(onActiveTab(6));
             }
         }
     }

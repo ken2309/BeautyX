@@ -8,7 +8,7 @@ import Review from "../../../Reviews";
 
 interface IProps {
     org: IOrganization;
-    refReview: any;
+    refReview?: any;
 }
 
 function OrgReviews(props: IProps) {
