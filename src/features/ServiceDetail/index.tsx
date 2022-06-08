@@ -70,16 +70,16 @@ function ServiceDetail(props: any) {
     };
 
     function handleScroll() {
-        if (window.scrollY + 120 <= scrollReview) {
+        if (window.scrollY + 150 <= scrollReview) {
             dispatch(onActiveTab(1));
             setValue(1);
         } else if (
-            window.scrollY + 120 >= scrollDesc &&
-            window.scrollY + 120 <= scrollMap
+            window.scrollY + 150 >= scrollDesc &&
+            window.scrollY + 150 <= scrollMap
         ) {
             dispatch(onActiveTab(2));
             setValue(2);
-        } else if (window.scrollY + 120 >= scrollReview) {
+        } else if (window.scrollY + 150 >= scrollReview) {
             dispatch(onActiveTab(3));
             setValue(3);
         }
