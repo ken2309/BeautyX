@@ -1,189 +1,3 @@
-/* .suggest-cnt__title {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-    color: var(--text-black);
-}
-.recomment-list {
-    padding: 32px 0 0;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 16px;
-    margin-bottom: 72px;
-}
-.suggest-cnt__list-tem__img {
-    width: 72px;
-    height: 72px;
-    border-radius: 8px;
-    object-fit: cover;
-}
-.suggest-cnt__list-tem__detail {
-    width: calc(100% - 128px);
-    padding: 0px 54px 0px 4px;
-}
-.suggest-cnt__list-tem__top {
-    font-size: 18px;
-    line-height: 24px;
-    font-weight: 700;
-    color: var(--text-black);
-}
-.suggest-cnt__list-tem__top span:nth-child(2) {
-    color: var(--purple);
-}
-.suggest-cnt__list-tem__bot div {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-    color: var(--text-black);
-}
-.suggest-cnt__list-tem__bot div span {
-    font-weight: 700;
-}
-.suggest-cnt__list-tem__bot div span:nth-child(2),
-.suggest-cnt__list-tem__bot div span:nth-child(3) {
-    margin-left: 8px;
-}
-.suggest-cnt__list-tem__btn {
-    cursor: pointer;
-}
-.suggest__retail-pr {
-    text-decoration: line-through;
-}
-.suggest-card {
-    margin-top: 24px;
-}
-.suggest-card__list-name {
-    font-size: 14px !important;
-    line-height: 20px !important;
-    font-weight: 700 !important;
-    color: var(--text-black) !important;
-}
-.suggest-card__list-quantity {
-    width: 44%;
-}
-.suggest-card__list-quantity button {
-    border: solid 1px var(--purple);
-    outline: none;
-    color: var(--purple);
-    font-weight: 700;
-    width: 17px;
-    border-radius: 100%;
-    margin: 0px 11px;
-}
-.suggest-card__list-quantity span {
-    text-align: end;
-}
-.slider-recoment-list {
-    padding: 0 16px;
-}
-.suggest-cnt .suggest-price {
-    display: flex;
-    gap: 0 8px;
-}
-.suggest-cnt .suggest__retail-pr {
-    font-size: 14px;
-    color: rgb(157, 157, 157);
-    font-weight: bold;
-} */
-
-/* @media only screen and (min-width: 768px) and (max-width: 1023px) {
-    .suggest-cnt .suggest-price {
-        display: flex;
-        flex-direction: column-reverse;
-    }
-    .product .product-cnt {
-        flex-direction: column;
-    }
-    .product-cnt__left {
-        width: 50%;
-    }
-    .product-cnt__right {
-        width: 50%;
-        padding: 36px 16px;
-    }
-    .mer-sale-head {
-        padding: 0 16px;
-    }
-    .product .mer__content-info__util-list {
-        flex-direction: row;
-        gap: 0 24px;
-        align-items: center;
-    }
-    .product .mer__content-info__util-item {
-        gap: 0 6px;
-    }
-    .product .mer__content-info__util-item span {
-        flex-direction: column;
-        gap: 4px 24px;
-        align-items: flex-start;
-    }
-    .recomment-list {
-        grid-template-columns: repeat(4, 1fr);
-        padding: 24px;
-    }
-} */
-
-/* @media only screen and (max-width: 767px) {
-    .recomment-cnt {
-        padding-top: 16px;
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    }
-    .mer-sale-head {
-        padding: 0 16px;
-    }
-    .mer-sale-head .section-title {
-        font-size: 16px;
-        text-align: left;
-    }
-    .recomment-list {
-        padding: 16px;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-        margin-bottom: 72px;
-    }
-    .product-cnt {
-        flex-direction: column;
-        padding-top: 0px;
-    }
-    .product-cnt__left {
-        width: 100%;
-        padding-right: 0px;
-    }
-    .product-cnt__left-img {
-        border-radius: 0px;
-        filter: none;
-    }
-    .product-cnt__left-tabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root,
-    .product-cnt__left-tabs .css-1q2h7u5 {
-        font-size: 14px !important;
-        padding: 4px !important;
-    }
-    .suggest-cnt__list li {
-        border-bottom: solid 1px var(--bgGray);
-    }
-    .suggest-cnt__list-tem__detail {
-        padding-right: 8px;
-    }
-    .suggest-cnt__list-tem__top {
-        flex-direction: column;
-        align-items: flex-start;
-        position: relative;
-    }
-    .suggest-cnt__list-tem__top span:nth-child(1) {
-        font-size: 14px;
-        line-height: 20px;
-        font-weight: bold;
-    }
-    .suggest-cnt__list-tem__top span:nth-child(2) {
-        font-size: 16px;
-        line-height: 20px;
-    }
-
-    .suggest__retail-pr {
-        font-size: 14px;
-    }
-} */
 .flexX-gap-8 {
     display: flex;
     gap: 0 8px;
@@ -231,6 +45,7 @@
     height: 100%;
     object-fit: cover;
     flex-shrink: 0;
+    border-radius: 8px;
 }
 .service-detail .detail-right__name {
     position: relative;
@@ -284,18 +99,16 @@
     font-weight: bold;
 }
 .service-detail .detail-right__percent {
-    padding: 2px 4px;
+    clip-path: polygon(0 0, 92% 0, 100% 50%, 92% 100%, 0 100%, 7% 50%);
     background-color: var(--red-cl);
-    width: max-content;
-    border-radius: 4px;
-    background-color: rgb(255 240 241);
-    border-color: var(--red-cl);
-    border-style: solid;
-    border-width: 1px;
-    margin-top: 4px;
+    padding: 2px 10px;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    color: #fff;
 }
 .service-detail .detail-right__percent p {
-    color: var(--red-cl);
+    color: #fff;
     font-size: 14px;
     line-height: 18px;
     font-weight: bold;
@@ -358,7 +171,7 @@
     flex-shrink: 0;
     border-radius: 100px;
     overflow: hidden;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 .service-detail .infoMer-top__img img {
     width: 100%;
@@ -438,7 +251,7 @@
     align-items: center;
 }
 .service-detail .bottom-quantity__text {
-    margin-bottom: 8px;
+    margin-bottom: 14px;
     font-weight: bold;
 }
 .service-detail .quantity-input {
@@ -447,12 +260,19 @@
     outline: none;
     border: none;
     font-size: 16px;
-    color: var(--purple);
-    font-weight: bold;
+    font-weight: 700;
     text-align: center;
+    background-color: #fff;
 }
 .service-detail .quantity-btn:first-child {
     background-color: #ccc;
+    font-size: 20px;
+    font-weight: 700;
+}
+.service-detail .quantity-btn:last-child {
+    font-size: 20px;
+    color: #fff;
+    font-weight: 700;
 }
 .service-detail .quantity-btn {
     width: 35px;
@@ -473,6 +293,7 @@
     display: flex;
     border-radius: 8px;
     grid-gap: 0 8px;
+    cursor: pointer;
 }
 .service-detail .bottom-addCart p {
     color: #fff;
@@ -540,12 +361,34 @@
 .service-detail .MuiTabPanel-root {
     padding: 0;
 }
+.service-detail .service-detail__button {
+    display: none;
+}
+.service-detail .detail-right__head-img {
+    display: none;
+}
+.service-detail .detail-right__duration-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0 8px;
+    padding: 8px 0;
+}
+.service-detail .detail-right__duration-wrap p {
+    font-weight: bold;
+}
 
 /* end cus tab MUI */
 
 @media only screen and (max-width: 1023px) {
     .service-detail {
+        padding: 0 0 80px 0;
+        position: relative;
+    }
+    .service-detail .org-evaluate__cnt {
         padding: 0;
+    }
+    .service-detail .detail-left__img img {
+        border-radius: unset;
     }
     .service-detail .service-detail__description {
         font-size: 14px;
@@ -553,9 +396,7 @@
     .service-detail .service-detail__tabitem {
         padding-top: 16px;
     }
-    .service-detail .service-detail__right {
-        display: none;
-    }
+
     .service-detail .service-detail__tab {
         margin: 80px 0 0 0;
         padding: 0 12px;
@@ -595,7 +436,7 @@
         font-weight: 700;
         font-size: 16px;
         line-height: 24px;
-        max-width: 90%;
+        max-width: 86%;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
@@ -620,8 +461,8 @@
         align-items: center;
     }
     .service-detail .service-detail__mobile-mid img {
-        width: 20px;
-        height: 20px;
+        width: 14px;
+        height: 14px;
     }
     .service-detail .service-detail__mobile-mid p {
         font-weight: 500;
@@ -636,16 +477,171 @@
     .service-detail .service-detail__mobile-percent {
         clip-path: polygon(0 0, 92% 0, 100% 50%, 92% 100%, 0 100%, 7% 50%);
         background-color: var(--red-cl);
-        padding: 4px 16px;
+        padding: 2px 10px;
         font-weight: 700;
         font-size: 12px;
         line-height: 16px;
         color: #fff;
     }
     .service-detail .service-detail__org {
-        margin-top: 24px;
+        margin-top: 16px;
     }
     .service-detail .MuiTab-root {
+        font-size: 14px;
+    }
+    .service-detail .service-detail__mobile-price span:nth-child(1) {
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--red-cl);
+    }
+
+    .service-detail .service-detail__mobile-price span:nth-child(2) {
+        color: rgb(128, 128, 137);
+        font-size: 12px;
+        text-decoration: line-through;
+        margin-left: 8px;
+    }
+    .service-detail .service-detail__button {
+        display: block;
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        padding: 12px;
+        background-color: #fff;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        grid-gap: 0 8px;
+    }
+    .service-detail .service-detail__button button {
+        width: 100%;
+        padding: 4px 8px;
+        outline: none;
+        border: none;
+        border-radius: 8px;
+        background-color: var(--purple);
+    }
+    .service-detail .service-detail__button button p {
+        color: #fff;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+    }
+    .service-detail .service-detail__button .btn-addcart {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        grid-gap: 0 8px;
+    }
+    .service-detail .service-detail__right {
+        display: none;
+    }
+    .active-mb {
+        border-radius: 16px;
+        overflow: hidden;
+    }
+    .active-mb .service-detail__right {
+        display: block;
+        width: 100%;
+        padding: 0;
+    }
+    .MuiDrawer-paper {
+        border-radius: 16px 16px 0 0;
+    }
+
+    .active-mb .detail-right__infoMer {
+        display: none;
+    }
+    .active-mb .service-detail {
+        padding: 12px;
+    }
+    .active-mb .detail-right__info {
+        width: 100%;
+    }
+    .active-mb .detail-right__head-img {
+        display: block;
+        width: 112px;
+        height: 112px;
+        border-radius: 8px;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+    .active-mb .detail-right__head-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .active-mb .detail-right__head {
+        display: flex;
+        grid-gap: 0 8px;
+        align-items: center;
+    }
+    .active-mb .favorite {
+        display: none;
+    }
+    .active-mb .detail-right__org {
+        display: none;
+    }
+    .active-mb .detail-right__name p {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        width: 100%;
+    }
+    .active-mb .service-detail__right .detail-right__price span:nth-child(1) {
+        font-size: 20px;
+        font-weight: bold;
+        color: var(--red-cl);
+    }
+
+    .active-mb .service-detail__right .detail-right__price span:nth-child(2) {
+        color: rgb(128, 128, 137);
+        font-size: 12px;
+        line-height: 20px;
+        text-decoration: line-through;
+        margin-left: 8px;
+    }
+    .active-mb .service-detail__right .detail-right__body {
+        margin: 16px 0 0 0;
+    }
+    .active-mb .detail-right__duration-wrap p {
+        font-size: 14px;
+    }
+    .active-mb .detail-right__duration {
+        font-size: 14px;
+        margin: 0;
+    }
+    .active-mb .detail-right__duration img {
+        width: 16px;
+        height: 16px;
+    }
+    .active-mb .bottom-quantity__text {
+        font-size: 14px;
+        margin: 0;
+    }
+    .active-mb .detail-right__bottom {
+        flex-direction: column;
+        align-items: unset;
+        grid-gap: 14px 0;
+    }
+    .active-mb .bottom-quantity {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .active-mb .quantity-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 14px !important;
+    }
+    .active-mb .bottom-addCart {
+        padding: 8px;
+        font-size: 14px;
+        align-items: center;
+        justify-content: center;
+    }
+    .active-mb .detail-right__percent p {
         font-size: 14px;
     }
 }
