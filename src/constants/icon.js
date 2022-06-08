@@ -141,8 +141,10 @@ import rss from "../assets/icon/rss.svg";
 import archive from "../assets/icon/archive.svg";
 import addBtn from "../assets/icon/add-btn.svg";
 import removeBtn from "../assets/icon/remove-btn.svg";
+import alarmClock from "../assets/icon/alarm-clock.svg";
 
 const icon = {
+    alarmClock,
     addBtn,
     removeBtn,
     rss,
