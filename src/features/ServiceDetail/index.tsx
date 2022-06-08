@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Head from "../Head";
-import { Container, Tab } from "@mui/material";
+import { Container, Drawer, Tab } from "@mui/material";
 import "./serviceDetail.css";
 import HeadTitle from "../HeadTitle";
 import Footer from "../Footer";
@@ -15,17 +15,76 @@ import {
     fetchAsyncServiceDetail,
     fetchAsyncServiceCmt,
 } from "../../redux/org_services/serviceSlice";
-import { fetchAsyncOrg } from "../../redux/org/orgSlice";
+import { fetchAsyncOrg, onActiveTab } from "../../redux/org/orgSlice";
 import { STATUS } from "../../redux/status";
 import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
 import Review from "../Reviews";
 //import OrgReviews from "../MerchantDetail/components/OrgPages/OrgReviews";
+import icon from "../../constants/icon";
 
 function ServiceDetail(props: any) {
     const dispatch = useDispatch();
     const ORG = useSelector((state: any) => state.ORG);
     const { SERVICE, COMMENTS } = useSelector((state: any) => state.SERVICE);
     const params: any = extraParamsUrl();
+
+    const service = SERVICE.service;
+    const org = ORG.org;
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState<any>(1);
+    let tabs = [
+        { id: 1, title: "Mô tả" },
+        { id: 2, title: "Đánh giá" },
+        { id: 3, title: "Doanh nghiệp" },
+    ];
+
+    let refMap = useRef<any>();
+    let refDesc = useRef<any>();
+    let refReview = useRef<any>();
+    const scrollMap = refMap?.current?.offsetTop;
+    const scrollDesc = refDesc?.current?.offsetTop;
+    const scrollReview = refReview?.current?.offsetTop;
+
+    const handleChange = (event: React.SyntheticEvent, value: any) => {
+        dispatch(onActiveTab(value));
+        let top;
+        switch (value) {
+            case 1:
+                setValue(value);
+                top = refDesc?.current?.offsetTop - 72;
+                break;
+            case 2:
+                top = refReview?.current?.offsetTop - 72;
+                setValue(value);
+                break;
+            case 3:
+                top = refMap?.current?.offsetTop - 72;
+                break;
+            default:
+                break;
+        }
+        window.scrollTo({
+            top: top,
+            behavior: "smooth",
+        });
+    };
+
+    function handleScroll() {
+        if (window.scrollY + 120 <= scrollReview) {
+            dispatch(onActiveTab(1));
+            setValue(1);
+        } else if (
+            window.scrollY + 120 >= scrollDesc &&
+            window.scrollY + 120 <= scrollMap
+        ) {
+            dispatch(onActiveTab(2));
+            setValue(2);
+        } else if (window.scrollY + 120 >= scrollReview) {
+            dispatch(onActiveTab(3));
+            setValue(3);
+        }
+    }
+
     const callServiceDetail = () => {
         if (
             parseInt(params.id) !== SERVICE.service.id ||
@@ -38,6 +97,7 @@ function ServiceDetail(props: any) {
             dispatch(fetchAsyncServiceDetail(values));
         }
     };
+
     const callOrgDetail = () => {
         if (
             parseInt(params.org) !== ORG.org?.id ||
@@ -46,6 +106,7 @@ function ServiceDetail(props: any) {
             dispatch(fetchAsyncOrg(params.org));
         }
     };
+
     const callServiceComments = () => {
         if (
             parseInt(params.id) !== COMMENTS.service_id ||
@@ -67,53 +128,14 @@ function ServiceDetail(props: any) {
         callServiceComments();
     }, []);
 
-    const service = SERVICE.service;
-    const org = ORG.org;
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll, false);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    });
 
-    const [value, setValue] = useState<any>(1);
-    let tabs = [
-        { id: 1, title: "Mô tả" },
-        { id: 2, title: "Đánh giá" },
-        { id: 3, title: "Doanh nghiệp" },
-    ];
-    const handleChange = (event: React.SyntheticEvent, value: any) => {
-        setValue(value);
-        // let top;
-        // switch (value) {
-        //     case 1:
-        //         top =  0;
-        //         break;
-        //     case 6:
-        //         top = refReview?.current?.offsetTop + 180;
-        //         break;
-        //     default:
-        //         break;
-        // }
-        // if (is_mb) {
-        //     window.scrollTo({
-        //         top: top,
-        //         behavior: "smooth",
-        //     });
-        // }
-    };
-    // const onSwitchTab = (value: any) => {
-    //     switch (value) {
-    //         case 1:
-    //             return <p>tab 1</p>;
-    //         case 2:
-    //             return <OrgInformation org={org} />;
-    //         case 3:
-    //             return (
-    //                 // <Review
-    //                 //     comments={comments}
-    //                 //     totalItem={totalItem}
-    //                 //     commentable_type={"SERVICE"}
-    //                 //     id={org.id}
-    //                 // />
-    //                 <></>
-    //             );
-    //     }
-    // };
     return (
         <>
             <HeadTitle
@@ -144,7 +166,10 @@ function ServiceDetail(props: any) {
                                 <div className="service-detail__tabitem">
                                     <TabPanel value={value}>
                                         {/* {onSwitchTab(value)} */}
-                                        <div className="service-detail__description">
+                                        <div
+                                            ref={refDesc}
+                                            className="service-detail__description"
+                                        >
                                             <p>
                                                 Mô tả:{" "}
                                                 {service.description
@@ -156,6 +181,7 @@ function ServiceDetail(props: any) {
                                     <TabPanel value={value}>
                                         <div className="service-detail__comment">
                                             <Review
+                                                refReview={refReview}
                                                 comments={COMMENTS.comments}
                                                 totalItem={COMMENTS.totalItem}
                                                 commentable_type={"SERVICE"}
@@ -165,17 +191,49 @@ function ServiceDetail(props: any) {
                                         </div>
                                     </TabPanel>
                                     <TabPanel value={value}>
-                                        <div className="service-detail__org">
-                                            {
-                                                ORG.status === STATUS.SUCCESS &&
+                                        <div
+                                            ref={refMap}
+                                            className="service-detail__org"
+                                        >
+                                            {ORG.status === STATUS.SUCCESS && (
                                                 <OrgInformation org={org} />
-                                            }
+                                            )}
                                         </div>
                                     </TabPanel>
                                 </div>
                             </TabContext>
                         </div>
                     </div>
+
+                    <div className="service-detail__button">
+                        <button>
+                            <p>Buy now</p>
+                        </button>
+                        <button
+                            onClick={() => {
+                                setOpen(true);
+                            }}
+                            className="btn-addcart"
+                        >
+                            <p>Add to cart</p>
+                            <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                        </button>
+                    </div>
+
+                    <Drawer
+                        open={open}
+                        anchor="bottom"
+                        onClose={() => setOpen(false)}
+                    >
+                        <div className="active-mb">
+                            <div className="service-detail">
+                                <ServiceDetailRight
+                                    service={service}
+                                    org={org}
+                                />
+                            </div>
+                        </div>
+                    </Drawer>
                 </div>
             </Container>
             <Footer />

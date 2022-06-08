@@ -1081,6 +1081,7 @@
     .org-services-cnt__left .cates-list {
         display: flex;
         width: max-content;
+        margin: 0 12px;
     }
 
     .cate-list__item {

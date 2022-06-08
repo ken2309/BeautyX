@@ -21,7 +21,7 @@ function DiscountItem(props: IProps) {
             pathname: `/chi-tiet-giam-gia/${slugify(
                 discountItem.productable.service_name
             )}`,
-            search: `org_id=${org?.id}&dis_id=${discountPar?.id}&ser_id=${discountItem.productable_id}`,
+            search: `org_id=${org?.id}&dis_id=${discountPar?.id}&item_id=${discountItem.productable_id}`,
         });
     };
     return (

@@ -19,6 +19,10 @@ interface IProps {
 
 function OrgDetail(props: IProps) {
     const { org, galleries } = props;
+    const { org_id, comments, totalItem, status } = useSelector(
+        (state: any) => state.ORG_COMMENTS
+    );
+    console.log("totalItem", totalItem);
     const dispatch = useDispatch();
     const history = useHistory();
     const { USER } = useSelector((state: any) => state.USER);
@@ -125,34 +129,34 @@ function OrgDetail(props: IProps) {
                                         </div>
                                         <div className="flex-row org-left-detail__rate">
                                             <div className="flex-row org-left-detail__rate-item">
+                                                <span className="text">
+                                                    4.5
+                                                </span>
                                                 <img
                                                     src={icon.star}
                                                     alt=""
                                                     className="icon"
                                                 />
-                                                <span className="text">
-                                                    4.5
-                                                </span>
                                             </div>
                                             <div className="flex-row org-left-detail__rate-item">
+                                                <span className="text">
+                                                    {totalItem}
+                                                </span>
                                                 <img
                                                     src={icon.chatAll}
                                                     alt=""
                                                     className="icon"
                                                 />
-                                                <span className="text">
-                                                    4.5
-                                                </span>
                                             </div>
                                             <div className="flex-row org-left-detail__rate-item">
+                                                <span className="text">
+                                                    {org.favorites_count}
+                                                </span>
                                                 <img
                                                     src={icon.heart}
                                                     alt=""
                                                     className="icon"
                                                 />
-                                                <span className="text">
-                                                    {org.favorites_count}
-                                                </span>
                                             </div>
                                         </div>
                                         <div className="org-time-work">

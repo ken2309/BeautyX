@@ -16,7 +16,7 @@ import { fetchAsyncOrg } from '../../redux/org/orgSlice';
 import DiscountDetailLeft from './components/DiscountDetailLeft';
 
 function DiscountDetail() {
-    const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
+    const { DISCOUNT, ITEM_DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
     const discount: IDiscountPar = DISCOUNT.discount;
     const status_detail = DISCOUNT.status
 
@@ -39,8 +39,8 @@ function DiscountDetail() {
     }
     const handleOnSetItemDiscount = () => {
         if (status_detail === STATUS.SUCCESS) {
-            const values = discount.items.find((item: IITEMS_DISCOUNT) => item.productable_id == params.ser_id)
-            console.log(values);
+            const values = discount.items.find((item: IITEMS_DISCOUNT) => item.productable_id == params.item_id)
+            dispatch(onSetItemDiscount(values))
         }
     }
     useEffect(() => {
@@ -50,6 +50,7 @@ function DiscountDetail() {
     useEffect(() => {
         handleOnSetItemDiscount()
     }, [status_detail])
+    console.log(ITEM_DISCOUNT);
 
     return (
         <>

@@ -6,6 +6,9 @@
     border: 1px solid #ccc;
     border-radius: 16px;
 }
+.org-evaluate__cnt {
+    padding: 0 0 24px 0;
+}
 .evaluate-rating__left,
 .evaluate-rating__right {
     width: 50%;
@@ -186,7 +189,7 @@
 .org-evaluate__cnt .total-comment {
     font-size: 14px;
     color: #8c8c8c;
-    padding: 24px;
+    padding: 0 24px;
 }
 .evaluate-input__upload {
     max-width: 200px;

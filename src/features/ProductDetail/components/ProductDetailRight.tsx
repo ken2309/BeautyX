@@ -1,26 +1,32 @@
-import React, { useState } from 'react';
-import { Product } from '../../../interface/product';
-import { IOrganization } from '../../../interface/organization'
-import onErrorImg from '../../../utils/errorImg';
-import icon from '../../../constants/icon';
-import formatPrice from '../../../utils/formatPrice';
-import { useDispatch, useSelector } from 'react-redux';
-import { onFavoriteOrg, onDeleteFavoriteOrg } from '../../../redux/org/orgSlice';
-import { useHistory } from 'react-router-dom';
-import { onFavoriteProduct, onDeleteFavorite } from '../../../redux/org_products/productSlice';
-import { Link } from 'react-router-dom';
-import { formatAddCart } from '../../../utils/cart/formatAddCart';
-import { addCart } from '../../../redux/cartSlice'
+import React, { useState } from "react";
+import { Product } from "../../../interface/product";
+import { IOrganization } from "../../../interface/organization";
+import onErrorImg from "../../../utils/errorImg";
+import icon from "../../../constants/icon";
+import formatPrice from "../../../utils/formatPrice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    onFavoriteOrg,
+    onDeleteFavoriteOrg,
+} from "../../../redux/org/orgSlice";
+import { useHistory } from "react-router-dom";
+import {
+    onFavoriteProduct,
+    onDeleteFavorite,
+} from "../../../redux/org_products/productSlice";
+import { Link } from "react-router-dom";
+import { formatAddCart } from "../../../utils/cart/formatAddCart";
+import { addCart } from "../../../redux/cartSlice";
 
 interface IProps {
-    product: Product,
-    org: IOrganization
+    product: Product;
+    org: IOrganization;
 }
 
 function ProductDetailRight(props: IProps) {
     const { org, product } = props;
     const dispatch = useDispatch();
-    const history = useHistory()
+    const history = useHistory();
     const { USER } = useSelector((state: any) => state.USER);
     const [quantity, setQuantity] = useState(1);
 
@@ -28,39 +34,50 @@ function ProductDetailRight(props: IProps) {
         if (USER) {
             const values = {
                 product: product,
-                org_id: org?.id
-            }
+                org_id: org?.id,
+            };
             if (product.is_favorite) {
-                dispatch(onDeleteFavorite(values))
+                dispatch(onDeleteFavorite(values));
             } else {
-                dispatch(onFavoriteProduct(values))
+                dispatch(onFavoriteProduct(values));
             }
         } else {
-            history.push('/sign-in?1')
+            history.push("/sign-in?1");
         }
-    }
+    };
     const onClickFavoriteOrg = () => {
         if (USER) {
             if (org?.is_favorite) {
-                dispatch(onDeleteFavoriteOrg(org))
+                dispatch(onDeleteFavoriteOrg(org));
             } else {
-                dispatch(onFavoriteOrg(org))
+                dispatch(onFavoriteOrg(org));
             }
         } else {
-            history.push('/sign-in?1')
+            history.push("/sign-in?1");
         }
-    }
-    const percent = Math.round(100 - product?.special_price / product?.retail_price * 100)
+    };
+    const percent = Math.round(
+        100 - (product?.special_price / product?.retail_price) * 100
+    );
     //handle add cart
     const onDescQuantity = () => {
-        if (quantity > 1) setQuantity(quantity - 1)
-    }
+        if (quantity > 1) setQuantity(quantity - 1);
+    };
     const handleAddCart = () => {
-        const sale_price = product?.special_price > 0 ? product?.special_price : product.retail_price;
-        const is_type = 1
-        const values = formatAddCart(product, org, is_type, quantity, sale_price)
-        dispatch(addCart(values))
-    }
+        const sale_price =
+            product?.special_price > 0
+                ? product?.special_price
+                : product.retail_price;
+        const is_type = 1;
+        const values = formatAddCart(
+            product,
+            org,
+            is_type,
+            quantity,
+            sale_price
+        );
+        dispatch(addCart(values));
+    };
     return (
         <div className="service-detail__right">
             <div className="detail-right__head">
@@ -71,7 +88,12 @@ function ProductDetailRight(props: IProps) {
                 <div className="detail-right__name">
                     <p>{product?.product_name}</p>
                     <div onClick={onFavorite} className="favorite">
-                        <img src={product?.is_favorite ? icon.heart : icon.unHeart} alt="" />
+                        <img
+                            src={
+                                product?.is_favorite ? icon.heart : icon.unHeart
+                            }
+                            alt=""
+                        />
                     </div>
                 </div>
                 <div className="detail-right__evaluate">
@@ -93,23 +115,27 @@ function ProductDetailRight(props: IProps) {
             <div className="detail-right__body">
                 <div className="detail-right__info">
                     <div className="flexX-gap-8">
-                        <div className="detail-right__price">
-                            {
-                                product?.special_price > 0 ?
-                                    <>
-                                        <span>{formatPrice(product?.special_price)}đ</span>
-                                        <span>{formatPrice(product?.retail_price)}đ</span>
-                                    </>
-                                    :
-                                    <span>{formatPrice(product?.retail_price)}đ</span>
-                            }
-                        </div>
-                        {
-                            product?.special_price > 0 &&
+                        {product?.special_price > 0 && (
                             <div className="detail-right__percent">
                                 <p>Giảm {percent}%</p>
                             </div>
-                        }
+                        )}
+                        <div className="detail-right__price">
+                            {product?.special_price > 0 ? (
+                                <>
+                                    <span>
+                                        {formatPrice(product?.special_price)}đ
+                                    </span>
+                                    <span>
+                                        {formatPrice(product?.retail_price)}đ
+                                    </span>
+                                </>
+                            ) : (
+                                <span>
+                                    {formatPrice(product?.retail_price)}đ
+                                </span>
+                            )}
+                        </div>
                     </div>
                     {/* <div style={{ padding: "8px 0" }}>
                         <p style={{ fontWeight: "bold", marginBottom: "8px" }}>
@@ -164,7 +190,7 @@ function ProductDetailRight(props: IProps) {
                     <div className="infoMer-bottom">
                         <button className="infoMer-bottom__left">
                             <Link
-                                className='flex-row'
+                                className="flex-row"
                                 to={{ pathname: `/org/${org.subdomain}` }}
                             >
                                 <img src={icon.archive} alt="" />
@@ -176,7 +202,11 @@ function ProductDetailRight(props: IProps) {
                             className="infoMer-bottom__right"
                         >
                             {org?.is_favorite && <img src={icon.rss} alt="" />}
-                            <p>{org?.is_favorite ? "Đang theo dõi" : "Theo dõi"}</p>
+                            <p>
+                                {org?.is_favorite
+                                    ? "Đang theo dõi"
+                                    : "Theo dõi"}
+                            </p>
                         </button>
                     </div>
                 </div>
@@ -185,7 +215,10 @@ function ProductDetailRight(props: IProps) {
                 <div className="bottom-quantity">
                     <p className="bottom-quantity__text">Số lượng:</p>
                     <div className="bottom-quantity__wrap">
-                        <button onClick={onDescQuantity} className="quantity-btn">
+                        <button
+                            onClick={onDescQuantity}
+                            className="quantity-btn"
+                        >
                             <p>-</p>
                         </button>
                         <input
