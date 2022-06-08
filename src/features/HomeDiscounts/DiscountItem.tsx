@@ -16,12 +16,12 @@ function DiscountItem(props: IProps) {
     const org = discountItem?.organization;
     const history = useHistory();
     const onDetail = () => {
+        //console.log(discountItem)
         history.push({
             pathname: `/chi-tiet-giam-gia/${slugify(
                 discountItem.productable.service_name
             )}`,
-            search: `org_id=${org?.id}&id=${discountPar?.id}`,
-            state: org,
+            search: `org_id=${org?.id}&dis_id=${discountPar?.id}&ser_id=${discountItem.productable_id}`,
         });
     };
     return (
@@ -56,15 +56,14 @@ function DiscountItem(props: IProps) {
                     <div
                         style={
                             !discountPar.total ||
-                            discountPar.total === discountPar.used
+                                discountPar.total === discountPar.used
                                 ? { width: "100%" }
                                 : {
-                                      width: `${
-                                          (discountPar.used /
-                                              discountPar.total) *
-                                          100
-                                      }%`,
-                                  }
+                                    width: `${(discountPar.used /
+                                            discountPar.total) *
+                                        100
+                                        }%`,
+                                }
                         }
                         className="limit-bar__used"
                     ></div>

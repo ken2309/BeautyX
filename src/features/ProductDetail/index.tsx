@@ -19,6 +19,7 @@ import ProductDetailLeft from "./components/ProductDetailLeft";
 import ProductDetailRight from "./components/ProductDetailRight";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import Review from "../Reviews";
+import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
 
 function ProductDetail(props: any) {
   const dispatch = useDispatch();
@@ -40,7 +41,6 @@ function ProductDetail(props: any) {
     }
   }
   const callProductComments = () => {
-    console.log(parseInt(params.id), COMMENTS.product_id, COMMENTS.status_cmt)
     if (parseInt(params.id) !== COMMENTS.product_id || COMMENTS.status_cmt !== STATUS.SUCCESS) {
       const values = {
         type: "PRODUCT",
@@ -65,8 +65,8 @@ function ProductDetail(props: any) {
     { id: 2, title: "Đánh giá" },
     { id: 3, title: "Doanh nghiệp" },
   ];
-  const handleChange = () => {
-
+  const handleChange = (event: React.SyntheticEvent, value: any) => {
+    setValue(value);
   }
 
   return (
@@ -122,14 +122,12 @@ function ProductDetail(props: any) {
                   </TabPanel>
                   <TabPanel value={value}>
                     <div className="org-information-cnt">
-                      {/* <OrgInformation
-                                                // refMap={refMap}
-                                                org={org}
-                                            /> */}
-                      {/* <OrgReviews
-                                                // refReview={refReview}
-                                                org={org}
-                                            /> */}
+                      <div className="service-detail__org">
+                        {
+                          ORG.status === STATUS.SUCCESS &&
+                          <OrgInformation org={org} />
+                        }
+                      </div>
                     </div>
                   </TabPanel>
                   <TabPanel value={value}>
