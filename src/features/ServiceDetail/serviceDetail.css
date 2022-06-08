@@ -99,18 +99,16 @@
     font-weight: bold;
 }
 .service-detail .detail-right__percent {
-    padding: 2px 4px;
+    clip-path: polygon(0 0, 92% 0, 100% 50%, 92% 100%, 0 100%, 7% 50%);
     background-color: var(--red-cl);
-    width: max-content;
-    border-radius: 4px;
-    background-color: rgb(255 240 241);
-    border-color: var(--red-cl);
-    border-style: solid;
-    border-width: 1px;
-    margin-top: 4px;
+    padding: 2px 10px;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    color: #fff;
 }
 .service-detail .detail-right__percent p {
-    color: var(--red-cl);
+    color: #fff;
     font-size: 14px;
     line-height: 18px;
     font-weight: bold;
@@ -605,7 +603,7 @@
         margin-left: 8px;
     }
     .active-mb .service-detail__right .detail-right__body {
-        margin: 8px 0;
+        margin: 16px 0 0 0;
     }
     .active-mb .detail-right__duration-wrap p {
         font-size: 14px;

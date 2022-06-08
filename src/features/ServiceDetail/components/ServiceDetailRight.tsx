@@ -125,6 +125,11 @@ export default function ServiceDetailRight(props: any) {
             <div className="detail-right__body">
                 <div className="detail-right__info">
                     <div className="flexX-gap-8">
+                        {service?.special_price > 0 && (
+                            <div className="detail-right__percent">
+                                <p>Giảm {percent}%</p>
+                            </div>
+                        )}
                         <div className="detail-right__price">
                             {service?.special_price > 0 ? (
                                 <>
@@ -137,11 +142,6 @@ export default function ServiceDetailRight(props: any) {
                                 <span>{formatPrice(service?.price)}đ</span>
                             )}
                         </div>
-                        {service?.special_price > 0 && (
-                            <div className="detail-right__percent">
-                                <p>Giảm {percent}%</p>
-                            </div>
-                        )}
                     </div>
 
                     <div className="detail-right__duration-wrap">
