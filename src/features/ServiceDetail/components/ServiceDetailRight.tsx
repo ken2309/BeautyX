@@ -22,7 +22,7 @@ export default function ServiceDetailRight(props: any) {
     const percent = service
         ? Math.round(100 - (service.special_price / service?.price) * 100)
         : null;
-    const USER = useSelector((state: any) => state.USER);
+    const {USER} = useSelector((state: any) => state.USER);
     const ORG = useSelector((state: any) => state.ORG);
     const onFavoriteOrganization = async () => {
         if (USER) {

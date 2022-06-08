@@ -165,19 +165,12 @@ function ServiceDetail(props: any) {
                                         </div>
                                     </TabPanel>
                                     <TabPanel value={value}>
-                                        <div className="org-information-cnt">
-                                            {/* <OrgInformation
-                                                // refMap={refMap}
-                                                org={org}
-                                            /> */}
-                                            {/* <OrgReviews
-                                                // refReview={refReview}
-                                                org={org}
-                                            /> */}
+                                        <div className="service-detail__org">
+                                            {
+                                                ORG.status === STATUS.SUCCESS &&
+                                                <OrgInformation org={org} />
+                                            }
                                         </div>
-                                    </TabPanel>
-                                    <TabPanel value={value}>
-                                        <>tab 3</>
                                     </TabPanel>
                                 </div>
                             </TabContext>
