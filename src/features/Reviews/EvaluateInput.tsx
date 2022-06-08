@@ -1,4 +1,3 @@
-import React from "react";
 import icon from "../../constants/icon";
 interface IProps {
     handleOnchange: any;
@@ -8,6 +7,7 @@ interface IProps {
     handlePostComment: any;
     onChangeMedia: any;
     onRemoveImgTemp: any;
+    InputRef?: any
 }
 export default function EvaluateInput(props: IProps) {
     const {

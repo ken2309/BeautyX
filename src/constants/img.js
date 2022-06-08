@@ -27,7 +27,7 @@ import banner from "../assets/image/banner.png";
 import thumb from "../assets/image/thumb.png";
 import thumb_1 from "../assets/image/thumb_1.png";
 import thumb_2 from "../assets/image/thumb_2.png";
-import imgDefault from "../assets/image/imgDefault.svg";
+import imgDefault from "../assets/image/imgDefault.png";
 
 import hairSalon from "../assets/image/tags/hairSalon.svg";
 import message from "../assets/image/tags/message.svg";

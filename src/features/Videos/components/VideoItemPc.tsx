@@ -1,180 +1,294 @@
 import React, { useEffect, useRef, useState } from 'react';
-import scrollTop from "../../../utils/scrollTop";
-import icon from "../../../constants/icon";
-import Avatar from '@mui/material/Avatar';
+import { useSelector, useDispatch } from 'react-redux';
+import { Dialog } from "@mui/material";
 import { useHistory } from 'react-router-dom';
-import { fetchAsyncOrg } from '../../../redux/org/orgSlice';
 import serviceApi from "../../../api/serviceApi";
-import { useDispatch } from 'react-redux';
+import scrollTop from "../../../utils/scrollTop";
+import Review from '../../Reviews/index';
+import icon from '../../../constants/icon';
+// post
+import PostHead from './post/PostHead';
+import PostReaction from './post/PostReaction';
+import PostVideo from './post/PostVideo';
+import PostProductList from './post/PostProductList';
+// interface
+import { IOrganization } from '../../../interface/organization';
+import { IComment } from '../../../interface/comments';
+import { Service } from '../../../interface/service';
+// api
+import { fetchAsyncOrg, onFavoriteOrg, onDeleteFavoriteOrg } from '../../../redux/org/orgSlice';
+import { fetchAsyncOrgComments, postAsyncOrgComments } from '../../../redux/org/orgCommentsSlice';
+import mediaApi from '../../../api/mediaApi';
+import PostComment from './post/PostCmt';
+
 function VideoItemPc(props: any) {
     const { video, videoCur, setVideoCur } = props;
     const sess = window.sessionStorage.getItem("_WEB_TK");
     const history = useHistory();
     const dispatch = useDispatch();
-    const videoRef = useRef<any>();
-    const vd_url = video?.excerpt?.rendered?.slice(10, video?.excerpt?.rendered?.length - 12);
-    const params_id = video?.slug?.split('-');
-    const id = params_id[0]?.slice(6, params_id[0]?.length);
-    const ser_id = params_id[1]?.slice(6, params_id[1]?.length);
-    const [org,setOrg] = useState<any>();
-    const [ser,setListSer] = useState<any>();
-    const [like,setLike] = useState<any>();
-    const getOrgById = async () =>{
-        const res = await dispatch(fetchAsyncOrg(id));
-        setOrg(res.payload)
-    }
-    const getSerByOrgId = async () =>{
-        const res = await serviceApi.getDetailById({
-            org_id:id,
-            ser_id:ser_id
-        });
-        // console.log(res);
-        setListSer(res.data.context)
-    }
-    useEffect(() => {
-        if (videoCur?.id === video?.id) {
-            videoRef.current.play()
-        }else{
-            videoRef.current.pause()
+  
+    
+    const USER = useSelector((state: any) => state.USER);
+    const [cmtDialog,setOpenCmtDialog] = useState<any>();
+    const [focus,setFocus] = useState<Boolean>();
+    const user = USER.USER;
+    // ---- interface ----
+        interface IReact {
+            favoriteCount: number;
+            isFavorite: Boolean;
         }
-        getOrgById();
-        getSerByOrgId();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-    // handle func
-    const onHoverVideoItem = () => {
-        setVideoCur(video)
-    }
-    const handleGoOrgDetail = () => {
-        scrollTop()
-        history.push({
-            pathname: `/org/${org.subdomain}`,
-            state: org,
+        interface ICmt {
+            text: String;
+            url?: String;
+            image_url?: String|null
+        }
+        interface Comments {
+            comments?:IComment[];
+            totalItem?:number
+        }
+        interface IData {
+            org?: IOrganization | null;
+            ser?: Service[]|null;
+            cmt?: Comments|undefined
+        }
+    // ---- video ----
+        const vd_url = video?.excerpt?.rendered?.slice(10, video?.excerpt?.rendered?.length - 12);
+    // ---- end ---- //
+    // ---- org - service ---- 
+        const params_id = video?.slug?.split('-');
+        const id = params_id[0]?.slice(6, params_id[0]?.length);
+        const ser_params = params_id[1]?.slice(6, params_id[1]?.length);
+        const sers = ser_params.split('_');
+    // ---- end ----
+    // ---- org - service - comments ---- 
+        const [data, setData] = useState<IData|undefined>({
+            org: null,
+            ser: null
+        });
+        const [reaction, setReaction] = useState<IReact>({
+            favoriteCount: 0,
+            isFavorite: false
         })
-    }
-    const handleReact = () => {
+        const [comment, setComment] = useState<ICmt>({
+            text: '',
+            url: video.link,
+            image_url: ''
+        });
+    // ---- end ---- 
+        const getComments = async () => {
+            const res = await dispatch(fetchAsyncOrgComments({
+                org_id: id,
+                page: 1
+            }));
+            setData({ ...data, cmt: res.payload })
+        }
+    //  ---- Init State ---- 
+        const getInitData = async () => {
+            const resOrg = await dispatch(fetchAsyncOrg(id));
+            let resSerList: any = [];
+            sers.map(async (item: any) => {
+                const resSer = await serviceApi.getDetailById({
+                    org_id: id,
+                    ser_id: item
+                });
+                resSerList.push(resSer.data.context)
+            })
+            const resCmt = await dispatch(fetchAsyncOrgComments({
+                org_id: id,
+                page: 1
+            }));
+            let resData = {
+                org: resOrg.payload,
+                ser: resSerList,
+                cmt: resCmt.payload
+            };
+            setData(resData);
+            if (resData.org.is_favorite) {
+                setReaction({
+                    ...reaction,
+                    favoriteCount: resData.org.favorites_count,
+                    isFavorite: resData.org.is_favorite
+                });
 
-    }
+            }
+        }
+        useEffect(()=>{
+            getInitData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        },[])
+    // handle func
+        const handleGoOrgDetail = () => {
+            goSignIn();
+        }
+        const handleComment = (e: any) => {
+            if (!sess) {
+                goSignIn();
+            }
+            else if (sess) {
+                setComment({
+                    ...comment,
+                    text: e.target.value,
+                });
+            }
+        }
+        const handlePostComment = async () => {
+            if (comment.text !== '') {
+                dispatch(
+                    postAsyncOrgComments({
+                        values: {
+                            page: 1,
+                            org_id: id,
+                            body: JSON.stringify(comment),
+                        },
+                        user: user,
+                    })
+                ).then(getComments);
+                setComment({ text: '' })
+            }
+        };
+
+        const handleKeyDown = (event: any) => {
+            if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
+                if (comment.text.length > 0 && sess) {
+                    handlePostComment();
+                    setComment({
+                        text: "",
+                        // image_url: "",
+                    });
+                } else {
+                    goSignIn();
+                }
+            }
+        };
+        const onChangeMedia = (e: any) => {
+            const media = e.target.files[0];
+            if (user && media) {
+                handlePostMedia(media);
+            } else if (!user) {
+                console.log("comments not found");
+                goSignIn();
+            }
+        };
+        const handlePostMedia = async (media: any) => {
+            let formData = new FormData();
+            formData.append("file", media);
+            try {
+                const res = await mediaApi.postMedia(formData);
+                setComment({
+                    ...comment,
+                    image_url: res.data.context.original_url,
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        };
+    
+        const onRemoveImgTemp = () => {
+            setComment({ ...comment, image_url: null });
+        };
     // === end ===
+        const handleReact = async () => {
+            if (reaction.isFavorite) {
+                const res = dispatch(onDeleteFavoriteOrg(data?.org))
+                console.log(res);
+                setReaction({ favoriteCount: reaction.favoriteCount-1 ,isFavorite: false })
+            } else {
+                const res = await dispatch(onFavoriteOrg(data?.org))
+                console.log(res);
+                setReaction({ favoriteCount: reaction.favoriteCount+1 ,isFavorite: true })
+            }
+        }
+        const goSignIn = () => {
+            scrollTop();
+            history.push({
+                pathname: '/sign-in',
+                search: '1',
+                state: { from: '/beautyx-videos' }
+            })
+        }
+        const handleViewAllCmt = () => {
+            setOpenCmtDialog(true);
+            setFocus(true)
+        }
+    console.log('render: ' + id,reaction)
+
     return (
         <>
-        <header>
-            <div className="video-item-header_ava" 
-                onClick={handleGoOrgDetail}
-            >
-                <Avatar 
-                alt="Remy Sharp" 
-                src={org?.image_url} 
-                sx={{ width: 32, height: 32 }}/>
-                <div className='video-item-header_name'>
-                    <span>{org?.name}</span>
-                    <span className="video-item-header_time">Đã đămg 5 giờ trước</span>
+            <PostHead
+                data={data}
+                video={video}
+                handleGoOrgDetail={handleGoOrgDetail}
+            />
+            <div className="video-item_body">
+                <div className="video-item_body-image">
+                    <PostVideo
+                        vd_url={vd_url}
+                        video={video}
+                        videoCur={videoCur}
+                        setVideoCur={setVideoCur}
+                    />
+                    <PostProductList
+                        data={data}
+                    />
                 </div>
+                <PostReaction
+                    data={data}
+                    reaction={reaction}
+                    handleReact={handleReact}
+                    handleViewAllCmt={handleViewAllCmt}
+                />
+                <PostComment
+                    data={data}
+                    video={video}
+                    handleComment={handleComment}
+                    comment={comment}
+                    handleViewAllCmt={handleViewAllCmt}
+                    handleKeyDown={handleKeyDown}
+                    user={user}
+                    handlePostComment={handlePostComment}
+                    onChangeMedia={onChangeMedia}
+                    onRemoveImgTemp={onRemoveImgTemp}
+                />
             </div>
-        </header>
-        <div className="video-item_body-status">
-                <span>
-                    Video meta description <br/>
-                    <span className="hastag">#tagline1 #tagline2</span>
-                </span>
-            </div>
-        <div className="video-item_body">
-            <div className="video-item_body-image"
-                
-            >
-                <div
-                    onMouseEnter={onHoverVideoItem}
-                    className='video-item-pc__wr'
+            
+            <Dialog
+                open={cmtDialog}
+                onClose={() => setOpenCmtDialog(false)}
+            >   
+                <div 
+                    className="close_btn"
+                    onClick={() => setOpenCmtDialog(false)}
                 >
-                    <video
-                        ref={videoRef}
-                        className='video-item__pc'
-                        controls
-                        // autoPlay={true}
-                        loop
-                    >
-                        <source src={vd_url} type="video/mp4" />
-                    </video>
-                    <div className="blur"></div>
-                    <video 
-                         ref={videoRef}
-                         className='video-item__pc back-drop__vid'
-                         controls
-                         // autoPlay={true}
-                         loop
-                    >
-                        <source src={vd_url} type="video/mp4" />
-                    </video>
+                   <img src={icon.closeCircleWhite} alt=""/>
                 </div>
-                <div className="video-item_product_list">
-                    {/* {
-                    data.ser.map((item))
-                    } */}
-                    <div>                
-                        <div className="video-item_product_item">
-                            <div className="video-item_product_item-img">
-                                <img src={ser?.image_url} alt=""/>
-                            </div>
-                            <div className="video-item_product_item-title">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. At fugiat autem libero quis nesciunt, accusantium eveniet officia blanditiis totam pariatur magni assumenda modi, mollitia nulla tempora. Distinctio mollitia culpa blanditiis.
-                            </div>
-                            <div className="video-item_product_item-price">
-                                <img src={icon.ShoppingCartSimpleWhite} alt=""/>
-                            </div>
-                        </div>
-                        <div className="video-item_product_item">
-                            <div className="video-item_product_item-img">
-                                <img src={ser?.image_url} alt=""/>
-                            </div>
-                            <div className="video-item_product_item-title">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. At fugiat autem libero quis nesciunt, accusantium eveniet officia blanditiis totam pariatur magni assumenda modi, mollitia nulla tempora. Distinctio mollitia culpa blanditiis.
-                            </div>
-                            <div className="video-item_product_item-price">
-                                <img src={icon.ShoppingCartSimpleWhite} alt=""/>
-                            </div>
-                        </div>
+                <div className="video-item_dialog">
+                    <PostVideo
+                        vd_url={vd_url}
+                        video={video}
+                        videoCur={videoCur}
+                        setVideoCur={setVideoCur}
+                    />
+                    <div className="video-item_dialog-body">
+                        <PostHead
+                            data={data}
+                            video={video}
+                            handleGoOrgDetail={handleGoOrgDetail}
+                        />
+                        <PostReaction
+                            data={data}
+                            reaction={reaction}
+                            handleReact={handleReact}
+                            handleViewAllCmt={handleViewAllCmt}
+                        />
+                        <Review
+                            commentable_type="ORGANIZATION"
+                            comments={data?.cmt?.comments}
+                            totalItem={data?.cmt?.totalItem}
+                            id={data?.org?.id}
+                        />
                     </div>
                 </div>
-            </div>
-            <div className="video-item_react-ctn">
-                <div className="react-btn">
-                    <div className="like" onClick={handleReact}>
-                        {
-                            like
-                            ?
-                            <img className="icon" src={icon.heart} alt=""/>
-                            :
-                            <img className="icon" src={icon.unHeartWhite} alt=""/>
-                        }
-                        <span>20</span>
-                    </div>
-                    <div className="comment">
-                        <img className="icon" src={icon.comment} alt=""/>
-                        <span>20</span>
-                    </div>
-                    <div className="share_link">
-                        <img className="icon" src={icon.share} alt=""/>
-                    </div>
-                    </div>
-                </div>
-                <div className="video-item_comment">
-                    {/* <Avatar
-                        alt={user_info.fullname}  
-                        sx={{ width: 24, height: 24, display: 'flex', alignItems: 'center' }}
-                    >
-                            {user_info.fullname}
-                    </Avatar>
-                    <div className="avatar">
-                        {user_info.fullname}
-                    </div>
-                    <div className="add-comment" onClick={()=>setCommentNow(true)}>
-                        Thêm bình luận 
-                    </div> */}
-                    {/* <div className="icon_recommend">
-                        {list_icon.map((item,index)=><div key={index} className="item">{item}</div>)}
-                    </div> */}
-            </div>
-        </div>
+            </Dialog>
         </>
     );
 }

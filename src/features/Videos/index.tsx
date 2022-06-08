@@ -1,4 +1,4 @@
-import React from 'react';
+import {useMemo,useState} from 'react';
 //import parse from "html-react-parser";
 import Head from '../Head';
 import { Container } from '@mui/material'
@@ -7,10 +7,9 @@ import ContainerPc from './components/ContainerPc';
 import Trends from '../Trends';
 import './style.css'
 
+
 function Videos() {
     const { videos } = useSelector((state: any) => state.BLOG.VIDEOS);
-    // console.log(useSelector((state: any) => state.BLOG));
-    // console.log(videos)
     return (
         <>
             <Head />

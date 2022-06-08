@@ -13,10 +13,10 @@ import { postCommentCombo } from '../../redux/org_combos/comboSlice';
 import { pickBy, identity } from "lodash";
 import { useHistory } from "react-router-dom";
 interface IProps {
-    comments: IComment[];
-    totalItem: number;
+    comments: IComment[]|undefined;
+    totalItem: number|undefined;
     commentable_type: string;
-    id: number;
+    id: number|undefined;
     detail_id?: number;
     refReview?: any;
 }
@@ -44,7 +44,6 @@ function Review(props: IProps) {
 
     const valuesStr = {
         page: 1,
-        type: commentable_type,
         org_id: id,
         body: JSON.stringify(comment),
         id: detail_id,
@@ -134,7 +133,7 @@ function Review(props: IProps) {
                     onRemoveImgTemp={onRemoveImgTemp}
                 />
                 <span className="total-comment">Tổng {totalItem} đánh giá</span>
-                {comments.map((item: IComment, index: number) => (
+                {comments?.map((item: IComment, index: number) => (
                     <CommentItem key={index} comment={item} user={user} />
                 ))}
             </div>

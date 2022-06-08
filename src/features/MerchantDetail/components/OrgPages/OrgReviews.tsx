@@ -34,9 +34,9 @@ function OrgReviews(props: IProps) {
     return (
         <div ref={refReview} className="org-evaluate">
             <Review
+                commentable_type="ORGANIZATION"
                 comments={comments}
                 totalItem={totalItem}
-                commentable_type={"ORGANIZATION"}
                 id={org_id}
             />
         </div>
