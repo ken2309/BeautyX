@@ -46,7 +46,7 @@ export default function ServiceDetailLeft(props: any) {
                                 style={{
                                     color: "var(--red-cl)",
                                     fontWeight: "700",
-                                    fontSize: "24px",
+                                    fontSize: "20px",
                                 }}
                             >
                                 {formatPrice(service.special_price)}đ
@@ -56,7 +56,7 @@ export default function ServiceDetailLeft(props: any) {
                                 style={{
                                     color: "var(--purple)",
                                     fontWeight: "700",
-                                    fontSize: "24px",
+                                    fontSize: "20px",
                                 }}
                             >
                                 {formatPrice(service.price)}đ
@@ -72,7 +72,7 @@ export default function ServiceDetailLeft(props: any) {
                             <span
                                 style={{
                                     color: "#8C8C8C",
-                                    fontSize: "14px",
+                                    fontSize: "12px",
                                     textDecoration: "line-through",
                                     marginLeft: "8px",
                                     fontWeight: "500",
