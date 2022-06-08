@@ -281,6 +281,7 @@ function VideoItemPc(props: any) {
                             handleViewAllCmt={handleViewAllCmt}
                         />
                         <Review
+                            commentable_type="ORGANIZATION"
                             comments={data?.cmt?.comments}
                             totalItem={data?.cmt?.totalItem}
                             id={data?.org?.id}

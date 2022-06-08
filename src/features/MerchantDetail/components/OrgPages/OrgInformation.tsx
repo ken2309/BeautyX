@@ -8,7 +8,7 @@ import { extraOrgTimeWork } from "../Functions/extraOrg";
 
 interface IProps {
     org: IOrganization;
-    refMap: any;
+    refMap?: any;
 }
 const day = new Date();
 const today = day.getDay() + 1;
@@ -17,7 +17,7 @@ function OrgInformation(props: IProps) {
     const { org, refMap } = props;
     const branchesCntRef = useRef<any>();
     const sliderRef = useRef<any>();
-    const [branch, setBranch] = useState(org?.branches[0] || org);
+    const [branch, setBranch] = useState<any>(org?.branches[0] || org);
     const settings = {
         className: "map-org-detail__slide",
     };

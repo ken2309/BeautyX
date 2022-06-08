@@ -3,7 +3,7 @@ import "./service-promo-item.css";
 import { IServicePromo } from "../../../interface/servicePromo";
 import icon from "../../../constants/icon";
 import formatPrice from "../../../utils/formatPrice";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import slugify from "../../../utils/formatUrlString";
 import onErrorImg from "../../../utils/errorImg";
 import scrollTop from "../../../utils/scrollTop";
@@ -13,25 +13,15 @@ interface IProps {
 
 function ServicePromoItem(props: IProps) {
     const { service } = props;
-    const history = useHistory();
-    // const org = {
-    //     id: service.org_id,
-    //     name: service.org_name,
-    //     latitude: service.org_latitude,
-    //     longitude: service.org_longitude,
-    //     address: service.org_full_address,
-    //     full_address: service.org_full_address
-    // }
-    const gotoDetail = () => {
-        //console.log(service)
-        scrollTop();
-        history.push({
-            pathname: `/dich-vu/${slugify(service?.service_name)}`,
-            search: `id=${service.service_id}&org=${service.org_id}`,
-        });
-    };
     return (
-        <div onClick={gotoDetail} className="ser-pro-item">
+        <Link
+            to={{
+                pathname: `/dich-vu/${slugify(service?.service_name)}`,
+                search: `id=${service.service_id}&org=${service.org_id}`,
+            }}
+            onClick={() => scrollTop()}
+            className="ser-pro-item"
+        >
             <div className="ser-img-cnt">
                 <img
                     className="ser-img"
@@ -101,7 +91,7 @@ function ServicePromoItem(props: IProps) {
                     </p>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 }
 
