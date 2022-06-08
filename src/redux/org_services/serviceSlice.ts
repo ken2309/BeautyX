@@ -49,18 +49,18 @@ export const postAsyncComment: any = createAsyncThunk(
 export const fetchAsyncFavoriteService: any = createAsyncThunk(
     "SERVICE/favoriteService",
     async (valueService: any) => {
+        const org_id = valueService.org_id;
+        const service_id = valueService.detail.id
         try {
             const payload = {
                 ...valueService.detail,
                 is_favorite: true,
                 favorites_count: valueService.detail.favorites_count + 1,
             };
-            const values: any = {
-                org_id: valueService.org_id,
-                type: valueService.type,
-                favoritetable_id: valueService.detail.id,
-            };
-            await favorites.postFavorite(values);
+            await favorites.postFavoriteItem({
+                org_id: org_id,
+                service_id: service_id
+            });
             return payload;
         } catch (error) {
             console.log(error);
@@ -70,18 +70,18 @@ export const fetchAsyncFavoriteService: any = createAsyncThunk(
 export const fetchAsyncCancelFavoriteService: any = createAsyncThunk(
     "SERVICE/favoriteService",
     async (valueService: any) => {
+        const org_id = valueService.org_id;
+        const service_id = valueService.detail.id
         try {
             const payload = {
                 ...valueService.detail,
                 is_favorite: false,
                 favorites_count: valueService.detail.favorites_count - 1,
             };
-            const values: any = {
-                org_id: valueService.org_id,
-                type: valueService.type,
-                favoritetable_id: valueService.detail.id,
-            };
-            await favorites.deleteFavorite(values);
+            await favorites.deleteFavoriteItem({
+                org_id: org_id,
+                service_id: service_id
+            })
             return payload;
         } catch (error) {
             console.log(error);
@@ -180,7 +180,7 @@ const serviceSlice = createSlice({
             };
         },
         [postAsyncComment.fulfilled]: (state, { payload }) => {
-            const { comment, totalItem, page, service_id } = payload;
+            const { comment, page, service_id } = payload;
             return {
                 ...state,
                 COMMENTS: {
@@ -201,23 +201,35 @@ const serviceSlice = createSlice({
         },
         //favorite service
         [fetchAsyncFavoriteService.pending]: (state) => {
-            return {
-                ...state,
-                status_likeService: STATUS.LOADING,
-            };
+            return state
         },
         [fetchAsyncFavoriteService.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
-                service: payload,
-                status_likeService: STATUS.SUCCESS,
+                SERVICE: {
+                    ...state.SERVICE,
+                    service: payload
+                },
             };
         },
         [fetchAsyncFavoriteService.rejected]: (state) => {
+            return state
+        },
+        //favorite service
+        [fetchAsyncCancelFavoriteService.pending]: (state) => {
+            return state
+        },
+        [fetchAsyncCancelFavoriteService.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
-                status_likeService: STATUS.FAIL,
+                SERVICE: {
+                    ...state.SERVICE,
+                    service: payload
+                },
             };
+        },
+        [fetchAsyncCancelFavoriteService.rejected]: (state) => {
+            return state
         },
     },
 });

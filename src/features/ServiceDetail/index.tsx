@@ -2,9 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Head from "../Head";
 import { Container, Tab } from "@mui/material";
-import DetailCard from "../ProductDetail/components/DetailCard";
-import { useLocation } from "react-router-dom";
-import DetailHead from "../ProductDetail/components/DetailHead";
 import "./serviceDetail.css";
 import HeadTitle from "../HeadTitle";
 import Footer from "../Footer";
@@ -25,7 +22,6 @@ import Review from "../Reviews";
 import OrgReviews from "../MerchantDetail/components/OrgPages/OrgReviews";
 
 function ServiceDetail(props: any) {
-    const location: any = useLocation();
     const dispatch = useDispatch();
     const ORG = useSelector((state: any) => state.ORG);
     const { SERVICE, COMMENTS } = useSelector((state: any) => state.SERVICE);
@@ -66,15 +62,13 @@ function ServiceDetail(props: any) {
     };
 
     useEffect(() => {
-        if (!location.state) {
-            callServiceDetail();
-            callOrgDetail();
-        }
+        callServiceDetail();
+        callOrgDetail();
         callServiceComments();
     }, []);
 
-    const service = location.state ? location.state.service : SERVICE.service;
-    const org = location.state ? location.state.org : ORG.org;
+    const service = SERVICE.service;
+    const org = ORG.org;
 
     const [value, setValue] = useState<any>(1);
     let tabs = [
@@ -172,7 +166,10 @@ function ServiceDetail(props: any) {
                                     </TabPanel>
                                     <TabPanel value={value}>
                                         <div className="service-detail__org">
-                                            <OrgInformation org={org} />
+                                            {
+                                                ORG.status === STATUS.SUCCESS &&
+                                                <OrgInformation org={org} />
+                                            }
                                         </div>
                                     </TabPanel>
                                 </div>

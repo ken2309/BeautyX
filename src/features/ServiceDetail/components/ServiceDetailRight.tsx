@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import icon from "../../../constants/icon";
 import onErrorImg from "../../../utils/errorImg";
@@ -7,21 +7,22 @@ import {
     onFavoriteOrg,
     onDeleteFavoriteOrg,
 } from "../../../redux/org/orgSlice";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
     fetchAsyncCancelFavoriteService,
     fetchAsyncFavoriteService,
 } from "../../../redux/org_services/serviceSlice";
+import { formatAddCart } from "../../../utils/cart/formatAddCart";
+import { addCart } from "../../../redux/cartSlice";
 
 export default function ServiceDetailRight(props: any) {
     const { org, service } = props;
-    console.log("service", service);
     const dispatch = useDispatch();
     const history = useHistory();
     const percent = service
         ? Math.round(100 - (service.special_price / service?.price) * 100)
         : null;
-    const USER = useSelector((state: any) => state.USER);
+    const {USER} = useSelector((state: any) => state.USER);
     const ORG = useSelector((state: any) => state.ORG);
     const onFavoriteOrganization = async () => {
         if (USER) {
@@ -37,7 +38,6 @@ export default function ServiceDetailRight(props: any) {
     const valueService = {
         org_id: org?.id,
         detail: service,
-        type: "SERVICE",
     };
     const onFavorite = async () => {
         if (USER) {
@@ -50,6 +50,17 @@ export default function ServiceDetailRight(props: any) {
             history.push("/sign-in");
         }
     };
+    //handle add cart
+    const [quantity, setQuantity] = useState(1);
+    const onDescQuantity = () => {
+        if (quantity > 1) setQuantity(quantity - 1)
+    }
+    const handleAddCart = () => {
+        const sale_price = service?.special_price > 0 ? service?.special_price : service?.price;
+        const is_type = 2
+        const values = formatAddCart(service, org, is_type, quantity, sale_price)
+        dispatch(addCart(values))
+    }
     return (
         <div className="service-detail__right">
             <div className="detail-right__head">
@@ -60,7 +71,7 @@ export default function ServiceDetailRight(props: any) {
                 <div className="detail-right__name">
                     <p>{service.service_name}</p>
                     <div onClick={onFavorite} className="favorite">
-                        <img src={icon.favoriteStroke} alt="" />
+                        <img src={service?.is_favorite ? icon.heart : icon.unHeart} alt="" />
                     </div>
                 </div>
                 <div className="detail-right__evaluate">
@@ -181,10 +192,14 @@ export default function ServiceDetailRight(props: any) {
                     </div>
                     <div className="infoMer-bottom">
                         <button className="infoMer-bottom__left">
-                            <img src={icon.archive} alt="" />
-                            <p>Xem Spa</p>
+                            <Link
+                                className='flex-row'
+                                to={{ pathname: `/org/${org.subdomain}` }}
+                            >
+                                <img src={icon.archive} alt="" />
+                                <p>Xem Spa</p>
+                            </Link>
                         </button>
-
                         {org?.is_favorite === true ? (
                             <button
                                 onClick={onFavoriteOrganization}
@@ -213,17 +228,17 @@ export default function ServiceDetailRight(props: any) {
                 <div className="bottom-quantity">
                     <p className="bottom-quantity__text">Số lượng:</p>
                     <div className="bottom-quantity__wrap">
-                        <button defaultValue={1} className="quantity-btn">
+                        <button onClick={onDescQuantity} className="quantity-btn">
                             <p>-</p>
                         </button>
-                        <input className="quantity-input" type="text" />
-                        <button className="quantity-btn">
+                        <input disabled value={quantity} className="quantity-input" type="text" />
+                        <button onClick={() => setQuantity(quantity + 1)} className="quantity-btn">
                             <p>+</p>
                         </button>
                     </div>
                 </div>
 
-                <div className="bottom-addCart">
+                <div onClick={handleAddCart} className="bottom-addCart">
                     <img src={icon.ShoppingCartSimpleWhite} alt="" />
                     <p>Thêm vào giỏ hàng</p>
                 </div>

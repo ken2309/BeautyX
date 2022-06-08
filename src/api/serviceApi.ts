@@ -1,5 +1,6 @@
 import axiosClient from "./axios";
-import { pickBy, identity } from 'lodash'
+import { pickBy, identity } from 'lodash';
+import { AUTH_HEADER_PARAM_GET } from '../utils/authHeader'
 
 class ServiceApi {
   getByOrg_id = (values: any) => {
@@ -24,9 +25,13 @@ class ServiceApi {
     }
     return axiosClient.get(url, { params });
   };
-  getDetailById = (params: any) => {
-    const url = `/organizations/${params.org_id}/services/${params.ser_id}`;
-    return axiosClient.get(url);
+  getDetailById = (values: any) => {
+    const url = `/organizations/${values.org_id}/services/${values.ser_id}`;
+    const params = {
+      "include": "category|favorites_count",
+      "append": "is_favorite|rating|bought_count"
+    }
+    return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params));
   };
   getBySearch = (params: any) => {
     const url = `/organizations/${params.org_id}/services?page=1&limit=15&filter%5Bkeyword%5D=${params.searchKey}`;
@@ -42,7 +47,7 @@ class ServiceApi {
       "include": "category|favorites_count",
       "append": "is_favorite|rating|bought_count"
     }
-    return axiosClient.get(url, { params })
+    return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params))
   }
 }
 const serviceApi = new ServiceApi();

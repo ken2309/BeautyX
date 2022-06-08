@@ -17,6 +17,7 @@ import loginFlatFromReducer from "./loginFlatForm/loginFlatFrom";
 import paymentsReducer from "./payments/paymentSlice";
 import searchReducer from './search/searchSlice';
 import blogReducer from "./blog/blogSlice";
+import cateReducer from "./cate/cateSlice";
 
 const rootReducer = {
   carts: cartReducer,
@@ -36,7 +37,8 @@ const rootReducer = {
   ADDRESS: userAddressReducer,
   PAYMENT: paymentsReducer,
   BLOG: blogReducer,
-  SEARCH: searchReducer
+  SEARCH: searchReducer,
+  CATE: cateReducer
 };
 const store = configureStore({
   reducer: rootReducer,

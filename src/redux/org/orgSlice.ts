@@ -92,6 +92,9 @@ const orgSlice = createSlice({
     initialState,
     name: "ORG",
     reducers: {
+        onSetOrgDetail:(state, action)=>{
+            state.org = action.payload
+        },
         onActiveTab: (state, action) => {
             return {
                 ...state,
@@ -204,5 +207,5 @@ const orgSlice = createSlice({
     }
 })
 const { actions } = orgSlice;
-export const { onActiveTab } = actions;
+export const { onActiveTab, onSetOrgDetail } = actions;
 export default orgSlice.reducer;

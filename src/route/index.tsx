@@ -35,6 +35,7 @@ import Blog from "../features/Blog";
 import ComboDetail from "../features/ComboDetail";
 import DiscountDetail from "../features/DiscountDetail";
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
+import CategoryTree from "../features/CategoryTree";
 
 
 // feature mobile
@@ -167,6 +168,10 @@ function RouterConfig(props: any) {
     {
       path: "/giam-gia",
       component: <HomeDiscountList />
+    },
+    {
+      path:"/-danh-muc/",
+      component : <CategoryTree/>
     }
   ];
   const routesPrivate = [
