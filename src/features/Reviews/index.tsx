@@ -6,11 +6,12 @@ import EvaluateInput from "./EvaluateInput";
 import TotalStartEvaluate from "./TotalStartEvaluate";
 import { useDispatch, useSelector } from "react-redux";
 import { postAsyncOrgComments } from "../../redux/org/orgCommentsSlice";
-import SignInUp from "../poupSignInUp";
 import mediaApi from "../../api/mediaApi";
 import { postAsyncComment } from "../../redux/org_services/serviceSlice";
-import { postAsyncProductComment } from '../../redux/org_products/productSlice'
+import { postAsyncProductComment } from '../../redux/org_products/productSlice';
+import { postCommentCombo } from '../../redux/org_combos/comboSlice';
 import { pickBy, identity } from "lodash";
+import { useHistory } from "react-router-dom";
 interface IProps {
     comments: IComment[]|undefined;
     totalItem: number|undefined;
@@ -24,7 +25,7 @@ function Review(props: IProps) {
     const USER = useSelector((state: any) => state.USER);
     const user = USER.USER;
     const dispatch = useDispatch();
-    const [popUpLogin, setPopUpLogin] = useState(false);
+    const history = useHistory();
     const [comment, setComment] = useState<any>({
         text: "",
         image_url: null,
@@ -49,32 +50,37 @@ function Review(props: IProps) {
 
     const handlePostComment = () => {
         if (comment.text.length > 0 && user) {
-            if (commentable_type === "ORGANIZATION") {
-                dispatch(
-                    postAsyncOrgComments({
+            switch (commentable_type) {
+                case "ORGANIZATION":
+                    return dispatch(
+                        postAsyncOrgComments({
+                            values: values,
+                            user: user,
+                        })
+                    );
+                case "SERVICE":
+                    return dispatch(
+                        postAsyncComment({
+                            values: values,
+                            user: user,
+                        })
+                    );
+                case "PRODUCT":
+                    return dispatch(
+                        postAsyncProductComment({
+                            values: values,
+                            user: user,
+                        })
+                    );
+                case "TREATMENT_COMBO":
+                    return dispatch(postCommentCombo({
                         values: values,
-                        user: user,
-                    })
-                );
-            } else if (commentable_type === "SERVICE") {
-                dispatch(
-                    postAsyncComment({
-                        values: values,
-                        user: user,
-                    })
-                );
-            } else if (commentable_type === "PRODUCT") {
-                dispatch(
-                    postAsyncProductComment({
-                        values: values,
-                        user: user,
-                    })
-                );
+                        user: user
+                    }))
             }
             setComment({ text: "", image_url: null });
         } else if (!user) {
-            console.log("comments not found");
-            setPopUpLogin(true);
+            history.push('/sign-in?1')
         }
     };
 
@@ -90,8 +96,7 @@ function Review(props: IProps) {
         if (user && media) {
             handlePostMedia(media);
         } else if (!user) {
-            console.log("comments not found");
-            setPopUpLogin(true);
+            history.push('/sign-in?1')
         }
     };
     const handlePostMedia = async (media: any) => {
@@ -114,11 +119,6 @@ function Review(props: IProps) {
 
     return (
         <>
-            <SignInUp
-                openSignIn={popUpLogin}
-                setOpenSignIn={setPopUpLogin}
-                activeTabSign={1}
-            />
             <div className="org-evaluate__cnt">
                 <TotalStartEvaluate />
                 <EvaluateInput

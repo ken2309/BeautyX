@@ -18,13 +18,13 @@ function DetailRight(props: IProps) {
     const { org, combo } = props;
     let old_price: number = 0;
     let sale_price: number = 0;
-    if (combo?.discount > combo?.price) {
+    if (combo?.discount > combo?.use_value) {
         old_price = combo?.discount;
-        sale_price = combo?.price
-    } else if (combo?.price > combo?.discount) {
-        old_price = combo?.price
+        sale_price = combo?.use_value
+    } else if (combo?.use_value > combo?.discount) {
+        old_price = combo?.use_value
         sale_price = combo?.discount
-    } else if (combo?.discount === combo?.price) {
+    } else if (combo?.discount === combo?.use_value) {
         sale_price = combo?.discount
     }
     const discount_percent = 100 - Math.round(sale_price / old_price * 100)

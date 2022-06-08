@@ -37,12 +37,17 @@ const initialState = {
     DISCOUNT: {
         discount: {},
         status: ""
-    }
+    },
+    ITEM_DISCOUNT: null,
 }
 const orgDiscountsSlice = createSlice({
     name: "ORG_DISCOUNTS",
     initialState,
-    reducers: {},
+    reducers: {
+        onSetItemDiscount: (state, action) => {
+            state.ITEM_DISCOUNT = action.payload
+        }
+    },
     extraReducers: {
         [fetchAsyncDiscountDetail.pending]: (state) => {
             return { ...state, DISCOUNT: { ...state.DISCOUNT, status: STATUS.LOADING } }
@@ -84,4 +89,6 @@ const orgDiscountsSlice = createSlice({
         }
     },
 })
+const { actions } = orgDiscountsSlice;
+export const { onSetItemDiscount } = actions
 export default orgDiscountsSlice.reducer;

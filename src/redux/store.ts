@@ -18,6 +18,7 @@ import paymentsReducer from "./payments/paymentSlice";
 import searchReducer from './search/searchSlice';
 import blogReducer from "./blog/blogSlice";
 import cateReducer from "./cate/cateSlice";
+import comboReducer from "./org_combos/comboSlice";
 
 const rootReducer = {
   carts: cartReducer,
@@ -38,7 +39,8 @@ const rootReducer = {
   PAYMENT: paymentsReducer,
   BLOG: blogReducer,
   SEARCH: searchReducer,
-  CATE: cateReducer
+  CATE: cateReducer,
+  COMBO: comboReducer
 };
 const store = configureStore({
   reducer: rootReducer,

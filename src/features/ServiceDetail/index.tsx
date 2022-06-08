@@ -19,7 +19,7 @@ import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import { STATUS } from "../../redux/status";
 import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
 import Review from "../Reviews";
-import OrgReviews from "../MerchantDetail/components/OrgPages/OrgReviews";
+//import OrgReviews from "../MerchantDetail/components/OrgPages/OrgReviews";
 
 function ServiceDetail(props: any) {
     const dispatch = useDispatch();

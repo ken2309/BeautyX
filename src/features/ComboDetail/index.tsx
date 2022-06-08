@@ -1,133 +1,138 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import { shareLink } from "../../utils/formatUrlString";
-import { useLocation } from "react-router-dom";
-import { fetchAsyncComboDetail } from "../../redux/org_combos/orgCombosSlice";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Container } from "@mui/material";
 import HeadTitle from "../HeadTitle";
 import Head from "../Head";
-import onErrorImg from "../../utils/errorImg";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Tab } from "@mui/material";
+import { Tab } from "@mui/material";
+import { AppContext } from "../../context/AppProvider";
+import { STATUS } from '../../redux/status';
+import { fetchAsyncComboDetail, fetchAsyncCommentsCombo } from '../../redux/org_combos/comboSlice';
+import ComboDetailLeft from "./components/ComboDetailLeft";
+import ComboDetailRight from "./components/ComboDetailRight";
+import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
+import Review from "../Reviews";
+import '../ServiceDetail/serviceDetail.css';
 import "./style.css";
 import "../ProductDetail/product.css";
-import { AppContext } from "../../context/AppProvider";
-import DetailRight from "./components/DetailRight";
-import TabDetail from "./components/TabDetail";
-import DetailMer from "../ProductDetail/components/DetailMer";
-import Comments from "../Comments";
 
 function ComboDetail() {
     const { t } = useContext(AppContext);
-    const [value, setValue] = useState("1");
-    const location: any = useLocation();
     const params: any = shareLink();
     const dispatch = useDispatch();
-    const org_reducer = useSelector((state: any) => state.ORG.org);
-    const combo_reducer = useSelector(
-        (state: any) => state.ORG_COMBOS.COMBO_DETAIL.combo
-    );
-    const org = location.state ? location.state.org_state : org_reducer;
-    const combo = location.state ? location.state.combo_state : combo_reducer;
+    const ORG = useSelector((state: any) => state.ORG);
+    const { COMBO, COMMENTS } = useSelector((state: any) => state.COMBO);
 
-    const callComboDetail = () => {
-        if (!location.state) {
-            const values = {
-                org_id: params.org_id,
-                com_id: params.id,
-            };
-            dispatch(fetchAsyncOrg(params.org_id));
-            dispatch(fetchAsyncComboDetail(values));
+    const callOrgDetail = () => {
+        if (parseInt(params.org_id) !== ORG.org?.id || ORG.status !== STATUS.SUCCESS) {
+            dispatch(fetchAsyncOrg(params.org_id))
         }
-    };
+    }
+    const callComboDetail = () => {
+        if (parseInt(params.id) !== COMBO.combo.id || COMBO.status !== STATUS.SUCCESS) {
+            const values = {
+                com_id: params.id,
+                org_id: params.org_id
+            }
+            dispatch(fetchAsyncComboDetail(values))
+        }
+    }
+    const callComboComments = () => {
+        if (parseInt(params.id) !== COMMENTS.combo_id || COMMENTS.status !== STATUS.SUCCESS) {
+            const values = {
+                type: "TREATMENT_COMBO",
+                page: 1,
+                id: params.id,
+                org_id: params.org_id
+            }
+            dispatch(fetchAsyncCommentsCombo(values))
+        }
+    }
     useEffect(() => {
-        callComboDetail();
+        callOrgDetail()
+        callComboDetail()
+        callComboComments()
     }, []);
 
-    const onTabChange = (event: React.SyntheticEvent, newValue: string) => {
-        setValue(newValue);
-    };
+    const [value, setValue] = useState<any>(1);
+    let tabs = [
+        { id: 1, title: "Mô tả" },
+        { id: 2, title: "Đánh giá" },
+        { id: 3, title: "Doanh nghiệp" },
+    ];
+    const handleChange = (event: React.SyntheticEvent, value: any) => {
+        setValue(value);
+    }
+    const org = ORG.org;
+    const combo = COMBO.combo;
 
     return (
-        <>
+        <div className="product">
             <Head />
-            <HeadTitle title={combo?.name ? combo.name : "Loading..."} />
+            <HeadTitle
+                title={combo?.name ? combo?.name : "Loading..."}
+            />
             <Container>
-                <div className="combo-cnt">
-                    <div className="combo-cnt__left">
-                        <img
-                            src={
-                                combo?.image ? combo?.image_url : org?.image_url
-                            }
-                            onError={(e) => onErrorImg(e)}
-                            alt=""
-                            className="combo-cnt__left-img"
-                        />
-                        <div className="product-cnt__left-tabs">
-                            <div className="product-cnt__tab-wrapper">
-                                <Box
-                                    sx={{ width: "100%", typography: "body1" }}
-                                >
-                                    <TabContext value={value}>
-                                        <Box
-                                            sx={{
-                                                borderBottom: 1,
-                                                borderColor: "divider",
-                                            }}
-                                        >
-                                            <TabList
-                                                onChange={onTabChange}
-                                                aria-label="lab API tabs example"
-                                            >
-                                                <Tab
-                                                    label={t("pr.description")}
-                                                    value="1"
-                                                />
-                                                <Tab
-                                                    label={t("Mer_de.feedback")}
-                                                    value="2"
-                                                />
-                                                {/* <Tab
-                                                    label={t("pr.recommend")}
-                                                    value="3"
-                                                /> */}
-                                                <Tab
-                                                    label={t(
-                                                        "pr.merchant_detail"
-                                                    )}
-                                                    value="4"
-                                                />
-                                            </TabList>
-                                        </Box>
-                                        <TabPanel value="1">
-                                            <TabDetail
-                                                combo={combo}
-                                                org={org}
+                <div className="service-detail">
+                    <div className="service-detail__head">
+                        <ComboDetailLeft org={org} combo={combo} />
+                        <ComboDetailRight org={org} combo={combo} />
+                    </div>
+                    <div className="service-detail__body">
+                        <div className="service-detail__tab">
+                            <TabContext value={value}>
+                                <TabList onChange={handleChange}>
+                                    {tabs.map((item: any, i: number) => (
+                                        <Tab
+                                            key={i}
+                                            label={item.title}
+                                            value={item.id}
+                                        />
+                                    ))}
+                                </TabList>
+                                <div className="service-detail__tabitem">
+                                    <TabPanel value={value}>
+                                        {/* {onSwitchTab(value)} */}
+                                        <div className="service-detail__description">
+                                            <p>
+                                                Đang cập nhật
+                                            </p>
+                                        </div>
+                                    </TabPanel>
+                                    <TabPanel value={value}>
+                                        <div className="service-detail__comment">
+                                            <Review
+                                                comments={COMMENTS.comments}
+                                                totalItem={COMMENTS.totalItem}
+                                                commentable_type={"TREATMENT_COMBO"}
+                                                id={ORG.org?.id}
+                                                detail_id={combo?.id}
                                             />
-                                        </TabPanel>
-                                        <TabPanel value="2">
-                                            <Comments
-                                                org={org}
-                                                id={combo?.id}
-                                                detail={combo}
-                                                comment_type={"TREATMENT_COMBO"}
-                                            />
-                                        </TabPanel>
-                                        {/* <TabPanel value="3"></TabPanel> */}
-                                        <TabPanel value="4">
-                                            <DetailMer org={org} />
-                                        </TabPanel>
-                                    </TabContext>
-                                </Box>
-                            </div>
+                                        </div>
+                                    </TabPanel>
+                                    <TabPanel value={value}>
+                                        <div className="org-information-cnt">
+                                            <div className="service-detail__org">
+                                                {
+                                                    ORG.status === STATUS.SUCCESS &&
+                                                    <OrgInformation org={org} />
+                                                }
+                                            </div>
+                                        </div>
+                                    </TabPanel>
+                                    <TabPanel value={value}>
+                                        <>tab 3</>
+                                    </TabPanel>
+                                </div>
+                            </TabContext>
                         </div>
                     </div>
-                    <DetailRight org={org} combo={combo} />
                 </div>
             </Container>
-        </>
+        </div>
     );
 }
 
