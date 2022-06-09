@@ -33,8 +33,8 @@ function DetailPolicy(props: any) {
             </div>
             {/* detail policy mid */}
             <div className="detailPolicy-rules">
-                <span>Điều khoản chung</span> <br />
-                <span>Xác nhận</span> <br />
+                <span>Điều khoản chung</span>
+                <span>Xác nhận</span>
                 <span>
                     Xác nhận ngay tức thời qua thông báo khi bạn mua dịch vụ/đặt
                     hẹn thành công. Sau đó, Myspa sẽ liên hệ xác nhận với bạn
@@ -42,8 +42,8 @@ function DetailPolicy(props: any) {
                     nhận được tin nhắn/ cuộc gọi nào từ Myspa, hãy liên hệ với
                     chúng tôi.
                 </span>
-                <br />
-                <span>Chính sách huỷ</span> <br />
+
+                <span>Chính sách huỷ</span>
                 <span>Không hoàn, huỷ hay thay đổi sau khi đã mua dịch vụ</span>
             </div>
         </div>
