@@ -213,7 +213,11 @@ function ProductDetailRight(props: IProps) {
                                 className="flex-row flexX-gap-4"
                                 to={{ pathname: `/org/${org.subdomain}` }}
                             >
-                                <img src={icon.archive} alt="" />
+                                <img
+                                    style={{ width: "20px" }}
+                                    src={icon.archive}
+                                    alt=""
+                                />
                                 <p>Xem Spa</p>
                             </Link>
                         </button>
@@ -223,7 +227,7 @@ function ProductDetailRight(props: IProps) {
                                 className="infoMer-bottom__right infoMer-bottom__right-active"
                             >
                                 <p className="infoMer-bottom__right-active">
-                                    Đang Theo Dõi
+                                    Đang Theo dõi
                                 </p>
                             </button>
                         ) : (

@@ -854,7 +854,7 @@
 
     .service-detail .infoMer-mid {
         padding: 0px;
-        justify-content: space-evenly;
+        justify-content: space-around;
     }
 
     .service-detail .MuiTabs-root {

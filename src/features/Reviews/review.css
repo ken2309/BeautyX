@@ -4,6 +4,14 @@
 .org-evaluate__cnt {
     margin-bottom: 24px;
 }
+.org-evaluate__title {
+    margin-bottom: 16px;
+}
+.org-evaluate__title p {
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 24px;
+}
 .org-evaluate__cnt .evaluate-rating {
     display: flex;
     border: 1px solid #ccc;
@@ -66,7 +74,8 @@
     grid-gap: 0 8px;
     align-items: center;
     width: 100%;
-    padding: 24px 24px 16px 24px;
+    /* padding: 24px 24px 16px 24px; */
+    margin: 24px 0;
 }
 .evaluate-input__ava {
     width: 32px;
@@ -270,6 +279,7 @@
     }
     .evaluate-input {
         padding: 16px 0 16px 0;
+        margin: 0;
     }
     .org-evaluate__cnt {
         margin-bottom: 0;
