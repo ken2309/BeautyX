@@ -11,7 +11,6 @@ import {
 import HeadTitle from '../HeadTitle';
 import { IDiscountPar, IITEMS_DISCOUNT } from '../../interface/discount';
 import { Container, Drawer, Tab } from '@mui/material'
-import '../ProductDetail/product.css';
 import { STATUS } from '../../redux/status';
 import '../ServiceDetail/serviceDetail.css';
 import '../ProductDetail/product.css';
@@ -157,7 +156,7 @@ function DiscountDetail() {
             <HeadTitle
                 title={status_detail === "LOADING" ? 'Loading...' : discount?.title}
             />
-            {IS_MB ? <HeadOrg org={ORG.org} />:<Head/>}
+            {IS_MB ? <HeadOrg org={ORG.org} /> : <Head />}
             {
                 status_detail === STATUS.SUCCESS &&
                 <Container>
@@ -233,7 +232,7 @@ function DiscountDetail() {
                                 </TabContext>
                             </div>
                         </div>
-                        <div className="service-detail__button">
+                        <div className="service-detail__bottom">
                             <button>
                                 <p>Buy now</p>
                             </button>

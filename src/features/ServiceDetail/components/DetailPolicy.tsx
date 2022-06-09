@@ -46,12 +46,6 @@ function DetailPolicy(props: any) {
                 <span>Chính sách huỷ</span> <br />
                 <span>Không hoàn, huỷ hay thay đổi sau khi đã mua dịch vụ</span>
             </div>
-
-            <div className="detailPolicy-recomment">
-                <p className="detailPolicy-recomment__title">
-                    Gợi ý dành cho bạn
-                </p>
-            </div>
         </div>
     );
 }

@@ -475,7 +475,7 @@
 
 .detailPolicy-useGuild__bot p {
     font-weight: 500;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 16px;
     color: #fff;
     text-align: center;
@@ -507,15 +507,14 @@
     margin: 8px 0 4px 0;
 }
 
-.detailPolicy-recomment {
-    margin-top: 12px;
+.detail-recommend {
+    padding: 24px;
+    background-color: #fff;
 }
-
-.detailPolicy-recomment__title {
+.detail-recommend__title {
     font-weight: 800;
     font-size: 16px;
     line-height: 24px;
-    text-align: center;
 }
 
 .recomment-list {
@@ -859,5 +858,54 @@
     .detail-recommend__list li {
         width: 50%;
         padding: 8px 4px;
+    }
+
+    /* policy */
+    .detailPolicy-useguild__item {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        list-style-position: inside;
+        list-style-type: disc;
+        padding: 0 8px;
+    }
+
+    .detailPolicy-useGuild__bot {
+        background-color: var(--purple);
+        padding: 12px;
+    }
+
+    .detailPolicy-useGuild__bot p {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        color: #fff;
+        text-align: center;
+    }
+
+    .detailPolicy-rules {
+        margin-top: 12px;
+    }
+
+    .detailPolicy-rules span:nth-child(1) {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .detailPolicy-rules span:nth-child(3),
+    .detailPolicy-rules span:nth-child(7) {
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 16px;
+        margin-top: 8px;
+    }
+
+    .detailPolicy-rules span:nth-child(5),
+    .detailPolicy-rules span:nth-child(9) {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        margin: 8px 0 4px 0;
     }
 }

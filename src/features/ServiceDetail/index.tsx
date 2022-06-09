@@ -23,7 +23,8 @@ import DetailOrgCard from "./components/DetailOrgCard";
 import useFullScreen from "../../utils/useFullScreen";
 import HeadOrg from "../MerchantDetail/components/HeadOrg";
 import DetailPolicy from "./components/DetailPolicy";
-import DetailRecommend from './components/DetailRecommend';
+import DetailRecommend from "./components/DetailRecommend";
+import { handleScroll, handleChangeScroll } from "./onScrollChange";
 
 function ServiceDetail(props: any) {
     const dispatch = useDispatch();
@@ -40,81 +41,29 @@ function ServiceDetail(props: any) {
     let tabs = [
         { id: 1, title: "Mô tả" },
         { id: 2, title: "Đánh giá" },
-        { id: 4, title: "Hướng dẫn & Điều khoản" },
         { id: 3, title: "Doanh nghiệp" },
+        { id: 4, title: "Hướng dẫn & Điều khoản" },
     ];
 
     let refDesc = useRef<any>();
     let refReview = useRef<any>();
     let refMap = useRef<any>();
+    let refPolicy = useRef<any>();
     const scrollMap = refMap?.current?.offsetTop;
     const scrollDesc = refDesc?.current?.offsetTop;
     const scrollReview = refReview?.current?.offsetTop;
+    const scrollPolicy = refPolicy?.current?.offsetTop;
 
     // handle onclick active menu
     const handleChange = (event: React.SyntheticEvent, value: any) => {
-        let top;
-        switch (value) {
-            case 1:
-                if (is_mobile) {
-                    top = refDesc?.current?.offsetTop;
-                } else {
-                    top = refDesc?.current?.offsetTop - 72;
-                }
-                setValue(value);
-                break;
-            case 2:
-                if (is_mobile) {
-                    top = refReview?.current?.offsetTop;
-                } else {
-                    top = refReview?.current?.offsetTop - 72;
-                }
-                setValue(value);
-                break;
-            case 3:
-                if (is_mobile) {
-                    top = refMap?.current?.offsetTop;
-                } else {
-                    top = refMap?.current?.offsetTop - 72;
-                }
-                setValue(value);
-                break;
-            default:
-                break;
-        }
+        const top = handleChangeScroll(
+            is_mobile, value, setValue, refDesc, refReview, refMap, refPolicy
+        )
         window.scrollTo({
             top: top,
             behavior: "smooth",
         });
     };
-
-    // handle scroll active menu
-    function handleScroll() {
-        if (is_mobile) {
-            if (window.scrollY + 65 < scrollReview) {
-                setValue(1);
-            } else if (
-                window.scrollY + 65 > scrollDesc &&
-                window.scrollY + 65 < scrollMap
-            ) {
-                setValue(2);
-            } else if (window.scrollY + 65 > scrollReview) {
-                setValue(3);
-            }
-        } else {
-            if (window.scrollY + 72 < scrollReview) {
-                setValue(1);
-            } else if (
-                window.scrollY + 72 > scrollDesc &&
-                window.scrollY + 72 < scrollMap
-            ) {
-                setValue(2);
-            } else if (window.scrollY + 72 > scrollReview) {
-                setValue(3);
-            }
-        }
-    }
-
     // call api service detail
     const callServiceDetail = () => {
         if (
@@ -128,7 +77,6 @@ function ServiceDetail(props: any) {
             dispatch(fetchAsyncServiceDetail(values));
         }
     };
-
     // call api org detail
     const callOrgDetail = () => {
         if (
@@ -138,7 +86,6 @@ function ServiceDetail(props: any) {
             dispatch(fetchAsyncOrg(params.org));
         }
     };
-
     // call api service comment
     const callServiceComments = () => {
         if (
@@ -156,9 +103,13 @@ function ServiceDetail(props: any) {
     };
 
     useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", () => handleScroll(
+            is_mobile, setValue, scrollReview, scrollDesc, scrollMap, scrollPolicy
+        ));
         return () => {
-            window.removeEventListener("scroll", handleScroll, false);
+            window.removeEventListener("scroll", () => handleScroll(
+                is_mobile, setValue, scrollReview, scrollDesc, scrollMap, scrollPolicy
+            ), false);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     });
@@ -248,13 +199,15 @@ function ServiceDetail(props: any) {
                                         </div>
                                     </TabPanel>
                                     <TabPanel value={value}>
-                                        <DetailPolicy org={org} />
+                                        <div ref={refPolicy}>
+                                            <DetailPolicy org={org} />
+                                        </div>
                                     </TabPanel>
                                 </div>
                             </TabContext>
                         </div>
+                        <DetailRecommend org={org} />
                     </div>
-                    <DetailRecommend org={org} />
                     {/* service bottom buttom add cart                                             */}
                     <div className="service-detail__bottom">
                         <button>

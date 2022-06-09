@@ -22,9 +22,11 @@ import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation
 import useFullScreen from "../../utils/useFullScreen";
 import icon from "../../constants/icon";
 import Review from "../Reviews";
+import HeadOrg from "../MerchantDetail/components/HeadOrg";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();
+    const IS_MB = useFullScreen();
     const ORG = useSelector((state: any) => state.ORG);
     const { PRODUCT, COMMENTS } = useSelector((state: any) => state.PRODUCT);
     const params: any = extraParamsUrl();
@@ -166,7 +168,7 @@ function ProductDetail(props: any) {
                     product?.product_name ? product.product_name : "Loading..."
                 }
             />
-            <Head />
+            {IS_MB ? <HeadOrg org={org} /> : <Head />}
             <Container>
                 <div className="service-detail">
                     <div className="service-detail__head">
@@ -221,8 +223,8 @@ function ProductDetail(props: any) {
                                             <div className="service-detail__org">
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                    <OrgInformation org={org} />
-                                                )}
+                                                        <OrgInformation org={org} />
+                                                    )}
                                             </div>
                                         </div>
                                     </TabPanel>
