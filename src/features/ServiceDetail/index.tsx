@@ -23,6 +23,7 @@ import DetailOrgCard from "./components/DetailOrgCard";
 import useFullScreen from "../../utils/useFullScreen";
 import HeadOrg from '../MerchantDetail/components/HeadOrg';
 import DetailPolicy from "./components/DetailPolicy";
+import DetailRecommend from './components/DetailRecommend';
 
 function ServiceDetail(props: any) {
     const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function ServiceDetail(props: any) {
     const org = ORG.org;
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState<any>(1);
+
     let tabs = [
         { id: 1, title: "Mô tả" },
         { id: 2, title: "Đánh giá" },
@@ -91,6 +93,7 @@ function ServiceDetail(props: any) {
     }
 
     const callServiceDetail = () => {
+        console.log(params.id, SERVICE.service.id)
         if (
             parseInt(params.id) !== SERVICE.service.id ||
             SERVICE.status !== STATUS.SUCCESS
@@ -139,7 +142,7 @@ function ServiceDetail(props: any) {
         callServiceDetail();
         callOrgDetail();
         callServiceComments();
-    }, []);
+    }, [params.id]);
 
     return (
         <>
@@ -220,6 +223,7 @@ function ServiceDetail(props: any) {
                             </TabContext>
                         </div>
                     </div>
+                    <DetailRecommend org={org} />
 
                     <div className="service-detail__button">
                         <button>

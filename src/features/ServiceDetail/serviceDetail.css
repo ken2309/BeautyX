@@ -4,15 +4,18 @@
     grid-gap: 0 8px;
     align-items: center;
 }
+
 .flexX-gap-4 {
     display: flex;
     gap: 0 4px;
     grid-gap: 0 4px;
     align-items: center;
 }
+
 .service-detail {
     padding: 48px 0;
 }
+
 .service-detail__head {
     display: flex;
     align-items: center;
@@ -21,6 +24,7 @@
     background-color: #fff;
     justify-content: space-between;
 }
+
 .service-detail .service-detail__left {
     width: 40%;
     height: 100%;
@@ -28,6 +32,7 @@
     background-color: #fff;
     flex-shrink: 0;
 }
+
 .service-detail .service-detail__right {
     width: 60%;
     padding: 24px;
@@ -36,10 +41,12 @@
     display: flex;
     flex-direction: column;
 }
+
 .service-detail .detail-left__img {
     width: 450px;
     height: 450px;
 }
+
 .service-detail .detail-left__img img {
     width: 100%;
     height: 100%;
@@ -47,9 +54,11 @@
     flex-shrink: 0;
     border-radius: 8px;
 }
+
 .service-detail .detail-right__name {
     position: relative;
 }
+
 .service-detail .detail-right__name .favorite {
     position: absolute;
     padding: 8px;
@@ -62,26 +71,31 @@
     overflow: hidden;
     cursor: pointer;
 }
+
 .service-detail .detail-right__name p {
     font-size: 24px;
     font-weight: 500;
     width: 90%;
     line-height: 36px;
 }
+
 .service-detail .detail-right__org p {
     font-size: 16px;
     font-weight: bold;
     color: var(--purple);
     padding: 0 16px;
 }
+
 .service-detail .detail-right__org p:nth-child(1) {
     border-right: 1px solid var(--purple);
 }
+
 .service-detail .detail-right__org {
     display: flex;
     margin-left: -16px;
     margin-bottom: 8px;
 }
+
 .service-detail .detail-right__evaluate {
     display: flex;
     grid-gap: 0 8px;
@@ -89,15 +103,18 @@
     width: 100%;
     margin: 8px 0;
 }
+
 .service-detail .evaluate-item {
     display: flex;
     align-items: center;
     grid-gap: 0 4px;
 }
+
 .service-detail .evaluate-item p {
     font-size: 16px;
     font-weight: bold;
 }
+
 .service-detail .detail-right__percent {
     clip-path: polygon(0 0, 92% 0, 100% 50%, 92% 100%, 0 100%, 7% 50%);
     background-color: var(--red-cl);
@@ -107,6 +124,7 @@
     line-height: 16px;
     color: #fff;
 }
+
 .service-detail .detail-right__percent p {
     color: #fff;
     font-size: 14px;
@@ -114,6 +132,7 @@
     font-weight: bold;
     font-size: 16px;
 }
+
 .service-detail .detail-right__duration {
     padding: 4px 8px;
     background-color: var(--bgWhite);
@@ -121,27 +140,33 @@
     border-radius: 8px;
     margin: 8px 0;
 }
+
 .service-detail .detail-right__duration p {
     font-size: 16px;
     font-weight: bold;
 }
+
 .service-detail .detail-right__duration img {
     width: 20px;
     height: 20px;
 }
+
 .service-detail .service-detail__right .detail-right__price .price {
     font-size: 32px;
     font-weight: bold;
 }
+
 .service-detail .service-detail__right .detail-right__body {
     display: flex;
     grid-gap: 0 24px;
     width: 100%;
     margin: 24px 0;
 }
+
 .service-detail .detail-right__info {
     width: 55%;
 }
+
 .service-detail .detail-right__infoMer {
     width: 45%;
     display: flex;
@@ -152,11 +177,13 @@
     box-shadow: rgb(242 242 242) 1px 1px 0px 0px inset,
         rgb(242 242 242) -1px -1px 0px 0px inset;
 }
+
 .service-detail .infoMer-top {
     display: flex;
     align-items: center;
     grid-gap: 0 8px;
 }
+
 .service-detail .infoMer-top__name {
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -165,6 +192,7 @@
     text-overflow: ellipsis;
     word-break: break-word;
 }
+
 .service-detail .infoMer-top__img {
     width: 44px;
     height: 44px;
@@ -173,15 +201,18 @@
     overflow: hidden;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
+
 .service-detail .infoMer-top__img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .service-detail .infoMer-top__right {
     font-size: 16px;
     font-weight: bold;
 }
+
 .service-detail .infoMer-top__right .infoMer-top__address {
     margin-top: 4px;
     font-size: 14px;
@@ -193,11 +224,13 @@
     text-overflow: ellipsis;
     word-break: break-word;
 }
+
 .service-detail .infoMer-mid {
     padding: 8px 0;
     display: flex;
     justify-content: space-between;
 }
+
 .service-detail .infoMer-item {
     display: flex;
     flex-direction: column;
@@ -205,6 +238,7 @@
     justify-content: center;
     grid-gap: 4px 0;
 }
+
 /* .service-detail .infoMer-item:not(:nth-child(3)) {
     border-right: 1px solid #ccc;
 } */
@@ -212,15 +246,18 @@
 .service-detail .infoMer-item__wrap p {
     font-weight: bold;
 }
+
 .service-detail .infoMer-item__text {
     font-size: 12px;
     font-weight: bold;
     color: rgb(128, 128, 137);
 }
+
 .service-detail .infoMer-bottom {
     display: flex;
     grid-gap: 0 10px;
 }
+
 .service-detail .infoMer-bottom__left,
 .service-detail .infoMer-bottom__right {
     width: 50%;
@@ -241,19 +278,23 @@
     width: 20px;
     height: 20px;
 }
+
 .service-detail .detail-right__bottom {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
 }
+
 .service-detail .bottom-quantity__wrap {
     display: flex;
     align-items: center;
 }
+
 .service-detail .bottom-quantity__text {
     margin-bottom: 14px;
     font-weight: bold;
 }
+
 .service-detail .quantity-input {
     width: 40px;
     height: 35px;
@@ -264,16 +305,19 @@
     text-align: center;
     background-color: #fff;
 }
+
 .service-detail .quantity-btn:first-child {
     background-color: #ccc;
     font-size: 20px;
     font-weight: 700;
 }
+
 .service-detail .quantity-btn:last-child {
     font-size: 20px;
     color: #fff;
     font-weight: 700;
 }
+
 .service-detail .quantity-btn {
     width: 35px;
     height: 35px;
@@ -282,11 +326,13 @@
     background-color: var(--purple);
     border-radius: 8px;
 }
+
 .service-detail .quantity-btn img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .service-detail .bottom-addCart {
     padding: 8px 16px;
     background-color: var(--purple);
@@ -295,6 +341,7 @@
     grid-gap: 0 8px;
     cursor: pointer;
 }
+
 .service-detail .bottom-addCart p {
     color: #fff;
     font-weight: bold;
@@ -317,6 +364,7 @@
 .service-detail .service-detail__comment {
     width: 50%;
 }
+
 .service-detail .infoMer-bottom__right-active {
     border: 1px solid transparent;
     background-color: var(--purple);
@@ -336,13 +384,16 @@
     z-index: 999;
     background-color: #fff;
 }
+
 .service-detail .MuiTabs-scroller {
     overflow-x: scroll !important;
     border-bottom: 1px solid #ccc;
 }
+
 .service-detail .MuiTab-root.Mui-selected {
     color: var(--purple) !important;
 }
+
 .service-detail .MuiTab-root {
     font-size: 18px;
     font-weight: bold;
@@ -358,44 +409,73 @@
 .service-detail .MuiTabs-indicator {
     background-color: var(--purple) !important;
 }
+
 .service-detail .MuiTabPanel-root {
     padding: 0;
 }
+
 .service-detail .service-detail__button {
     display: none;
 }
+
 .service-detail .detail-right__head-img {
     display: none;
 }
+
 .service-detail .detail-right__duration-wrap {
     display: flex;
     align-items: center;
     gap: 0 8px;
     padding: 8px 0;
 }
+
 .service-detail .detail-right__duration-wrap p {
     font-weight: bold;
 }
-.service-detail__org-mb{
+
+.service-detail__org-mb {
     display: none;
 }
 
 /* end cus tab MUI */
+/* detail recommend */
+.detail-recommend {
+    width: 100%;
+    background-color: var(--white);
+    padding: 24px;
+}
+
+.detail-recommend__list {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.detail-recommend__list li {
+    width: 16.6%;
+    padding: 8px;
+    cursor: pointer;
+}
 
 @media only screen and (max-width: 1023px) {
     .service-detail {
         padding: 0 0 80px 0;
         position: relative;
     }
+
     .service-detail .org-evaluate__cnt {
         padding: 0;
     }
+
     .service-detail .detail-left__img img {
         border-radius: unset;
     }
+
     .service-detail .service-detail__description {
         font-size: 14px;
     }
+
     .service-detail .service-detail__tabitem {
         padding-top: 16px;
     }
@@ -404,11 +484,13 @@
         margin: 80px 0 0 0;
         padding: 0 12px;
     }
+
     .service-detail .service-detail__left {
         width: 100%;
         padding: 0;
         position: relative;
     }
+
     .service-detail .service-detail__mobile {
         display: block;
         width: calc(100% - 24px);
@@ -424,9 +506,11 @@
         flex-direction: column;
         gap: 8px 0;
     }
+
     .service-detail .detail-left__img {
         width: 100%;
     }
+
     .service-detail .service-detail__comment {
         width: 100%;
     }
@@ -435,6 +519,7 @@
         width: 100%;
         height: 375px;
     }
+
     .service-detail .service-detail__mobile-name {
         font-weight: 700;
         font-size: 16px;
@@ -447,6 +532,7 @@
         text-overflow: ellipsis;
         word-break: break-word;
     }
+
     .service-detail .service-detail__mobile-favorite {
         position: absolute;
         padding: 8px;
@@ -458,25 +544,30 @@
         border-radius: 100px;
         overflow: hidden;
     }
+
     .service-detail .service-detail__mobile-mid {
         display: flex;
         gap: 0 4px;
         align-items: center;
     }
+
     .service-detail .service-detail__mobile-mid img {
         width: 14px;
         height: 14px;
     }
+
     .service-detail .service-detail__mobile-mid p {
         font-weight: 500;
         font-size: 12px;
         color: #8c8c8c;
     }
+
     .service-detail .service-detail__mobile-bottom {
         display: flex;
         gap: 0 8px;
         align-items: center;
     }
+
     .service-detail .service-detail__mobile-percent {
         clip-path: polygon(0 0, 92% 0, 100% 50%, 92% 100%, 0 100%, 7% 50%);
         background-color: var(--red-cl);
@@ -486,12 +577,15 @@
         line-height: 16px;
         color: #fff;
     }
+
     .service-detail .service-detail__org {
         margin-top: 16px;
     }
+
     .service-detail .MuiTab-root {
         font-size: 14px;
     }
+
     .service-detail .service-detail__mobile-price span:nth-child(1) {
         font-size: 24px;
         font-weight: bold;
@@ -504,6 +598,7 @@
         text-decoration: line-through;
         margin-left: 8px;
     }
+
     .service-detail .service-detail__button {
         display: block;
         display: flex;
@@ -517,6 +612,7 @@
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         grid-gap: 0 8px;
     }
+
     .service-detail .service-detail__button button {
         width: 100%;
         padding: 8px;
@@ -525,30 +621,36 @@
         border-radius: 8px;
         background-color: var(--purple);
     }
+
     .service-detail .service-detail__button button p {
         color: #fff;
         font-weight: 500;
         font-size: 12px;
         line-height: 16px;
     }
+
     .service-detail .service-detail__button .btn-addcart {
         display: flex;
         align-items: center;
         justify-content: center;
         grid-gap: 0 8px;
     }
+
     .service-detail .service-detail__right {
         display: none;
     }
+
     .active-mb {
         border-radius: 16px;
         overflow: hidden;
     }
+
     .active-mb .service-detail__right {
         display: block;
         width: 100%;
         padding: 0;
     }
+
     .MuiDrawer-paper {
         border-radius: 16px 16px 0 0;
     }
@@ -556,12 +658,15 @@
     .active-mb .detail-right__infoMer {
         display: none;
     }
+
     .active-mb .service-detail {
         padding: 12px 12px 24px 12px;
     }
+
     .active-mb .detail-right__info {
         width: 100%;
     }
+
     .active-mb .detail-right__head-img {
         display: block;
         width: 112px;
@@ -570,28 +675,34 @@
         overflow: hidden;
         flex-shrink: 0;
     }
+
     .active-mb .detail-right__head-img img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
+
     .active-mb .detail-right__head {
         display: flex;
         grid-gap: 0 8px;
         align-items: center;
     }
+
     .active-mb .favorite {
         display: none;
     }
+
     .active-mb .detail-right__org {
         display: none;
     }
+
     .active-mb .detail-right__name p {
         font-weight: 700;
         font-size: 16px;
         line-height: 24px;
         width: 100%;
     }
+
     .active-mb .service-detail__right .detail-right__price span:nth-child(1) {
         font-size: 20px;
         font-weight: bold;
@@ -605,39 +716,48 @@
         text-decoration: line-through;
         margin-left: 8px;
     }
+
     .active-mb .service-detail__right .detail-right__body {
         margin: 16px 0 0 0;
     }
+
     .active-mb .detail-right__duration-wrap p {
         font-size: 14px;
     }
+
     .active-mb .detail-right__duration {
         font-size: 14px;
         margin: 0;
     }
+
     .active-mb .detail-right__duration img {
         width: 16px;
         height: 16px;
     }
+
     .active-mb .bottom-quantity__text {
         font-size: 14px;
         margin: 0;
     }
+
     .active-mb .detail-right__bottom {
         flex-direction: column;
         align-items: unset;
         grid-gap: 14px 0;
     }
+
     .active-mb .bottom-quantity {
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
+
     .active-mb .quantity-btn {
         width: 28px;
         height: 28px;
         font-size: 14px !important;
     }
+
     .active-mb .bottom-addCart {
         padding: 8px;
         align-items: center;
@@ -646,13 +766,16 @@
         font-size: 12px;
         line-height: 16px;
     }
+
     .active-mb .detail-right__percent p {
         font-size: 14px;
     }
-    .service-detail__org-mb{
+
+    .service-detail__org-mb {
         display: block;
     }
-    .service-detail .detail-right__infoMer{
+
+    .service-detail .detail-right__infoMer {
         width: 100%;
         background-color: #FFF;
         border-radius: 8px;
@@ -660,10 +783,19 @@
         padding: 12px;
         box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
     }
+
     .service-detail .infoMer-mid {
         padding: 0px;
     }
+
     .service-detail .MuiTabs-root {
         top: 49px;
+    }
+    .detail-recommend {
+        padding: 12px;
+    }
+    .detail-recommend__list li{
+        width: 50%;
+        padding: 8px 4px;
     }
 }
