@@ -461,8 +461,8 @@
 
 .detailPolicy-useguild__item {
     font-weight: 500;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 14px;
+    line-height: 24px;
     list-style-position: inside;
     list-style-type: disc;
     padding: 0 8px;
@@ -470,7 +470,7 @@
 
 .detailPolicy-useGuild__bot {
     background-color: var(--purple);
-    padding: 12px;
+    padding: 16px;
 }
 
 .detailPolicy-useGuild__bot p {
@@ -483,6 +483,8 @@
 
 .detailPolicy-rules {
     margin-top: 12px;
+    display: flex;
+    flex-direction: column;
 }
 
 .detailPolicy-rules span:nth-child(1) {
@@ -491,20 +493,20 @@
     line-height: 24px;
 }
 
-.detailPolicy-rules span:nth-child(3),
-.detailPolicy-rules span:nth-child(7) {
+.detailPolicy-rules span:nth-child(2),
+.detailPolicy-rules span:nth-child(4) {
     font-weight: 700;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 16px;
     margin-top: 8px;
 }
 
-.detailPolicy-rules span:nth-child(5),
-.detailPolicy-rules span:nth-child(9) {
+.detailPolicy-rules span:nth-child(3),
+.detailPolicy-rules span:nth-child(5) {
     font-weight: 500;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 16px;
-    margin: 8px 0 4px 0;
+    margin: 8px 0;
 }
 
 .detail-recommend {
@@ -517,8 +519,11 @@
     line-height: 24px;
 }
 
-.recomment-list {
+.detail-recommend__list {
     display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 16px;
+    margin-top: 24px;
 }
 
 @media only screen and (max-width: 1023px) {
@@ -646,7 +651,7 @@
     }
 
     .service-detail .service-detail__mobile-price span:nth-child(1) {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: bold;
         color: var(--red-cl);
     }
@@ -833,18 +838,23 @@
     .service-detail__org-mb {
         display: block;
     }
-
+    .service-detail .infoMer-top__right {
+        font-size: 14px;
+    }
+    .service-detail .infoMer-item__wrap p {
+        font-size: 14px;
+    }
     .service-detail .detail-right__infoMer {
         width: 100%;
         background-color: #fff;
         border-radius: 8px;
-        margin: 12px 0px;
         padding: 12px;
         box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
     }
 
     .service-detail .infoMer-mid {
         padding: 0px;
+        justify-content: space-around;
     }
 
     .service-detail .MuiTabs-root {
@@ -852,35 +862,29 @@
     }
 
     .detail-recommend {
-        padding: 12px;
-    }
-
-    .detail-recommend__list li {
-        width: 50%;
-        padding: 8px 4px;
+        padding: 0 12px 12px 12px;
     }
 
     /* policy */
-    .detailPolicy-useguild__item {
-        font-weight: 500;
-        font-size: 12px;
-        line-height: 16px;
-        list-style-position: inside;
-        list-style-type: disc;
-        padding: 0 8px;
+    .detail-recommend__list {
+        margin-top: 12px;
     }
-
+    .detailPolicy-useguild .detailPolicy-useguild__top p {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+    }
     .detailPolicy-useGuild__bot {
         background-color: var(--purple);
         padding: 12px;
     }
 
-    .detailPolicy-useGuild__bot p {
-        font-weight: 500;
+    .detailPolicy-useguild__item {
         font-size: 12px;
-        line-height: 16px;
-        color: #fff;
-        text-align: center;
+    }
+
+    .detailPolicy-useGuild__bot p {
+        font-size: 12px;
     }
 
     .detailPolicy-rules {
@@ -888,14 +892,12 @@
     }
 
     .detailPolicy-rules span:nth-child(1) {
-        font-weight: 700;
         font-size: 16px;
         line-height: 24px;
     }
 
     .detailPolicy-rules span:nth-child(3),
     .detailPolicy-rules span:nth-child(7) {
-        font-weight: 700;
         font-size: 12px;
         line-height: 16px;
         margin-top: 8px;
@@ -903,9 +905,13 @@
 
     .detailPolicy-rules span:nth-child(5),
     .detailPolicy-rules span:nth-child(9) {
-        font-weight: 500;
         font-size: 12px;
         line-height: 16px;
         margin: 8px 0 4px 0;
+    }
+    .detail-recommend__list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 12px;
     }
 }

@@ -126,6 +126,9 @@ function Review(props: IProps) {
     return (
         <>
             <div className="org-evaluate__cnt">
+                <div className="org-evaluate__title">
+                    <p>Đánh giá</p>
+                </div>
                 <TotalStartEvaluate />
                 <EvaluateInput
                     handleOnchange={handleOnchange}

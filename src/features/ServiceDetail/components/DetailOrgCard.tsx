@@ -1,13 +1,16 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import icon from '../../../constants/icon';
-import { IOrganization } from '../../../interface/organization';
-import { onDeleteFavoriteOrg, onFavoriteOrg } from '../../../redux/org/orgSlice';
-import onErrorImg from '../../../utils/errorImg';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import icon from "../../../constants/icon";
+import { IOrganization } from "../../../interface/organization";
+import {
+    onDeleteFavoriteOrg,
+    onFavoriteOrg,
+} from "../../../redux/org/orgSlice";
+import onErrorImg from "../../../utils/errorImg";
 
 interface IProps {
-    org: IOrganization
+    org: IOrganization;
 }
 
 function DetailOrgCard(props: IProps) {
@@ -73,10 +76,14 @@ function DetailOrgCard(props: IProps) {
                 <div className="infoMer-bottom">
                     <button className="infoMer-bottom__left">
                         <Link
-                            className="flex-row"
+                            className="flex-row flexX-gap-4"
                             to={{ pathname: `/org/${org.subdomain}` }}
                         >
-                            <img src={icon.archive} alt="" />
+                            <img
+                                style={{ width: "20px", height: "20px" }}
+                                src={icon.archive}
+                                alt=""
+                            />
                             <p>Xem Spa</p>
                         </Link>
                     </button>
@@ -86,7 +93,7 @@ function DetailOrgCard(props: IProps) {
                             className="infoMer-bottom__right infoMer-bottom__right-active"
                         >
                             <p className="infoMer-bottom__right-active">
-                                Đang Theo Dõi
+                                Đang Theo dõi
                             </p>
                         </button>
                     ) : (
