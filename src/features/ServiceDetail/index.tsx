@@ -18,12 +18,14 @@ import { fetchAsyncOrg, onActiveTab } from "../../redux/org/orgSlice";
 import { STATUS } from "../../redux/status";
 import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
 import Review from "../Reviews";
-//import OrgReviews from "../MerchantDetail/components/OrgPages/OrgReviews";
 import icon from "../../constants/icon";
 import DetailOrgCard from "./components/DetailOrgCard";
+import useFullScreen from "../../utils/useFullScreen";
+import HeadOrg from '../MerchantDetail/components/HeadOrg';
 
 function ServiceDetail(props: any) {
     const dispatch = useDispatch();
+    const IS_MB = useFullScreen();
     const ORG = useSelector((state: any) => state.ORG);
     const { SERVICE, COMMENTS } = useSelector((state: any) => state.SERVICE);
     const params: any = extraParamsUrl();
@@ -143,7 +145,7 @@ function ServiceDetail(props: any) {
                     service?.service_name ? service.service_name : "Loading..."
                 }
             />
-            <Head />
+            {IS_MB ? <HeadOrg org={org} /> : <Head />}
             <Container>
                 <div className="service-detail">
                     <div className="service-detail__head">

@@ -20,9 +20,12 @@ import "./style.css";
 import "../ProductDetail/product.css";
 import icon from "../../constants/icon";
 import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
+import HeadOrg from "../MerchantDetail/components/HeadOrg";
+import useFullScreen from "../../utils/useFullScreen";
 
 function ComboDetail() {
     const { t } = useContext(AppContext);
+    const IS_MB = useFullScreen();
     const params: any = shareLink();
     const dispatch = useDispatch();
     const ORG = useSelector((state: any) => state.ORG);
@@ -74,7 +77,7 @@ function ComboDetail() {
 
     return (
         <div className="product">
-            <Head />
+            {IS_MB ? <HeadOrg org={org} /> : <Head />}
             <HeadTitle
                 title={combo?.name ? combo?.name : "Loading..."}
             />

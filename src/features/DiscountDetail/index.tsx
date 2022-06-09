@@ -25,9 +25,12 @@ import Review from '../Reviews';
 import OrgInformation from '../MerchantDetail/components/OrgPages/OrgInformation';
 import icon from '../../constants/icon';
 import DetailOrgCard from '../ServiceDetail/components/DetailOrgCard';
+import useFullScreen from '../../utils/useFullScreen';
+import HeadOrg from '../MerchantDetail/components/HeadOrg';
 
 function DiscountDetail() {
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
+    const IS_MB = useFullScreen();
     const discount: IDiscountPar = DISCOUNT.discount;
     const status_detail = DISCOUNT.status
 
@@ -154,7 +157,7 @@ function DiscountDetail() {
             <HeadTitle
                 title={status_detail === "LOADING" ? 'Loading...' : discount?.title}
             />
-            <Head />
+            {IS_MB ? <HeadOrg org={ORG.org} />:<Head/>}
             {
                 status_detail === STATUS.SUCCESS &&
                 <Container>

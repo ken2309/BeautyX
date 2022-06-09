@@ -22,9 +22,12 @@ import Review from "../Reviews";
 import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
 import icon from "../../constants/icon";
 import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
+import HeadOrg from "../MerchantDetail/components/HeadOrg";
+import useFullScreen from "../../utils/useFullScreen";
 
 function ProductDetail(props: any) {
   const dispatch = useDispatch();
+  const IS_MB = useFullScreen();
   const ORG = useSelector((state: any) => state.ORG);
   const { PRODUCT, COMMENTS } = useSelector((state: any) => state.PRODUCT);
   const params: any = extraParamsUrl();
@@ -77,7 +80,9 @@ function ProductDetail(props: any) {
       <HeadTitle
         title={product?.product_name ? product.product_name : "Loading..."}
       />
-      <Head />
+      {
+        IS_MB ? <HeadOrg org={org} />:<Head/>
+      }
       <Container>
         <div className="service-detail">
           <div className="service-detail__head">

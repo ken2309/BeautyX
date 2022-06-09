@@ -19,10 +19,9 @@ interface IProps {
 
 function OrgDetail(props: IProps) {
     const { org, galleries } = props;
-    const { org_id, comments, totalItem, status } = useSelector(
+    const { totalItem } = useSelector(
         (state: any) => state.ORG_COMMENTS
     );
-    console.log("totalItem", totalItem);
     const dispatch = useDispatch();
     const history = useHistory();
     const { USER } = useSelector((state: any) => state.USER);
@@ -195,10 +194,10 @@ function OrgDetail(props: IProps) {
                                     style={
                                         org?.is_favorite
                                             ? {
-                                                  backgroundColor:
-                                                      "var(--purple)",
-                                                  color: "var(--bgWhite)",
-                                              }
+                                                backgroundColor:
+                                                    "var(--purple)",
+                                                color: "var(--bgWhite)",
+                                            }
                                             : {}
                                     }
                                     onClick={handleFavoriteOrg}
