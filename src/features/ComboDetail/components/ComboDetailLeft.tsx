@@ -1,13 +1,7 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import icon from "../../../constants/icon";
 import { Combo } from "../../../interface/combo";
 import { IOrganization } from "../../../interface/organization";
-import {
-    onDeleteFavorite,
-    onFavoriteProduct,
-} from "../../../redux/org_products/productSlice";
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
 
@@ -18,26 +12,11 @@ interface IProps {
 
 function ComboDetailLeft(props: IProps) {
     const { combo, org } = props;
-    console.log("combo", combo);
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const percent = Math.round(100 - (combo?.use_value / combo?.price) * 100);
-    const { USER } = useSelector((state: any) => state.USER);
-    //  const onFavorite = () => {
-    //      if (USER) {
-    //          const values = {
-    //              combo: combo,
-    //              org_id: org?.id,
-    //          };
-    //          if (combo.is_favorite) {
-    //              dispatch(onDeleteFavorite(values));
-    //          } else {
-    //              dispatch(onFavoriteProduct(values));
-    //          }
-    //      } else {
-    //          history.push("/sign-in?1");
-    //      }
-    //  };
+    const list_price = [combo?.price, combo?.use_value].sort((a, b) => b - a);
+    const price = list_price[0];
+    const special_price = list_price[1];
+    const percent = Math.round(100 - (special_price / price) * 100);
+
     return (
         <>
             <div className="service-detail__left">
@@ -50,41 +29,35 @@ function ComboDetailLeft(props: IProps) {
                         onError={(e) => onErrorImg(e)}
                     />
                 </div>
-                {/* detail service mobile */}
                 <div className="service-detail__mobile">
                     <div className="service-detail__mobile-top">
                         <p className="service-detail__mobile-name">
-                            {/* {combo.service_name} */}
+                            {combo?.name}
                         </p>
-                        <div className="service-detail__mobile-favorite">
+                        <div
+                            //onClick={onFavorite}
+                            className="service-detail__mobile-favorite"
+                        >
                             <img src={icon.heart} alt="" />
                         </div>
                     </div>
 
-                    <div className="service-detail__mobile-mid">
+                    {/* <div className="service-detail__mobile-mid">
                         <img src={icon.alarmClock} alt="" />
                         <p className="service-detail__mobile-duration">
-                            {combo.expired} phút
+                            {service.duration} phút
                         </p>
-                    </div>
+                    </div> */}
 
                     <div className="service-detail__mobile-bottom">
-                        {combo?.use_value > 0 && (
+                        {percent > 0 && (
                             <div className="service-detail__mobile-percent">
                                 Giảm {percent}%
                             </div>
                         )}
                         <div className="service-detail__mobile-price">
-                            {combo?.use_value > 0 ? (
-                                <>
-                                    <span>
-                                        {formatPrice(combo?.use_value)}đ
-                                    </span>
-                                    <span>{formatPrice(combo?.price)}đ</span>
-                                </>
-                            ) : (
-                                <span>{formatPrice(combo?.price)}đ</span>
-                            )}
+                            <span>{formatPrice(special_price)}đ</span>
+                            <span>{formatPrice(price)}đ</span>
                         </div>
                     </div>
                 </div>

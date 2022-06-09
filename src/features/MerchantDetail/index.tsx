@@ -83,7 +83,7 @@ function MerchantDetail() {
   return (
     <div className="mb-cnt">
       <HeadTitle title={org?.name ? org.name : 'Đang tải...'} />
-      {IS_MB ? <HeadOrg org={org} /> : <Head />}
+      {IS_MB ? <HeadOrg org={org} isShowSearch={true} /> : <Head />}
       <OrgDetail
         org={org}
         galleries={GALLERIES?.galleries}

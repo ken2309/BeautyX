@@ -24,7 +24,7 @@ export const fetchAsyncOrgComments: any = createAsyncThunk(
                 org_id: values.org_id,
                 comments: (await res).data.context.data,
                 totalItem: (await res).data.context.total,
-                page: 1,
+                page: values.page,
             };
             return payload;
         } catch (error) {

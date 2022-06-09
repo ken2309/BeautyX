@@ -14,7 +14,8 @@ import OrgSearch from './OrgPages/OrgSearch/OrgSearch';
 import _, { debounce } from 'lodash';
 
 interface IProps {
-    org: IOrganization
+    org: IOrganization,
+    isShowSearch?: boolean,
 }
 
 // onload event
@@ -31,7 +32,7 @@ function HeadOrg(props: IProps) {
     const { USER } = useSelector((state: any) => state.USER);
     const dispatch = useDispatch();
     const history = useHistory();
-    const { org } = props;
+    const { org, isShowSearch } = props;
     const orgHeadRef = useRef<any>();
     const orgSearchBtn = useRef<any>();
     const orgSearchCnt = useRef<any>();
@@ -81,7 +82,7 @@ function HeadOrg(props: IProps) {
         setKeyword(e.target.value)
         getByKeyword(e.target.value)
     }
-    
+
 
     return (
         <>
@@ -105,15 +106,18 @@ function HeadOrg(props: IProps) {
                         type="text"
                         placeholder='Tìm kiếm trong cửa hàng...'
                     />
-                    <button
-                        className='mb-head-org-cnt__button'
-                        ref={orgSearchBtn}
-                        onClick={onClickSearchIcon}
-                    >
-                        <div className="icon-btn">
-                            <img src={icon.searchPurple} alt="" />
-                        </div>
-                    </button>
+                    {
+                        isShowSearch &&
+                        <button
+                            className='mb-head-org-cnt__button'
+                            ref={orgSearchBtn}
+                            onClick={onClickSearchIcon}
+                        >
+                            <div className="icon-btn">
+                                <img src={icon.searchPurple} alt="" />
+                            </div>
+                        </button>
+                    }
                     <button
                         className='mb-head-org-cnt__button'
                         onClick={() => history.push('/cart')}
@@ -122,14 +126,17 @@ function HeadOrg(props: IProps) {
                             <img src={icon.ShoppingCartSimple} alt="" />
                         </div>
                     </button>
-                    <button
-                        className='mb-head-org-cnt__button'
-                        onClick={handleFavoriteOrg}
-                    >
-                        <div className="icon-btn">
-                            <img src={org?.is_favorite ? icon.heart : icon.unHeart} alt="" />
-                        </div>
-                    </button>
+                    {
+                        isShowSearch &&
+                        <button
+                            className='mb-head-org-cnt__button'
+                            onClick={handleFavoriteOrg}
+                        >
+                            <div className="icon-btn">
+                                <img src={org?.is_favorite ? icon.heart : icon.unHeart} alt="" />
+                            </div>
+                        </button>
+                    }
                 </div>
             </div>
             <OrgSearch

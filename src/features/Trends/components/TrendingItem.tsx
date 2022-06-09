@@ -38,6 +38,8 @@ export default function TrendItem(props:any){
                 onClick={()=>setOpenReels(true)}
                 ref={videoRef}
                 className='video-item__pc'
+                webkit-playsinline="webkit-playsinline"
+                playsInline={true}
                 autoPlay={true}
                 loop
                 muted

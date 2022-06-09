@@ -12,9 +12,11 @@ import { postAsyncProductComment } from "../../redux/org_products/productSlice";
 import { postCommentCombo } from "../../redux/org_combos/comboSlice";
 import { pickBy, identity } from "lodash";
 import { useHistory } from "react-router-dom";
+
 interface IProps {
-    comments: IComment[] | undefined;
-    totalItem: number | undefined;
+    comments?: IComment[];
+    totalItem?: number;
+    page?: number;
     commentable_type: string;
     id: number | undefined;
     detail_id?: number;
@@ -22,7 +24,7 @@ interface IProps {
 }
 
 function Review(props: IProps) {
-    const { comments, totalItem, commentable_type, id, detail_id, refReview } =
+    const { comments, totalItem, commentable_type, id, detail_id, page } =
         props;
     const USER = useSelector((state: any) => state.USER);
     const user = USER.USER;
@@ -45,6 +47,7 @@ function Review(props: IProps) {
     const valuesStr = {
         page: 1,
         org_id: id,
+        type: commentable_type,
         body: JSON.stringify(comment),
         id: detail_id,
     };
@@ -120,7 +123,6 @@ function Review(props: IProps) {
     const onRemoveImgTemp = () => {
         setComment({ ...comment, image_url: null });
     };
-
     return (
         <>
             <div className="org-evaluate__cnt">

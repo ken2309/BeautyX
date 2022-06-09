@@ -18,11 +18,10 @@ import { Container, Drawer, Tab } from "@mui/material";
 import ProductDetailLeft from "./components/ProductDetailLeft";
 import ProductDetailRight from "./components/ProductDetailRight";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import Review from "../Reviews";
 import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
 import useFullScreen from "../../utils/useFullScreen";
-import ServiceDetailRight from "../ServiceDetail/components/ServiceDetailRight";
 import icon from "../../constants/icon";
+import Review from "../Reviews";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();

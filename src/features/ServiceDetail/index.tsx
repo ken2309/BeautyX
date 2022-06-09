@@ -19,10 +19,14 @@ import { STATUS } from "../../redux/status";
 import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
 import Review from "../Reviews";
 import icon from "../../constants/icon";
+import DetailOrgCard from "./components/DetailOrgCard";
 import useFullScreen from "../../utils/useFullScreen";
+import HeadOrg from "../MerchantDetail/components/HeadOrg";
+import DetailPolicy from "./components/DetailPolicy";
 
 function ServiceDetail(props: any) {
     const dispatch = useDispatch();
+    const IS_MB = useFullScreen();
     const ORG = useSelector((state: any) => state.ORG);
     const { SERVICE, COMMENTS } = useSelector((state: any) => state.SERVICE);
     const params: any = extraParamsUrl();
@@ -35,6 +39,7 @@ function ServiceDetail(props: any) {
     let tabs = [
         { id: 1, title: "Mô tả" },
         { id: 2, title: "Đánh giá" },
+        { id: 4, title: "Hướng dẫn & Điều khoản" },
         { id: 3, title: "Doanh nghiệp" },
     ];
 
@@ -44,7 +49,6 @@ function ServiceDetail(props: any) {
     const scrollMap = refMap?.current?.offsetTop;
     const scrollDesc = refDesc?.current?.offsetTop;
     const scrollReview = refReview?.current?.offsetTop;
-    console.log(scrollMap, scrollDesc, scrollReview);
 
     // handle onclick active menu
     const handleChange = (event: React.SyntheticEvent, value: any) => {
@@ -172,9 +176,7 @@ function ServiceDetail(props: any) {
                     service?.service_name ? service.service_name : "Loading..."
                 }
             />
-            {/* header */}
-            <Head />
-            {/* body */}
+            {IS_MB ? <HeadOrg org={org} /> : <Head />}
             <Container>
                 {/* service detail */}
                 <div className="service-detail">
@@ -222,6 +224,7 @@ function ServiceDetail(props: any) {
                                                 totalItem={COMMENTS.totalItem}
                                                 commentable_type={"SERVICE"}
                                                 id={ORG.org?.id}
+                                                page={COMMENTS.page}
                                                 detail_id={service?.id}
                                             />
                                         </div>
@@ -232,9 +235,19 @@ function ServiceDetail(props: any) {
                                             className="service-detail__org"
                                         >
                                             {ORG.status === STATUS.SUCCESS && (
-                                                <OrgInformation org={org} />
+                                                <>
+                                                    <div className="service-detail__org-mb">
+                                                        <DetailOrgCard
+                                                            org={org}
+                                                        />
+                                                    </div>
+                                                    <OrgInformation org={org} />
+                                                </>
                                             )}
                                         </div>
+                                    </TabPanel>
+                                    <TabPanel value={value}>
+                                        <DetailPolicy />
                                     </TabPanel>
                                 </div>
                             </TabContext>

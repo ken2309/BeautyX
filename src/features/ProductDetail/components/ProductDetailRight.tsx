@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import { Product } from "../../../interface/product";
 import { IOrganization } from "../../../interface/organization";
-import onErrorImg from "../../../utils/errorImg";
 import icon from "../../../constants/icon";
 import formatPrice from "../../../utils/formatPrice";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    onFavoriteOrg,
-    onDeleteFavoriteOrg,
-} from "../../../redux/org/orgSlice";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
     onFavoriteProduct,
     onDeleteFavorite,
 } from "../../../redux/org_products/productSlice";
-import { Link } from "react-router-dom";
 import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import { addCart } from "../../../redux/cartSlice";
+import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
+import onErrorImg from "../../../utils/errorImg";
+import {
+    onDeleteFavoriteOrg,
+    onFavoriteOrg,
+} from "../../../redux/org/orgSlice";
 
 interface IProps {
     product: Product;

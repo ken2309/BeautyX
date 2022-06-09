@@ -21,11 +21,14 @@ import Review from "../Reviews";
 import "../ServiceDetail/serviceDetail.css";
 import "./style.css";
 import "../ProductDetail/product.css";
-import useFullScreen from "../../utils/useFullScreen";
 import icon from "../../constants/icon";
+import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
+import HeadOrg from "../MerchantDetail/components/HeadOrg";
+import useFullScreen from "../../utils/useFullScreen";
 
 function ComboDetail() {
     const { t } = useContext(AppContext);
+    const IS_MB = useFullScreen();
     const params: any = shareLink();
     const dispatch = useDispatch();
     const ORG = useSelector((state: any) => state.ORG);
@@ -164,8 +167,8 @@ function ComboDetail() {
     const combo = COMBO.combo;
 
     return (
-        <div className="combo">
-            <Head />
+        <div className="product">
+            {IS_MB ? <HeadOrg org={org} /> : <Head />}
             <HeadTitle title={combo?.name ? combo?.name : "Loading..."} />
             <Container>
                 <div className="service-detail">
@@ -205,6 +208,7 @@ function ComboDetail() {
                                                 commentable_type={
                                                     "TREATMENT_COMBO"
                                                 }
+                                                page={COMMENTS.page}
                                                 id={ORG.org?.id}
                                                 detail_id={combo?.id}
                                             />
@@ -218,7 +222,16 @@ function ComboDetail() {
                                             <div className="service-detail__org">
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                    <OrgInformation org={org} />
+                                                    <>
+                                                        <div className="service-detail__org-mb">
+                                                            <DetailOrgCard
+                                                                org={org}
+                                                            />
+                                                        </div>
+                                                        <OrgInformation
+                                                            org={org}
+                                                        />
+                                                    </>
                                                 )}
                                             </div>
                                         </div>
@@ -227,10 +240,9 @@ function ComboDetail() {
                             </TabContext>
                         </div>
                     </div>
-                    {/* service bottom buttom add cart                                             */}
-                    <div className="service-detail__bottom">
+                    <div className="service-detail__button">
                         <button>
-                            <p>Mua ngay</p>
+                            <p>Buy now</p>
                         </button>
                         <button
                             onClick={() => {
@@ -238,22 +250,21 @@ function ComboDetail() {
                             }}
                             className="btn-addcart"
                         >
-                            <p>Thêm vào giỏ hàng</p>
+                            <p>Add to cart</p>
                             <img src={icon.ShoppingCartSimpleWhite} alt="" />
                         </button>
-                        {/* drawer service detail */}
-                        <Drawer
-                            open={open}
-                            anchor="bottom"
-                            onClose={() => setOpen(false)}
-                        >
-                            <div className="active-mb">
-                                <div className="service-detail">
-                                    <ComboDetailRight combo={combo} org={org} />
-                                </div>
-                            </div>
-                        </Drawer>
                     </div>
+                    <Drawer
+                        open={open}
+                        anchor="bottom"
+                        onClose={() => setOpen(false)}
+                    >
+                        <div className="active-mb">
+                            <div className="service-detail">
+                                <ComboDetailRight combo={combo} org={org} />
+                            </div>
+                        </div>
+                    </Drawer>
                 </div>
             </Container>
         </div>
