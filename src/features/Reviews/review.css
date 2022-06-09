@@ -1,6 +1,9 @@
 .org-evaluate {
     width: 50%;
 }
+.org-evaluate__cnt {
+    margin-bottom: 24px;
+}
 .org-evaluate__cnt .evaluate-rating {
     display: flex;
     border: 1px solid #ccc;
@@ -63,7 +66,7 @@
     grid-gap: 0 8px;
     align-items: center;
     width: 100%;
-    padding: 24px;
+    padding: 24px 24px 16px 24px;
 }
 .evaluate-input__ava {
     width: 32px;
@@ -190,7 +193,7 @@
 .org-evaluate__cnt .total-comment {
     font-size: 14px;
     color: #8c8c8c;
-    padding: 0 24px;
+    padding: 24px;
 }
 .evaluate-input__upload {
     max-width: 200px;
@@ -267,6 +270,9 @@
     }
     .evaluate-input {
         padding: 16px 0 16px 0;
+    }
+    .org-evaluate__cnt {
+        margin-bottom: 0;
     }
     .org-evaluate__cnt .total-comment {
         padding: 16px 0;

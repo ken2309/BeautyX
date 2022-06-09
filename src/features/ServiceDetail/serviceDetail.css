@@ -523,6 +523,7 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 16px;
+    margin-top: 24px;
 }
 
 @media only screen and (max-width: 1023px) {
@@ -650,7 +651,7 @@
     }
 
     .service-detail .service-detail__mobile-price span:nth-child(1) {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: bold;
         color: var(--red-cl);
     }
@@ -837,18 +838,23 @@
     .service-detail__org-mb {
         display: block;
     }
-
+    .service-detail .infoMer-top__right {
+        font-size: 14px;
+    }
+    .service-detail .infoMer-item__wrap p {
+        font-size: 14px;
+    }
     .service-detail .detail-right__infoMer {
         width: 100%;
         background-color: #fff;
         border-radius: 8px;
-        margin: 12px 0px;
         padding: 12px;
         box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
     }
 
     .service-detail .infoMer-mid {
         padding: 0px;
+        justify-content: space-evenly;
     }
 
     .service-detail .MuiTabs-root {
@@ -868,13 +874,17 @@
         font-size: 16px;
         line-height: 24px;
     }
+    .detailPolicy-useGuild__bot {
+        background-color: var(--purple);
+        padding: 12px;
+    }
 
     .detailPolicy-useguild__item {
         font-size: 12px;
     }
 
     .detailPolicy-useGuild__bot p {
-        font-size: 14px;
+        font-size: 12px;
     }
 
     .detailPolicy-rules {
