@@ -240,6 +240,7 @@ function ComboDetail() {
                             </TabContext>
                         </div>
                     </div>
+                    {/* btn add cart */}
                     <div className="service-detail__button">
                         <button>
                             <p>Buy now</p>

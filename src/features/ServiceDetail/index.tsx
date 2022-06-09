@@ -90,14 +90,14 @@ function ServiceDetail(props: any) {
     // handle scroll active menu
     function handleScroll() {
         if (is_mobile) {
-            if (window.scrollY + 16 < scrollReview) {
+            if (window.scrollY + 65 < scrollReview) {
                 setValue(1);
             } else if (
-                window.scrollY + 16 > scrollDesc &&
-                window.scrollY + 16 < scrollMap
+                window.scrollY + 65 > scrollDesc &&
+                window.scrollY + 65 < scrollMap
             ) {
                 setValue(2);
-            } else if (window.scrollY + 16 > scrollReview) {
+            } else if (window.scrollY + 65 > scrollReview) {
                 setValue(3);
             }
         } else {
@@ -247,7 +247,7 @@ function ServiceDetail(props: any) {
                                         </div>
                                     </TabPanel>
                                     <TabPanel value={value}>
-                                        <DetailPolicy />
+                                        <DetailPolicy org={org} />
                                     </TabPanel>
                                 </div>
                             </TabContext>
