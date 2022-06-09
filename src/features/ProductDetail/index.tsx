@@ -122,6 +122,7 @@ function ProductDetail(props: any) {
                       <Review
                         comments={COMMENTS.comments}
                         totalItem={COMMENTS.totalItem}
+                        page={COMMENTS.page}
                         commentable_type={"PRODUCT"}
                         id={ORG.org?.id}
                         detail_id={product?.id}

@@ -512,14 +512,14 @@
         left: 0;
         width: 100%;
         z-index: 100;
-        padding: 12px;
+        padding: 12px 12px 24px 12px;
         background-color: #fff;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         grid-gap: 0 8px;
     }
     .service-detail .service-detail__button button {
         width: 100%;
-        padding: 4px 8px;
+        padding: 8px;
         outline: none;
         border: none;
         border-radius: 8px;
@@ -557,7 +557,7 @@
         display: none;
     }
     .active-mb .service-detail {
-        padding: 12px;
+        padding: 12px 12px 24px 12px;
     }
     .active-mb .detail-right__info {
         width: 100%;
@@ -640,9 +640,11 @@
     }
     .active-mb .bottom-addCart {
         padding: 8px;
-        font-size: 14px;
         align-items: center;
         justify-content: center;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
     }
     .active-mb .detail-right__percent p {
         font-size: 14px;

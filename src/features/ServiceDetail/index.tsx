@@ -22,6 +22,7 @@ import icon from "../../constants/icon";
 import DetailOrgCard from "./components/DetailOrgCard";
 import useFullScreen from "../../utils/useFullScreen";
 import HeadOrg from '../MerchantDetail/components/HeadOrg';
+import DetailPolicy from "./components/DetailPolicy";
 
 function ServiceDetail(props: any) {
     const dispatch = useDispatch();
@@ -37,12 +38,13 @@ function ServiceDetail(props: any) {
     let tabs = [
         { id: 1, title: "Mô tả" },
         { id: 2, title: "Đánh giá" },
+        { id: 4, title: "Hướng dẫn & Điều khoản" },
         { id: 3, title: "Doanh nghiệp" },
     ];
 
-    let refMap = useRef<any>();
     let refDesc = useRef<any>();
     let refReview = useRef<any>();
+    let refMap = useRef<any>();
     const scrollMap = refMap?.current?.offsetTop;
     const scrollDesc = refDesc?.current?.offsetTop;
     const scrollReview = refReview?.current?.offsetTop;
@@ -52,8 +54,8 @@ function ServiceDetail(props: any) {
         let top;
         switch (value) {
             case 1:
-                setValue(value);
                 top = refDesc?.current?.offsetTop - 72;
+                setValue(value);
                 break;
             case 2:
                 top = refReview?.current?.offsetTop - 72;
@@ -61,6 +63,7 @@ function ServiceDetail(props: any) {
                 break;
             case 3:
                 top = refMap?.current?.offsetTop - 72;
+                setValue(value);
                 break;
             default:
                 break;
@@ -72,16 +75,16 @@ function ServiceDetail(props: any) {
     };
 
     function handleScroll() {
-        if (window.scrollY + 120 <= scrollReview) {
+        if (window.scrollY + 72 < scrollReview) {
             dispatch(onActiveTab(1));
             setValue(1);
         } else if (
-            window.scrollY + 120 >= scrollDesc &&
-            window.scrollY + 120 <= scrollMap
+            window.scrollY + 72 > scrollDesc &&
+            window.scrollY + 72 < scrollMap
         ) {
             dispatch(onActiveTab(2));
             setValue(2);
-        } else if (window.scrollY + 120 >= scrollReview) {
+        } else if (window.scrollY + 72 > scrollReview) {
             dispatch(onActiveTab(3));
             setValue(3);
         }
@@ -125,18 +128,18 @@ function ServiceDetail(props: any) {
     };
 
     useEffect(() => {
-        callServiceDetail();
-        callOrgDetail();
-        callServiceComments();
-    }, []);
-
-    useEffect(() => {
         window.addEventListener("scroll", handleScroll);
         return () => {
             window.removeEventListener("scroll", handleScroll, false);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     });
+
+    useEffect(() => {
+        callServiceDetail();
+        callOrgDetail();
+        callServiceComments();
+    }, []);
 
     return (
         <>
@@ -181,13 +184,16 @@ function ServiceDetail(props: any) {
                                         </div>
                                     </TabPanel>
                                     <TabPanel value={value}>
-                                        <div className="service-detail__comment">
+                                        <div
+                                            ref={refReview}
+                                            className="service-detail__comment"
+                                        >
                                             <Review
-                                                refReview={refReview}
                                                 comments={COMMENTS.comments}
                                                 totalItem={COMMENTS.totalItem}
                                                 commentable_type={"SERVICE"}
                                                 id={ORG.org?.id}
+                                                page={COMMENTS.page}
                                                 detail_id={service?.id}
                                             />
                                         </div>
@@ -207,6 +213,9 @@ function ServiceDetail(props: any) {
                                             )}
                                         </div>
                                     </TabPanel>
+                                    <TabPanel value={value} >
+                                        <DetailPolicy />
+                                    </TabPanel>
                                 </div>
                             </TabContext>
                         </div>
@@ -214,7 +223,7 @@ function ServiceDetail(props: any) {
 
                     <div className="service-detail__button">
                         <button>
-                            <p>Buy now</p>
+                            <p>Mua ngay</p>
                         </button>
                         <button
                             onClick={() => {
@@ -222,7 +231,7 @@ function ServiceDetail(props: any) {
                             }}
                             className="btn-addcart"
                         >
-                            <p>Add to cart</p>
+                            <p>Thêm vào giỏ hàng</p>
                             <img src={icon.ShoppingCartSimpleWhite} alt="" />
                         </button>
                     </div>

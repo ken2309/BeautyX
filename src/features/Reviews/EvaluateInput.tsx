@@ -7,7 +7,7 @@ interface IProps {
     handlePostComment: any;
     onChangeMedia: any;
     onRemoveImgTemp: any;
-    InputRef?: any
+    InputRef?: any;
 }
 export default function EvaluateInput(props: IProps) {
     const {
@@ -39,7 +39,10 @@ export default function EvaluateInput(props: IProps) {
                         value={comment.text}
                     />
                     <div className="input-btn">
-                        <div style={{ marginLeft: "6px" }} className="in-cmt">
+                        <div
+                            style={{ width: "20px", marginLeft: "6px" }}
+                            className="in-cmt"
+                        >
                             <label htmlFor="file">
                                 <img src={icon.addImg} alt="" />
                             </label>
@@ -56,6 +59,7 @@ export default function EvaluateInput(props: IProps) {
                             onClick={() => {
                                 handlePostComment();
                             }}
+                            style={{ width: "20px" }}
                             src={icon.sendComment}
                             alt=""
                         />

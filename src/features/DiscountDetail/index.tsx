@@ -208,6 +208,7 @@ function DiscountDetail() {
                                                     comments={COMMENTS.comments}
                                                     totalItem={COMMENTS.totalItem}
                                                     commentable_type={"SERVICE"}
+                                                    page={COMMENTS.page}
                                                     id={ORG.org?.id}
                                                     detail_id={service?.id}
                                                 />

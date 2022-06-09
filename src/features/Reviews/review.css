@@ -6,9 +6,6 @@
     border: 1px solid #ccc;
     border-radius: 16px;
 }
-.org-evaluate__cnt {
-    padding: 0 0 24px 0;
-}
 .evaluate-rating__left,
 .evaluate-rating__right {
     width: 50%;
@@ -224,6 +221,24 @@
 }
 
 @media only screen and (max-width: 768px) {
+    .service-detail .MuiRating-root {
+        font-size: 16px !important;
+    }
+    .evaluate-rating__quantity span {
+        font-size: 14px;
+    }
+    .evaluate-rating__total span:nth-child(1) {
+        font-size: 18px;
+    }
+    .evaluate-rating__total span:nth-child(2) {
+        font-size: 14px;
+    }
+    .evaluate-rating__progress span {
+        font-size: 14px;
+    }
+    .comment-user__info {
+        font-size: 14px;
+    }
     .org-evaluate {
         width: 100%;
     }

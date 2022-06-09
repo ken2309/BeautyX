@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IOrganization } from "../../../../interface/organization";
 import { fetchAsyncOrgComments, clearPrevState } from "../../../../redux/org/orgCommentsSlice";
 import { STATUS } from "../../../../redux/status";
 import Review from "../../../Reviews";
+import ButtonLoading from "../../../../components/ButtonLoading";
+import ReviewsContainer from "../../../ReviewsContainer";
 
 interface IProps {
     org: IOrganization;
@@ -14,7 +16,8 @@ interface IProps {
 function OrgReviews(props: IProps) {
     const { org, refReview } = props;
     const dispatch = useDispatch();
-    const { org_id, comments, totalItem, status } = useSelector(
+    const [openAll, setOpenAll] = useState(false);
+    const { org_id, comments, totalItem, status, page } = useSelector(
         (state: any) => state.ORG_COMMENTS
     );
     const callOrgComments = () => {
@@ -32,14 +35,33 @@ function OrgReviews(props: IProps) {
         callOrgComments();
     }, []);
     return (
-        <div ref={refReview} className="org-evaluate">
-            <Review
-                commentable_type="ORGANIZATION"
-                comments={comments.slice(0, 10)}
+        <>
+            <div ref={refReview} className="org-evaluate">
+                <Review
+                    commentable_type="ORGANIZATION"
+                    comments={comments.slice(0, 10)}
+                    totalItem={totalItem}
+                    id={org_id}
+                    page={page}
+                />
+                <div style={{ justifyContent: "center" }} className="flex-row">
+                    <ButtonLoading
+                        title="Xem tất cả đánh giá"
+                        onClick={() => setOpenAll(true)}
+                        loading={false}
+                    />
+                </div>
+            </div>
+            <ReviewsContainer
+                open={openAll}
+                setOpen={setOpenAll}
+                comments={comments}
+                org_id={org_id}
                 totalItem={totalItem}
-                id={org_id}
+                page={page}
+                commentable_type="ORGANIZATION"
             />
-        </div>
+        </>
     );
 }
 

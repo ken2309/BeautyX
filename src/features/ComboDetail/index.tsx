@@ -114,6 +114,7 @@ function ComboDetail() {
                                                 comments={COMMENTS.comments}
                                                 totalItem={COMMENTS.totalItem}
                                                 commentable_type={"TREATMENT_COMBO"}
+                                                page={COMMENTS.page}
                                                 id={ORG.org?.id}
                                                 detail_id={combo?.id}
                                             />
