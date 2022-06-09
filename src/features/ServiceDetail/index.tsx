@@ -233,6 +233,7 @@ function ServiceDetail(props: any) {
                                     <ServiceDetailRight
                                         service={service}
                                         org={org}
+                                        setOpenDrawer={setOpen}
                                     />
                                 </div>
                             </div>

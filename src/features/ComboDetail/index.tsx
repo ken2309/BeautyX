@@ -42,7 +42,6 @@ function ComboDetail() {
     const scrollMap = refMap?.current?.offsetTop;
     const scrollDesc = refDesc?.current?.offsetTop;
     const scrollReview = refReview?.current?.offsetTop;
-    console.log(scrollMap, scrollDesc, scrollReview);
 
     // handle onclick active menu
     const handleChange = (event: React.SyntheticEvent, value: any) => {
@@ -241,7 +240,7 @@ function ComboDetail() {
                         </div>
                     </div>
                     {/* btn add cart */}
-                    <div className="service-detail__button">
+                    <div className="service-detail__bottom">
                         <button>
                             <p>Buy now</p>
                         </button>

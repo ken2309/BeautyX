@@ -14,7 +14,7 @@ import PopupSuccess from "../../PopupSuccess";
 import DetailOrgCard from "./DetailOrgCard";
 
 export default function ServiceDetailRight(props: any) {
-    const { org, service } = props;
+    const { org, service, setOpenDrawer } = props;
     const dispatch = useDispatch();
     const history = useHistory();
     const [popupSuccess, setPopupSuccess] = useState(false);
@@ -58,6 +58,9 @@ export default function ServiceDetailRight(props: any) {
         );
         setPopupSuccess(true);
         dispatch(addCart(values));
+        if (setOpenDrawer) {
+            setOpenDrawer(false)
+        }
     };
     return (
         <div className="service-detail__right">

@@ -35,6 +35,19 @@
     background-color: #dcdbdb8c;
     transition: all 0.3s;
 }
+.mb-head-org-cnt__button .badge{
+    position: absolute;
+    background-color: var(--red-cl);
+    margin: -14px 0px 0px 8px;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 700;
+    color: var(--bgWhite);
+    padding: 3px 4px;
+    border-radius: 100%;
+    min-width: 24px;
+    text-align: center;
+}
 
 .mb-head-org-cnt__right button {
     margin-left: 8px;
