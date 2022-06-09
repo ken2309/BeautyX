@@ -41,6 +41,20 @@
   color: #61dafb;
 }
 
+.flexX-gap-8 {
+  display: flex;
+  gap: 0 8px;
+  grid-gap: 0 8px;
+  align-items: center;
+}
+
+.flexX-gap-4 {
+  display: flex;
+  gap: 0 4px;
+  grid-gap: 0 4px;
+  align-items: center;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

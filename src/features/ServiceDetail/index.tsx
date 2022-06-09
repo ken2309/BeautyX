@@ -14,14 +14,14 @@ import {
     fetchAsyncServiceDetail,
     fetchAsyncServiceCmt,
 } from "../../redux/org_services/serviceSlice";
-import { fetchAsyncOrg, onActiveTab } from "../../redux/org/orgSlice";
+import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import { STATUS } from "../../redux/status";
 import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
 import Review from "../Reviews";
 import icon from "../../constants/icon";
 import DetailOrgCard from "./components/DetailOrgCard";
 import useFullScreen from "../../utils/useFullScreen";
-import HeadOrg from '../MerchantDetail/components/HeadOrg';
+import HeadOrg from "../MerchantDetail/components/HeadOrg";
 import DetailPolicy from "./components/DetailPolicy";
 import DetailRecommend from './components/DetailRecommend';
 
@@ -31,7 +31,7 @@ function ServiceDetail(props: any) {
     const ORG = useSelector((state: any) => state.ORG);
     const { SERVICE, COMMENTS } = useSelector((state: any) => state.SERVICE);
     const params: any = extraParamsUrl();
-
+    const is_mobile = useFullScreen();
     const service = SERVICE.service;
     const org = ORG.org;
     const [open, setOpen] = useState(false);
@@ -51,20 +51,32 @@ function ServiceDetail(props: any) {
     const scrollDesc = refDesc?.current?.offsetTop;
     const scrollReview = refReview?.current?.offsetTop;
 
+    // handle onclick active menu
     const handleChange = (event: React.SyntheticEvent, value: any) => {
-        dispatch(onActiveTab(value));
         let top;
         switch (value) {
             case 1:
-                top = refDesc?.current?.offsetTop - 72;
+                if (is_mobile) {
+                    top = refDesc?.current?.offsetTop;
+                } else {
+                    top = refDesc?.current?.offsetTop - 72;
+                }
                 setValue(value);
                 break;
             case 2:
-                top = refReview?.current?.offsetTop - 72;
+                if (is_mobile) {
+                    top = refReview?.current?.offsetTop;
+                } else {
+                    top = refReview?.current?.offsetTop - 72;
+                }
                 setValue(value);
                 break;
             case 3:
-                top = refMap?.current?.offsetTop - 72;
+                if (is_mobile) {
+                    top = refMap?.current?.offsetTop;
+                } else {
+                    top = refMap?.current?.offsetTop - 72;
+                }
                 setValue(value);
                 break;
             default:
@@ -76,22 +88,34 @@ function ServiceDetail(props: any) {
         });
     };
 
+    // handle scroll active menu
     function handleScroll() {
-        if (window.scrollY + 72 < scrollReview) {
-            dispatch(onActiveTab(1));
-            setValue(1);
-        } else if (
-            window.scrollY + 72 > scrollDesc &&
-            window.scrollY + 72 < scrollMap
-        ) {
-            dispatch(onActiveTab(2));
-            setValue(2);
-        } else if (window.scrollY + 72 > scrollReview) {
-            dispatch(onActiveTab(3));
-            setValue(3);
+        if (is_mobile) {
+            if (window.scrollY + 65 < scrollReview) {
+                setValue(1);
+            } else if (
+                window.scrollY + 65 > scrollDesc &&
+                window.scrollY + 65 < scrollMap
+            ) {
+                setValue(2);
+            } else if (window.scrollY + 65 > scrollReview) {
+                setValue(3);
+            }
+        } else {
+            if (window.scrollY + 72 < scrollReview) {
+                setValue(1);
+            } else if (
+                window.scrollY + 72 > scrollDesc &&
+                window.scrollY + 72 < scrollMap
+            ) {
+                setValue(2);
+            } else if (window.scrollY + 72 > scrollReview) {
+                setValue(3);
+            }
         }
     }
 
+    // call api service detail
     const callServiceDetail = () => {
         console.log(params.id, SERVICE.service.id)
         if (
@@ -106,6 +130,7 @@ function ServiceDetail(props: any) {
         }
     };
 
+    // call api org detail
     const callOrgDetail = () => {
         if (
             parseInt(params.org) !== ORG.org?.id ||
@@ -115,6 +140,7 @@ function ServiceDetail(props: any) {
         }
     };
 
+    // call api service comment
     const callServiceComments = () => {
         if (
             parseInt(params.id) !== COMMENTS.service_id ||
@@ -146,6 +172,7 @@ function ServiceDetail(props: any) {
 
     return (
         <>
+            {/* title page servive */}
             <HeadTitle
                 title={
                     service?.service_name ? service.service_name : "Loading..."
@@ -153,14 +180,18 @@ function ServiceDetail(props: any) {
             />
             {IS_MB ? <HeadOrg org={org} /> : <Head />}
             <Container>
+                {/* service detail */}
                 <div className="service-detail">
+                    {/* service head detail */}
                     <div className="service-detail__head">
                         <ServiceDetailLeft org={org} service={service} />
                         <ServiceDetailRight org={org} service={service} />
                     </div>
-
+                    {/* service body */}
                     <div className="service-detail__body">
+                        {/* service tab detail */}
                         <div className="service-detail__tab">
+                            {/* service tab menu */}
                             <TabContext value={value}>
                                 <TabList onChange={handleChange}>
                                     {tabs.map((item: any, i: number) => (
@@ -173,7 +204,6 @@ function ServiceDetail(props: any) {
                                 </TabList>
                                 <div className="service-detail__tabitem">
                                     <TabPanel value={value}>
-                                        {/* {onSwitchTab(value)} */}
                                         <div
                                             ref={refDesc}
                                             className="service-detail__description"
@@ -209,23 +239,25 @@ function ServiceDetail(props: any) {
                                             {ORG.status === STATUS.SUCCESS && (
                                                 <>
                                                     <div className="service-detail__org-mb">
-                                                        <DetailOrgCard org={org} />
+                                                        <DetailOrgCard
+                                                            org={org}
+                                                        />
                                                     </div>
                                                     <OrgInformation org={org} />
                                                 </>
                                             )}
                                         </div>
                                     </TabPanel>
-                                    <TabPanel value={value} >
-                                        <DetailPolicy />
+                                    <TabPanel value={value}>
+                                        <DetailPolicy org={org} />
                                     </TabPanel>
                                 </div>
                             </TabContext>
                         </div>
                     </div>
                     <DetailRecommend org={org} />
-
-                    <div className="service-detail__button">
+                    {/* service bottom buttom add cart                                             */}
+                    <div className="service-detail__bottom">
                         <button>
                             <p>Mua ngay</p>
                         </button>
@@ -238,24 +270,25 @@ function ServiceDetail(props: any) {
                             <p>Thêm vào giỏ hàng</p>
                             <img src={icon.ShoppingCartSimpleWhite} alt="" />
                         </button>
-                    </div>
-
-                    <Drawer
-                        open={open}
-                        anchor="bottom"
-                        onClose={() => setOpen(false)}
-                    >
-                        <div className="active-mb">
-                            <div className="service-detail">
-                                <ServiceDetailRight
-                                    service={service}
-                                    org={org}
-                                />
+                        {/* drawer service detail */}
+                        <Drawer
+                            open={open}
+                            anchor="bottom"
+                            onClose={() => setOpen(false)}
+                        >
+                            <div className="active-mb">
+                                <div className="service-detail">
+                                    <ServiceDetailRight
+                                        service={service}
+                                        org={org}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    </Drawer>
+                        </Drawer>
+                    </div>
                 </div>
             </Container>
+            {/* footer */}
             <Footer />
         </>
     );

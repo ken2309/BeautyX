@@ -1010,7 +1010,7 @@
 
     .org-information {
         width: 100%;
-        padding: 0px;
+        padding: 16px 0;
     }
 
     .org-information__map-cnt {

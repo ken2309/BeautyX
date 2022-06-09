@@ -14,9 +14,9 @@ import { pickBy, identity } from "lodash";
 import { useHistory } from "react-router-dom";
 
 interface IProps {
-    comments: IComment[];
-    totalItem: number;
-    page: number,
+    comments?: IComment[];
+    totalItem?: number;
+    page?: number;
     commentable_type: string;
     id: number | undefined;
     detail_id?: number;
@@ -136,7 +136,13 @@ function Review(props: IProps) {
                     onChangeMedia={onChangeMedia}
                     onRemoveImgTemp={onRemoveImgTemp}
                 />
-                <span className="total-comment">Tổng {totalItem} đánh giá</span>
+                {totalItem && totalItem > 0 ? (
+                    <span className="total-comment">
+                        Tổng {totalItem} đánh giá
+                    </span>
+                ) : (
+                    <span className="total-comment">Chưa có bình luận nào</span>
+                )}
                 {comments?.map((item: IComment, index: number) => (
                     <CommentItem key={index} comment={item} user={user} />
                 ))}

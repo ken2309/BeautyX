@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import icon from '../../../constants/icon';
-import { Combo } from '../../../interface/combo';
-import { IOrganization } from '../../../interface/organization';
-import { addCart } from '../../../redux/cartSlice';
-import { formatAddCart } from '../../../utils/cart/formatAddCart';
-import onErrorImg from '../../../utils/errorImg';
-import formatPrice from '../../../utils/formatPrice';
-import '../../ProductDetail/product.css';
-import DetailOrgCard from '../../ServiceDetail/components/DetailOrgCard';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import icon from "../../../constants/icon";
+import { Combo } from "../../../interface/combo";
+import { IOrganization } from "../../../interface/organization";
+import { addCart } from "../../../redux/cartSlice";
+import { formatAddCart } from "../../../utils/cart/formatAddCart";
+import onErrorImg from "../../../utils/errorImg";
+import formatPrice from "../../../utils/formatPrice";
+import "../../ProductDetail/product.css";
+import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
 
 interface IProps {
-    combo: Combo,
-    org: IOrganization
+    combo: Combo;
+    org: IOrganization;
 }
 
 function ComboDetailRight(props: IProps) {
@@ -21,18 +21,18 @@ function ComboDetailRight(props: IProps) {
     const list_price = [combo?.price, combo?.use_value].sort((a, b) => b - a);
     const price = list_price[0];
     const special_price = list_price[1];
-    const percent = Math.round(100 - special_price / price * 100);
+    const percent = Math.round(100 - (special_price / price) * 100);
     //handle add cart
-    const [quantity, setQuantity] = useState(1)
+    const [quantity, setQuantity] = useState(1);
     const onDescQuantity = () => {
-        if (quantity > 1) setQuantity(quantity - 1)
-    }
+        if (quantity > 1) setQuantity(quantity - 1);
+    };
     const handleAddCart = () => {
-        const sale_price = special_price
-        const is_type = 3
-        const values = formatAddCart(combo, org, is_type, quantity, sale_price)
-        dispatch(addCart(values))
-    }
+        const sale_price = special_price;
+        const is_type = 3;
+        const values = formatAddCart(combo, org, is_type, quantity, sale_price);
+        dispatch(addCart(values));
+    };
     return (
         <div className="service-detail__right">
             <div className="detail-right__head">
@@ -51,7 +51,7 @@ function ComboDetailRight(props: IProps) {
                     <div className="detail-right__name">
                         <p>{combo?.name}</p>
                         <div
-                            //onClick={onFavorite} 
+                            //onClick={onFavorite}
                             className="favorite"
                         >
                             <img src={icon.heart} alt="" />
@@ -81,12 +81,11 @@ function ComboDetailRight(props: IProps) {
                             <span>{formatPrice(special_price)}đ</span>
                             <span>{formatPrice(price)}đ</span>
                         </div>
-                        {
-                            percent > 0 &&
+                        {percent > 0 && (
                             <div className="detail-right__percent">
                                 <p>Giảm {percent}%</p>
                             </div>
-                        }
+                        )}
                     </div>
                 </div>
                 <DetailOrgCard org={org} />
@@ -95,7 +94,10 @@ function ComboDetailRight(props: IProps) {
                 <div className="bottom-quantity">
                     <p className="bottom-quantity__text">Số lượng:</p>
                     <div className="bottom-quantity__wrap">
-                        <button onClick={onDescQuantity} className="quantity-btn">
+                        <button
+                            onClick={onDescQuantity}
+                            className="quantity-btn"
+                        >
                             <p>-</p>
                         </button>
                         <input
@@ -112,10 +114,7 @@ function ComboDetailRight(props: IProps) {
                         </button>
                     </div>
                 </div>
-                <div
-                    onClick={handleAddCart}
-                    className="bottom-addCart"
-                >
+                <div onClick={handleAddCart} className="bottom-addCart">
                     <img src={icon.ShoppingCartSimpleWhite} alt="" />
                     <p>Thêm vào giỏ hàng</p>
                 </div>

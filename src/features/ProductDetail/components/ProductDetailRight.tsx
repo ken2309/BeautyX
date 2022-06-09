@@ -4,15 +4,19 @@ import { IOrganization } from "../../../interface/organization";
 import icon from "../../../constants/icon";
 import formatPrice from "../../../utils/formatPrice";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
     onFavoriteProduct,
     onDeleteFavorite,
 } from "../../../redux/org_products/productSlice";
 import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import { addCart } from "../../../redux/cartSlice";
-import DetailOrgCard from '../../ServiceDetail/components/DetailOrgCard';
+import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
 import onErrorImg from "../../../utils/errorImg";
+import {
+    onDeleteFavoriteOrg,
+    onFavoriteOrg,
+} from "../../../redux/org/orgSlice";
 
 interface IProps {
     product: Product;
@@ -25,6 +29,7 @@ function ProductDetailRight(props: IProps) {
     const history = useHistory();
     const { USER } = useSelector((state: any) => state.USER);
     const [quantity, setQuantity] = useState(1);
+    const ORG = useSelector((state: any) => state.ORG);
 
     const onFavorite = () => {
         if (USER) {
@@ -36,6 +41,17 @@ function ProductDetailRight(props: IProps) {
                 dispatch(onDeleteFavorite(values));
             } else {
                 dispatch(onFavoriteProduct(values));
+            }
+        } else {
+            history.push("/sign-in?1");
+        }
+    };
+    const onFavoriteOrganization = () => {
+        if (USER) {
+            if (org?.is_favorite) {
+                dispatch(onDeleteFavoriteOrg(org));
+            } else {
+                dispatch(onFavoriteOrg(org));
             }
         } else {
             history.push("/sign-in?1");
@@ -65,12 +81,13 @@ function ProductDetailRight(props: IProps) {
     };
     return (
         <div className="service-detail__right">
+            {/* service detail right head */}
             <div className="detail-right__head">
                 <div className="detail-right__head-img">
                     <img
                         src={
-                            product?.image_url
-                                ? product?.image_url
+                            product.image_url
+                                ? product.image_url
                                 : org.image_url
                         }
                         alt=""
@@ -87,7 +104,9 @@ function ProductDetailRight(props: IProps) {
                         <div onClick={onFavorite} className="favorite">
                             <img
                                 src={
-                                    product?.is_favorite ? icon.heart : icon.unHeart
+                                    product?.is_favorite
+                                        ? icon.heart
+                                        : icon.unHeart
                                 }
                                 alt=""
                             />
@@ -109,7 +128,7 @@ function ProductDetailRight(props: IProps) {
                     </div>
                 </div>
             </div>
-
+            {/* service detail right body */}
             <div className="detail-right__body">
                 <div className="detail-right__info">
                     <div className="flexX-gap-8">
@@ -145,8 +164,83 @@ function ProductDetailRight(props: IProps) {
                         </div>
                     </div> */}
                 </div>
-                <DetailOrgCard org={org} />
+
+                {/* detail org product  */}
+                <div className="detail-right__infoMer">
+                    <div className="infoMer-top">
+                        <div className="infoMer-top__img">
+                            <img
+                                onError={(e) => onErrorImg(e)}
+                                src={org.image_url}
+                                alt=""
+                            />
+                        </div>
+                        <div className="infoMer-top__right">
+                            <p className="infoMer-top__name">{org.name}</p>
+                            <p className="infoMer-top__address">
+                                {org.address ? org.address : org.full_address}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="infoMer-mid">
+                        <div className="infoMer-item">
+                            <div className="infoMer-item__wrap flexX-gap-4">
+                                <p>{"4.5/5"}</p>
+                                <img src={icon.star} alt="" />
+                            </div>
+                            <p className="infoMer-item__text">Đánh giá</p>
+                        </div>
+                        <div className="infoMer-item">
+                            <div className="infoMer-item__wrap flexX-gap-4">
+                                <p>{ORG.org?.favorites_count}</p>
+                                <img src={icon.Favorite} alt="" />
+                            </div>
+                            <p className="infoMer-item__text">Yêu thích</p>
+                        </div>
+                        <div className="infoMer-item">
+                            <div className="infoMer-item__wrap flexX-gap-4">
+                                <p>{"5"}</p>
+                                <img src={icon.chatAll} alt="" />
+                            </div>
+                            <p className="infoMer-item__text">Bình luận</p>
+                        </div>
+                    </div>
+
+                    <div className="infoMer-bottom">
+                        <button className="infoMer-bottom__left">
+                            <Link
+                                className="flex-row flexX-gap-4"
+                                to={{ pathname: `/org/${org.subdomain}` }}
+                            >
+                                <img src={icon.archive} alt="" />
+                                <p>Xem Spa</p>
+                            </Link>
+                        </button>
+                        {org?.is_favorite === true ? (
+                            <button
+                                onClick={onFavoriteOrganization}
+                                className="infoMer-bottom__right infoMer-bottom__right-active"
+                            >
+                                <p className="infoMer-bottom__right-active">
+                                    Đang Theo Dõi
+                                </p>
+                            </button>
+                        ) : (
+                            <>
+                                <button
+                                    onClick={onFavoriteOrganization}
+                                    className="infoMer-bottom__right"
+                                >
+                                    <img src={icon.rss} alt="" />
+                                    <p>Theo Dõi</p>
+                                </button>
+                            </>
+                        )}
+                    </div>
+                </div>
             </div>
+            {/* button add cart */}
             <div className="detail-right__bottom">
                 <div className="bottom-quantity">
                     <p className="bottom-quantity__text">Số lượng:</p>
