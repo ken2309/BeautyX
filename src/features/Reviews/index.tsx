@@ -8,15 +8,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { postAsyncOrgComments } from "../../redux/org/orgCommentsSlice";
 import mediaApi from "../../api/mediaApi";
 import { postAsyncComment } from "../../redux/org_services/serviceSlice";
-import { postAsyncProductComment } from '../../redux/org_products/productSlice';
-import { postCommentCombo } from '../../redux/org_combos/comboSlice';
+import { postAsyncProductComment } from "../../redux/org_products/productSlice";
+import { postCommentCombo } from "../../redux/org_combos/comboSlice";
 import { pickBy, identity } from "lodash";
 import { useHistory } from "react-router-dom";
 interface IProps {
-    comments: IComment[]|undefined;
-    totalItem: number|undefined;
+    comments: IComment[] | undefined;
+    totalItem: number | undefined;
     commentable_type: string;
-    id: number|undefined;
+    id: number | undefined;
     detail_id?: number;
     refReview?: any;
 }
@@ -75,14 +75,16 @@ function Review(props: IProps) {
                         })
                     );
                 case "TREATMENT_COMBO":
-                    return dispatch(postCommentCombo({
-                        values: values,
-                        user: user
-                    }))
+                    return dispatch(
+                        postCommentCombo({
+                            values: values,
+                            user: user,
+                        })
+                    );
             }
             setComment({ text: "", image_url: null });
         } else if (!user) {
-            history.push('/sign-in?1')
+            history.push("/sign-in?1");
         }
     };
 
@@ -98,7 +100,7 @@ function Review(props: IProps) {
         if (user && media) {
             handlePostMedia(media);
         } else if (!user) {
-            history.push('/sign-in?1')
+            history.push("/sign-in?1");
         }
     };
     const handlePostMedia = async (media: any) => {

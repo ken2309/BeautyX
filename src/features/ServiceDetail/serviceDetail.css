@@ -637,9 +637,11 @@
     }
     .active-mb .bottom-addCart {
         padding: 8px;
-        font-size: 14px;
         align-items: center;
         justify-content: center;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
     }
     .active-mb .detail-right__percent p {
         font-size: 14px;
