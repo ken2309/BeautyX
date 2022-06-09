@@ -424,6 +424,10 @@
 .service-detail .service-detail__description {
     margin-bottom: 24px;
 }
+.service-detail .service-detail__description p {
+    margin-bottom: 24px;
+    line-height: 20px;
+}
 
 .service-detail .service-detail__comment {
     width: 50%;
@@ -531,7 +535,10 @@
         padding: 0 0 92px 0;
         position: relative;
     }
-
+    .service-detail .service-detail__description p {
+        font-size: 12px;
+        line-height: 16px;
+    }
     .service-detail .org-evaluate__cnt {
         padding: 0 0 16px 0;
     }

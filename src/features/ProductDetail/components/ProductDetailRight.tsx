@@ -236,7 +236,11 @@ function ProductDetailRight(props: IProps) {
                                     onClick={onFavoriteOrganization}
                                     className="infoMer-bottom__right"
                                 >
-                                    <img src={icon.rss} alt="" />
+                                    <img
+                                        style={{ width: "20px" }}
+                                        src={icon.rss}
+                                        alt=""
+                                    />
                                     <p>Theo Dõi</p>
                                 </button>
                             </>
