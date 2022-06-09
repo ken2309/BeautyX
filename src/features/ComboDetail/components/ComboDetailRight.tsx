@@ -1,51 +1,54 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import icon from '../../../constants/icon';
-import { Combo } from '../../../interface/combo';
-import { IOrganization } from '../../../interface/organization';
-import { addCart } from '../../../redux/cartSlice';
-import { onDeleteFavoriteOrg, onFavoriteOrg } from '../../../redux/org/orgSlice';
-import { formatAddCart } from '../../../utils/cart/formatAddCart';
-import onErrorImg from '../../../utils/errorImg';
-import formatPrice from '../../../utils/formatPrice';
-import '../../ProductDetail/product.css'
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import icon from "../../../constants/icon";
+import { Combo } from "../../../interface/combo";
+import { IOrganization } from "../../../interface/organization";
+import { addCart } from "../../../redux/cartSlice";
+import {
+    onDeleteFavoriteOrg,
+    onFavoriteOrg,
+} from "../../../redux/org/orgSlice";
+import { formatAddCart } from "../../../utils/cart/formatAddCart";
+import onErrorImg from "../../../utils/errorImg";
+import formatPrice from "../../../utils/formatPrice";
+import "../../ProductDetail/product.css";
 
 interface IProps {
-    combo: Combo,
-    org: IOrganization
+    combo: Combo;
+    org: IOrganization;
 }
 
 function ComboDetailRight(props: IProps) {
     const { combo, org } = props;
-
     const { USER } = useSelector((state: any) => state.USER);
     const dispatch = useDispatch();
     const history = useHistory();
-    const onClickFavoriteOrg = () => {
+    const onFavoriteOrganization = () => {
         if (USER) {
             if (org?.is_favorite) {
-                dispatch(onDeleteFavoriteOrg(org))
+                dispatch(onDeleteFavoriteOrg(org));
             } else {
-                dispatch(onFavoriteOrg(org))
+                dispatch(onFavoriteOrg(org));
             }
         } else {
-            history.push('/sign-in?1')
+            history.push("/sign-in?1");
         }
-    }
-    const percent = Math.round(100 - combo?.use_value / combo?.price * 100)
+    };
+    const percent = Math.round(100 - (combo?.use_value / combo?.price) * 100);
     //handle add cart
-    const [quantity, setQuantity] = useState(1)
+    const [quantity, setQuantity] = useState(1);
     const onDescQuantity = () => {
-        if (quantity > 1) setQuantity(quantity - 1)
-    }
+        if (quantity > 1) setQuantity(quantity - 1);
+    };
     const handleAddCart = () => {
-        const sale_price = combo?.use_value === combo.price ? combo.price : combo?.use_value
-        const is_type = 3
-        const values = formatAddCart(combo, org, is_type, quantity, sale_price)
-        dispatch(addCart(values))
-    }
+        const sale_price =
+            combo?.use_value === combo.price ? combo.price : combo?.use_value;
+        const is_type = 3;
+        const values = formatAddCart(combo, org, is_type, quantity, sale_price);
+        dispatch(addCart(values));
+    };
     return (
         <div className="service-detail__right">
             <div className="detail-right__head">
@@ -56,7 +59,7 @@ function ComboDetailRight(props: IProps) {
                 <div className="detail-right__name">
                     <p>{combo?.name}</p>
                     <div
-                        //onClick={onFavorite} 
+                        //onClick={onFavorite}
                         className="favorite"
                     >
                         <img src={icon.heart} alt="" />
@@ -82,32 +85,33 @@ function ComboDetailRight(props: IProps) {
                 <div className="detail-right__info">
                     <div className="flexX-gap-8">
                         <div className="detail-right__price">
-                            {
-                                combo?.price > combo?.use_value ?
-                                    <>
-                                        <span>{formatPrice(combo?.use_value)}đ</span>
-                                        <span>{formatPrice(combo?.price)}đ</span>
-                                    </>
-                                    :
+                            {combo?.price > combo?.use_value ? (
+                                <>
+                                    <span>
+                                        {formatPrice(combo?.use_value)}đ
+                                    </span>
                                     <span>{formatPrice(combo?.price)}đ</span>
-                            }
+                                </>
+                            ) : (
+                                <span>{formatPrice(combo?.price)}đ</span>
+                            )}
                         </div>
-                        {
-                            combo?.use_value < combo?.price &&
+                        {combo?.use_value < combo?.price && (
                             <div className="detail-right__percent">
                                 <p>Giảm {percent}%</p>
                             </div>
-                        }
+                        )}
                     </div>
-                    {/* <div style={{ padding: "8px 0" }}>
-                        <p style={{ fontWeight: "bold", marginBottom: "8px" }}>
-                            Thời gian:
-                        </p>
+                    <div className="detail-right__duration-wrap">
+                        <p>Thời hạn:</p>
                         <div className="detail-right__duration flexX-gap-4">
-                            <img src={icon.Clock_purple} alt="" />
-                            <p>{service.duration} Phút</p>
+                            <img src={icon.alarmClock} alt="" />
+                            <p>
+                                {combo?.expired}
+                                ngày
+                            </p>
                         </div>
-                    </div> */}
+                    </div>
                 </div>
 
                 <div className="detail-right__infoMer">
@@ -126,6 +130,7 @@ function ComboDetailRight(props: IProps) {
                             </p>
                         </div>
                     </div>
+
                     <div className="infoMer-mid">
                         <div className="infoMer-item">
                             <div className="infoMer-item__wrap flexX-gap-4">
@@ -149,23 +154,37 @@ function ComboDetailRight(props: IProps) {
                             <p className="infoMer-item__text">Bình luận</p>
                         </div>
                     </div>
+
                     <div className="infoMer-bottom">
                         <button className="infoMer-bottom__left">
                             <Link
-                                className='flex-row'
+                                className="flex-row flexX-gap-4"
                                 to={{ pathname: `/org/${org.subdomain}` }}
                             >
                                 <img src={icon.archive} alt="" />
                                 <p>Xem Spa</p>
                             </Link>
                         </button>
-                        <button
-                            onClick={onClickFavoriteOrg}
-                            className="infoMer-bottom__right"
-                        >
-                            {org?.is_favorite && <img src={icon.rss} alt="" />}
-                            <p>{org?.is_favorite ? "Đang theo dõi" : "Theo dõi"}</p>
-                        </button>
+                        {org?.is_favorite === true ? (
+                            <button
+                                onClick={onFavoriteOrganization}
+                                className="infoMer-bottom__right infoMer-bottom__right-active"
+                            >
+                                <p className="infoMer-bottom__right-active">
+                                    Đang Theo Dõi
+                                </p>
+                            </button>
+                        ) : (
+                            <>
+                                <button
+                                    onClick={onFavoriteOrganization}
+                                    className="infoMer-bottom__right"
+                                >
+                                    <img src={icon.rss} alt="" />
+                                    <p>Theo Dõi</p>
+                                </button>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
@@ -173,7 +192,10 @@ function ComboDetailRight(props: IProps) {
                 <div className="bottom-quantity">
                     <p className="bottom-quantity__text">Số lượng:</p>
                     <div className="bottom-quantity__wrap">
-                        <button onClick={onDescQuantity} className="quantity-btn">
+                        <button
+                            onClick={onDescQuantity}
+                            className="quantity-btn"
+                        >
                             <p>-</p>
                         </button>
                         <input
@@ -190,10 +212,7 @@ function ComboDetailRight(props: IProps) {
                         </button>
                     </div>
                 </div>
-                <div
-                    onClick={handleAddCart}
-                    className="bottom-addCart"
-                >
+                <div onClick={handleAddCart} className="bottom-addCart">
                     <img src={icon.ShoppingCartSimpleWhite} alt="" />
                     <p>Thêm vào giỏ hàng</p>
                 </div>

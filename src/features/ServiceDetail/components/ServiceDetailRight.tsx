@@ -197,7 +197,7 @@ export default function ServiceDetailRight(props: any) {
                     <div className="infoMer-bottom">
                         <button className="infoMer-bottom__left">
                             <Link
-                                className="flex-row"
+                                className="flex-row flexX-gap-4"
                                 to={{ pathname: `/org/${org.subdomain}` }}
                             >
                                 <img src={icon.archive} alt="" />

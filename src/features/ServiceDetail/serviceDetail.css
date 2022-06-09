@@ -361,7 +361,7 @@
 .service-detail .MuiTabPanel-root {
     padding: 0;
 }
-.service-detail .service-detail__button {
+.service-detail .service-detail__bottom {
     display: none;
 }
 .service-detail .detail-right__head-img {
@@ -385,7 +385,7 @@
         position: relative;
     }
     .service-detail .org-evaluate__cnt {
-        padding: 0;
+        padding: 0 0 16px 0;
     }
     .service-detail .detail-left__img img {
         border-radius: unset;
@@ -483,9 +483,7 @@
         line-height: 16px;
         color: #fff;
     }
-    .service-detail .service-detail__org {
-        margin-top: 16px;
-    }
+
     .service-detail .MuiTab-root {
         font-size: 14px;
     }
@@ -501,7 +499,7 @@
         text-decoration: line-through;
         margin-left: 8px;
     }
-    .service-detail .service-detail__button {
+    .service-detail .service-detail__bottom {
         display: block;
         display: flex;
         position: fixed;
@@ -514,7 +512,7 @@
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         grid-gap: 0 8px;
     }
-    .service-detail .service-detail__button button {
+    .service-detail .service-detail__bottom button {
         width: 100%;
         padding: 8px;
         outline: none;
@@ -522,13 +520,13 @@
         border-radius: 8px;
         background-color: var(--purple);
     }
-    .service-detail .service-detail__button button p {
+    .service-detail .service-detail__bottom button p {
         color: #fff;
         font-weight: 500;
         font-size: 12px;
         line-height: 16px;
     }
-    .service-detail .service-detail__button .btn-addcart {
+    .service-detail .service-detail__bottom .btn-addcart {
         display: flex;
         align-items: center;
         justify-content: center;
