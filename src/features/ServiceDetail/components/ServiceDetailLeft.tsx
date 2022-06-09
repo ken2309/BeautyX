@@ -36,7 +36,9 @@ export default function ServiceDetailLeft(props: any) {
         <div className="service-detail__left flex-column">
             <div className="detail-left__img">
                 <img
-                    src={service.image_url ? service.image_url : org.image_url}
+                    src={
+                        service?.image_url ? service?.image_url : org?.image_url
+                    }
                     alt=""
                     onError={(e) => onErrorImg(e)}
                 />
