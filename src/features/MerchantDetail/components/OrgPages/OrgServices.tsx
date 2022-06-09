@@ -37,6 +37,7 @@ function OrgServices(props: IProps) {
                 page: 1,
                 cate_id: choose_cate,
             };
+            dispatch(clearServices());
             dispatch(fetchAsyncServices(values));
         }
     };
@@ -74,9 +75,9 @@ function OrgServices(props: IProps) {
                         style={
                             !choose_cate
                                 ? {
-                                      color: "var(--bgWhite)",
-                                      backgroundColor: "var(--purple)",
-                                  }
+                                    color: "var(--bgWhite)",
+                                    backgroundColor: "var(--purple)",
+                                }
                                 : {}
                         }
                         className="cate-list__item"
@@ -85,8 +86,8 @@ function OrgServices(props: IProps) {
                             style={
                                 !choose_cate
                                     ? {
-                                          color: "var(--bgWhite)",
-                                      }
+                                        color: "var(--bgWhite)",
+                                    }
                                     : {}
                             }
                             className="cate-list__item-title"
@@ -99,9 +100,9 @@ function OrgServices(props: IProps) {
                             style={
                                 choose_cate === item.id
                                     ? {
-                                          color: "#fff",
-                                          backgroundColor: "var(--purple)",
-                                      }
+                                        color: "#fff",
+                                        backgroundColor: "var(--purple)",
+                                    }
                                     : {}
                             }
                             onClick={() => handleChooseCate(item.id)}
@@ -112,8 +113,8 @@ function OrgServices(props: IProps) {
                                 style={
                                     choose_cate === item.id
                                         ? {
-                                              color: "#fff",
-                                          }
+                                            color: "#fff",
+                                        }
                                         : {}
                                 }
                                 className="cate-list__item-title"

@@ -1,7 +1,7 @@
-import {useState, useEffect, useMemo} from 'react'
-export const useElementOnScreen = (options:any, targetRef:any) => {
+import { useState, useEffect, useMemo } from 'react'
+export const useElementOnScreen = (options: any, targetRef: any) => {
     const [isVisibile, setIsVisible] = useState();
-    const callbackFunction = (entries:any) => {
+    const callbackFunction = (entries: any) => {
         const [entry] = entries; //const entry = entries[0]
         setIsVisible(entry.isIntersecting);
     };
@@ -12,7 +12,6 @@ export const useElementOnScreen = (options:any, targetRef:any) => {
         const observer = new IntersectionObserver(callbackFunction, optionsMemo);
         const currentTarget = targetRef.current;
         if (currentTarget) observer.observe(currentTarget);
-
         return () => {
             if (currentTarget) observer.unobserve(currentTarget);
         };

@@ -36,7 +36,11 @@ const initialState: IState = {
 const combosOrgSlice = createSlice({
     initialState,
     name: "ORG_COMBOS",
-    reducers: {},
+    reducers: {
+        clearPrevCombos: (state) => {
+            state.combos = []
+        }
+    },
     extraReducers: {
         [fetchAsyncCombosOrg.pending]: (state) => {
             return { ...state, status: STATUS.LOADING }
@@ -55,4 +59,6 @@ const combosOrgSlice = createSlice({
         },
     }
 })
+const { actions } = combosOrgSlice;
+export const { clearPrevCombos } = actions;
 export default combosOrgSlice.reducer;

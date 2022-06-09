@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { IOrganization } from '../../../../interface/organization';
 import { STATUS } from '../../../../redux/status';
-import { fetchAsyncCombosOrg } from '../../../../redux/org_combos/orgCombosSlice'
+import { fetchAsyncCombosOrg, clearPrevCombos } from '../../../../redux/org_combos/orgCombosSlice'
 import OrgComboItem from './OrgComboItem';
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -21,6 +21,7 @@ function OrgCombos(props: IProps) {
                 org_id: org?.id,
                 page: 1
             }
+            dispatch(clearPrevCombos())
             dispatch(fetchAsyncCombosOrg(values))
         }
     }

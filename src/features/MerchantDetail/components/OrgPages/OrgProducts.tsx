@@ -37,6 +37,7 @@ function OrgProducts(props: IProps) {
                 page: 1,
                 cate_id: choose_cate,
             };
+            dispatch(clearProducts());
             dispatch(fetchAsyncProducts(values));
         }
     };
@@ -73,9 +74,9 @@ function OrgProducts(props: IProps) {
                         style={
                             !choose_cate
                                 ? {
-                                      color: "#fff",
-                                      backgroundColor: "var(--purple)",
-                                  }
+                                    color: "#fff",
+                                    backgroundColor: "var(--purple)",
+                                }
                                 : {}
                         }
                         className="cate-list__item"
@@ -84,8 +85,8 @@ function OrgProducts(props: IProps) {
                             style={
                                 !choose_cate
                                     ? {
-                                          color: "#fff",
-                                      }
+                                        color: "#fff",
+                                    }
                                     : {}
                             }
                             className="cate-list__item-title"
@@ -98,9 +99,9 @@ function OrgProducts(props: IProps) {
                             style={
                                 choose_cate === item.id
                                     ? {
-                                          color: "#fff",
-                                          backgroundColor: "var(--purple)",
-                                      }
+                                        color: "#fff",
+                                        backgroundColor: "var(--purple)",
+                                    }
                                     : {}
                             }
                             onClick={() => handleChooseCate(item.id)}
@@ -111,8 +112,8 @@ function OrgProducts(props: IProps) {
                                 style={
                                     choose_cate === item.id
                                         ? {
-                                              color: "#fff",
-                                          }
+                                            color: "#fff",
+                                        }
                                         : {}
                                 }
                                 className="cate-list__item-title"

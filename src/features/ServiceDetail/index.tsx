@@ -23,6 +23,7 @@ import DetailOrgCard from "./components/DetailOrgCard";
 import useFullScreen from "../../utils/useFullScreen";
 import HeadOrg from "../MerchantDetail/components/HeadOrg";
 import DetailPolicy from "./components/DetailPolicy";
+import DetailRecommend from './components/DetailRecommend';
 
 function ServiceDetail(props: any) {
     const dispatch = useDispatch();
@@ -137,6 +138,7 @@ function ServiceDetail(props: any) {
 
     // call api service detail
     const callServiceDetail = () => {
+        console.log(params.id, SERVICE.service.id)
         if (
             parseInt(params.id) !== SERVICE.service.id ||
             SERVICE.status !== STATUS.SUCCESS
@@ -187,7 +189,7 @@ function ServiceDetail(props: any) {
         callServiceDetail();
         callOrgDetail();
         callServiceComments();
-    }, []);
+    }, [params.id]);
 
     return (
         <>
@@ -276,6 +278,7 @@ function ServiceDetail(props: any) {
                             </TabContext>
                         </div>
                     </div>
+                    <DetailRecommend org={org} />
                     {/* service bottom buttom add cart                                             */}
                     <div className="service-detail__bottom">
                         <button>
