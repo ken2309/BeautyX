@@ -117,7 +117,6 @@ function ServiceDetail(props: any) {
 
     // call api service detail
     const callServiceDetail = () => {
-        console.log(params.id, SERVICE.service.id)
         if (
             parseInt(params.id) !== SERVICE.service.id ||
             SERVICE.status !== STATUS.SUCCESS
