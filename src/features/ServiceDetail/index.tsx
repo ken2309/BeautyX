@@ -39,24 +39,27 @@ function ServiceDetail(props: any) {
     let tabs = [
         { id: 1, title: "Mô tả" },
         { id: 2, title: "Đánh giá" },
-        { id: 4, title: "Hướng dẫn & Điều khoản" },
         { id: 3, title: "Doanh nghiệp" },
+        { id: 4, title: "Hướng dẫn & Điều khoản" },
     ];
 
     let refDesc = useRef<any>();
     let refReview = useRef<any>();
     let refMap = useRef<any>();
+    let refPolicy = useRef<any>();
     const scrollMap = refMap?.current?.offsetTop;
     const scrollDesc = refDesc?.current?.offsetTop;
     const scrollReview = refReview?.current?.offsetTop;
+    const scrollPolicy = refPolicy?.current?.offsetTop;
 
     // handle onclick active menu
     const handleChange = (event: React.SyntheticEvent, value: any) => {
         let top;
         switch (value) {
             case 1:
+                // header height: 49, menu height: 48, padding top: 16px = 113
                 if (is_mobile) {
-                    top = refDesc?.current?.offsetTop;
+                    top = refDesc?.current?.offsetTop - 113;
                 } else {
                     top = refDesc?.current?.offsetTop - 72;
                 }
@@ -64,7 +67,7 @@ function ServiceDetail(props: any) {
                 break;
             case 2:
                 if (is_mobile) {
-                    top = refReview?.current?.offsetTop;
+                    top = refReview?.current?.offsetTop - 113;
                 } else {
                     top = refReview?.current?.offsetTop - 72;
                 }
@@ -72,9 +75,17 @@ function ServiceDetail(props: any) {
                 break;
             case 3:
                 if (is_mobile) {
-                    top = refMap?.current?.offsetTop;
+                    top = refMap?.current?.offsetTop - 113;
                 } else {
                     top = refMap?.current?.offsetTop - 72;
+                }
+                setValue(value);
+                break;
+            case 4:
+                if (is_mobile) {
+                    top = refPolicy?.current?.offsetTop - 113;
+                } else {
+                    top = refPolicy?.current?.offsetTop - 72;
                 }
                 setValue(value);
                 break;
@@ -90,15 +101,20 @@ function ServiceDetail(props: any) {
     // handle scroll active menu
     function handleScroll() {
         if (is_mobile) {
-            if (window.scrollY + 65 < scrollReview) {
+            if (window.scrollY + 113 < scrollReview) {
                 setValue(1);
             } else if (
-                window.scrollY + 65 > scrollDesc &&
-                window.scrollY + 65 < scrollMap
+                window.scrollY + 113 > scrollDesc &&
+                window.scrollY + 113 < scrollMap
             ) {
                 setValue(2);
-            } else if (window.scrollY + 65 > scrollReview) {
+            } else if (
+                window.scrollY + 113 > scrollReview &&
+                window.scrollY + 113 < scrollPolicy
+            ) {
                 setValue(3);
+            } else if (window.scrollY + 113 > scrollMap) {
+                setValue(4);
             }
         } else {
             if (window.scrollY + 72 < scrollReview) {
@@ -108,8 +124,13 @@ function ServiceDetail(props: any) {
                 window.scrollY + 72 < scrollMap
             ) {
                 setValue(2);
-            } else if (window.scrollY + 72 > scrollReview) {
+            } else if (
+                window.scrollY + 72 > scrollReview &&
+                window.scrollY + 72 < scrollPolicy
+            ) {
                 setValue(3);
+            } else if (window.scrollY + 72 > scrollMap) {
+                setValue(4);
             }
         }
     }
@@ -247,7 +268,9 @@ function ServiceDetail(props: any) {
                                         </div>
                                     </TabPanel>
                                     <TabPanel value={value}>
-                                        <DetailPolicy org={org} />
+                                        <div ref={scrollPolicy}>
+                                            <DetailPolicy org={org} />
+                                        </div>
                                     </TabPanel>
                                 </div>
                             </TabContext>
