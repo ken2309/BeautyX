@@ -1,31 +1,38 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import icon from '../../../constants/icon';
-import { IDiscountPar, IITEMS_DISCOUNT } from '../../../interface/discount';
-import { IOrganization } from '../../../interface/organization';
-import { addCart } from '../../../redux/cartSlice';
-import { fetchAsyncCancelFavoriteService, fetchAsyncFavoriteService } from '../../../redux/org_services/serviceSlice';
-import { formatAddCart } from '../../../utils/cart/formatAddCart';
-import onErrorImg from '../../../utils/errorImg';
-import formatPrice from '../../../utils/formatPrice';
-import DetailOrgCard from '../../ServiceDetail/components/DetailOrgCard';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import icon from "../../../constants/icon";
+import { IDiscountPar, IITEMS_DISCOUNT } from "../../../interface/discount";
+import { IOrganization } from "../../../interface/organization";
+import { addCart } from "../../../redux/cartSlice";
+import {
+    fetchAsyncCancelFavoriteService,
+    fetchAsyncFavoriteService,
+} from "../../../redux/org_services/serviceSlice";
+import { formatAddCart } from "../../../utils/cart/formatAddCart";
+import onErrorImg from "../../../utils/errorImg";
+import formatPrice from "../../../utils/formatPrice";
+import PopupSuccess from "../../PopupSuccess";
+import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
 
 interface IProps {
-    discount: IDiscountPar,
-    org: IOrganization,
-    detail: any
+    discount: IDiscountPar;
+    org: IOrganization;
+    detail: any;
 }
 
 function DiscountDetailRight(props: IProps) {
-    const {
-        discount,
-        org,
-        detail
-    } = props;
-    const ITEM_DISCOUNT: IITEMS_DISCOUNT = useSelector((state: any) => state.ORG_DISCOUNTS.ITEM_DISCOUNT);
-    const percent = Math.round(100 - ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price * 100)
-
+    const { discount, org, detail } = props;
+    const [quantity, setQuantity] = useState(1);
+    const [popupSuccess, setPopupSuccess] = useState(false);
+    const dispatch = useDispatch();
+    const ITEM_DISCOUNT: IITEMS_DISCOUNT = useSelector(
+        (state: any) => state.ORG_DISCOUNTS.ITEM_DISCOUNT
+    );
+    const percent = Math.round(
+        100 -
+            (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
+    );
     const { USER } = useSelector((state: any) => state.USER);
     const history = useHistory();
 
@@ -44,12 +51,11 @@ function DiscountDetailRight(props: IProps) {
             history.push("/sign-in");
         }
     };
-    const [quantity, setQuantity] = useState(1);
-    const dispatch = useDispatch();
+
     const onDescQuantity = () => {
         if (quantity > 1) setQuantity(quantity - 1);
     };
-    const is_type = 2
+    const is_type = 2;
     const values = formatAddCart(
         detail,
         org,
@@ -57,10 +63,11 @@ function DiscountDetailRight(props: IProps) {
         quantity,
         ITEM_DISCOUNT?.productable.price,
         discount
-    )
+    );
     const handleAddCart = () => {
-        dispatch(addCart(values))
-    }
+        dispatch(addCart(values));
+        setPopupSuccess(true);
+    };
     return (
         <div className="service-detail__right">
             <div className="detail-right__head">
@@ -82,13 +89,12 @@ function DiscountDetailRight(props: IProps) {
                     </div>
                     <div className="detail-right__name">
                         <p>{detail?.service_name || detail?.product_name}</p>
-                        <div
-                            onClick={onFavorite}
-                            className="favorite"
-                        >
+                        <div onClick={onFavorite} className="favorite">
                             <img
                                 src={
-                                    detail?.is_favorite ? icon.heart : icon.unHeart
+                                    detail?.is_favorite
+                                        ? icon.heart
+                                        : icon.unHeart
                                 }
                                 alt=""
                             />
@@ -132,25 +138,33 @@ function DiscountDetailRight(props: IProps) {
                 </div>
                 <DetailOrgCard org={org} />
             </div>
-            {
-                quantity > 1 &&
+            {quantity > 1 && (
                 <div className="flex-row-sp detail-right__calc">
-                    <span className="total-title">
-                        Tổng tiền
-                    </span>
+                    <span className="total-title">Tổng tiền</span>
                     <div className="total-math">
-                        <span>{formatPrice(ITEM_DISCOUNT?.productable.price * quantity)}đ</span>
+                        <span>
+                            {formatPrice(
+                                ITEM_DISCOUNT?.productable.price * quantity
+                            )}
+                            đ
+                        </span>
                         <span>-{formatPrice(discount.discount_value)}đ</span>
-                        <span>{formatPrice(ITEM_DISCOUNT?.productable.price * quantity - discount.discount_value)}đ</span>
+                        <span>
+                            {formatPrice(
+                                ITEM_DISCOUNT?.productable.price * quantity -
+                                    discount.discount_value
+                            )}
+                            đ
+                        </span>
                     </div>
                 </div>
-            }
-            {
-                quantity > 1 &&
+            )}
+            {quantity > 1 && (
                 <div className="detail-right__warn">
-                    Giá dịch vụ đã thay đổi vì bạn chọn nhiều hơn số lượng được áp dụng mã
+                    Giá dịch vụ đã thay đổi vì bạn chọn nhiều hơn số lượng được
+                    áp dụng mã
                 </div>
-            }
+            )}
             <div className="detail-right__bottom">
                 <div className="bottom-quantity">
                     <p className="bottom-quantity__text">Số lượng:</p>
@@ -180,6 +194,13 @@ function DiscountDetailRight(props: IProps) {
                     <p>Thêm vào giỏ hàng</p>
                 </div>
             </div>
+            <PopupSuccess
+                popup={popupSuccess}
+                setPopup={setPopupSuccess}
+                title={`Đã thêm ${
+                    detail?.service_name || detail?.product_name
+                } vào giỏ hàng`}
+            />
         </div>
     );
 }
