@@ -40,6 +40,7 @@
     background-color: var(--grey);
     width: calc(100% - 8.3% - 12px);
     padding: 12px;
+    overflow: hidden;
 }
 .cate-cnt__right-list{
     flex-wrap: wrap;

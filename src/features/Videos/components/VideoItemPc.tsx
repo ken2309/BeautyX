@@ -6,6 +6,8 @@ import serviceApi from "../../../api/serviceApi";
 import scrollTop from "../../../utils/scrollTop";
 import Review from '../../Reviews/index';
 import icon from '../../../constants/icon';
+import {useElementOnScreen} from '../../../utils/useElementScreen';
+
 // post
 import PostHead from './post/PostHead';
 import PostReaction from './post/PostReaction';
@@ -26,12 +28,20 @@ function VideoItemPc(props: any) {
     const sess = window.sessionStorage.getItem("_WEB_TK");
     const history = useHistory();
     const dispatch = useDispatch();
-  
+    const refCurPost = useRef<any>(null);
     
     const USER = useSelector((state: any) => state.USER);
-    const [cmtDialog,setOpenCmtDialog] = useState<any>();
+    const ORG = useSelector((state:any) => state.ORG);
+    const ORG_COMMENTS = useSelector((state:any) => state.ORG_COMMENTS);
+    const [cmtDialog,setOpenCmtDialog]  = useState<any>();
     const [focus,setFocus] = useState<Boolean>();
     const user = USER.USER;
+    const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.3,
+    };
+    const isVisable = useElementOnScreen(options, refCurPost);
     // ---- interface ----
         interface IReact {
             favoriteCount: number;
@@ -49,7 +59,7 @@ function VideoItemPc(props: any) {
         interface IData {
             org?: IOrganization | null;
             ser?: Service[]|null;
-            cmt?: Comments|undefined
+            cmt?: Comments|undefined|null
         }
     // ---- video ----
         const vd_url = video?.excerpt?.rendered?.slice(10, video?.excerpt?.rendered?.length - 12);
@@ -62,8 +72,9 @@ function VideoItemPc(props: any) {
     // ---- end ----
     // ---- org - service - comments ---- 
         const [data, setData] = useState<IData|undefined>({
-            org: null,
-            ser: null
+            org: ORG,
+            ser: null,
+            cmt: ORG_COMMENTS
         });
         const [reaction, setReaction] = useState<IReact>({
             favoriteCount: 0,
@@ -84,7 +95,7 @@ function VideoItemPc(props: any) {
         }
     //  ---- Init State ---- 
         const getInitData = async () => {
-            const resOrg = await dispatch(fetchAsyncOrg(id));
+            await dispatch(fetchAsyncOrg(id));
             let resSerList: any = [];
             sers.map(async (item: any) => {
                 const resSer = await serviceApi.getDetailById({
@@ -93,17 +104,17 @@ function VideoItemPc(props: any) {
                 });
                 resSerList.push(resSer.data.context)
             })
-            const resCmt = await dispatch(fetchAsyncOrgComments({
+            await dispatch(fetchAsyncOrgComments({
                 org_id: id,
                 page: 1
             }));
+           
             let resData = {
-                org: resOrg.payload,
+                ...data,
                 ser: resSerList,
-                cmt: resCmt.payload
             };
             setData(resData);
-            if (resData.org.is_favorite) {
+            if (resData?.org?.is_favorite) {
                 setReaction({
                     ...reaction,
                     favoriteCount: resData.org.favorites_count,
@@ -113,9 +124,9 @@ function VideoItemPc(props: any) {
             }
         }
         useEffect(()=>{
-            getInitData();
+            isVisable&&ORG.status!=='SUCCESS'&&getInitData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        },[])
+        },[isVisable,ORG.status])
     // handle func
         const handleGoOrgDetail = () => {
             goSignIn();
@@ -191,11 +202,11 @@ function VideoItemPc(props: any) {
             if (reaction.isFavorite) {
                 const res = dispatch(onDeleteFavoriteOrg(data?.org))
                 console.log(res);
-                setReaction({ favoriteCount: reaction.favoriteCount-1 ,isFavorite: false })
+                // setReaction({ favoriteCount: reaction.favoriteCount-1 ,isFavorite: false })
             } else {
                 const res = await dispatch(onFavoriteOrg(data?.org))
                 console.log(res);
-                setReaction({ favoriteCount: reaction.favoriteCount+1 ,isFavorite: true })
+                // setReaction({ favoriteCount: reaction.favoriteCount+1 ,isFavorite: true })
             }
         }
         const goSignIn = () => {
@@ -210,10 +221,13 @@ function VideoItemPc(props: any) {
             setOpenCmtDialog(true);
             setFocus(true)
         }
-    console.log('render: ' + id,reaction)
+        
 
+    console.log('render: ' + id,isVisable)
     return (
-        <>
+        <div
+            ref={refCurPost}
+        >
             <PostHead
                 data={data}
                 video={video}
@@ -233,6 +247,8 @@ function VideoItemPc(props: any) {
                 </div>
                 <PostReaction
                     data={data}
+                    ORG={ORG}
+                    ORG_COMMENTS={ORG_COMMENTS}
                     reaction={reaction}
                     handleReact={handleReact}
                     handleViewAllCmt={handleViewAllCmt}
@@ -289,7 +305,7 @@ function VideoItemPc(props: any) {
                     </div>
                 </div>
             </Dialog>
-        </>
+        </div>
     );
 }
 

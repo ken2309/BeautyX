@@ -24,7 +24,7 @@ export default function Trends(props:any) {
                     <h1>
                         {t("trending.trend")}
                     </h1>
-                    <div className="watch-more">
+                    <div className="watch-more" onClick={()=>setOpenReels(true)}>
                         <img src={icon.watchMore} className="icon" alt="icon watch more"/> {t("trending.watch_all")}
                     </div>
             </div>

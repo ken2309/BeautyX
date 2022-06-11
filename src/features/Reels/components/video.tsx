@@ -1,6 +1,8 @@
 import {useRef, useEffect, useState} from 'react';
+import Avatar from '@mui/material/Avatar';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import EvaluateInput from '../../Reviews/EvaluateInput'
 
 import icon from '../../../constants/icon';
 import { fetchAsyncOrg } from '../../../redux/org/orgSlice';
@@ -138,7 +140,47 @@ export default function Video(props:any){
             >
                 <source src={vd_url} type="video/mp4" />
             </video>
+            <div>
+                <div>
+                    <div>
+                        <img src="" alt=""/>
+                    </div>
+                    <div>
+                        <Avatar
+                            alt={'alo'}
+                            src={data?.org?.image_url}
+                            sx={{ width: 32, height: 32 }} />
+                        <div className='video-item-header_name'>
+                            <span>alo</span>
+                            <span className="video-item-header_time">Đã đămg 5 giờ trước</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div className="video-item_react-ctn">
+                        <div className="react-btn">
+                            <div className="like">
+                                <img className="icon" src={icon.unHeartWhite} alt="" />
+                                <span>100</span>
+                            </div>
+                            <div className="comment" >
+                                <img className="icon" src={icon.comment} alt="" />
+                                <span>alo</span>
+                            </div>
+                            <div className="share_link">
+                                <img className="icon" src={icon.share} alt="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div className="video-item_comments">
+                        
+                    </div>
+                </div>
+            </div>
         </div>
+        
         </>
     )
 }
