@@ -14,6 +14,7 @@ export default function MapOrg(props: any) {
         long: 0,
     });
     const refListOrg: any = useRef();
+    const [openListOrg] = useState(true);
     const handleOpenListOrg = () => {
         refListOrg.current.classList.add("list-org__active");
     };
@@ -60,7 +61,14 @@ export default function MapOrg(props: any) {
             >
                 <img src={icon.arrownRightWhite} alt="" />
             </div>
-            <div ref={refListOrg} className="dialog-map__list">
+            <div
+                ref={refListOrg}
+                className={
+                    openListOrg === true
+                        ? "dialog-map__list list-org__active "
+                        : "dialog-map__list"
+                }
+            >
                 {listOrg?.map((item: any, index: number) => (
                     <OrgMapItem
                         location={location}
