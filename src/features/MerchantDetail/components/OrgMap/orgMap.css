@@ -1,0 +1,182 @@
+.dialog-map__org {
+    width: 90vw;
+    height: 90vh;
+}
+.dialog-map__org .dialog-map__close {
+    position: absolute;
+    top: 14px;
+    right: 60px;
+    z-index: 2;
+    background-color: var(--purple);
+    border-radius: 100px;
+    padding: 2px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    cursor: pointer;
+}
+.dialog-map__org .dialog-map__close-img {
+    width: 30px;
+    height: 30px;
+}
+
+.dialog-map__org .dialog-map__close img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.dialog-map__org .dialog-map__list {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 100%;
+    background-color: var(--bgWhite);
+    margin-left: -100%;
+    transition: all 0.3s ease-in;
+    z-index: 4;
+}
+
+.list-org__active {
+    margin-left: 0 !important;
+    transition: all 0.3s ease-out !important;
+}
+.dialog-map__org .dialog-map__item {
+    display: flex;
+    background-color: var(--bgWhite);
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; */
+    /* border-radius: 16px; */
+    overflow: hidden;
+    grid-gap: 0 16px;
+    padding: 16px;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+}
+.dialog-map__org .dialog-map__item:hover {
+    background-color: var(--bgGray);
+    transition: all 0.2s ease-in;
+}
+.dialog-map__org .dialog-map__item:not(:last-child) {
+    border-bottom: 1px solid rgba(204, 204, 204, 0.539);
+}
+.dialog-map__org .map-item__img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.dialog-map__org .map-item__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/* .dialog-map__org .map-item__content {
+    padding: 16px;
+} */
+.dialog-map__org .map-item__name p {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 24px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+.dialog-map__org .map-item__address p {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 24px;
+    color: #8c8c8c;
+    margin-top: auto;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+.dialog-map__org .map-item__evaluate {
+    display: flex;
+    grid-gap: 0 16px;
+}
+
+.dialog-map__org .evaluate-item {
+    display: flex;
+    grid-gap: 0 4px;
+}
+.dialog-map__item .map-item__content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 4px 0;
+    flex: 1;
+    height: 100%;
+}
+.dialog-map__org .evaluate-item img {
+    width: 20px;
+    height: 20px;
+}
+.dialog-map__org .evaluate-item p {
+    font-size: 14px;
+    font-weight: bold;
+}
+.dialog-map__org .open-list__org.open {
+    z-index: 6;
+    position: absolute;
+    padding: 16px 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    width: max-content;
+    z-index: 3;
+    background-color: var(--purple);
+    border-radius: 0 8px 8px 0;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.dialog-map__org .open-list__org.close {
+    z-index: 6;
+    position: absolute;
+    padding: 16px 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -23px;
+    border-radius: 0px 8px 8px 0px;
+    background-color: var(--purple);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+/* cus google map marker */
+
+.gm-style .gm-style-iw-c {
+    width: max-content;
+    background-color: var(--purple);
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 4px;
+    z-index: 5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -100%);
+    box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    max-width: 500px !important;
+    max-height: 326px !important;
+    min-width: 0px !important;
+    padding-right: 8px !important;
+    margin-right: 8px !important;
+    padding-bottom: 4px !important;
+    padding-top: 4px !important;
+}
+.gm-style .gm-style-iw-t::after {
+    background: var(--purple);
+    z-index: 2;
+}
+.gm-ui-hover-effect {
+    display: none !important;
+}

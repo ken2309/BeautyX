@@ -1,20 +1,24 @@
 import React from "react";
+import "../../../MerchantDetail/style.css";
 import {
     withGoogleMap,
     withScriptjs,
     GoogleMap,
     Marker,
 } from "react-google-maps";
-import icon from "../../../constants/icon";
 
-function MapGoogle(props: any) {
+import icon from "../../../../constants/icon";
+import InfoWindow from "react-google-maps/lib/components/InfoWindow";
+const OrgMapGoogle = (props: any) => {
     const { zoom, location, org } = props;
     const defaultMapOptions = {
-        fullscreenControl: false,
-        zoomControl: false,
-        streetViewControl: false,
-        mapTypeControl: false,
+        fullscreenControl: true,
+        zoomControl: true,
+        streetViewControl: true,
+        mapTypeControl: true,
     };
+
+    // const listMarker = [org].concat(org?.branches);
     return (
         <div>
             <GoogleMap
@@ -22,9 +26,8 @@ function MapGoogle(props: any) {
                 zoom={zoom}
                 center={{ lat: location.lat, lng: location.long }}
             >
-                {org.map((item: any, index: number) => (
+                {org?.map((item: any, index: number) => (
                     <Marker
-                        key={index}
                         icon={{
                             url:
                                 item.latitude === location.lat
@@ -33,11 +36,16 @@ function MapGoogle(props: any) {
                         }}
                         position={{ lat: item.latitude, lng: item.longitude }}
                         //animation={item?.latitude === location.lat ? window.google.maps.Animation.DROP : null}
-                    />
+                    >
+                        {
+                            <InfoWindow>
+                                <div className="tooltip">{item?.name}</div>
+                            </InfoWindow>
+                        }
+                    </Marker>
                 ))}
             </GoogleMap>
         </div>
     );
-}
-
-export default withScriptjs(withGoogleMap(MapGoogle));
+};
+export default withScriptjs(withGoogleMap(OrgMapGoogle));

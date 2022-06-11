@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container } from "@mui/material";
 import { IOrganization } from "../../../interface/organization";
 import onErrorImg from "../../../utils/errorImg";
@@ -11,6 +11,7 @@ import {
 } from "../../../redux/org/orgSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import PopupDetailContact from "./PopupDetailContact";
 
 interface IProps {
     org: IOrganization;
@@ -19,12 +20,11 @@ interface IProps {
 
 function OrgDetail(props: IProps) {
     const { org, galleries } = props;
-    const { totalItem } = useSelector(
-        (state: any) => state.ORG_COMMENTS
-    );
+    const { totalItem } = useSelector((state: any) => state.ORG_COMMENTS);
     const dispatch = useDispatch();
     const history = useHistory();
     const { USER } = useSelector((state: any) => state.USER);
+    const [openPopupContact, setOpenPopupContact] = useState(false);
     const handleFavoriteOrg = () => {
         if (USER) {
             if (org?.is_favorite) {
@@ -194,10 +194,10 @@ function OrgDetail(props: IProps) {
                                     style={
                                         org?.is_favorite
                                             ? {
-                                                backgroundColor:
-                                                    "var(--purple)",
-                                                color: "var(--bgWhite)",
-                                            }
+                                                  backgroundColor:
+                                                      "var(--purple)",
+                                                  color: "var(--bgWhite)",
+                                              }
                                             : {}
                                     }
                                     onClick={handleFavoriteOrg}
@@ -207,12 +207,22 @@ function OrgDetail(props: IProps) {
                                         : "Theo dõi"}
                                 </button>
                                 <br />
-                                <button>Liên hệ tư vấn</button>
+                                <button
+                                    onClick={() => {
+                                        setOpenPopupContact(true);
+                                    }}
+                                >
+                                    Liên hệ tư vấn
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </Container>
+            <PopupDetailContact
+                openPopupContact={openPopupContact}
+                setOpenPopupContact={setOpenPopupContact}
+            />
         </div>
     );
 }

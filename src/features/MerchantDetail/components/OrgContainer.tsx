@@ -24,9 +24,7 @@ interface ITabs {
 
 function OrgContainer(props: IProps) {
     const is_mb = useFullScreen();
-    const { totalItem } = useSelector(
-        (state: any) => state.ORG_COMMENTS
-    );
+    const { totalItem } = useSelector((state: any) => state.ORG_COMMENTS);
     const { org, tab } = props;
     const dispatch = useDispatch();
     let tabs = [
@@ -35,7 +33,7 @@ function OrgContainer(props: IProps) {
         { id: 3, title: "Sản phẩm" },
         { id: 4, title: "Combos" },
         { id: 5, title: is_mb ? "Chi tiết" : "Doanh nghiệp" },
-        { id: 6, title: `Đánh giá (${totalItem > 30 ? '30+' : totalItem})` },
+        { id: 6, title: `Đánh giá (${totalItem > 30 ? "30+" : totalItem})` },
         { id: 7, title: "Hình ảnh" },
     ];
     if (is_mb === false) {
