@@ -1,5 +1,6 @@
 import React from "react";
 import "../../../MerchantDetail/style.css";
+import { IOrganization } from "../../../../interface/organization";
 import {
     withGoogleMap,
     withScriptjs,
@@ -17,16 +18,15 @@ const OrgMapGoogle = (props: any) => {
         streetViewControl: true,
         mapTypeControl: true,
     };
-
-    // const listMarker = [org].concat(org?.branches);
     return (
         <div>
             <GoogleMap
                 defaultOptions={defaultMapOptions}
                 zoom={zoom}
+                defaultCenter={{ lat: location.lat, lng: location.long }}
                 center={{ lat: location.lat, lng: location.long }}
             >
-                {org?.map((item: any, index: number) => (
+                {org?.map((item: IOrganization, index: number) => (
                     <Marker
                         icon={{
                             url:

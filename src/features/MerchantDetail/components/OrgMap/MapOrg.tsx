@@ -1,17 +1,17 @@
-import { Drawer } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import icon from "../../../../constants/icon";
 import { IOrganization } from "../../../../interface/organization";
 import OrgMapGoogle from "./OrgMapGoogle";
 import OrgMapItem from "./OrgMapItem";
+import OrgMapListMB from "./OrgMapListMB";
 
 export default function MapOrg(props: any) {
     const { org } = props;
     const listOrg = [org].concat(org?.branches);
     const key = "AIzaSyDfxBgfHh5HeBw2kVRcpgxgG4lswl50jTg";
     const [location, setLocation] = useState({
-        lat: 0,
-        long: 0,
+        lat: org?.latitude,
+        long: org?.longitude,
     });
     const refListOrg: any = useRef();
     const [openListOrg] = useState(true);
@@ -21,19 +21,19 @@ export default function MapOrg(props: any) {
     const handleCloseListOrg = () => {
         refListOrg.current.classList.remove("list-org__active");
     };
-    useEffect(() => {
-        setLocation({
-            lat: listOrg[0]?.latitude,
-            long: listOrg[0]?.longitude,
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
     const handleSetLocation: any = (listOrg: IOrganization) => {
         setLocation({
             lat: listOrg?.latitude,
             long: listOrg?.longitude,
         });
     };
+    useEffect(() => {
+        setLocation({
+            lat: org?.latitude,
+            long: org?.longitude,
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [org]);
     return (
         <div className="map-cnt">
             <OrgMapGoogle
@@ -86,6 +86,11 @@ export default function MapOrg(props: any) {
                     <img src={icon.arrownLeftWhite} alt="" />
                 </div>
             </div>
+            <OrgMapListMB
+                handleSetLocation={handleSetLocation}
+                listOrg={listOrg}
+                location={location}
+            />
         </div>
     );
 }
