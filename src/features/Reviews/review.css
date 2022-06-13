@@ -140,7 +140,7 @@
 
 .input-btn {
     position: absolute;
-    right: 40px;
+    right: 16px;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
@@ -350,6 +350,7 @@
 
     .org-evaluate__cnt .total-comment {
         padding: 16px 0;
+        font-size: 12px;
     }
 
     .input-btn {

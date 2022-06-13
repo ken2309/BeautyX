@@ -67,13 +67,17 @@ function CartPayment(props: any) {
             data_cart={data_cart}
           />
           {/* payment method for flat form beautyX */}
-          {
-            FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
+          <div
+            style={
+              (FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX) ?
+                { display: "block" } : { display: "none" }
+            }
+          >
             <PaymentMethodCpn
               e={chooseE_wall}
               onPaymentMethodChange={setChooseE_wall}
             />
-          }
+          </div>
         </div>
       </Container>
       <PaymentTotal

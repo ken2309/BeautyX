@@ -19,12 +19,11 @@ function PaymentTotal(props: any) {
   const { t } = useContext(AppContext);
   const FLAT_FORM = EXTRA_FLAT_FORM();
   const USER = useSelector((state: any) => state.USER.USER);
+  const { payments_method } = useSelector((state: any) => state.PAYMENT.PAYMENT)
   const {
     chooseE_wall,
     data_cart,
   } = props;
-  const xxx = useSelector((state: any) => state.PAYMENT);
-  console.log(xxx);
   const history = useHistory();
   const [popup, setPopup] = useState(false);
   const [popupFail, setPopUpFail] = useState(false);
@@ -35,27 +34,14 @@ function PaymentTotal(props: any) {
     .map((item: any) => item.discount);
   const listCouponCode = listDiscount.map((item: any) => item?.coupon_code).filter(Boolean);
 
-  //const payment_method_id = extraPaymentMethodId(payments_method, chooseE_wall);
-  // switch (FLAT_FORM) {
-  //   case FLAT_FORM_TYPE.BEAUTYX:
-  //     payment_method_id = chooseE_wall?.id
-  //     break
-  //   case FLAT_FORM_TYPE.MOMO:
-  //     payment_method_id = payments_method.find((item: any) => item.name_key === FLAT_FORM_TYPE.MOMO)?.id
-  //     break
-  //   case FLAT_FORM_TYPE.TIKI:
-  //     payment_method_id = payments_method.find((item: any) => item.name_key === FLAT_FORM_TYPE.TIKI)?.id
-  //     break
-  //   default:
-  //     break
-  // }
+  const payment_method_id = extraPaymentMethodId(payments_method, chooseE_wall);
 
   const { products, services, combos } = REDUCER_CART(data_cart);
   const params_string = {
     products: products,
     services: services,
     treatment_combo: combos,
-    //payment_method_id: payment_method_id,
+    payment_method_id: payment_method_id,
     coupon_code: listCouponCode.length > 0 ? listCouponCode : [],
     user_address_id: data_cart.address?.id,
     description: data_cart.note,
