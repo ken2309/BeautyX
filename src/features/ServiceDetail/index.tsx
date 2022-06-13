@@ -242,8 +242,8 @@ function ServiceDetail(props: any) {
                             }}
                             className="btn-addcart"
                         >
-                            <p>Thêm vào giỏ hàng</p>
                             <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                            <p>Thêm vào giỏ hàng</p>
                         </button>
                         {/* drawer service detail */}
                         <Drawer

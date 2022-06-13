@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Container } from "@mui/material";
 import { IOrganization } from "../../../interface/organization";
 import onErrorImg from "../../../utils/errorImg";
@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import PopupDetailContact from "./PopupDetailContact";
+import { extraOrgTimeWork } from "./Functions/extraOrg";
 
 interface IProps {
     org: IOrganization;
@@ -25,6 +26,20 @@ function OrgDetail(props: IProps) {
     const history = useHistory();
     const { USER } = useSelector((state: any) => state.USER);
     const [openPopupContact, setOpenPopupContact] = useState(false);
+
+    // time works
+    const now = new Date();
+    const today = now.getDay() + 1;
+    const orgTimes = extraOrgTimeWork(org?.opening_time);
+    const time_works_today = orgTimes?.find(
+        (item: any, index: number) => index + 2 === today
+    );
+    const refListTimeWorks = useRef<any>();
+    const handleOpenSelector = () => {
+        refListTimeWorks.current.classList.toggle("org-time-work__list-active");
+    };
+
+    // handle favorite Org
     const handleFavoriteOrg = () => {
         if (USER) {
             if (org?.is_favorite) {
@@ -36,6 +51,8 @@ function OrgDetail(props: IProps) {
             history.push("/sign-in?1");
         }
     };
+
+    // setting slider
     const settings = {
         dots: true,
         infinite: true,
@@ -64,6 +81,7 @@ function OrgDetail(props: IProps) {
             },
         ],
     };
+
     const onActiveTabGallery = () => {
         dispatch(onActiveTab(7));
     };
@@ -166,17 +184,25 @@ function OrgDetail(props: IProps) {
                                                     className="icon"
                                                 />
                                                 <span className="title">
-                                                    Thời gian mở cửa
+                                                    Thời gian mở cửa{" "}
+                                                    {time_works_today?.day_week}
+                                                    :
                                                 </span>
                                             </div>
                                             <div className="flex-row org-time-work__right">
-                                                <span className="time">
-                                                    09:00 - 12:00
-                                                </span>
-                                                <div className="flex-row-sp org-time-work__right-list">
-                                                    <span className="day-week">
-                                                        Thứ 2 - Thứ 7
-                                                    </span>
+                                                <div
+                                                    onClick={() =>
+                                                        handleOpenSelector()
+                                                    }
+                                                    className="flex-row-sp org-time-work__right-list"
+                                                >
+                                                    {
+                                                        time_works_today?.from_time_opening
+                                                    }{" "}
+                                                    -{" "}
+                                                    {
+                                                        time_works_today?.to_time_opening
+                                                    }
                                                     <img
                                                         src={
                                                             icon.arrowDownPurple
@@ -184,6 +210,47 @@ function OrgDetail(props: IProps) {
                                                         alt=""
                                                     />
                                                 </div>
+                                                {/* selector time_works_today */}
+                                                <ul
+                                                    ref={refListTimeWorks}
+                                                    className="org-time-work__list"
+                                                >
+                                                    {orgTimes?.map(
+                                                        (
+                                                            item: any,
+                                                            index: number
+                                                        ) => (
+                                                            <li
+                                                                style={
+                                                                    index +
+                                                                        2 ===
+                                                                    today
+                                                                        ? {
+                                                                              color: "var(--purple)",
+                                                                          }
+                                                                        : {}
+                                                                }
+                                                                key={index}
+                                                                className="flex-row org-time-list__item"
+                                                            >
+                                                                <span className="org-time-list__left">
+                                                                    {
+                                                                        item.day_week
+                                                                    }
+                                                                </span>
+                                                                <div className="org-time-list__right">
+                                                                    {
+                                                                        item?.from_time_opening
+                                                                    }{" "}
+                                                                    -{" "}
+                                                                    {
+                                                                        item?.to_time_opening
+                                                                    }
+                                                                </div>
+                                                            </li>
+                                                        )
+                                                    )}
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>

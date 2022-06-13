@@ -7,6 +7,7 @@ import { addCart } from "../../../redux/cartSlice";
 import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
+import PopupSuccess from "../../PopupSuccess";
 import "../../ProductDetail/product.css";
 import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
 
@@ -22,6 +23,7 @@ function ComboDetailRight(props: IProps) {
     const price = list_price[0];
     const special_price = list_price[1];
     const percent = Math.round(100 - (special_price / price) * 100);
+    const [popupSuccess, setPopupSuccess] = useState(false);
     //handle add cart
     const [quantity, setQuantity] = useState(1);
     const onDescQuantity = () => {
@@ -32,6 +34,7 @@ function ComboDetailRight(props: IProps) {
         const is_type = 3;
         const values = formatAddCart(combo, org, is_type, quantity, sale_price);
         dispatch(addCart(values));
+        setPopupSuccess(true);
     };
     return (
         <div className="service-detail__right">
@@ -119,6 +122,11 @@ function ComboDetailRight(props: IProps) {
                     <p>Thêm vào giỏ hàng</p>
                 </div>
             </div>
+            <PopupSuccess
+                popup={popupSuccess}
+                setPopup={setPopupSuccess}
+                title={`Đã thêm ${combo?.name} vào giỏ hàng`}
+            />
         </div>
     );
 }

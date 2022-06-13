@@ -11,12 +11,12 @@ import {
 } from "../../../redux/org_products/productSlice";
 import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import { addCart } from "../../../redux/cartSlice";
-import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
 import onErrorImg from "../../../utils/errorImg";
 import {
     onDeleteFavoriteOrg,
     onFavoriteOrg,
 } from "../../../redux/org/orgSlice";
+import PopupSuccess from "../../PopupSuccess";
 
 interface IProps {
     product: Product;
@@ -30,6 +30,7 @@ function ProductDetailRight(props: IProps) {
     const { USER } = useSelector((state: any) => state.USER);
     const [quantity, setQuantity] = useState(1);
     const ORG = useSelector((state: any) => state.ORG);
+    const [popupSuccess, setPopupSuccess] = useState(false);
 
     const onFavorite = () => {
         if (USER) {
@@ -78,6 +79,7 @@ function ProductDetailRight(props: IProps) {
             sale_price
         );
         dispatch(addCart(values));
+        setPopupSuccess(true);
     };
     return (
         <div className="service-detail__right">
@@ -278,6 +280,11 @@ function ProductDetailRight(props: IProps) {
                     <p>Thêm vào giỏ hàng</p>
                 </div>
             </div>
+            <PopupSuccess
+                popup={popupSuccess}
+                setPopup={setPopupSuccess}
+                title={`Đã thêm ${product.product_name} vào giỏ hàng`}
+            />
         </div>
     );
 }

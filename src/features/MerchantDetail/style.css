@@ -152,7 +152,7 @@
 }
 
 .org-detail__cnt .wrap-bot {
-    z-index: 20;
+    z-index: 1000;
     background-color: transparent;
     padding: 0px 32px;
     position: absolute;
@@ -263,6 +263,7 @@
 }
 .org-time-work__right {
     margin-left: 8px;
+    position: relative;
 }
 
 .org-time-work__right-list {
@@ -272,7 +273,29 @@
     border-radius: 6px;
     font-size: 14px;
     line-height: 18px;
-    font-weight: 600;
+    font-weight: 700;
+}
+.org-time-work__list {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 16px;
+    position: absolute;
+    background-color: var(--bgWhite);
+    bottom: -20px;
+    right: 0;
+    z-index: 9999;
+    transform: translateY(100%);
+    width: max-content;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+.org-time-work__list-active {
+    visibility: visible;
+    opacity: 1;
+    bottom: -10px;
+    transition: all 0.3s ease-in-out;
 }
 
 /* org container */
@@ -475,6 +498,19 @@
 
 .map-org-detail__item .branch-detail {
     padding-left: 8px;
+}
+.map-org-detail__item .rate {
+    margin-top: 4px;
+}
+.map-org-detail__item .address-text {
+    font-size: 10px;
+    font-weight: bold;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
 }
 
 .map-org-detail__item .branch-detail .name {
@@ -776,7 +812,7 @@
 }
 
 .org-time-work__right-list {
-    font-size: 12px;
+    font-size: 14px;
     padding: 4px 8px;
     line-height: unset;
 }

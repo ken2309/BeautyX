@@ -230,7 +230,7 @@ function ComboDetail() {
                     {/* btn add cart */}
                     <div className="service-detail__bottom">
                         <button>
-                            <p>Buy now</p>
+                            <p>Mua ngay</p>
                         </button>
                         <button
                             onClick={() => {
@@ -238,8 +238,8 @@ function ComboDetail() {
                             }}
                             className="btn-addcart"
                         >
-                            <p>Add to cart</p>
                             <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                            <p>Thêm vào giỏ hàng</p>
                         </button>
                     </div>
                     <Drawer
