@@ -36,6 +36,7 @@ import ComboDetail from "../features/ComboDetail";
 import DiscountDetail from "../features/DiscountDetail";
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 import CategoryTree from "../features/CategoryTree";
+import Booking from "../features/Booking";
 
 
 // feature mobile
@@ -172,6 +173,10 @@ function RouterConfig(props: any) {
     {
       path:"/-danh-muc/",
       component : <CategoryTree/>
+    },
+    {
+      path:"/dat-hen",
+      component: <Booking/>
     }
   ];
   const routesPrivate = [

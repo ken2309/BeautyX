@@ -405,6 +405,11 @@
     grid-gap: 0 8px;
     cursor: pointer;
 }
+.bottom-buy__now{
+    height: 40px;
+    margin-right: 16px;
+    background-color: var(--orange) !important;
+}
 
 .service-detail .bottom-addCart p {
     color: #fff;
@@ -473,7 +478,7 @@
 }
 
 .detailPolicy-useGuild__bot {
-    background-color: var(--purple);
+    background-color: var(--red_2);
     padding: 16px;
 }
 
@@ -830,12 +835,16 @@
     }
 
     .active-mb .bottom-addCart {
+        width: 100%;
         padding: 8px;
         align-items: center;
         justify-content: center;
         font-weight: 500;
         font-size: 12px;
         line-height: 16px;
+    }
+    .bottom-buy__now{
+        margin: 0px;
     }
 
     .active-mb .detail-right__percent p {
@@ -882,7 +891,6 @@
         line-height: 24px;
     }
     .detailPolicy-useGuild__bot {
-        background-color: var(--purple);
         padding: 12px;
     }
 

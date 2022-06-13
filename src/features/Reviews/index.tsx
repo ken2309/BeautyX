@@ -6,7 +6,6 @@ import EvaluateInput from "./EvaluateInput";
 import TotalStartEvaluate from "./TotalStartEvaluate";
 import { useDispatch, useSelector } from "react-redux";
 import { postAsyncOrgComments } from "../../redux/org/orgCommentsSlice";
-import mediaApi from "../../api/mediaApi";
 import { postAsyncComment } from "../../redux/org_services/serviceSlice";
 import { postAsyncProductComment } from "../../redux/org_products/productSlice";
 import { postCommentCombo } from "../../redux/org_combos/comboSlice";
@@ -21,10 +20,11 @@ interface IProps {
     id: number | undefined;
     detail_id?: number;
     refReview?: any;
+    changeStyle?: any
 }
 
 function Review(props: IProps) {
-    const { comments, totalItem, commentable_type, id, detail_id, page } =
+    const { comments, totalItem, commentable_type, id, detail_id, page, changeStyle } =
         props;
     const USER = useSelector((state: any) => state.USER);
     const user = USER.USER;
@@ -55,6 +55,11 @@ function Review(props: IProps) {
 
     const handlePostComment = () => {
         if (comment.text.length > 0 && user) {
+            setComment({
+                ...comment,
+                text: "",
+                image_url: null
+            });
             switch (commentable_type) {
                 case "ORGANIZATION":
                     return dispatch(
@@ -85,7 +90,6 @@ function Review(props: IProps) {
                         })
                     );
             }
-            setComment({ text: "", image_url: null });
         } else if (!user) {
             history.push("/sign-in?1");
         }
@@ -95,33 +99,6 @@ function Review(props: IProps) {
         if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
             handlePostComment();
         }
-    };
-
-    //handle post media
-    const onChangeMedia = (e: any) => {
-        const media = e.target.files[0];
-        if (user && media) {
-            handlePostMedia(media);
-        } else if (!user) {
-            history.push("/sign-in?1");
-        }
-    };
-    const handlePostMedia = async (media: any) => {
-        let formData = new FormData();
-        formData.append("file", media);
-        try {
-            const res = await mediaApi.postMedia(formData);
-            setComment({
-                ...comment,
-                image_url: res.data.context.original_url,
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const onRemoveImgTemp = () => {
-        setComment({ ...comment, image_url: null });
     };
     return (
         <>
@@ -136,8 +113,8 @@ function Review(props: IProps) {
                     handleKeyDown={handleKeyDown}
                     handlePostComment={handlePostComment}
                     user={user}
-                    onChangeMedia={onChangeMedia}
-                    onRemoveImgTemp={onRemoveImgTemp}
+                    setComment={setComment}
+                    changeStyle={changeStyle}
                 />
                 {totalItem && totalItem > 0 ? (
                     <span className="total-comment">

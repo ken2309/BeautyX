@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import icon from '../../../constants/icon';
@@ -12,6 +12,7 @@ import {
 import OrgSearch from './OrgPages/OrgSearch/OrgSearch';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import _, { debounce } from 'lodash';
+import { getTotal } from '../../../redux/cartSlice';
 
 interface IProps {
     org: IOrganization,
@@ -82,6 +83,10 @@ function HeadOrg(props: IProps) {
         setKeyword(e.target.value)
         getByKeyword(e.target.value)
     }
+    const carts = useSelector((state: any) => state.carts);
+    useEffect(() => {
+        dispatch(getTotal());
+    }, [dispatch, carts]);
 
 
     return (
@@ -122,6 +127,9 @@ function HeadOrg(props: IProps) {
                         className='mb-head-org-cnt__button'
                         onClick={() => history.push('/cart')}
                     >
+                        <div className="badge">
+                            {carts.cartQuantity}
+                        </div>
                         <div className="icon-btn">
                             <img src={icon.ShoppingCartSimple} alt="" />
                         </div>

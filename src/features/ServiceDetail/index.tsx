@@ -35,7 +35,10 @@ function ServiceDetail(props: any) {
     const is_mobile = useFullScreen();
     const service = SERVICE.service;
     const org = ORG.org;
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState({
+        NOW: true,
+        open: false
+    });
     const [value, setValue] = useState<any>(1);
 
     let tabs = [
@@ -158,7 +161,7 @@ function ServiceDetail(props: any) {
                     {/* service head detail */}
                     <div className="service-detail__head">
                         <ServiceDetailLeft org={org} service={service} />
-                        <ServiceDetailRight org={org} service={service} />
+                        <ServiceDetailRight org={org} service={service} NOW={open.NOW} />
                     </div>
                     {/* service body */}
                     <div className="service-detail__body">
@@ -233,12 +236,17 @@ function ServiceDetail(props: any) {
                     </div>
                     {/* service bottom buttom add cart */}
                     <div className="service-detail__bottom">
-                        <button>
-                            <p>Mua ngay</p>
+                        <button
+                            onClick={() => {
+                                setOpen({ NOW: true, open: true });
+                            }}
+                            style={{ backgroundColor: "var(--orange)" }}
+                        >
+                            <p>Đặt hẹn ngay</p>
                         </button>
                         <button
                             onClick={() => {
-                                setOpen(true);
+                                setOpen({ NOW: false, open: true });
                             }}
                             className="btn-addcart"
                         >
@@ -247,15 +255,17 @@ function ServiceDetail(props: any) {
                         </button>
                         {/* drawer service detail */}
                         <Drawer
-                            open={open}
+                            open={open.open}
                             anchor="bottom"
-                            onClose={() => setOpen(false)}
+                            onClose={() => setOpen({ ...open, open: false })}
                         >
                             <div className="active-mb">
                                 <div className="service-detail">
                                     <ServiceDetailRight
                                         service={service}
                                         org={org}
+                                        setOpenDrawer={setOpen}
+                                        NOW={open.NOW}
                                     />
                                 </div>
                             </div>

@@ -1,19 +1,16 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import icon from "../../../constants/icon";
-import { IDiscountPar, IITEMS_DISCOUNT } from "../../../interface/discount";
-import { IOrganization } from "../../../interface/organization";
-import { addCart } from "../../../redux/cartSlice";
-import {
-    fetchAsyncCancelFavoriteService,
-    fetchAsyncFavoriteService,
-} from "../../../redux/org_services/serviceSlice";
-import { formatAddCart } from "../../../utils/cart/formatAddCart";
-import onErrorImg from "../../../utils/errorImg";
-import formatPrice from "../../../utils/formatPrice";
-import PopupSuccess from "../../PopupSuccess";
-import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import icon from '../../../constants/icon';
+import { IDiscountPar, IITEMS_DISCOUNT } from '../../../interface/discount';
+import { IOrganization } from '../../../interface/organization';
+import { addCart } from '../../../redux/cartSlice';
+import { fetchAsyncCancelFavoriteService, fetchAsyncFavoriteService } from '../../../redux/org_services/serviceSlice';
+import { clearAllServices } from '../../../redux/servicesBookSlice';
+import { formatAddCart } from '../../../utils/cart/formatAddCart';
+import onErrorImg from '../../../utils/errorImg';
+import formatPrice from '../../../utils/formatPrice';
+import DetailOrgCard from '../../ServiceDetail/components/DetailOrgCard';
 
 interface IProps {
     discount: IDiscountPar;
@@ -24,14 +21,13 @@ interface IProps {
 function DiscountDetailRight(props: IProps) {
     const { discount, org, detail } = props;
     const [quantity, setQuantity] = useState(1);
-    const [popupSuccess, setPopupSuccess] = useState(false);
     const dispatch = useDispatch();
     const ITEM_DISCOUNT: IITEMS_DISCOUNT = useSelector(
         (state: any) => state.ORG_DISCOUNTS.ITEM_DISCOUNT
     );
     const percent = Math.round(
         100 -
-            (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
+        (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
     );
     const { USER } = useSelector((state: any) => state.USER);
     const history = useHistory();
@@ -65,9 +61,19 @@ function DiscountDetailRight(props: IProps) {
         discount
     );
     const handleAddCart = () => {
-        dispatch(addCart(values));
-        setPopupSuccess(true);
-    };
+        dispatch(addCart(values))
+    }
+    //handle booking now
+    const onBookingNow = () => {
+        const TYPE = "BOOK_NOW";
+        const service = { ...detail, discount: discount }
+        const services = [{ service, quantity: quantity }];
+        history.push({
+            pathname: "/dat-hen",
+            state: { org, services, TYPE }
+        })
+        dispatch(clearAllServices())
+    }
     return (
         <div className="service-detail__right">
             <div className="detail-right__head">
@@ -152,7 +158,7 @@ function DiscountDetailRight(props: IProps) {
                         <span>
                             {formatPrice(
                                 ITEM_DISCOUNT?.productable.price * quantity -
-                                    discount.discount_value
+                                discount.discount_value
                             )}
                             đ
                         </span>
@@ -189,18 +195,18 @@ function DiscountDetailRight(props: IProps) {
                         </button>
                     </div>
                 </div>
-                <div onClick={handleAddCart} className="bottom-addCart">
-                    <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                    <p>Thêm vào giỏ hàng</p>
+                <div className="flex-row">
+                    <div
+                        onClick={onBookingNow}
+                        className="bottom-addCart bottom-buy__now">
+                        <p>Đặt hẹn ngay</p>
+                    </div>
+                    <div onClick={handleAddCart} className="bottom-addCart">
+                        <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                        <p>Thêm vào giỏ hàng</p>
+                    </div>
                 </div>
             </div>
-            <PopupSuccess
-                popup={popupSuccess}
-                setPopup={setPopupSuccess}
-                title={`Đã thêm ${
-                    detail?.service_name || detail?.product_name
-                } vào giỏ hàng`}
-            />
         </div>
     );
 }

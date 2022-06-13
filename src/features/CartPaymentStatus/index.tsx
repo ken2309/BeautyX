@@ -11,6 +11,7 @@ import PaymentQr from './components/PaymentQr';
 import PaymentInfo from './components/PaymentInfo';
 import PaymentConfirm from './components/PaymentConfirm';
 import useGetMessageTiki from '../../rootComponents/tiki/useGetMessageTiki';
+import apointmentApi from '../../api/apointmentApi';
 
 const timerRender = [0];
 const ORDER_STATUS = ['PENDING', 'PAID', 'CANCELED_BY_USER']
@@ -22,13 +23,29 @@ function CartPaymentStatus() {
     const carts = useSelector((state: any) => state.carts);
     const list = carts.cartList.filter((item: any) => item.isConfirm === true);
     const services = list.filter((item: any) => item.is_type === 2);
-    const location = useLocation();
-    const res: any = location?.state;
+    const location: any = useLocation();
+    const res: any = location?.state?.state_payment;
     const intervalRef = useRef<any>();
     const transaction_uuid = res?.payment_gateway?.transaction_uuid;
+    const action = location?.state?.action
+    console.log(action)
     window.onbeforeunload = function () {
         return 'Are you sure you want to leave?';
     };
+    const handlePostApp = async () => {
+        const params = {
+            order_id: action.order_id,
+            service_ids: action.service_ids,
+            branch_id: action.branch,
+            time_start: action.time_start,
+            note: action.note,
+        }
+        try {
+            await apointmentApi.postAppointment(params, action.org_id);
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const handleGetPaymentStatus = async (_status: boolean) => {
         try {
@@ -39,6 +56,9 @@ function CartPaymentStatus() {
             const status = res_status.data.context.status;
             switch (status) {
                 case "PAID":
+                    if (action) {
+                        handlePostApp()
+                    }
                     setOrderStatus(status)
                     timerRender[0] = -1;
                     break;

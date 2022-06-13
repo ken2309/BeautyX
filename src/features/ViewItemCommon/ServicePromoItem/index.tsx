@@ -34,7 +34,7 @@ function ServicePromoItem(props: IProps) {
                     onError={(e) => onErrorImg(e)}
                 />
                 <div className="ser-promo">
-                    {service.discount_percent > 0 ? (
+                    {(service.discount_percent > 0 && service.discount_percent < 50) ? (
                         <div className="ser-promo__percent">
                             Giảm {Math.round(service?.discount_percent)}
                             %
@@ -64,7 +64,7 @@ function ServicePromoItem(props: IProps) {
                     ) : (
                         <>
                             <span>{formatPrice(service?.special_price)}đ</span>
-                            <span>{formatPrice(service?.price)}đ</span>
+                            {service?.discount_percent < 50 && <span>{formatPrice(service?.price)}đ</span>}
                         </>
                     )}
                 </div>

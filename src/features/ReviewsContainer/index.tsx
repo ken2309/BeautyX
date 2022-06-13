@@ -4,9 +4,7 @@ import './style.css'
 import useFullScreen from '../../utils/useFullScreen';
 import Review from '../Reviews';
 import { IComment } from '../../interface/comments'
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { useDispatch } from 'react-redux';
-import { fetchAsyncOrgComments } from '../../redux/org/orgCommentsSlice';
+
 
 interface IProps {
     open: boolean,
@@ -21,19 +19,9 @@ interface IProps {
 function ReviewsContainer(props: IProps) {
     const { open, setOpen, comments, totalItem, org_id, page } = props;
     const IS_MB = useFullScreen();
-    const dispatch = useDispatch();
+
     const anchor = IS_MB ? "bottom" : "right";
-    const onViewMore = () => {
-        console.log('xxx')
-        if (totalItem < 15 && comments.length < totalItem) {
-            dispatch(
-                fetchAsyncOrgComments({
-                    org_id: org_id,
-                    page: page + 1,
-                })
-            );
-        }
-    }
+
     return (
         <Drawer
             open={open}
@@ -41,20 +29,14 @@ function ReviewsContainer(props: IProps) {
             onClose={() => setOpen(false)}
         >
             <div className="all-review-cnt">
-                <InfiniteScroll
-                    dataLength={comments.length}
-                    loader={<></>}
-                    hasMore={true}
-                    next={onViewMore}
-                >
-                    <Review
-                        commentable_type="ORGANIZATION"
-                        comments={comments}
-                        totalItem={totalItem}
-                        id={org_id}
-                        page={page}
-                    />
-                </InfiniteScroll>
+                <Review
+                    commentable_type="ORGANIZATION"
+                    comments={comments}
+                    totalItem={totalItem}
+                    id={org_id}
+                    page={page}
+                    changeStyle={true}
+                />
             </div>
         </Drawer>
     );
