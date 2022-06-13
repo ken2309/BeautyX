@@ -95,11 +95,11 @@ const cart = createSlice({
                         (cartTotal: any, cartItem: any) => {
                               const { quantity, price, isConfirm } = cartItem;
                               if (isConfirm === true) {
-                                    console.log('xxx')
                                     const itemTotal = price * quantity;
                                     cartTotal.total += itemTotal;
-                                    cartTotal.quantity += quantity;
+                                    //cartTotal.quantity += quantity;
                               }
+                              cartTotal.quantity += quantity;
                               return cartTotal;
                         },
                         {
