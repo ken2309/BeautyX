@@ -405,6 +405,11 @@
     grid-gap: 0 8px;
     cursor: pointer;
 }
+.bottom-buy__now{
+    height: 40px;
+    margin-right: 16px;
+    background-color: var(--orange) !important;
+}
 
 .service-detail .bottom-addCart p {
     color: #fff;
@@ -423,6 +428,10 @@
 
 .service-detail .service-detail__description {
     margin-bottom: 24px;
+}
+.service-detail .service-detail__description p {
+    margin-bottom: 24px;
+    line-height: 20px;
 }
 
 .service-detail .service-detail__comment {
@@ -469,7 +478,7 @@
 }
 
 .detailPolicy-useGuild__bot {
-    background-color: var(--purple);
+    background-color: var(--red_2);
     padding: 16px;
 }
 
@@ -531,7 +540,10 @@
         padding: 0 0 92px 0;
         position: relative;
     }
-
+    .service-detail .service-detail__description p {
+        font-size: 12px;
+        line-height: 16px;
+    }
     .service-detail .org-evaluate__cnt {
         padding: 0 0 16px 0;
     }
@@ -823,12 +835,16 @@
     }
 
     .active-mb .bottom-addCart {
+        width: 100%;
         padding: 8px;
         align-items: center;
         justify-content: center;
         font-weight: 500;
         font-size: 12px;
         line-height: 16px;
+    }
+    .bottom-buy__now{
+        margin: 0px;
     }
 
     .active-mb .detail-right__percent p {
@@ -875,7 +891,6 @@
         line-height: 24px;
     }
     .detailPolicy-useGuild__bot {
-        background-color: var(--purple);
         padding: 12px;
     }
 

@@ -6,6 +6,7 @@ import { IDiscountPar, IITEMS_DISCOUNT } from '../../../interface/discount';
 import { IOrganization } from '../../../interface/organization';
 import { addCart } from '../../../redux/cartSlice';
 import { fetchAsyncCancelFavoriteService, fetchAsyncFavoriteService } from '../../../redux/org_services/serviceSlice';
+import { addServiceBookNow, clearAllServices } from '../../../redux/servicesBookSlice';
 import { formatAddCart } from '../../../utils/cart/formatAddCart';
 import onErrorImg from '../../../utils/errorImg';
 import formatPrice from '../../../utils/formatPrice';
@@ -60,6 +61,17 @@ function DiscountDetailRight(props: IProps) {
     )
     const handleAddCart = () => {
         dispatch(addCart(values))
+    }
+    //handle booking now
+    const onBookingNow = () => {
+        const TYPE = "BOOK_NOW";
+        const service = {...detail, discount: discount}
+        const services = [{service, quantity: quantity}];
+        history.push({
+            pathname: "/dat-hen",
+            state: { org, services, TYPE }
+        })
+        dispatch(clearAllServices())
     }
     return (
         <div className="service-detail__right">
@@ -175,9 +187,16 @@ function DiscountDetailRight(props: IProps) {
                         </button>
                     </div>
                 </div>
-                <div onClick={handleAddCart} className="bottom-addCart">
-                    <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                    <p>Thêm vào giỏ hàng</p>
+                <div className="flex-row">
+                    <div
+                        onClick={onBookingNow}
+                        className="bottom-addCart bottom-buy__now">
+                        <p>Đặt hẹn ngay</p>
+                    </div>
+                    <div onClick={handleAddCart} className="bottom-addCart">
+                        <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                        <p>Thêm vào giỏ hàng</p>
+                    </div>
                 </div>
             </div>
         </div>

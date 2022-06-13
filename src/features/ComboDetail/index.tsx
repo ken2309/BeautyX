@@ -25,6 +25,11 @@ import icon from "../../constants/icon";
 import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
 import HeadOrg from "../MerchantDetail/components/HeadOrg";
 import useFullScreen from "../../utils/useFullScreen";
+import {
+    handleChangeScroll,
+    handleScroll,
+} from "../ServiceDetail/onScrollChange";
+import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
 
 function ComboDetail() {
     const { t } = useContext(AppContext);
@@ -35,77 +40,44 @@ function ComboDetail() {
     const { COMBO, COMMENTS } = useSelector((state: any) => state.COMBO);
     const is_mobile = useFullScreen();
     const [open, setOpen] = useState(false);
+    const [value, setValue] = useState<any>(1);
+
+    let tabs = [
+        { id: 1, title: "Mô tả" },
+        { id: 2, title: "Đánh giá" },
+        { id: 3, title: "Doanh nghiệp" },
+        { id: 4, title: "Hướng dẫn & Điều khoản" },
+    ];
+
+    const org = ORG.org;
+    const combo = COMBO.combo;
 
     let refDesc = useRef<any>();
     let refReview = useRef<any>();
     let refMap = useRef<any>();
+    let refPolicy = useRef<any>();
     const scrollMap = refMap?.current?.offsetTop;
     const scrollDesc = refDesc?.current?.offsetTop;
     const scrollReview = refReview?.current?.offsetTop;
+    const scrollPolicy = refPolicy?.current?.offsetTop;
 
     // handle onclick active menu
     const handleChange = (event: React.SyntheticEvent, value: any) => {
-        let top;
-        switch (value) {
-            case 1:
-                if (is_mobile) {
-                    top = refDesc?.current?.offsetTop;
-                } else {
-                    top = refDesc?.current?.offsetTop - 72;
-                }
-                setValue(value);
-                break;
-            case 2:
-                if (is_mobile) {
-                    top = refReview?.current?.offsetTop;
-                } else {
-                    top = refReview?.current?.offsetTop - 72;
-                }
-                setValue(value);
-                break;
-            case 3:
-                if (is_mobile) {
-                    top = refMap?.current?.offsetTop;
-                } else {
-                    top = refMap?.current?.offsetTop - 72;
-                }
-                setValue(value);
-                break;
-            default:
-                break;
-        }
+        const top = handleChangeScroll(
+            is_mobile,
+            value,
+            setValue,
+            refDesc,
+            refReview,
+            refMap,
+            refPolicy
+        );
         window.scrollTo({
             top: top,
             behavior: "smooth",
         });
     };
 
-    // handle scroll active menu
-    function handleScroll() {
-        if (is_mobile) {
-            if (window.scrollY + 16 < scrollReview) {
-                setValue(1);
-            } else if (
-                window.scrollY + 16 > scrollDesc &&
-                window.scrollY + 16 < scrollMap
-            ) {
-                setValue(2);
-            } else if (window.scrollY + 16 > scrollReview) {
-                setValue(3);
-            }
-        } else {
-            if (window.scrollY + 72 < scrollReview) {
-                setValue(1);
-            } else if (
-                window.scrollY + 72 > scrollDesc &&
-                window.scrollY + 72 < scrollMap
-            ) {
-                setValue(2);
-            } else if (window.scrollY + 72 > scrollReview) {
-                setValue(3);
-            }
-        }
-    }
     const callOrgDetail = () => {
         if (
             parseInt(params.org_id) !== ORG.org?.id ||
@@ -142,9 +114,30 @@ function ComboDetail() {
     };
 
     useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", () =>
+            handleScroll(
+                is_mobile,
+                setValue,
+                scrollReview,
+                scrollDesc,
+                scrollMap,
+                scrollPolicy
+            )
+        );
         return () => {
-            window.removeEventListener("scroll", handleScroll, false);
+            window.removeEventListener(
+                "scroll",
+                () =>
+                    handleScroll(
+                        is_mobile,
+                        setValue,
+                        scrollReview,
+                        scrollDesc,
+                        scrollMap,
+                        scrollPolicy
+                    ),
+                false
+            );
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     });
@@ -154,16 +147,6 @@ function ComboDetail() {
         callComboDetail();
         callComboComments();
     }, []);
-
-    const [value, setValue] = useState<any>(1);
-    let tabs = [
-        { id: 1, title: "Mô tả" },
-        { id: 2, title: "Đánh giá" },
-        { id: 3, title: "Doanh nghiệp" },
-    ];
-
-    const org = ORG.org;
-    const combo = COMBO.combo;
 
     return (
         <div className="product">
@@ -233,6 +216,11 @@ function ComboDetail() {
                                                     </>
                                                 )}
                                             </div>
+                                        </div>
+                                    </TabPanel>
+                                    <TabPanel value={value}>
+                                        <div ref={refPolicy}>
+                                            <DetailPolicy org={org} />
                                         </div>
                                     </TabPanel>
                                 </div>

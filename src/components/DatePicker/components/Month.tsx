@@ -13,8 +13,7 @@ function Month(props: any) {
             setLocale("en");
         }
     }, [language]);
-    console.log("dayjs :>> ", dayjs().month() + 1);
-    console.log("thisMonth :>> ", thisMonth);
+
     return (
         <div className={props.Class}>
             <div

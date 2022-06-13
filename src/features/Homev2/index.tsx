@@ -6,7 +6,7 @@ import HomeCard from './components/HomeCard';
 import HomeProvince from './components/HomeProvince';
 import HomeServicesRe from './components/HomeServicesRe';
 import HomeDiscount from '../HomeDiscounts';
-import CategoryTree from '../CategoryTree';
+//import CategoryTree from '../CategoryTree';
 
 import { Container } from '@mui/material';
 import './home-se.css'
@@ -19,11 +19,11 @@ function HomeSecond(props: any) {
                 <HomeTags />
             </Container>
             <HomeDiscount />
-            <div className="home-cate-tree-cnt">
+            {/* <div className="home-cate-tree-cnt">
                 <Container>
                     <CategoryTree />
                 </Container>
-            </div>
+            </div> */}
             <Container>
                 <HomePromo />
                 <HomeDeal />

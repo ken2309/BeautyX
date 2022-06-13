@@ -1,6 +1,6 @@
 import EvaluateInput from '../../../Reviews/EvaluateInput';
 import icon from "../../../../constants/icon";
-export default function PostComment (props: any){
+export default function PostComment(props: any) {
     const {
         data,
         video,
@@ -10,8 +10,7 @@ export default function PostComment (props: any){
         handleKeyDown,
         user,
         handlePostComment,
-        onChangeMedia,
-        onRemoveImgTemp
+        setComment
     } = props;
     const PreviewComment = ({ index, val }: any) => {
         let body
@@ -48,20 +47,20 @@ export default function PostComment (props: any){
                 </div>
         )
     }
-    return(
+    return (
         <div className="video-item_comments">
-            { 
-                (data?.cmt?.totalItem &&data?.cmt?.totalItem > 0)&&
-                    <>
-                        <div className="video-item-comments-preview">
-                            {
-                                data?.cmt?.comments?.map((item: any, index: any) => <PreviewComment key={index} val={item} />).slice(0, 2)
-                            }
-                        </div>
-                        <div className="video-item-comments-read_all" onClick={handleViewAllCmt}>
-                            xem toàn bộ {data?.cmt?.totalItem} <img src={icon.vector_down} alt="icon" />
-                        </div>
-                    </>
+            {
+                (data?.cmt?.totalItem && data?.cmt?.totalItem > 0) &&
+                <>
+                    <div className="video-item-comments-preview">
+                        {
+                            data?.cmt?.comments?.map((item: any, index: any) => <PreviewComment key={index} val={item} />).slice(0, 2)
+                        }
+                    </div>
+                    <div className="video-item-comments-read_all" onClick={handleViewAllCmt}>
+                        xem toàn bộ {data?.cmt?.totalItem} <img src={icon.vector_down} alt="icon" />
+                    </div>
+                </>
             }
             <EvaluateInput
                 handleOnchange={handleComment}
@@ -69,8 +68,7 @@ export default function PostComment (props: any){
                 handleKeyDown={handleKeyDown}
                 user={user}
                 handlePostComment={handlePostComment}
-                onChangeMedia={onChangeMedia}
-                onRemoveImgTemp={onRemoveImgTemp}
+                setComment={setComment}
             />
         </div>
     )

@@ -1,27 +1,30 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAsyncServices, clearServices } from '../../../redux/org_services/orgServivesSlice';
 import { extraParamsUrl } from '../../../utils/extraParamsUrl';
 import { STATUS } from '../../../redux/status';
 import { Service } from '../../../interface/service';
 import ServiceItem from '../../ViewItemCommon/ServiceItem';
+import { fetchAsyncServicesRec } from '../../../redux/org_services/serviceSlice'
 
 
 function DetailRecommend(props: any) {
     const params: any = extraParamsUrl();
     const { org } = props;
     const dispatch = useDispatch();
-    const { SERVICES } = useSelector((state: any) => state.ORG_SERVICES);
-    const { SERVICE } = useSelector((state: any) => state.SERVICE);
+    const { SERVICE, SERVICES_REC } = useSelector((state: any) => state.SERVICE);
     const callServicesRecommend = () => {
         if (SERVICE.status === STATUS.SUCCESS) {
-            const values = {
-                page: 1,
-                org_id: params.org,
-                cate_id: SERVICE.service.category?.id
+            if (
+                SERVICES_REC.cate_id !== SERVICE.service.category?.id ||
+                SERVICES_REC.status !== STATUS.SUCCESS
+            ) {
+                const values = {
+                    page: 1,
+                    org_id: params.org,
+                    cate_id: SERVICE.service.category?.id
+                }
+                dispatch(fetchAsyncServicesRec(values))
             }
-            dispatch(clearServices())
-            dispatch(fetchAsyncServices(values))
         }
     }
     useEffect(() => {
@@ -35,7 +38,7 @@ function DetailRecommend(props: any) {
             </div>
             <ul className="detail-recommend__list">
                 {
-                    SERVICES.services.map((item: Service, index: number) => (
+                    SERVICES_REC.services.map((item: Service, index: number) => (
                         <li
                             key={index}
                         >

@@ -17,7 +17,7 @@ interface IProps {
 function ServiceItem(props: IProps) {
     const { service, org, changeStyle } = props;
     const history = useHistory();
-    const percent = Math.round(
+    const percent: any = Math.round(
         100 - (service?.special_price / service?.price) * 100
     );
     const onDetail = () => {
@@ -40,7 +40,7 @@ function ServiceItem(props: IProps) {
                     onError={(e) => onErrorImg(e)}
                 />
                 <div className="ser-promo">
-                    {service.special_price > 0 && (
+                    {(service.special_price > 0 && percent < 50) && (
                         <div className="ser-promo__percent">
                             Giảm {percent} %
                         </div>
@@ -69,7 +69,7 @@ function ServiceItem(props: IProps) {
                     ) : (
                         <>
                             <span>{formatPrice(service?.special_price)}đ</span>
-                            <span>{formatPrice(service?.price)}đ</span>
+                            {percent < 50 && <span>{formatPrice(service?.price)}đ</span>}
                         </>
                     )}
                 </div>

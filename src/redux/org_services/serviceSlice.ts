@@ -88,10 +88,27 @@ export const fetchAsyncCancelFavoriteService: any = createAsyncThunk(
         }
     }
 );
+//get services recommend
+export const fetchAsyncServicesRec: any = createAsyncThunk(
+    "SERVICE/fetchAsyncServicesRec",
+    async (values: any) => {
+        const res = await serviceApi.getByOrg_id(values);
+        const payload = {
+            services: res.data.context.data,
+            cate_id: values.cate_id
+        }
+        return payload
+    }
+)
 const initialState = {
     SERVICE: {
         service: {},
         status: "",
+    },
+    SERVICES_REC: {
+        services: [],
+        cate_id: null,
+        status: ''
     },
     COMMENTS: {
         service_id: null,
@@ -231,6 +248,23 @@ const serviceSlice = createSlice({
         [fetchAsyncCancelFavoriteService.rejected]: (state) => {
             return state
         },
+        //get services recommend
+        [fetchAsyncServicesRec.pending]: (state) => {
+            return { ...state, SERVICES_REC: { ...state.SERVICES_REC, status: STATUS.LOADING } }
+        },
+        [fetchAsyncServicesRec.fulfilled]: (state, { payload }) => {
+            return {
+                ...state,
+                SERVICES_REC: {
+                    services: payload.services,
+                    cate_id: payload.cate_id,
+                    status: STATUS.SUCCESS
+                }
+            }
+        },
+        [fetchAsyncServicesRec.rejected]: (state) => {
+            return { ...state, SERVICES_REC: { ...state.SERVICES_REC, status: STATUS.FAIL } }
+        }
     },
 });
 export default serviceSlice.reducer;

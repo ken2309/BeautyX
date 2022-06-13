@@ -6,22 +6,30 @@ import formatPrice from '../../../utils/formatPrice';
 import slugify from '../../../utils/formatUrlString';
 import scrollTop from '../../../utils/scrollTop';
 import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { fetchAsyncServiceDetail } from '../../../redux/org_services/serviceSlice';
 
 function SectionServices(props: any) {
     const { services, setOpenSearch, hiddenFilter } = props;
     const history = useHistory();
+    const dispatch = useDispatch();
     const gotoDetail = (service: IServicePromo) => {
-        if(hiddenFilter){
+        if (hiddenFilter) {
             hiddenFilter()
         }
-        if(setOpenSearch){
+        if (setOpenSearch) {
             setOpenSearch(false)
         }
         scrollTop()
         history.push({
             pathname: `/dich-vu/${slugify(service.service_name)}`,
-            search: `${service.org_id},${service.service_id},2`,
+            search: `id=${service.service_id}?org=${service.org_id}`,
         })
+        const values = {
+            org_id: service.org_id,
+            ser_id: service.service_id,
+        };
+        dispatch(fetchAsyncServiceDetail(values));
     }
     return (
         <div
@@ -78,7 +86,7 @@ function SectionServices(props: any) {
                                             item.special_price > -1 ?
                                                 <>
                                                     <span>{formatPrice(item.special_price)}đ</span>
-                                                    <span>{formatPrice(item.price)}đ</span>
+                                                    {/* <span>{formatPrice(item.price)}đ</span> */}
                                                 </>
                                                 :
                                                 <span style={{ color: 'var(--purple)' }}>{formatPrice(item.price)}đ</span>

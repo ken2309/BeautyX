@@ -8,7 +8,9 @@
   --bgGray: #e5e5e5;
   --bgWhite: #f5f5f7;
   --darkBlue: #4E4693;
-  --white: #FFFFFF
+  --white: #FFFFFF;
+  --red_2: #E64D4A;
+  --orange: #FF721F
 }
 
 .App {
