@@ -405,7 +405,7 @@
     grid-gap: 0 8px;
     cursor: pointer;
 }
-.bottom-buy__now{
+.bottom-buy__now {
     height: 40px;
     margin-right: 16px;
     background-color: var(--orange) !important;
@@ -557,7 +557,7 @@
     }
 
     .service-detail .service-detail__tabitem {
-        padding-top: 16px;
+        padding: 16px 0;
     }
 
     .service-detail .service-detail__tab {
@@ -843,7 +843,7 @@
         font-size: 12px;
         line-height: 16px;
     }
-    .bottom-buy__now{
+    .bottom-buy__now {
         margin: 0px;
     }
 

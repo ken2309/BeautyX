@@ -28,6 +28,7 @@ import {
     handleScroll,
 } from "../ServiceDetail/onScrollChange";
 import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
+import ProductDetailRecomment from "./components/ProductDetailRecomment";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();
@@ -141,7 +142,7 @@ function ProductDetail(props: any) {
         callProductDetail();
         callOrgDetail();
         callProductComments();
-    }, []);
+    }, [params.id]);
 
     return (
         <div className="product">
@@ -218,6 +219,7 @@ function ProductDetail(props: any) {
                                 </div>
                             </TabContext>
                         </div>
+                        <ProductDetailRecomment org={org} />
                     </div>
                     {/* service bottom buttom add cart                                             */}
                     <div className="service-detail__bottom">

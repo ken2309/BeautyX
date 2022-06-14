@@ -35,7 +35,7 @@
     background-color: #dcdbdb8c;
     transition: all 0.3s;
 }
-.mb-head-org-cnt__button .badge{
+.mb-head-org-cnt__button .badge {
     position: absolute;
     background-color: var(--red-cl);
     margin: -14px 0px 0px 8px;
@@ -165,7 +165,7 @@
 }
 
 .org-detail__cnt .wrap-bot {
-    z-index: 1000;
+    z-index: 20;
     background-color: transparent;
     padding: 0px 32px;
     position: absolute;
@@ -277,6 +277,7 @@
 .org-time-work__right {
     margin-left: 8px;
     position: relative;
+    user-select: none;
 }
 
 .org-time-work__right-list {
@@ -287,6 +288,7 @@
     font-size: 14px;
     line-height: 18px;
     font-weight: 700;
+    user-select: none;
 }
 .org-time-work__list {
     border: 1px solid #ccc;
@@ -793,6 +795,7 @@
 }
 .mb-org-search__result .tab {
     padding: 0px 12px;
+    z-index: 23;
 }
 .mb-org-search__result .tab-item {
     padding: 4px 0px;
@@ -925,6 +928,7 @@
         padding: 16px 8px;
         border-radius: 8px;
         box-shadow: 0px 4px 6px rgb(0 0 0 / 10%);
+        z-index: 10;
     }
 
     .org-detail__cnt-bot .icon {

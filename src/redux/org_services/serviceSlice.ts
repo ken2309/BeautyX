@@ -50,7 +50,7 @@ export const fetchAsyncFavoriteService: any = createAsyncThunk(
     "SERVICE/favoriteService",
     async (valueService: any) => {
         const org_id = valueService.org_id;
-        const service_id = valueService.detail.id
+        const service_id = valueService.detail.id;
         try {
             const payload = {
                 ...valueService.detail,
@@ -59,7 +59,7 @@ export const fetchAsyncFavoriteService: any = createAsyncThunk(
             };
             await favorites.postFavoriteItem({
                 org_id: org_id,
-                service_id: service_id
+                service_id: service_id,
             });
             return payload;
         } catch (error) {
@@ -67,11 +67,12 @@ export const fetchAsyncFavoriteService: any = createAsyncThunk(
         }
     }
 );
+// delete favorite service
 export const fetchAsyncCancelFavoriteService: any = createAsyncThunk(
     "SERVICE/favoriteService",
     async (valueService: any) => {
         const org_id = valueService.org_id;
-        const service_id = valueService.detail.id
+        const service_id = valueService.detail.id;
         try {
             const payload = {
                 ...valueService.detail,
@@ -80,26 +81,26 @@ export const fetchAsyncCancelFavoriteService: any = createAsyncThunk(
             };
             await favorites.deleteFavoriteItem({
                 org_id: org_id,
-                service_id: service_id
-            })
+                service_id: service_id,
+            });
             return payload;
         } catch (error) {
             console.log(error);
         }
     }
 );
-//get services recommend
+// get services recommend
 export const fetchAsyncServicesRec: any = createAsyncThunk(
     "SERVICE/fetchAsyncServicesRec",
     async (values: any) => {
         const res = await serviceApi.getByOrg_id(values);
         const payload = {
             services: res.data.context.data,
-            cate_id: values.cate_id
-        }
-        return payload
+            cate_id: values.cate_id,
+        };
+        return payload;
     }
-)
+);
 const initialState = {
     SERVICE: {
         service: {},
@@ -108,7 +109,7 @@ const initialState = {
     SERVICES_REC: {
         services: [],
         cate_id: null,
-        status: ''
+        status: "",
     },
     COMMENTS: {
         service_id: null,
@@ -218,39 +219,42 @@ const serviceSlice = createSlice({
         },
         //favorite service
         [fetchAsyncFavoriteService.pending]: (state) => {
-            return state
+            return state;
         },
         [fetchAsyncFavoriteService.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
                 SERVICE: {
                     ...state.SERVICE,
-                    service: payload
+                    service: payload,
                 },
             };
         },
         [fetchAsyncFavoriteService.rejected]: (state) => {
-            return state
+            return state;
         },
         //favorite service
         [fetchAsyncCancelFavoriteService.pending]: (state) => {
-            return state
+            return state;
         },
         [fetchAsyncCancelFavoriteService.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
                 SERVICE: {
                     ...state.SERVICE,
-                    service: payload
+                    service: payload,
                 },
             };
         },
         [fetchAsyncCancelFavoriteService.rejected]: (state) => {
-            return state
+            return state;
         },
         //get services recommend
         [fetchAsyncServicesRec.pending]: (state) => {
-            return { ...state, SERVICES_REC: { ...state.SERVICES_REC, status: STATUS.LOADING } }
+            return {
+                ...state,
+                SERVICES_REC: { ...state.SERVICES_REC, status: STATUS.LOADING },
+            };
         },
         [fetchAsyncServicesRec.fulfilled]: (state, { payload }) => {
             return {
@@ -258,13 +262,16 @@ const serviceSlice = createSlice({
                 SERVICES_REC: {
                     services: payload.services,
                     cate_id: payload.cate_id,
-                    status: STATUS.SUCCESS
-                }
-            }
+                    status: STATUS.SUCCESS,
+                },
+            };
         },
         [fetchAsyncServicesRec.rejected]: (state) => {
-            return { ...state, SERVICES_REC: { ...state.SERVICES_REC, status: STATUS.FAIL } }
-        }
+            return {
+                ...state,
+                SERVICES_REC: { ...state.SERVICES_REC, status: STATUS.FAIL },
+            };
+        },
     },
 });
 export default serviceSlice.reducer;
