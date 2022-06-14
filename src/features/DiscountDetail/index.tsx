@@ -254,6 +254,9 @@ function DiscountDetail() {
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
                                                     <>
+                                                        <p className="service-detail__title">
+                                                            Doanh nghiệp
+                                                        </p>
                                                         <div className="service-detail__org-mb">
                                                             <DetailOrgCard
                                                                 org={ORG?.org}

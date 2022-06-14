@@ -37,7 +37,7 @@ export default function ProductDetailRecomment(props: IProps) {
 
     return (
         <div className="detail-recommend">
-            <div className="detail-recommend__title">Dịch vụ tương tự</div>
+            <div className="detail-recommend__title">Sản phẩm tương tự</div>
             <ul className="detail-recommend__list">
                 {PRODUCT_REC?.products?.map((item: Product, index: number) => (
                     <li key={index}>

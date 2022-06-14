@@ -29,6 +29,7 @@ import {
 } from "../ServiceDetail/onScrollChange";
 import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
 import ProductDetailRecomment from "./components/ProductDetailRecomment";
+import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();
@@ -206,7 +207,19 @@ function ProductDetail(props: any) {
                                             <div className="service-detail__org">
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                    <OrgInformation org={org} />
+                                                    <>
+                                                        <p className="service-detail__title">
+                                                            Doanh nghiệp
+                                                        </p>
+                                                        <div className="service-detail__org-mb">
+                                                            <DetailOrgCard
+                                                                org={org}
+                                                            />
+                                                        </div>
+                                                        <OrgInformation
+                                                            org={org}
+                                                        />
+                                                    </>
                                                 )}
                                             </div>
                                         </div>

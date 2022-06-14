@@ -37,7 +37,7 @@ function ServiceDetail(props: any) {
     const org = ORG.org;
     const [open, setOpen] = useState({
         NOW: true,
-        open: false
+        open: false,
     });
     const [value, setValue] = useState<any>(1);
 
@@ -161,7 +161,11 @@ function ServiceDetail(props: any) {
                     {/* service head detail */}
                     <div className="service-detail__head">
                         <ServiceDetailLeft org={org} service={service} />
-                        <ServiceDetailRight org={org} service={service} NOW={open.NOW} />
+                        <ServiceDetailRight
+                            org={org}
+                            service={service}
+                            NOW={open.NOW}
+                        />
                     </div>
                     {/* service body */}
                     <div className="service-detail__body">
@@ -214,6 +218,9 @@ function ServiceDetail(props: any) {
                                         >
                                             {ORG.status === STATUS.SUCCESS && (
                                                 <>
+                                                    <p className="service-detail__title">
+                                                        Doanh nghiệp
+                                                    </p>
                                                     <div className="service-detail__org-mb">
                                                         <DetailOrgCard
                                                             org={org}
