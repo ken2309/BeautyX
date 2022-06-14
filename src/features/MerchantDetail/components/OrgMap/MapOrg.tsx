@@ -14,13 +14,12 @@ export default function MapOrg(props: any) {
         long: org?.longitude,
     });
     const refListOrg: any = useRef();
-    const [openListOrg] = useState(true);
-    const handleOpenListOrg = () => {
-        refListOrg.current.classList.add("list-org__active");
+    const [openListOrg, setOpenListOrg] = useState(true);
+    const handleToggleListOrg = () => {
+        refListOrg.current.classList.toggle("list-org__active");
+        setOpenListOrg(!openListOrg);
     };
-    const handleCloseListOrg = () => {
-        refListOrg.current.classList.remove("list-org__active");
-    };
+
     const handleSetLocation: any = (listOrg: IOrganization) => {
         setLocation({
             lat: listOrg?.latitude,
@@ -54,36 +53,39 @@ export default function MapOrg(props: any) {
                 mapElement={<div style={{ height: `100%` }} />}
             />
             <div
-                onClick={() => {
-                    handleOpenListOrg();
-                }}
-                className="open-list__org open"
-            >
-                <img src={icon.arrownRightWhite} alt="" />
-            </div>
-            <div
-                ref={refListOrg}
                 className={
                     openListOrg === true
-                        ? "dialog-map__list list-org__active "
-                        : "dialog-map__list"
+                        ? "dialog-map__wrapper list-org__active "
+                        : "dialog-map__wrapper"
                 }
+                ref={refListOrg}
             >
-                {listOrg?.map((item: any, index: number) => (
-                    <OrgMapItem
-                        location={location}
-                        handleSetLocation={handleSetLocation}
-                        key={index}
-                        item={item}
-                    />
-                ))}
+                <div className="dialog-map__list">
+                    {listOrg?.map((item: any, index: number) => (
+                        <OrgMapItem
+                            location={location}
+                            handleSetLocation={handleSetLocation}
+                            key={index}
+                            item={item}
+                        />
+                    ))}
+                </div>
+
+                {/* btn toggle open close list map org */}
                 <div
                     onClick={() => {
-                        handleCloseListOrg();
+                        handleToggleListOrg();
                     }}
                     className="open-list__org close"
                 >
-                    <img src={icon.arrownLeftWhite} alt="" />
+                    <img
+                        src={
+                            openListOrg === true
+                                ? icon.arrownLeftWhite
+                                : icon.arrownRightWhite
+                        }
+                        alt=""
+                    />
                 </div>
             </div>
             <OrgMapListMB
