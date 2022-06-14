@@ -57,7 +57,9 @@ function CartPaymentStatus() {
             switch (status) {
                 case "PAID":
                     if (action) {
-                        handlePostApp()
+                        for (var i = 1; i <= action.quantity; i++) {
+                            handlePostApp()
+                        }
                     }
                     setOrderStatus(status)
                     timerRender[0] = -1;

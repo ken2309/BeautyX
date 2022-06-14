@@ -21,7 +21,7 @@ function ServiceItem(props: IProps) {
     service,
     handleServiceBook,
     order_id,
-    //service_sold
+    service_sold
   } = props;
   const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
   const servicesBook = servicesBookSlice.servicesBook;
@@ -76,6 +76,10 @@ function ServiceItem(props: IProps) {
           <span className="ser-name">
             {service?.service_name}
           </span>
+          {
+            service.time_expired &&
+            <p>Ngày hết hạn : {service.time_expired}</p>
+          }
           <span className="ser-desc">
             {service.description !== null && service.description}
           </span>

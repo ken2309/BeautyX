@@ -108,7 +108,8 @@ function Booking() {
                     branch: bookTime.branch_id,
                     org_id: org?.id,
                     order_id: response.data.context.id,
-                    service_ids: servicesBook?.map((item: any) => item?.id)
+                    service_ids: services?.map((item: any) => item?.id),
+                    quantity: services[0].quantity
                 }
                 history.push({
                     pathname: `/trang-thai-don-hang/${desc}`,

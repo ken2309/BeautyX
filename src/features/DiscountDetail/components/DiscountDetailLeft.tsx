@@ -26,7 +26,6 @@ function DiscountDetailLeft(props: IProps) {
         100 -
             (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
     );
-    console.log("first", ITEM_DISCOUNT);
     const history = useHistory();
     const dispatch = useDispatch();
     const { USER } = useSelector((state: any) => state.USER);
