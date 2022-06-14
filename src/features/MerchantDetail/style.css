@@ -5,7 +5,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 1002;
     transition: all 0.5s;
 }
 
@@ -81,7 +81,7 @@
 .mb-org-search-cnt {
     overflow: hidden;
     position: fixed;
-    z-index: 21;
+    z-index: 1001;
     left: 0;
     right: 0;
     width: 100vw;
@@ -165,7 +165,7 @@
 }
 
 .org-detail__cnt .wrap-bot {
-    z-index: 20;
+    z-index: 100;
     background-color: transparent;
     padding: 0px 32px;
     position: absolute;
@@ -887,6 +887,13 @@
 }
 
 @media only screen and (max-width: 1023px) {
+    .mb-cnt {
+        z-index: 1;
+    }
+    .org-information__map-cnt .map-org__seemore {
+        top: 12px;
+        right: 12px;
+    }
     .org-container .MuiTab-root {
         font-size: 14px;
     }
@@ -924,6 +931,7 @@
         padding: 12px;
         margin-top: 120px;
         border: none;
+        z-index: 100;
     }
 
     .org-detail__cnt-bot {

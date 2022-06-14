@@ -134,7 +134,7 @@ function ProductDetailRight(props: IProps) {
             <div className="detail-right__body">
                 <div className="detail-right__info">
                     <div className="flexX-gap-8">
-                        {product?.special_price > 0 && (
+                        {product?.special_price > 0 && percent !== 0 && (
                             <div className="detail-right__percent">
                                 <p>Giảm {percent}%</p>
                             </div>

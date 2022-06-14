@@ -230,9 +230,11 @@
     font-weight: bold;
 }
 
-.evaluate-comment__body span:nth-child(2) {
+.evaluate-comment__body span:nth-child(2),
+.evaluate-comment__body span:nth-child(3) {
     color: #8c8c8c;
     font-weight: normal;
+    font-size: 14px;
 }
 
 .evaluate-comment .comment-img {
@@ -286,8 +288,14 @@
 }
 
 @media only screen and (max-width: 768px) {
+    .evaluate-comment__body span:nth-child(2),
+    .evaluate-comment__body span:nth-child(3) {
+        font-size: 12px;
+        font-weight: bold;
+    }
+
     .service-detail .MuiRating-root {
-        font-size: 12px !important;
+        font-size: 14px !important;
     }
 
     .evaluate-rating__quantity span {

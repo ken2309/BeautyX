@@ -132,9 +132,11 @@ function DiscountDetailRight(props: IProps) {
             <div className="detail-right__body">
                 <div className="detail-right__info">
                     <div className="flexX-gap-8">
-                        <div className="detail-right__percent">
-                            <p>Giảm {percent}%</p>
-                        </div>
+                        {percent !== 0 && (
+                            <div className="detail-right__percent">
+                                <p>Giảm {percent}%</p>
+                            </div>
+                        )}
                         <div className="detail-right__price">
                             <span>
                                 {formatPrice(ITEM_DISCOUNT?.view_price)}đ

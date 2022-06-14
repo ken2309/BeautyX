@@ -136,11 +136,13 @@ export default function ServiceDetailRight(props: IProps) {
             <div className="detail-right__body">
                 <div className="detail-right__info">
                     <div className="flexX-gap-8">
-                        {service?.special_price > 0 && percent < 50 && (
-                            <div className="detail-right__percent">
-                                <p>Giảm {percent}%</p>
-                            </div>
-                        )}
+                        {service?.special_price > 0 &&
+                            percent < 50 &&
+                            percent !== 0 && (
+                                <div className="detail-right__percent">
+                                    <p>Giảm {percent}%</p>
+                                </div>
+                            )}
                         <div className="detail-right__price">
                             {service?.special_price > 0 ? (
                                 <>

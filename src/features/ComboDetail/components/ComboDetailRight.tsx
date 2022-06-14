@@ -80,15 +80,21 @@ function ComboDetailRight(props: IProps) {
             <div className="detail-right__body">
                 <div className="detail-right__info">
                     <div className="flexX-gap-8">
-                        <div className="detail-right__price">
-                            <span>{formatPrice(special_price)}đ</span>
-                            <span>{formatPrice(price)}đ</span>
-                        </div>
-                        {percent > 0 && (
+                        {special_price > 0 && percent !== 0 && (
                             <div className="detail-right__percent">
                                 <p>Giảm {percent}%</p>
                             </div>
                         )}
+                        <div className="detail-right__price">
+                            {special_price > 0 ? (
+                                <>
+                                    <span>{formatPrice(special_price)}đ</span>
+                                    <span>{formatPrice(price)}đ</span>
+                                </>
+                            ) : (
+                                <span>{formatPrice(price)}đ</span>
+                            )}
+                        </div>
                     </div>
                 </div>
                 <DetailOrgCard org={org} />
