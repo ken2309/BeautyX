@@ -66,7 +66,9 @@ function OrgInformation(props: IProps) {
                                         className="icon"
                                     />
                                     <span className="address-text">
-                                        {org?.address}
+                                        {org?.address
+                                            ? org?.address
+                                            : org?.full_address}
                                     </span>
                                 </div>
                                 <div className="flex-row rate">

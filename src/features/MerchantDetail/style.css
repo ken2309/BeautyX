@@ -5,7 +5,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 1002;
     transition: all 0.5s;
 }
 
@@ -35,7 +35,7 @@
     background-color: #dcdbdb8c;
     transition: all 0.3s;
 }
-.mb-head-org-cnt__button .badge{
+.mb-head-org-cnt__button .badge {
     position: absolute;
     background-color: var(--red-cl);
     margin: -14px 0px 0px 8px;
@@ -81,7 +81,7 @@
 .mb-org-search-cnt {
     overflow: hidden;
     position: fixed;
-    z-index: 21;
+    z-index: 1001;
     left: 0;
     right: 0;
     width: 100vw;
@@ -165,7 +165,7 @@
 }
 
 .org-detail__cnt .wrap-bot {
-    z-index: 20;
+    z-index: 100;
     background-color: transparent;
     padding: 0px 32px;
     position: absolute;
@@ -233,7 +233,6 @@
 .org-detail__cnt-bot .icon {
     width: 20px;
     height: 20px;
-    margin-right: 4px;
 }
 
 .org-left-detail__address {
@@ -255,9 +254,6 @@
     flex-direction: column;
     grid-gap: 4px 0;
 }
-.org-left-detail__rate-item {
-    margin-right: 6px;
-}
 
 .org-time-work {
     align-items: center;
@@ -276,6 +272,8 @@
 }
 .org-time-work__right {
     margin-left: 8px;
+    position: relative;
+    user-select: none;
 }
 
 .org-time-work__right-list {
@@ -285,7 +283,30 @@
     border-radius: 6px;
     font-size: 14px;
     line-height: 18px;
-    font-weight: 600;
+    font-weight: 700;
+    user-select: none;
+}
+.org-time-work__list {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 16px;
+    position: absolute;
+    background-color: var(--bgWhite);
+    bottom: -20px;
+    right: 0;
+    z-index: 9999;
+    transform: translateY(100%);
+    width: max-content;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+.org-time-work__list-active {
+    visibility: visible;
+    opacity: 1;
+    bottom: -10px;
+    transition: all 0.3s ease-in-out;
 }
 
 /* org container */
@@ -488,6 +509,19 @@
 
 .map-org-detail__item .branch-detail {
     padding-left: 8px;
+}
+.map-org-detail__item .rate {
+    margin-top: 4px;
+}
+.map-org-detail__item .address-text {
+    font-size: 10px;
+    font-weight: bold;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
 }
 
 .map-org-detail__item .branch-detail .name {
@@ -757,6 +791,7 @@
 }
 .mb-org-search__result .tab {
     padding: 0px 12px;
+    z-index: 23;
 }
 .mb-org-search__result .tab-item {
     padding: 4px 0px;
@@ -789,7 +824,7 @@
 }
 
 .org-time-work__right-list {
-    font-size: 12px;
+    font-size: 14px;
     padding: 4px 8px;
     line-height: unset;
 }
@@ -848,13 +883,25 @@
 }
 
 @media only screen and (max-width: 1023px) {
+    .mb-cnt {
+        z-index: 1;
+    }
+    .org-information__map-cnt .map-org__seemore {
+        top: 12px;
+        right: 12px;
+    }
+    .org-container .MuiTab-root {
+        font-size: 14px;
+    }
     .org-container .org-information-cnt {
         grid-gap: 16px 0;
         padding: 16px 12px;
         display: flex;
         flex-direction: column;
     }
-
+    .org-time-work__right-list {
+        font-size: 12px;
+    }
     .org-detail {
         padding: 0px;
         height: 296px;
@@ -880,6 +927,7 @@
         padding: 12px;
         margin-top: 120px;
         border: none;
+        z-index: 100;
     }
 
     .org-detail__cnt-bot {
@@ -887,6 +935,7 @@
         padding: 16px 8px;
         border-radius: 8px;
         box-shadow: 0px 4px 6px rgb(0 0 0 / 10%);
+        z-index: 10;
     }
 
     .org-detail__cnt-bot .icon {

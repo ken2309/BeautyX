@@ -25,6 +25,7 @@ import HeadOrg from "../MerchantDetail/components/HeadOrg";
 import DetailPolicy from "./components/DetailPolicy";
 import DetailRecommend from "./components/DetailRecommend";
 import { handleScroll, handleChangeScroll } from "./onScrollChange";
+import ReviewsContainer from "../ReviewsContainer";
 
 function ServiceDetail(props: any) {
     const dispatch = useDispatch();
@@ -37,8 +38,12 @@ function ServiceDetail(props: any) {
     const org = ORG.org;
     const [open, setOpen] = useState({
         NOW: true,
-        open: false
+        open: false,
     });
+    const [openAllCmt, setOpenAllCmt] = useState(false);
+    const handleOpenSeemoreCmt = () => {
+        setOpenAllCmt(true);
+    };
     const [value, setValue] = useState<any>(1);
 
     let tabs = [
@@ -161,7 +166,11 @@ function ServiceDetail(props: any) {
                     {/* service head detail */}
                     <div className="service-detail__head">
                         <ServiceDetailLeft org={org} service={service} />
-                        <ServiceDetailRight org={org} service={service} NOW={open.NOW} />
+                        <ServiceDetailRight
+                            org={org}
+                            service={service}
+                            NOW={open.NOW}
+                        />
                     </div>
                     {/* service body */}
                     <div className="service-detail__body">
@@ -179,6 +188,7 @@ function ServiceDetail(props: any) {
                                     ))}
                                 </TabList>
                                 <div className="service-detail__tabitem">
+                                    {/* description */}
                                     <TabPanel value={value}>
                                         <div
                                             ref={refDesc}
@@ -192,6 +202,8 @@ function ServiceDetail(props: any) {
                                             </p>
                                         </div>
                                     </TabPanel>
+
+                                    {/* comment */}
                                     <TabPanel value={value}>
                                         <div
                                             ref={refReview}
@@ -204,9 +216,38 @@ function ServiceDetail(props: any) {
                                                 id={ORG.org?.id}
                                                 page={COMMENTS.page}
                                                 detail_id={service?.id}
+                                                openSeeMoreCmt={
+                                                    handleOpenSeemoreCmt
+                                                }
+                                            />
+                                            {COMMENTS.comments &&
+                                            COMMENTS.comments.length > 0 ? (
+                                                <div
+                                                    style={{
+                                                        justifyContent:
+                                                            "center",
+                                                    }}
+                                                    onClick={() => {
+                                                        setOpenAllCmt(true);
+                                                    }}
+                                                    className="seemore-cmt"
+                                                >
+                                                    <p>{"Xem tất cả >>"}</p>
+                                                </div>
+                                            ) : null}
+                                            <ReviewsContainer
+                                                open={openAllCmt}
+                                                setOpen={setOpenAllCmt}
+                                                comments={COMMENTS.comments}
+                                                org_id={ORG.org?.id}
+                                                totalItem={COMMENTS.totalItem}
+                                                page={COMMENTS.page}
+                                                commentable_type="ORGANIZATION"
                                             />
                                         </div>
                                     </TabPanel>
+
+                                    {/* org */}
                                     <TabPanel value={value}>
                                         <div
                                             ref={refMap}
@@ -214,6 +255,9 @@ function ServiceDetail(props: any) {
                                         >
                                             {ORG.status === STATUS.SUCCESS && (
                                                 <>
+                                                    <p className="service-detail__title">
+                                                        Doanh nghiệp
+                                                    </p>
                                                     <div className="service-detail__org-mb">
                                                         <DetailOrgCard
                                                             org={org}
@@ -224,6 +268,8 @@ function ServiceDetail(props: any) {
                                             )}
                                         </div>
                                     </TabPanel>
+
+                                    {/* policy */}
                                     <TabPanel value={value}>
                                         <div ref={refPolicy}>
                                             <DetailPolicy org={org} />
@@ -250,8 +296,8 @@ function ServiceDetail(props: any) {
                             }}
                             className="btn-addcart"
                         >
-                            <p>Thêm vào giỏ hàng</p>
                             <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                            <p>Thêm vào giỏ hàng</p>
                         </button>
                         {/* drawer service detail */}
                         <Drawer

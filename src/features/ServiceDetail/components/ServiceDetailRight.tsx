@@ -12,17 +12,16 @@ import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import { addCart } from "../../../redux/cartSlice";
 import PopupSuccess from "../../PopupSuccess";
 import DetailOrgCard from "./DetailOrgCard";
-import { clearAllServices } from '../../../redux/servicesBookSlice';
-import { IOrganization } from '../../../interface/organization'
-import { Service } from '../../../interface/service'
+import { clearAllServices } from "../../../redux/servicesBookSlice";
+import { IOrganization } from "../../../interface/organization";
+import { Service } from "../../../interface/service";
 import useFullScreen from "../../../utils/useFullScreen";
 
-
 interface IProps {
-    org: IOrganization,
-    service: Service,
-    setOpenDrawer?: any,
-    NOW?: boolean
+    org: IOrganization;
+    service: Service;
+    setOpenDrawer?: any;
+    NOW?: boolean;
 }
 
 export default function ServiceDetailRight(props: IProps) {
@@ -72,19 +71,19 @@ export default function ServiceDetailRight(props: IProps) {
         setPopupSuccess(true);
         dispatch(addCart(values));
         if (setOpenDrawer) {
-            setOpenDrawer({ NOW: true, open: false })
+            setOpenDrawer({ NOW: true, open: false });
         }
     };
     //handle booking now
     const onBookingNow = () => {
         const services = [{ service, quantity }];
-        const TYPE = "BOOK_NOW"
+        const TYPE = "BOOK_NOW";
         history.push({
             pathname: "/dat-hen",
-            state: { org, services, TYPE }
-        })
-        dispatch(clearAllServices())
-    }
+            state: { org, services, TYPE },
+        });
+        dispatch(clearAllServices());
+    };
     return (
         <div className="service-detail__right">
             <div className="detail-right__head">
@@ -137,18 +136,24 @@ export default function ServiceDetailRight(props: IProps) {
             <div className="detail-right__body">
                 <div className="detail-right__info">
                     <div className="flexX-gap-8">
-                        {(service?.special_price > 0 && percent < 50) && (
-                            <div className="detail-right__percent">
-                                <p>Giảm {percent}%</p>
-                            </div>
-                        )}
+                        {service?.special_price > 0 &&
+                            percent < 50 &&
+                            percent !== 0 && (
+                                <div className="detail-right__percent">
+                                    <p>Giảm {percent}%</p>
+                                </div>
+                            )}
                         <div className="detail-right__price">
                             {service?.special_price > 0 ? (
                                 <>
                                     <span>
                                         {formatPrice(service?.special_price)}đ
                                     </span>
-                                    {percent < 50 && <span>{formatPrice(service?.price)}đ</span>}
+                                    {percent < 50 && (
+                                        <span>
+                                            {formatPrice(service?.price)}đ
+                                        </span>
+                                    )}
                                 </>
                             ) : (
                                 <span>{formatPrice(service?.price)}đ</span>
@@ -191,32 +196,42 @@ export default function ServiceDetailRight(props: IProps) {
                     </div>
                 </div>
 
-                {
-                    IS_MB ?
-                        <div className="flex-row">
-                            {
-                                NOW ?
-                                    <div onClick={onBookingNow} className="bottom-addCart bottom-buy__now">
-                                        <p>Đặt hẹn ngay</p>
-                                    </div>
-                                    :
-                                    <div onClick={handleAddCart} className="bottom-addCart">
-                                        <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                                        <p>Thêm vào giỏ hàng</p>
-                                    </div>
-                            }
-                        </div>
-                        :
-                        <div className="flex-row">
-                            <div onClick={onBookingNow} className="bottom-addCart bottom-buy__now">
+                {IS_MB ? (
+                    <div className="flex-row flexX-gap-8">
+                        {NOW ? (
+                            <div
+                                onClick={onBookingNow}
+                                className="bottom-addCart bottom-buy__now"
+                            >
                                 <p>Đặt hẹn ngay</p>
                             </div>
-                            <div onClick={handleAddCart} className="bottom-addCart">
-                                <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                        ) : (
+                            <div
+                                onClick={handleAddCart}
+                                className="bottom-addCart"
+                            >
+                                <img
+                                    src={icon.ShoppingCartSimpleWhite}
+                                    alt=""
+                                />
                                 <p>Thêm vào giỏ hàng</p>
                             </div>
+                        )}
+                    </div>
+                ) : (
+                    <div className="flex-row flexX-gap-8">
+                        <div
+                            onClick={onBookingNow}
+                            className="bottom-addCart bottom-buy__now"
+                        >
+                            <p>Đặt hẹn ngay</p>
                         </div>
-                }
+                        <div onClick={handleAddCart} className="bottom-addCart">
+                            <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                            <p>Thêm vào giỏ hàng</p>
+                        </div>
+                    </div>
+                )}
             </div>
             <PopupSuccess
                 popup={popupSuccess}

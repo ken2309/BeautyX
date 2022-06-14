@@ -254,6 +254,9 @@ function DiscountDetail() {
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
                                                     <>
+                                                        <p className="service-detail__title">
+                                                            Doanh nghiệp
+                                                        </p>
                                                         <div className="service-detail__org-mb">
                                                             <DetailOrgCard
                                                                 org={ORG?.org}
@@ -277,7 +280,7 @@ function DiscountDetail() {
                         </div>
                         <div className="service-detail__bottom">
                             <button>
-                                <p>Buy now</p>
+                                <p>Mua ngay</p>
                             </button>
                             <button
                                 onClick={() => {
@@ -285,11 +288,11 @@ function DiscountDetail() {
                                 }}
                                 className="btn-addcart"
                             >
-                                <p>Add to cart</p>
                                 <img
                                     src={icon.ShoppingCartSimpleWhite}
                                     alt=""
                                 />
+                                <p>Thêm vào giỏ hàng</p>
                             </button>
                         </div>
                         <Drawer

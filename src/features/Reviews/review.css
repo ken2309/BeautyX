@@ -165,7 +165,10 @@
 
 /* comment */
 .evaluate-comment {
-    padding: 0 24px 24px 24px;
+    padding: 0 24px 0 24px;
+}
+.evaluate-comment:not(:last-child) {
+    padding-bottom: 24px;
 }
 
 .evaluate-comment:not(:nth-child(3)) {
@@ -230,9 +233,11 @@
     font-weight: bold;
 }
 
-.evaluate-comment__body span:nth-child(2) {
+.evaluate-comment__body span:nth-child(2),
+.evaluate-comment__body span:nth-child(3) {
     color: #8c8c8c;
     font-weight: normal;
+    font-size: 14px;
 }
 
 .evaluate-comment .comment-img {
@@ -246,7 +251,7 @@
 .org-evaluate__cnt .total-comment {
     font-size: 14px;
     color: #8c8c8c;
-    padding: 24px;
+    padding: 0 24px;
 }
 
 .evaluate-input__upload {
@@ -286,8 +291,14 @@
 }
 
 @media only screen and (max-width: 768px) {
-    .service-detail .MuiRating-root {
-        font-size: 16px !important;
+    .evaluate-comment__body span:nth-child(2),
+    .evaluate-comment__body span:nth-child(3) {
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .MuiRating-root {
+        font-size: 14px !important;
     }
 
     .evaluate-rating__quantity span {
@@ -349,14 +360,14 @@
     }
 
     .org-evaluate__cnt .total-comment {
-        padding: 16px 0;
+        padding: 0;
         font-size: 12px;
     }
 
     .input-btn {
         right: 16px;
     }
-    .evaluate-input__change{
+    .evaluate-input__change {
         width: 100%;
         padding: 6px 8px;
     }

@@ -23,7 +23,7 @@ function ProductItem(props: IProps) {
         <Link
             to={{
                 pathname: `/product-detail/${slugify(product?.product_name)}`,
-                search: `id=${product.id}&org=${org.id}`,
+                search: `id=${product?.id}&org=${org?.id}`,
                 state: { org, product },
             }}
             onClick={() => scrollTop()}
