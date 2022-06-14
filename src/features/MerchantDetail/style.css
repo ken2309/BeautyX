@@ -233,7 +233,6 @@
 .org-detail__cnt-bot .icon {
     width: 20px;
     height: 20px;
-    margin-right: 4px;
 }
 
 .org-left-detail__address {
@@ -254,9 +253,6 @@
     display: flex;
     flex-direction: column;
     grid-gap: 4px 0;
-}
-.org-left-detail__rate-item {
-    margin-right: 6px;
 }
 
 .org-time-work {

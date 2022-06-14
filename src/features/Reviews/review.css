@@ -165,7 +165,10 @@
 
 /* comment */
 .evaluate-comment {
-    padding: 0 24px 24px 24px;
+    padding: 0 24px 0 24px;
+}
+.evaluate-comment:not(:last-child) {
+    padding-bottom: 24px;
 }
 
 .evaluate-comment:not(:nth-child(3)) {
@@ -248,7 +251,7 @@
 .org-evaluate__cnt .total-comment {
     font-size: 14px;
     color: #8c8c8c;
-    padding: 24px;
+    padding: 0 24px;
 }
 
 .evaluate-input__upload {
@@ -294,7 +297,7 @@
         font-weight: bold;
     }
 
-    .service-detail .MuiRating-root {
+    .MuiRating-root {
         font-size: 14px !important;
     }
 
@@ -357,7 +360,7 @@
     }
 
     .org-evaluate__cnt .total-comment {
-        padding: 16px 0;
+        padding: 0;
         font-size: 12px;
     }
 

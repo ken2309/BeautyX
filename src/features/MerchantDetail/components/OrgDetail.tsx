@@ -134,7 +134,7 @@ function OrgDetail(props: IProps) {
                                         <span className="org-left-detail__name">
                                             {org?.name}
                                         </span>
-                                        <div className="flex-row org-left-detail__address">
+                                        <div className="flexX-gap-4 org-left-detail__address">
                                             <img
                                                 src={icon.mapPinRed}
                                                 alt=""
@@ -144,40 +144,40 @@ function OrgDetail(props: IProps) {
                                                 {org?.full_address}
                                             </span>
                                         </div>
-                                        <div className="flex-row org-left-detail__rate">
-                                            <div className="flex-row org-left-detail__rate-item">
-                                                <span className="text">
-                                                    4.5
-                                                </span>
+                                        <div className="flexX-gap-8 org-left-detail__rate">
+                                            <div className="flexX-gap-4 org-left-detail__rate-item">
                                                 <img
                                                     src={icon.star}
                                                     alt=""
                                                     className="icon"
                                                 />
-                                            </div>
-                                            <div className="flex-row org-left-detail__rate-item">
                                                 <span className="text">
-                                                    {totalItem}
+                                                    4.5
                                                 </span>
+                                            </div>
+                                            <div className="flexX-gap-4 org-left-detail__rate-item">
                                                 <img
                                                     src={icon.chatAll}
                                                     alt=""
                                                     className="icon"
                                                 />
-                                            </div>
-                                            <div className="flex-row org-left-detail__rate-item">
                                                 <span className="text">
-                                                    {org.favorites_count}
+                                                    {totalItem}
                                                 </span>
+                                            </div>
+                                            <div className="flexX-gap-4 org-left-detail__rate-item">
                                                 <img
                                                     src={icon.heart}
                                                     alt=""
                                                     className="icon"
                                                 />
+                                                <span className="text">
+                                                    {org.favorites_count}
+                                                </span>
                                             </div>
                                         </div>
                                         <div className="org-time-work">
-                                            <div className="flex-row org-time-work__left">
+                                            <div className="flexX-gap-4 org-time-work__left">
                                                 <img
                                                     src={icon.Clock_purple}
                                                     alt=""

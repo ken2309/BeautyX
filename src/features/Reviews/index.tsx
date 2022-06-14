@@ -20,12 +20,20 @@ interface IProps {
     id: number | undefined;
     detail_id?: number;
     refReview?: any;
-    changeStyle?: any
+    changeStyle?: any;
+    openSeeMoreCmt?: any;
 }
 
 function Review(props: IProps) {
-    const { comments, totalItem, commentable_type, id, detail_id, page, changeStyle } =
-        props;
+    const {
+        comments,
+        totalItem,
+        commentable_type,
+        id,
+        detail_id,
+        changeStyle,
+        openSeeMoreCmt,
+    } = props;
     const USER = useSelector((state: any) => state.USER);
     const user = USER.USER;
     const dispatch = useDispatch();
@@ -58,7 +66,7 @@ function Review(props: IProps) {
             setComment({
                 ...comment,
                 text: "",
-                image_url: null
+                image_url: null,
             });
             switch (commentable_type) {
                 case "ORGANIZATION":
@@ -106,7 +114,10 @@ function Review(props: IProps) {
                 <div className="org-evaluate__title">
                     <p>Đánh giá</p>
                 </div>
-                <TotalStartEvaluate />
+                <TotalStartEvaluate
+                    totalItem={totalItem}
+                    openSeeMoreCmt={openSeeMoreCmt}
+                />
                 <EvaluateInput
                     handleOnchange={handleOnchange}
                     comment={comment}
@@ -117,9 +128,11 @@ function Review(props: IProps) {
                     changeStyle={changeStyle}
                 />
                 {totalItem && totalItem > 0 ? (
-                    <span className="total-comment">
-                        Tổng {totalItem} đánh giá
-                    </span>
+                    <div className="total-comment__wrap">
+                        <span className="total-comment">
+                            Tổng {totalItem} đánh giá
+                        </span>
+                    </div>
                 ) : (
                     <span className="total-comment">Chưa có bình luận nào</span>
                 )}

@@ -1,8 +1,12 @@
 import React from "react";
 import Rating from "@mui/material/Rating";
-
-export default function TotalStartEvaluate() {
+interface IProps {
+    totalItem: number | undefined;
+    openSeeMoreCmt: any;
+}
+export default function TotalStartEvaluate(props: IProps) {
     const [value, setValue] = React.useState<number | null>(4);
+    const { totalItem, openSeeMoreCmt } = props;
     return (
         <>
             {/* rating pc */}
@@ -23,7 +27,7 @@ export default function TotalStartEvaluate() {
                         />
                     </div>
                     <div className="evaluate-rating__quantity">
-                        <span>999+ đánh giá</span>
+                        <span>{totalItem} đánh giá</span>
                     </div>
                 </div>
                 <div className="evaluate-rating__right">
@@ -33,24 +37,24 @@ export default function TotalStartEvaluate() {
                         <span>7</span>
                     </div>
                     <div className="evaluate-rating__progress">
-                        <span>5</span>
+                        <span>4</span>
                         <div className="progess-bar"></div>
-                        <span>7</span>
+                        <span>2</span>
                     </div>
                     <div className="evaluate-rating__progress">
-                        <span>5</span>
+                        <span>3</span>
                         <div className="progess-bar"></div>
-                        <span>7</span>
+                        <span>0</span>
                     </div>
                     <div className="evaluate-rating__progress">
-                        <span>5</span>
+                        <span>2</span>
                         <div className="progess-bar"></div>
-                        <span>7</span>
+                        <span>0</span>
                     </div>
                     <div className="evaluate-rating__progress">
-                        <span>5</span>
+                        <span>1</span>
                         <div className="progess-bar"></div>
-                        <span>7</span>
+                        <span>0</span>
                     </div>
                 </div>
             </div>
@@ -69,11 +73,16 @@ export default function TotalStartEvaluate() {
                                 }}
                             />
                         </div>
-                        <div className="rating-left__text">100+ đánh giá</div>
+                        <div className="rating-left__text">
+                            {totalItem} đánh giá
+                        </div>
                     </div>
                 </div>
                 <div className="rating-right">
-                    <button className="rating-right__btn">
+                    <button
+                        onClick={openSeeMoreCmt}
+                        className="rating-right__btn"
+                    >
                         <p>{"Xem tất cả"}</p>
                     </button>
                 </div>

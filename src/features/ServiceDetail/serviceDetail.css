@@ -443,6 +443,7 @@
 
 .service-detail .service-detail__comment {
     width: 50%;
+    margin-bottom: 24px;
 }
 
 .service-detail .infoMer-bottom__right-active {
@@ -544,6 +545,20 @@
 .evaluate-rating__mobile {
     display: none;
 }
+.total-comment__wrap {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+.seemore-cmt {
+    font-size: 14px;
+    color: var(--purple);
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    line-height: 34px;
+}
 
 @media only screen and (max-width: 1023px) {
     .service-detail {
@@ -554,10 +569,9 @@
         font-size: 12px;
         line-height: 16px;
     }
-    .service-detail .org-evaluate__cnt {
-        padding: 0 0 16px 0;
+    .seemore-cmt {
+        font-size: 12px;
     }
-
     .service-detail .detail-left__img img {
         border-radius: unset;
     }
@@ -603,6 +617,7 @@
 
     .service-detail .service-detail__comment {
         width: 100%;
+        margin-bottom: 16px;
     }
 
     .service-detail .detail-left__img {
