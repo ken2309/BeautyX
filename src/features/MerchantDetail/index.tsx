@@ -15,7 +15,6 @@ import SaleByMerchant from "../SaleByMerchant";
 import Footer from "../Footer";
 import DetailTab from "./components/DetailTab";
 import DetailTabMb from "../../featuresMobile/DetailTabMb";
-import MerchantMb from "../../featuresMobile/MerchantMb";
 import HeadTitle from "../HeadTitle/index";
 import { fetchAsyncOrg, fetchOrgGalleries } from '../../redux/org/orgSlice';
 import { fetchAsyncServicesSpecial, fetchProductsSpecial } from '../../redux/org_specials/orgSpecialSlice'
