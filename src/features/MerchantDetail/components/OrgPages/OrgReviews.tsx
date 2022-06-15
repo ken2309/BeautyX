@@ -23,6 +23,9 @@ function OrgReviews(props: IProps) {
     const { org_id, comments, totalItem, status, page } = useSelector(
         (state: any) => state.ORG_COMMENTS
     );
+    const handleOpenSeemoreCmt = () => {
+        setOpenAll(true);
+    };
     const callOrgComments = () => {
         if (org?.id !== org_id || status !== STATUS.SUCCESS) {
             dispatch(clearPrevState());
@@ -46,6 +49,7 @@ function OrgReviews(props: IProps) {
                     totalItem={totalItem}
                     id={org_id}
                     page={page}
+                    openSeeMoreCmt={handleOpenSeemoreCmt}
                 />
                 {comments && comments.length > 8 ? (
                     <div
