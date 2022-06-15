@@ -51,7 +51,7 @@ function OrgReviews(props: IProps) {
                     page={page}
                     openSeeMoreCmt={handleOpenSeemoreCmt}
                 />
-                {comments && comments.length > 8 ? (
+                {comments && comments.length >= 8 ? (
                     <div
                         style={{
                             justifyContent: "center",
