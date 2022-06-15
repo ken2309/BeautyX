@@ -6,26 +6,36 @@ import EvaluateInput from "./EvaluateInput";
 import TotalStartEvaluate from "./TotalStartEvaluate";
 import { useDispatch, useSelector } from "react-redux";
 import { postAsyncOrgComments } from "../../redux/org/orgCommentsSlice";
-import mediaApi from "../../api/mediaApi";
 import { postAsyncComment } from "../../redux/org_services/serviceSlice";
 import { postAsyncProductComment } from "../../redux/org_products/productSlice";
 import { postCommentCombo } from "../../redux/org_combos/comboSlice";
 import { pickBy, identity } from "lodash";
 import { useHistory } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 interface IProps {
-    comments?: IComment[];
+    comments?: any;
     totalItem?: number;
     page?: number;
     commentable_type: string;
     id: number | undefined;
     detail_id?: number;
     refReview?: any;
+    changeStyle?: any;
+    openSeeMoreCmt?: any;
 }
 
 function Review(props: IProps) {
-    const { comments, totalItem, commentable_type, id, detail_id, page } =
-        props;
+    const {
+        comments,
+        totalItem,
+        commentable_type,
+        id,
+        detail_id,
+        changeStyle,
+        openSeeMoreCmt,
+        page,
+    } = props;
     const USER = useSelector((state: any) => state.USER);
     const user = USER.USER;
     const dispatch = useDispatch();
@@ -43,6 +53,22 @@ function Review(props: IProps) {
             text: e.target.value,
         });
     };
+    // const [data, setData] = useState<any>({
+    //     comments: [...comments],
+    //     page: page,
+    //     totalItem: totalItem,
+    // });
+    // const onViewMore = () => {
+    //     if (
+    //         data.comments.length < data.totalItem &&
+    //         data.comments.length >= 8
+    //     ) {
+    //         setData({
+    //             ...data,
+    //             page: data.page + 1,
+    //         });
+    //     }
+    // };
 
     const valuesStr = {
         page: 1,
@@ -55,6 +81,11 @@ function Review(props: IProps) {
 
     const handlePostComment = () => {
         if (comment.text.length > 0 && user) {
+            setComment({
+                ...comment,
+                text: "",
+                image_url: null,
+            });
             switch (commentable_type) {
                 case "ORGANIZATION":
                     return dispatch(
@@ -85,7 +116,6 @@ function Review(props: IProps) {
                         })
                     );
             }
-            setComment({ text: "", image_url: null });
         } else if (!user) {
             history.push("/sign-in?1");
         }
@@ -96,59 +126,51 @@ function Review(props: IProps) {
             handlePostComment();
         }
     };
-
-    //handle post media
-    const onChangeMedia = (e: any) => {
-        const media = e.target.files[0];
-        if (user && media) {
-            handlePostMedia(media);
-        } else if (!user) {
-            history.push("/sign-in?1");
-        }
-    };
-    const handlePostMedia = async (media: any) => {
-        let formData = new FormData();
-        formData.append("file", media);
-        try {
-            const res = await mediaApi.postMedia(formData);
-            setComment({
-                ...comment,
-                image_url: res.data.context.original_url,
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const onRemoveImgTemp = () => {
-        setComment({ ...comment, image_url: null });
-    };
     return (
         <>
             <div className="org-evaluate__cnt">
                 <div className="org-evaluate__title">
                     <p>Đánh giá</p>
                 </div>
-                <TotalStartEvaluate />
+                <TotalStartEvaluate
+                    totalItem={totalItem}
+                    openSeeMoreCmt={openSeeMoreCmt}
+                />
                 <EvaluateInput
                     handleOnchange={handleOnchange}
                     comment={comment}
                     handleKeyDown={handleKeyDown}
                     handlePostComment={handlePostComment}
                     user={user}
-                    onChangeMedia={onChangeMedia}
-                    onRemoveImgTemp={onRemoveImgTemp}
+                    setComment={setComment}
+                    changeStyle={changeStyle}
                 />
                 {totalItem && totalItem > 0 ? (
-                    <span className="total-comment">
-                        Tổng {totalItem} đánh giá
-                    </span>
+                    <div className="total-comment__wrap">
+                        <span className="total-comment">
+                            Tổng {totalItem} đánh giá
+                        </span>
+                    </div>
                 ) : (
                     <span className="total-comment">Chưa có bình luận nào</span>
                 )}
-                {comments?.map((item: IComment, index: number) => (
-                    <CommentItem key={index} comment={item} user={user} />
-                ))}
+                {/* {data.comments.length > 0 ? (
+                    <InfiniteScroll
+                        dataLength={data?.comments.length}
+                        hasMore={true}
+                        next={onViewMore}
+                        height={"80vh"}
+                        loader={<div></div>}
+                    > */}
+                <div className="evaluate__list">
+                    {comments?.map((item: IComment, index: number) => (
+                        <CommentItem key={index} comment={item} user={user} />
+                    ))}
+                </div>
+                {/* </InfiniteScroll>
+                ) : (
+                    <></> */}
+                {/* )} */}
             </div>
         </>
     );

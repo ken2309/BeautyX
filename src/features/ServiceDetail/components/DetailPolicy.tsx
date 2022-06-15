@@ -26,7 +26,7 @@ function DetailPolicy(props: any) {
                 <div className="detailPolicy-useGuild__bot">
                     <p>
                         {
-                            "(*) thời hạn sử dụng: Sử dụng dịch vụ đã mua trong 1 tháng kể từ ngày mua thành công"
+                            "(*) Thời hạn sử dụng: Sử dụng dịch vụ đã mua trong 1 tháng kể từ ngày mua thành công"
                         }
                     </p>
                 </div>

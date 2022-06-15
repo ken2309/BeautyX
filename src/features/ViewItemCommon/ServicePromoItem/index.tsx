@@ -34,22 +34,22 @@ function ServicePromoItem(props: IProps) {
                     onError={(e) => onErrorImg(e)}
                 />
                 <div className="ser-promo">
-                    {service.discount_percent > 0 ? (
+                    {service.discount_percent > 0 &&
+                    service.discount_percent < 50 ? (
                         <div className="ser-promo__percent">
-                            Giảm {Math.round(service?.discount_percent)}
-                            %
+                            Giảm {Math.round(service?.discount_percent)}%
                         </div>
                     ) : (
                         <div></div>
                     )}
                     <div className="flex-row ser-promo__bot">
-                        <div className="flex-row ser-promo__bot-start">
-                            {service?.rating}
+                        <div className="flexX-gap-4 ser-promo__bot-start">
                             <img src={icon.star} alt="" />
+                            {service?.rating}
                         </div>
-                        <div className="ser-promo__bot-bought">
-                            Lượt mua
-                            <span>{service?.bought_count}</span>
+                        <div className="flexX-gap-4 ser-promo__bot-bought">
+                            <img src={icon.cartCheckPurple} alt="" />
+                            <p>{service?.bought_count}</p>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,9 @@ function ServicePromoItem(props: IProps) {
                     ) : (
                         <>
                             <span>{formatPrice(service?.special_price)}đ</span>
-                            <span>{formatPrice(service?.price)}đ</span>
+                            {service?.discount_percent < 50 && (
+                                <span>{formatPrice(service?.price)}đ</span>
+                            )}
                         </>
                     )}
                 </div>
@@ -76,8 +78,8 @@ function ServicePromoItem(props: IProps) {
                             {service._geoDistance < 1000
                                 ? `${service._geoDistance}(m)`
                                 : `${Math.round(
-                                    service._geoDistance / 1000
-                                )}(km)`}
+                                      service._geoDistance / 1000
+                                  )}(km)`}
                         </span>
                     </div>
                 ) : (

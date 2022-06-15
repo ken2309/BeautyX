@@ -11,7 +11,7 @@ import scrollTop from "../../../utils/scrollTop";
 interface IProps {
     product: Product;
     org: IOrganization;
-    changeStyle?: boolean,
+    changeStyle?: boolean;
 }
 
 function ProductItem(props: IProps) {
@@ -23,14 +23,27 @@ function ProductItem(props: IProps) {
         <Link
             to={{
                 pathname: `/product-detail/${slugify(product?.product_name)}`,
-                search: `id=${product.id}&org=${org.id}`,
+                search: `id=${product?.id}&org=${org?.id}`,
                 state: { org, product },
             }}
             onClick={() => scrollTop()}
-            className={changeStyle ? "ser-pro-item ser-pro-item__change" : "ser-pro-item"}>
-            <div className={changeStyle ? "ser-img-cnt ser-img-cnt__change" : "ser-img-cnt"}>
+            className={
+                changeStyle
+                    ? "ser-pro-item ser-pro-item__change"
+                    : "ser-pro-item"
+            }
+        >
+            <div
+                className={
+                    changeStyle
+                        ? "ser-img-cnt ser-img-cnt__change"
+                        : "ser-img-cnt"
+                }
+            >
                 <img
-                    className={changeStyle ? "ser-img ser-img__change" : "ser-img"}
+                    className={
+                        changeStyle ? "ser-img ser-img__change" : "ser-img"
+                    }
                     src={product?.image ? product.image_url : org?.image_url}
                     alt=""
                     onError={(e) => onErrorImg(e)}
@@ -56,7 +69,11 @@ function ProductItem(props: IProps) {
             <div className="ser-pro-item__cnt">
                 <span className="ser-name">{product?.product_name}</span>
                 <div
-                    className={changeStyle ? "ser-price ser-price__change" : "ser-price"}
+                    className={
+                        changeStyle
+                            ? "ser-price ser-price__change"
+                            : "ser-price"
+                    }
                 >
                     {product?.special_price === -1 ? (
                         <span style={{ color: "var(--purple)" }}>
@@ -86,7 +103,11 @@ function ProductItem(props: IProps) {
                         <></>
                 } */}
                 <div className="ser-org-address">
-                    <img src={org?.image_url} onError={(e) => onErrorImg(e)} alt="" />
+                    <img
+                        src={org?.image_url}
+                        onError={(e) => onErrorImg(e)}
+                        alt=""
+                    />
                     <p>{org?.address}</p>
                 </div>
             </div>

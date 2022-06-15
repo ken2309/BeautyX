@@ -2,7 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IOrganization } from "../../../../interface/organization";
-import { fetchAsyncOrgComments, clearPrevState } from "../../../../redux/org/orgCommentsSlice";
+import {
+    fetchAsyncOrgComments,
+    clearPrevState,
+} from "../../../../redux/org/orgCommentsSlice";
 import { STATUS } from "../../../../redux/status";
 import Review from "../../../Reviews";
 import ButtonLoading from "../../../../components/ButtonLoading";
@@ -22,7 +25,7 @@ function OrgReviews(props: IProps) {
     );
     const callOrgComments = () => {
         if (org?.id !== org_id || status !== STATUS.SUCCESS) {
-            dispatch(clearPrevState())
+            dispatch(clearPrevState());
             dispatch(
                 fetchAsyncOrgComments({
                     org_id: org?.id,
@@ -44,13 +47,19 @@ function OrgReviews(props: IProps) {
                     id={org_id}
                     page={page}
                 />
-                <div style={{ justifyContent: "center" }} className="flex-row">
-                    <ButtonLoading
-                        title="Xem tất cả đánh giá"
-                        onClick={() => setOpenAll(true)}
-                        loading={false}
-                    />
-                </div>
+                {comments && comments.length > 8 ? (
+                    <div
+                        style={{
+                            justifyContent: "center",
+                        }}
+                        onClick={() => {
+                            setOpenAll(true);
+                        }}
+                        className="seemore-cmt"
+                    >
+                        <p>{"Xem tất cả >>"}</p>
+                    </div>
+                ) : null}
             </div>
             <ReviewsContainer
                 open={openAll}

@@ -1,27 +1,31 @@
-import React from 'react';
-import icon from '../../../constants/icon';
-import { IDiscountPar, IITEMS_DISCOUNT } from '../../../interface/discount';
-import { IOrganization } from '../../../interface/organization'
-import onErrorImg from '../../../utils/errorImg';
-import formatPrice from '../../../utils/formatPrice';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import React from "react";
+import icon from "../../../constants/icon";
+import { IDiscountPar, IITEMS_DISCOUNT } from "../../../interface/discount";
+import { IOrganization } from "../../../interface/organization";
+import onErrorImg from "../../../utils/errorImg";
+import formatPrice from "../../../utils/formatPrice";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
     fetchAsyncCancelFavoriteService,
-    fetchAsyncFavoriteService
-} from '../../../redux/org_services/serviceSlice';
+    fetchAsyncFavoriteService,
+} from "../../../redux/org_services/serviceSlice";
 
 interface IProps {
-    discount: IDiscountPar,
-    org: IOrganization,
-    detail: any
+    discount: IDiscountPar;
+    org: IOrganization;
+    detail: any;
 }
 
 function DiscountDetailLeft(props: IProps) {
     const { org, detail, discount } = props;
-    const ITEM_DISCOUNT: IITEMS_DISCOUNT = useSelector((state: any) => state.ORG_DISCOUNTS.ITEM_DISCOUNT);
-    const percent = Math.round(100 - ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price * 100)
-
+    const ITEM_DISCOUNT: IITEMS_DISCOUNT = useSelector(
+        (state: any) => state.ORG_DISCOUNTS.ITEM_DISCOUNT
+    );
+    const percent = Math.round(
+        100 -
+            (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
+    );
     const history = useHistory();
     const dispatch = useDispatch();
     const { USER } = useSelector((state: any) => state.USER);
@@ -57,19 +61,27 @@ function DiscountDetailLeft(props: IProps) {
             <div className="service-detail__mobile">
                 <div className="service-detail__mobile-top">
                     <p className="service-detail__mobile-name">
-                        {detail?.service_name}
+                        {detail?.service_name || detail?.product_name}
                     </p>
                     <div
                         onClick={onFavorite}
                         className="service-detail__mobile-favorite"
                     >
-                        <img src={detail?.is_favorite ? icon.heart : icon.unHeart} alt="" />
+                        <img
+                            src={
+                                detail?.is_favorite ? icon.heart : icon.unHeart
+                            }
+                            alt=""
+                        />
                     </div>
                 </div>
 
-                <div className="service-detail__mobile-mid">
-                    <img src={icon.alarmClock} alt="" />
-                </div>
+                {detail?.service_name ? (
+                    <div className="service-detail__mobile-mid">
+                        <img src={icon.alarmClock} alt="" />
+                        <p>{ITEM_DISCOUNT?.productable.duration} phút</p>
+                    </div>
+                ) : null}
 
                 <div className="service-detail__mobile-bottom">
                     <div className="service-detail__mobile-percent">
@@ -77,7 +89,9 @@ function DiscountDetailLeft(props: IProps) {
                     </div>
                     <div className="service-detail__mobile-price">
                         <span>{formatPrice(ITEM_DISCOUNT?.view_price)}đ</span>
-                        <span>{formatPrice(ITEM_DISCOUNT?.productable.price)}</span>
+                        <span>
+                            {formatPrice(ITEM_DISCOUNT?.productable.price)}đ
+                        </span>
                     </div>
                 </div>
                 <div className="service-detail__mobile-avi">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Container } from "@mui/material";
 import { IOrganization } from "../../../interface/organization";
 import onErrorImg from "../../../utils/errorImg";
@@ -11,6 +11,8 @@ import {
 } from "../../../redux/org/orgSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import PopupDetailContact from "./PopupDetailContact";
+import { extraOrgTimeWork } from "./Functions/extraOrg";
 
 interface IProps {
     org: IOrganization;
@@ -19,12 +21,25 @@ interface IProps {
 
 function OrgDetail(props: IProps) {
     const { org, galleries } = props;
-    const { totalItem } = useSelector(
-        (state: any) => state.ORG_COMMENTS
-    );
+    const { totalItem } = useSelector((state: any) => state.ORG_COMMENTS);
     const dispatch = useDispatch();
     const history = useHistory();
     const { USER } = useSelector((state: any) => state.USER);
+    const [openPopupContact, setOpenPopupContact] = useState(false);
+
+    // time works
+    const now = new Date();
+    const today = now.getDay() + 1;
+    const orgTimes = extraOrgTimeWork(org?.opening_time);
+    const time_works_today = orgTimes?.find(
+        (item: any, index: number) => index + 2 === today
+    );
+    const refListTimeWorks = useRef<any>();
+    const handleOpenSelector = () => {
+        refListTimeWorks.current.classList.toggle("org-time-work__list-active");
+    };
+
+    // handle favorite Org
     const handleFavoriteOrg = () => {
         if (USER) {
             if (org?.is_favorite) {
@@ -36,6 +51,8 @@ function OrgDetail(props: IProps) {
             history.push("/sign-in?1");
         }
     };
+
+    // setting slider
     const settings = {
         dots: true,
         infinite: true,
@@ -64,6 +81,7 @@ function OrgDetail(props: IProps) {
             },
         ],
     };
+
     const onActiveTabGallery = () => {
         dispatch(onActiveTab(7));
     };
@@ -105,86 +123,131 @@ function OrgDetail(props: IProps) {
                         <div className="org-detail__cnt-bot">
                             <div className="left">
                                 <div className="org-detail__info">
-                                    <div className="org-avatar">
-                                        <img
-                                            src={org.image_url}
-                                            onError={(e) => onErrorImg(e)}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="org-left-detail">
-                                        <span className="org-left-detail__name">
-                                            {org?.name}
-                                        </span>
-                                        <div className="flex-row org-left-detail__address">
+                                    <div className="flexX-gap-8">
+                                        <div className="org-avatar">
                                             <img
-                                                src={icon.mapPinRed}
+                                                src={org.image_url}
+                                                onError={(e) => onErrorImg(e)}
                                                 alt=""
-                                                className="icon"
                                             />
-                                            <span className="title">
-                                                {org?.full_address}
+                                        </div>
+                                        <div className="org-left-detail">
+                                            <span className="org-left-detail__name">
+                                                {org?.name}
                                             </span>
-                                        </div>
-                                        <div className="flex-row org-left-detail__rate">
-                                            <div className="flex-row org-left-detail__rate-item">
-                                                <span className="text">
-                                                    4.5
-                                                </span>
+                                            <div className="flexX-gap-4 org-left-detail__address">
                                                 <img
-                                                    src={icon.star}
-                                                    alt=""
-                                                    className="icon"
-                                                />
-                                            </div>
-                                            <div className="flex-row org-left-detail__rate-item">
-                                                <span className="text">
-                                                    {totalItem}
-                                                </span>
-                                                <img
-                                                    src={icon.chatAll}
-                                                    alt=""
-                                                    className="icon"
-                                                />
-                                            </div>
-                                            <div className="flex-row org-left-detail__rate-item">
-                                                <span className="text">
-                                                    {org.favorites_count}
-                                                </span>
-                                                <img
-                                                    src={icon.heart}
-                                                    alt=""
-                                                    className="icon"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="org-time-work">
-                                            <div className="flex-row org-time-work__left">
-                                                <img
-                                                    src={icon.Clock_purple}
+                                                    src={icon.mapPinRed}
                                                     alt=""
                                                     className="icon"
                                                 />
                                                 <span className="title">
-                                                    Thời gian mở cửa
+                                                    {org?.full_address}
                                                 </span>
                                             </div>
-                                            <div className="flex-row org-time-work__right">
-                                                <span className="time">
-                                                    09:00 - 12:00
-                                                </span>
-                                                <div className="flex-row-sp org-time-work__right-list">
-                                                    <span className="day-week">
-                                                        Thứ 2 - Thứ 7
-                                                    </span>
+                                            <div className="flexX-gap-8 org-left-detail__rate">
+                                                <div className="flexX-gap-4 org-left-detail__rate-item">
                                                     <img
-                                                        src={
-                                                            icon.arrowDownPurple
-                                                        }
+                                                        src={icon.star}
                                                         alt=""
+                                                        className="icon"
                                                     />
+                                                    <span className="text">
+                                                        4.5
+                                                    </span>
+                                                </div>
+                                                <div className="flexX-gap-4 org-left-detail__rate-item">
+                                                    <img
+                                                        src={icon.chatAll}
+                                                        alt=""
+                                                        className="icon"
+                                                    />
+                                                    <span className="text">
+                                                        {totalItem}
+                                                    </span>
+                                                </div>
+                                                <div className="flexX-gap-4 org-left-detail__rate-item">
+                                                    <img
+                                                        src={icon.heart}
+                                                        alt=""
+                                                        className="icon"
+                                                    />
+                                                    <span className="text">
+                                                        {org.favorites_count}
+                                                    </span>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div className="org-time-work">
+                                        <div className="flexX-gap-4 org-time-work__left">
+                                            <img
+                                                src={icon.Clock_purple}
+                                                alt=""
+                                                className="icon"
+                                            />
+                                            <span className="title">
+                                                Thời gian hoạt động{" "}
+                                                {time_works_today?.day_week}:
+                                            </span>
+                                        </div>
+                                        <div className="flex-row org-time-work__right">
+                                            <div
+                                                onClick={() =>
+                                                    handleOpenSelector()
+                                                }
+                                                className="flex-row-sp org-time-work__right-list"
+                                            >
+                                                {
+                                                    time_works_today?.from_time_opening
+                                                }{" "}
+                                                -{" "}
+                                                {
+                                                    time_works_today?.to_time_opening
+                                                }
+                                                <img
+                                                    src={icon.arrowDownPurple}
+                                                    alt=""
+                                                />
+                                            </div>
+                                            {/* selector time_works_today */}
+                                            <ul
+                                                ref={refListTimeWorks}
+                                                className="org-time-work__list"
+                                            >
+                                                {orgTimes?.map(
+                                                    (
+                                                        item: any,
+                                                        index: number
+                                                    ) => (
+                                                        <li
+                                                            style={
+                                                                index + 2 ===
+                                                                today
+                                                                    ? {
+                                                                          color: "var(--purple)",
+                                                                      }
+                                                                    : {}
+                                                            }
+                                                            key={index}
+                                                            className="flex-row org-time-list__item"
+                                                        >
+                                                            <span className="org-time-list__left">
+                                                                {item.day_week}
+                                                            </span>
+                                                            <div className="org-time-list__right">
+                                                                {
+                                                                    item?.from_time_opening
+                                                                }{" "}
+                                                                -{" "}
+                                                                {
+                                                                    item?.to_time_opening
+                                                                }
+                                                            </div>
+                                                        </li>
+                                                    )
+                                                )}
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -194,10 +257,10 @@ function OrgDetail(props: IProps) {
                                     style={
                                         org?.is_favorite
                                             ? {
-                                                backgroundColor:
-                                                    "var(--purple)",
-                                                color: "var(--bgWhite)",
-                                            }
+                                                  backgroundColor:
+                                                      "var(--purple)",
+                                                  color: "var(--bgWhite)",
+                                              }
                                             : {}
                                     }
                                     onClick={handleFavoriteOrg}
@@ -207,12 +270,22 @@ function OrgDetail(props: IProps) {
                                         : "Theo dõi"}
                                 </button>
                                 <br />
-                                <button>Liên hệ tư vấn</button>
+                                <button
+                                    onClick={() => {
+                                        setOpenPopupContact(true);
+                                    }}
+                                >
+                                    Liên hệ tư vấn
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </Container>
+            <PopupDetailContact
+                openPopupContact={openPopupContact}
+                setOpenPopupContact={setOpenPopupContact}
+            />
         </div>
     );
 }

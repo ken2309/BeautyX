@@ -136,7 +136,8 @@
 /* Mobile */
 @media only screen and (max-width: 767px) {
     .home-discounts {
-        padding: 20px 0px;
+        padding: 0px;
+        margin: 16px 0;
     }
     .home-discounts__list-wrap {
         overflow-x: scroll;
@@ -149,7 +150,8 @@
         flex-wrap: nowrap;
     }
     .home-discounts__title {
-        margin: 0 16px;
+        padding: 16px 16px 0 16px;
+        margin-bottom: 0;
     }
     .home-discounts__title span:nth-child(1) {
         font-size: 16px;

@@ -36,6 +36,8 @@ import ComboDetail from "../features/ComboDetail";
 import DiscountDetail from "../features/DiscountDetail";
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 import CategoryTree from "../features/CategoryTree";
+import Booking from "../features/Booking";
+import BuyNow from "../features/BuyNow";
 
 
 // feature mobile
@@ -170,9 +172,17 @@ function RouterConfig(props: any) {
       component: <HomeDiscountList />
     },
     {
-      path:"/-danh-muc/",
-      component : <CategoryTree/>
-    }
+      path: "/-danh-muc/",
+      component: <CategoryTree />
+    },
+    {
+      path: "/dat-hen",
+      component: <Booking />
+    },
+    // {
+    //   path: "/mua-hang",
+    //   component: <BoyNow />
+    // }
   ];
   const routesPrivate = [
     {
@@ -198,6 +208,10 @@ function RouterConfig(props: any) {
     {
       path: '/trang-thai-don-hang/:desc',
       component: CartPaymentStatus
+    },
+    {
+      path: "/mua-hang",
+      component: BuyNow
     }
   ];
   return (

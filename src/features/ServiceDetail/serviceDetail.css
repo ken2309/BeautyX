@@ -119,6 +119,13 @@
     border-radius: 8px;
 }
 
+.service-detail .service-detail__org .service-detail__title {
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 12px;
+}
+
 .service-detail .detail-right__name {
     position: relative;
 }
@@ -405,6 +412,11 @@
     grid-gap: 0 8px;
     cursor: pointer;
 }
+.bottom-buy__now {
+    height: 40px;
+    margin-right: 16px;
+    background-color: var(--orange) !important;
+}
 
 .service-detail .bottom-addCart p {
     color: #fff;
@@ -424,9 +436,14 @@
 .service-detail .service-detail__description {
     margin-bottom: 24px;
 }
+.service-detail .service-detail__description p {
+    margin-bottom: 24px;
+    line-height: 20px;
+}
 
 .service-detail .service-detail__comment {
     width: 50%;
+    margin-bottom: 24px;
 }
 
 .service-detail .infoMer-bottom__right-active {
@@ -469,7 +486,7 @@
 }
 
 .detailPolicy-useGuild__bot {
-    background-color: var(--purple);
+    background-color: var(--red_2);
     padding: 16px;
 }
 
@@ -525,17 +542,36 @@
     grid-gap: 16px;
     margin-top: 24px;
 }
+.evaluate-rating__mobile {
+    display: none;
+}
+.total-comment__wrap {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+.seemore-cmt {
+    font-size: 14px;
+    color: var(--purple);
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    line-height: 34px;
+}
 
 @media only screen and (max-width: 1023px) {
     .service-detail {
         padding: 0 0 92px 0;
         position: relative;
     }
-
-    .service-detail .org-evaluate__cnt {
-        padding: 0 0 16px 0;
+    .service-detail .service-detail__description p {
+        font-size: 12px;
+        line-height: 16px;
     }
-
+    .seemore-cmt {
+        font-size: 12px;
+    }
     .service-detail .detail-left__img img {
         border-radius: unset;
     }
@@ -545,7 +581,7 @@
     }
 
     .service-detail .service-detail__tabitem {
-        padding-top: 16px;
+        padding: 16px 0;
     }
 
     .service-detail .service-detail__tab {
@@ -581,6 +617,7 @@
 
     .service-detail .service-detail__comment {
         width: 100%;
+        margin-bottom: 16px;
     }
 
     .service-detail .detail-left__img {
@@ -823,12 +860,16 @@
     }
 
     .active-mb .bottom-addCart {
+        width: 100%;
         padding: 8px;
         align-items: center;
         justify-content: center;
         font-weight: 500;
         font-size: 12px;
         line-height: 16px;
+    }
+    .bottom-buy__now {
+        margin: 0px;
     }
 
     .active-mb .detail-right__percent p {
@@ -875,7 +916,6 @@
         line-height: 24px;
     }
     .detailPolicy-useGuild__bot {
-        background-color: var(--purple);
         padding: 12px;
     }
 
@@ -913,5 +953,54 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 12px;
+    }
+    .evaluate-rating__mobile {
+        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #ffe3d2;
+        border-radius: 8px;
+        padding: 8px;
+    }
+    .org-evaluate__cnt .evaluate-rating {
+        display: none !important;
+    }
+    .evaluate-rating__mobile .rating-left {
+        display: flex;
+        align-items: center;
+        grid-gap: 0 8px;
+    }
+    .evaluate-rating__mobile .rating-left__total {
+        font-weight: bold;
+        font-size: 30px;
+        line-height: 40px;
+        color: #ff721f;
+    }
+    .evaluate-rating__mobile .rating-left__infor {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .evaluate-rating__mobile .rating-left__text {
+        font-weight: 500;
+        font-size: 10px;
+        line-height: 12px;
+        color: #1f1f1f;
+    }
+    .evaluate-rating__mobile .rating-right .rating-right__btn {
+        outline: none;
+        border: none;
+        border: 1px solid #ff721f;
+        padding: 4px 8px;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: transparent;
+    }
+    .evaluate-rating__mobile .rating-right .rating-right__btn p {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        color: #ff721f;
     }
 }

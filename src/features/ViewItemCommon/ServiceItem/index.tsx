@@ -11,13 +11,13 @@ import scrollTop from "../../../utils/scrollTop";
 interface IProps {
     service: Service;
     org: IOrganization;
-    changeStyle?: boolean
+    changeStyle?: boolean;
 }
 
 function ServiceItem(props: IProps) {
     const { service, org, changeStyle } = props;
     const history = useHistory();
-    const percent = Math.round(
+    const percent: any = Math.round(
         100 - (service?.special_price / service?.price) * 100
     );
     const onDetail = () => {
@@ -29,10 +29,25 @@ function ServiceItem(props: IProps) {
         });
     };
     return (
-        <div onClick={onDetail} className={changeStyle ? "ser-pro-item ser-pro-item__change" : "ser-pro-item"}>
-            <div className={changeStyle ? "ser-img-cnt ser-img-cnt__change" : "ser-img-cnt"}>
+        <div
+            onClick={onDetail}
+            className={
+                changeStyle
+                    ? "ser-pro-item ser-pro-item__change"
+                    : "ser-pro-item"
+            }
+        >
+            <div
+                className={
+                    changeStyle
+                        ? "ser-img-cnt ser-img-cnt__change"
+                        : "ser-img-cnt"
+                }
+            >
                 <img
-                    className={changeStyle ? "ser-img ser-img__change" : "ser-img"}
+                    className={
+                        changeStyle ? "ser-img ser-img__change" : "ser-img"
+                    }
                     src={
                         service?.image_url ? service.image_url : org?.image_url
                     }
@@ -40,7 +55,7 @@ function ServiceItem(props: IProps) {
                     onError={(e) => onErrorImg(e)}
                 />
                 <div className="ser-promo">
-                    {service.special_price > 0 && (
+                    {service.special_price > 0 && percent < 50 && (
                         <div className="ser-promo__percent">
                             Giảm {percent} %
                         </div>
@@ -60,7 +75,11 @@ function ServiceItem(props: IProps) {
             <div className="ser-pro-item__cnt">
                 <span className="ser-name">{service?.service_name}</span>
                 <div
-                    className={changeStyle ? "ser-price ser-price__change" : "ser-price"}
+                    className={
+                        changeStyle
+                            ? "ser-price ser-price__change"
+                            : "ser-price"
+                    }
                 >
                     {service?.special_price === -1 ? (
                         <span style={{ color: "var(--purple)" }}>
@@ -69,7 +88,9 @@ function ServiceItem(props: IProps) {
                     ) : (
                         <>
                             <span>{formatPrice(service?.special_price)}đ</span>
-                            <span>{formatPrice(service?.price)}đ</span>
+                            {percent < 50 && (
+                                <span>{formatPrice(service?.price)}đ</span>
+                            )}
                         </>
                     )}
                 </div>
@@ -90,7 +111,11 @@ function ServiceItem(props: IProps) {
                         <></>
                 } */}
                 <div className="ser-org-address">
-                    <img onError={(e) => onErrorImg(e)} src={org?.image_url} alt="" />
+                    <img
+                        onError={(e) => onErrorImg(e)}
+                        src={org?.image_url}
+                        alt=""
+                    />
                     <p>{org?.address}</p>
                 </div>
             </div>

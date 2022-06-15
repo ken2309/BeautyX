@@ -1,16 +1,32 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import productsApi from '../../api/productApi';
-import commentsApi from '../../api/commentsApi';
-import { STATUS } from '../status';
-import favorites from '../../api/favorite';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import productsApi from "../../api/productApi";
+import commentsApi from "../../api/commentsApi";
+import { STATUS } from "../status";
+import favorites from "../../api/favorite";
 
+// get product detail
 export const fetchAsyncProductDetail: any = createAsyncThunk(
     "PRODUCT/fetchAsyncProductDetail",
     async (values: any) => {
         const res = await productsApi.getDetailById(values);
-        return res.data.context
+        return res.data.context;
     }
-)
+);
+
+// get product recomment
+export const fetchAsynProductRecomment: any = createAsyncThunk(
+    "PRODUCT/fetchAsynProductRecomment",
+    async (values: any) => {
+        const res = await productsApi.getByOrg_id(values);
+        const payload = {
+            products: res.data.context.data,
+            cate_id: values.cate_id,
+        };
+        return payload;
+    }
+);
+
+// get comment product
 export const fetchAsyncProductCmt: any = createAsyncThunk(
     "PRODUCT/fetchAsyncProductCmt",
     async (values: any) => {
@@ -19,12 +35,12 @@ export const fetchAsyncProductCmt: any = createAsyncThunk(
             comments: res.data.context.data,
             totalItem: res.data.context.total,
             page: values.page,
-            product_id: parseInt(values.id)
-        }
-        return payload
+            product_id: parseInt(values.id),
+        };
+        return payload;
     }
-)
-// post comment service
+);
+// post comment product
 export const postAsyncProductComment: any = createAsyncThunk(
     "SERVICE/postAsyncProductComment",
     async (params: any) => {
@@ -42,74 +58,89 @@ export const postAsyncProductComment: any = createAsyncThunk(
         }
     }
 );
+// post favorite product
 export const onFavoriteProduct: any = createAsyncThunk(
     "PRODUCT/onFavoriteProduct",
     async (values: any) => {
         const payload = {
             ...values.product,
             is_favorite: true,
-            favorites_count: values.product.favorites_count + 1
-        }
+            favorites_count: values.product.favorites_count + 1,
+        };
         await favorites.postFavoriteItem({
             org_id: values.org_id,
-            product_id: values.product.id
-        })
-        return payload
+            product_id: values.product.id,
+        });
+        return payload;
     }
-)
+);
+// delete favorite product
 export const onDeleteFavorite: any = createAsyncThunk(
     "PRODUCT/onDeleteFavorite",
     async (values: any) => {
         const payload = {
             ...values.product,
             is_favorite: false,
-            favorites_count: values.product.favorites_count - 1
-        }
+            favorites_count: values.product.favorites_count - 1,
+        };
         await favorites.deleteFavoriteItem({
             org_id: values.org_id,
-            product_id: values.product.id
-        })
-        return payload
+            product_id: values.product.id,
+        });
+        return payload;
     }
-)
+);
 const initialState = {
     PRODUCT: {
         product: {},
-        status: ""
+        status: "",
+    },
+    PRODUCT_REC: {
+        products: [],
+        cate_id: null,
+        status: "",
     },
     COMMENTS: {
         product_id: null,
         comments: [],
         page: 1,
         totalItem: 1,
-        status_cmt: ""
-    }
-}
+        status_cmt: "",
+    },
+};
 const productSlice = createSlice({
     initialState,
     name: "PRODUCT",
-    reducers: {
-
-    },
+    reducers: {},
     extraReducers: {
+        // get product detail
         [fetchAsyncProductDetail.pending]: (state) => {
-            return { ...state, PRODUCT: { ...state.PRODUCT, status: STATUS.LOADING } }
+            return {
+                ...state,
+                PRODUCT: { ...state.PRODUCT, status: STATUS.LOADING },
+            };
         },
         [fetchAsyncProductDetail.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
                 PRODUCT: {
                     product: payload,
-                    status: STATUS.SUCCESS
-                }
-            }
+                    status: STATUS.SUCCESS,
+                },
+            };
         },
         [fetchAsyncProductDetail.rejected]: (state) => {
-            return { ...state, PRODUCT: { ...state.PRODUCT, status: STATUS.FAIL } }
+            return {
+                ...state,
+                PRODUCT: { ...state.PRODUCT, status: STATUS.FAIL },
+            };
         },
-
+        // get product comment
         [fetchAsyncProductCmt.pending]: (state) => {
-            return { ...state, COMMENTS: { ...state.COMMENTS, status_cmt: STATUS.LOADING } }
+            return {
+                ...state,
+                COMMENTS: { ...state.COMMENTS, status_cmt: STATUS.LOADING },
+            };
         },
         [fetchAsyncProductCmt.fulfilled]: (state, { payload }) => {
             const { comments, totalItem, page, product_id } = payload;
@@ -121,44 +152,47 @@ const productSlice = createSlice({
                     totalItem: totalItem,
                     page: page,
                     product_id: product_id,
-                    status_cmt: STATUS.SUCCESS
-                }
-            }
+                    status_cmt: STATUS.SUCCESS,
+                },
+            };
         },
         [fetchAsyncProductCmt.rejected]: (state) => {
-            return { ...state, COMMENTS: { ...state.COMMENTS, status_cmt: STATUS.FAIL } }
+            return {
+                ...state,
+                COMMENTS: { ...state.COMMENTS, status_cmt: STATUS.FAIL },
+            };
         },
-
+        // favorite product
         [onFavoriteProduct.pending]: (state) => {
-            return state
+            return state;
         },
         [onFavoriteProduct.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
                 PRODUCT: {
                     ...state.PRODUCT,
-                    product: payload
-                }
-            }
+                    product: payload,
+                },
+            };
         },
         [onFavoriteProduct.pending]: (state) => {
-            return state
+            return state;
         },
-
+        // delete favorite
         [onDeleteFavorite.pending]: (state) => {
-            return state
+            return state;
         },
         [onDeleteFavorite.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
                 PRODUCT: {
                     ...state.PRODUCT,
-                    product: payload
-                }
-            }
+                    product: payload,
+                },
+            };
         },
         [onDeleteFavorite.pending]: (state) => {
-            return state
+            return state;
         },
         // post comment product
         [postAsyncProductComment.pending]: (state, { payload }) => {
@@ -185,8 +219,37 @@ const productSlice = createSlice({
                 status_cmt: STATUS.FAIL,
             };
         },
-    }
-})
+        // get product recomment
+        [fetchAsynProductRecomment.pending]: (state) => {
+            return {
+                ...state,
+                PRODUCT_REC: {
+                    ...state.PRODUCT_REC,
+                    status: STATUS.LOADING,
+                },
+            };
+        },
+        [fetchAsynProductRecomment.fulfilled]: (state, { payload }) => {
+            return {
+                ...state,
+                PRODUCT_REC: {
+                    products: payload.products,
+                    cate_id: payload.cate_id,
+                    status: STATUS.SUCCESS,
+                },
+            };
+        },
+        [fetchAsynProductRecomment.rejected]: (state) => {
+            return {
+                ...state,
+                PRODUCT_REC: {
+                    ...state.PRODUCT_REC,
+                    status: STATUS.FAIL,
+                },
+            };
+        },
+    },
+});
 // const { actions } = productSlice;
 // export const {  } = actions;
 export default productSlice.reducer;

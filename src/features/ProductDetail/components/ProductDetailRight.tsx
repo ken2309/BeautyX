@@ -11,25 +11,29 @@ import {
 } from "../../../redux/org_products/productSlice";
 import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import { addCart } from "../../../redux/cartSlice";
-import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
 import onErrorImg from "../../../utils/errorImg";
 import {
     onDeleteFavoriteOrg,
     onFavoriteOrg,
 } from "../../../redux/org/orgSlice";
+import PopupSuccess from "../../PopupSuccess";
+import useFullScreen from "../../../utils/useFullScreen";
 
 interface IProps {
     product: Product;
     org: IOrganization;
+    NOW?: boolean
 }
 
 function ProductDetailRight(props: IProps) {
-    const { org, product } = props;
+    const { org, product, NOW } = props;
+    const IS_MB = useFullScreen();
     const dispatch = useDispatch();
     const history = useHistory();
     const { USER } = useSelector((state: any) => state.USER);
     const [quantity, setQuantity] = useState(1);
     const ORG = useSelector((state: any) => state.ORG);
+    const [popupSuccess, setPopupSuccess] = useState(false);
 
     const onFavorite = () => {
         if (USER) {
@@ -78,7 +82,20 @@ function ProductDetailRight(props: IProps) {
             sale_price
         );
         dispatch(addCart(values));
+        setPopupSuccess(true);
     };
+    const onBuyNow = () => {
+        const TYPE = "BOOK_NOW";
+        const products = [{ product, quantity }]
+        if (USER) {
+            history.push({
+                pathname: "/mua-hang",
+                state: { org, products, TYPE }
+            })
+        } else {
+            history.push('/sign-in?1')
+        }
+    }
     return (
         <div className="service-detail__right">
             {/* service detail right head */}
@@ -132,7 +149,7 @@ function ProductDetailRight(props: IProps) {
             <div className="detail-right__body">
                 <div className="detail-right__info">
                     <div className="flexX-gap-8">
-                        {product?.special_price > 0 && (
+                        {product?.special_price > 0 && percent !== 0 && (
                             <div className="detail-right__percent">
                                 <p>Giảm {percent}%</p>
                             </div>
@@ -236,7 +253,11 @@ function ProductDetailRight(props: IProps) {
                                     onClick={onFavoriteOrganization}
                                     className="infoMer-bottom__right"
                                 >
-                                    <img src={icon.rss} alt="" />
+                                    <img
+                                        style={{ width: "20px" }}
+                                        src={icon.rss}
+                                        alt=""
+                                    />
                                     <p>Theo Dõi</p>
                                 </button>
                             </>
@@ -269,11 +290,49 @@ function ProductDetailRight(props: IProps) {
                         </button>
                     </div>
                 </div>
-                <div onClick={handleAddCart} className="bottom-addCart">
-                    <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                    <p>Thêm vào giỏ hàng</p>
-                </div>
+
+                {IS_MB ? (
+                    <div className="flex-row flexX-gap-8">
+                        {NOW ? (
+                            <div
+                                onClick={onBuyNow}
+                                className="bottom-addCart bottom-buy__now"
+                            >
+                                <p>Mua ngay</p>
+                            </div>
+                        ) : (
+                            <div
+                                onClick={handleAddCart}
+                                className="bottom-addCart"
+                            >
+                                <img
+                                    src={icon.ShoppingCartSimpleWhite}
+                                    alt=""
+                                />
+                                <p>Thêm vào giỏ hàng</p>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <div className="flex-row flexX-gap-8">
+                        <div
+                            onClick={onBuyNow}
+                            className="bottom-addCart bottom-buy__now"
+                        >
+                            <p>Mua ngay</p>
+                        </div>
+                        <div onClick={handleAddCart} className="bottom-addCart">
+                            <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                            <p>Thêm vào giỏ hàng</p>
+                        </div>
+                    </div>
+                )}
             </div>
+            <PopupSuccess
+                popup={popupSuccess}
+                setPopup={setPopupSuccess}
+                title={`Đã thêm ${product.product_name} vào giỏ hàng`}
+            />
         </div>
     );
 }

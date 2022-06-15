@@ -5,6 +5,7 @@ import onErrorImg from "../../../../utils/errorImg";
 import icon from "../../../../constants/icon";
 import WrapperMap from "../../../Map/MapWarraper/WrapperMap";
 import { extraOrgTimeWork } from "../Functions/extraOrg";
+import OrgMapWrapper from "../OrgMap/OrgMapWrapper";
 
 interface IProps {
     org: IOrganization;
@@ -21,6 +22,7 @@ function OrgInformation(props: IProps) {
     const settings = {
         className: "map-org-detail__slide",
     };
+    const [openPopupSeemoreMap, setOpenPopupSeemoreMap] = useState(false);
     const onDropBranches = () => {
         branchesCntRef.current.classList.toggle("branches-list-cnt__drop");
     };
@@ -36,6 +38,15 @@ function OrgInformation(props: IProps) {
             <div className="org-information__map-cnt">
                 <div className="map-cnt">
                     <WrapperMap />
+                </div>
+                <div className="map-org__seemore">
+                    <p
+                        onClick={() => {
+                            setOpenPopupSeemoreMap(true);
+                        }}
+                    >
+                        Xem Thêm
+                    </p>
                 </div>
                 <div className="map-org-detail">
                     <Slider {...settings} ref={sliderRef}>
@@ -55,7 +66,9 @@ function OrgInformation(props: IProps) {
                                         className="icon"
                                     />
                                     <span className="address-text">
-                                        {org?.address}
+                                        {org?.address
+                                            ? org?.address
+                                            : org?.full_address}
                                     </span>
                                 </div>
                                 <div className="flex-row rate">
@@ -236,6 +249,11 @@ function OrgInformation(props: IProps) {
                     </li>
                 </ul>
             </div>
+            <OrgMapWrapper
+                open={openPopupSeemoreMap}
+                setOpen={setOpenPopupSeemoreMap}
+                org={org}
+            />
         </div>
     );
 }
