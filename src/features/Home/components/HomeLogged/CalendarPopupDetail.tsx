@@ -16,7 +16,6 @@ export default function CalendarPopupDetail(props: any) {
       try {
         const res = await apointmentApi.getAppointmentById(datingList.id);
         setServices(res?.data.context.service_ids);
-        console.log("res :>> ", res?.data.context.service_ids);
       } catch (error) {
         console.log(error);
       }

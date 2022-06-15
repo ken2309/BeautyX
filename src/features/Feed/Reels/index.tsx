@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Drawer } from "@mui/material";
 import Video from "./components/video";
-import icon from "../../constants/icon";
+import icon from "../../../constants/icon";
 import "./style.css";
 export default function Reels(props:any){
     const {open,setOpen,data} = props
@@ -18,10 +18,11 @@ export default function Reels(props:any){
         <div style={{
             position: 'fixed',
             /* inset: auto; */
-            top: 0,
+            top: '50vh',
             left: '50vw',
-            transform: 'translateX(-50%)',
+            transform: 'translateX(-50%) translateY(-50%)',
             backgroundColor: 'white'
+            
         }}>
             <div className="reel-head">
                 <button

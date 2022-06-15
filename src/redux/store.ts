@@ -19,6 +19,7 @@ import searchReducer from './search/searchSlice';
 import blogReducer from "./blog/blogSlice";
 import cateReducer from "./cate/cateSlice";
 import comboReducer from "./org_combos/comboSlice";
+import videosReducer from './video/videosSlice';
 
 const rootReducer = {
   carts: cartReducer,
@@ -40,7 +41,8 @@ const rootReducer = {
   BLOG: blogReducer,
   SEARCH: searchReducer,
   CATE: cateReducer,
-  COMBO: comboReducer
+  COMBO: comboReducer,
+  VID: videosReducer,
 };
 const store = configureStore({
   reducer: rootReducer,

@@ -1,23 +1,23 @@
-import icon from "../../../../constants/icon";
+import icon from "../../../../../constants/icon";
 export default function PostReaction (props:any) {
     const {
-        ORG,
         ORG_COMMENTS,
         handleReact,
+        reaction,
         handleViewAllCmt} = props;
-        console.log(ORG);
+        
     return (
         <div className="video-item_react-ctn">
             <div className="react-btn">
                 <div className="like" onClick={handleReact}>
                     {
-                        ORG.org?.is_favorite
+                        reaction.isFavorite
                             ?
                             <img className="icon" src={icon.heart} alt="" />
                             :
                             <img className="icon" src={icon.unHeartWhite} alt="" />
                     }
-                    <span>{ORG.org?.favorites_count}</span>
+                    <span>{reaction.favoriteCount}</span>
                 </div>
                 <div className="comment" onClick={handleViewAllCmt}>
                     <img className="icon" src={icon.comment} alt="" />

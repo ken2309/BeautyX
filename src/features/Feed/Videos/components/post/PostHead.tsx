@@ -2,7 +2,7 @@ import React from "react";
 import Avatar from '@mui/material/Avatar';
 
 export default function PostHead (props:any) {
-    const {data, video, handleGoOrgDetail} = props;
+    const {org, video, handleGoOrgDetail} = props;
     return (
     <>
     <header>
@@ -10,11 +10,11 @@ export default function PostHead (props:any) {
             onClick={handleGoOrgDetail}
         >
             <Avatar
-                alt={data?.org?.name}
-                src={data?.org?.image_url}
+                alt={org?.name}
+                src={org?.image_url}
                 sx={{ width: 32, height: 32 }} />
             <div className='video-item-header_name'>
-                <span>{data?.org?.name}</span>
+                <span>{org?.name}</span>
                 <span className="video-item-header_time">Đã đămg 5 giờ trước</span>
             </div>
         </div>

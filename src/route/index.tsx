@@ -30,7 +30,7 @@ import SellerCenter from "../features/SellerCenter";
 import CommentsDetail from "../features/Comments/CommentsDetail";
 import Otp from "../features/Otp";
 import ResetPassword from "../features/ResetPassword";
-import Videos from "../features/Videos";
+import Videos from "../features/Feed/Videos";
 import Blog from "../features/Blog";
 import ComboDetail from "../features/ComboDetail";
 import DiscountDetail from "../features/DiscountDetail";
