@@ -4,6 +4,7 @@ import { STATUS } from "../status";
 import { IComment } from "../../interface/comments";
 
 interface IInitialState {
+    org_id: any;
     comments: IComment[];
     page: number;
     totalItem: number;
@@ -20,9 +21,10 @@ export const fetchAsyncOrgComments: any = createAsyncThunk(
                 page: values.page,
             });
             const payload = {
+                org_id: values.org_id,
                 comments: (await res).data.context.data,
                 totalItem: (await res).data.context.total,
-                page: 1,
+                page: values.page,
             };
             return payload;
         } catch (error) {
@@ -34,10 +36,7 @@ export const postAsyncOrgComments: any = createAsyncThunk(
     "ORG_COMMENTS/postAsyncOrgComments",
     async (values: any) => {
         try {
-            const res = await commentsApi.postCommentOrg({
-                org_id: values.org_id,
-                body: values.body,
-            });
+            const res = await commentsApi.postCommentOrg(values.values);
             const payload = {
                 comment: {
                     ...res.data.context,
@@ -51,6 +50,7 @@ export const postAsyncOrgComments: any = createAsyncThunk(
     }
 );
 const initialState: IInitialState = {
+    org_id: null,
     comments: [],
     page: 1,
     totalItem: 1,
@@ -72,6 +72,7 @@ const orgCommentsSlice = createSlice({
         [fetchAsyncOrgComments.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
+                org_id: payload.org_id,
                 comments: [...state.comments, ...payload.comments],
                 page: payload.page,
                 totalItem: payload.totalItem,

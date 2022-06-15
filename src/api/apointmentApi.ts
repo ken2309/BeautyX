@@ -1,6 +1,7 @@
 import axiosClient from "./axios";
 import { AUTH_HEADER_PARAM_GET, AUTH_HEADER } from "../utils/authHeader";
 import { EXTRA_FLAT_FORM } from "./extraFlatForm";
+import { identity, pickBy } from 'lodash'
 
 class ApointmentApi {
   sendApointment = (props: any) => {
@@ -40,9 +41,10 @@ class ApointmentApi {
     }
     return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params));
   };
-  postAppointment = (params: any, org_id: any) => {
+  postAppointment = (paramsOb: any, org_id: any) => {
     //const session = window.sessionStorage.getItem("_WEB_TK");
     //const local = localStorage.getItem("_WEB_TK");
+    const params = pickBy(paramsOb, identity)
     const url = `organizations/${org_id}/appointments`;
     return axiosClient.post(url, params, AUTH_HEADER());
   };

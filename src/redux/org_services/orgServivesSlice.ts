@@ -1,22 +1,24 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import categoryApi from '../../api/categoryApi';
-import serviceApi from '../../api/serviceApi';
-import { STATUS } from '../status';
-import { Service } from '../../interface/service'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import categoryApi from "../../api/categoryApi";
+import serviceApi from "../../api/serviceApi";
+import { STATUS } from "../status";
+import { Service } from "../../interface/service";
 
 interface ISERVICES {
-    services: Service[],
-    page: number,
-    totalItem: number,
-    status_ser: string
+    services: Service[];
+    page: number;
+    totalItem: number;
+    status_ser: string;
 }
 interface ICATE {
-    categories: [],
-    status: string
+    categories: [];
+    status: string;
 }
 interface IINITIALSTATE {
-    CATE: ICATE,
-    SERVICES: ISERVICES
+    choose_cate: null;
+    org_id: any;
+    CATE: ICATE;
+    SERVICES: ISERVICES;
 }
 
 export const fetchAsyncCateServices: any = createAsyncThunk(
@@ -25,13 +27,16 @@ export const fetchAsyncCateServices: any = createAsyncThunk(
         const params = { org_id };
         try {
             const res = await categoryApi.getByOrgId_services(params);
-            const payload = res.data.context.data
-            return payload
+            const payload = {
+                categories: res.data.context.data,
+                org_id: org_id,
+            };
+            return payload;
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
-)
+);
 export const fetchAsyncServices: any = createAsyncThunk(
     "ORG_SERVICES/fetchAsyncServices",
     async (values: any) => {
@@ -40,62 +45,76 @@ export const fetchAsyncServices: any = createAsyncThunk(
             services: res.data.context.data,
             page: values.page,
             totalItem: res.data.context.total,
-            status_ser: STATUS.SUCCESS
-        }
-        return payload
+            status_ser: STATUS.SUCCESS,
+        };
+        return payload;
     }
-)
+);
 const initialState: IINITIALSTATE = {
+    choose_cate: null,
+    org_id: null,
     CATE: {
         categories: [],
-        status: ''
+        status: "",
     },
     SERVICES: {
         services: [],
         page: 1,
         totalItem: 1,
-        status_ser: ''
-    }
-}
+        status_ser: "",
+    },
+};
 const orgServicesSlice = createSlice({
     name: "ORG_SERVICES",
     initialState,
     reducers: {
-        clearServices: (state) => {
+        onChooseCateServices: (state, { payload }) => {
+            state.choose_cate = payload;
+        },
+        clearServices: (state: any) => {
             return {
                 ...state,
                 SERVICES: {
                     ...state.SERVICES,
                     services: [],
-                    page: 1
-                }
-            }
-        }
+                    page: 1,
+                },
+            };
+        },
     },
     extraReducers: {
         //get services cate org
         [fetchAsyncCateServices.pending]: (state) => {
-            return { ...state, CATE: { ...state.CATE, status: STATUS.LOADING } }
+            return {
+                ...state,
+                CATE: { ...state.CATE, status: STATUS.LOADING },
+            };
         },
         [fetchAsyncCateServices.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
-                CATE: { categories: payload, status: STATUS.SUCCESS }
-            }
+                org_id: payload.org_id,
+                CATE: {
+                    categories: payload.categories,
+                    status: STATUS.SUCCESS,
+                },
+            };
         },
         [fetchAsyncCateServices.rejected]: (state) => {
             return {
-                ...state, CATE: { ...state.CATE, status: STATUS.FAIL }
-            }
+                ...state,
+                CATE: { ...state.CATE, status: STATUS.FAIL },
+            };
         },
         //get services org
         [fetchAsyncServices.pending]: (state) => {
             return {
-                ...state, SERVICES: {
+                ...state,
+                SERVICES: {
                     ...state.SERVICES,
                     //status_ser: STATUS.LOADING
-                }
-            }
+                },
+            };
         },
         [fetchAsyncServices.fulfilled]: (state, { payload }) => {
             return {
@@ -104,18 +123,18 @@ const orgServicesSlice = createSlice({
                     services: [...state.SERVICES.services, ...payload.services],
                     totalItem: payload.totalItem,
                     page: payload.page,
-                    status_ser: payload.status_ser
-                }
-            }
+                    status_ser: payload.status_ser,
+                },
+            };
         },
         [fetchAsyncServices.rejected]: (state) => {
             return {
                 ...state,
-                SERVICES: { ...state.SERVICES, status_ser: STATUS.FAIL }
-            }
-        }
-    }
-})
+                SERVICES: { ...state.SERVICES, status_ser: STATUS.FAIL },
+            };
+        },
+    },
+});
 const { actions } = orgServicesSlice;
-export const { clearServices } = actions
+export const { clearServices, onChooseCateServices } = actions;
 export default orgServicesSlice.reducer;

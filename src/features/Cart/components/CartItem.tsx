@@ -86,7 +86,6 @@ function CartItem(props: IProps) {
         }
         scrollTop();
     };
-    console.log(cartItem);
     //when quantity discount > 1
     const total = cartItem.price * cartItem.quantity;
     const discount_value = cartItem.discount?.discount_value;

@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import dateNow from "../utils/dateExp";
 import { useDispatch } from 'react-redux';
+import { unwrapResult } from '@reduxjs/toolkit'
 import { fetchAsyncUser } from '../redux/USER/userSlice';
 import { fetchAsyncHome, fetchAsyncDiscounts } from '../redux/home/homeSlice';
 import { fetchAsyncNews, fetchAsyncVideos } from '../redux/blog/blogSlice';
@@ -46,8 +47,8 @@ export default function AppProvider({ children }) {
     dispatch(fetchAsyncDiscounts({
       page:1
     }))
-    dispatch(fetchAsyncNews())
-    dispatch(fetchAsyncVideos())
+    dispatch(fetchAsyncNews());
+    dispatch(fetchAsyncVideos());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const getUserLocation = () => {

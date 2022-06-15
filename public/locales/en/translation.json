@@ -91,7 +91,10 @@
     "favorite_list": "Favorite beauty spots",
     "pr_ser_purchased": "Products/Services purchased",
     "sale_for_me": "Special offer just for you",
-    "appointment":"My appointments"
+    "appointment":"My appointments",
+    "location":"Location",
+    "trending":"Trends",
+    "cate":"Categories"
   },
   "Search_result": {
     "text_result": "search results",
@@ -363,5 +366,10 @@
   "sell_center":{
     "next":"Next",
     "enter_your_subdomain":"Enter your subdomain"
+  },
+  "trending":{
+    "trend": "Reels",
+    "watch_all": "Watch All"
   }
+
 }

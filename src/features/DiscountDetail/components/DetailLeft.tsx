@@ -6,8 +6,6 @@ import { IDiscountPar, IITEMS_DISCOUNT } from "../../../interface/discount";
 import { IOrganization } from "../../../interface/organization";
 import onErrorImg from "../../../utils/errorImg";
 import Comments from "../../Comments";
-import DetailMer from "../../ProductDetail/components/DetailMer";
-import DetailDesc from "../components/DetailDesc";
 import DetailNameMb from "../DetailNameMb/index";
 interface IProps {
     discount: IDiscountPar;
@@ -69,7 +67,6 @@ function DetailLeft(props: IProps) {
                                         is_type={discount.discount_type}
                                     />
                                 </>
-                                <DetailDesc discount={discount_item_child} />
                             </TabPanel>
                             <TabPanel value="2">
                                 <Comments
@@ -80,7 +77,6 @@ function DetailLeft(props: IProps) {
                                 />
                             </TabPanel>
                             <TabPanel value="3">
-                                <DetailMer org={org} />
                             </TabPanel>
                         </TabContext>
                     </Box>

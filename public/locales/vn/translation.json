@@ -7,7 +7,7 @@
   },
   "Header": {
     "1": "Trở thành đối tác",
-    "seller_center":"Kênh người bán",
+    "seller_center": "Kênh người bán",
     "my_acc": "Tài khoản của tôi",
     "my_order": "Lịch sử đơn hàng",
     "my_codes": "Danh sách mã ưu đãi",
@@ -15,7 +15,7 @@
     "support": "Hỗ trợ",
     "sign_out": "Đăng xuất",
     "back": "Trở lại",
-    "noti":"Thông báo"
+    "noti": "Thông báo"
   },
   "Bottom": {
     "appointment": "Lịch hẹn",
@@ -91,7 +91,10 @@
     "favorite_list": "Các địa điểm làm đẹp yêu thích",
     "pr_ser_purchased": "Sản phẩm/Dịch vụ đã sử dụng",
     "sale_for_me": "Ưu đãi nổi bật dành riêng cho bạn",
-    "appointment":"Lịch hẹn"
+    "appointment": "Lịch hẹn",
+    "location": "Địa điểm",
+    "trending": "Xu hướng",
+    "cate": "Danh mục"
   },
   "Search_result": {
     "text_result": "kết quả tìm kiếm",
@@ -204,7 +207,7 @@
   "url": {
     "home": "Trang-chu",
     "search": "/tim-kiem/",
-    "urlTest":"thu-nghiem"
+    "urlTest": "thu-nghiem"
   },
   "booking": {
     "booking_info": "Thông tin lịch hẹn",
@@ -247,19 +250,19 @@
     "now": "ngay",
     "is_not_registered": "chưa được đăng ký",
     "register_success": "Đăng ký tài khoản thành công",
-    "email_already":"Email này đã được đăng ký",
-    "phone_already":"Số điện thoại này đã được đăng ký",
-    "reset_password":"Đổi mật khẩu",
-    "continue":"Tiếp tục",
-    "send_your_code_text":"Mã xác minh của bạn sẽ được gửi bằng tin nhắn đến",
-    "verification_code":"Mã xác thực",
-    "please_wait":"Vui lòng chờ",
-    "to_get_the_verification_code_back":"Để nhận lại mã xác thực",
-    "resend_code":"Gửi lại mã",
-    "verification_invalid":"Mã xác thực không hợp lệ",
-    "verification_code_of_6_characters":"Mã xác thực gồm 6 ký tự",
-    "change_password_successfully":"Đổi mật khẩu thành công",
-    "sending":"Đang gửi..."
+    "email_already": "Email này đã được đăng ký",
+    "phone_already": "Số điện thoại này đã được đăng ký",
+    "reset_password": "Đổi mật khẩu",
+    "continue": "Tiếp tục",
+    "send_your_code_text": "Mã xác minh của bạn sẽ được gửi bằng tin nhắn đến",
+    "verification_code": "Mã xác thực",
+    "please_wait": "Vui lòng chờ",
+    "to_get_the_verification_code_back": "Để nhận lại mã xác thực",
+    "resend_code": "Gửi lại mã",
+    "verification_invalid": "Mã xác thực không hợp lệ",
+    "verification_code_of_6_characters": "Mã xác thực gồm 6 ký tự",
+    "change_password_successfully": "Đổi mật khẩu thành công",
+    "sending": "Đang gửi..."
   },
   "partner": {
     "online_business": "Nền tảng kinh doanh online ngành làm đẹp",
@@ -283,85 +286,88 @@
   },
   "acc": {
     "scores": "Điểm",
-    "surplus":"Số dư",
-    "rank":"Hạng",
-    "my_profiles":"Thông tin cá nhân",
-    "update_acc":"Cập nhật đầy đủ thông tin cá nhân giúp tài khoản được bảo mật tốt hơn",
-    "dob":"Ngày sinh",
-    "sex":"Giới tính",
-    "order_address":"Địa chỉ giao hàng",
-    "add_other_address":"Thêm địa điểm khác",
-    "default":"Mặc định",
-    "change_pass":"Thay đổi mật khẩu",
-    "save":"Lưu thay đổi"
+    "surplus": "Số dư",
+    "rank": "Hạng",
+    "my_profiles": "Thông tin cá nhân",
+    "update_acc": "Cập nhật đầy đủ thông tin cá nhân giúp tài khoản được bảo mật tốt hơn",
+    "dob": "Ngày sinh",
+    "sex": "Giới tính",
+    "order_address": "Địa chỉ giao hàng",
+    "add_other_address": "Thêm địa điểm khác",
+    "default": "Mặc định",
+    "change_pass": "Thay đổi mật khẩu",
+    "save": "Lưu thay đổi"
   },
-  "order":{
-    "order_his":"Lịch sử đơn hàng",
-    "pending":"Đang xử lý",
-    "complete":"Hoàn thành",
-    "order_de":"Chi tiết đơn hàng",
-    "time":"Thời gian",
-    "view_org":"Xem doanh nghiệp",
-    "watch_info":"Xem thông tin"
+  "order": {
+    "order_his": "Lịch sử đơn hàng",
+    "pending": "Đang xử lý",
+    "complete": "Hoàn thành",
+    "order_de": "Chi tiết đơn hàng",
+    "time": "Thời gian",
+    "view_org": "Xem doanh nghiệp",
+    "watch_info": "Xem thông tin"
   },
-  "my_ser":{
-    "business":"Doanh nghiệp",
-    "all_business":"Tất cả doanh nghiệp",
-    "choose_business":"Chọn doanh nghiệp",
-    "choose_ser":"Chọn dich vụ bạn muốn đặt hẹn",
-    "services_book":"Dịch vụ đã đặt hẹn",
-    "status":"Trạng thái",
-    "count_unused":"Số lượng gói chưa dùng",
-    "choose":"Chọn dịch vụ",
-    "selected":"Đã chọn",
-    "service":"dịch vụ",
-    "continue":"Tiếp tục",
-    "close":"Đóng",
-    "services_selected":"Dahh sách dịch vụ đã chọn",
-    "branch_select":"Chọn chi nhánh bạn muốn đặt hẹn",
-    "time_select":"Chọn thời gian",
-    "date_select":"Chọn ngày",
-    "name_br":"Tên chi nhánh",
-    "app_info":"Thông tin đặt hẹn",
-    "pl_select_date":"Vui lòng chọn thời gian",
-    "pl_select_br":"Vui lòng chọn chi nhánh",
-    "bk_now":"Đặt hẹn ngay",
-    "bk_success":"Đặt hẹn thành công",
-    "bk_fail":"Đặt hẹn thất bại",
-    "rv_booked":"Bạn có thể xem lại dịch vụ đã đặt hẹn",
-    "bk_fail_title":"Có lỗi xảy ra trong quá trình đặt hẹn",
-    "code_err":"Mã lỗi"
-
+  "my_ser": {
+    "business": "Doanh nghiệp",
+    "all_business": "Tất cả doanh nghiệp",
+    "choose_business": "Chọn doanh nghiệp",
+    "choose_ser": "Chọn dich vụ bạn muốn đặt hẹn",
+    "services_book": "Dịch vụ đã đặt hẹn",
+    "status": "Trạng thái",
+    "count_unused": "Số lượng gói chưa dùng",
+    "choose": "Chọn dịch vụ",
+    "selected": "Đã chọn",
+    "service": "dịch vụ",
+    "continue": "Tiếp tục",
+    "close": "Đóng",
+    "services_selected": "Dahh sách dịch vụ đã chọn",
+    "branch_select": "Chọn chi nhánh bạn muốn đặt hẹn",
+    "time_select": "Chọn thời gian",
+    "date_select": "Chọn ngày",
+    "name_br": "Tên chi nhánh",
+    "app_info": "Thông tin đặt hẹn",
+    "pl_select_date": "Vui lòng chọn thời gian",
+    "pl_select_br": "Vui lòng chọn chi nhánh",
+    "bk_now": "Đặt hẹn ngay",
+    "bk_success": "Đặt hẹn thành công",
+    "bk_fail": "Đặt hẹn thất bại",
+    "rv_booked": "Bạn có thể xem lại dịch vụ đã đặt hẹn",
+    "bk_fail_title": "Có lỗi xảy ra trong quá trình đặt hẹn",
+    "code_err": "Mã lỗi"
   },
-  "home_2":{
-    "categories":"Danh mục",
-    "clinic":"Phòng khám",
-    "beauty_salon":"Thẩm mỹ viện",
-    "hot_beauty_deal":"Deal làm đẹp cực HOT",
-    "hot_promotion":"Khuyến mãi HOT",
-    "places_near_you":"Gần bạn",
-    "selling":"Bán chạy",
-    "name":"Tên",
-    "hot_deal_locations":"Địa điểm nhiều Deal HOT",
-    "trusted_place":"Địa điểm đáng tin cậy",
-    "places_near_you_2":"Địa điểm gần bạn",
-    "places_you_are_interested_in":"Địa điểm bạn quan tâm",
-    "beauty_places":"Địa điểm làm đẹp"
+  "home_2": {
+    "categories": "Danh mục",
+    "clinic": "Phòng khám",
+    "beauty_salon": "Thẩm mỹ viện",
+    "hot_beauty_deal": "Deal làm đẹp cực HOT",
+    "hot_promotion": "Khuyến mãi HOT",
+    "places_near_you": "Gần bạn",
+    "selling": "Bán chạy",
+    "name": "Tên",
+    "hot_deal_locations": "Địa điểm nhiều Deal HOT",
+    "trusted_place": "Địa điểm đáng tin cậy",
+    "places_near_you_2": "Địa điểm gần bạn",
+    "places_you_are_interested_in": "Địa điểm bạn quan tâm",
+    "beauty_places": "Địa điểm làm đẹp"
   },
-  "se":{
-    "search_results_for_keyword":"Kết quả tìm kiếm cho từ khóa",
-    "filters":"Bộ lọc tìm kiếm",
-    "price_range":"Khoảng giá",
-    "form":"từ",
-    "to":"đến",
-    "invalid":"Không hợp lệ",
-    "apply":"Áp dụng khoảng giá"
+  "se": {
+    "search_results_for_keyword": "Kết quả tìm kiếm cho từ khóa",
+    "filters": "Bộ lọc tìm kiếm",
+    "price_range": "Khoảng giá",
+    "form": "từ",
+    "to": "đến",
+    "invalid": "Không hợp lệ",
+    "apply": "Áp dụng khoảng giá"
   },
-  "Contact":{
-    "success":"Đã nhận thông tin"
+  "Contact": {
+    "success": "Đã nhận thông tin"
   },
-  "sell_center":{
-    "next":"Tiếp tục",
-    "enter_your_subdomain":"Nhập đia chỉ Subdomain"
+  "sell_center": {
+    "next": "Tiếp tục",
+    "enter_your_subdomain": "Nhập đia chỉ Subdomain"
+  },
+  "trending": {
+    "trend": "Xu hướng",
+    "watch_all": "Xem thêm"
   }
 }

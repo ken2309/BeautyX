@@ -7,3 +7,9 @@ function formatDate(values: any) {
     return date;
 }
 export default formatDate;
+
+export const formatDatePost = (date: string) => {
+    const dateArr = date.split("-").reverse();
+    const datePost = dateArr.join("-");
+    return datePost
+}

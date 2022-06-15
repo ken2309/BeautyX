@@ -30,7 +30,7 @@ class NewsApi {
             limit: 5,
             order: "desc",
             orderby: "modified",
-            categories: 7,
+            categories: 9,
         }
         return axiosClient.get(url, {
             params,

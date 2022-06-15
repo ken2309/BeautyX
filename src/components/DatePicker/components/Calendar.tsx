@@ -15,7 +15,7 @@ function Calendar(props: any) {
         handleGetDate,
         dayObj,
     } = props;
-    console.log("dayjs", dayjs().date());
+    
     return (
         <>
             <div className="calendar">

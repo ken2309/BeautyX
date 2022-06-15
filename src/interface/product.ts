@@ -30,5 +30,8 @@ export interface Product {
       status: boolean
       unit2_id: number | string | null
       unit_id: number
-      unit_ratio: number | string | null
+      unit_ratio: number | string | null,
+      rating: number,
+      is_favorite: boolean,
+      favorites_count: number
 }

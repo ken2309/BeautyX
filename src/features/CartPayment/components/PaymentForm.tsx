@@ -6,17 +6,18 @@ import { AppContext } from '../../../context/AppProvider';
 import onErrorImg from '../../../utils/errorImg';
 import PaymentBranch from './PaymentBranch';
 import { useSelector } from 'react-redux';
+import UserPaymentInfo from '../../Account/components/UserPaymentInfo';
 
 //const phoneFormat = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 function PaymentForm(props: any) {
-      const { setNote, list, chooseBr, setChooseBr } = props;
+      const { setNote, list, chooseBr, setChooseBr, setAddress } = props;
       const org = list[0]?.org;
       const [open, setOpen] = useState(false);
       const { t } = useContext(AppContext);
       const history = useHistory();
       const { address } = props;
       const [popup, setPopup] = useState(false);
-      const {USER} = useSelector((state:any) => state.USER);
+      const { USER } = useSelector((state: any) => state.USER);
       return (
             <>
                   <PaymentBranch
@@ -31,7 +32,10 @@ function PaymentForm(props: any) {
                   >
                         <div style={{ width: '100%' }} className="flex-row-sp payment-form__box">
                               <div className="payment-form__left">
-                                    <span>{t('pm.payment_info')}</span>
+                                    <UserPaymentInfo
+                                          onSetAddressDefault={setAddress}
+                                    />
+                                    {/* <span>{t('pm.payment_info')}</span>
                                     <div className="payment-form__left-cnt">
                                           <span className="flex-row-sp sec-title">
                                                 Thông tin người nhận
@@ -79,7 +83,7 @@ function PaymentForm(props: any) {
                                                 type="text"
                                                 placeholder='Ghi chú cho doanh nghiệp...'
                                           />
-                                    </div>
+                                    </div> */}
                               </div>
                               <div className="payment-form__right">
                                     <img

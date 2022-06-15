@@ -23,19 +23,21 @@ function HomeDiscount() {
                     <ul className="home-discounts__list">
                         {discounts
                             .slice(0, 12)
-                            .map((discount: IDiscountPar, index: number) => (
+                            .map((discount: IDiscountPar, index: number) =>
                                 <>
                                     {discount.items.map(
                                         (item: IITEMS_DISCOUNT, i: number) => (
-                                            <DiscountItem
-                                                key={i}
-                                                discountItem={item}
-                                                discountPar={discount}
-                                            />
+                                            <li key={i}>
+                                                <DiscountItem
+                                                    discountItem={item}
+                                                    discountPar={discount}
+                                                />
+                                            </li>
                                         )
-                                    )}
+                                    )
+                                    }
                                 </>
-                            ))}
+                            )}
                     </ul>
                 </div>
             </Container>

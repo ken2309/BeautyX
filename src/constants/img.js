@@ -27,60 +27,69 @@ import banner from "../assets/image/banner.png";
 import thumb from "../assets/image/thumb.png";
 import thumb_1 from "../assets/image/thumb_1.png";
 import thumb_2 from "../assets/image/thumb_2.png";
-import imgDefault from '../assets/image/imgDefault.svg';
+import imgDefault from "../assets/image/imgDefault.png";
 
-import hairSalon from '../assets/image/tags/hairSalon.svg';
-import message from '../assets/image/tags/message.svg';
-import nails from '../assets/image/tags/nails.svg';
-import nhaKhoa from '../assets/image/tags/nhaKhoa.svg';
-import skinCare from '../assets/image/tags/skinCare.svg';
-import spa from '../assets/image/tags/spa.svg';
-import yoga from '../assets/image/tags/yoga.svg';
-import dealhot from '../assets/image/homeBannerDeal/dealhot.png';
-import dealhot1 from '../assets/image/homeBannerDeal/dealhot1.png';
-import dealhot2 from '../assets/image/homeBannerDeal/dealhot2.png';
-import sellerCenterImg from '../assets/image/sellerCenterImg.jpeg';
+import hairSalon from "../assets/image/tags/hairSalon.svg";
+import message from "../assets/image/tags/message.svg";
+import nails from "../assets/image/tags/nails.svg";
+import nhaKhoa from "../assets/image/tags/nhaKhoa.svg";
+import skinCare from "../assets/image/tags/skinCare.svg";
+import spa from "../assets/image/tags/spa.svg";
+import yoga from "../assets/image/tags/yoga.svg";
+
+import dealhot from "../assets/image/homeBannerDeal/dealhot.png";
+import dealhot1 from "../assets/image/homeBannerDeal/dealhot1.png";
+import dealhot2 from "../assets/image/homeBannerDeal/dealhot2.png";
+import sellerCenterImg from "../assets/image/sellerCenterImg.jpeg";
 
 const img = {
-  slider1,
-  Avatar,
-  banner,
-  mapCustomer,
-  miniMap,
-  homeSt1,
-  homeSt2,
-  homeSt3,
-  homeSt4,
-  homeCalendar,
-  flatform1,
-  flatform2,
-  flatform3,
-  slider,
-  slider4,
-  nv,
-  rectangle,
-  service,
-  Partner,
-  money,
-  creditMachine,
-  cardAtm,
-  payon,
-  imagePay,
-  resultNull,
-  beautyX,
-  thumb,
-  thumb_1,
-  thumb_2,
-  imgDefault,
-  sellerCenterImg
+    slider1,
+    Avatar,
+    banner,
+    mapCustomer,
+    miniMap,
+    homeSt1,
+    homeSt2,
+    homeSt3,
+    homeSt4,
+    homeCalendar,
+    flatform1,
+    flatform2,
+    flatform3,
+    slider,
+    slider4,
+    nv,
+    rectangle,
+    service,
+    Partner,
+    money,
+    creditMachine,
+    cardAtm,
+    payon,
+    imagePay,
+    resultNull,
+    beautyX,
+    thumb,
+    thumb_1,
+    thumb_2,
+    imgDefault,
+    sellerCenterImg,
 };
 
-export const imgTag={
-  hairSalon, message, nails, nhaKhoa, skinCare, spa, yoga
-}
-export const dealHot={
-  dealhot1, dealhot, dealhot2
-}
+export const imgTag = {
+    hairSalon,
+    message,
+    nails,
+    nhaKhoa,
+    skinCare,
+    spa,
+    yoga,
+};
+export const dealHot = {
+    dealhot1,
+    dealhot,
+    dealhot2,
+};
 
 export default img;
 export const banner_default = banner;

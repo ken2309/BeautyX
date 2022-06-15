@@ -1,7 +1,6 @@
 import React from "react";
 import { Drawer } from "@mui/material";
 import DetailRight from "../components/DetailRight";
-import DetailCard from "../../ProductDetail/components/DetailCard";
 import { IDiscountPar } from "../../../interface/discount";
 
 interface IProps {
