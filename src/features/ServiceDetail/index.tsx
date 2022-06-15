@@ -221,7 +221,7 @@ function ServiceDetail(props: any) {
                                                 }
                                             />
                                             {COMMENTS.comments &&
-                                            COMMENTS.comments.length > 0 ? (
+                                            COMMENTS.comments.length >= 8 ? (
                                                 <div
                                                     style={{
                                                         justifyContent:
@@ -242,7 +242,7 @@ function ServiceDetail(props: any) {
                                                 org_id={ORG.org?.id}
                                                 totalItem={COMMENTS.totalItem}
                                                 page={COMMENTS.page}
-                                                commentable_type="ORGANIZATION"
+                                                commentable_type="SERVICE"
                                             />
                                         </div>
                                     </TabPanel>

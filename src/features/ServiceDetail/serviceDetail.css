@@ -964,7 +964,7 @@
         padding: 8px;
     }
     .org-evaluate__cnt .evaluate-rating {
-        display: none;
+        display: none !important;
     }
     .evaluate-rating__mobile .rating-left {
         display: flex;

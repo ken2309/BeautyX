@@ -192,6 +192,9 @@
     display: none !important;
 }
 @media only screen and (max-width: 1023px) {
+    .dialog-map__org .evaluate-item p {
+        font-size: 12px;
+    }
     .dialog-map__org {
         width: 100vw;
         height: 100vh;

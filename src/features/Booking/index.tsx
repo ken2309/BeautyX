@@ -67,7 +67,7 @@ function Booking() {
         onDropBranchList();
         setBookTime({
             ...bookTime,
-            branch_id: item.id,
+            branch_id: item.subdomain ? null : item.id,
         });
     };
     const listCouponCode = servicesBook
@@ -131,6 +131,12 @@ function Booking() {
             //setLoading(false);
         }
     }
+    const onChangeCardMap = (itemMap: any) => {
+        setBookTime({
+            ...bookTime,
+            branch_id: itemMap.subdomain ? null : itemMap.id,
+        });
+    };
 
     const handleBooking = () => {
         if (USER) {
@@ -160,7 +166,12 @@ function Booking() {
             >
                 <div className="booking-cnt">
                     <div className="booking-cnt__left">
-                        {org && <MapOrg org={org} />}
+                        {org && (
+                            <MapOrg
+                                onChangeCardMap={onChangeCardMap}
+                                org={org}
+                            />
+                        )}
                     </div>
                     <div className="booking-cnt__right">
                         <div className="booking-cnt__right-org">
