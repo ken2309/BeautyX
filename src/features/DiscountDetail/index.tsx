@@ -34,6 +34,7 @@ import {
     handleScroll,
 } from "../ServiceDetail/onScrollChange";
 import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
+import ReviewsContainer from "../ReviewsContainer";
 
 function DiscountDetail() {
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
@@ -42,6 +43,10 @@ function DiscountDetail() {
     const status_detail = DISCOUNT.status;
     const is_mobile = useFullScreen();
     const [open, setOpen] = useState(false);
+    const [openAllCmt, setOpenAllCmt] = useState(false);
+    const handleOpenSeemoreCmt = () => {
+        setOpenAllCmt(true);
+    };
 
     const dispatch = useDispatch();
     const params: any = extraParamsUrl();
@@ -243,6 +248,36 @@ function DiscountDetail() {
                                                     page={COMMENTS.page}
                                                     id={ORG.org?.id}
                                                     detail_id={service?.id}
+                                                    openSeeMoreCmt={
+                                                        handleOpenSeemoreCmt
+                                                    }
+                                                />
+                                                {COMMENTS.comments &&
+                                                COMMENTS.comments.length >=
+                                                    8 ? (
+                                                    <div
+                                                        style={{
+                                                            justifyContent:
+                                                                "center",
+                                                        }}
+                                                        onClick={() => {
+                                                            setOpenAllCmt(true);
+                                                        }}
+                                                        className="seemore-cmt"
+                                                    >
+                                                        <p>{"Xem tất cả >>"}</p>
+                                                    </div>
+                                                ) : null}
+                                                <ReviewsContainer
+                                                    open={openAllCmt}
+                                                    setOpen={setOpenAllCmt}
+                                                    comments={COMMENTS.comments}
+                                                    org_id={ORG.org?.id}
+                                                    totalItem={
+                                                        COMMENTS.totalItem
+                                                    }
+                                                    page={COMMENTS.page}
+                                                    commentable_type="SERVICE"
                                                 />
                                             </div>
                                         </TabPanel>

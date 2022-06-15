@@ -123,135 +123,131 @@ function OrgDetail(props: IProps) {
                         <div className="org-detail__cnt-bot">
                             <div className="left">
                                 <div className="org-detail__info">
-                                    <div className="org-avatar">
-                                        <img
-                                            src={org.image_url}
-                                            onError={(e) => onErrorImg(e)}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="org-left-detail">
-                                        <span className="org-left-detail__name">
-                                            {org?.name}
-                                        </span>
-                                        <div className="flexX-gap-4 org-left-detail__address">
+                                    <div className="flexX-gap-8">
+                                        <div className="org-avatar">
                                             <img
-                                                src={icon.mapPinRed}
+                                                src={org.image_url}
+                                                onError={(e) => onErrorImg(e)}
                                                 alt=""
-                                                className="icon"
                                             />
-                                            <span className="title">
-                                                {org?.full_address}
+                                        </div>
+                                        <div className="org-left-detail">
+                                            <span className="org-left-detail__name">
+                                                {org?.name}
                                             </span>
-                                        </div>
-                                        <div className="flexX-gap-8 org-left-detail__rate">
-                                            <div className="flexX-gap-4 org-left-detail__rate-item">
+                                            <div className="flexX-gap-4 org-left-detail__address">
                                                 <img
-                                                    src={icon.star}
-                                                    alt=""
-                                                    className="icon"
-                                                />
-                                                <span className="text">
-                                                    4.5
-                                                </span>
-                                            </div>
-                                            <div className="flexX-gap-4 org-left-detail__rate-item">
-                                                <img
-                                                    src={icon.chatAll}
-                                                    alt=""
-                                                    className="icon"
-                                                />
-                                                <span className="text">
-                                                    {totalItem}
-                                                </span>
-                                            </div>
-                                            <div className="flexX-gap-4 org-left-detail__rate-item">
-                                                <img
-                                                    src={icon.heart}
-                                                    alt=""
-                                                    className="icon"
-                                                />
-                                                <span className="text">
-                                                    {org.favorites_count}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="org-time-work">
-                                            <div className="flexX-gap-4 org-time-work__left">
-                                                <img
-                                                    src={icon.Clock_purple}
+                                                    src={icon.mapPinRed}
                                                     alt=""
                                                     className="icon"
                                                 />
                                                 <span className="title">
-                                                    Thời gian mở cửa{" "}
-                                                    {time_works_today?.day_week}
-                                                    :
+                                                    {org?.full_address}
                                                 </span>
                                             </div>
-                                            <div className="flex-row org-time-work__right">
-                                                <div
-                                                    onClick={() =>
-                                                        handleOpenSelector()
-                                                    }
-                                                    className="flex-row-sp org-time-work__right-list"
-                                                >
-                                                    {
-                                                        time_works_today?.from_time_opening
-                                                    }{" "}
-                                                    -{" "}
-                                                    {
-                                                        time_works_today?.to_time_opening
-                                                    }
+                                            <div className="flexX-gap-8 org-left-detail__rate">
+                                                <div className="flexX-gap-4 org-left-detail__rate-item">
                                                     <img
-                                                        src={
-                                                            icon.arrowDownPurple
-                                                        }
+                                                        src={icon.star}
                                                         alt=""
+                                                        className="icon"
                                                     />
+                                                    <span className="text">
+                                                        4.5
+                                                    </span>
                                                 </div>
-                                                {/* selector time_works_today */}
-                                                <ul
-                                                    ref={refListTimeWorks}
-                                                    className="org-time-work__list"
-                                                >
-                                                    {orgTimes?.map(
-                                                        (
-                                                            item: any,
-                                                            index: number
-                                                        ) => (
-                                                            <li
-                                                                style={
-                                                                    index +
-                                                                        2 ===
-                                                                    today
-                                                                        ? {
-                                                                              color: "var(--purple)",
-                                                                          }
-                                                                        : {}
-                                                                }
-                                                                key={index}
-                                                                className="flex-row org-time-list__item"
-                                                            >
-                                                                <span className="org-time-list__left">
-                                                                    {
-                                                                        item.day_week
-                                                                    }
-                                                                </span>
-                                                                <div className="org-time-list__right">
-                                                                    {
-                                                                        item?.from_time_opening
-                                                                    }{" "}
-                                                                    -{" "}
-                                                                    {
-                                                                        item?.to_time_opening
-                                                                    }
-                                                                </div>
-                                                            </li>
-                                                        )
-                                                    )}
-                                                </ul>
+                                                <div className="flexX-gap-4 org-left-detail__rate-item">
+                                                    <img
+                                                        src={icon.chatAll}
+                                                        alt=""
+                                                        className="icon"
+                                                    />
+                                                    <span className="text">
+                                                        {totalItem}
+                                                    </span>
+                                                </div>
+                                                <div className="flexX-gap-4 org-left-detail__rate-item">
+                                                    <img
+                                                        src={icon.heart}
+                                                        alt=""
+                                                        className="icon"
+                                                    />
+                                                    <span className="text">
+                                                        {org.favorites_count}
+                                                    </span>
+                                                </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div className="org-time-work">
+                                        <div className="flexX-gap-4 org-time-work__left">
+                                            <img
+                                                src={icon.Clock_purple}
+                                                alt=""
+                                                className="icon"
+                                            />
+                                            <span className="title">
+                                                Thời gian hoạt động{" "}
+                                                {time_works_today?.day_week}:
+                                            </span>
+                                        </div>
+                                        <div className="flex-row org-time-work__right">
+                                            <div
+                                                onClick={() =>
+                                                    handleOpenSelector()
+                                                }
+                                                className="flex-row-sp org-time-work__right-list"
+                                            >
+                                                {
+                                                    time_works_today?.from_time_opening
+                                                }{" "}
+                                                -{" "}
+                                                {
+                                                    time_works_today?.to_time_opening
+                                                }
+                                                <img
+                                                    src={icon.arrowDownPurple}
+                                                    alt=""
+                                                />
+                                            </div>
+                                            {/* selector time_works_today */}
+                                            <ul
+                                                ref={refListTimeWorks}
+                                                className="org-time-work__list"
+                                            >
+                                                {orgTimes?.map(
+                                                    (
+                                                        item: any,
+                                                        index: number
+                                                    ) => (
+                                                        <li
+                                                            style={
+                                                                index + 2 ===
+                                                                today
+                                                                    ? {
+                                                                          color: "var(--purple)",
+                                                                      }
+                                                                    : {}
+                                                            }
+                                                            key={index}
+                                                            className="flex-row org-time-list__item"
+                                                        >
+                                                            <span className="org-time-list__left">
+                                                                {item.day_week}
+                                                            </span>
+                                                            <div className="org-time-list__right">
+                                                                {
+                                                                    item?.from_time_opening
+                                                                }{" "}
+                                                                -{" "}
+                                                                {
+                                                                    item?.to_time_opening
+                                                                }
+                                                            </div>
+                                                        </li>
+                                                    )
+                                                )}
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>

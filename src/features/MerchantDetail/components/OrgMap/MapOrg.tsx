@@ -5,8 +5,13 @@ import OrgMapGoogle from "./OrgMapGoogle";
 import OrgMapItem from "./OrgMapItem";
 import OrgMapListMB from "./OrgMapListMB";
 
-export default function MapOrg(props: any) {
-    const { org } = props;
+interface IProps {
+    org: IOrganization;
+    onChangeCardMap?: (cardItem: any) => void;
+}
+
+export default function MapOrg(props: IProps) {
+    const { org, onChangeCardMap } = props;
     const listOrg = [org].concat(org?.branches);
     const key = "AIzaSyDfxBgfHh5HeBw2kVRcpgxgG4lswl50jTg";
     const [location, setLocation] = useState({
@@ -20,10 +25,13 @@ export default function MapOrg(props: any) {
         setOpenListOrg(!openListOrg);
     };
 
-    const handleSetLocation: any = (listOrg: IOrganization) => {
+    const handleSetLocation: any = (cardMapItem: any) => {
+        if (onChangeCardMap) {
+            onChangeCardMap(cardMapItem);
+        }
         setLocation({
-            lat: listOrg?.latitude,
-            long: listOrg?.longitude,
+            lat: cardMapItem?.latitude,
+            long: cardMapItem?.longitude,
         });
     };
     useEffect(() => {

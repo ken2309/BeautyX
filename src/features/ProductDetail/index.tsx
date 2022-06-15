@@ -30,6 +30,7 @@ import {
 import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
 import ProductDetailRecomment from "./components/ProductDetailRecomment";
 import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
+import ReviewsContainer from "../ReviewsContainer";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();
@@ -42,6 +43,10 @@ function ProductDetail(props: any) {
     const product = PRODUCT.product;
     const org = ORG.org;
     const [value, setValue] = useState<any>(1);
+    const [openAllCmt, setOpenAllCmt] = useState(false);
+    const handleOpenSeemoreCmt = () => {
+        setOpenAllCmt(true);
+    };
 
     let tabs = [
         { id: 1, title: "Mô tả" },
@@ -196,6 +201,34 @@ function ProductDetail(props: any) {
                                                 commentable_type={"PRODUCT"}
                                                 id={ORG.org?.id}
                                                 detail_id={product?.id}
+                                                page={COMMENTS.page}
+                                                openSeeMoreCmt={
+                                                    handleOpenSeemoreCmt
+                                                }
+                                            />
+                                            {COMMENTS.comments &&
+                                            COMMENTS.comments.length >= 8 ? (
+                                                <div
+                                                    style={{
+                                                        justifyContent:
+                                                            "center",
+                                                    }}
+                                                    onClick={() => {
+                                                        setOpenAllCmt(true);
+                                                    }}
+                                                    className="seemore-cmt"
+                                                >
+                                                    <p>{"Xem tất cả >>"}</p>
+                                                </div>
+                                            ) : null}
+                                            <ReviewsContainer
+                                                open={openAllCmt}
+                                                setOpen={setOpenAllCmt}
+                                                comments={COMMENTS.comments}
+                                                org_id={ORG.org?.id}
+                                                totalItem={COMMENTS.totalItem}
+                                                page={COMMENTS.page}
+                                                commentable_type="PRODUCT"
                                             />
                                         </div>
                                     </TabPanel>

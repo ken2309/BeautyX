@@ -47,16 +47,17 @@ function OrgReviews(props: IProps) {
                     id={org_id}
                     page={page}
                 />
-                {comments && comments.length > 0 ? (
+                {comments && comments.length > 8 ? (
                     <div
-                        style={{ justifyContent: "center" }}
-                        className="flex-row"
+                        style={{
+                            justifyContent: "center",
+                        }}
+                        onClick={() => {
+                            setOpenAll(true);
+                        }}
+                        className="seemore-cmt"
                     >
-                        <ButtonLoading
-                            title="Xem tất cả đánh giá"
-                            onClick={() => setOpenAll(true)}
-                            loading={false}
-                        />
+                        <p>{"Xem tất cả >>"}</p>
                     </div>
                 ) : null}
             </div>

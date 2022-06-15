@@ -24,7 +24,6 @@ import PaymentMethodCpn from "../PaymentMethod/index";
 import { formatDatePost } from "../../utils/formatDate";
 import { extraPaymentMethodId } from "../PaymentMethod/extraPaymentMethodId";
 import MapOrg from "../MerchantDetail/components/OrgMap/MapOrg";
-import BookingMap from "./components/BookingMap/BookingMap";
 
 const date = dayjs();
 function Booking() {
@@ -68,7 +67,7 @@ function Booking() {
         onDropBranchList();
         setBookTime({
             ...bookTime,
-            branch_id: item.id,
+            branch_id: item.subdomain ? null : item.id,
         });
     };
     const listCouponCode = servicesBook
@@ -132,6 +131,12 @@ function Booking() {
             //setLoading(false);
         }
     }
+    const onChangeCardMap = (itemMap: any) => {
+        setBookTime({
+            ...bookTime,
+            branch_id: itemMap.subdomain ? null : itemMap.id,
+        });
+    };
 
     const handleBooking = () => {
         if (USER) {
@@ -159,7 +164,12 @@ function Booking() {
             <Container>
                 <div className="booking-cnt">
                     <div className="booking-cnt__left">
-                        {org && <MapOrg org={org} />}
+                        {org && (
+                            <MapOrg
+                                onChangeCardMap={onChangeCardMap}
+                                org={org}
+                            />
+                        )}
                     </div>
                     <div className="booking-cnt__right">
                         <div className="booking-cnt__right-org">

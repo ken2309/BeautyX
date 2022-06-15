@@ -11,9 +11,10 @@ import { postAsyncProductComment } from "../../redux/org_products/productSlice";
 import { postCommentCombo } from "../../redux/org_combos/comboSlice";
 import { pickBy, identity } from "lodash";
 import { useHistory } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 interface IProps {
-    comments?: IComment[];
+    comments?: any;
     totalItem?: number;
     page?: number;
     commentable_type: string;
@@ -33,6 +34,7 @@ function Review(props: IProps) {
         detail_id,
         changeStyle,
         openSeeMoreCmt,
+        page,
     } = props;
     const USER = useSelector((state: any) => state.USER);
     const user = USER.USER;
@@ -51,6 +53,22 @@ function Review(props: IProps) {
             text: e.target.value,
         });
     };
+    // const [data, setData] = useState<any>({
+    //     comments: [...comments],
+    //     page: page,
+    //     totalItem: totalItem,
+    // });
+    // const onViewMore = () => {
+    //     if (
+    //         data.comments.length < data.totalItem &&
+    //         data.comments.length >= 8
+    //     ) {
+    //         setData({
+    //             ...data,
+    //             page: data.page + 1,
+    //         });
+    //     }
+    // };
 
     const valuesStr = {
         page: 1,
@@ -136,9 +154,23 @@ function Review(props: IProps) {
                 ) : (
                     <span className="total-comment">Chưa có bình luận nào</span>
                 )}
-                {comments?.map((item: IComment, index: number) => (
-                    <CommentItem key={index} comment={item} user={user} />
-                ))}
+                {/* {data.comments.length > 0 ? (
+                    <InfiniteScroll
+                        dataLength={data?.comments.length}
+                        hasMore={true}
+                        next={onViewMore}
+                        height={"80vh"}
+                        loader={<div></div>}
+                    > */}
+                <div className="evaluate__list">
+                    {comments?.map((item: IComment, index: number) => (
+                        <CommentItem key={index} comment={item} user={user} />
+                    ))}
+                </div>
+                {/* </InfiniteScroll>
+                ) : (
+                    <></> */}
+                {/* )} */}
             </div>
         </>
     );
