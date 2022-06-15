@@ -38,7 +38,10 @@ function ProductDetail(props: any) {
     const { PRODUCT, COMMENTS } = useSelector((state: any) => state.PRODUCT);
     const params: any = extraParamsUrl();
     const is_mobile = useFullScreen();
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState({
+        NOW: true,
+        open: false,
+    });
     const product = PRODUCT.product;
     const org = ORG.org;
     const [value, setValue] = useState<any>(1);
@@ -207,20 +210,20 @@ function ProductDetail(props: any) {
                                             <div className="service-detail__org">
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                    <>
-                                                        <p className="service-detail__title">
-                                                            Doanh nghiệp
-                                                        </p>
-                                                        <div className="service-detail__org-mb">
-                                                            <DetailOrgCard
+                                                        <>
+                                                            <p className="service-detail__title">
+                                                                Doanh nghiệp
+                                                            </p>
+                                                            <div className="service-detail__org-mb">
+                                                                <DetailOrgCard
+                                                                    org={org}
+                                                                />
+                                                            </div>
+                                                            <OrgInformation
                                                                 org={org}
                                                             />
-                                                        </div>
-                                                        <OrgInformation
-                                                            org={org}
-                                                        />
-                                                    </>
-                                                )}
+                                                        </>
+                                                    )}
                                             </div>
                                         </div>
                                     </TabPanel>
@@ -236,12 +239,17 @@ function ProductDetail(props: any) {
                     </div>
                     {/* service bottom buttom add cart                                             */}
                     <div className="service-detail__bottom">
-                        <button>
+                        <button
+                            onClick={() => {
+                                setOpen({ NOW: true, open: true });
+                            }}
+                            style={{ backgroundColor: "var(--orange)" }}
+                        >
                             <p>Mua ngay</p>
                         </button>
                         <button
                             onClick={() => {
-                                setOpen(true);
+                                setOpen({ NOW: false, open: true });
                             }}
                             className="btn-addcart"
                         >
@@ -250,15 +258,16 @@ function ProductDetail(props: any) {
                         </button>
                         {/* drawer service detail */}
                         <Drawer
-                            open={open}
+                            open={open.open}
                             anchor="bottom"
-                            onClose={() => setOpen(false)}
+                            onClose={() => setOpen({ ...open, open: false })}
                         >
                             <div className="active-mb">
                                 <div className="service-detail">
                                     <ProductDetailRight
                                         product={product}
                                         org={org}
+                                        NOW={open.NOW}
                                     />
                                 </div>
                             </div>

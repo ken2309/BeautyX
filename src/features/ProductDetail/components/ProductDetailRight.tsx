@@ -17,14 +17,17 @@ import {
     onFavoriteOrg,
 } from "../../../redux/org/orgSlice";
 import PopupSuccess from "../../PopupSuccess";
+import useFullScreen from "../../../utils/useFullScreen";
 
 interface IProps {
     product: Product;
     org: IOrganization;
+    NOW?: boolean
 }
 
 function ProductDetailRight(props: IProps) {
-    const { org, product } = props;
+    const { org, product, NOW } = props;
+    const IS_MB = useFullScreen();
     const dispatch = useDispatch();
     const history = useHistory();
     const { USER } = useSelector((state: any) => state.USER);
@@ -81,6 +84,18 @@ function ProductDetailRight(props: IProps) {
         dispatch(addCart(values));
         setPopupSuccess(true);
     };
+    const onBuyNow = () => {
+        const TYPE = "BOOK_NOW";
+        const products = [{ product, quantity }]
+        if (USER) {
+            history.push({
+                pathname: "/mua-hang",
+                state: { org, products, TYPE }
+            })
+        } else {
+            history.push('/sign-in?1')
+        }
+    }
     return (
         <div className="service-detail__right">
             {/* service detail right head */}
@@ -275,10 +290,43 @@ function ProductDetailRight(props: IProps) {
                         </button>
                     </div>
                 </div>
-                <div onClick={handleAddCart} className="bottom-addCart">
-                    <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                    <p>Thêm vào giỏ hàng</p>
-                </div>
+
+                {IS_MB ? (
+                    <div className="flex-row flexX-gap-8">
+                        {NOW ? (
+                            <div
+                                onClick={onBuyNow}
+                                className="bottom-addCart bottom-buy__now"
+                            >
+                                <p>Mua ngay</p>
+                            </div>
+                        ) : (
+                            <div
+                                onClick={handleAddCart}
+                                className="bottom-addCart"
+                            >
+                                <img
+                                    src={icon.ShoppingCartSimpleWhite}
+                                    alt=""
+                                />
+                                <p>Thêm vào giỏ hàng</p>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <div className="flex-row flexX-gap-8">
+                        <div
+                            onClick={onBuyNow}
+                            className="bottom-addCart bottom-buy__now"
+                        >
+                            <p>Mua ngay</p>
+                        </div>
+                        <div onClick={handleAddCart} className="bottom-addCart">
+                            <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                            <p>Thêm vào giỏ hàng</p>
+                        </div>
+                    </div>
+                )}
             </div>
             <PopupSuccess
                 popup={popupSuccess}

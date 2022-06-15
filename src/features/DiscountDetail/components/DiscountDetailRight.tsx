@@ -13,6 +13,7 @@ import { clearAllServices } from "../../../redux/servicesBookSlice";
 import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
+import useFullScreen from "../../../utils/useFullScreen";
 import PopupSuccess from "../../PopupSuccess";
 import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
 
@@ -20,10 +21,12 @@ interface IProps {
     discount: IDiscountPar;
     org: IOrganization;
     detail: any;
+    NOW?: boolean
 }
 
 function DiscountDetailRight(props: IProps) {
-    const { discount, org, detail } = props;
+    const { discount, org, detail, NOW } = props;
+    const IS_MB = useFullScreen();
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
     const ITEM_DISCOUNT: IITEMS_DISCOUNT = useSelector(
@@ -32,7 +35,7 @@ function DiscountDetailRight(props: IProps) {
     const [popupSuccess, setPopupSuccess] = useState(false);
     const percent = Math.round(
         100 -
-            (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
+        (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
     );
     const { USER } = useSelector((state: any) => state.USER);
     const history = useHistory();
@@ -166,7 +169,7 @@ function DiscountDetailRight(props: IProps) {
                         <span>
                             {formatPrice(
                                 ITEM_DISCOUNT?.productable.price * quantity -
-                                    discount.discount_value
+                                discount.discount_value
                             )}
                             đ
                         </span>
@@ -203,25 +206,48 @@ function DiscountDetailRight(props: IProps) {
                         </button>
                     </div>
                 </div>
-                <div className="flex-row flexX-gap-8">
-                    <div
-                        onClick={onBookingNow}
-                        className="bottom-addCart bottom-buy__now"
-                    >
-                        <p>Đặt hẹn ngay</p>
+                {IS_MB ? (
+                    <div className="flex-row flexX-gap-8">
+                        {NOW ? (
+                            <div
+                                onClick={onBookingNow}
+                                className="bottom-addCart bottom-buy__now"
+                            >
+                                <p>Đặt hẹn ngay</p>
+                            </div>
+                        ) : (
+                            <div
+                                onClick={handleAddCart}
+                                className="bottom-addCart"
+                            >
+                                <img
+                                    src={icon.ShoppingCartSimpleWhite}
+                                    alt=""
+                                />
+                                <p>Thêm vào giỏ hàng</p>
+                            </div>
+                        )}
                     </div>
-                    <div onClick={handleAddCart} className="bottom-addCart">
-                        <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                        <p>Thêm vào giỏ hàng</p>
+                ) : (
+                    <div className="flex-row flexX-gap-8">
+                        <div
+                            onClick={onBookingNow}
+                            className="bottom-addCart bottom-buy__now"
+                        >
+                            <p>Đặt hẹn ngay</p>
+                        </div>
+                        <div onClick={handleAddCart} className="bottom-addCart">
+                            <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                            <p>Thêm vào giỏ hàng</p>
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
             <PopupSuccess
                 popup={popupSuccess}
                 setPopup={setPopupSuccess}
-                title={`Đã thêm ${
-                    detail?.service_name || detail?.product_name
-                } vào giỏ hàng`}
+                title={`Đã thêm ${detail?.service_name || detail?.product_name
+                    } vào giỏ hàng`}
             />
         </div>
     );

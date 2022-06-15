@@ -34,29 +34,31 @@ function CartPayment(props: any) {
     dispatch(getTotal());
   }, [dispatch, carts]);
 
-  useEffect(() => {
-    async function handleGetUserAddress() {
-      const session = await window.sessionStorage.getItem("_WEB_TK");
-      const local = await localStorage.getItem("_WEB_TK")
-      try {
-        const res = await userAddressApi.getAll(session, local);
-        setAddress(res?.data.context.find((item: IUserAddress) => item.is_default === true))
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    handleGetUserAddress()
-  }, []);
+  // useEffect(() => {
+  //   async function handleGetUserAddress() {
+  //     const session = await window.sessionStorage.getItem("_WEB_TK");
+  //     const local = await localStorage.getItem("_WEB_TK")
+  //     try {
+  //       const res = await userAddressApi.getAll(session, local);
+  //       setAddress(res?.data.context.find((item: IUserAddress) => item.is_default === true))
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  //   handleGetUserAddress()
+  // }, []);
 
   const data_cart = {
     list, products, services, combos, address, note, chooseBr, carts
   }
+  console.log(address)
   return (
     <div className="payment">
       <Head isCart={isCart} title={headerTitle} />
       <Container>
         <div className="payment-cnt">
           <PaymentForm
+            setAddress={setAddress}
             list={list}
             address={address}
             setNote={setNote}

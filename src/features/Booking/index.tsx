@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import HeadTitle from "../HeadTitle";
 import Head from "../Head";
-import { Container } from "@mui/material";
 import "./style.css";
 import onErrorImg from "../../utils/errorImg";
 import ServiceBookItem from "./components/ServiceItem";
@@ -24,7 +23,7 @@ import PaymentMethodCpn from "../PaymentMethod/index";
 import { formatDatePost } from "../../utils/formatDate";
 import { extraPaymentMethodId } from "../PaymentMethod/extraPaymentMethodId";
 import MapOrg from "../MerchantDetail/components/OrgMap/MapOrg";
-import BookingMap from "./components/BookingMap/BookingMap";
+import BookingNowBill from "./components/BookingNowBill";
 
 const date = dayjs();
 function Booking() {
@@ -47,9 +46,9 @@ function Booking() {
             };
             dispatch(addServiceBookNow(action));
         } else {
-            history.push("/");
+            history.push("/home");
         }
-    }, []);
+    }, [location.state]);
     const { org, servicesBook } = SERVICES_BOOK;
     const branches = org?.branches.concat(org);
     //const [branch, setChooseBranch] = useState<any>();
@@ -156,7 +155,9 @@ function Booking() {
         <>
             <HeadTitle title="Đặt hẹn" />
             {IS_MB ? <HeadMobile title="Đặt hẹn" /> : <Head />}
-            <Container>
+            <div
+                className="booking-wrap"
+            >
                 <div className="booking-cnt">
                     <div className="booking-cnt__left">
                         {org && <MapOrg org={org} />}
@@ -205,10 +206,10 @@ function Booking() {
                                         />
                                         {bookTime.branch_id
                                             ? org?.branches?.find(
-                                                  (i: any) =>
-                                                      i.id ===
-                                                      bookTime.branch_id
-                                              )?.full_address
+                                                (i: any) =>
+                                                    i.id ===
+                                                    bookTime.branch_id
+                                            )?.full_address
                                             : org?.full_address}
                                     </span>
                                     {org?.branches?.length > 0 && (
@@ -228,10 +229,10 @@ function Booking() {
                                                     }
                                                     style={
                                                         bookTime.branch_id ===
-                                                        item.id
+                                                            item.id
                                                             ? {
-                                                                  color: "var(--text-black)",
-                                                              }
+                                                                color: "var(--text-black)",
+                                                            }
                                                             : {}
                                                     }
                                                     key={index}
@@ -254,7 +255,7 @@ function Booking() {
                                         {bookTime.date} {bookTime.time}
                                     </span>
                                 ) : (
-                                    <span>Vui lòng chọn thời gian</span>
+                                    <span style={{ color: "var(--red-cl)" }} >Vui lòng chọn thời gian</span>
                                 )}
                             </div>
                             <ButtonLoading
@@ -270,13 +271,13 @@ function Booking() {
                                 name=""
                                 id=""
                                 cols={30}
-                                rows={7}
+                                rows={1}
                             ></textarea>
                         </div>
                         <div
                             style={
                                 FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
-                                location.state.TYPE === "BOOK_NOW"
+                                    location.state.TYPE === "BOOK_NOW"
                                     ? { display: "block" }
                                     : { display: "none" }
                             }
@@ -287,6 +288,7 @@ function Booking() {
                             />
                         </div>
                         <div className="booking-cnt__bot">
+                            <BookingNowBill />
                             <ButtonLoading
                                 title={
                                     location.state?.TYPE === "BOOK_NOW"
@@ -299,7 +301,7 @@ function Booking() {
                         </div>
                     </div>
                 </div>
-            </Container>
+            </div>
             <BookingTime
                 bookTime={bookTime}
                 setBookTime={setBookTime}

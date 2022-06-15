@@ -41,7 +41,10 @@ function DiscountDetail() {
     const discount: IDiscountPar = DISCOUNT.discount;
     const status_detail = DISCOUNT.status;
     const is_mobile = useFullScreen();
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState({
+        NOW: true,
+        open: false,
+    });
 
     const dispatch = useDispatch();
     const params: any = extraParamsUrl();
@@ -253,20 +256,20 @@ function DiscountDetail() {
                                             >
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                    <>
-                                                        <p className="service-detail__title">
-                                                            Doanh nghiệp
-                                                        </p>
-                                                        <div className="service-detail__org-mb">
-                                                            <DetailOrgCard
+                                                        <>
+                                                            <p className="service-detail__title">
+                                                                Doanh nghiệp
+                                                            </p>
+                                                            <div className="service-detail__org-mb">
+                                                                <DetailOrgCard
+                                                                    org={ORG?.org}
+                                                                />
+                                                            </div>
+                                                            <OrgInformation
                                                                 org={ORG?.org}
                                                             />
-                                                        </div>
-                                                        <OrgInformation
-                                                            org={ORG?.org}
-                                                        />
-                                                    </>
-                                                )}
+                                                        </>
+                                                    )}
                                             </div>
                                         </TabPanel>
                                         <TabPanel value={value}>
@@ -279,12 +282,17 @@ function DiscountDetail() {
                             </div>
                         </div>
                         <div className="service-detail__bottom">
-                            <button>
-                                <p>Mua ngay</p>
+                            <button
+                                onClick={() => {
+                                    setOpen({ NOW: true, open: true });
+                                }}
+                                style={{ backgroundColor: "var(--orange)" }}
+                            >
+                                <p>Đặt hẹn ngay</p>
                             </button>
                             <button
                                 onClick={() => {
-                                    setOpen(true);
+                                    setOpen({ NOW: false, open: true });
                                 }}
                                 className="btn-addcart"
                             >
@@ -296,9 +304,9 @@ function DiscountDetail() {
                             </button>
                         </div>
                         <Drawer
-                            open={open}
+                            open={open.open}
                             anchor="bottom"
-                            onClose={() => setOpen(false)}
+                            onClose={() => setOpen({ ...open, open: false })}
                         >
                             <div className="active-mb">
                                 <div className="service-detail">
@@ -306,6 +314,7 @@ function DiscountDetail() {
                                         discount={discount}
                                         org={ORG.org}
                                         detail={service}
+                                        NOW={open.NOW}
                                     />
                                 </div>
                             </div>
