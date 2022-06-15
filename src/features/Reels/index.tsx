@@ -16,7 +16,14 @@ export default function Reels(props:any){
             onClose={() => setOpen(false)}
             sx={{inset: 0, margin: 'auto'}}
         >
-        <div style={{width: '100vw'}}>
+        <div style={{
+            position: 'fixed',
+            /* inset: auto; */
+            top: 0,
+            left: '50vw',
+            transform: 'translateX(-50%)',
+            backgroundColor: 'white'
+        }}>
             <div className="reel-head">
                 <button
                     onClick={() => setOpen(false)}

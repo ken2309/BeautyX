@@ -1,4 +1,5 @@
 :root {
+    --bg-white:rgb(255,255,255);
     --bg-gray-dark: #e5e5e5;
     --bg-gray: #f5f5f7;
     --purple: #7161ba;
@@ -10,6 +11,8 @@
     --pink: #fff3f1;
     --pink-2: #fbf3f7;
     --pink-momo: #d82d8b;
+    --purple-text: #3A2C93;
+    --bg-purple: #7266BA;
 }
 a {
     color: unset;

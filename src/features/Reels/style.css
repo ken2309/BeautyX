@@ -1,14 +1,16 @@
 .video__list{
+    position: relative;
+    width: 100vw;
     height: 100vh;
     overflow: scroll;
     -ms-scroll-snap-type: y mandatory;
     scroll-snap-type: y mandatory;
 }
-.trend-item-ctn, .video__list{
+.trend-item-ctn{
     position: relative;
     width: 100%;
-}
-.trend-item-ctn{
+    display: flex;
+    flex-direction: row;
     height: 100%;
     scroll-snap-align: start;
     scroll-snap-stop: always;
@@ -87,4 +89,12 @@
     width: 32px;
     height: 32px;
     border-radius: 100%;
+}
+@media only screen and (min-width: 767px){
+    .video-control__info{
+        display: none;
+    }
+    .video__list{
+        width: auto;
+    }
 }

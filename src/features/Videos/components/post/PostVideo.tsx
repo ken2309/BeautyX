@@ -26,6 +26,8 @@ export default function PostVideo (props:any) {
                 className='video-item__pc'
                 // controls
                 // autoPlay={true}
+                webkit-playsinline="webkit-playsinline"
+                playsInline={true}
                 loop
             >
                 <source src={vd_url} type="video/mp4" />
@@ -36,6 +38,8 @@ export default function PostVideo (props:any) {
                 className='video-item__pc back-drop__vid'
                 // controls
                 // autoPlay={true}
+                webkit-playsinline="webkit-playsinline"
+                playsInline={true}
                 loop
             >
                 <source src={vd_url} type="video/mp4" />

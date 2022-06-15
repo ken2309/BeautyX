@@ -16,7 +16,8 @@ function ServiceBookItem(props: IProps) {
         <div className='flex-row book__service-item'>
             <img src={service?.service?.image ? `${service?.service?.image_url}` : `${org?.image_url}`}
                 alt=""
-                className="book__service-item__img" />
+                className="book__service-item__img"
+            />
             <div className="book__service-item__de">
                 <p className="name">{service?.service?.service_name}</p>
                 <p className="quantity">Số lượng : {service.quantity}</p>
