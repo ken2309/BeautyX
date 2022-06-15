@@ -3,7 +3,7 @@ import "./service-promo-item.css";
 import { IServicePromo } from "../../../interface/servicePromo";
 import icon from "../../../constants/icon";
 import formatPrice from "../../../utils/formatPrice";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import slugify from "../../../utils/formatUrlString";
 import onErrorImg from "../../../utils/errorImg";
 import scrollTop from "../../../utils/scrollTop";
@@ -13,24 +13,15 @@ interface IProps {
 
 function ServicePromoItem(props: IProps) {
     const { service } = props;
-    const history = useHistory();
-    // const org = {
-    //     id: service.org_id,
-    //     name: service.org_name,
-    //     latitude: service.org_latitude,
-    //     longitude: service.org_longitude,
-    //     address: service.org_full_address,
-    //     full_address: service.org_full_address
-    // }
-    const gotoDetail = () => {
-        scrollTop();
-        history.push({
-            pathname: `/dich-vu/${slugify(service.service_name)}`,
-            search: `${service.org_id},${service.service_id},2`,
-        });
-    };
     return (
-        <div onClick={gotoDetail} className="ser-pro-item">
+        <Link
+            to={{
+                pathname: `/dich-vu/${slugify(service?.service_name)}`,
+                search: `id=${service.service_id}&org=${service.org_id}`,
+            }}
+            onClick={() => scrollTop()}
+            className="ser-pro-item"
+        >
             <div className="ser-img-cnt">
                 <img
                     className="ser-img"
@@ -43,22 +34,22 @@ function ServicePromoItem(props: IProps) {
                     onError={(e) => onErrorImg(e)}
                 />
                 <div className="ser-promo">
-                    {service.discount_percent > 0 ? (
+                    {service.discount_percent > 0 &&
+                    service.discount_percent < 50 ? (
                         <div className="ser-promo__percent">
-                            Giảm <br /> {Math.round(service?.discount_percent)}{" "}
-                            %
+                            Giảm {Math.round(service?.discount_percent)}%
                         </div>
                     ) : (
                         <div></div>
                     )}
                     <div className="flex-row ser-promo__bot">
-                        <div className="flex-row ser-promo__bot-start">
-                            {service?.rating}
+                        <div className="flexX-gap-4 ser-promo__bot-start">
                             <img src={icon.star} alt="" />
+                            {service?.rating}
                         </div>
-                        <div className="ser-promo__bot-bought">
-                            Lượt mua
-                            <span>{service?.bought_count}</span>
+                        <div className="flexX-gap-4 ser-promo__bot-bought">
+                            <img src={icon.cartCheckPurple} alt="" />
+                            <p>{service?.bought_count}</p>
                         </div>
                     </div>
                 </div>
@@ -73,7 +64,9 @@ function ServicePromoItem(props: IProps) {
                     ) : (
                         <>
                             <span>{formatPrice(service?.special_price)}đ</span>
-                            <span>{formatPrice(service?.price)}đ</span>
+                            {service?.discount_percent < 50 && (
+                                <span>{formatPrice(service?.price)}đ</span>
+                            )}
                         </>
                     )}
                 </div>
@@ -100,7 +93,7 @@ function ServicePromoItem(props: IProps) {
                     </p>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 }
 

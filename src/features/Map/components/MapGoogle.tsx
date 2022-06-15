@@ -1,15 +1,14 @@
-import React from 'react';
+import React from "react";
 import {
     withGoogleMap,
     withScriptjs,
     GoogleMap,
-    Marker
+    Marker,
 } from "react-google-maps";
-import icon from '../../../constants/icon';
-
+import icon from "../../../constants/icon";
 
 function MapGoogle(props: any) {
-    const { zoom, location, orgs } = props;
+    const { zoom, location, org } = props;
     const defaultMapOptions = {
         fullscreenControl: false,
         zoomControl: false,
@@ -23,18 +22,19 @@ function MapGoogle(props: any) {
                 zoom={zoom}
                 center={{ lat: location.lat, lng: location.long }}
             >
-                {
-                    orgs.map((item: any, index: number) => (
-                        <Marker
-                            key={index}
-                            icon={{
-                                url: item.latitude === location.lat ? icon.pinMapGreen : icon.pinMap,
-                            }}
-                            position={{ lat: item.latitude, lng: item.longitude }}
-                            //animation={item?.latitude === location.lat ? window.google.maps.Animation.DROP : null}
-                        />
-                    ))
-                }
+                {org.map((item: any, index: number) => (
+                    <Marker
+                        key={index}
+                        icon={{
+                            url:
+                                item.latitude === location.lat
+                                    ? icon.pinMapGreen
+                                    : icon.pinMap,
+                        }}
+                        position={{ lat: item.latitude, lng: item.longitude }}
+                        //animation={item?.latitude === location.lat ? window.google.maps.Animation.DROP : null}
+                    />
+                ))}
             </GoogleMap>
         </div>
     );

@@ -7,8 +7,12 @@ import { IDiscountPar } from '../../interface/discount'
 export const fetchAsyncUser: any = createAsyncThunk(
     "USER/fetchAsyncUser",
     async () => {
-        const res = await authentication.getUserProfile();
-        return res?.data.context
+        try {
+            const res = await authentication.getUserProfile();
+            return res?.data.context
+        } catch (error) {
+            localStorage.removeItem('_WEB_TK')
+        }
     }
 )
 export const updateAsyncUser: any = createAsyncThunk(

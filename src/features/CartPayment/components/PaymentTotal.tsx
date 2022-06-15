@@ -12,21 +12,19 @@ import REDUCER_CART from "../../../utils/reducerCart";
 import { EXTRA_FLAT_FORM } from "../../../api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "../../../rootComponents/flatForm";
 import PaymentCreateFail from "./PaymentCreateFail";
+import { extraPaymentMethodId } from "../../PaymentMethod/extraPaymentMethodId";
 
 const useInPayment: boolean = true;
 function PaymentTotal(props: any) {
   const { t } = useContext(AppContext);
   const FLAT_FORM = EXTRA_FLAT_FORM();
   const USER = useSelector((state: any) => state.USER.USER);
+  const { payments_method } = useSelector((state: any) => state.PAYMENT.PAYMENT)
   const {
-    methodList,
-    value,
     chooseE_wall,
     data_cart,
   } = props;
-  const { payments_method } = useSelector((state: any) => state.PAYMENT.PAYMENT);
   const history = useHistory();
-  const pmMethod = methodList.find((item: any) => item.method === value);
   const [popup, setPopup] = useState(false);
   const [popupFail, setPopUpFail] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,22 +33,8 @@ function PaymentTotal(props: any) {
     .filter((item: any) => item.isConfirm === true)
     .map((item: any) => item.discount);
   const listCouponCode = listDiscount.map((item: any) => item?.coupon_code).filter(Boolean);
-  console.log(listCouponCode)
 
-  let payment_method_id;
-  switch (FLAT_FORM) {
-    case FLAT_FORM_TYPE.BEAUTYX:
-      payment_method_id = chooseE_wall?.id
-      break
-    case FLAT_FORM_TYPE.MOMO:
-      payment_method_id = payments_method.find((item: any) => item.name_key === FLAT_FORM_TYPE.MOMO)?.id
-      break
-    case FLAT_FORM_TYPE.TIKI:
-      payment_method_id = payments_method.find((item: any) => item.name_key === FLAT_FORM_TYPE.TIKI)?.id
-      break
-    default:
-      break
-  }
+  const payment_method_id = extraPaymentMethodId(payments_method, chooseE_wall);
 
   const { products, services, combos } = REDUCER_CART(data_cart);
   const params_string = {
@@ -74,7 +58,7 @@ function PaymentTotal(props: any) {
         history.push({
           pathname: `/trang-thai-don-hang/${desc}`,
           search: transaction_uuid,
-          state: state_payment
+          state: { state_payment }
         })
       } else {
         setPopUpFail(true)
@@ -89,7 +73,7 @@ function PaymentTotal(props: any) {
     if (USER) {
       const params = pickBy(params_string, identity);
       if (FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX) {
-        if (data_cart.address && value && chooseE_wall?.id === 1) {
+        if (data_cart.address) {
           handlePostOrder(org_id, params)
         } else {
           console.log("Trang web chỉ chấp nhận thanh toán qua ví điện tử Momo");
@@ -104,25 +88,21 @@ function PaymentTotal(props: any) {
   return (
     <div className="payment-total">
       <Container>
-        {/* <div className="flex-row payment-total__head">
-          <span>{t("pr.enter_sale_code")}</span>
-          <input type="text" placeholder={t("pr.enter_sale_code")} />
-        </div> */}
         <div className="flex-row payment-total__body">
           <div className="payment-total__body-item">
-            <p>{t("pm.payment_method")}</p>
             <p>{t("pr.total")}</p>
-            <p>{t("pm.discounts")}</p>
+            {
+              listCouponCode.length > 0 &&
+              <p>{t("pm.discounts")}</p>
+            }
             <p>{t("pm.payment_total")}</p>
           </div>
           <div className="payment-total__body-item">
-            <p style={{ color: "var(--text-black)" }}>
-              {pmMethod
-                ? `${pmMethod?.title}: ${chooseE_wall?.name_key}`
-                : t("pm.choose_payment_method")}
-            </p>
             <p>{formatPrice(data_cart.carts.cartAmount)} đ</p>
-            <p>-{formatPrice(data_cart.carts.cartAmountDiscount)} đ</p>
+            {
+              listCouponCode.length > 0 &&
+              <p>-{formatPrice(data_cart.carts.cartAmountDiscount)} đ</p>
+            }
             <p>{formatPrice(data_cart.carts.cartAmount - data_cart.carts.cartAmountDiscount)} đ</p>
           </div>
         </div>

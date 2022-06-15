@@ -13,16 +13,41 @@ export const fetchAsyncDiscountDetail: any = createAsyncThunk(
         }
     }
 )
+export const fetchAsyncOrgDiscounts: any = createAsyncThunk(
+    "ORG_DISCOUNTS/fetchAsyncOrgDiscounts",
+    async (values: any) => {
+        try {
+            const res = await discountApi.getByOrgId(values);
+            const payload = {
+                discounts: res.data.context.data,
+                org_id: values.org_id
+            }
+            return payload
+        } catch (error) {
+            console.log(error)
+        }
+    }
+)
 const initialState = {
+    org_id: null,
+    DISCOUNTS: {
+        discounts: [],
+        status_list: "",
+    },
     DISCOUNT: {
         discount: {},
         status: ""
-    }
+    },
+    ITEM_DISCOUNT: null,
 }
 const orgDiscountsSlice = createSlice({
     name: "ORG_DISCOUNTS",
     initialState,
-    reducers: {},
+    reducers: {
+        onSetItemDiscount: (state, action) => {
+            state.ITEM_DISCOUNT = action.payload
+        }
+    },
     extraReducers: {
         [fetchAsyncDiscountDetail.pending]: (state) => {
             return { ...state, DISCOUNT: { ...state.DISCOUNT, status: STATUS.LOADING } }
@@ -38,7 +63,32 @@ const orgDiscountsSlice = createSlice({
         },
         [fetchAsyncDiscountDetail.rejected]: (state) => {
             return { ...state, DISCOUNT: { ...state.DISCOUNT, status: STATUS.FAIL } }
+        },
+
+        [fetchAsyncOrgDiscounts.pending]: (state) => {
+            return {
+                ...state,
+                DISCOUNTS: { ...state.DISCOUNTS, status_list: STATUS.LOADING }
+            }
+        },
+        [fetchAsyncOrgDiscounts.fulfilled]: (state, { payload }) => {
+            return {
+                ...state,
+                org_id: payload.org_id,
+                DISCOUNTS: {
+                    discounts: payload.discounts,
+                    status_list: STATUS.SUCCESS
+                }
+            }
+        },
+        [fetchAsyncOrgDiscounts.rejected]: (state) => {
+            return {
+                ...state,
+                DISCOUNTS: { ...state.DISCOUNTS, status_list: STATUS.FAIL }
+            }
         }
-    }
+    },
 })
+const { actions } = orgDiscountsSlice;
+export const { onSetItemDiscount } = actions
 export default orgDiscountsSlice.reducer;

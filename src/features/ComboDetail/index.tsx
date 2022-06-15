@@ -1,133 +1,296 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { shareLink } from "../../utils/formatUrlString";
-import { useLocation } from "react-router-dom";
-import { fetchAsyncComboDetail } from "../../redux/org_combos/orgCombosSlice";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Container } from "@mui/material";
+import { Container, Drawer } from "@mui/material";
 import HeadTitle from "../HeadTitle";
 import Head from "../Head";
-import onErrorImg from "../../utils/errorImg";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Tab } from "@mui/material";
+import { Tab } from "@mui/material";
+import { AppContext } from "../../context/AppProvider";
+import { STATUS } from "../../redux/status";
+import {
+    fetchAsyncComboDetail,
+    fetchAsyncCommentsCombo,
+} from "../../redux/org_combos/comboSlice";
+import ComboDetailLeft from "./components/ComboDetailLeft";
+import ComboDetailRight from "./components/ComboDetailRight";
+import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
+import Review from "../Reviews";
+import "../ServiceDetail/serviceDetail.css";
 import "./style.css";
 import "../ProductDetail/product.css";
-import { AppContext } from "../../context/AppProvider";
-import DetailRight from "./components/DetailRight";
-import TabDetail from "./components/TabDetail";
-import DetailMer from "../ProductDetail/components/DetailMer";
-import Comments from "../Comments";
+import icon from "../../constants/icon";
+import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
+import HeadOrg from "../MerchantDetail/components/HeadOrg";
+import useFullScreen from "../../utils/useFullScreen";
+import {
+    handleChangeScroll,
+    handleScroll,
+} from "../ServiceDetail/onScrollChange";
+import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
+import ReviewsContainer from "../ReviewsContainer";
 
 function ComboDetail() {
     const { t } = useContext(AppContext);
-    const [value, setValue] = useState("1");
-    const location: any = useLocation();
+    const IS_MB = useFullScreen();
     const params: any = shareLink();
     const dispatch = useDispatch();
-    const org_reducer = useSelector((state: any) => state.ORG.org);
-    const combo_reducer = useSelector(
-        (state: any) => state.ORG_COMBOS.COMBO_DETAIL.combo
-    );
-    const org = location.state ? location.state.org_state : org_reducer;
-    const combo = location.state ? location.state.combo_state : combo_reducer;
+    const ORG = useSelector((state: any) => state.ORG);
+    const { COMBO, COMMENTS } = useSelector((state: any) => state.COMBO);
+    const is_mobile = useFullScreen();
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState<any>(1);
+    const [openAllCmt, setOpenAllCmt] = useState(false);
+    const handleOpenSeemoreCmt = () => {
+        setOpenAllCmt(true);
+    };
 
-    const callComboDetail = () => {
-        if (!location.state) {
-            const values = {
-                org_id: params.org_id,
-                com_id: params.id,
-            };
+    let tabs = [
+        { id: 1, title: "Mô tả" },
+        { id: 2, title: "Đánh giá" },
+        { id: 3, title: "Doanh nghiệp" },
+        { id: 4, title: "Hướng dẫn & Điều khoản" },
+    ];
+
+    const org = ORG.org;
+    const combo = COMBO.combo;
+
+    let refDesc = useRef<any>();
+    let refReview = useRef<any>();
+    let refMap = useRef<any>();
+    let refPolicy = useRef<any>();
+    const scrollMap = refMap?.current?.offsetTop;
+    const scrollDesc = refDesc?.current?.offsetTop;
+    const scrollReview = refReview?.current?.offsetTop;
+    const scrollPolicy = refPolicy?.current?.offsetTop;
+
+    // handle onclick active menu
+    const handleChange = (event: React.SyntheticEvent, value: any) => {
+        const top = handleChangeScroll(
+            is_mobile,
+            value,
+            setValue,
+            refDesc,
+            refReview,
+            refMap,
+            refPolicy
+        );
+        window.scrollTo({
+            top: top,
+            behavior: "smooth",
+        });
+    };
+
+    const callOrgDetail = () => {
+        if (
+            parseInt(params.org_id) !== ORG.org?.id ||
+            ORG.status !== STATUS.SUCCESS
+        ) {
             dispatch(fetchAsyncOrg(params.org_id));
+        }
+    };
+    const callComboDetail = () => {
+        if (
+            parseInt(params.id) !== COMBO.combo.id ||
+            COMBO.status !== STATUS.SUCCESS
+        ) {
+            const values = {
+                com_id: params.id,
+                org_id: params.org_id,
+            };
             dispatch(fetchAsyncComboDetail(values));
         }
     };
-    useEffect(() => {
-        callComboDetail();
-    }, []);
-
-    const onTabChange = (event: React.SyntheticEvent, newValue: string) => {
-        setValue(newValue);
+    const callComboComments = () => {
+        if (
+            parseInt(params.id) !== COMMENTS.combo_id ||
+            COMMENTS.status !== STATUS.SUCCESS
+        ) {
+            const values = {
+                type: "TREATMENT_COMBO",
+                page: 1,
+                id: params.id,
+                org_id: params.org_id,
+            };
+            dispatch(fetchAsyncCommentsCombo(values));
+        }
     };
 
+    useEffect(() => {
+        window.addEventListener("scroll", () =>
+            handleScroll(
+                is_mobile,
+                setValue,
+                scrollReview,
+                scrollDesc,
+                scrollMap,
+                scrollPolicy
+            )
+        );
+        return () => {
+            window.removeEventListener(
+                "scroll",
+                () =>
+                    handleScroll(
+                        is_mobile,
+                        setValue,
+                        scrollReview,
+                        scrollDesc,
+                        scrollMap,
+                        scrollPolicy
+                    ),
+                false
+            );
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    });
+
+    useEffect(() => {
+        callOrgDetail();
+        callComboDetail();
+        callComboComments();
+    }, []);
+
     return (
-        <>
-            <Head />
-            <HeadTitle title={combo?.name ? combo.name : "Loading..."} />
+        <div className="product">
+            {IS_MB ? <HeadOrg org={org} /> : <Head />}
+            <HeadTitle title={combo?.name ? combo?.name : "Loading..."} />
             <Container>
-                <div className="combo-cnt">
-                    <div className="combo-cnt__left">
-                        <img
-                            src={
-                                combo?.image ? combo?.image_url : org?.image_url
-                            }
-                            onError={(e) => onErrorImg(e)}
-                            alt=""
-                            className="combo-cnt__left-img"
-                        />
-                        <div className="product-cnt__left-tabs">
-                            <div className="product-cnt__tab-wrapper">
-                                <Box
-                                    sx={{ width: "100%", typography: "body1" }}
-                                >
-                                    <TabContext value={value}>
-                                        <Box
-                                            sx={{
-                                                borderBottom: 1,
-                                                borderColor: "divider",
-                                            }}
+                <div className="service-detail">
+                    <div className="service-detail__head">
+                        <ComboDetailLeft org={org} combo={combo} />
+                        <ComboDetailRight org={org} combo={combo} />
+                    </div>
+                    <div className="service-detail__body">
+                        <div className="service-detail__tab">
+                            <TabContext value={value}>
+                                <TabList onChange={handleChange}>
+                                    {tabs.map((item: any, i: number) => (
+                                        <Tab
+                                            key={i}
+                                            label={item.title}
+                                            value={item.id}
+                                        />
+                                    ))}
+                                </TabList>
+                                <div className="service-detail__tabitem">
+                                    <TabPanel value={value}>
+                                        <div
+                                            ref={refDesc}
+                                            className="service-detail__description"
                                         >
-                                            <TabList
-                                                onChange={onTabChange}
-                                                aria-label="lab API tabs example"
-                                            >
-                                                <Tab
-                                                    label={t("pr.description")}
-                                                    value="1"
-                                                />
-                                                <Tab
-                                                    label={t("Mer_de.feedback")}
-                                                    value="2"
-                                                />
-                                                {/* <Tab
-                                                    label={t("pr.recommend")}
-                                                    value="3"
-                                                /> */}
-                                                <Tab
-                                                    label={t(
-                                                        "pr.merchant_detail"
-                                                    )}
-                                                    value="4"
-                                                />
-                                            </TabList>
-                                        </Box>
-                                        <TabPanel value="1">
-                                            <TabDetail
-                                                combo={combo}
-                                                org={org}
+                                            <p>{"Đang cập nhật"}</p>
+                                        </div>
+                                    </TabPanel>
+                                    <TabPanel value={value}>
+                                        <div
+                                            ref={refReview}
+                                            className="service-detail__comment"
+                                        >
+                                            <Review
+                                                comments={COMMENTS.comments}
+                                                totalItem={COMMENTS.totalItem}
+                                                commentable_type={
+                                                    "TREATMENT_COMBO"
+                                                }
+                                                page={COMMENTS.page}
+                                                id={ORG.org?.id}
+                                                detail_id={combo?.id}
+                                                openSeeMoreCmt={
+                                                    handleOpenSeemoreCmt
+                                                }
                                             />
-                                        </TabPanel>
-                                        <TabPanel value="2">
-                                            <Comments
-                                                org={org}
-                                                id={combo?.id}
-                                                detail={combo}
-                                                comment_type={"TREATMENT_COMBO"}
+                                            {COMMENTS.comments &&
+                                            COMMENTS.comments.length >= 8 ? (
+                                                <div
+                                                    style={{
+                                                        justifyContent:
+                                                            "center",
+                                                    }}
+                                                    onClick={() => {
+                                                        setOpenAllCmt(true);
+                                                    }}
+                                                    className="seemore-cmt"
+                                                >
+                                                    <p>{"Xem tất cả >>"}</p>
+                                                </div>
+                                            ) : null}
+                                            <ReviewsContainer
+                                                open={openAllCmt}
+                                                setOpen={setOpenAllCmt}
+                                                comments={COMMENTS.comments}
+                                                org_id={ORG.org?.id}
+                                                totalItem={COMMENTS.totalItem}
+                                                page={COMMENTS.page}
+                                                commentable_type="TREATMENT_COMBO"
                                             />
-                                        </TabPanel>
-                                        {/* <TabPanel value="3"></TabPanel> */}
-                                        <TabPanel value="4">
-                                            <DetailMer org={org} />
-                                        </TabPanel>
-                                    </TabContext>
-                                </Box>
-                            </div>
+                                        </div>
+                                    </TabPanel>
+                                    <TabPanel value={value}>
+                                        <div
+                                            ref={refMap}
+                                            className="org-information-cnt"
+                                        >
+                                            <div className="service-detail__org">
+                                                {ORG.status ===
+                                                    STATUS.SUCCESS && (
+                                                    <>
+                                                        <p className="service-detail__title">
+                                                            Doanh nghiệp
+                                                        </p>
+                                                        <div className="service-detail__org-mb">
+                                                            <DetailOrgCard
+                                                                org={org}
+                                                            />
+                                                        </div>
+                                                        <OrgInformation
+                                                            org={org}
+                                                        />
+                                                    </>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </TabPanel>
+                                    <TabPanel value={value}>
+                                        <div ref={refPolicy}>
+                                            <DetailPolicy org={org} />
+                                        </div>
+                                    </TabPanel>
+                                </div>
+                            </TabContext>
                         </div>
                     </div>
-                    <DetailRight org={org} combo={combo} />
+                    {/* btn add cart */}
+                    <div className="service-detail__bottom">
+                        <button>
+                            <p>Mua ngay</p>
+                        </button>
+                        <button
+                            onClick={() => {
+                                setOpen(true);
+                            }}
+                            className="btn-addcart"
+                        >
+                            <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                            <p>Thêm vào giỏ hàng</p>
+                        </button>
+                    </div>
+                    <Drawer
+                        open={open}
+                        anchor="bottom"
+                        onClose={() => setOpen(false)}
+                    >
+                        <div className="active-mb">
+                            <div className="service-detail">
+                                <ComboDetailRight combo={combo} org={org} />
+                            </div>
+                        </div>
+                    </Drawer>
                 </div>
             </Container>
-        </>
+        </div>
     );
 }
 

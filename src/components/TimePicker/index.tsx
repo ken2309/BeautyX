@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import dayjs from "dayjs";
 import TimeItem from './components/TimeItem';
 import './timePicker.css';
@@ -11,6 +11,7 @@ interface IProps {
 function TimePicker(props: IProps) {
       const { onChange, disablePrev } = props;
       let times = 25;
+      const [t, setT] = useState();
       var rows = [];
       var hours = dayjs().set("hour", 8).set("minute", 0).set("second", 0);
       for (var i = 0; i <= times; i++) {
@@ -21,6 +22,8 @@ function TimePicker(props: IProps) {
                               Time={hours}
                               onChangeItem={(e) => onChange(e)}
                               disablePrev={disablePrev}
+                              t={t}
+                              setT={setT}
                         // Now={now}
                         // handleClick={handleTime}
                         // activeTime={activeTime}

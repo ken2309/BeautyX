@@ -1,32 +1,42 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import productsApi from '../../api/productApi';
-import categoryApi from '../../api/categoryApi';
-import { STATUS } from '../status';
-import { Product } from '../../interface/product'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import productsApi from "../../api/productApi";
+import categoryApi from "../../api/categoryApi";
+import { STATUS } from "../status";
+import { Product } from "../../interface/product";
 
 interface IPRODUCTS {
-    products: Product[],
-    page: number,
-    totalItem: number,
-    status_pr: string
+    products: Product[];
+    page: number;
+    totalItem: number;
+    status_pr: string;
 }
 interface ICATE {
-    categories: [],
-    status: string
+    categories: [];
+    status: string;
 }
 interface IINITIALSTATE {
-    CATE: ICATE,
-    PRODUCTS: IPRODUCTS
+    CATE: ICATE;
+    PRODUCTS: IPRODUCTS;
+    org_id: any;
+    choose_cate: any;
 }
 
 export const fetchAsyncCateProducts: any = createAsyncThunk(
     "ORG_PRODUCTS/fetchAsyncCateProducts",
     async (org_id: any) => {
-        const res = await categoryApi.getByOrgId(org_id);
-        const payload = res.data.context.data
-        return payload
+        try {
+            const res = await categoryApi.getByOrgId(org_id);
+            const payload = {
+                org_id: org_id,
+                categories: res.data.context.data,
+            };
+            return payload;
+        } catch (error) {
+            console.log(error);
+        }
     }
-)
+);
+
 export const fetchAsyncProducts: any = createAsyncThunk(
     "ORG_PRODUCTS/fetchAsyncProducts",
     async (values: any) => {
@@ -35,61 +45,75 @@ export const fetchAsyncProducts: any = createAsyncThunk(
             products: res.data.context.data,
             page: values.page,
             totalItem: res.data.context.total,
-        }
-        return payload
+        };
+        return payload;
     }
-)
+);
 const initialState: IINITIALSTATE = {
+    org_id: null,
+    choose_cate: null,
     CATE: {
         categories: [],
-        status: ''
+        status: "",
     },
     PRODUCTS: {
         products: [],
         totalItem: 1,
         page: 1,
-        status_pr: ''
-    }
-}
+        status_pr: "",
+    },
+};
 const orgProductsSlice = createSlice({
     initialState,
     name: "ORG_PRODUCTS",
     reducers: {
-        clearProducts: (state) => {
+        clearProducts: (state: any) => {
             return {
                 ...state,
                 PRODUCTS: {
                     ...state.PRODUCTS,
                     products: [],
-                    page: 1
-                }
-            }
-        }
+                    page: 1,
+                },
+            };
+        },
+        onChooseCateServices: (state, { payload }) => {
+            state.choose_cate = payload;
+        },
     },
     extraReducers: {
         //get services cate org
-        [fetchAsyncCateProducts.pending]: (state) => {
-            return { ...state, CATE: { ...state.CATE, status: STATUS.LOADING } }
+        [fetchAsyncCateProducts.pending]: (state, { payload }) => {
+            return {
+                ...state,
+                CATE: { ...state.CATE, status: STATUS.LOADING },
+            };
         },
         [fetchAsyncCateProducts.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
-                CATE: { categories: payload, status: STATUS.SUCCESS }
-            }
+                org_id: payload.org_id,
+                CATE: {
+                    categories: payload.categories,
+                    status: STATUS.SUCCESS,
+                },
+            };
         },
         [fetchAsyncCateProducts.rejected]: (state) => {
             return {
-                ...state, CATE: { ...state.CATE, status: STATUS.FAIL }
-            }
+                ...state,
+                CATE: { ...state.CATE, status: STATUS.FAIL },
+            };
         },
         //get prducts org
         [fetchAsyncProducts.pending]: (state) => {
             return {
-                ...state, PRODUCTS: {
+                ...state,
+                PRODUCTS: {
                     ...state.PRODUCTS,
                     //status_ser: STATUS.LOADING
-                }
-            }
+                },
+            };
         },
         [fetchAsyncProducts.fulfilled]: (state, { payload }) => {
             return {
@@ -98,18 +122,18 @@ const orgProductsSlice = createSlice({
                     products: [...state.PRODUCTS.products, ...payload.products],
                     totalItem: payload.totalItem,
                     page: payload.page,
-                    status_pr: STATUS.SUCCESS
-                }
-            }
+                    status_pr: STATUS.SUCCESS,
+                },
+            };
         },
         [fetchAsyncProducts.rejected]: (state) => {
             return {
                 ...state,
-                PRODUCTS: { ...state.PRODUCTS, status_pr: STATUS.FAIL }
-            }
-        }
-    }
-})
+                PRODUCTS: { ...state.PRODUCTS, status_pr: STATUS.FAIL },
+            };
+        },
+    },
+});
 const { actions } = orgProductsSlice;
-export const { clearProducts } = actions;
+export const { clearProducts, onChooseCateServices } = actions;
 export default orgProductsSlice.reducer;

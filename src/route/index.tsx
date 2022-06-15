@@ -35,11 +35,14 @@ import Blog from "../features/Blog";
 import ComboDetail from "../features/ComboDetail";
 import DiscountDetail from "../features/DiscountDetail";
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
+import CategoryTree from "../features/CategoryTree";
+import Booking from "../features/Booking";
+import BuyNow from "../features/BuyNow";
 
 
 // feature mobile
 import Calendar from "../featuresMobile/Calendar";
-import MerchantComment from "../features/MerchantComment";
+//import MerchantComment from "../features/MerchantComment";
 import { useSelector } from "react-redux";
 
 const RouterPage = (
@@ -109,14 +112,6 @@ function RouterConfig(props: any) {
       component: <SignPageRequest />,
     },
     {
-      path: "/merchant-comment",
-      component: <MerchantComment />,
-    },
-    // {
-    //   path: "/date",
-    //   component: <DatePicker />
-    // },
-    {
       path: "/org/:subdomain",
       component: <MerchantDetail />,
     },
@@ -175,7 +170,19 @@ function RouterConfig(props: any) {
     {
       path: "/giam-gia",
       component: <HomeDiscountList />
-    }
+    },
+    {
+      path: "/-danh-muc/",
+      component: <CategoryTree />
+    },
+    {
+      path: "/dat-hen",
+      component: <Booking />
+    },
+    // {
+    //   path: "/mua-hang",
+    //   component: <BoyNow />
+    // }
   ];
   const routesPrivate = [
     {
@@ -201,6 +208,10 @@ function RouterConfig(props: any) {
     {
       path: '/trang-thai-don-hang/:desc',
       component: CartPaymentStatus
+    },
+    {
+      path: "/mua-hang",
+      component: BuyNow
     }
   ];
   return (

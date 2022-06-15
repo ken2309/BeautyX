@@ -14,7 +14,6 @@ export const fetchAsyncServicesSpecial: any = createAsyncThunk(
             services_special: res.data.context.data,
             page: values.page,
             totalItem: res.data.context.total,
-            org_id: values.org_id
         }
         return payload
     }
@@ -34,6 +33,7 @@ export const fetchProductsSpecial: any = createAsyncThunk(
         return payload
     }
 )
+
 const initialState = {
     org_id: null,
     SERVICES_SPECIAL: {
@@ -52,7 +52,11 @@ const initialState = {
 const orgSpecialSlice = createSlice({
     initialState,
     name: "ORG_SPECIALS",
-    reducers: {},
+    reducers: {
+        onSaveOrgId: (state, { payload }) => {
+            state.org_id = payload
+        }
+    },
     extraReducers: {
         [fetchAsyncServicesSpecial.pending]: (state) => {
             return {
@@ -63,7 +67,6 @@ const orgSpecialSlice = createSlice({
         [fetchAsyncServicesSpecial.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
-                org_id: payload.org_id,
                 SERVICES_SPECIAL: {
                     services_special: payload.services_special,
                     page: payload.page,
@@ -104,4 +107,6 @@ const orgSpecialSlice = createSlice({
         }
     }
 })
+const { actions } = orgSpecialSlice;
+export const { onSaveOrgId } = actions;
 export default orgSpecialSlice.reducer;
