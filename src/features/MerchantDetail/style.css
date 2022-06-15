@@ -189,7 +189,6 @@
 .org-detail__cnt-bot .org-detail__info {
     display: flex;
     grid-gap: 0 8px;
-    align-items: center;
     flex-direction: column;
 }
 
@@ -250,7 +249,7 @@
     color: var(--black);
 }
 .org-left-detail {
-    margin-top: auto;
+    /* margin-top: auto; */
     display: flex;
     flex-direction: column;
     grid-gap: 4px 0;
@@ -840,7 +839,7 @@
     padding: 0 16px;
 }
 .org-container {
-    padding: 0;
+    padding: 24px 0 0 0;
 }
 .org-container .MuiTabs-root {
     min-height: 48px;
