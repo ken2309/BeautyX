@@ -1,15 +1,21 @@
-import {useMemo,useState} from 'react';
+import {useMemo,useState,useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 //import parse from "html-react-parser";
-import Head from '../Head';
+import { fetchAsyncVideos } from '../../../redux/video/videosSlice';
+import Head from '../../Head';
 import { Container } from '@mui/material'
-import { useSelector } from 'react-redux';
 import ContainerPc from './components/ContainerPc';
-import Trends from '../Trends';
+import Trends from '../../Trends';
 import './style.css'
 
 
 function Videos() {
-    const { videos } = useSelector((state: any) => state.BLOG.VIDEOS);
+    const dispatch = useDispatch();
+    const videos  = useSelector((state: any) => state.VID).LISTVIDs;
+    useEffect(() => {
+        dispatch(fetchAsyncVideos());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     return (
         <>
             <Head />
@@ -20,7 +26,7 @@ function Videos() {
                     maxWidth='md'
                 >
                 <Trends
-                    videos={videos}
+                    videos={videos.data}
                 />
                 <div className="video-cnt-des">
                     <ContainerPc videos={videos} />

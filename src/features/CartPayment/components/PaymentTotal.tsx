@@ -76,7 +76,7 @@ function PaymentTotal(props: any) {
         if (data_cart.address) {
           handlePostOrder(org_id, params)
         } else {
-          console.log("Trang web chỉ chấp nhận thanh toán qua ví điện tử Momo");
+          alert("Trang web chỉ chấp nhận thanh toán qua ví điện tử Momo");
         }
       } else {
         if (data_cart.address) {

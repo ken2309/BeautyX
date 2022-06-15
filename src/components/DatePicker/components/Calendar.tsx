@@ -14,8 +14,7 @@ function Calendar(props: any) {
         datepick,
         handleGetDate,
         dayObj,
-    } = props;
-    
+    } = props;    
     return (
         <>
             <div className="calendar">

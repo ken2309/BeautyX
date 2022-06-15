@@ -228,13 +228,18 @@
 .video-item_dialog{
     background-color: var(--bgWhite);
 }
-.video-item_dialog .org-evaluate__cnt{
+/* REVIEW COMPONENT CUSTOM  */
+.video-item_dialog .org-evaluate__cnt .org-evaluate__title{
+    display: none;
+}
+.video-item_dialog .org-evaluate__cnt .input-btn{
+    right: 30px;
 }
 .video-item_dialog .org-evaluate__cnt .evaluate-rating{
     display: none;
 }
 .video-item_dialog .video-item-pc__wr{
-    width: 65%;
+    width: 70%;
 }
 .video-item_dialog .video-item-pc__wr .video-item__pc{
     /* width: max-content; */
@@ -242,7 +247,7 @@
 .video-item_dialog-body{
     height: 100%;
     overflow-y: scroll;
-    width: 35%;
+    width: 30%;
 }
 .video-item_dialog-body{
     padding: 24px 0;

@@ -153,7 +153,8 @@ const orgSlice = createSlice({
                 }
             }
         },
-        [onFavoriteOrg.rejected]: (state) => {
+        [onFavoriteOrg.rejected]: (state,{payload}) => {
+            console.log(payload)
             return state
         },
         //remove favorite org
@@ -161,6 +162,7 @@ const orgSlice = createSlice({
             return state
         },
         [onDeleteFavoriteOrg.fulfilled]: (state, { payload }) => {
+            console.log(payload)
             return {
                 ...state,
                 org: {

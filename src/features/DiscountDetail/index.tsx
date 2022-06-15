@@ -316,6 +316,11 @@ function DiscountDetail() {
                                                 <DetailPolicy org={org} />
                                             </div>
                                         </TabPanel>
+                                        <TabPanel value={value}>
+                                            <div ref={refPolicy}>
+                                                <DetailPolicy org={org} />
+                                            </div>
+                                        </TabPanel>
                                     </div>
                                 </TabContext>
                             </div>
