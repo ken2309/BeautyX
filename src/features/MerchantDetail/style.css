@@ -1000,6 +1000,7 @@
     /* org container */
     .org-container {
         top: 42px;
+        padding-top: 0px;
     }
 
     .org-container__tab-cnt {
