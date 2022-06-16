@@ -16,13 +16,12 @@ import { IComment } from '../../../../interface/comments';
 import { Service } from '../../../../interface/service';
 // api
 import { setResetInitialState } from '../../../../redux/video/videosSlice';
-import { fetchAsyncOrgComments, postAsyncOrgComments } from '../../../../redux/org/orgCommentsSlice';
+import { postAsyncOrgComments } from '../../../../redux/org/orgCommentsSlice';
 import { onFavoriteOrg, onDeleteFavoriteOrg } from '../../../../redux/org/orgSlice';
 import mediaApi from '../../../../api/mediaApi';
 
 function VideoItemPc(props: any) {
     const { video, org, cmt, sers, videoCur, setVideoCur } = props;
-    const sess = window.sessionStorage.getItem("_WEB_TK");
     const history = useHistory();
     const dispatch = useDispatch();
     const refCurPost = useRef<any>(null);
@@ -71,8 +70,7 @@ function VideoItemPc(props: any) {
             star: 5,
         });
     // ---- end ---- 
-        const getComments = async (props:any) => {
-            console.log(props);
+        const getComments = (props:any) => {
             setData({ ...data,
                 cmt: {  comments:[props.payload.comment,...(data?.cmt?.comments||[])],
                         totalItem: (data?.cmt?.totalItem||0) + 1
@@ -96,13 +94,13 @@ function VideoItemPc(props: any) {
         },[])
     // handle func
         const handleGoOrgDetail = () => {
-            goSignIn();
+           alert('detail');
         }
         const handleComment = (e: any) => {
-            if (!sess) {
+            if (!user) {
                 goSignIn();
             }
-            else if (sess) {
+            else if (user) {
                 setComment({
                     ...comment,
                     text: e.target.value,
@@ -127,7 +125,7 @@ function VideoItemPc(props: any) {
 
         const handleKeyDown = (event: any) => {
             if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
-                if (comment.text.length > 0 && sess) {
+                if (comment.text.length > 0 && user) {
                     handlePostComment();
                     setComment({
                         text: "",
@@ -212,6 +210,7 @@ function VideoItemPc(props: any) {
                     <PostVideo
                         vd_url={vd_url}
                         video={video}
+                        is_mute={true}
                         videoCur={videoCur}
                         setVideoCur={setVideoCur}
                         setOpenCmtDialog={setOpenCmtDialog}
@@ -232,6 +231,7 @@ function VideoItemPc(props: any) {
                     video={video}
                     handleComment={handleComment}
                     comment={comment}
+                    setComment={setComment}
                     handleViewAllCmt={handleViewAllCmt}
                     handleKeyDown={handleKeyDown}
                     user={user}
@@ -257,4 +257,4 @@ function VideoItemPc(props: any) {
     );
 }
 
-export default VideoItemPc;
+export default React.memo(VideoItemPc);

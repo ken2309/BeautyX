@@ -5,13 +5,15 @@ import CommentItem from "./CommentItem";
 import EvaluateInput from "./EvaluateInput";
 import TotalStartEvaluate from "./TotalStartEvaluate";
 import { useDispatch, useSelector } from "react-redux";
-import { postAsyncOrgComments } from "../../redux/org/orgCommentsSlice";
+
+
 import { postAsyncComment } from "../../redux/org_services/serviceSlice";
 import { postAsyncProductComment } from "../../redux/org_products/productSlice";
 import { postCommentCombo } from "../../redux/org_combos/comboSlice";
 import { pickBy, identity } from "lodash";
 import { useHistory } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { postAsyncOrgComments } from "../../redux/org/orgCommentsSlice";
 
 interface IProps {
     comments?: any;
@@ -126,6 +128,7 @@ function Review(props: IProps) {
             handlePostComment();
         }
     };
+    console.log('render times ==>', id);
     return (
         <>
             <div className="org-evaluate__cnt">

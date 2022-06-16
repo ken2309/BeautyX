@@ -125,10 +125,10 @@ const videosSlice = createSlice({
          * @returns {object} state
          */
         setResetInitialState: (state,payload) => {
-            if(!state.RESET_STATE){state.RESET_STATE=payload.payload;}
+            state.RESET_STATE=payload.payload;
         },
         resetVIDEOs: (state)=>{
-            state.VIDEOs=initialState.VIDEOs
+            state.VIDEOs=initialState.VIDEOs;
         }
     },
     extraReducers: {
@@ -153,7 +153,11 @@ const videosSlice = createSlice({
         },
         // fetch data of post -- org -- ser -- 
         [fetchAsyncDataVideos.pending]: (state) => {
-            return { ...state, VIDEOs: { ...state.VIDEOs, status: STATUS.LOADING } }
+            return { ...state,
+                        VIDEOs: { 
+                            ...state.VIDEOs,
+                            data:state.RESET_STATE?[]:[...state.VIDEOs.data],
+                            status: STATUS.LOADING } }
         },
         [fetchAsyncDataVideos.fulfilled]: (state, { payload }) => {
             return {
