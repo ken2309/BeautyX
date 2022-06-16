@@ -166,12 +166,12 @@ function Booking() {
             >
                 <div className="booking-cnt">
                     <div className="booking-cnt__left">
-                        {org && (
+                        {/* {org && (
                             <MapOrg
                                 onChangeCardMap={onChangeCardMap}
                                 org={org}
                             />
-                        )}
+                        )} */}
                     </div>
                     <div className="booking-cnt__right">
                         <div className="booking-cnt__right-org">
