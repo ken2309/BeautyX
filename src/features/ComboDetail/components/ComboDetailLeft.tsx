@@ -12,6 +12,7 @@ interface IProps {
 
 function ComboDetailLeft(props: IProps) {
     const { combo, org } = props;
+    console.log("combo", combo);
     const list_price = [combo?.price, combo?.use_value].sort((a, b) => b - a);
     const price = list_price[0];
     const special_price = list_price[1];

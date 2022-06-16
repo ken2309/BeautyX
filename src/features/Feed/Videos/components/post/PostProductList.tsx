@@ -1,10 +1,10 @@
-import icon from "../../../../constants/icon";
-import formatPrice from '../../../../utils/formatPrice';
-import errorImg from '../../../../utils/errorImg';
+import icon from "../../../../../constants/icon";
+import formatPrice from '../../../../../utils/formatPrice';
+import errorImg from '../../../../../utils/errorImg';
 // // interface
-// import { IOrganization } from '../../../../interface/organization';
-// import { IComment } from '../../../../interface/comments';
-// import { Service } from '../../../../interface/service';
+// import { IOrganization } from '../../../../../interface/organization';
+// import { IComment } from '../../../../../interface/comments';
+// import { Service } from '../../../../../interface/service';
 // // ---- interface ----
 // interface IData {
 //     org?: IOrganization | null;

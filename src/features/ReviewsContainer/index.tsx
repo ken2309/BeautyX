@@ -21,7 +21,6 @@ function ReviewsContainer(props: IProps) {
     const IS_MB = useFullScreen();
 
     const anchor = IS_MB ? "bottom" : "right";
-
     return (
         <Drawer
             open={open}

@@ -1,10 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 export default function PostVideo (props:any) {
-    const {vd_url,video,videoCur,setVideoCur} = props
+    const {vd_url,video,videoCur,setVideoCur,setOpenCmtDialog} = props
     const videoRef = useRef<any>();
     const videoRefBack = useRef<any>();
     const onHoverVideoItem = () => {
-        setVideoCur(video)
+        // setVideoCur(video);
+        setOpenCmtDialog(true);
+        if (videoCur?.id === video?.id) {
+            videoRef.current.play();
+            videoRefBack.current.play();
+        } else {
+            videoRef.current.pause();
+            videoRefBack.current.pause();
+        }
     }
     useEffect(() => {
         if (videoCur?.id === video?.id) {

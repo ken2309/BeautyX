@@ -53,7 +53,6 @@ function Form(props: any) {
       // sex: Yup.string().required(t("form.please_choose_sex")),
     }),
     onSubmit: (values) => {
-      console.log(values);
       // handleCloseContact();
     },
   });
