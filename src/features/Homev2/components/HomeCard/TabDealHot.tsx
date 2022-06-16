@@ -1,71 +1,64 @@
-import React, { useEffect, useState } from 'react';
-import orgApi from '../../../../api/organizationApi';
-import { IOrganization } from '../../../../interface/organization';
-import OrgItem from '../../../ViewItemCommon/OrgItem/index'
-import { useHistory } from 'react-router-dom';
-import slugify from '../../../../utils/formatUrlString';
-import icon from '../../../../constants/icon';
+import React, { useEffect, useState } from "react";
+import orgApi from "../../../../api/organizationApi";
+import { IOrganization } from "../../../../interface/organization";
+import OrgItem from "../../../ViewItemCommon/OrgItem/index";
+import { useHistory } from "react-router-dom";
+import slugify from "../../../../utils/formatUrlString";
+import icon from "../../../../constants/icon";
 interface IData {
-    orgs: IOrganization[],
-    page: number,
-    lastPage: number
+    orgs: IOrganization[];
+    page: number;
+    lastPage: number;
 }
 
 function TabDealHot(props: any) {
     const history = useHistory();
-    const {card} = props;
+    const { card } = props;
     const [data, setData] = useState<IData>({
         orgs: [],
         page: 1,
-        lastPage: 1
-    })
+        lastPage: 1,
+    });
     async function getOrgsManyDealHot() {
         try {
             const res = await orgApi.getOrgsByManyDealHot({
-                page:1
+                page: 1,
             });
             setData({
                 ...data,
-                orgs: res.data.context.data
-            })
+                orgs: res.data.context.data,
+            });
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
     useEffect(() => {
-        getOrgsManyDealHot()
+        getOrgsManyDealHot();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
     return (
-        <div className='home-card-list-org'>
-            <ul className='org-list'>
-                {
-                    data.orgs.slice(0, 9).map((item: IOrganization, index: number) => (
-                        <li
-                            key={index}
-                        >
-                            <OrgItem
-                                org={item}
-                            />
+        <div className="home-card-list-org">
+            <ul className="org-list">
+                {data.orgs
+                    .slice(0, 9)
+                    .map((item: IOrganization, index: number) => (
+                        <li key={index}>
+                            <OrgItem org={item} />
                         </li>
-                    ))
-                }
-                <li
-                className="card-read-more"
-                >
-                    <div className="read-more"
-                        onClick={
-                            ()=>
+                    ))}
+                <li className="card-read-more">
+                    <div
+                        className="read-more"
+                        onClick={() =>
                             history.push({
-                            pathname: `/doanh-nghiep/${slugify(card.title)}`,
-                            search: `${card.id}`
-                            }
-                        )}
+                                pathname: `/doanh-nghiep/${slugify(
+                                    card.title
+                                )}`,
+                                search: `${card.id}`,
+                            })
+                        }
                     >
-                        xem tat ca
-                        <img style={{
-                            display: 'inline-block'
-                        }} src={icon.chevronRightBlack} alt="" />
+                        {"Xem tất cả >"}
                     </div>
                 </li>
             </ul>
