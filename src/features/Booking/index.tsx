@@ -24,6 +24,7 @@ import { formatDatePost } from "../../utils/formatDate";
 import { extraPaymentMethodId } from "../PaymentMethod/extraPaymentMethodId";
 import MapOrg from "../MerchantDetail/components/OrgMap/MapOrg";
 import BookingNowBill from "./components/BookingNowBill";
+import { formatAddCart } from "../../utils/cart/formatAddCart";
 
 const date = dayjs();
 function Booking() {
@@ -96,7 +97,22 @@ function Booking() {
         description: "",
         branch_id: bookTime.branch_id,
     };
-    //console.log(params_string)
+    const listPayment = location.state?.services.map((item: any) => {
+        const is_type = 2;
+        const sale_price =
+            item.service?.special_price > 0
+                ? item.service?.special_price
+                : item.service?.price;
+        const values = formatAddCart(
+            item.service,
+            org,
+            is_type,
+            item.quantity,
+            sale_price,
+            item.service.discount
+        );
+        return values
+    })
     async function handlePostOrder() {
         //setLoading(true)
         const dayBook = formatDatePost(bookTime.date);
@@ -120,7 +136,7 @@ function Booking() {
                 history.push({
                     pathname: `/trang-thai-don-hang/${desc}`,
                     search: transaction_uuid,
-                    state: { state_payment, action },
+                    state: { state_payment, action, listPayment },
                 });
             } else {
                 //setPopUpFail(true)
@@ -166,12 +182,12 @@ function Booking() {
             >
                 <div className="booking-cnt">
                     <div className="booking-cnt__left">
-                        {/* {org && (
+                        {(IS_MB === false && org) && (
                             <MapOrg
                                 onChangeCardMap={onChangeCardMap}
                                 org={org}
                             />
-                        )} */}
+                        )}
                     </div>
                     <div className="booking-cnt__right">
                         <div className="booking-cnt__right-org">

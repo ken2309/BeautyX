@@ -4,14 +4,18 @@ import icon from '../../constants/icon';
 
 interface IProps {
     title: string,
-    onBack?: () => void
+    onBack?: () => void,
+    handleCancelPayment?: () => void
 }
 
 
 function HeadMobile(props: IProps) {
-    const { title, onBack } = props;
+    const { title, onBack, handleCancelPayment } = props;
     const history = useHistory();
     const onBackClick = () => {
+        if (handleCancelPayment) {
+            handleCancelPayment()
+        }
         if (onBack) {
 
         } else {
