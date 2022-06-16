@@ -91,10 +91,14 @@
         display: block;
         background-color: var(--bgWhite);
     }
-    .home-result-org-cnt__mb .cnt {
+    .home-result-org-cnt__mb{
+        display: block;
+        background-color: var(--bgWhite);
+    }
+    .home-result-org-cnt__mb .cnt{
         padding: 0px 12px;
     }
-    .home-result-org-cnt__mb .cnt span {
+    .home-result-org-cnt__mb .cnt span{
         font-size: 12px;
         line-height: 14px;
         font-weight: 700;

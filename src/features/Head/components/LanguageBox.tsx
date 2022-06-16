@@ -14,7 +14,12 @@ function LanguageBox(props: any) {
       }
       return (
             <>
-                  <div className="hd-lang-box__left">
+                  <div className="hd-lang-box__left"
+                        style={{
+                              width: '100%',
+                              borderRight: 'none'
+                        }}
+                  >
                         {
                               languages.map((item) => (
                                     <div
@@ -30,7 +35,7 @@ function LanguageBox(props: any) {
                               ))
                         }
                   </div>
-                  <div className="hd-lang-box__right">
+                  {/* <div className="hd-lang-box__right">
                         {
                               languages.map((item) => (
                                     <div
@@ -44,7 +49,7 @@ function LanguageBox(props: any) {
                                     </div>
                               ))
                         }
-                  </div>
+                  </div> */}
             </>
       );
 }

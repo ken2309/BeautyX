@@ -21,13 +21,13 @@ function Bottom(props: any) {
             iconAct: ICON.locationAct,
             path: "/home"
         },
-        {
-            id: 2,
-            title: t('Home.trending'),
-            icon: ICON.trend,
-            iconAct: ICON.trendAct,
-            path: "/beautyx-videos"
-        },
+        // {
+        //     id: 2,
+        //     title: t('Home.trending'),
+        //     icon: ICON.trend,
+        //     iconAct: ICON.trendAct,
+        //     path: "/beautyx-videos"
+        // },
         {
             id: 3,
             title: t('Home.cate'),
@@ -99,7 +99,7 @@ function Bottom(props: any) {
         history.push(`${item.path}`)
     }
     return (
-        <div className='bt'>
+        <div className="bt">
             <div className="flex-row-sp bt-cnt">
                 {
                     Btns.map(item => (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { IComment } from "../../interface/comments";
 import "./review.css";
 import CommentItem from "./CommentItem";
@@ -12,6 +12,7 @@ import { postCommentCombo } from "../../redux/org_combos/comboSlice";
 import { pickBy, identity } from "lodash";
 import { useHistory } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { AppContext } from "../../context/AppProvider";
 
 interface IProps {
     comments?: any;
@@ -36,6 +37,7 @@ function Review(props: IProps) {
         openSeeMoreCmt,
         page,
     } = props;
+    const {t} = useContext(AppContext);
     const USER = useSelector((state: any) => state.USER);
     const user = USER.USER;
     const dispatch = useDispatch();
@@ -130,7 +132,7 @@ function Review(props: IProps) {
         <>
             <div className="org-evaluate__cnt">
                 <div className="org-evaluate__title">
-                    <p>Đánh giá</p>
+                    <p>{t("Mer_de.feedback")}</p>
                 </div>
                 <TotalStartEvaluate
                     totalItem={totalItem}

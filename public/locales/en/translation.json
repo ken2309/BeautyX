@@ -144,7 +144,9 @@
     "decrease_price": "Decrease price",
     "ascending_price": "Ascending price",
     "search_by_product": "Search by product name",
-    "search_by_service": "Search by service name"
+    "search_by_service": "Search by service name",
+    "galleries":"Galleries",
+    "business_hours":"Business hours"
   },
   "pr": {
     "merchant_detail": "Merchant detail",

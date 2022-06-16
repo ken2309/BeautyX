@@ -363,7 +363,7 @@ function DiscountDetail() {
                     </div>
                 </Container>
             )}
-            <Footer/>
+            <Footer />
         </>
     );
 }

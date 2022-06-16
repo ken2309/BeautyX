@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { IOrganization } from "../../../../interface/organization";
 import Slider from "react-slick";
 import onErrorImg from "../../../../utils/errorImg";
@@ -6,6 +6,7 @@ import icon from "../../../../constants/icon";
 import WrapperMap from "../../../Map/MapWarraper/WrapperMap";
 import { extraOrgTimeWork } from "../Functions/extraOrg";
 import OrgMapWrapper from "../OrgMap/OrgMapWrapper";
+import { AppContext } from "../../../../context/AppProvider";
 
 interface IProps {
     org: IOrganization;
@@ -16,6 +17,7 @@ const today = day.getDay() + 1;
 
 function OrgInformation(props: IProps) {
     const { org, refMap } = props;
+    const {t} = useContext(AppContext);
     const branchesCntRef = useRef<any>();
     const sliderRef = useRef<any>();
     const [branch, setBranch] = useState<any>(org?.branches[0] || org);
@@ -45,7 +47,7 @@ function OrgInformation(props: IProps) {
                             setOpenPopupSeemoreMap(true);
                         }}
                     >
-                        Xem Thêm
+                        {t("trending.watch_all")}
                     </p>
                 </div>
                 <div className="map-org-detail">
@@ -197,7 +199,7 @@ function OrgInformation(props: IProps) {
                 </div>
             )}
             <div className="org-information__branches">
-                <div className="title">Giờ mở cửa</div>
+                <div className="title">{t("Mer_de.business_hours")}</div>
                 <ul className="org-time-list">
                     {orgTimes.map((item: any, index: number) => (
                         <li
@@ -221,7 +223,7 @@ function OrgInformation(props: IProps) {
                 </ul>
             </div>
             <div className="org-information__branches">
-                <div className="title">Về chúng tôi</div>
+                <div className="title">{t("Mer_de.about")}</div>
                 <div className="org-information__about">
                     Thành lập năm 2018, {org?.name} là thương hiệu uy tín hàng
                     đầu trong ngành công nghệ spa, với thiết bị máy móc hiện đại
@@ -229,7 +231,7 @@ function OrgInformation(props: IProps) {
                 </div>
             </div>
             <div className="org-information__branches">
-                <div className="title">Tiện ích</div>
+                <div className="title">{t("Mer_de.utilities")}</div>
                 <ul className="org-information-utils">
                     <li className="flex-row utils-item">
                         <img src={icon.carBlack} alt="" className="icon" />

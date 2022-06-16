@@ -9,7 +9,7 @@ interface IProps {
 function HeadTitle(props: IProps) {
       const { title } = props;
       const FLAT_FORM = EXTRA_FLAT_FORM();
-      document.title = FLAT_FORM === FLAT_FORM_TYPE.TIKI ? 'BeautyX' : `${title} - ${FLAT_FORM}`
+      document.title = FLAT_FORM === FLAT_FORM_TYPE.MOMO ? 'BeautyX' : `${title} - ${FLAT_FORM}`
       return (
             <></>
       );

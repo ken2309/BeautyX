@@ -21,7 +21,7 @@ function Home() {
   return (
     <div className="home">
       <ExtraFlatForm />
-      <HeadTitle title={t("Home.home")} />
+      {/* <HeadTitle title={t("Home.home")} /> */}
       {
         FLAT_FORM === "BEAUTYX" &&
         <Head

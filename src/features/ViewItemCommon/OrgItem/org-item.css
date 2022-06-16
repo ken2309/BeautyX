@@ -11,8 +11,8 @@
 }
 
 .re-org-item:hover {
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    border: 1px solid #ccc;
+    box-shadow: 0 6px 15px #dcd8ee;
+    transform: translateY(-10px);
 }
 
 .re-org-item .org-img-cnt {
@@ -49,7 +49,9 @@
 
 .re-org-item .re-org-item__img {
     width: 100%;
-    height: 180px;
+    height: auto;
+    min-height: 159px;
+    border-radius: 8px;
 }
 
 .re-org-item__cnt {

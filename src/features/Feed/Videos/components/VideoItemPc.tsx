@@ -99,10 +99,10 @@ function VideoItemPc(props: any) {
             goSignIn();
         }
         const handleComment = (e: any) => {
-            if (!sess) {
+            if (!user) {
                 goSignIn();
             }
-            else if (sess) {
+            else if (user) {
                 setComment({
                     ...comment,
                     text: e.target.value,
@@ -127,7 +127,7 @@ function VideoItemPc(props: any) {
 
         const handleKeyDown = (event: any) => {
             if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
-                if (comment.text.length > 0 && sess) {
+                if (comment.text.length > 0 && user) {
                     handlePostComment();
                     setComment({
                         text: "",

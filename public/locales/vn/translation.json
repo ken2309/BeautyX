@@ -27,7 +27,7 @@
     "1": "Khám phá và trải nghiệm \n thiên đường làm đẹp ngay gần bạn với \n Beautyx.vn"
   },
   "Home": {
-    "home": "Trang chủ",
+    "home": "BeautyX - Đặt lịch làm đẹp online.",
     "Filter_form_input": "Tên doanh nghiệp/Sản phẩm/Dịch vụ",
     "Filter_category": "Danh mục",
     "Filter_location": "Khu vực",
@@ -110,7 +110,7 @@
   },
   "Mer_de": {
     "address": "Địa chỉ",
-    "time_work": "Lịch làm việc",
+    "time_work": "Thời gian làm việc",
     "weeks_day": "Thứ 2 - Thứ 7",
     "sunday": "Chủ nhật",
     "contact": "Liên hệ tư vấn",
@@ -144,7 +144,9 @@
     "decrease_price": "Giá cao",
     "ascending_price": "Giá thấp",
     "search_by_product": "Tìm theo tên sản phẩm",
-    "search_by_service": "Tìm theo tên dịch vụ"
+    "search_by_service": "Tìm theo tên dịch vụ",
+    "galleries":"Hình ảnh",
+    "business_hours":"Giờ mở cửa"
   },
   "pr": {
     "merchant_detail": "Về doanh nghiệp",
