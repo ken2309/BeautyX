@@ -40,6 +40,7 @@ export default function Reels(props:any){
                         <Video
                         key={index}
                         video={item}
+                        isOpen={open}
                         videoCur={videoCur}
                         setVideoCur={setVideoCur}      
                         />

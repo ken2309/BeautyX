@@ -225,9 +225,8 @@
     max-width: 1400px;
     width: calc(100vw - 64px);
     height: 90vh;
-}
-.video-item_dialog{
     background-color: var(--bgWhite);
+    border-radius: 8px;
 }
 /* REVIEW COMPONENT CUSTOM  */
 .video-item_dialog .org-evaluate__cnt .org-evaluate__title{
@@ -292,6 +291,10 @@
         object-fit: cover;
         object-position: center;
         z-index: 1;
+    }
+    .video-item_dialog .video-item__pc{
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
     }
 }
 @media only screen and (max-width: 1023px){
