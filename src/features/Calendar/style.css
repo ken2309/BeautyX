@@ -1,0 +1,48 @@
+.cal-cnt__tab-cnt .MuiTabPanel-root {
+    padding: 12px 0px !important;
+}
+
+.cal-cnt__tab-cnt .MuiButtonBase-root {
+    padding: 8px 16px !important;
+    text-transform: none;
+    font-weight: 600;
+    font-family: "Nunito";
+    font-size: 16px;
+    min-height: unset !important;
+}
+
+.cal-cnt__tab-cnt .Mui-selected {
+    color: var(--purple) !important;
+}
+
+.cal-cnt__tab-cnt .MuiTabs-indicator {
+    background-color: var(--purple);
+}
+.cal-cnt__tab-cnt .MuiTabs-root{
+    min-height: unset !important;
+    height:  fit-content !important;
+}
+.cal-cnt__tab-cnt-head .back-btn{
+    border: none;
+    outline: none;
+    display: none;
+    background-color: transparent;
+}
+
+@media only screen and (max-width: 1023px) {
+    .cal-cnt__tab-cnt-head {
+        padding: 2px 12px;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: solid 1px var(--grey);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 2;
+        background-color: var(--white);
+    }
+    .cal-cnt__tab-cnt-head .back-btn{
+        display: block;
+    }
+}

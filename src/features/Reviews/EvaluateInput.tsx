@@ -1,3 +1,4 @@
+import React from 'react';
 import { useHistory } from "react-router-dom";
 import mediaApi from "../../api/mediaApi";
 import icon from "../../constants/icon";
@@ -13,7 +14,7 @@ interface IProps {
 }
 
 
-export default function EvaluateInput(props: IProps) {
+function EvaluateInput(props: IProps) {
     const {
         handleOnchange,
         comment,
@@ -36,6 +37,7 @@ export default function EvaluateInput(props: IProps) {
     const handlePostMedia = async (media: any) => {
         let formData = new FormData();
         formData.append("file", media);
+        console.log(media);
         try {
             const res = await mediaApi.postMedia(formData);
             setComment({
@@ -50,6 +52,7 @@ export default function EvaluateInput(props: IProps) {
     const onRemoveImgTemp = () => {
         setComment({ ...comment, image_url: null });
     };
+    console.log(comment);
     return (
         <>
             <div className={changeStyle ? "evaluate-input evaluate-input__change" : "evaluate-input"}>
@@ -112,3 +115,4 @@ export default function EvaluateInput(props: IProps) {
         </>
     );
 }
+export default React.memo(EvaluateInput);

@@ -40,7 +40,7 @@ function Bottom(props: any) {
             title: t('Bottom.appointment'),
             icon: ICON.calendar,
             iconAct: ICON.calendarAct,
-            path: "/Calendar"
+            path: "/lich-hen"
         },
         {
             id: 5,

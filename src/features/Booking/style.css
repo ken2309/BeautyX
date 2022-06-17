@@ -49,6 +49,9 @@
     padding-top: 12px;
     border-top: solid 1px var(--grey);
 }
+.booking-service-list li{
+    margin: 6px 0px;
+}
 
 .book__service-item__img {
     width: 96px;

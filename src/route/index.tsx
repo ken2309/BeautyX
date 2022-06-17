@@ -38,10 +38,11 @@ import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 import CategoryTree from "../features/CategoryTree";
 import Booking from "../features/Booking";
 import BuyNow from "../features/BuyNow";
+import Calendar from "../features/Calendar";
 
 
 // feature mobile
-import Calendar from "../featuresMobile/Calendar";
+//import Calendar from "../featuresMobile/Calendar";
 //import MerchantComment from "../features/MerchantComment";
 import { useSelector } from "react-redux";
 
@@ -198,7 +199,7 @@ function RouterConfig(props: any) {
       component: CartPayment,
     },
     {
-      path: "/Calendar",
+      path: "/lich-hen",
       component: Calendar,
     },
     {

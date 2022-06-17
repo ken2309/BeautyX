@@ -25,10 +25,15 @@ import { extraPaymentMethodId } from "../PaymentMethod/extraPaymentMethodId";
 import MapOrg from "../MerchantDetail/components/OrgMap/MapOrg";
 import BookingNowBill from "./components/BookingNowBill";
 import { formatAddCart } from "../../utils/cart/formatAddCart";
+import { fetchAsyncOrg } from '../../redux/org/orgSlice';
+import { STATUS } from '../../redux/status'
+
 
 const date = dayjs();
 function Booking() {
+    const dispatch = useDispatch();
     const { SERVICES_BOOK } = useSelector((state: any) => state);
+    const { org, status } = useSelector((state: any) => state.ORG);
     const IS_MB = useFullScreen();
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const { USER } = useSelector((state: any) => state.USER);
@@ -37,10 +42,15 @@ function Booking() {
     );
     const branchRef = useRef<any>();
     const history = useHistory();
-    const dispatch = useDispatch();
     const location: any = useLocation();
+    const callOrgDetail = () => {
+        if (location.state.org.id !== org?.id || status !== STATUS.SUCCESS) {
+            dispatch(fetchAsyncOrg(location.state.org.id))
+        }
+    }
     useEffect(() => {
         if (location.state) {
+            callOrgDetail()
             const action = {
                 org: location.state.org,
                 services: location.state.services,
@@ -50,8 +60,9 @@ function Booking() {
             history.push("/home");
         }
     }, [location.state]);
-    const { org, servicesBook } = SERVICES_BOOK;
-    const branches = org?.branches.concat(org);
+    const { servicesBook } = SERVICES_BOOK;
+    console.log(servicesBook)
+    const branches = org?.branches?.concat(org);
     //const [branch, setChooseBranch] = useState<any>();
     const [open, setOpen] = useState(false);
     const [chooseE_wall, setChooseE_wall] = useState<any>();
@@ -78,7 +89,7 @@ function Booking() {
         ?.filter(Boolean);
     const services = servicesBook.map((item: any) => {
         return {
-            id: item.service.id,
+            id: item.service?.id,
             quantity: item.quantity,
         };
     });
@@ -113,9 +124,19 @@ function Booking() {
         );
         return values
     })
+    const dayBook = formatDatePost(bookTime.date);
+    const action = {
+        note: "",
+        time_start: `${dayBook} ${bookTime.time}:00`,
+        branch: bookTime.branch_id,
+        org_id: org?.id,
+        order_id: location.state.order_id,
+        service_ids: services?.map((item: any) => item?.id),
+        quantity: services[0].quantity,
+    };
+    console.log(action)
     async function handlePostOrder() {
         //setLoading(true)
-        const dayBook = formatDatePost(bookTime.date);
         const params = pickBy(params_string, identity);
         try {
             const response = await order.postOrder(org?.id, params);
@@ -124,19 +145,14 @@ function Booking() {
             const transaction_uuid =
                 state_payment.payment_gateway.transaction_uuid;
             if (response.data.context.status !== "CANCELED") {
-                const action = {
-                    note: "",
-                    time_start: `${dayBook} ${bookTime.time}:00`,
-                    branch: bookTime.branch_id,
-                    org_id: org?.id,
-                    order_id: response.data.context.id,
-                    service_ids: services?.map((item: any) => item?.id),
-                    quantity: services[0].quantity,
-                };
+                const actionAfter = {
+                    ...action,
+                    order_id: response.data.context.id
+                }
                 history.push({
                     pathname: `/trang-thai-don-hang/${desc}`,
                     search: transaction_uuid,
-                    state: { state_payment, action, listPayment },
+                    state: { state_payment, actionAfter, listPayment },
                 });
             } else {
                 //setPopUpFail(true)
@@ -298,7 +314,7 @@ function Booking() {
                                 name=""
                                 id=""
                                 cols={30}
-                                rows={1}
+                                rows={5}
                             ></textarea>
                         </div>
                         <div
@@ -315,7 +331,10 @@ function Booking() {
                             />
                         </div>
                         <div className="booking-cnt__bot">
-                            <BookingNowBill />
+                            {
+                                location.state.TYPE === "BOOK_NOW" &&
+                                <BookingNowBill />
+                            }
                             <ButtonLoading
                                 title={
                                     location.state?.TYPE === "BOOK_NOW"
