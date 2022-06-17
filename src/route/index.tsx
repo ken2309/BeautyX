@@ -18,7 +18,7 @@ import PrivateRoute from "./PrivateRoute";
 import CartPaymentStatus from "../features/CartPaymentStatus";
 import ServicesUser from "../features/ServiceUser";
 //import DatePicker from "../components/DatePicker"
-import SearchResults from '../features/SearchResults/index';
+import SearchResults from "../features/SearchResults/index";
 import HomeTags from "../features/HomeResults/HomeTags";
 import HomePromo from "../features/HomeResults/HomePromo";
 import HomeProvince from "../features/HomeResults/HomeProvince";
@@ -39,203 +39,207 @@ import CategoryTree from "../features/CategoryTree";
 import Booking from "../features/Booking";
 import BuyNow from "../features/BuyNow";
 
-
 // feature mobile
 import Calendar from "../featuresMobile/Calendar";
 //import MerchantComment from "../features/MerchantComment";
 import { useSelector } from "react-redux";
+import HomePage from "../features/HomePage";
 
 const RouterPage = (
-  props: { pageComponent: JSX.Element } & RouteComponentProps
+    props: { pageComponent: JSX.Element } & RouteComponentProps
 ) => props.pageComponent;
 function RouterConfig(props: any) {
-  const USER = useSelector((state: any) => state.USER);
-  const routes = [
-    {
-      path: `/home`,
-      component: <Home />,
-    },
-    {
-      path: `/MOMO`,
-      component: <Home />
-    },
-    {
-      path: '/TIKI',
-      component: <Home />
-    },
-    {
-      path: `/otp`,
-      component: <Otp />,
-    },
-    {
-      path: '/doi-mat-khau',
-      component: <ResetPassword />
-    },
-    {
-      path: "/search-result/",
-      component: <SearchResult />,
-    },
-    {
-      path: '/ket-qua-tim-kiem/',
-      component: <SearchResults />
-    },
-    {
-      path: "/cart",
-      component: <Cart />,
-    },
-    {
-      path: "/product-detail/:name",
-      component: <ProductDetail />,
-    },
-    {
-      path: "/combo-detail/:name",
-      component: <ComboDetail />
-    },
-    {
-      path: "/dich-vu/",
-      component: <ServiceDetail />,
-    },
-    {
-      path: "/popup",
-      component: <PopupAppointInfor />,
-    },
-    {
-      path: "/sign-up",
-      component: <SignPage />,
-    },
-    {
-      path: "/sign-in",
-      component: <SignPage />,
-    },
-    {
-      path: "/sign-request",
-      component: <SignPageRequest />,
-    },
-    {
-      path: "/org/:subdomain",
-      component: <MerchantDetail />,
-    },
-    {
-      path: '/danh-muc/',
-      component: <HomeTags />
-    },
-    {
-      path: '/deal-lam-dep-cuc-HOT',
-      component: <HomePromo />
-    },
-    {
-      path: '/khu-vuc/',
-      component: <HomeProvince />
-    },
-    {
-      path: '/dia-diem-quan-tam',
-      component: <HomeListProvince />
-    },
-    {
-      path: '/doanh-nghiep/:title',
-      component: <HomeCardResult />
-    },
-    {
-      path: '/chinh-sach/',
-      component: <Policy />
-    },
-    {
-      path: "/partner",
-      component: <Partner />,
-    },
-    {
-      path: "/kenh-nguoi-ban",
-      component: <SellerCenter />
-    },
-    {
-      path: "/danh-gia/",
-      component: <CommentsDetail />
-    },
-    {
-      path: "/deal/:title",
-      component: <HomeDealBanner />
-    },
-    {
-      path: "/beautyx-videos",
-      component: <Videos />
-    },
-    {
-      path: "/tin-tuc",
-      component: <Blog />
-    },
-    {
-      path: "/chi-tiet-giam-gia/:name",
-      component: <DiscountDetail />
-    },
-    {
-      path: "/giam-gia",
-      component: <HomeDiscountList />
-    },
-    {
-      path: "/-danh-muc/",
-      component: <CategoryTree />
-    },
-    {
-      path: "/dat-hen",
-      component: <Booking />
-    },
-    // {
-    //   path: "/mua-hang",
-    //   component: <BoyNow />
-    // }
-  ];
-  const routesPrivate = [
-    {
-      path: '/goi-dich-vu',
-      component: ServicesUser
-    },
-    {
-      path: "/tai-khoan",
-      component: Account,
-    },
-    {
-      path: "/payment",
-      component: CartPayment,
-    },
-    {
-      path: "/Calendar",
-      component: Calendar,
-    },
-    {
-      path: "/notifications",
-      component: Notification,
-    },
-    {
-      path: '/trang-thai-don-hang/:desc',
-      component: CartPaymentStatus
-    },
-    {
-      path: "/mua-hang",
-      component: BuyNow
-    }
-  ];
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Redirect exact from="/" to="home" />
-        {routes.map((item, index) => (
-          <RouterPage
-            key={index}
-            path={`${item.path}`}
-            pageComponent={item.component}
-          />
-        ))}
-        {routesPrivate.map((item, index) => (
-          <PrivateRoute
-            USER={USER}
-            key={index}
-            path={`${item.path}`}
-            component={item.component}
-          />
-        ))}
-      </Switch>
-    </BrowserRouter>
-  );
+    const USER = useSelector((state: any) => state.USER);
+    const routes = [
+        {
+            path: `/home`,
+            component: <Home />,
+        },
+        {
+            path: `/homepage`,
+            component: <HomePage />,
+        },
+        {
+            path: `/MOMO`,
+            component: <Home />,
+        },
+        {
+            path: "/TIKI",
+            component: <Home />,
+        },
+        {
+            path: `/otp`,
+            component: <Otp />,
+        },
+        {
+            path: "/doi-mat-khau",
+            component: <ResetPassword />,
+        },
+        {
+            path: "/search-result/",
+            component: <SearchResult />,
+        },
+        {
+            path: "/ket-qua-tim-kiem/",
+            component: <SearchResults />,
+        },
+        {
+            path: "/cart",
+            component: <Cart />,
+        },
+        {
+            path: "/product-detail/:name",
+            component: <ProductDetail />,
+        },
+        {
+            path: "/combo-detail/:name",
+            component: <ComboDetail />,
+        },
+        {
+            path: "/dich-vu/",
+            component: <ServiceDetail />,
+        },
+        {
+            path: "/popup",
+            component: <PopupAppointInfor />,
+        },
+        {
+            path: "/sign-up",
+            component: <SignPage />,
+        },
+        {
+            path: "/sign-in",
+            component: <SignPage />,
+        },
+        {
+            path: "/sign-request",
+            component: <SignPageRequest />,
+        },
+        {
+            path: "/org/:subdomain",
+            component: <MerchantDetail />,
+        },
+        {
+            path: "/danh-muc/",
+            component: <HomeTags />,
+        },
+        {
+            path: "/deal-lam-dep-cuc-HOT",
+            component: <HomePromo />,
+        },
+        {
+            path: "/khu-vuc/",
+            component: <HomeProvince />,
+        },
+        {
+            path: "/dia-diem-quan-tam",
+            component: <HomeListProvince />,
+        },
+        {
+            path: "/doanh-nghiep/:title",
+            component: <HomeCardResult />,
+        },
+        {
+            path: "/chinh-sach/",
+            component: <Policy />,
+        },
+        {
+            path: "/partner",
+            component: <Partner />,
+        },
+        {
+            path: "/kenh-nguoi-ban",
+            component: <SellerCenter />,
+        },
+        {
+            path: "/danh-gia/",
+            component: <CommentsDetail />,
+        },
+        {
+            path: "/deal/:title",
+            component: <HomeDealBanner />,
+        },
+        {
+            path: "/beautyx-videos",
+            component: <Videos />,
+        },
+        {
+            path: "/tin-tuc",
+            component: <Blog />,
+        },
+        {
+            path: "/chi-tiet-giam-gia/:name",
+            component: <DiscountDetail />,
+        },
+        {
+            path: "/giam-gia",
+            component: <HomeDiscountList />,
+        },
+        {
+            path: "/-danh-muc/",
+            component: <CategoryTree />,
+        },
+        {
+            path: "/dat-hen",
+            component: <Booking />,
+        },
+        // {
+        //   path: "/mua-hang",
+        //   component: <BoyNow />
+        // }
+    ];
+    const routesPrivate = [
+        {
+            path: "/goi-dich-vu",
+            component: ServicesUser,
+        },
+        {
+            path: "/tai-khoan",
+            component: Account,
+        },
+        {
+            path: "/payment",
+            component: CartPayment,
+        },
+        {
+            path: "/Calendar",
+            component: Calendar,
+        },
+        {
+            path: "/notifications",
+            component: Notification,
+        },
+        {
+            path: "/trang-thai-don-hang/:desc",
+            component: CartPaymentStatus,
+        },
+        {
+            path: "/mua-hang",
+            component: BuyNow,
+        },
+    ];
+    return (
+        <BrowserRouter>
+            <Switch>
+                <Redirect exact from="/" to="home" />
+                {routes.map((item, index) => (
+                    <RouterPage
+                        key={index}
+                        path={`${item.path}`}
+                        pageComponent={item.component}
+                    />
+                ))}
+                {routesPrivate.map((item, index) => (
+                    <PrivateRoute
+                        USER={USER}
+                        key={index}
+                        path={`${item.path}`}
+                        component={item.component}
+                    />
+                ))}
+            </Switch>
+        </BrowserRouter>
+    );
 }
 
 export default RouterConfig;
