@@ -30,8 +30,8 @@ function HomeBanner(props: any) {
         slidesToShow: 1,
         slidesToScroll: 1,
         //autoplay: true,
-        nextArrow: <NextButton/>,
-        prevArrow:<PrevButton/>,
+        nextArrow: <NextButton />,
+        prevArrow: <PrevButton />,
         swipe: true,
         autoplaySpeed: 2000,
         //fade: true,
@@ -137,25 +137,19 @@ function HomeBanner(props: any) {
 
 export default HomeBanner;
 
-const PrevButton = (props:any) => {
-    const {onClick} = props;
+const PrevButton = (props: any) => {
+    const { onClick } = props;
     return (
-        <button
-            onClick={onClick}
-            className="home-banner__btn-prev"
-        >
+        <button onClick={onClick} className="home-banner__btn-prev">
             <img src={icon.chevronLeft} alt="" />
         </button>
-    )
-}
-const NextButton = (props:any) => {
-    const {onClick} = props;
+    );
+};
+const NextButton = (props: any) => {
+    const { onClick } = props;
     return (
-        <button
-            onClick={onClick}
-            className="home-banner__btn-next"
-        >
-           <img src={icon.chevronRight} alt="" />
+        <button onClick={onClick} className="home-banner__btn-next">
+            <img src={icon.chevronRight} alt="" />
         </button>
-    )
-}
+    );
+};

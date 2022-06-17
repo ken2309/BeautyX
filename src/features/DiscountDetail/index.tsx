@@ -40,7 +40,7 @@ import { useLocation } from "react-router-dom";
 
 function DiscountDetail() {
     const location: any = useLocation();
-    console.log(location.state)
+    console.log(location.state);
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
     const IS_MB = useFullScreen();
     const discount: IDiscountPar = DISCOUNT.discount;
@@ -260,7 +260,7 @@ function DiscountDetail() {
                                                     }
                                                 />
                                                 {COMMENTS.comments &&
-                                                    COMMENTS.comments.length >=
+                                                COMMENTS.comments.length >=
                                                     8 ? (
                                                     <div
                                                         style={{
@@ -295,25 +295,20 @@ function DiscountDetail() {
                                             >
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                        <>
-                                                            <p className="service-detail__title">
-                                                                Doanh nghiệp
-                                                            </p>
-                                                            <div className="service-detail__org-mb">
-                                                                <DetailOrgCard
-                                                                    org={ORG?.org}
-                                                                />
-                                                            </div>
-                                                            <OrgInformation
+                                                    <>
+                                                        <p className="service-detail__title">
+                                                            Doanh nghiệp
+                                                        </p>
+                                                        <div className="service-detail__org-mb">
+                                                            <DetailOrgCard
                                                                 org={ORG?.org}
                                                             />
-                                                        </>
-                                                    )}
-                                            </div>
-                                        </TabPanel>
-                                        <TabPanel value={value}>
-                                            <div ref={refPolicy}>
-                                                <DetailPolicy org={org} />
+                                                        </div>
+                                                        <OrgInformation
+                                                            org={ORG?.org}
+                                                        />
+                                                    </>
+                                                )}
                                             </div>
                                         </TabPanel>
                                         <TabPanel value={value}>

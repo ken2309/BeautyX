@@ -108,7 +108,7 @@ function Footer() {
             id: 3,
             img: social.tiktok,
             type: "SOCIAL",
-            url: "https://www.tiktok.com/@myspabeautyx",
+            url: "https://www.tiktok.com/@beautyx.vn",
         },
         {
             id: 4,
@@ -235,6 +235,7 @@ function Footer() {
                     </div>
                 </div>
                 <div
+                    className="address"
                     onClick={() =>
                         window.open(
                             `${url_map}`,
@@ -242,7 +243,6 @@ function Footer() {
                             "noopener,noreferrer"
                         )
                     }
-                    className="address"
                 >
                     Công ty CP MYSPA - Lầu 3, 27K Trần Nhật Duật, Phường Tân
                     Định, Quận 1, TP.HCM - GPĐKKD: 0314964245, cấp
