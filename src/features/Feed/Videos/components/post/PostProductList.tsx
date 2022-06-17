@@ -1,6 +1,8 @@
+import {useHistory} from 'react-router-dom';
 import icon from "../../../../../constants/icon";
 import formatPrice from '../../../../../utils/formatPrice';
 import errorImg from '../../../../../utils/errorImg';
+import slugify from "../../../../../utils/formatUrlString";
 // // interface
 // import { IOrganization } from '../../../../../interface/organization';
 // import { IComment } from '../../../../../interface/comments';
@@ -17,13 +19,21 @@ import errorImg from '../../../../../utils/errorImg';
 // }
  // ---- end ----
 export default function PostProductList (props:any) {
-    const {data} = props
+    const {data} = props;
+    const history = useHistory();
+    const goDetail=(item:any)=>{
+        console.log(item);
+        history.push({
+            pathname: `/dich-vu/${slugify(item?.service_name)}`,
+            search: `id=${item.id}&org=${data.org.id}`,
+        })
+    }
     return (
         <div className="video-item_product_list">
-            <div>
+            <div >
                 {
                     data?.ser?.map((item: any, index: any) => (
-                        <div key={index} className="video-item_product_item">
+                        <div key={index} onClick={()=>goDetail(item)} className="video-item_product_item">
                             <div className="video-item_product_item-img">
                                 <img src={(item?.image_url) ? item?.image_url : ''} onError={(e) => errorImg(e)} alt="" />
                             </div>
@@ -37,7 +47,7 @@ export default function PostProductList (props:any) {
                                 {formatPrice(item?.price)} đ
                         </div>
                             <div className="video-item_product_item-add_cart">
-                                <img src={icon.shopingCartAddBlack} alt="" />
+                                <img src={icon.shopingCartAddOrange} alt="" />
                             </div>
                         </div>
                     ))

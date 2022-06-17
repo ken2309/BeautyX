@@ -5,13 +5,16 @@ import CommentItem from "./CommentItem";
 import EvaluateInput from "./EvaluateInput";
 import TotalStartEvaluate from "./TotalStartEvaluate";
 import { useDispatch, useSelector } from "react-redux";
-import { postAsyncOrgComments } from "../../redux/org/orgCommentsSlice";
+
+
 import { postAsyncComment } from "../../redux/org_services/serviceSlice";
 import { postAsyncProductComment } from "../../redux/org_products/productSlice";
 import { postCommentCombo } from "../../redux/org_combos/comboSlice";
+import { clearPrevState } from "../../redux/commentSlice";
 import { pickBy, identity } from "lodash";
 import { useHistory } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { postAsyncOrgComments } from "../../redux/org/orgCommentsSlice";
 
 interface IProps {
     comments?: any;
@@ -37,12 +40,13 @@ function Review(props: IProps) {
         page,
     } = props;
     const USER = useSelector((state: any) => state.USER);
+    const COMMENT = useSelector((state: any) => state.COMMENT);
     const user = USER.USER;
     const dispatch = useDispatch();
     const history = useHistory();
     const [comment, setComment] = useState<any>({
         text: "",
-        image_url: null,
+        image_url: COMMENT.image_url,
         used: true,
         star: 5,
     });
@@ -51,6 +55,7 @@ function Review(props: IProps) {
         setComment({
             ...comment,
             text: e.target.value,
+            image_url: COMMENT.image_url,
         });
     };
     // const [data, setData] = useState<any>({
@@ -69,12 +74,11 @@ function Review(props: IProps) {
     //         });
     //     }
     // };
-
     const valuesStr = {
         page: 1,
         org_id: id,
         type: commentable_type,
-        body: JSON.stringify(comment),
+        body: JSON.stringify({...comment,image_url:COMMENT.image_url}),
         id: detail_id,
     };
     const values = pickBy(valuesStr, identity);
@@ -86,6 +90,8 @@ function Review(props: IProps) {
                 text: "",
                 image_url: null,
             });
+            dispatch(clearPrevState());
+            console.log(values);
             switch (commentable_type) {
                 case "ORGANIZATION":
                     return dispatch(
@@ -126,6 +132,7 @@ function Review(props: IProps) {
             handlePostComment();
         }
     };
+    console.log(COMMENT.image_url)
     return (
         <>
             <div className="org-evaluate__cnt">
