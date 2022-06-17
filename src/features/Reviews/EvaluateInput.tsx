@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import mediaApi from "../../api/mediaApi";
 import icon from "../../constants/icon";
+
+import { postAsyncMediaComment, clearPrevState } from "../../redux/commentSlice";
 interface IProps {
     handleOnchange: any;
     comment: any;
@@ -24,6 +27,8 @@ function EvaluateInput(props: IProps) {
         setComment,
         changeStyle
     } = props;
+    const dispatch = useDispatch();
+    const COMMENT_STORE = useSelector((state: any) => state.COMMENT);
     const history = useHistory();
     //handle post media
     const onChangeMedia = (e: any) => {
@@ -37,13 +42,15 @@ function EvaluateInput(props: IProps) {
     const handlePostMedia = async (media: any) => {
         let formData = new FormData();
         formData.append("file", media);
-        console.log(media);
         try {
-            const res = await mediaApi.postMedia(formData);
+            // const res = await mediaApi.postMedia(formData);
+            const res = await dispatch(postAsyncMediaComment(media));
+            console.log(res);
             setComment({
                 ...comment,
-                image_url: res.data.context.original_url,
+                image_url: COMMENT_STORE.image_url,
             });
+            
         } catch (error) {
             console.log(error);
         }
@@ -51,6 +58,7 @@ function EvaluateInput(props: IProps) {
 
     const onRemoveImgTemp = () => {
         setComment({ ...comment, image_url: null });
+        dispatch(clearPrevState())
     };
     console.log(comment);
     return (
@@ -100,10 +108,10 @@ function EvaluateInput(props: IProps) {
                     </div>
                 </div>
             </div>
-            {comment.image_url && (
+            {COMMENT_STORE.image_url && (
                 <div className="evaluate-input__upload">
                     <img
-                        src={comment.image_url}
+                        src={COMMENT_STORE.image_url}
                         className="evaluate-upload__img"
                         alt=""
                     />
