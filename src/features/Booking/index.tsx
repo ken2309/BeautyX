@@ -26,7 +26,7 @@ import MapOrg from "../MerchantDetail/components/OrgMap/MapOrg";
 import BookingNowBill from "./components/BookingNowBill";
 import { formatAddCart } from "../../utils/cart/formatAddCart";
 import { fetchAsyncOrg } from '../../redux/org/orgSlice';
-import { STATUS } from '../../redux/status'
+import { STATUS } from '../../redux/status';
 
 
 const date = dayjs();
