@@ -13,7 +13,7 @@ class NewsApi {
         const url = `/posts`;
         return axiosClient.get(url, {
             params,
-            baseURL: 'https://beautyx.vn/blog/index.php/wp-json/wp/v2',
+            baseURL: "https://beautyx.vn/blog/index.php/wp-json/wp/v2",
         });
     };
 
@@ -24,19 +24,19 @@ class NewsApi {
         });
     };
     getVideo = () => {
-        const url = `/posts`
+        const url = `/posts`;
         const params = {
             page: 1,
             limit: 5,
             order: "desc",
             orderby: "modified",
-            categories: 9,
-        }
+            categories: 7,
+        };
         return axiosClient.get(url, {
             params,
-            baseURL: 'https://beautyx.vn/blog/index.php/wp-json/wp/v2',
-        })
-    }
+            baseURL: "https://beautyx.vn/blog/index.php/wp-json/wp/v2",
+        });
+    };
 }
 const newsApi = new NewsApi();
 export default newsApi;

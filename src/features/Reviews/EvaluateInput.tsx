@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import mediaApi from "../../api/mediaApi";
 import icon from "../../constants/icon";
 
-import { postAsyncMediaComment, clearPrevState } from "../../redux/commentSlice";
+import {
+    postAsyncMediaComment,
+    clearPrevState,
+} from "../../redux/commentSlice";
 interface IProps {
     handleOnchange: any;
     comment: any;
-    setComment: (comment: any) => void,
+    setComment: (comment: any) => void;
     handleKeyDown: any;
     user: any;
     handlePostComment: any;
     InputRef?: any;
-    changeStyle?: any
+    changeStyle?: any;
 }
-
 
 function EvaluateInput(props: IProps) {
     const {
@@ -25,7 +27,7 @@ function EvaluateInput(props: IProps) {
         user,
         handlePostComment,
         setComment,
-        changeStyle
+        changeStyle,
     } = props;
     const dispatch = useDispatch();
     const COMMENT_STORE = useSelector((state: any) => state.COMMENT);
@@ -50,7 +52,6 @@ function EvaluateInput(props: IProps) {
                 ...comment,
                 image_url: COMMENT_STORE.image_url,
             });
-            
         } catch (error) {
             console.log(error);
         }
@@ -58,12 +59,17 @@ function EvaluateInput(props: IProps) {
 
     const onRemoveImgTemp = () => {
         setComment({ ...comment, image_url: null });
-        dispatch(clearPrevState())
+        dispatch(clearPrevState());
     };
-    console.log(comment);
     return (
         <>
-            <div className={changeStyle ? "evaluate-input evaluate-input__change" : "evaluate-input"}>
+            <div
+                className={
+                    changeStyle
+                        ? "evaluate-input evaluate-input__change"
+                        : "evaluate-input"
+                }
+            >
                 <div className="evaluate-input__ava">
                     <img
                         src={user?.avatar ? user.avatar : icon.userNotSign}

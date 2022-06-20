@@ -1,4 +1,4 @@
-.trend-ctn{
+.trend-ctn {
     padding: 8px 0 12px;
     margin-bottom: 8px;
     margin-top: 8px;
@@ -6,7 +6,7 @@
     box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
     border-radius: 8px;
 }
-.trend-ctn-head{
+.trend-ctn-head {
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -15,50 +15,54 @@
     margin: 12px;
     justify-content: space-between;
 }
-.trend-ctn-head>h1{
+.trend-ctn-head > h1 {
     font-family: "Nunito";
     font-weight: 700;
     font-size: 16px;
     line-height: 24px;
 }
-.trend-ctn-head .watch-more{
+.trend-ctn-head .watch-more {
     font-weight: 600;
-    font-family: 'Quicksand';
+    font-family: "Quicksand";
     font-size: 12px;
     line-height: 16px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    
+
     cursor: pointer;
 }
-.trend-ctn-head .watch-more .icon{
+.trend-ctn-head .watch-more .icon {
     width: 6px;
     margin-right: 5px;
 }
-.trend-ctn-body{
+.trend-ctn-body {
     display: flex;
     flex-direction: row;
     width: 100%;
     overflow-x: scroll;
 }
-.trend-ctn-body .trend-item-ctn{
+.trend-ctn-body .trend-item-ctn {
     display: flex;
     width: 127px;
     min-width: 127px;
     height: 196px;
     border-radius: 8px;
     overflow: hidden;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(217, 217, 217, 0) 100%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(217, 217, 217, 0) 100%,
+        rgba(0, 0, 0, 0) 100%
+    );
     margin: 0 6px;
     position: relative;
 }
-.trend-ctn-body .trend-item-ctn:first-child{
+.trend-ctn-body .trend-item-ctn:first-child {
     margin-left: 12px;
 }
-.trend-ctn-body .trend-item-ctn video.video-item__pc{
-}
-.trend-ctn-body .trend-item-ctn .logo{
+
+.trend-ctn-body .trend-item-ctn .logo {
     position: absolute;
     width: 32px;
     height: 32px;
@@ -72,14 +76,14 @@
     z-index: 1;
     /* border: 1px solid #8C8C8C; */
 }
-.trend-ctn-body .trend-item-ctn .title{
+.trend-ctn-body .trend-item-ctn .title {
     position: absolute;
     color: white;
     bottom: 0;
     padding: 12px;
 }
-.trend-ctn-body .trend-item-ctn .title .text{
-    font-family: 'Nunito';
+.trend-ctn-body .trend-item-ctn .title .text {
+    font-family: "Nunito";
     font-size: 12px;
     line-height: 16px;
     font-weight: 700;
