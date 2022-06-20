@@ -13,7 +13,7 @@ interface IProps {
 export default function MapOrg(props: IProps) {
     const { org, onChangeCardMap } = props;
     const listOrg = [org].concat(org?.branches);
-    const key = "AIzaSyDfxBgfHh5HeBw2kVRcpgxgG4lswl50jTg";
+    const key = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
     const [location, setLocation] = useState({
         lat: org?.latitude,
         long: org?.longitude,
