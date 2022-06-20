@@ -1804,7 +1804,9 @@ img {
     .homelogged-calendar__right .day-cell--faded {
         font-size: 14px;
     }
-
+    .homelogged-calendar__right .day-cell{
+        padding: 4px 0px;
+    }
     .day-cell--today {
         border: 1px solid var(--purple);
     }
@@ -1965,9 +1967,7 @@ img {
     }
 
     .calendar {
-        padding: 16px;
-        border-top: solid 1px var(--purple);
-        /* border-bottom: solid 1px var(--purple); */
+        padding: 16px 12px;
     }
 
     .calender-wrap {
@@ -1975,10 +1975,9 @@ img {
     }
 
     .calendar-mounth {
-        padding: 16px 0px;
-        /* background-color: var(--purple); */
         border-radius: 8px 8px 0 0;
         overflow: hidden;
+        margin-top: 20px;
     }
 
     .week-container {

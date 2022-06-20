@@ -1,12 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import './bottom.css';
-//import icon from '../../constants/icon';
 import { ICON } from '../../constants/icon2';
 import { useHistory } from 'react-router-dom';
-import SearchFilter from '../SearchResult/SearchFilter';
 import { AppContext } from '../../context/AppProvider';
 import scrollTop from '../../utils/scrollTop';
-//import notifications from '../../data/listNotifications';
 import { useLocation } from 'react-router-dom'
 
 function Bottom(props: any) {
@@ -21,13 +18,13 @@ function Bottom(props: any) {
             iconAct: ICON.locationAct,
             path: "/home"
         },
-        // {
-        //     id: 2,
-        //     title: t('Home.trending'),
-        //     icon: ICON.trend,
-        //     iconAct: ICON.trendAct,
-        //     path: "/beautyx-videos"
-        // },
+        {
+            id: 2,
+            title: t('Home.trending'),
+            icon: ICON.trend,
+            iconAct: ICON.trendAct,
+            path: "/beautyx-videos"
+        },
         {
             id: 3,
             title: t('Home.cate'),
@@ -92,7 +89,6 @@ function Bottom(props: any) {
         //       is_badge: false,
         // },
     ]
-    const [openFilter, setOpenFilter] = useState(false);
     const history = useHistory();
     const chooseBtn = (item: any) => {
         scrollTop();
@@ -126,22 +122,7 @@ function Bottom(props: any) {
                         </div>
                     ))
                 }
-                {/* <div
-                              onClick={() => setOpenFilter(true)}
-                              className="flex-column bt-cnt__item"
-                        >
-                              <img src={icon.searchPurple} alt="" />
-                              <span
-                                    className="bt-cnt__item-title"
-                              >
-                                    {t('Bottom.search')}
-                              </span>
-                        </div> */}
             </div>
-            <SearchFilter
-                openFilter={openFilter}
-                setOpenFilter={setOpenFilter}
-            />
         </div>
     );
 }

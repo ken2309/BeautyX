@@ -27,6 +27,8 @@ import BookingNowBill from "./components/BookingNowBill";
 import { formatAddCart } from "../../utils/cart/formatAddCart";
 import { fetchAsyncOrg } from '../../redux/org/orgSlice';
 import { STATUS } from '../../redux/status';
+import apointmentApi from "../../api/apointmentApi";
+import Notification from "../../components/Notification";
 
 
 const date = dayjs();
@@ -36,6 +38,14 @@ function Booking() {
     const { org, status } = useSelector((state: any) => state.ORG);
     const IS_MB = useFullScreen();
     const FLAT_FORM = EXTRA_FLAT_FORM();
+    const [openNoti, setOpenNoti] = useState({
+        title: "",
+        open: false,
+        titleLeft: "",
+        titleRight: "",
+        onClickLeft: () => { },
+        onClickRight: () => { }
+    })
     const { USER } = useSelector((state: any) => state.USER);
     const { payments_method } = useSelector(
         (state: any) => state.PAYMENT.PAYMENT
@@ -61,7 +71,6 @@ function Booking() {
         }
     }, [location.state]);
     const { servicesBook } = SERVICES_BOOK;
-    console.log(servicesBook)
     const branches = org?.branches?.concat(org);
     //const [branch, setChooseBranch] = useState<any>();
     const [open, setOpen] = useState(false);
@@ -129,14 +138,10 @@ function Booking() {
         note: "",
         time_start: `${dayBook} ${bookTime.time}:00`,
         branch: bookTime.branch_id,
-        org_id: org?.id,
         order_id: location.state.order_id,
         service_ids: services?.map((item: any) => item?.id),
-        quantity: services[0].quantity,
     };
-    console.log(action)
     async function handlePostOrder() {
-        //setLoading(true)
         const params = pickBy(params_string, identity);
         try {
             const response = await order.postOrder(org?.id, params);
@@ -147,7 +152,9 @@ function Booking() {
             if (response.data.context.status !== "CANCELED") {
                 const actionAfter = {
                     ...action,
-                    order_id: response.data.context.id
+                    org_id: org?.id,
+                    order_id: response.data.context.id,
+                    quantity: services[0]?.quantity,
                 }
                 history.push({
                     pathname: `/trang-thai-don-hang/${desc}`,
@@ -155,12 +162,49 @@ function Booking() {
                     state: { state_payment, actionAfter, listPayment },
                 });
             } else {
-                //setPopUpFail(true)
+                setOpenNoti({
+                    open: true,
+                    title: "Tạo đơn hàng thất bại",
+                    titleLeft: "Đã hiểu",
+                    titleRight: "Về trang chủ",
+                    onClickLeft: () => setOpenNoti({ ...openNoti, open: false }),
+                    onClickRight: () => history.push('/home')
+                })
             }
             //setLoading(false);
         } catch (err) {
             console.log(err);
-            //setLoading(false);
+            setOpenNoti({
+                open: true,
+                title: "Tạo đơn hàng thất bại",
+                titleLeft: "Đã hiểu",
+                titleRight: "Về trang chủ",
+                onClickLeft: () => setOpenNoti({ ...openNoti, open: false }),
+                onClickRight: () => history.push('/home')
+            })
+        }
+    }
+    const handlePostApps = async () => {
+        try {
+            await apointmentApi.postAppointment(action, org?.id);
+            setOpenNoti({
+                open: true,
+                title: "Đặt hẹn thành công",
+                titleLeft: "Xem lịch hẹn",
+                titleRight: "Về trang chủ",
+                onClickLeft: () => history.push('/lich-hen?tab=1'),
+                onClickRight: () => history.push('/home')
+            })
+        } catch (error) {
+            console.log(error)
+            setOpenNoti({
+                open: true,
+                title: "Có lỗi xảy ra trong quá trình đặt hẹn",
+                titleLeft: "Đã hiểu",
+                titleRight: "Về trang chủ",
+                onClickLeft: () => setOpenNoti({ ...openNoti, open: false }),
+                onClickRight: () => history.push('/home')
+            })
         }
     }
     const onChangeCardMap = (itemMap: any) => {
@@ -180,7 +224,7 @@ function Booking() {
                         return handlePostOrder();
                     }
                 } else {
-                    //run post appointment
+                    handlePostApps()
                 }
             } else {
                 //pop up choose time request
@@ -353,6 +397,14 @@ function Booking() {
                 setBookTime={setBookTime}
                 open={open}
                 setOpen={setOpen}
+            />
+            <Notification
+                content={openNoti.title}
+                open={openNoti.open}
+                titleBtnLeft={openNoti.titleLeft}
+                titleBtnRight={openNoti.titleRight}
+                onClickLeft={openNoti.onClickLeft}
+                onClickRight={openNoti.onClickRight}
             />
             <Footer />
         </>

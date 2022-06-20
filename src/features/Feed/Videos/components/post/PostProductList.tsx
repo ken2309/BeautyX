@@ -47,7 +47,7 @@ export default function PostProductList (props:any) {
                                 {formatPrice(item?.price)} đ
                         </div>
                             <div className="video-item_product_item-add_cart">
-                                <img src={icon.shopingCartAddBlack} alt="" />
+                                <img src={icon.shopingCartAddOrange} alt="" />
                             </div>
                         </div>
                     ))

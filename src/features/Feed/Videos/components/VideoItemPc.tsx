@@ -19,6 +19,7 @@ import { setResetInitialState } from '../../../../redux/video/videosSlice';
 import { postAsyncOrgComments } from '../../../../redux/org/orgCommentsSlice';
 import { onFavoriteOrg, onDeleteFavoriteOrg } from '../../../../redux/org/orgSlice';
 import mediaApi from '../../../../api/mediaApi';
+import { clearPrevState } from '../../../../redux/commentSlice';
 
 function VideoItemPc(props: any) {
     const { video, org, cmt, sers, videoCur, setVideoCur } = props;
@@ -27,6 +28,7 @@ function VideoItemPc(props: any) {
     const refCurPost = useRef<any>(null);
     
     const USER = useSelector((state: any) => state.USER);
+    const COMMENT_STORE = useSelector((state: any) => state.COMMENT).image_url;
     const [cmtDialog,setOpenCmtDialog]  = useState<any>(false);
     const user = USER.USER;
     const options = {
@@ -65,7 +67,7 @@ function VideoItemPc(props: any) {
         const [comment, setComment] = useState<any>({
             text: '',
             url: video.link,
-            image_url: '',
+            image_url: COMMENT_STORE,
             used: true,
             star: 5,
         });
@@ -103,18 +105,19 @@ function VideoItemPc(props: any) {
             else if (user) {
                 setComment({
                     ...comment,
-                    text: e.target.value,
+                    text: e.target.value
                 });
             }
         }
         const handlePostComment = async () => {
             if (comment.text !== '') {
+                dispatch(clearPrevState());
                 dispatch(
                     postAsyncOrgComments({
                         values: {
                             page: 1,
                             org_id: org.id,
-                            body: JSON.stringify(comment),
+                            body: JSON.stringify({...comment,image_url:COMMENT_STORE}),
                         },
                         user: user,
                     })
@@ -195,7 +198,7 @@ function VideoItemPc(props: any) {
         }
         
 
-    // console.log('render: ' + org.is_favorite+'| id: '+org.id, cmt, sers)
+    // console.log('render: ' + COMMENT_STORE+'| id: '+org.id, cmt, sers)
     return (
         <div
             ref={refCurPost}

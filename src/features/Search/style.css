@@ -1,0 +1,24 @@
+.search-cnt{
+    width: 60vw;
+    height: 86vh;
+    overflow-y: scroll;
+    background-color: var(--white);
+    padding: 12px 24px;
+}
+.search-cnt__head-input{
+    background-color: burlywood;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+}
+.search-cnt__head-icon{
+    position: absolute;
+}
+.search-cnt__head-icon-x{
+    position: absolute;
+    right: 0;
+}
+.search-cnt__head-input input{
+    width: 100%;
+}

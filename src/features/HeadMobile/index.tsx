@@ -4,7 +4,7 @@ import icon from '../../constants/icon';
 
 interface IProps {
     title: string,
-    onBack?: () => void,
+    onBack?: (back: boolean) => void,
     handleCancelPayment?: () => void
 }
 
@@ -17,7 +17,7 @@ function HeadMobile(props: IProps) {
             handleCancelPayment()
         }
         if (onBack) {
-
+            onBack(false)
         } else {
             history.goBack()
         }
@@ -33,7 +33,7 @@ function HeadMobile(props: IProps) {
             <span style={style.headTitle} className="title">
                 {title}
             </span>
-            <div></div>
+            <div style={{width:"24px", height:"24px"}} ></div>
         </div>
     );
 }

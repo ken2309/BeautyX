@@ -11,7 +11,7 @@ import { fetchAsyncOrgComments } from '../../../../redux/org/orgCommentsSlice';
 
 import onErrorImg from '../../../../utils/errorImg';
 export default function Video(props:any){
-    const { video,videoCur,setVideoCur } = props;
+    const { video,videoCur,setVideoCur,isOpen } = props;
     const dispatch = useDispatch();
     const videoRef = useRef<any>();
     const options = {
@@ -48,14 +48,14 @@ export default function Video(props:any){
 
 
     useEffect(() => {
+
         if (isVisable) {
                 videoRef.current.play();
-           
+                getOrgById();
+                getCommentsByOrg();
         } else {
                 videoRef.current.pause();
         }
-        getOrgById();
-        getCommentsByOrg();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisable])
     return(

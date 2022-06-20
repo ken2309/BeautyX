@@ -6,25 +6,24 @@ export default function PostVideo (props:any) {
     const onHoverVideoItem = () => {
         setVideoCur(video);
         (setOpenCmtDialog)&&setOpenCmtDialog(true);
-        if (videoRef.current.paused) {
-            videoRef.current.play();
-            videoRefBack.current.play();
-        } else {
+        let isPaused = videoRef.current.paused||false;
+        handleVid(!isPaused);
+    }
+    const handleVid = (isPlaying:any) => {
+        if(isPlaying){
+            videoRef.current.pause();
+            videoRefBack.current.pause();
+        }else{
             videoRef.current.pause();
             videoRefBack.current.pause();
         }
     }
     useEffect(() => {
-        if (videoCur?.id === video?.id) {
-            videoRef.current.play();
-            videoRefBack.current.play();
-        } else {
-            videoRef.current.pause();
-            videoRefBack.current.pause();
-        }
+        let isPalying = (videoCur?.id === video?.id)||false;
+        handleVid(isPalying);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [videoCur])
-    console.log(videoCur);
+    // console.log(videoCur);
     return(
         <div
             onClick={onHoverVideoItem}

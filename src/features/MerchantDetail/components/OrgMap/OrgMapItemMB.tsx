@@ -7,14 +7,14 @@ export default function OrgMapItemMB(props: any) {
         <div className="map-item__wrap">
             <div className="map-item__mobile">
                 <div className="item-img">
-                    <img src={item.image_url} alt="" />
+                    <img src={item?.image_url} alt="" />
                 </div>
                 <div className="item-content">
                     <div className="item-content__name">
-                        <p>{item.name}</p>
+                        <p>{item?.name}</p>
                     </div>
                     <div className="item-content__address">
-                        <p>{item.full_address}</p>
+                        <p>{item?.full_address}</p>
                     </div>
                     <div className="item-content__evaluate">
                         <div className="evaluate-item">

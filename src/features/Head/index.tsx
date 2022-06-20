@@ -14,20 +14,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { getTotal } from "../../redux/cartSlice";
 import MbMenu from "../../featuresMobile/Menu";
 import scrollTop from "../../utils/scrollTop";
-import HomeFilter from '../Home/components/HomeFilter';
-import SearchFilter from "../../featuresMobile/SearchResult/SearchFilter";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
+import Search from "../Search";
+import { onToggleSearchCnt } from '../../redux/search/searchSlice'
 
-const styleFilter = {
-  width: '41.5%',
-  boxShadow: "rgb(0 0 0 / 14%) -2px 1px 16px 0px",
-  padding: "12px",
-  transform: 'translateX(0%)'
-}
 
-function openFilter() {
-  document.querySelector('.header-filter')?.classList.toggle('header-file__ac')
-}
+
 function hiddenFilter() {
   document.querySelector('.header-filter')?.classList.remove('header-file__ac')
 }
@@ -46,6 +38,7 @@ function Head(props: any) {
     //userInfo
   } = useContext(AppContext);
   const FLAT_FORM = EXTRA_FLAT_FORM();
+  const dispatch = useDispatch();
   const {
     IN_HOME,
     setCloseDialog,
@@ -53,12 +46,11 @@ function Head(props: any) {
     handleCancelPayment,
     prev_url
   } = props;
-  const dispatch = useDispatch();
   const [openNo, setOpenNo] = useState(false);
   const [openLang, setOpenLang] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [openMbMenu, setOpenMbMenu] = useState(false);
-  const [openSearch, setOpenSearch] = useState(false);
+  //const [openSearch, setOpenSearch] = useState(false);
   const [unit, setUnit] = useState("VND");
   const history = useHistory();
 
@@ -66,6 +58,7 @@ function Head(props: any) {
 
   const carts = useSelector((state: any) => state.carts);
   const USER = useSelector((state: any) => state.USER.USER);
+  const { open } = useSelector((state: any) => state.SEARCH);
 
   useEffect(() => {
     dispatch(getTotal());
@@ -132,6 +125,10 @@ function Head(props: any) {
     }
     history.push("/")
   }
+  const onOpenSearchContainer = () => {
+    const action = open ? false : true
+    dispatch(onToggleSearchCnt(action))
+  }
   return (
     <div
       style={headerStyle}
@@ -181,16 +178,8 @@ function Head(props: any) {
               <img
                 className="header-search-icon"
                 src={icon.searchPurple} alt=""
-                onClick={() => openFilter()}
+                onClick={() => onOpenSearchContainer()}
               />
-              <div className="header-filter">
-                <div className="header-filter__wrap">
-                  <HomeFilter
-                    styleFilter={styleFilter}
-                    hiddenFilter={hiddenFilter}
-                  />
-                </div>
-              </div>
             </div>
             {!USER ? (
               <>
@@ -239,7 +228,7 @@ function Head(props: any) {
             <div className="mb-hd-cnt__right">
               <div className="flex-row-sp">
                 <button
-                  onClick={() => setOpenSearch(true)}
+                //onClick={() => setOpenSearch(true)}
                 >
                   <img src={icon.search} alt="" />
                 </button>
@@ -305,10 +294,7 @@ function Head(props: any) {
           </div>
         </div>
       </Container>
-      <SearchFilter
-        openSearch={openSearch}
-        setOpenSearch={setOpenSearch}
-      />
+      <Search />
     </div>
   );
 }

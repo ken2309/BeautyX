@@ -30,11 +30,11 @@ const OrgMapGoogle = (props: any) => {
                     <Marker
                         icon={{
                             url:
-                                item.latitude === location.lat
+                                item?.latitude === location.lat
                                     ? icon.pinMapGreen
                                     : icon.pinMap,
                         }}
-                        position={{ lat: item.latitude, lng: item.longitude }}
+                        position={{ lat: item?.latitude, lng: item?.longitude }}
                         //animation={item?.latitude === location.lat ? window.google.maps.Animation.DROP : null}
                     >
                         {

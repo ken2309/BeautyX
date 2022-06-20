@@ -9,6 +9,7 @@
     font-family: "Nunito";
     font-size: 16px;
     min-height: unset !important;
+    line-height: 28px !important;
 }
 
 .cal-cnt__tab-cnt .Mui-selected {
@@ -31,7 +32,7 @@
 
 @media only screen and (max-width: 1023px) {
     .cal-cnt__tab-cnt-head {
-        padding: 2px 12px;
+        padding: 0px 12px;
         display: flex;
         justify-content: space-between;
         border-bottom: solid 1px var(--grey);
