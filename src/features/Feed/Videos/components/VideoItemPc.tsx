@@ -16,18 +16,19 @@ import { IComment } from '../../../../interface/comments';
 import { Service } from '../../../../interface/service';
 // api
 import { setResetInitialState } from '../../../../redux/video/videosSlice';
-import { fetchAsyncOrgComments, postAsyncOrgComments } from '../../../../redux/org/orgCommentsSlice';
+import { postAsyncOrgComments } from '../../../../redux/org/orgCommentsSlice';
 import { onFavoriteOrg, onDeleteFavoriteOrg } from '../../../../redux/org/orgSlice';
 import mediaApi from '../../../../api/mediaApi';
+import { clearPrevState } from '../../../../redux/commentSlice';
 
 function VideoItemPc(props: any) {
     const { video, org, cmt, sers, videoCur, setVideoCur } = props;
-    const sess = window.sessionStorage.getItem("_WEB_TK");
     const history = useHistory();
     const dispatch = useDispatch();
     const refCurPost = useRef<any>(null);
     
     const USER = useSelector((state: any) => state.USER);
+    const COMMENT_STORE = useSelector((state: any) => state.COMMENT).image_url;
     const [cmtDialog,setOpenCmtDialog]  = useState<any>(false);
     const user = USER.USER;
     const options = {
@@ -66,13 +67,12 @@ function VideoItemPc(props: any) {
         const [comment, setComment] = useState<any>({
             text: '',
             url: video.link,
-            image_url: '',
+            image_url: COMMENT_STORE,
             used: true,
             star: 5,
         });
     // ---- end ---- 
-        const getComments = async (props:any) => {
-            console.log(props);
+        const getComments = (props:any) => {
             setData({ ...data,
                 cmt: {  comments:[props.payload.comment,...(data?.cmt?.comments||[])],
                         totalItem: (data?.cmt?.totalItem||0) + 1
@@ -96,7 +96,7 @@ function VideoItemPc(props: any) {
         },[])
     // handle func
         const handleGoOrgDetail = () => {
-            goSignIn();
+           alert('detail');
         }
         const handleComment = (e: any) => {
             if (!user) {
@@ -105,18 +105,19 @@ function VideoItemPc(props: any) {
             else if (user) {
                 setComment({
                     ...comment,
-                    text: e.target.value,
+                    text: e.target.value
                 });
             }
         }
         const handlePostComment = async () => {
             if (comment.text !== '') {
+                dispatch(clearPrevState());
                 dispatch(
                     postAsyncOrgComments({
                         values: {
                             page: 1,
                             org_id: org.id,
-                            body: JSON.stringify(comment),
+                            body: JSON.stringify({...comment,image_url:COMMENT_STORE}),
                         },
                         user: user,
                     })
@@ -197,7 +198,7 @@ function VideoItemPc(props: any) {
         }
         
 
-    // console.log('render: ' + org.is_favorite+'| id: '+org.id, cmt, sers)
+    // console.log('render: ' + COMMENT_STORE+'| id: '+org.id, cmt, sers)
     return (
         <div
             ref={refCurPost}
@@ -212,6 +213,7 @@ function VideoItemPc(props: any) {
                     <PostVideo
                         vd_url={vd_url}
                         video={video}
+                        is_mute={true}
                         videoCur={videoCur}
                         setVideoCur={setVideoCur}
                         setOpenCmtDialog={setOpenCmtDialog}
@@ -232,6 +234,7 @@ function VideoItemPc(props: any) {
                     video={video}
                     handleComment={handleComment}
                     comment={comment}
+                    setComment={setComment}
                     handleViewAllCmt={handleViewAllCmt}
                     handleKeyDown={handleKeyDown}
                     user={user}
@@ -257,4 +260,4 @@ function VideoItemPc(props: any) {
     );
 }
 
-export default VideoItemPc;
+export default React.memo(VideoItemPc);

@@ -42,7 +42,19 @@ import dealhot1 from "../assets/image/homeBannerDeal/dealhot1.png";
 import dealhot2 from "../assets/image/homeBannerDeal/dealhot2.png";
 import sellerCenterImg from "../assets/image/sellerCenterImg.jpeg";
 
+// social
+import facebook from "../assets/image/social/facebook.png";
+import tiktok from "../assets/image/social/tiktok.png";
+import youtube from "../assets/image/social/youtube.png";
+import instagram from "../assets/image/social/instagram.png";
+import qrCode from "../assets/icon/qr-code.svg";
+import appStore from "../assets/image/appstore.png";
+import playStore from "../assets/image/playstore.png";
+
 const img = {
+    appStore,
+    playStore,
+    qrCode,
     slider1,
     Avatar,
     banner,
@@ -74,6 +86,12 @@ const img = {
     thumb_2,
     imgDefault,
     sellerCenterImg,
+};
+export const social = {
+    facebook,
+    tiktok,
+    instagram,
+    youtube,
 };
 
 export const imgTag = {

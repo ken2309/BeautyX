@@ -240,7 +240,6 @@
 }
 
 .booking-cnt .map-item__name {
-    font-size: 14px;
     font-weight: bold;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -248,6 +247,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-word;
+}
+.booking-cnt .map-item__name p {
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .booking-cnt .dialog-map__list {
@@ -259,6 +262,14 @@
 }
 
 .booking-cnt .map-item__address {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+.booking-cnt .map-item__address p {
     font-size: 12px;
     font-weight: bold;
     color: #8c8c8c;
@@ -277,17 +288,11 @@
 }
 
 .booking-cnt .map-item__evaluate .evaluate-item img {
-    width: 16px;
+    width: 12px;
 }
 
 .booking-cnt .map-item__evaluate .evaluate-item p {
     font-weight: bold;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
     font-size: 12px;
 }
 

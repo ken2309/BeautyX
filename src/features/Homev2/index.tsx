@@ -1,15 +1,15 @@
-import React from 'react';
-import HomeTags from './components/HomeTags';
-import HomePromo from './components/HomePromo';
-import HomeDeal from './components/HomeDeal';
-import HomeCard from './components/HomeCard';
-import HomeProvince from './components/HomeProvince';
-import HomeServicesRe from './components/HomeServicesRe';
-import HomeDiscount from '../HomeDiscounts';
+import React from "react";
+import HomeTags from "./components/HomeTags";
+import HomePromo from "./components/HomePromo";
+import HomeDeal from "./components/HomeDeal";
+import HomeCard from "./components/HomeCard";
+import HomeProvince from "./components/HomeProvince";
+import HomeServicesRe from "./components/HomeServicesRe";
+import HomeDiscount from "../HomeDiscounts";
 //import CategoryTree from '../CategoryTree';
 
-import { Container } from '@mui/material';
-import './home-se.css'
+import { Container } from "@mui/material";
+import "./home-se.css";
 
 function HomeSecond(props: any) {
     //const { profile } = useContext(AppContext)

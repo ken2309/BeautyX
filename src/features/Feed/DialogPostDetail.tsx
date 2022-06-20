@@ -1,12 +1,22 @@
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Dialog } from "@mui/material";
 import icon from "../../constants/icon";
 import Review from "../Reviews";
-import video from "./Reels/components/video";
+
 import PostHead from "./Videos/components/post/PostHead";
 import PostReaction from "./Videos/components/post/PostReaction";
 import PostVideo from "./Videos/components/post/PostVideo";
+// store of detail post
+import {
+    clearPrevState,
+    fetchAsyncOrgComments,
+} from "../../redux/org/orgCommentsSlice";
+import { useElementOnScreen } from "../../utils/useElementScreen";
+import useFullScreen from "../../utils/useFullScreen";
+// end
 
-export default function PopupPostDetail(props:any){
+function PopupPostDetail(props: any) {
     const {
         open,
         setOpen,
@@ -21,16 +31,33 @@ export default function PopupPostDetail(props:any){
         handleReact,
         handleViewAllCmt,
     } = props;
+    const dispatch = useDispatch();
+    const is_mb = useFullScreen();
+    const ORG_COMMENTS = useSelector((state: any) => state.ORG_COMMENTS);
+    const fetchInitState = () => {
+        dispatch(clearPrevState());
+        dispatch(
+            fetchAsyncOrgComments({
+                org_id: org.id,
+                page: 1,
+            })
+        );
+    };
+    useEffect(() => {
+        let mounted = true;
+        if (mounted) {
+            org.id !== ORG_COMMENTS.org_id &&
+                ORG_COMMENTS.status !== "SUCCESS" &&
+                fetchInitState();
+        }
+        return () => {
+            mounted = false;
+        };
+    }, [ORG_COMMENTS.status]);
     return (
-        <Dialog
-            open={open}
-            onClose={() => setOpen(false)}
-        >   
-           <div 
-                className="close_btn"
-                onClick={() => setOpen(false)}
-            >
-                <img src={icon.closeCircleWhite} alt=""/>
+        <Dialog open={open} onClose={() => setOpen(false)}>
+            <div className="close_btn" onClick={() => setOpen(false)}>
+                <img src={icon.closeCircleWhite} alt="" />
             </div>
             <div className="video-item_dialog">
                 <PostVideo
@@ -55,12 +82,13 @@ export default function PopupPostDetail(props:any){
                     <Review
                         // handleComment={handleComment}
                         commentable_type="ORGANIZATION"
-                        comments={cmt?.comments}
+                        comments={ORG_COMMENTS.comments}
                         totalItem={cmt?.totalItem}
                         id={org?.id}
                     />
                 </div>
             </div>
         </Dialog>
-    )
+    );
 }
+export default React.memo(PopupPostDetail);
