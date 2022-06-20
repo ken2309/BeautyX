@@ -211,11 +211,6 @@ function Head(props: any) {
                     borderRadius="18px"
                     onClick={gotoPageSignIn}
                   />
-                  <img
-                    className="hd-cnt__right-avatar"
-                    src={icon.userCircle}
-                    alt=""
-                  />
                 </div>
               </>
             ) : (

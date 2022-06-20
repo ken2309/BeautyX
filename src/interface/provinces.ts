@@ -30,5 +30,6 @@ export interface IProvince {
       province_id: number | null,
       district_id: number | null,
       organizations_count: number,
-      media: IMedia[]
+      media: IMedia[],
+      branches_count: number
 }

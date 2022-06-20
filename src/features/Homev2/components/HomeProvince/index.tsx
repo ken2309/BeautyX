@@ -3,7 +3,6 @@ import { AppContext } from "../../../../context/AppProvider";
 import HomeTitleSection from "../HomeTitleSection/index";
 import { IProvince } from "../../../../interface/provinces";
 import { Container } from "@mui/material";
-import icon from "../../../../constants/icon";
 import { useHistory } from "react-router-dom";
 import scrollTop from "../../../../utils/scrollTop";
 import { useSelector } from "react-redux";
@@ -61,7 +60,7 @@ function HomeProvince(props: any) {
                                 <div className="province-item-cnt">
                                     <span>{item.name}</span>
                                     <span>
-                                        {item.organizations_count}{" "}
+                                        {item.organizations_count + item.branches_count}{" "}
                                         {t("home_2.beauty_places")}{" "}
                                     </span>
                                 </div>

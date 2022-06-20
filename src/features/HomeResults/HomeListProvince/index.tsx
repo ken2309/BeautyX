@@ -46,7 +46,7 @@ function HomeListProvince(props: any) {
                                     <img src={`${item.media[1].original_url}`} alt="" />
                                     <div className="province-item-cnt">
                                         <span>{item.name}</span>
-                                        <span>{item.organizations_count} {t("home_2.beauty_places")} </span>
+                                        <span>{item.organizations_count + item.branches_count} {t("home_2.beauty_places")} </span>
                                     </div>
                                 </div>
                             ))
