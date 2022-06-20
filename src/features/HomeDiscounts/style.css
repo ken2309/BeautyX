@@ -11,17 +11,20 @@
     grid-gap: 16px;
 }
 .home-discounts__title {
-    font-size: 20px;
-    line-height: 24px;
     font-weight: 700;
-    color: var(--bgWhite);
+    font-size: 24px;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #ffe818;
     margin-bottom: 16px;
 }
 .home-discounts__title span:nth-child(2) {
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 18px;
     font-weight: 700;
+    color: #fff;
+    text-transform: capitalize;
 }
 .home-discounts__list .item-cnt {
     padding: 8px;
@@ -32,12 +35,17 @@
     width: 100%;
     border-radius: 8px;
     transition: all 0.4s;
+    cursor: pointer;
 }
 
 .home-discount-item__img {
     width: 100%;
-    object-fit: cover;
     border-radius: 8px 8px 0px 0px;
+}
+.home-discount-item__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .home-discount-item__detail {
@@ -97,14 +105,15 @@
 }
 .home-discount-item__cnt .limit-bar {
     margin-top: 6px;
-    background-color: #ffaaae;
+    background: var(--red-cl);
+    background: linear-gradient(to right, #ff721f 0%, #f5c031 100%);
+    background: -webkit-linear-gradient(to right, #ff721f 0%, #f5c031 100%);
+    border-radius: 12px;
     height: 18px;
-    border-radius: 9px;
     position: relative;
 }
 .home-discount-item__cnt .limit-bar__used {
     position: absolute;
-    background-color: var(--red-cl);
     height: 100%;
     width: 50%;
     top: 0;

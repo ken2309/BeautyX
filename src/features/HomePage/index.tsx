@@ -5,7 +5,9 @@ import Bottom from "../../featuresMobile/Bottom";
 import ExtraFlatForm from "../../rootComponents/extraFlatForm";
 import Footer from "../Footer";
 import Head from "../Head";
+import HomeDiscount from "../HomeDiscounts";
 import HomeBanner from "./HomeBanner";
+import HomeHotDeal from "./HomeHotDeal";
 
 export default function HomePage() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
@@ -17,7 +19,10 @@ export default function HomePage() {
             <Container>
                 <HomeBanner />
             </Container>
-
+            <HomeDiscount />
+            <Container>
+                <HomeHotDeal />
+            </Container>
             <Footer />
             <Bottom />
         </div>

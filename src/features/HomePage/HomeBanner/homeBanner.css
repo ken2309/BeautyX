@@ -52,15 +52,18 @@
     opacity: 0;
     z-index: 100;
     top: 50%;
+    transform: translateY(-50%);
     border-radius: 100%;
     border: none;
     outline: none;
-    background-color: #f5f5f780;
-    transition: all 0.3s;
+    background-color: #fff;
+    visibility: hidden;
+    transition: all 0.3s ease-out;
     padding: 3px;
 }
 .homepage-btn__prev {
-    transform: rotate(180deg);
+    top: 50%;
+    transform: translateY(-50%) rotate(180deg);
     left: 0;
 }
 .homepage-btn__next {
@@ -72,14 +75,16 @@
     height: 32px;
 }
 .homepage-banner:hover .homepage-btn__prev {
-    display: block;
-    opacity: 1;
+    opacity: 0.7;
+    visibility: visible;
     left: 14px;
+    transition: all 0.3s ease-in;
 }
 .homepage-banner:hover .homepage-btn__next {
-    display: block;
-    opacity: 1;
+    opacity: 0.7;
     right: 14px;
+    visibility: visible;
+    transition: all 0.3s ease-in;
 }
 
 /* cus dot slider */
@@ -92,12 +97,14 @@
     width: 6px;
     height: 6px;
     border-radius: 100%;
-    background-color: #ccc;
+    background-color: #fff;
+    opacity: 0.7;
 }
 .slick-dots ul .slick-active {
     background-color: var(--purple);
     width: 10px;
     height: 10px;
+    opacity: 1;
 }
 .slick-dots li.slick-active button:before {
     display: none;
