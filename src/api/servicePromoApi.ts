@@ -1,8 +1,8 @@
 import axiosClient from "./axios";
-import { pickBy, identity } from 'lodash';
-import { AUTH_LOCATION } from './authLocation'
+import { pickBy, identity } from "lodash";
+import { AUTH_LOCATION } from "./authLocation";
 
-const location_user = JSON.parse(`${sessionStorage.getItem('USER_LOCATION')}`)
+const location_user = JSON.parse(`${sessionStorage.getItem("USER_LOCATION")}`);
 
 class ServicePromo {
     getByKeyword = (values: any) => {
@@ -12,22 +12,24 @@ class ServicePromo {
             limit: 20,
             "filter[is_momo_ecommerce_enable]": true,
             "filter[keyword]": values.keyword,
-            "filter[location]": location_user ? `${location_user.lat},${location_user.long}` : ``
-        }
-        return axiosClient.get(url, { params })
-    }
+            "filter[location]": location_user
+                ? `${location_user.lat},${location_user.long}`
+                : ``,
+        };
+        return axiosClient.get(url, { params });
+    };
     getBySort = (values: any) => {
         const url = `/services`;
         const params = {
             page: values.page,
-            limit: 20,
+            limit: 18,
             "filter[keyword]": values.keyword,
             "filter[special_price]": true,
             "filter[is_momo_ecommerce_enable]": true,
-            "sort": values.dataSort
-        }
-        return axiosClient.get(url, { params })
-    }
+            sort: values.dataSort,
+        };
+        return axiosClient.get(url, { params });
+    };
     getBySortFeature = (values: any) => {
         const url = `/services`;
         const params = {
@@ -36,10 +38,10 @@ class ServicePromo {
             "filter[keyword]": values.keyword,
             "filter[is_momo_ecommerce_enable]": true,
             "filter[is_featured]": true,
-            "sort": "-modified_date"
-        }
-        return axiosClient.get(url, { params })
-    }
+            sort: "-modified_date",
+        };
+        return axiosClient.get(url, { params });
+    };
     getByUserLocation = (values: any) => {
         const url = `/services`;
         const params = {
@@ -47,10 +49,12 @@ class ServicePromo {
             limit: 20,
             "filter[keyword]": values.keyword,
             "filter[is_momo_ecommerce_enable]": true,
-            "filter[location]": location_user ? `${location_user.lat},${location_user.long}` : ``
-        }
-        return axiosClient.get(url, { params })
-    }
+            "filter[location]": location_user
+                ? `${location_user.lat},${location_user.long}`
+                : ``,
+        };
+        return axiosClient.get(url, { params });
+    };
     //services promo
     getServicesPromo = (values: any) => {
         const url = `/services`;
@@ -61,11 +65,11 @@ class ServicePromo {
             "filter[special_price]": true,
             "filter[is_momo_ecommerce_enable]": true,
             "filter[location]": values.sort === null ? LOCATION : null,
-            "sort": values.sort
-        }
-        const params = pickBy(paramsOb, identity)
-        return axiosClient.get(url, { params })
-    }
+            sort: values.sort,
+        };
+        const params = pickBy(paramsOb, identity);
+        return axiosClient.get(url, { params });
+    };
     //
     // getServicesPromoLocation = (values: any) => {
     //     const url = `/services`;
@@ -86,10 +90,10 @@ class ServicePromo {
             limit: 30,
             "filter[is_featured]": true,
             "filter[is_momo_ecommerce_enable]": true,
-            "sort": "random",
-        }
-        return axiosClient.get(url, { params })
-    }
+            sort: "random",
+        };
+        return axiosClient.get(url, { params });
+    };
     //servives deal banner
     getServicesDealBanner = (values: any) => {
         const LOCATION = AUTH_LOCATION();
@@ -102,11 +106,11 @@ class ServicePromo {
             "filter[max_price]": values.max_price,
             "filter[discount_percent]": values.percent,
             "filter[location]": values.sort === null ? LOCATION : null,
-            "sort": values.sort
-        }
-        const params = pickBy(paramsOb, identity)
-        return axiosClient.get(url, { params })
-    }
+            sort: values.sort,
+        };
+        const params = pickBy(paramsOb, identity);
+        return axiosClient.get(url, { params });
+    };
 }
 const servicePromoApi = new ServicePromo();
-export default servicePromoApi
+export default servicePromoApi;

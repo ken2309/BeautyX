@@ -20,6 +20,7 @@ import blogReducer from "./blog/blogSlice";
 import cateReducer from "./cate/cateSlice";
 import comboReducer from "./org_combos/comboSlice";
 import videosReducer from './video/videosSlice';
+import commentReducer from './commentSlice';
 
 const rootReducer = {
   carts: cartReducer,
@@ -43,6 +44,7 @@ const rootReducer = {
   CATE: cateReducer,
   COMBO: comboReducer,
   VID: videosReducer,
+  COMMENT: commentReducer
 };
 const store = configureStore({
   reducer: rootReducer,

@@ -1,13 +1,10 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import Slider from "react-slick";
 import img from "../../../constants/img";
-import HomePromo from "../../Homev2/components/HomePromo";
-import HomeTitleSection from "../../Homev2/components/HomeTitleSection/index";
+import HomeTitle from "../Components/HomeTitle";
+import HomePromo from "../HomePromo";
 import "./homeHotDeal.css";
 export default function HomeHotDeal() {
-    const history = useHistory();
-
     const settings = {
         dots: false,
         infinite: true,
@@ -47,23 +44,8 @@ export default function HomeHotDeal() {
         // },
     };
     return (
-        <div className="home-hot-deal">
-            <div className="flex-row-sp home-se-promo__header">
-                <HomeTitleSection title={`Top Deal Khủng`} />
-                <div onClick={() => history.push("/deal-lam-dep-cuc-HOT")}>
-                    <div className="flex-row cursor-pointer">
-                        <p
-                            style={{
-                                fontSize: "16px",
-                                color: "var(--purple)",
-                                fontWeight: "bold",
-                            }}
-                        >
-                            Xem thêm {">"}
-                        </p>
-                    </div>
-                </div>
-            </div>
+        <div className="home-hot__deal">
+            <HomeTitle title={`Top Deal Khủng`} url={"/deal-lam-dep-cuc-HOT"} />
             <ul className="dealHot-listBanner">
                 <Slider {...settings}>
                     <li className="dealHot-listBanner__item">

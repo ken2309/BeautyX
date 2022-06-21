@@ -7,7 +7,10 @@ import Footer from "../Footer";
 import Head from "../Head";
 import HomeDiscount from "../HomeDiscounts";
 import HomeBanner from "./HomeBanner";
+import HomeFavorite from "./HomeFavorite";
 import HomeHotDeal from "./HomeHotDeal";
+import HomeHotTrend from "./HomeHotTrend";
+import HomeTopService from "./HomeTopService";
 
 export default function HomePage() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
@@ -22,6 +25,9 @@ export default function HomePage() {
             <HomeDiscount />
             <Container>
                 <HomeHotDeal />
+                <HomeHotTrend />
+                <HomeTopService />
+                <HomeFavorite />
             </Container>
             <Footer />
             <Bottom />

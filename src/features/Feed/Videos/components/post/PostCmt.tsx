@@ -1,6 +1,6 @@
 import EvaluateInput from '../../../../Reviews/EvaluateInput';
 import icon from "../../../../../constants/icon";
-export default function PostComment (props: any){
+export default function PostComment(props: any) {
     const {
         data,
         video,

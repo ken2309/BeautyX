@@ -12,20 +12,21 @@ function ContainerPc(props: any) {
     const handleFetchAsync = () => {
         // (videos.data)&&dispatch(fetchAsyncDataVideos(videos.data[0]));
         console.log('handleFetchAsync =====')
-        dispatch(setResetInitialState(false))
         let arr;
+        dispatch(setResetInitialState(false));
+        dispatch(resetVIDEOs());
         (videos.data&&videos.data[0])&&videos.data.map(
-            async(item:any)=>{
+            async(item:any,index:any)=>{
+                console.log(index)
             arr = await dispatch(fetchAsyncDataVideos(item));
             return arr
         })
-        
     }
     useEffect(() => {
+        (videos.status==='SUCCESS'&&(RESET_STATE))&&handleFetchAsync()
         // (videos.status==='SUCCESS'&&(RESET_STATE))&&handleFetchAsync()
-        (videos.status==='SUCCESS')&&handleFetchAsync()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [videos.status])
-    console.log(RESET_STATE);
     return (
         <div className="video-list-des">
             <ul className="video-list">
@@ -48,4 +49,4 @@ function ContainerPc(props: any) {
     );
 }
 
-export default ContainerPc;
+export default React.memo(ContainerPc);
