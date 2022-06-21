@@ -28,13 +28,16 @@
 .homepage-banner .banner-right__top {
     height: 50%;
     background-color: #cfeaff;
+    cursor: pointer;
 }
 .homepage-banner .banner-right__bottom {
     height: 50%;
     display: flex;
-    display: flex;
     height: 50%;
     grid-gap: 0 16px;
+}
+.homepage-banner .banner-right__bottom img {
+    cursor: pointer;
 }
 .homepage-banner .banner-bottom__item {
     width: 50%;
