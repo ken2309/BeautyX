@@ -27,7 +27,7 @@ export default function HomePage() {
             <Container>
                 <HomeHotDeal />
                 <HomeTopService />
-                {/* <HomeHotTrend /> */}
+                <HomeHotTrend />
                 <HomeFavorite />
                 <HomeRecomment />
             </Container>
