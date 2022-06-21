@@ -39,6 +39,7 @@ import CategoryTree from "../features/CategoryTree";
 import Booking from "../features/Booking";
 import BuyNow from "../features/BuyNow";
 import Calendar from "../features/Calendar";
+import Carts from "../features/Carts"
 
 
 // feature mobile
@@ -213,6 +214,10 @@ function RouterConfig(props: any) {
     {
       path: "/mua-hang",
       component: BuyNow
+    },
+    {
+      path: "/gio-hang",
+      component: Carts
     }
   ];
   return (

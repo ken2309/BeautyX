@@ -27,7 +27,7 @@ function UserPaymentInfo(props: IProps) {
         if (status !== STATUS.SUCCESS) {
             dispatch(fetchAsyncUserAddress())
         } else if (status === STATUS.SUCCESS) {
-            const addressDefault = address.find((item: any) => item.is_default === true);
+            const addressDefault = address?.find((item: any) => item.is_default === true);
             setUserAddress(addressDefault)
             if (onSetAddressDefault) {
                 onSetAddressDefault(addressDefault)
