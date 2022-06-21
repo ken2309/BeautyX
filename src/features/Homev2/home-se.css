@@ -271,7 +271,6 @@
     .home-promo-ser .ser-list {
         grid-template-columns: repeat(2, 1fr);
         display: grid;
-        margin: 0;
         width: unset;
     }
     .home-cate-tree-cnt {

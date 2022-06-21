@@ -53,7 +53,7 @@ export default function HomeBanner() {
                 settings: {
                     swipe: true,
                     dots: true,
-                    speed: 100,
+                    speed: 500,
                 },
             },
         ],

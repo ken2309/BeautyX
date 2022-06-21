@@ -10,6 +10,7 @@ import HomeBanner from "./HomeBanner";
 import HomeFavorite from "./HomeFavorite";
 import HomeHotDeal from "./HomeHotDeal";
 import HomeHotTrend from "./HomeHotTrend";
+import HomeRecomment from "./HomeRecomment";
 import HomeTopService from "./HomeTopService";
 
 export default function HomePage() {
@@ -25,9 +26,10 @@ export default function HomePage() {
             <HomeDiscount />
             <Container>
                 <HomeHotDeal />
-                <HomeHotTrend />
                 <HomeTopService />
+                {/* <HomeHotTrend /> */}
                 <HomeFavorite />
+                <HomeRecomment />
             </Container>
             <Footer />
             <Bottom />

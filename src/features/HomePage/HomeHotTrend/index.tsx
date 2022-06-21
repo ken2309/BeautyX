@@ -5,14 +5,14 @@ import { fetchAsyncVideos } from "../../../redux/video/videosSlice";
 import Trends from "../../Trends";
 
 export default function HomeHotTrend() {
-    // const dispatch = useDispatch();
-    // const videos = useSelector((state: any) => state.VID).LISTVIDs;
+    const dispatch = useDispatch();
+    const videos = useSelector((state: any) => state.VID).LISTVIDs;
 
-    // useEffect(() => {
-    //     if (videos.status !== STATUS.SUCCESS) {
-    //         dispatch(fetchAsyncVideos());
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
-    return <div>{/* <Trends videos={videos.data} /> */}</div>;
+    useEffect(() => {
+        if (videos.status !== STATUS.SUCCESS) {
+            dispatch(fetchAsyncVideos());
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    return <div>{<Trends videos={videos.data} />}</div>;
 }

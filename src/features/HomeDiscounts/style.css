@@ -152,18 +152,22 @@
         overflow-x: scroll;
     }
     .home-discounts__list {
-        padding: 16px;
+        padding: 12px;
         display: flex;
         flex-shrink: 0;
         width: max-content;
         flex-wrap: nowrap;
+        grid-gap: 12px;
     }
     .home-discounts__title {
-        padding: 16px 16px 0 16px;
+        padding: 12px 12px 0 12px;
         margin-bottom: 0;
     }
     .home-discounts__title span:nth-child(1) {
-        font-size: 16px;
+        font-size: 14px;
+    }
+    .home-discounts__title span:nth-child(2) {
+        font-size: 12px;
     }
     .home-discounts__list li {
         width: 164px;

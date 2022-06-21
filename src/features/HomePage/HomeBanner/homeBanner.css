@@ -74,17 +74,98 @@
     width: 32px;
     height: 32px;
 }
-.homepage-banner:hover .homepage-btn__prev {
+.banner-slide:hover .homepage-btn__prev {
     opacity: 0.7;
     visibility: visible;
     left: 14px;
     transition: all 0.3s ease-in;
 }
-.homepage-banner:hover .homepage-btn__next {
+.banner-slide:hover .homepage-btn__next {
     opacity: 0.7;
     right: 14px;
     visibility: visible;
     transition: all 0.3s ease-in;
+}
+
+/* reponsive tablet */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+    .homepage-btn__prev,
+    .homepage-btn__next {
+        opacity: 0.7;
+        background-color: #fff;
+        visibility: visible;
+    }
+    .homepage-banner .banner-wraper {
+        flex-direction: column;
+        height: unset;
+        grid-gap: 16px 0;
+        margin: 16px 0;
+    }
+    .homepage-banner .banner-slide {
+        width: 100%;
+    }
+    .homepage-banner .banner-right {
+        width: 100%;
+        flex-direction: row;
+        grid-gap: 0 16px;
+        padding: 0 16px;
+    }
+    .home-discounts {
+        padding: 16px;
+        margin: unset;
+        margin-bottom: 16px;
+    }
+    .homepage-banner .banner-slide__img {
+        max-height: 380px;
+    }
+    .home-discounts__list {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .banner-slide .homepage-btn__next {
+        right: 14px;
+    }
+    .banner-slide .homepage-btn__prev {
+        left: 14px;
+    }
+}
+/* reponsive mobile */
+@media only screen and (max-width: 767px) {
+    .homepage-btn__prev,
+    .homepage-btn__next {
+        opacity: 0.7;
+        background-color: #fff;
+        visibility: visible;
+    }
+    .homepage-banner .banner-wraper {
+        flex-direction: column;
+        height: unset;
+        grid-gap: 12px 0;
+        margin: 0;
+    }
+    .homepage-banner .banner-slide {
+        width: 100%;
+    }
+    .homepage-banner .banner-right {
+        /* width: 100%;
+        flex-direction: column;
+        grid-gap: 12px;
+        padding: 0 12px; */
+        display: none;
+    }
+    .homepage-banner .banner-right__bottom {
+        grid-gap: 0 12px;
+    }
+    .banner-slide .homepage-btn__next {
+        right: 14px;
+    }
+    .banner-slide .homepage-btn__prev {
+        left: 14px;
+    }
+    .homepage-btn__prev img,
+    .homepage-btn__next img {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 /* cus dot slider */

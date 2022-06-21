@@ -13,3 +13,12 @@
     font-weight: bold;
     color: var(--purple);
 }
+
+@media screen and (max-width: 767.98px) {
+    .home-title .home-title__text {
+        font-size: 16px;
+    }
+    .home-title .home-title__seemore {
+        font-size: 12px;
+    }
+}
