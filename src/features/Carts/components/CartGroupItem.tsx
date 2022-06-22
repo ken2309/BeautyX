@@ -3,9 +3,6 @@ import { Checkbox } from '@mui/material';
 import React from 'react';
 import icon from '../../../constants/icon';
 import CartItem from './CartItem';
-import {
-    SwipeableList,
-} from 'react-swipeable-list';
 
 function CartGroupItem(props: any) {
     const { item } = props;
@@ -32,19 +29,17 @@ function CartGroupItem(props: any) {
                 </div>
                 <span className="right" onClick={onEditCartItem} >Sửa</span>
             </div>
-            <SwipeableList>
-                <ul className="re-cart-item-group__body">
-                    {
-                        item.items.map((cart: any, i: number) => (
-                            <li key={i} >
-                                <CartItem
-                                    cartItem={cart}
-                                />
-                            </li>
-                        ))
-                    }
-                </ul>
-            </SwipeableList>
+            <ul className="re-cart-item-group__body">
+                {
+                    item.items.map((cart: any, i: number) => (
+                        <li key={i} >
+                            <CartItem
+                                cartItem={cart}
+                            />
+                        </li>
+                    ))
+                }
+            </ul>
         </>
     );
 }

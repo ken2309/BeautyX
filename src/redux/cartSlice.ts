@@ -117,27 +117,27 @@ const cart = createSlice({
             state.cartList = action.payload
             localStorage.setItem(storageName, JSON.stringify(state.cartList))
         },
-        onGroupCart: (state, action) => {
-            const orgs_id = state.cartList.map((item: any) => item.org_id);
-            const unique = (arr: any) => {
-                var newArr = []
-                for (var i = 0; i < arr.length; i++) {
-                    if (newArr.indexOf(arr[i]) === -1) {
-                        newArr.push(arr[i])
-                    }
-                }
-                return newArr
-            }
-            const orgs = unique(orgs_id)
-            const cartListGroupOrg = orgs.map((item) => {
-                const cartItemByOrg = state.cartList.filter((i: any) => item === i.org_id)
-                return {
-                    org_id: item,
-                    org_name: cartItemByOrg[0]?.org_name,
-                    items: cartItemByOrg
-                }
-            })
-        }
+        // onGroupCart: (state, action) => {
+        //     const orgs_id = state.cartList.map((item: any) => item.org_id);
+        //     const unique = (arr: any) => {
+        //         var newArr = []
+        //         for (var i = 0; i < arr.length; i++) {
+        //             if (newArr.indexOf(arr[i]) === -1) {
+        //                 newArr.push(arr[i])
+        //             }
+        //         }
+        //         return newArr
+        //     }
+        //     const orgs = unique(orgs_id)
+        //     const cartListGroupOrg = orgs.map((item) => {
+        //         const cartItemByOrg = state.cartList.filter((i: any) => item === i.org_id)
+        //         return {
+        //             org_id: item,
+        //             org_name: cartItemByOrg[0]?.org_name,
+        //             items: cartItemByOrg
+        //         }
+        //     })
+        // }
     }
 });
 const { reducer, actions } = cart;

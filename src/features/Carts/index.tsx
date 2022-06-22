@@ -1,5 +1,6 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './style.css';
 import Head from '../Head';
 import HeadMobile from '../HeadMobile';
@@ -8,9 +9,17 @@ import useFullScreen from '../../utils/useFullScreen';
 import { Container } from '@mui/material';
 import UserPaymentInfo from '../Account/components/UserPaymentInfo';
 import CartGroupItem from './components/CartGroupItem';
+import CartBottom from './components/CartBottom';
+import Footer from '../Footer';
+import { getTotal } from '../../redux/cartSlice'
 
 function Carts() {
-    const { cartList } = useSelector((state: any) => state.carts);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getTotal())
+    }, [])
+    const { cartList, cartAmountDiscount, cartAmount } = useSelector((state: any) => state.carts);
+    const DATA_CART = { cartList, cartAmountDiscount, cartAmount };
     const orgs_id = cartList.map((item: any) => item.org_id);
     const IS_MB = useFullScreen();
     function unique(arr: any) {
@@ -55,6 +64,10 @@ function Carts() {
                     </div>
                 </div>
             </Container>
+            <CartBottom
+                DATA_CART={DATA_CART}
+            />
+            <Footer />
         </>
     );
 }

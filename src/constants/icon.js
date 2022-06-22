@@ -150,6 +150,7 @@ import arrownLeftWhite from "../assets/icon/arrown-left-white.svg";
 import arrownRightWhite from "../assets/icon/arrown-right-white.svg";
 import cartPurpleBold from '../assets/icon/cartPurpleBold.svg';
 import calendarPurpleBold from "../assets/icon/calendarPurpleBold.svg";
+import cardDiscountOrange from "../assets/icon/cardDiscountOrange.svg";
 
 const icon = {
     arrownLeftWhite,
@@ -302,6 +303,7 @@ const icon = {
     removeBtn,
     alarmClock,
     cartPurpleBold,
-    calendarPurpleBold
+    calendarPurpleBold,
+    cardDiscountOrange
 };
 export default icon;

@@ -47,6 +47,100 @@
     height: 100px;
 }
 
+.re-cart-swipe-btn {
+    width: 52px;
+    height: 100%;
+    padding: 0px 12px;
+    display: flex;
+}
+
+.re-cart-swipe-btn button {
+    border: none;
+    outline: none;
+    margin: auto 0px;
+    background-color: var(--red-cl);
+    padding: 4px;
+    border-radius: 6px;
+}
+
+.re-cart-swipe-btn button img {
+    width: 20px;
+    height: 20px;
+}
+
+.re-cart-bottom {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background-color: var(--bgWhite);
+    box-shadow: 0px 4px 20px rgb(113 97 186 / 20%);
+}
+
+.re-cart-bottom__cnt {
+    padding: 12px 0px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.re-cart-bottom__total {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+.re-cart-bottom__total-discount {
+    justify-content: flex-end;
+}
+
+.re-cart-bottom__total-discount span {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 700;
+    color: var(--orange);
+}
+
+.re-cart-bottom__total-discount .icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 4px;
+}
+.re-cart-bottom__cal-item{
+    margin: 4px 0px;
+}
+.re-cart-bottom__cal-item span:nth-child(1){
+    font-size: 16px;
+    line-height: 18px;
+    color: var(--text-hover);
+}
+.re-cart-bottom__cal-item span:nth-child(2){
+    font-size: 18px;
+    line-height: 20px;
+    font-weight: 700;
+    color: var(--black);
+}
+.re-cart-bottom__pay{
+    align-items: flex-start;
+}
+.re-cart-bottom__pay .left,
+.re-cart-bottom__pay .right-money{
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 700;
+}
+.re-cart-bottom__pay .right{
+    display: flex;
+    align-items: flex-start;
+}
+.re-cart-bottom__pay .right-money{
+    margin-right: 12px;
+}
+.re-cart-bottom__pay button{
+    background-color: var(--orange);
+    border-radius: 8px;
+}
+
 @media only screen and (max-width: 1023px) {
     .re-cart-cnt {
         background-color: var(--grey_2);
@@ -105,6 +199,7 @@
         padding: 12px;
         border: solid 1px var(--grey);
         border-radius: 8px;
+        transition: all .4s;
     }
 
     .re-cart-item-cnt .cart-item__name-text {
@@ -160,7 +255,8 @@
         font-size: 14px;
         line-height: 20px;
     }
-    .re-cart-item__slide{
+
+    .re-cart-item__slide {
         display: none !important;
     }
 }
