@@ -10,7 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 interface IProps {
   e: any,
-  onPaymentMethodChange: (e: any) => void
+  onPaymentMethodChange: (e: any) => void,
+  setOpen?: (open?: boolean) => void,
 }
 
 function PaymentMethod(props: IProps) {
@@ -18,7 +19,7 @@ function PaymentMethod(props: IProps) {
   const dispatch = useDispatch();
   const { status } = useSelector((state: any) => state.PAYMENT.PAYMENT);
   const { PAYMENT_METHOD } = useSelector((state: any) => state.PAYMENT);
-  const { e, onPaymentMethodChange } = props;
+  const { e, onPaymentMethodChange, setOpen } = props;
   const [value, setValue] = useState('');
   const callPaymentMethodOnline = () => {
     if (status !== STATUS.SUCCESS) {
@@ -31,6 +32,13 @@ function PaymentMethod(props: IProps) {
   const handleOnChange = useCallback((event: any) => {
     setValue(event.target.value);
   }, [])
+
+  const onChoosePmtClick = (item: any) => {
+    onPaymentMethodChange(item)
+    if (setOpen) {
+      setOpen(false)
+    }
+  }
 
   return (
     <div>
@@ -70,7 +78,7 @@ function PaymentMethod(props: IProps) {
                       <li
                         className="pm-method_child-item"
                         key={item.id}
-                        onClick={() => onPaymentMethodChange(item)}
+                        onClick={() => onChoosePmtClick(item)}
                       >
                         <div
                           className="pm-method_child-item_box"

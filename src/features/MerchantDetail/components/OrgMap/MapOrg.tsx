@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import icon from "../../../../constants/icon";
 import { IOrganization } from "../../../../interface/organization";
 import OrgMapGoogle from "./OrgMapGoogle";
@@ -25,7 +26,16 @@ export default function MapOrg(props: IProps) {
         setOpenListOrg(!openListOrg);
     };
 
-    const handleSetLocation: any = (cardMapItem: any) => {
+    // const handleSetLocation = (cardMapItem: any) => {
+    //     if (onChangeCardMap) {
+    //         onChangeCardMap(cardMapItem);
+    //     }
+    //     setLocation({
+    //         lat: cardMapItem?.latitude,
+    //         long: cardMapItem?.longitude,
+    //     });
+    // };
+    const handleSetLocation = useCallback((cardMapItem: any) => {
         if (onChangeCardMap) {
             onChangeCardMap(cardMapItem);
         }
@@ -33,8 +43,8 @@ export default function MapOrg(props: IProps) {
             lat: cardMapItem?.latitude,
             long: cardMapItem?.longitude,
         });
-    };
-    useEffect(() => {
+    }, []);
+    useMemo(() => {
         setLocation({
             lat: org?.latitude,
             long: org?.longitude,

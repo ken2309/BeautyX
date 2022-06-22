@@ -5,9 +5,12 @@ import { IServicePromo } from '../../../interface/servicePromo';
 import ServicePromoItem from '../../ViewItemCommon/ServicePromoItem';
 import { Pagination } from '@mui/material';
 import scrollTop from '../../../utils/scrollTop';
+import useFullScreen from '../../../utils/useFullScreen';
+import ServiceResultItem from '../../Search/components/ServiceResultItem';
 
 function TabService(props: any) {
     const { keyword, acTab, itemCount, setItemCount } = props;
+    const IS_MB = useFullScreen();
     const [dataSort, setDataSort] = useState('default')
     const [data, setData] = useState({
         services: [],
@@ -91,12 +94,10 @@ function TabService(props: any) {
                 <ul className="re-ser-list">
                     {
                         data.services.map((item: IServicePromo, index: number) => (
-                            <li
+                            <li className='re-ser-list__item'
                                 key={index}
                             >
-                                <ServicePromoItem
-                                    service={item}
-                                />
+                                {IS_MB ? <ServiceResultItem service={item} /> : <ServicePromoItem service={item} />}
                             </li>
                         ))
                     }

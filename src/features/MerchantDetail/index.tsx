@@ -12,7 +12,7 @@ import {
 import {
   fetchAsyncServicesSpecial,
   fetchProductsSpecial,
-  onSaveOrgId
+  onSaveOrgId,
 } from '../../redux/org_specials/orgSpecialSlice';
 import { fetchAsyncOrgDiscounts } from '../../redux/org_discounts/orgDiscountsSlice'
 import { useDispatch, useSelector } from 'react-redux';
@@ -80,7 +80,6 @@ function MerchantDetail() {
   useEffect(() => {
     callOrgDetail()
   }, [sub_domain])
-  console.log(sub_domain);
   return (
     <div className="mb-cnt">
       <HeadTitle title={org?.name ? org.name : 'Đang tải...'} />

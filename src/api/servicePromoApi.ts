@@ -6,13 +6,16 @@ const location_user = JSON.parse(`${sessionStorage.getItem('USER_LOCATION')}`)
 
 class ServicePromo {
     getByKeyword = (values: any) => {
+        const LOCATION = AUTH_LOCATION();
         const url = `/services`;
         const params = {
             page: values.page,
             limit: 20,
             "filter[is_momo_ecommerce_enable]": true,
             "filter[keyword]": values.keyword,
-            "filter[location]": location_user ? `${location_user.lat},${location_user.long}` : ``
+            "filter[min_price]": values.price?.min || 1000,
+            "filter[max_price]": values.price?.max,
+            "filter[location]": LOCATION
         }
         return axiosClient.get(url, { params })
     }

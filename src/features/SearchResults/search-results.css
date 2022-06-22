@@ -101,4 +101,9 @@
         width: 50%;
         padding: 8px 4px;
     }
+    .re-ser-list__item{
+        width: 100% !important;
+        padding: 12px 0px;
+        border-bottom: solid 1px var(--grey);
+    }
 }

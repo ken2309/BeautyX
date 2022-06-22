@@ -22,6 +22,7 @@ import { pickBy, identity } from 'lodash'
 import order from '../../api/orderApi';
 import { IUserAddress } from '../../interface/userAddress'
 import Footer from '../Footer';
+import { formatAddCart } from '../../utils/cart/formatAddCart';
 
 
 function BuyNow() {
@@ -58,6 +59,21 @@ function BuyNow() {
             quantity: item.quantity
         }
     })
+    const listPayment = location.state?.products.map((item: any) => {
+        const is_type = 1;
+        const sale_price =
+            item.product?.special_price > 0
+                ? item.product?.special_price
+                : item.product?.retail_price;
+        const values = formatAddCart(
+            item.product,
+            org,
+            is_type,
+            item.quantity,
+            sale_price,
+        );
+        return values
+    })
     const params_string = {
         products: productsPost,
         services: [],
@@ -80,7 +96,7 @@ function BuyNow() {
                 history.push({
                     pathname: `/trang-thai-don-hang/${desc}`,
                     search: transaction_uuid,
-                    state: { state_payment },
+                    state: { state_payment, listPayment },
                 });
             } else {
                 //setPopUpFail(true)
