@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { IServiceUser, IUser_Items } from '../../../interface/servicesUser';
 import ServiceSoldItem from './ServiceSoldItem';
+import { formatDate } from '../../../utils/format';
 
 interface IProps {
     card_items: IServiceUser
@@ -22,7 +23,7 @@ function TreatmentCardItem(props: IProps) {
                 <div className="head_detail">
                     <div className="time">
                         Ngày tạo:
-                        <span>{card_items?.created_at}</span>
+                        <span>{formatDate(card_items?.created_at)}</span>
                     </div>
                     <div className="code">
                         Mã: <span>{card_items?.payment_gateway?.transaction_uuid}</span>

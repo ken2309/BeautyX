@@ -18,7 +18,7 @@ import PrivateRoute from "./PrivateRoute";
 import CartPaymentStatus from "../features/CartPaymentStatus";
 import ServicesUser from "../features/ServiceUser";
 //import DatePicker from "../components/DatePicker"
-import SearchResults from '../features/SearchResults/index';
+import SearchResults from "../features/SearchResults/index";
 import HomeTags from "../features/HomeResults/HomeTags";
 import HomePromo from "../features/HomeResults/HomePromo";
 import HomeProvince from "../features/HomeResults/HomeProvince";
@@ -41,11 +41,11 @@ import BuyNow from "../features/BuyNow";
 import Calendar from "../features/Calendar";
 import Carts from "../features/Carts"
 
-
 // feature mobile
 //import Calendar from "../featuresMobile/Calendar";
 //import MerchantComment from "../features/MerchantComment";
 import { useSelector } from "react-redux";
+import HomePage from "../features/HomePage";
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps
@@ -56,6 +56,10 @@ function RouterConfig(props: any) {
     {
       path: `/home`,
       component: <Home />,
+    },
+    {
+      path: `/homepage`,
+      component: <HomePage />,
     },
     {
       path: `/MOMO`,

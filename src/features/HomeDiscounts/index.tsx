@@ -14,7 +14,7 @@ function HomeDiscount() {
         <div className="home-discounts">
             <Container>
                 <div className="flex-row-sp home-discounts__title">
-                    <span>KHUYỄN MÃI HOT</span>
+                    <span>KHUYẾN MÃI HOT</span>
                     <span onClick={() => history.push("/giam-gia")}>
                         Xem thêm {">"}
                     </span>
@@ -23,7 +23,7 @@ function HomeDiscount() {
                     <ul className="home-discounts__list">
                         {discounts
                             .slice(0, 12)
-                            .map((discount: IDiscountPar, index: number) =>
+                            .map((discount: IDiscountPar, index: number) => (
                                 <>
                                     {discount.items.map(
                                         (item: IITEMS_DISCOUNT, i: number) => (
@@ -34,10 +34,9 @@ function HomeDiscount() {
                                                 />
                                             </li>
                                         )
-                                    )
-                                    }
+                                    )}
                                 </>
-                            )}
+                            ))}
                     </ul>
                 </div>
             </Container>

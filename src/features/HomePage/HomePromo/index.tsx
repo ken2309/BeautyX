@@ -1,12 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import HomeTitleSection from "../HomeTitleSection/index";
-import FilterServices from "../../../FilterServices";
-import { IServicePromo } from "../../../../interface/servicePromo";
-import servicePromoApi from "../../../../api/servicePromoApi";
-import ServicePromoItem from "../../../ViewItemCommon/ServicePromoItem";
-import icon from "../../../../constants/icon";
 import { useHistory } from "react-router-dom";
-import { AppContext } from "../../../../context/AppProvider";
+import servicePromoApi from "../../../api/servicePromoApi";
+import { AppContext } from "../../../context/AppProvider";
+import { IServicePromo } from "../../../interface/servicePromo";
+import FilterServices from "../../FilterServices";
+import ServicePromoItem from "../../ViewItemCommon/ServicePromoItem";
 
 interface IData {
     services: IServicePromo[];

@@ -18,7 +18,7 @@
     font-weight: 700;
     color: var(--bgWhite);
     border-radius: 12px 12px 0px 0px;
-    margin-bottom: 12px;
+    /* margin-bottom: 12px; */
     position: relative;
 }
 .home-se-sec-title::after {
@@ -69,14 +69,14 @@
 }
 /* home promo */
 .home-se-promo {
-    margin: 28px 0px;
+    margin: 16px 0px 24px 0;
 }
 .home-promo-ser .ser-list {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 16px;
-    margin: 24px 0;
+    margin: 16px 0 24px 0;
 }
 .home-promo-ser .ser-list li {
     background-color: var(--bgWhite);
@@ -271,7 +271,6 @@
     .home-promo-ser .ser-list {
         grid-template-columns: repeat(2, 1fr);
         display: grid;
-        margin: 0;
         width: unset;
     }
     .home-cate-tree-cnt {

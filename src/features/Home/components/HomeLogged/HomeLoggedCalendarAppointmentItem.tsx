@@ -6,10 +6,13 @@ import { AppContext } from "../../../../context/AppProvider";
 //import CalendarPopupDetail from "./CalendarPopupDetail";
 import AppointmentDetail from "../../../AppointmentDetail/index";
 import { STATUS } from '../../../../utils/statusApp'
+import useFullScreen from "../../../../utils/useFullScreen";
 
 export default function HomeLoggedCalendarAppointmentItem(props: any) {
   const { t } = useContext(AppContext);
+  const IS_MB = useFullScreen();
   const { datingList } = props;
+  console.log(datingList)
   const [org, setOrg] = useState<IOrganization>();
   const [branch, setBranch] = useState<IBranch>();
   const [openPopupDetail, setOpenPopupDetail] = useState(false);
@@ -53,7 +56,14 @@ export default function HomeLoggedCalendarAppointmentItem(props: any) {
     <div>
       <div className="calendar-appointment__item">
         <div className="calendar-appointment__item-row">
-          {checkdotstt(datingList.status)}
+          {!IS_MB && checkdotstt(datingList.status)}
+          <div className="appointment-item-time-mb">
+            <div className="flex-column container">
+              <span className="time">{datingList.time_start}</span>
+              {/* <span className="day-week">Thứ 5</span> */}
+              <span className="day">{datingList.date}</span>
+            </div>
+          </div>
           <div className="calendar-appointment__item-column">
             <div className="calendar-appointment__item-time">
               <p>{datingList.time_start}</p>
@@ -64,12 +74,22 @@ export default function HomeLoggedCalendarAppointmentItem(props: any) {
             <p className="calendar-appointment__item-address">
               {branch ? branch.full_address : org?.full_address}
             </p>
-            <button
-              onClick={handleOpenPopupDetail}
-              className="calendar-appointment__item-detail"
-            >
-              {t("app.details")} {">"}
-            </button>
+            <div className="flex-row">
+              {
+                IS_MB && <button
+                  onClick={handleOpenPopupDetail}
+                  className="calendar-appointment__item-detail"
+                >
+                  Quét mã QR
+                </button>
+              }
+              <button
+                onClick={handleOpenPopupDetail}
+                className="calendar-appointment__item-detail"
+              >
+                {t("app.details")} {">"}
+              </button>
+            </div>
           </div>
         </div>
       </div>
