@@ -1,5 +1,5 @@
 :root {
-    --bg-white:rgb(255,255,255);
+    --bg-white: rgb(255, 255, 255);
     --bg-gray-dark: #e5e5e5;
     --bg-gray: #f5f5f7;
     --purple: #7161ba;
@@ -7,13 +7,13 @@
     --text-black: #3b3a40;
     --text-hover: #a2a1ab;
     --text-op: #cac4e5;
-    --text-orange: #FF721F;
+    --text-orange: #ff721f;
     --bg-color: #eeedf2;
     --pink: #fff3f1;
     --pink-2: #fbf3f7;
     --pink-momo: #d82d8b;
-    --purple-text: #3A2C93;
-    --bg-purple: #7266BA;
+    --purple-text: #3a2c93;
+    --bg-purple: #7266ba;
 }
 a {
     color: unset;
@@ -81,6 +81,9 @@ html {
 * {
     margin: 0;
     padding: 0;
+}
+.mt-24 {
+    margin-top: 24px;
 }
 
 .flex-row {
@@ -160,7 +163,7 @@ body > iframe {
     cursor: pointer;
 }
 @media only screen and (max-width: 1023px) {
-    html{
-        background-color: #FFF;
+    html {
+        background-color: #fff;
     }
 }

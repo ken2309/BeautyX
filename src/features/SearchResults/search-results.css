@@ -32,7 +32,7 @@
     line-height: 20px;
     font-weight: bold;
     border-radius: 16px;
-    transition: all .3s;
+    transition: all 0.3s;
 }
 
 .se-re-cnt__right {
@@ -66,7 +66,10 @@
     .se-re-cnt {
         flex-direction: column;
     }
-
+    .se-re-cnt-title {
+        font-size: 14px;
+        font-weight: 700;
+    }
     .se-re-cnt__left {
         width: 100%;
         /* display: none; */
@@ -74,6 +77,7 @@
 
     .se-re-cnt__left-top {
         width: 100%;
+        padding: 0 12px;
         overflow-x: scroll;
     }
 
@@ -101,7 +105,7 @@
         width: 50%;
         padding: 8px 4px;
     }
-    .re-ser-list__item{
+    .re-ser-list__item {
         width: 100% !important;
         padding: 12px 0px;
         border-bottom: solid 1px var(--grey);
