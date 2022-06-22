@@ -129,6 +129,13 @@ function Head(props: any) {
     const action = open ? false : true
     dispatch(onToggleSearchCnt(action))
   }
+  const onGotoCart = () => {
+    if (USER) {
+      history.push("/gio-hang")
+    } else {
+      history.push("/sign-in?1")
+    }
+  }
   return (
     <div
       style={headerStyle}
@@ -234,7 +241,7 @@ function Head(props: any) {
                 </button>
                 <div className="flex-row">
                   <div
-                    onClick={() => history.push("/cart")}
+                    onClick={onGotoCart}
                     className="hd-cnt__right-cart"
                   >
                     <img src={icon.ShoppingCartSimpleWhite} alt="" />
@@ -259,7 +266,7 @@ function Head(props: any) {
             }
             {/* --- */}
             <div
-              onClick={() => history.push("/cart")}
+              onClick={onGotoCart}
               className="hd-cnt__right-cart"
             >
               <img src={icon.ShoppingCartSimple} alt="" />

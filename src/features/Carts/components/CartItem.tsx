@@ -7,6 +7,7 @@ import {
     descItem,
     removeItem,
     ascItem,
+    onClearPrevCartItem
 } from "../../../redux/cartSlice";
 import { useDispatch } from "react-redux";
 import icon from "../../../constants/icon";
@@ -30,22 +31,26 @@ import 'react-swipeable-list/dist/styles.css';
 interface IProps {
     inPayment?: boolean;
     cartItem: any;
+    org?: any
 }
 
 function CartItem(props: IProps) {
-    const { cartItem, inPayment } = props;
+    const { cartItem, inPayment, org } = props;
     const [open, setOpen] = useState(false);
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
     const history = useHistory();
     const [process, setProcess] = useState(0);
-    const [isCheck, setIsCheck] = useState(cartItem.isConfirm);
     const [openConfirm, setOpenConfirm] = useState(false);
-    const isConfirm = isCheck;
-    const handleConfirm = (e: any) => {
-        setIsCheck(e.target.checked);
-        const action = checkConfirm({ ...cartItem, isConfirm });
-        dispatch(action);
+    const handleConfirm = () => {
+        if (!org || org?.id === cartItem.org_id) {
+            const action = checkConfirm({ ...cartItem, isConfirm: !cartItem.isConfirm });
+            dispatch(action);
+        } else {
+            dispatch(onClearPrevCartItem())
+            const action = checkConfirm({ ...cartItem, isConfirm: !cartItem.isConfirm });
+            dispatch(action);
+        }
     };
     const handleAscCart = () => {
         if (cartItem.discount && cartItem.quantity === 1) {

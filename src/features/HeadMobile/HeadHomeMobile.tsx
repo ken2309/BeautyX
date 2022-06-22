@@ -2,13 +2,21 @@ import React from 'react';
 import Search from '../Search';
 import icon from '../../constants/icon';
 import './style.css'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { onToggleSearchCnt } from '../../redux/search/searchSlice';
 import { useHistory } from 'react-router-dom'
 
 function HeadHomeMobile() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const { USER } = useSelector((state: any) => state.USER);
+    const onGotoCart = () => {
+        if (USER) {
+            history.push("/gio-hang")
+        } else {
+            history.push("/sign-in?1")
+        }
+    }
     return (
         <>
             <Search />
@@ -28,7 +36,7 @@ function HeadHomeMobile() {
                         <img src={icon.calendarPurpleBold} alt="" className="img-con" />
                     </button>
                     <button
-                        onClick={() => history.push("/cart")}
+                        onClick={onGotoCart}
                         className="head-home-mb__button-item"
                     >
                         <img src={icon.cartPurpleBold} alt="" className="img-con" />

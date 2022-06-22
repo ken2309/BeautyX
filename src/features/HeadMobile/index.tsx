@@ -5,12 +5,13 @@ import icon from '../../constants/icon';
 interface IProps {
     title: string,
     onBack?: (back: boolean) => void,
-    handleCancelPayment?: () => void
+    handleCancelPayment?: () => void,
+    element?: any,
 }
 
 
 function HeadMobile(props: IProps) {
-    const { title, onBack, handleCancelPayment } = props;
+    const { title, onBack, handleCancelPayment, element } = props;
     const history = useHistory();
     const onBackClick = () => {
         if (handleCancelPayment) {
@@ -33,7 +34,9 @@ function HeadMobile(props: IProps) {
             <span style={style.headTitle} className="title">
                 {title}
             </span>
-            <div style={{width:"24px", height:"24px"}} ></div>
+            {
+                element ? element : <div style={{ width: "24px", height: "24px" }} ></div>
+            }
         </div>
     );
 }
