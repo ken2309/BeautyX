@@ -54,6 +54,7 @@
     .home-promo-ser .ser-list {
         display: flex;
         grid-gap: 12px;
+        margin: 12px 0 12px 0;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     }
     .home-promo-ser .ser-list li {
