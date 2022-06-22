@@ -13,6 +13,7 @@ function SectionOrgs(props: any) {
             item: item,
         };
         dispatch(addHistory(values));
+        dispatch(onToggleSearchCnt(false));
     };
     const dispatch = useDispatch();
     return ORGS.orgs.length > 0 ? (
@@ -32,9 +33,6 @@ function SectionOrgs(props: any) {
                                         pathname: `/org/${item.subdomain}`,
                                     }}
                                     className="flex-column search-empty-item__list-item"
-                                    onClick={() =>
-                                        dispatch(onToggleSearchCnt(false))
-                                    }
                                 >
                                     <img src={item.image_url} alt="" />
                                     <span>{item.name}</span>

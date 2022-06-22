@@ -2,7 +2,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import icon from "../../constants/icon";
-import { removeKeyWord } from "../../redux/search/searchSlice";
+import {
+    removeKeyWord,
+    onToggleSearchCnt,
+} from "../../redux/search/searchSlice";
 const listRecomment = [
     {
         id: 1,
@@ -55,6 +58,9 @@ function SectionEmpty() {
                                     to={{
                                         pathname: `/org/${item.subdomain}`,
                                     }}
+                                    onClick={() =>
+                                        dispatch(onToggleSearchCnt(false))
+                                    }
                                     className="flex-column search-empty-item__list-item"
                                 >
                                     <img src={item.image_url} alt="" />
@@ -77,6 +83,7 @@ function SectionEmpty() {
                                     </p>
                                 </div>
                                 <img
+                                    className="cursor-pointer"
                                     style={{ width: "24px" }}
                                     onClick={() => handleRemoveKeyWord(item)}
                                     src={icon.x}
