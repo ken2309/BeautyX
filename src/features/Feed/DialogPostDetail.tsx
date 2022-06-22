@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Dialog } from "@mui/material";
 import icon from "../../constants/icon";
 import Review from "../Reviews";
@@ -7,8 +7,13 @@ import Review from "../Reviews";
 import PostHead from "./Videos/components/post/PostHead";
 import PostReaction from "./Videos/components/post/PostReaction";
 import PostVideo from "./Videos/components/post/PostVideo";
-// store of detail post 
-    import { clearPrevState, fetchAsyncOrgComments } from '../../redux/org/orgCommentsSlice';
+// store of detail post
+import {
+    clearPrevState,
+    fetchAsyncOrgComments,
+} from "../../redux/org/orgCommentsSlice";
+import { useElementOnScreen } from "../../utils/useElementScreen";
+import useFullScreen from "../../utils/useFullScreen";
 // end
 
 function PopupPostDetail(props: any) {
@@ -27,32 +32,31 @@ function PopupPostDetail(props: any) {
         handleViewAllCmt,
     } = props;
     const dispatch = useDispatch();
+    const is_mb = useFullScreen();
     const ORG_COMMENTS = useSelector((state: any) => state.ORG_COMMENTS);
     const fetchInitState = () => {
         dispatch(clearPrevState());
-        dispatch(fetchAsyncOrgComments({
-            'org_id': org.id,
-            'page': 1
-        }))
-    }
+        dispatch(
+            fetchAsyncOrgComments({
+                org_id: org.id,
+                page: 1,
+            })
+        );
+    };
     useEffect(() => {
         let mounted = true;
-        if(mounted){
-            (org.id !== ORG_COMMENTS.org_id && ORG_COMMENTS.status !== 'SUCCESS')&&fetchInitState()
+        if (mounted) {
+            org.id !== ORG_COMMENTS.org_id &&
+                ORG_COMMENTS.status !== "SUCCESS" &&
+                fetchInitState();
         }
         return () => {
-            mounted = false
-        }
-    }, [ORG_COMMENTS.status])
+            mounted = false;
+        };
+    }, [ORG_COMMENTS.status]);
     return (
-        <Dialog
-            open={open}
-            onClose={() => setOpen(false)}
-        >
-            <div
-                className="close_btn"
-                onClick={() => setOpen(false)}
-            >
+        <Dialog open={open} onClose={() => setOpen(false)}>
+            <div className="close_btn" onClick={() => setOpen(false)}>
                 <img src={icon.closeCircleWhite} alt="" />
             </div>
             <div className="video-item_dialog">
@@ -85,6 +89,6 @@ function PopupPostDetail(props: any) {
                 </div>
             </div>
         </Dialog>
-    )
+    );
 }
 export default React.memo(PopupPostDetail);

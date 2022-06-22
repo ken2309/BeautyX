@@ -1,13 +1,13 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { STATUS } from '../status';
-import newsApi from '../../api/newsApi';
-import orgApi from '../../api/organizationApi';
-import commentsApi from '../../api/commentsApi';
-import favorites from '../../api/favorite';
-import serviceApi from '../../api/serviceApi';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { STATUS } from "../status";
+import newsApi from "../../api/newsApi";
+import orgApi from "../../api/organizationApi";
+import commentsApi from "../../api/commentsApi";
+import favorites from "../../api/favorite";
+import serviceApi from "../../api/serviceApi";
 // import { stat } from 'fs';
 
-const fetchAsyncData = async ({sub_domain,service_list}:any) => {
+const fetchAsyncData = async ({ sub_domain, service_list }: any) => {
     try {
         const resOrg = await orgApi.getOrgById(sub_domain);
         const resCmt = await commentsApi.getCommentsOrg({
@@ -23,12 +23,12 @@ const fetchAsyncData = async ({sub_domain,service_list}:any) => {
         //     });
         //     return res
         // })
-        for(i;i<service_list.length;i++){
+        for (i; i < service_list.length; i++) {
             let res = await serviceApi.getDetailById({
                 org_id: resOrg.data.context.id,
-                ser_id: service_list[i]
-            })
-            resSerList[i]= res.data.context;
+                ser_id: service_list[i],
+            });
+            resSerList[i] = res.data.context;
         }
         const payload = {
             org: resOrg.data,
@@ -37,84 +37,86 @@ const fetchAsyncData = async ({sub_domain,service_list}:any) => {
                 totalItem: (await resCmt).data.context.total,
                 page: 1,
             },
-            sers: resSerList
-        }
-        return payload
+            sers: resSerList,
+        };
+        return payload;
         // return new Promise(resolve=>resolve(payload))
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 };
 export const fetchAsyncDataVideos: any = createAsyncThunk(
     "VIDEOS/fetchAsyncDataVideos",
     async (vid: any) => {
         try {
-            let param_id = vid.slug.split('-');
+            let param_id = vid.slug.split("-");
             let org_id = param_id[0].slice(6, param_id[0].length);
             let ser_params = param_id[1]?.slice(6, param_id[1]?.length);
-            let sers = ser_params.split('_');
+            let sers = ser_params.split("_");
             const resVidData = await fetchAsyncData({
-                sub_domain:org_id,
-                service_list:sers
+                sub_domain: org_id,
+                service_list: sers,
             });
-            let payload = [{
-                video: vid,
-                resVidData
-            }]
-            return payload
+            let payload = [
+                {
+                    video: vid,
+                    resVidData,
+                },
+            ];
+            return payload;
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
-)
+);
 export const fetchAsyncVideos: any = createAsyncThunk(
     "VIDEOS/fetchAsyncVideos",
     async () => {
         try {
             const res = await newsApi.getVideo();
-            return res.data
+            return res.data;
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
-)
+);
 export const onFavoriteOrg: any = createAsyncThunk(
     "VIDEOS/onFavoriteOrg",
     async (org: any) => {
         console.log(org);
-        await favorites.postFavorite(org?.id)
+        await favorites.postFavorite(org?.id);
         const payload = {
             ...org,
             is_favorite: true,
-            favorites_count: org.favorites_count + 1
-        }
-        return payload
+            favorites_count: org.favorites_count + 1,
+        };
+        return payload;
     }
-)
+);
 export const onDeleteFavoriteOrg: any = createAsyncThunk(
     "VIDEOS/onDeleteFavoriteOrg",
     async (org: any) => {
         console.log(org);
-        await favorites.deleteFavorite(org?.id)
+        await favorites.deleteFavorite(org?.id);
         const payload = {
             ...org,
             is_favorite: false,
-            favorites_count: org.favorites_count + 1
-        }
-        return payload
+            favorites_count: org.favorites_count + 1,
+        };
+        return payload;
     }
-)
+);
 const initialState = {
     LISTVIDs: {
         data: [],
-        status: ''
+        status: "",
     },
     VIDEOs: {
         data: [],
-        status: ''
+        status: "",
     },
-    RESET_STATE: true
-}
+    RESET_STATE: true,
+};
 const videosSlice = createSlice({
     name: "VID",
     initialState,
@@ -124,57 +126,70 @@ const videosSlice = createSlice({
          * @description reset state for the next rerender.
          * @returns {object} state
          */
-        setResetInitialState: (state,payload) => {
-            state.RESET_STATE=payload.payload;
+        setResetInitialState: (state: any, payload: any) => {
+            state.RESET_STATE = payload.payload;
         },
-        resetVIDEOs: (state)=>{
-            state.VIDEOs=initialState.VIDEOs;
-        }
+        resetVIDEOs: (state: any) => {
+            state.VIDEOs = initialState.VIDEOs;
+        },
     },
     extraReducers: {
-        // fetch list post 
+        // fetch list post
         [fetchAsyncVideos.pending]: (state) => {
             return {
-                ...state, LISTVIDs: {
+                ...state,
+                LISTVIDs: {
                     ...state.LISTVIDs,
-                    status: STATUS.LOADING
-                }
-            }
+                    status: STATUS.LOADING,
+                },
+            };
         },
         [fetchAsyncVideos.fulfilled]: (state, { payload }) => {
             // console.log(payload)
             return {
                 ...state,
-                LISTVIDs: { data: payload, status: STATUS.SUCCESS }
-            }
+                LISTVIDs: { data: payload, status: STATUS.SUCCESS },
+            };
         },
         [fetchAsyncVideos.rejected]: (state) => {
-            return { ...state, LISTVIDs: { ...state.LISTVIDs, status: STATUS.LOADING } }
+            return {
+                ...state,
+                LISTVIDs: { ...state.LISTVIDs, status: STATUS.LOADING },
+            };
         },
-        // fetch data of post -- org -- ser -- 
+        // fetch data of post -- org -- ser --
         [fetchAsyncDataVideos.pending]: (state) => {
-            return { ...state,
-                        VIDEOs: { 
-                            ...state.VIDEOs,
-                            data:state.RESET_STATE?[]:[...state.VIDEOs.data],
-                            status: STATUS.LOADING } }
+            return {
+                ...state,
+                VIDEOs: {
+                    ...state.VIDEOs,
+                    data: state.RESET_STATE ? [] : [...state.VIDEOs.data],
+                    status: STATUS.LOADING,
+                },
+            };
         },
         [fetchAsyncDataVideos.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
                 RESET_STATE: false,
                 VIDEOs: {
-                    data: (state.VIDEOs.data.length === 0) ? payload : [...state.VIDEOs.data, ...payload],
-                    status: STATUS.SUCCESS
-                }
-            }
+                    data:
+                        state.VIDEOs.data.length === 0
+                            ? payload
+                            : [...state.VIDEOs.data, ...payload],
+                    status: STATUS.SUCCESS,
+                },
+            };
         },
         [fetchAsyncDataVideos.rejected]: (state) => {
-            return { ...state, VIDEOs: { ...state.VIDEOs, status: STATUS.LOADING } }
+            return {
+                ...state,
+                VIDEOs: { ...state.VIDEOs, status: STATUS.LOADING },
+            };
         },
         // favorites org
         [onFavoriteOrg.pending]: (state) => {
-            return state
+            return state;
         },
         [onFavoriteOrg.fulfilled]: (state, { payload }) => {
             return {
@@ -184,18 +199,18 @@ const videosSlice = createSlice({
                 //     is_favorite: true,
                 //     favorites_count: payload
                 // }
-            }
+            };
         },
-        [onFavoriteOrg.rejected]: (state,{payload}) => {
-            console.log(payload)
-            return state
+        [onFavoriteOrg.rejected]: (state, { payload }) => {
+            console.log(payload);
+            return state;
         },
         //remove favorite org
         [onDeleteFavoriteOrg.pending]: (state) => {
-            return state
+            return state;
         },
         [onDeleteFavoriteOrg.fulfilled]: (state, { payload }) => {
-            console.log(payload)
+            console.log(payload);
             return {
                 ...state,
                 // org: {
@@ -203,13 +218,13 @@ const videosSlice = createSlice({
                 //     is_favorite: false,
                 //     favorites_count: payload
                 // }
-            }
+            };
         },
         [onDeleteFavoriteOrg.rejected]: (state) => {
-            return state
+            return state;
         },
-    }
-})
+    },
+});
 const { reducer, actions } = videosSlice;
 export const { setResetInitialState, resetVIDEOs } = actions;
 export default reducer;

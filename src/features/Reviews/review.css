@@ -231,6 +231,7 @@
 .evaluate-comment__body span {
     color: var(--text-black);
     font-weight: bold;
+    word-break: break-word;
 }
 
 .evaluate-comment__body span:nth-child(2),

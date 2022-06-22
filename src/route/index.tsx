@@ -30,22 +30,22 @@ import SellerCenter from "../features/SellerCenter";
 import CommentsDetail from "../features/Comments/CommentsDetail";
 import Otp from "../features/Otp";
 import ResetPassword from "../features/ResetPassword";
-import Videos from "../features/Feed/Videos";
-import Blog from "../features/Blog";
 import ComboDetail from "../features/ComboDetail";
 import DiscountDetail from "../features/DiscountDetail";
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
-import CategoryTree from "../features/CategoryTree";
-import Booking from "../features/Booking";
-import BuyNow from "../features/BuyNow";
-import Calendar from "../features/Calendar";
-import Carts from "../features/Carts"
 
 // feature mobile
 //import Calendar from "../featuresMobile/Calendar";
 //import MerchantComment from "../features/MerchantComment";
 import { useSelector } from "react-redux";
 import HomePage from "../features/HomePage";
+import Videos from "../features/Feed/Videos";
+import Blog from "../features/Blog";
+import CategoryTree from "../features/CategoryTree";
+import Booking from "../features/Booking";
+import Calendar from "../features/Calendar";
+import BuyNow from "../features/BuyNow";
+import Carts from "../features/Carts";
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps
