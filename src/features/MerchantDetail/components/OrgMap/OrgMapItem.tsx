@@ -15,7 +15,7 @@ export default function OrgMapItem(props: IProps) {
                 handleSetLocation(item);
             }}
             style={
-                item.latitude === location.lat
+                item?.latitude === location.lat
                     ? {
                           backgroundColor: "var(--bgGray)",
                       }

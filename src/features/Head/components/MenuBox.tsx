@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 function MenuBox(props: any) {
   const history = useHistory();
   const { t } = useContext(AppContext);
-  const USER = useSelector((state:any) => state.USER.USER)
+  const USER = useSelector((state: any) => state.USER.USER)
   return (
     <ul>
       {USER ? (
@@ -39,7 +39,7 @@ function MenuBox(props: any) {
             </div>
           </li>
           <li
-            onClick={() => history.push("/Calendar")}
+            onClick={() => history.push("/lich-hen?tab=1")}
             className="{menu.menuBoxItem}"
           >
             <div className="flex-row hd-menu__item">
@@ -48,7 +48,7 @@ function MenuBox(props: any) {
             </div>
           </li>
           <li
-            onClick={() => history.push("/goi-dich-vu")}
+            onClick={() => history.push("/lich-hen?tab=2")}
             className="{menu.menuBoxItem}"
           >
             <div className="flex-row hd-menu__item">
@@ -56,7 +56,7 @@ function MenuBox(props: any) {
               <span className="hd-menu__item-text">{t('app.my_services')}</span>
             </div>
           </li>
-          <li onClick={()=>history.push('/tai-khoan/ma-uu-dai')} className="{menu.menuBoxItem}">
+          <li onClick={() => history.push('/tai-khoan/ma-uu-dai')} className="{menu.menuBoxItem}">
             <div className="flex-row hd-menu__item">
               <img src={icon.Ticket} alt="" />
               <span className="hd-menu__item-text">{t("Header.my_codes")}</span>

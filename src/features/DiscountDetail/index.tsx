@@ -36,11 +36,8 @@ import {
 import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
 import ReviewsContainer from "../ReviewsContainer";
 import Footer from "../Footer";
-import { useLocation } from "react-router-dom";
 
 function DiscountDetail() {
-    const location: any = useLocation();
-    console.log(location.state);
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
     const IS_MB = useFullScreen();
     const discount: IDiscountPar = DISCOUNT.discount;

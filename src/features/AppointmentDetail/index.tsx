@@ -6,7 +6,7 @@ import { TransitionProps } from "@mui/material/transitions";
 import icon from "../../constants/icon";
 import formatPrice from "../../utils/formatPrice";
 import onErrorImg from "../../utils/errorImg";
-import {Service} from '../../interface/service';
+import { Service } from '../../interface/service';
 import useFullScreen from "../../utils/useFullScreen";
 
 const view = window.screen.width;
@@ -22,8 +22,7 @@ const Transition = React.forwardRef(function Transition(
 function AppointmentDetail(props: any) {
   const { openPopupDetail, setOpenPopupDetail, datingList, org } = props;
   const fullScreen = useFullScreen();
-  console.log(datingList)
-  
+
   const [services, setServices] = useState<Service[]>([]);
   useEffect(() => {
     async function handleSetDetail() {
@@ -67,7 +66,7 @@ function AppointmentDetail(props: any) {
             <div className="flex-row app-de__head-status">
               <div className="flex-row app-de__head-status-it">
                 <span></span>
-                {datingList.status?.length === 0 ? "Chưa xác nhận": datingList.status}
+                {datingList.status?.length === 0 ? "Chưa xác nhận" : datingList.status}
               </div>
             </div>
             <div className="flex-row">
@@ -89,7 +88,7 @@ function AppointmentDetail(props: any) {
                   <div className="item">
                     <img
                       src={item.image ? item?.image_url : org?.image_url}
-                      onError={(e)=>onErrorImg(e)}
+                      onError={(e) => onErrorImg(e)}
                       alt=""
                       className="item-img"
                     />

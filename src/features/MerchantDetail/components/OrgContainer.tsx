@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { IOrganization } from "../../../interface/organization";
 import { onActiveTab } from "../../../redux/org/orgSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import OrgGalleries from "./OrgPages/OrgGalleries/OrgGalleries";
 import useFullScreen from "../../../utils/useFullScreen";
 import { Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { AppContext } from "../../../context/AppProvider";
 
 interface IProps {
     org: IOrganization;
@@ -24,17 +25,18 @@ interface ITabs {
 
 function OrgContainer(props: IProps) {
     const is_mb = useFullScreen();
+    const {t} = useContext(AppContext)
     const { totalItem } = useSelector((state: any) => state.ORG_COMMENTS);
     const { org, tab } = props;
     const dispatch = useDispatch();
     let tabs = [
         { id: 1, title: "Deal Hot" },
-        { id: 2, title: "Dịch vụ" },
-        { id: 3, title: "Sản phẩm" },
+        { id: 2, title: t("Mer_de.services") },
+        { id: 3, title: t("Mer_de.products") },
         { id: 4, title: "Combos" },
-        { id: 5, title: is_mb ? "Chi tiết" : "Doanh nghiệp" },
-        { id: 6, title: `Đánh giá (${totalItem > 30 ? "30+" : totalItem})` },
-        { id: 7, title: "Hình ảnh" },
+        { id: 5, title: is_mb ? t("app.details") : t("pr.merchant_detail") },
+        { id: 6, title: `${t("Mer_de.feedback")} (${totalItem > 30 ? "30+" : totalItem})` },
+        { id: 7, title: t("Mer_de.galleries") },
     ];
     if (is_mb === false) {
         tabs = tabs.filter((item: any) => item.id !== 6);

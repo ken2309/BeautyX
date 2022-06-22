@@ -24,22 +24,43 @@ import { formatDatePost } from "../../utils/formatDate";
 import { extraPaymentMethodId } from "../PaymentMethod/extraPaymentMethodId";
 import MapOrg from "../MerchantDetail/components/OrgMap/MapOrg";
 import BookingNowBill from "./components/BookingNowBill";
+import { formatAddCart } from "../../utils/cart/formatAddCart";
+import { fetchAsyncOrg } from '../../redux/org/orgSlice';
+import { STATUS } from '../../redux/status';
+import apointmentApi from "../../api/apointmentApi";
+import Notification from "../../components/Notification";
+
 
 const date = dayjs();
 function Booking() {
+    const dispatch = useDispatch();
     const { SERVICES_BOOK } = useSelector((state: any) => state);
+    const { org, status } = useSelector((state: any) => state.ORG);
     const IS_MB = useFullScreen();
     const FLAT_FORM = EXTRA_FLAT_FORM();
+    const [openNoti, setOpenNoti] = useState({
+        title: "",
+        open: false,
+        titleLeft: "",
+        titleRight: "",
+        onClickLeft: () => { },
+        onClickRight: () => { }
+    })
     const { USER } = useSelector((state: any) => state.USER);
     const { payments_method } = useSelector(
         (state: any) => state.PAYMENT.PAYMENT
     );
     const branchRef = useRef<any>();
     const history = useHistory();
-    const dispatch = useDispatch();
     const location: any = useLocation();
+    const callOrgDetail = () => {
+        if (location.state.org.id !== org?.id || status !== STATUS.SUCCESS) {
+            dispatch(fetchAsyncOrg(location.state.org.id))
+        }
+    }
     useEffect(() => {
         if (location.state) {
+            callOrgDetail()
             const action = {
                 org: location.state.org,
                 services: location.state.services,
@@ -49,8 +70,8 @@ function Booking() {
             history.push("/home");
         }
     }, [location.state]);
-    const { org, servicesBook } = SERVICES_BOOK;
-    const branches = org?.branches.concat(org);
+    const { servicesBook } = SERVICES_BOOK;
+    const branches = org?.branches?.concat(org);
     //const [branch, setChooseBranch] = useState<any>();
     const [open, setOpen] = useState(false);
     const [chooseE_wall, setChooseE_wall] = useState<any>();
@@ -77,7 +98,7 @@ function Booking() {
         ?.filter(Boolean);
     const services = servicesBook.map((item: any) => {
         return {
-            id: item.service.id,
+            id: item.service?.id,
             quantity: item.quantity,
         };
     });
@@ -96,10 +117,31 @@ function Booking() {
         description: "",
         branch_id: bookTime.branch_id,
     };
-    //console.log(params_string)
+    const listPayment = location.state?.services.map((item: any) => {
+        const is_type = 2;
+        const sale_price =
+            item.service?.special_price > 0
+                ? item.service?.special_price
+                : item.service?.price;
+        const values = formatAddCart(
+            item.service,
+            org,
+            is_type,
+            item.quantity,
+            sale_price,
+            item.service.discount
+        );
+        return values
+    })
+    const dayBook = formatDatePost(bookTime.date);
+    const action = {
+        note: "",
+        time_start: `${dayBook} ${bookTime.time}:00`,
+        branch: bookTime.branch_id,
+        order_id: location.state.order_id,
+        service_ids: services?.map((item: any) => item?.id),
+    };
     async function handlePostOrder() {
-        //setLoading(true)
-        const dayBook = formatDatePost(bookTime.date);
         const params = pickBy(params_string, identity);
         try {
             const response = await order.postOrder(org?.id, params);
@@ -108,27 +150,61 @@ function Booking() {
             const transaction_uuid =
                 state_payment.payment_gateway.transaction_uuid;
             if (response.data.context.status !== "CANCELED") {
-                const action = {
-                    note: "",
-                    time_start: `${dayBook} ${bookTime.time}:00`,
-                    branch: bookTime.branch_id,
+                const actionAfter = {
+                    ...action,
                     org_id: org?.id,
                     order_id: response.data.context.id,
-                    service_ids: services?.map((item: any) => item?.id),
-                    quantity: services[0].quantity,
-                };
+                    quantity: services[0]?.quantity,
+                }
                 history.push({
                     pathname: `/trang-thai-don-hang/${desc}`,
                     search: transaction_uuid,
-                    state: { state_payment, action },
+                    state: { state_payment, actionAfter, listPayment },
                 });
             } else {
-                //setPopUpFail(true)
+                setOpenNoti({
+                    open: true,
+                    title: "Tạo đơn hàng thất bại",
+                    titleLeft: "Đã hiểu",
+                    titleRight: "Về trang chủ",
+                    onClickLeft: () => setOpenNoti({ ...openNoti, open: false }),
+                    onClickRight: () => history.push('/home')
+                })
             }
             //setLoading(false);
         } catch (err) {
             console.log(err);
-            //setLoading(false);
+            setOpenNoti({
+                open: true,
+                title: "Tạo đơn hàng thất bại",
+                titleLeft: "Đã hiểu",
+                titleRight: "Về trang chủ",
+                onClickLeft: () => setOpenNoti({ ...openNoti, open: false }),
+                onClickRight: () => history.push('/home')
+            })
+        }
+    }
+    const handlePostApps = async () => {
+        try {
+            await apointmentApi.postAppointment(action, org?.id);
+            setOpenNoti({
+                open: true,
+                title: "Đặt hẹn thành công",
+                titleLeft: "Xem lịch hẹn",
+                titleRight: "Về trang chủ",
+                onClickLeft: () => history.push('/lich-hen?tab=1'),
+                onClickRight: () => history.push('/home')
+            })
+        } catch (error) {
+            console.log(error)
+            setOpenNoti({
+                open: true,
+                title: "Có lỗi xảy ra trong quá trình đặt hẹn",
+                titleLeft: "Đã hiểu",
+                titleRight: "Về trang chủ",
+                onClickLeft: () => setOpenNoti({ ...openNoti, open: false }),
+                onClickRight: () => history.push('/home')
+            })
         }
     }
     const onChangeCardMap = (itemMap: any) => {
@@ -148,7 +224,7 @@ function Booking() {
                         return handlePostOrder();
                     }
                 } else {
-                    //run post appointment
+                    handlePostApps()
                 }
             } else {
                 //pop up choose time request
@@ -166,7 +242,7 @@ function Booking() {
             >
                 <div className="booking-cnt">
                     <div className="booking-cnt__left">
-                        {org && (
+                        {(IS_MB === false && org) && (
                             <MapOrg
                                 onChangeCardMap={onChangeCardMap}
                                 org={org}
@@ -282,7 +358,7 @@ function Booking() {
                                 name=""
                                 id=""
                                 cols={30}
-                                rows={1}
+                                rows={5}
                             ></textarea>
                         </div>
                         <div
@@ -299,7 +375,10 @@ function Booking() {
                             />
                         </div>
                         <div className="booking-cnt__bot">
-                            <BookingNowBill />
+                            {
+                                location.state.TYPE === "BOOK_NOW" &&
+                                <BookingNowBill />
+                            }
                             <ButtonLoading
                                 title={
                                     location.state?.TYPE === "BOOK_NOW"
@@ -318,6 +397,14 @@ function Booking() {
                 setBookTime={setBookTime}
                 open={open}
                 setOpen={setOpen}
+            />
+            <Notification
+                content={openNoti.title}
+                open={openNoti.open}
+                titleBtnLeft={openNoti.titleLeft}
+                titleBtnRight={openNoti.titleRight}
+                onClickLeft={openNoti.onClickLeft}
+                onClickRight={openNoti.onClickRight}
             />
             <Footer />
         </>

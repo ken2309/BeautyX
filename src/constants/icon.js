@@ -148,6 +148,8 @@ import alarmClock from "../assets/icon/alarm-clock.svg";
 import list from "../assets/icon/list.svg";
 import arrownLeftWhite from "../assets/icon/arrown-left-white.svg";
 import arrownRightWhite from "../assets/icon/arrown-right-white.svg";
+import cartPurpleBold from '../assets/icon/cartPurpleBold.svg';
+import calendarPurpleBold from "../assets/icon/calendarPurpleBold.svg";
 
 const icon = {
     arrownLeftWhite,
@@ -299,5 +301,7 @@ const icon = {
     addBtn,
     removeBtn,
     alarmClock,
+    cartPurpleBold,
+    calendarPurpleBold
 };
 export default icon;

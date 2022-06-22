@@ -17,3 +17,11 @@ export const checkTimeExpired = (time_expired: any) => {
     }
     return dateExpired
 }
+
+export const formatDistance = (distance?: number) => {
+    let dis: string = '';
+    if (distance) {
+        dis = distance < 1000 ? `${Math.round(distance)} m` : `${Math.round(distance / 1000)} km`;
+    }
+    return dis;
+}

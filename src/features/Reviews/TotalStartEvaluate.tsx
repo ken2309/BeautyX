@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import Rating from "@mui/material/Rating";
+import { AppContext } from "../../context/AppProvider";
 interface IProps {
     totalItem: number | undefined;
     openSeeMoreCmt: any;
 }
 export default function TotalStartEvaluate(props: IProps) {
+    const {t} = useContext(AppContext);
     const [value, setValue] = React.useState<number | null>(4);
     const { totalItem, openSeeMoreCmt } = props;
     return (
@@ -27,7 +29,7 @@ export default function TotalStartEvaluate(props: IProps) {
                         />
                     </div>
                     <div className="evaluate-rating__quantity">
-                        <span>{totalItem} đánh giá</span>
+                        <span>{totalItem} {t("Mer_de.feedback")}</span>
                     </div>
                 </div>
                 <div className="evaluate-rating__right">
@@ -74,7 +76,7 @@ export default function TotalStartEvaluate(props: IProps) {
                             />
                         </div>
                         <div className="rating-left__text">
-                            {totalItem} đánh giá
+                            {totalItem} {t("Mer_de.feedback")}
                         </div>
                     </div>
                 </div>

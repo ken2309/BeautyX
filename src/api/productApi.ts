@@ -1,6 +1,7 @@
 import axiosClient from "./axios";
 import { pickBy, identity } from "lodash";
 import { AUTH_HEADER_PARAM_GET } from "../utils/authHeader";
+import { AUTH_LOCATION } from './authLocation';
 
 class ProductApi {
     getByOrgId = (values: any) => {
@@ -59,6 +60,23 @@ class ProductApi {
         const params = pickBy(paramsOb, identity);
         return axiosClient.get(url, { params });
     };
+    getProductsSingle = (values: any) => {
+        const url = `/products`;
+        const LOCATION = AUTH_LOCATION();
+        const paramsOb = {
+            page: values.page || 1,
+            limit: 15,
+            "filter[keyword]": values.keyword,
+            "filter[location]": LOCATION,
+            "filter[is_featured]": values.is_featured,
+            "filter[special_price]": values.special_price,
+            "filter[min_price]": values.price?.min || 1000,
+            "filter[max_price]": values.price?.max,
+            "sort": values.sort
+        }
+        const params = pickBy(paramsOb, identity);
+        return axiosClient.get(url, { params })
+    }
 }
 const productsApi = new ProductApi();
 export default productsApi;

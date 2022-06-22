@@ -1804,7 +1804,9 @@ img {
     .homelogged-calendar__right .day-cell--faded {
         font-size: 14px;
     }
-
+    .homelogged-calendar__right .day-cell{
+        padding: 4px 0px;
+    }
     .day-cell--today {
         border: 1px solid var(--purple);
     }
@@ -1940,12 +1942,7 @@ img {
     }
 
     .homelogged-calendar .section-title {
-        color: var(--purple);
-        font-size: 18px;
-        line-height: 24px;
-        font-weight: 500;
-        text-align: center !important;
-        padding: 0px;
+        display: none;
     }
 
     .homelogged-calendar__content {
@@ -1970,9 +1967,7 @@ img {
     }
 
     .calendar {
-        padding: 16px;
-        border-top: solid 1px var(--purple);
-        /* border-bottom: solid 1px var(--purple); */
+        padding: 16px 12px;
     }
 
     .calender-wrap {
@@ -1980,10 +1975,9 @@ img {
     }
 
     .calendar-mounth {
-        padding: 16px 0px;
-        /* background-color: var(--purple); */
         border-radius: 8px 8px 0 0;
         overflow: hidden;
+        margin-top: 20px;
     }
 
     .week-container {
@@ -1991,7 +1985,7 @@ img {
     }
 
     .calendar-status {
-        padding: 4px 24px;
+       display: none;
     }
 
     .calendar-status__title {
@@ -2018,11 +2012,13 @@ img {
 
     .calendar-choosedate {
         padding: 0px;
+        background-color: var(--bgWhite);
     }
 
     .homelogged-calendar__right {
         width: 100%;
-        padding: 24px;
+        padding: 12px;
+        background-color: var(--bgWhite);
     }
 
     .week-container__right {

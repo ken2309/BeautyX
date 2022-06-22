@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IOrganization } from "../../../../interface/organization";
 import {
@@ -12,6 +12,7 @@ import { Service } from "../../../../interface/service";
 import OrgServiceItem from "./OrgServiceItem";
 import { STATUS } from "../../../../redux/status";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { AppContext } from "../../../../context/AppProvider";
 
 interface IProps {
     org: IOrganization;
@@ -19,6 +20,7 @@ interface IProps {
 
 function OrgServices(props: IProps) {
     const dispatch = useDispatch();
+    const {t} = useContext(AppContext)
     const { CATE, SERVICES, choose_cate, org_id } = useSelector(
         (state: any) => state.ORG_SERVICES
     );
@@ -92,7 +94,7 @@ function OrgServices(props: IProps) {
                             }
                             className="cate-list__item-title"
                         >
-                            Tất cả
+                            {t("cart.all")}
                         </span>
                     </li>
                     {categories.map((item: any, index: number) => (

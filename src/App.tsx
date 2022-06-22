@@ -11,7 +11,6 @@ function App() {
     <div>
       <AppProvider>
         <RouterConfig />
-        {/* <BlurModal /> */}
       </AppProvider>
     </div>
   );

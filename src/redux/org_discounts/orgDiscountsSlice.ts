@@ -20,7 +20,8 @@ export const fetchAsyncOrgDiscounts: any = createAsyncThunk(
             const res = await discountApi.getByOrgId(values);
             const payload = {
                 discounts: res.data.context.data,
-                org_id: values.org_id
+                org_id: values.org_id,
+                totalItem: res.data.context.total
             }
             return payload
         } catch (error) {
@@ -32,6 +33,7 @@ const initialState = {
     org_id: null,
     DISCOUNTS: {
         discounts: [],
+        totalItem: 1,
         status_list: "",
     },
     DISCOUNT: {
@@ -77,7 +79,8 @@ const orgDiscountsSlice = createSlice({
                 org_id: payload.org_id,
                 DISCOUNTS: {
                     discounts: payload.discounts,
-                    status_list: STATUS.SUCCESS
+                    status_list: STATUS.SUCCESS,
+                    totalItem: payload.totalItem
                 }
             }
         },
