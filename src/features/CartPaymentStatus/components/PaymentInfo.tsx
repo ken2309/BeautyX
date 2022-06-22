@@ -76,7 +76,7 @@ function PaymentInfo(props: any) {
                                     data.services.length > 0 &&
                                     <button
                                         onClick={() => history.push({
-                                            pathname: '/Calendar',
+                                            pathname: '/lich-hen',
                                         })}
                                     >
                                         Xem lịch hẹn

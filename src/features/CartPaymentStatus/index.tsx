@@ -30,7 +30,8 @@ function CartPaymentStatus() {
     const res: any = location?.state?.state_payment;
     const intervalRef = useRef<any>();
     const transaction_uuid = res?.payment_gateway?.transaction_uuid;
-    const action = location?.state?.action
+    const action = location?.state?.actionAfter
+    console.log(action)
     const listPayment = location.state?.listPayment;
     window.onbeforeunload = function () {
         return 'Are you sure you want to leave?';
@@ -60,9 +61,7 @@ function CartPaymentStatus() {
             switch (status) {
                 case "PAID":
                     if (action) {
-                        for (var i = 1; i <= action.quantity; i++) {
-                            handlePostApp()
-                        }
+                        handlePostApp()
                     }
                     setOrderStatus(status)
                     timerRender[0] = -1;
