@@ -10,9 +10,9 @@ function ExtraFlatForm() {
     //?email=toan@myspa.vn&telephone=0392645745&name=m&momo=true
     const location = useLocation();
     const params = extraParamsUrl();
-    console.log(location)
+
     const flatForm = location.pathname.slice(1, params ? location.pathname.length - 1 : location.pathname.length);
-    
+
     const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
     if (!FLAT_FORM) {
         switch (flatForm) {

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Container } from "@mui/material";
 import { IOrganization } from "../../../interface/organization";
 import onErrorImg from "../../../utils/errorImg";
@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import PopupDetailContact from "./PopupDetailContact";
 import { extraOrgTimeWork } from "./Functions/extraOrg";
+import { AppContext } from "../../../context/AppProvider";
 
 interface IProps {
     org: IOrganization;
@@ -21,6 +22,7 @@ interface IProps {
 
 function OrgDetail(props: IProps) {
     const { org, galleries } = props;
+    const {t} = useContext(AppContext);
     const { totalItem } = useSelector((state: any) => state.ORG_COMMENTS);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -187,7 +189,7 @@ function OrgDetail(props: IProps) {
                                                 className="icon"
                                             />
                                             <span className="title">
-                                                Thời gian hoạt động{" "}
+                                                {t("Mer_de.time_work")}{" "}
                                                 {time_works_today?.day_week}:
                                             </span>
                                         </div>
@@ -266,8 +268,9 @@ function OrgDetail(props: IProps) {
                                     onClick={handleFavoriteOrg}
                                 >
                                     {org?.is_favorite
-                                        ? "Đang theo dõi"
-                                        : "Theo dõi"}
+                                        ? t("Mer_de.flowing")
+                                        : t("Mer_de.flow")
+                                    }
                                 </button>
                                 <br />
                                 <button
@@ -275,7 +278,7 @@ function OrgDetail(props: IProps) {
                                         setOpenPopupContact(true);
                                     }}
                                 >
-                                    Liên hệ tư vấn
+                                    {t("Mer_de.contact")}
                                 </button>
                             </div>
                         </div>

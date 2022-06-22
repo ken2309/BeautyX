@@ -10,12 +10,13 @@ import { IUserAddress } from '../../../../interface/userAddress';
 import './style.css'
 
 interface IProps {
-    onSetAddressDefault?: (address?: any) => void
+    onSetAddressDefault?: (address?: any) => void,
+    disableEdit?: boolean
 }
 
 function UserPaymentInfo(props: IProps) {
     const { t } = useContext(AppContext);
-    const { onSetAddressDefault } = props;
+    const { onSetAddressDefault, disableEdit } = props;
     const history = useHistory();
     const dispatch = useDispatch();
     const USER = useSelector((state: any) => state.USER.USER);
@@ -26,7 +27,7 @@ function UserPaymentInfo(props: IProps) {
         if (status !== STATUS.SUCCESS) {
             dispatch(fetchAsyncUserAddress())
         } else if (status === STATUS.SUCCESS) {
-            const addressDefault = address.find((item: any) => item.is_default === true);
+            const addressDefault = address?.find((item: any) => item.is_default === true);
             setUserAddress(addressDefault)
             if (onSetAddressDefault) {
                 onSetAddressDefault(addressDefault)
@@ -53,13 +54,18 @@ function UserPaymentInfo(props: IProps) {
                             >
                                 {USER?.fullname}
                             </td>
-                            <td>
-                                <button
-                                    onClick={() => history.push('/tai-khoan/thong-tin-ca-nhan')}
-                                >
-                                    <img src={icon.edit} alt="" />
-                                </button>
-                            </td>
+                            {
+                                disableEdit ?
+                                    <></>
+                                    :
+                                    <td>
+                                        <button
+                                            onClick={() => history.push('/tai-khoan/thong-tin-ca-nhan')}
+                                        >
+                                            <img src={icon.edit} alt="" />
+                                        </button>
+                                    </td>
+                            }
                         </tr>
                         <tr>
                             <td
@@ -82,13 +88,18 @@ function UserPaymentInfo(props: IProps) {
                                 className='user-pm-de-cnt__tb-left'>
                                 {useAddress?.address}
                             </td>
-                            <td>
-                                <button
-                                    onClick={() => history.push('/tai-khoan/thong-tin-ca-nhan')}
-                                >
-                                    <img src={icon.edit} alt="" />
-                                </button>
-                            </td>
+                            {
+                                disableEdit ?
+                                    <></>
+                                    :
+                                    <td>
+                                        <button
+                                            onClick={() => history.push('/tai-khoan/thong-tin-ca-nhan')}
+                                        >
+                                            <img src={icon.edit} alt="" />
+                                        </button>
+                                    </td>
+                            }
                         </tr>
                     </tbody>
                 </table>

@@ -4,7 +4,7 @@ import './style.css';
 
 interface IProps {
     loading: boolean,
-    title: string,
+    title?: string,
     onClick?: () => void,
     type?: any
 }

@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import dateNow from "../utils/dateExp";
 import { useDispatch } from 'react-redux';
-import { unwrapResult } from '@reduxjs/toolkit'
+import dayjs from "dayjs";
 import { fetchAsyncUser } from '../redux/USER/userSlice';
 import { fetchAsyncHome, fetchAsyncDiscounts } from '../redux/home/homeSlice';
 import { fetchAsyncNews, fetchAsyncVideos } from '../redux/blog/blogSlice';
@@ -19,6 +19,7 @@ export default function AppProvider({ children }) {
   const [userInfo, setUserInfo] = useState();
   const [sign, setSign] = useState();
   const [tempCount, setTempleCount] = useState(0);
+  const [dayObj, setDayObj] = useState(dayjs())
   if (localStorage.getItem("_WEB_US")) {
     const tokenDecoded = JSON.parse(`${localStorage.getItem("_WEB_US")}`);
     let exp = tokenDecoded?.token_expired_at;
@@ -79,6 +80,7 @@ export default function AppProvider({ children }) {
     setSign,
     tempCount,
     setTempleCount,
+    dayObj, setDayObj
   };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

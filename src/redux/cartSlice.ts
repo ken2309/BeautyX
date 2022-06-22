@@ -3,10 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const storageName = 'web-booking-cart'
 const storage = JSON.parse(`${localStorage.getItem(storageName)}`);
 const initialState = {
+    org: null,
     cartList: localStorage.getItem(storageName) ? storage : [],
     cartQuantity: 0,
     cartAmountDiscount: 0,
-    cartAmount: 0
+    cartAmount: 0,
 }
 const cart = createSlice({
     name: 'carts',
@@ -116,9 +117,30 @@ const cart = createSlice({
         clearByCheck: (state, action) => {
             state.cartList = action.payload
             localStorage.setItem(storageName, JSON.stringify(state.cartList))
+        },
+        onClearPrevCartItem:(state)=>{
+            const newCartList = state.cartList.map((item:any)=>{
+                return {
+                    ...item,
+                    isConfirm: false
+                }
+            })
+            state.cartList = newCartList
         }
     }
 });
 const { reducer, actions } = cart;
-export const { addCart, descItem, ascItem, checkConfirm, removeItem, chooseAll, getTotal, unCheck, clearAllCart, clearByCheck } = actions;
+export const {
+    addCart,
+    descItem,
+    ascItem,
+    checkConfirm,
+    removeItem,
+    chooseAll,
+    getTotal,
+    unCheck,
+    clearAllCart,
+    clearByCheck,
+    onClearPrevCartItem
+} = actions;
 export default reducer;

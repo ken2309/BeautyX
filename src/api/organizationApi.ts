@@ -18,17 +18,17 @@ class Organization {
     return axiosClient.get(url, AUTH_HEADER());
   };
   getOrgByKeyword = (values: any) => {
-    const url = `/organizations?page=1&limit=15`;
+    const url = `/organizations`;
     const LOCATION = AUTH_LOCATION();
     const paramsOb = {
-      "page": values.page,
+      "page": values.page || 1,
       "limit": 15,
       "filter[keyword]": values.keyword,
       "sort": "-priority",
       "filter[tags]": values.tags,
       "filter[province_code]": values.province,
-      "filter[min_price]": values.price.min,
-      "filter[max_price]": values.price.max,
+      "filter[min_price]": values.price?.min,
+      "filter[max_price]": values.price?.max,
       "include": "favorites_count|tags|branches",
       "filter[location]": LOCATION
     }

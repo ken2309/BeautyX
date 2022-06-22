@@ -41,6 +41,7 @@ import dealhot from "../assets/image/homeBannerDeal/dealhot.png";
 import dealhot1 from "../assets/image/homeBannerDeal/dealhot1.png";
 import dealhot2 from "../assets/image/homeBannerDeal/dealhot2.png";
 import sellerCenterImg from "../assets/image/sellerCenterImg.jpeg";
+import beautyx from '../assets/image/beautyx_icon.png';
 
 // social
 import facebook from "../assets/image/social/facebook.png";
@@ -86,6 +87,7 @@ const img = {
     thumb_2,
     imgDefault,
     sellerCenterImg,
+    beautyx
 };
 export const social = {
     facebook,

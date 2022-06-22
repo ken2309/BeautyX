@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext } from "react";
 import SectionTitle from "../../../SectionTitle/index";
 import dayjs from "dayjs";
@@ -7,34 +8,19 @@ import HomeLoggedCalendarStatus from "./HomeLoggedCalendarStatus";
 import HomeLoggedCalendarList from "./HomeLoggedCalendarList";
 import { Container } from "@mui/material";
 import { AppContext } from "../../../../context/AppProvider";
-import apointmentApi from "../../../../api/apointmentApi";
-import { Appointment } from "../../../../interface/appointment";
 import { cleanup } from "@testing-library/react";
+import { fetchAsyncApps } from "../../../../redux/appointment/appSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { STATUS } from '../../../../redux/status'
 
 const todayObj = dayjs();
 export default function HomeLoggedCalendar() {
   const [datingList, setdatingList] = useState([]);
   const [dotAppoint, setdotAppoint] = useState([]);
-  const [appoiment, setAppoiment] = useState<Appointment[]>([]);
-  const [chooseMonth, setChooseMonth] = useState(dayjs().format("YYYY-MM"));
-  // console.log(`appoiment`, appoiment);
-  //const [, setActive] = useState(false);
-  const { t } = useContext(AppContext);
-
-  // useEffect(() => {
-  //   document.addEventListener("scroll", () => {
-  //     const scrollY = window.scrollY;
-  //     if (scrollY >= 120) {
-  //       setActive(true);
-  //     } else {
-  //       setActive(false);
-  //     }
-  //   });
-  //   return () => {
-  //     cleanup();
-  //   };
-  // }, []);
-
+  const dispatch = useDispatch();
+  const { appointments, status } = useSelector((state: any) => state.APP.APPS);
+  //const { dayObj } = useSelector((state: any) => state.APP);
+  const { t, dayObj, setDayObj } = useContext(AppContext);
   const weekDays = [
     t("Home.su"),
     t("Home.mo"),
@@ -47,7 +33,7 @@ export default function HomeLoggedCalendar() {
 
   // dayjs(year-mouth-day) -> tạo ra 1 ngày (format of dayjs)
   // lấy time hiện tại (year-mouth-day,...)
-  const [dayObj, setDayObj] = useState(dayjs());
+  //const dayObj = dayjs();
   let thisYear = dayObj.year();
   // (tháng 1 -> [0], tháng 12 -> [11])
   let thisMonth = dayObj.month();
@@ -62,23 +48,23 @@ export default function HomeLoggedCalendar() {
   // lấy thứ của ngày cuối cùng của tháng
   let weekDayOfLast = dayObjOfLastMonth.day();
 
-  useEffect(() => {
-    async function handleGetAppoint() {
-      try {
-        const res = await apointmentApi.getAppoitment(chooseMonth);
-        setAppoiment(res?.data.context.data);
-      } catch (error) {
-        console.log(error);
-      }
+
+  const callAppointments = () => {
+    if (status !== STATUS.SUCCESS) {
+      const time = dayjs().format("YYYY-MM")
+      dispatch(fetchAsyncApps(time))
     }
-    handleGetAppoint();
+  }
+
+  useEffect(() => {
+    callAppointments();
     return () => {
       cleanup();
     };
-  }, [chooseMonth]);
+  }, []);
 
   const dataAppoint: any = [];
-  for (var item of appoiment) {
+  for (var item of appointments) {
     const dateTimeStartString = item.time_start.split(" ");
     const dateTimeEndString = item.time_end.split(" ");
     const date = dateTimeStartString[0].split("-").reverse().join("/");
@@ -98,16 +84,20 @@ export default function HomeLoggedCalendar() {
     };
     dataAppoint.push(app);
   }
-
-  // console.log("dataAppoint", dataAppoint);
-
   const handlePrev = () => {
+    //console.log(dayObj.subtract(1, "month"))
+    //const action = dayObj.subtract(1, "month")
     setDayObj(dayObj.subtract(1, "month"));
-    setChooseMonth(dayObj.subtract(1, "month").format("YYYY-MM"));
+    //dispatch(onSetDayObj(action));
+    const time = dayObj.subtract(1, "month").format("YYYY-MM");
+    dispatch(fetchAsyncApps(time))
   };
   const handleNext = () => {
-    setDayObj(dayObj.add(1, "month"));
-    setChooseMonth(dayObj.add(1, "month").format("YYYY-MM"));
+    //const action = dayObj.add(1, "month");
+    //dispatch(onSetDayObj(action));
+    setDayObj(dayObj.add(1, "month"))
+    const time = dayObj.add(1, "month").format("YYYY-MM");
+    dispatch(fetchAsyncApps(time))
   };
   // hander pick active calendar
   const [datepick, setdatepick] = useState({
@@ -168,7 +158,7 @@ export default function HomeLoggedCalendar() {
       );
     });
     setdatingList(dateList);
-    
+
   }
 
   // hiển thị status ở calendar dựa api
@@ -248,7 +238,7 @@ export default function HomeLoggedCalendar() {
       handleAppointDot();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [appoiment]);
+  }, [appointments]);
   return (
     <div className="homelogged-calendar">
       <Container>

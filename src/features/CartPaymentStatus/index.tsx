@@ -12,12 +12,15 @@ import PaymentInfo from './components/PaymentInfo';
 import PaymentConfirm from './components/PaymentConfirm';
 import useGetMessageTiki from '../../rootComponents/tiki/useGetMessageTiki';
 import apointmentApi from '../../api/apointmentApi';
+import HeadMobile from '../HeadMobile';
+import useFullScreen from '../../utils/useFullScreen';
 
 const timerRender = [0];
 const ORDER_STATUS = ['PENDING', 'PAID', 'CANCELED_BY_USER']
 
 function CartPaymentStatus() {
     const sec = useCountDown(600);
+    const IS_MB = useFullScreen();
     const [orderStatus, setOrderStatus] = useState(ORDER_STATUS[0])
     const [openConf, setOpenConf] = useState(false);
     const carts = useSelector((state: any) => state.carts);
@@ -28,7 +31,7 @@ function CartPaymentStatus() {
     const intervalRef = useRef<any>();
     const transaction_uuid = res?.payment_gateway?.transaction_uuid;
     const action = location?.state?.action
-    console.log(action)
+    const listPayment = location.state?.listPayment;
     window.onbeforeunload = function () {
         return 'Are you sure you want to leave?';
     };
@@ -125,20 +128,26 @@ function CartPaymentStatus() {
             <HeadTitle
                 title={orderStatus === "PAID" ? 'Thanh toán thành công' : 'Thanh toán đơn hàng'}
             />
-            <Head
-                handleCancelPayment={handleCancelPayment}
-            />
+            {
+                IS_MB ?
+                    <HeadMobile handleCancelPayment={handleCancelPayment} title='Thanh toán' />
+                    : <Head
+                        handleCancelPayment={handleCancelPayment}
+                    />}
             <Container>
                 <div
                     className='pm-st-cnt'
                 >
                     <PaymentQr
                         res={res}
+                        sec={sec}
                         orderStatus={orderStatus}
                     //pay_url={pay_url}
                     />
                     <div className="pm-st-cnt__body">
                         <PaymentInfo
+                            action={action}
+                            listPayment={listPayment}
                             data={dataCartInfo}
                             handleCancelOrder={handleCancelOrder}
                         />

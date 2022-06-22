@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Product } from "../../../../interface/product";
 import { IOrganization } from "../../../../interface/organization";
 import { STATUS } from "../../../../redux/status";
@@ -12,6 +12,7 @@ import {
     onChooseCateServices,
 } from "../../../../redux/org_products/orgProductsSlice";
 import OrgProductItem from "./OrgProductItem";
+import { AppContext } from "../../../../context/AppProvider";
 
 interface IProps {
     org: IOrganization;
@@ -19,6 +20,7 @@ interface IProps {
 
 function OrgProducts(props: IProps) {
     const { org } = props;
+    const {t} = useContext(AppContext);
     const { CATE, PRODUCTS, choose_cate, org_id } = useSelector(
         (state: any) => state.ORG_PRODUCTS
     );
@@ -91,7 +93,7 @@ function OrgProducts(props: IProps) {
                             }
                             className="cate-list__item-title"
                         >
-                            Tất cả
+                            {t("cart.all")}
                         </span>
                     </li>
                     {categories.map((item: any, index: number) => (

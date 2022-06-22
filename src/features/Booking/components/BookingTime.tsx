@@ -23,7 +23,7 @@ function BookingTime(props: any) {
             TransitionComponent={Transition}
         >
             <div className="flex-column book-time-cnt">
-                {IS_MB && <HeadMobile title='Chọn thời gian' />}
+                {IS_MB && <HeadMobile onBack={setOpen} title='Chọn thời gian' />}
                 <div className="flex-row-sp book-time-cnt__wrap">
                     <div className="book-time__date">
                         <DatePicker
