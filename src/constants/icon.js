@@ -150,6 +150,7 @@ import arrownLeftWhite from "../assets/icon/arrown-left-white.svg";
 import arrownRightWhite from "../assets/icon/arrown-right-white.svg";
 import cartPurpleBold from "../assets/icon/cartPurpleBold.svg";
 import calendarPurpleBold from "../assets/icon/calendarPurpleBold.svg";
+import cardDiscountOrange from "../assets/icon/cardDiscountOrange.svg";
 import tumerGray from "../assets/icon/tumer-gray.svg";
 import searchGray from "../assets/icon/searchGray.svg";
 
@@ -307,5 +308,6 @@ const icon = {
     alarmClock,
     cartPurpleBold,
     calendarPurpleBold,
+    cardDiscountOrange
 };
 export default icon;

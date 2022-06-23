@@ -13,12 +13,12 @@ class ServicePromo {
             limit: 20,
             "filter[is_momo_ecommerce_enable]": true,
             "filter[keyword]": values.keyword,
-            "filter[location]": location_user
-                ? `${location_user.lat},${location_user.long}`
-                : ``,
-        };
-        return axiosClient.get(url, { params });
-    };
+            "filter[min_price]": values.price?.min || 1000,
+            "filter[max_price]": values.price?.max,
+            "filter[location]": LOCATION
+        }
+        return axiosClient.get(url, { params })
+    }
     getBySort = (values: any) => {
         const url = `/services`;
         const params = {

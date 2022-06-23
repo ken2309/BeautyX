@@ -516,7 +516,7 @@
         border: none;
         outline: none;
         border-radius: 6px;
-        background-color: var(--purple);
+        background-color: var(--orange);
         color: var(--white);
         margin-left: 8px;
     }

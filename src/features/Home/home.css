@@ -1968,6 +1968,7 @@ img {
 
     .calendar {
         padding: 16px 12px;
+        border-bottom: solid 1px var(--grey);
     }
 
     .calender-wrap {

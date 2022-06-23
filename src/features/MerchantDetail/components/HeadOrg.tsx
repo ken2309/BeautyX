@@ -88,6 +88,13 @@ function HeadOrg(props: IProps) {
         dispatch(getTotal());
     }, [dispatch, carts]);
 
+    const onGotoCart = ()=>{
+        if(USER){
+            history.push("/gio-hang")
+        }else{
+            history.push("/sign-in?1")
+        }
+    }
 
     return (
         <>
@@ -125,7 +132,7 @@ function HeadOrg(props: IProps) {
                     }
                     <button
                         className='mb-head-org-cnt__button'
-                        onClick={() => history.push('/cart')}
+                        onClick={onGotoCart}
                     >
                         <div className="badge">
                             {carts.cartQuantity}

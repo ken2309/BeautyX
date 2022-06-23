@@ -18,7 +18,7 @@ import onErrorImg from "../../../utils/errorImg";
 import PopupDiscountQuantity from "./PopupDiscountQuantity";
 
 interface IProps {
-    inPayment: boolean;
+    inPayment?: boolean;
     cartItem: any;
 }
 

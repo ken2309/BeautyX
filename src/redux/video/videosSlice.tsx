@@ -23,12 +23,16 @@ const fetchAsyncData = async ({ sub_domain, service_list }: any) => {
         //     });
         //     return res
         // })
-        for (i; i < service_list.length; i++) {
-            let res = await serviceApi.getDetailById({
-                org_id: resOrg.data.context.id,
-                ser_id: service_list[i],
-            });
-            resSerList[i] = res.data.context;
+        try {
+            for (i; i < service_list.length; i++) {
+                let res = await serviceApi.getDetailById({
+                    org_id: resOrg.data.context.id,
+                    ser_id: service_list[i],
+                });
+                resSerList[i] = res.data.context;
+            }
+        }catch(err){
+            console.log(err)
         }
         const payload = {
             org: resOrg.data,

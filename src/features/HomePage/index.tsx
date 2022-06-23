@@ -30,8 +30,7 @@ export default function HomePage() {
             <Container>
                 <HomeHotDeal />
                 <HomeTopService />
-                {/* <HomeHotTrend /> */}
-                <HomeProvince />
+                <HomeHotTrend />
                 <HomeFavorite />
                 <HomeRecomment />
             </Container>
