@@ -14,6 +14,8 @@ import useGetMessageTiki from '../../rootComponents/tiki/useGetMessageTiki';
 import apointmentApi from '../../api/apointmentApi';
 import HeadMobile from '../HeadMobile';
 import useFullScreen from '../../utils/useFullScreen';
+import Notification from '../../components/Notification/index';
+import { useHistory } from 'react-router-dom';
 
 const timerRender = [0];
 const ORDER_STATUS = ['PENDING', 'PAID', 'CANCELED_BY_USER']
@@ -23,6 +25,17 @@ function CartPaymentStatus() {
     const IS_MB = useFullScreen();
     const [orderStatus, setOrderStatus] = useState(ORDER_STATUS[0])
     const [openConf, setOpenConf] = useState(false);
+    const history = useHistory();
+
+    const [open, setOpen] = useState({
+        title: "",
+        open: false,
+        titleLeft: "",
+        titleRight: "",
+        onClickLeft: () => { },
+        onClickRight: () => { }
+    })
+
     const carts = useSelector((state: any) => state.carts);
     const list = carts.cartList.filter((item: any) => item.isConfirm === true);
     const services = list.filter((item: any) => item.is_type === 2);
@@ -32,9 +45,9 @@ function CartPaymentStatus() {
     const transaction_uuid = res?.payment_gateway?.transaction_uuid;
     const action = location?.state?.actionAfter
     const listPayment = location.state?.listPayment;
-    window.onbeforeunload = function () {
-        return 'Are you sure you want to leave?';
-    };
+    // window.onbeforeunload = function () {
+    //     return 'Are you sure you want to leave?';
+    // };
     const handlePostApp = async () => {
         const params = {
             order_id: action.order_id,
@@ -118,7 +131,14 @@ function CartPaymentStatus() {
     const response = useGetMessageTiki();
     if (response?.requestId && response?.result.status === "fail") {
         handleCancelPayment()
-        setOrderStatus("CANCELED")
+        setOpen({
+            title: "Thanh toán thất bại \n Bạn có muốn tiếp tục thanh toán không ?",
+            open: true,
+            titleLeft: "Về trang chủ",
+            titleRight: "",
+            onClickLeft: () => history.push("/Home"),
+            onClickRight: () => history.push("/gio-hang")
+        })
     }
     const dataCartInfo = { res, orderStatus, sec, services }
     return (
@@ -156,6 +176,14 @@ function CartPaymentStatus() {
                 open={openConf}
                 setOpen={setOpenConf}
                 handleCancelPayment={handleCancelPayment}
+            />
+            <Notification
+                open={open.open}
+                content={open.title}
+                titleBtnLeft={open.titleLeft}
+                titleBtnRight={open.titleRight}
+                onClickLeft={open.onClickLeft}
+                onClickRight={open.onClickRight}
             />
         </>
     );

@@ -12,6 +12,7 @@ import authentication from "../../api/authApi";
 import { putUser } from '../../redux/USER/userSlice'
 import { useSelector, useDispatch } from "react-redux";
 import Settings from "./Setting";
+import { useHistory } from "react-router-dom";
 
 
 function AccountMb() {
@@ -23,6 +24,7 @@ function AccountMb() {
   const [openSettings, setOpenSettings] = useState(false);
   const dispatch = useDispatch();
   const USER = useSelector((state: any) => state.USER.USER);
+  const history = useHistory();
 
   //const [avatarMb, setAvatarMb] = useState();
 
@@ -135,7 +137,7 @@ function AccountMb() {
             </li>
             <li>
               <div
-                onClick={() => setOpenSer(true)}
+                onClick={() => history.push("/lich-hen?tab=2")}
                 className="flex-column mb-ac__cnt-private-item"
               >
                 <img src={icon.bag} alt="" />
@@ -162,7 +164,7 @@ function AccountMb() {
               </div>
             </li>
             <li>
-              <div onClick={()=>setOpenSettings(true)} className="flex-column mb-ac__cnt-private-item">
+              <div onClick={() => setOpenSettings(true)} className="flex-column mb-ac__cnt-private-item">
                 <img src={icon.Setting} alt="" />
                 <span>{t("Header.settings")}</span>
               </div>
