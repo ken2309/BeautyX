@@ -185,6 +185,7 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 248px 84px 248px;
     gap: 16px;
+    margin-top: 24px !;
 }
 .home-province .home-province_item {
     overflow: hidden;
@@ -246,11 +247,13 @@
 .home-se-re {
     margin: 42px 0px;
 }
+
 /* tablet */
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
     .home-promo-ser .ser-list {
         grid-template-columns: repeat(4, 1fr);
     }
+
     .home-result-ser-cnt {
         padding: 0 24px !important;
     }
@@ -272,11 +275,20 @@
         grid-template-columns: repeat(2, 1fr);
         display: grid;
         width: unset;
+        margin: 0;
+        padding: 12px 0 0 12px;
+    }
+    .home-se-promo .home-promo-ser .ser-list {
+        display: flex;
+        padding: 0 12px 0 12px;
     }
     .home-cate-tree-cnt {
         display: none;
     }
-
+    .home-se-promo__header {
+        width: 100%;
+        padding: 0 12px;
+    }
     .home-title__tag {
         display: none;
     }
@@ -287,6 +299,7 @@
         margin: 0;
         padding: 16px 0;
     }
+
     .home-card-cnt {
         margin: unset;
     }
@@ -299,7 +312,6 @@
         margin-bottom: 84px;
     }
     .home-se-sec-title {
-        margin-left: 16px;
         margin-bottom: 0px;
         padding: 6px 18px;
         border-radius: 8px 10px 0px 0px;
@@ -335,13 +347,13 @@
         margin: 0px;
         padding-top: 16px;
     }
-    .home-se-promo__header {
-        padding-right: 16px;
-    }
 
     .home-se-promo__header button img {
         width: 16px;
         height: 16px;
+    }
+    .home-se-promo__header p {
+        font-size: 14px;
     }
     .home-se-re {
         margin: 16px 0;
@@ -396,8 +408,8 @@
         flex-shrink: 0;
     }
     .home-province_list {
-        padding: 0 16px;
         margin-top: 16px;
+        padding: 0 12px;
         gap: 12px;
         display: grid;
         grid-template-rows: 1fr 1fr 1fr 1fr;

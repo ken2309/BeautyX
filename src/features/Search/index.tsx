@@ -143,7 +143,7 @@ function Search() {
                 {keyword.length > 0 ? (
                     <div className="search-cnt__body">
                         <p
-                            className="search-cnt__keyword"
+                            className="search-cnt__keyword cursor-pointer"
                             onClick={() => handleSearch()}
                         >
                             Xem kết quả cho <span>{keyword}</span>
