@@ -28,9 +28,7 @@ function HomeSecond(props: any) {
                 <HomePromo />
                 <HomeDeal />
                 <HomeCard />
-            </Container>
-            <HomeProvince />
-            <Container>
+                <HomeProvince />
                 <HomeServicesRe />
             </Container>
         </div>

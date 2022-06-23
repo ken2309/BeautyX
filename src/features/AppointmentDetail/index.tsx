@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import apointmentApi from "../../api/apointmentApi";
+import React from "react";
 import { Dialog, Slide } from "@mui/material";
 import "./appointment-detail.css";
 import { TransitionProps } from "@mui/material/transitions";
@@ -23,24 +22,10 @@ function AppointmentDetail(props: any) {
   const { openPopupDetail, setOpenPopupDetail, datingList } = props;
   const fullScreen = useFullScreen();
   const IS_MB = useFullScreen();
-  const [services, setServices] = useState<Service[]>([]);
-  useEffect(() => {
-    async function handleSetDetail() {
-      try {
-        const res = await apointmentApi.getAppointmentById(datingList.id);
-        setServices(res?.data.context.services);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    if (openPopupDetail === true) {
-      handleSetDetail();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [datingList.id, openPopupDetail]);
   function handleClosePopupDetail() {
     setOpenPopupDetail(false);
   }
+  const { services } = datingList
   return (
     <Dialog
       fullScreen={fullScreen}

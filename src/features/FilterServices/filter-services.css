@@ -24,7 +24,7 @@
         font-size: 12px;
     }
     .filter-ser-cnt {
-        padding: 12px 0;
+        padding: 12px;
         overflow-x: scroll;
     }
     .filter-ser-list {
@@ -34,7 +34,7 @@
         width: 100%;
         overflow-x: scroll;
     }
-    .home-se-re .home-promo-ser {
+    /* .home-se-re .home-promo-ser {
         margin-top: 16px;
-    }
+    } */
 }

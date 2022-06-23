@@ -18,7 +18,6 @@ function HomeTitleSection(props: IProps) {
                 <div className="flex-row cursor-pointer">
                     <p
                         style={{
-                            fontSize: "16px",
                             color: "var(--purple)",
                             fontWeight: "bold",
                         }}

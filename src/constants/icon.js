@@ -153,7 +153,7 @@ import calendarPurpleBold from "../assets/icon/calendarPurpleBold.svg";
 import cardDiscountOrange from "../assets/icon/cardDiscountOrange.svg";
 import tumerGray from "../assets/icon/tumer-gray.svg";
 import searchGray from "../assets/icon/searchGray.svg";
-
+import supportChat from "../assets/icon/messageChat.svg";
 const icon = {
     searchGray,
     tumerGray,
@@ -308,6 +308,7 @@ const icon = {
     alarmClock,
     cartPurpleBold,
     calendarPurpleBold,
-    cardDiscountOrange
+    cardDiscountOrange,
+    supportChat
 };
 export default icon;

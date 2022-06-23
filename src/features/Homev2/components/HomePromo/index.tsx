@@ -44,6 +44,7 @@ function HomePromo(props: any) {
     }, [dataSort]);
     return (
         <div className="home-se-promo">
+            <HomeTitleSection title={"Deal làm đẹp cực HOT"} />
             <FilterServices
                 dataSort={dataSort}
                 setDataSort={setDataSort}
