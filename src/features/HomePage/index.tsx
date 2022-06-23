@@ -6,6 +6,8 @@ import ExtraFlatForm from "../../rootComponents/extraFlatForm";
 import Footer from "../Footer";
 import Head from "../Head";
 import HomeDiscount from "../HomeDiscounts";
+import HomeProvince from "../Homev2/components/HomeProvince";
+import HomeTags from "../Homev2/components/HomeTags";
 import HomeBanner from "./HomeBanner";
 import HomeFavorite from "./HomeFavorite";
 import HomeHotDeal from "./HomeHotDeal";
@@ -22,12 +24,14 @@ export default function HomePage() {
             {FLAT_FORM === "BEAUTYX" && <Head IN_HOME={true} />}
             <Container>
                 <HomeBanner />
+                <HomeTags />
             </Container>
             <HomeDiscount />
             <Container>
                 <HomeHotDeal />
                 <HomeTopService />
                 {/* <HomeHotTrend /> */}
+                <HomeProvince />
                 <HomeFavorite />
                 <HomeRecomment />
             </Container>

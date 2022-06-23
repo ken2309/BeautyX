@@ -27,12 +27,10 @@ function HomeProvince(props: any) {
 
     return (
         <div className="home-province">
-            <Container>
-                <div className="flex-row-sp home-se-promo__header">
-                    <HomeTitleSection
-                        title={`${t("home_2.places_you_are_interested_in")}`}
-                    />
-                    <div onClick={gotoListProvince}>
+            <HomeTitleSection
+                title={`${t("home_2.places_you_are_interested_in")}`}
+            />
+            {/* <div onClick={gotoListProvince}>
                         <div className="flex-row cursor-pointer ">
                             <p
                                 style={{
@@ -43,32 +41,27 @@ function HomeProvince(props: any) {
                                 Xem thêm {">"}
                             </p>
                         </div>
-                    </div>
-                </div>
-                <div className="home-province_list">
-                    {provinces_org
-                        ?.slice(0, 6)
-                        .map((item: IProvince, index: number) => (
-                            <div
-                                onClick={() => gotoResult(item)}
-                                key={index}
-                                className="home-province_item"
-                            >
-                                <img
-                                    src={`${item.media[1].original_url}`}
-                                    alt=""
-                                />
-                                <div className="province-item-cnt">
-                                    <span>{item.name}</span>
-                                    <span>
-                                        {item.organizations_count}{" "}
-                                        {t("home_2.beauty_places")}{" "}
-                                    </span>
-                                </div>
+                    </div> */}
+            <div className="home-province_list">
+                {provinces_org
+                    ?.slice(0, 6)
+                    .map((item: IProvince, index: number) => (
+                        <div
+                            onClick={() => gotoResult(item)}
+                            key={index}
+                            className="home-province_item"
+                        >
+                            <img src={`${item.media[1].original_url}`} alt="" />
+                            <div className="province-item-cnt">
+                                <span>{item.name}</span>
+                                <span>
+                                    {item.organizations_count}{" "}
+                                    {t("home_2.beauty_places")}{" "}
+                                </span>
                             </div>
-                        ))}
-                </div>
-            </Container>
+                        </div>
+                    ))}
+            </div>
         </div>
     );
 }
