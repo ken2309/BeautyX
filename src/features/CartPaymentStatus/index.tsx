@@ -30,7 +30,7 @@ function CartPaymentStatus() {
     const res: any = location?.state?.state_payment;
     const intervalRef = useRef<any>();
     const transaction_uuid = res?.payment_gateway?.transaction_uuid;
-    const action = location?.state?.action
+    const action = location?.state?.actionAfter
     const listPayment = location.state?.listPayment;
     window.onbeforeunload = function () {
         return 'Are you sure you want to leave?';
@@ -60,9 +60,7 @@ function CartPaymentStatus() {
             switch (status) {
                 case "PAID":
                     if (action) {
-                        for (var i = 1; i <= action.quantity; i++) {
-                            handlePostApp()
-                        }
+                        handlePostApp()
                     }
                     setOrderStatus(status)
                     timerRender[0] = -1;
@@ -85,7 +83,6 @@ function CartPaymentStatus() {
             console.log(error)
         }
     }
-    const dataCartInfo = { res, orderStatus, sec, services }
     const setInter = () => {
         timerRender[0] = 200;
         intervalRef.current = setInterval(() => {
@@ -121,8 +118,9 @@ function CartPaymentStatus() {
     const response = useGetMessageTiki();
     if (response?.requestId && response?.result.status === "fail") {
         handleCancelPayment()
-        //setOpenFail(true)
+        setOrderStatus("CANCELED")
     }
+    const dataCartInfo = { res, orderStatus, sec, services }
     return (
         <>
             <HeadTitle

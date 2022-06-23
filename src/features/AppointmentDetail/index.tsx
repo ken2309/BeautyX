@@ -3,11 +3,11 @@ import apointmentApi from "../../api/apointmentApi";
 import { Dialog, Slide } from "@mui/material";
 import "./appointment-detail.css";
 import { TransitionProps } from "@mui/material/transitions";
-import icon from "../../constants/icon";
 import formatPrice from "../../utils/formatPrice";
 import onErrorImg from "../../utils/errorImg";
 import { Service } from '../../interface/service';
 import useFullScreen from "../../utils/useFullScreen";
+import HeadMobile from "../HeadMobile";
 
 const view = window.screen.width;
 const Transition = React.forwardRef(function Transition(
@@ -20,9 +20,9 @@ const Transition = React.forwardRef(function Transition(
 });
 
 function AppointmentDetail(props: any) {
-  const { openPopupDetail, setOpenPopupDetail, datingList, org } = props;
+  const { openPopupDetail, setOpenPopupDetail, datingList } = props;
   const fullScreen = useFullScreen();
-
+  const IS_MB = useFullScreen();
   const [services, setServices] = useState<Service[]>([]);
   useEffect(() => {
     async function handleSetDetail() {
@@ -49,19 +49,9 @@ function AppointmentDetail(props: any) {
       onClose={handleClosePopupDetail}
       open={openPopupDetail}
     >
+      {IS_MB && <HeadMobile onBack={() => setOpenPopupDetail(false)} title="Chi tiết lịch hẹn" />}
       {openPopupDetail === true ? (
         <div className="app-de">
-          <div className="app-de-header">
-            <div className="flex-row-sp">
-              <img
-                onClick={handleClosePopupDetail}
-                src={icon.pPrev_purple}
-                alt=""
-              />
-              <span>Chi tiết lịch hẹn</span>
-              <div style={{ width: "20px", height: "20px" }}></div>
-            </div>
-          </div>
           <div className="flex-row-sp app-de__head">
             <div className="flex-row app-de__head-status">
               <div className="flex-row app-de__head-status-it">
@@ -87,7 +77,7 @@ function AppointmentDetail(props: any) {
                 <li key={index} className="app-de__ser-item">
                   <div className="item">
                     <img
-                      src={item.image ? item?.image_url : org?.image_url}
+                      src={item.image ? item?.image_url : datingList?.organization?.image_url}
                       onError={(e) => onErrorImg(e)}
                       alt=""
                       className="item-img"
@@ -112,9 +102,7 @@ function AppointmentDetail(props: any) {
           <div className="app-de__address">
             <span className="app-de__ser-head">Địa chỉ</span>
             <div className="app-de__address-txt">
-              {datingList.branch_id
-                ? org.branches.find((i: any) => i.id === datingList.branch_id)?.full_address
-                : org?.full_address}
+              {datingList.branch ? datingList.branch?.full_address : datingList.organization?.full_address}
             </div>
           </div>
           <div className="app-de__address">
