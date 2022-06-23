@@ -59,7 +59,8 @@
 .trend-ctn-body .trend-item-ctn:first-child {
     margin-left: 12px;
 }
-
+.trend-ctn-body .trend-item-ctn video.video-item__pc {
+}
 .trend-ctn-body .trend-item-ctn .logo {
     position: absolute;
     width: 32px;
@@ -90,8 +91,6 @@
     word-wrap: break-word;
     overflow-y: hidden;
 }
-@media only screen and (max-width: 767px) {
-    .video-item__pc {
-        border-radius: 0;
-    }
+.trend-ctn .home-title {
+    padding: 0 16px 8px 16px;
 }

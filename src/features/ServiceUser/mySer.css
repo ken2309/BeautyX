@@ -683,6 +683,16 @@
     color: var(--text-black);
 }
 
+.quantity-text__time-ex {
+    background-color: #FFE3D2;
+    padding: 2px 4px;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 700;
+    border-radius: 4px;
+    color: var(--orange);
+}
+
 /* res-tablet */
 /* Tablet */
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
@@ -816,7 +826,7 @@
 
 /* res-mobile */
 /* Mobile */
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 1023px) {
     .my-ser-book__list {
         display: flex;
         flex-direction: column;
@@ -828,12 +838,22 @@
     }
 
     .treat-card-item {
-        padding: 8px;
+        padding: 12px;
+        box-shadow: none;
+        border: solid 1px var(--grey);
+        border-radius: 6px;
+        margin-bottom: 12px;
     }
 
     .treat-card-item__head .org-name {
         font-size: 12px;
         line-height: 14px;
+    }
+
+    .treatment-ser-item__cnt .ser-name {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
     }
 
     .treat-card-item__head .time,
@@ -916,6 +936,16 @@
         left: 0;
         bottom: 0;
         padding: 0 16px 16px 16px;
+    }
+
+    .treatment-ser-item__img {
+        width: 72px;
+        height: 72px;
+    }
+
+    .quantity-text__time-ex {
+        font-size: 10px;
+        line-height: 12px;
     }
 
     .__list-item__cnt {
@@ -1028,6 +1058,9 @@
 
     .my-ser-book__cnt-head-title {
         font-size: 18px;
+    }
+    .treatment-ser-item__cnt{
+        width: calc(100% - 112px);
     }
 }
 

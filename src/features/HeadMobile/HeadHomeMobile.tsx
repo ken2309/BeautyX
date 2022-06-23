@@ -1,14 +1,20 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useMemo } from 'react';
 import Search from '../Search';
 import icon from '../../constants/icon';
 import './style.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { onToggleSearchCnt } from '../../redux/search/searchSlice';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
+import { getTotal } from '../../redux/cartSlice';
 
 function HeadHomeMobile() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const { cartList, cartQuantity } = useSelector((state: any) => state.carts);
+    useMemo(() => {
+        dispatch(getTotal())
+    }, [dispatch, cartList])
     const { USER } = useSelector((state: any) => state.USER);
     const onGotoCart = () => {
         if (USER) {
@@ -17,6 +23,7 @@ function HeadHomeMobile() {
             history.push("/sign-in?1")
         }
     }
+
     return (
         <>
             <Search />
@@ -39,6 +46,7 @@ function HeadHomeMobile() {
                         onClick={onGotoCart}
                         className="head-home-mb__button-item"
                     >
+                        <span className="badge">{cartQuantity}</span>
                         <img src={icon.cartPurpleBold} alt="" className="img-con" />
                     </button>
                 </div>

@@ -44,16 +44,6 @@ function HomePromo(props: any) {
     }, [dataSort]);
     return (
         <div className="home-se-promo">
-            <div className="flex-row-sp home-se-promo__header">
-                <HomeTitleSection title={`${t("home_2.hot_beauty_deal")}`} />
-                <div onClick={() => history.push("/deal-lam-dep-cuc-HOT")}>
-                    <div className="flex-row cursor-pointer">
-                        <p style={{ fontSize: "14px", color: "var(--purple)" }}>
-                            Xem thêm {">"}
-                        </p>
-                    </div>
-                </div>
-            </div>
             <FilterServices
                 dataSort={dataSort}
                 setDataSort={setDataSort}

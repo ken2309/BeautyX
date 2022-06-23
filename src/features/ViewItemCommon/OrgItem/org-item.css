@@ -88,6 +88,10 @@
     color: var(--text-black);
 }
 .re-org-item__cnt .org_address span {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 700;
+    color: grey;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;

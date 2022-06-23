@@ -43,7 +43,7 @@ function Calendar() {
                     <TabContext value={valueTab} >
                         <Container>
                             <div className="cal-cnt__tab-cnt-head">
-                                <button onClick={() => history.goBack('/Home')} className='back-btn'>
+                                <button onClick={() => history.push('/')} className='back-btn'>
                                     <img src={icon.chevronLeft} alt="" />
                                 </button>
                                 <TabList

@@ -27,15 +27,16 @@ function DiscountItem(props: IProps) {
                 type = "product";
                 break;
         }
-        return type
-    }
+        return type;
+    };
     const type = onCheckType();
     const history = useHistory();
     const onDetail = () => {
         //console.log(type)
         history.push({
             pathname: `/chi-tiet-giam-gia/${slugify(
-                discountItem.productable.service_name || discountItem.productable.product_name
+                discountItem.productable.service_name ||
+                    discountItem.productable.product_name
             )}`,
             search: `type=${type}&org_id=${org?.id}&dis_id=${discountPar?.id}&item_id=${discountItem.productable_id}`,
         });
@@ -72,21 +73,22 @@ function DiscountItem(props: IProps) {
                     <div
                         style={
                             !discountPar.total ||
-                                discountPar.total === discountPar.used
+                            discountPar.total === discountPar.used
                                 ? { width: "100%" }
                                 : {
-                                    width: `${(discountPar.used /
-                                        discountPar.total) *
-                                        100
-                                        }%`,
-                                }
+                                      width: `${
+                                          (discountPar.used /
+                                              discountPar.total) *
+                                          100
+                                      }%`,
+                                  }
                         }
                         className="limit-bar__used"
                     ></div>
                     <span className="limit-bar__num">
                         {discountPar?.total
                             ? `Đã bán ${discountPar.used}/${discountPar.total}`
-                            : "Đang mở bán"}
+                            : "Đang mở"}
                     </span>
                 </div>
             </div>

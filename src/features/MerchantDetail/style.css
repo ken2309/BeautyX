@@ -312,11 +312,11 @@
 /* org container */
 .org-container {
     width: 100%;
-    padding: 12px 0px;
     position: sticky;
     background-color: var(--bgWhite);
     z-index: 20;
     top: 0px;
+    margin: 32px 0;
 }
 
 .org-tab-list {
@@ -838,9 +838,7 @@
 .org-container__tab-cnt {
     padding: 0 16px;
 }
-.org-container {
-    padding: 24px 0 0 0;
-}
+
 .org-container .MuiTabs-root {
     min-height: 48px;
     position: sticky;
@@ -907,7 +905,7 @@
     }
     .org-detail {
         padding: 0px;
-        height: 296px;
+        height: 284px;
     }
 
     .org-detail__cnt-top {
@@ -927,7 +925,7 @@
     }
 
     .org-detail__cnt .wrap-bot {
-        padding: 12px;
+        padding: 12px 12px 0 12px;
         margin-top: 120px;
         border: none;
         z-index: 100;
@@ -999,7 +997,7 @@
 
     /* org container */
     .org-container {
-        top: 42px;
+        margin-top: 0;
         padding-top: 0px;
     }
 

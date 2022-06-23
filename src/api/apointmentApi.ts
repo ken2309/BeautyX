@@ -37,6 +37,7 @@ class ApointmentApi {
       "filter[time_start]": time,
       "filter[platform]": FLAT_FORM,
       "append": "services",
+      "include": "organization|order|branch",
       "sort": "-id"
     }
     return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params));

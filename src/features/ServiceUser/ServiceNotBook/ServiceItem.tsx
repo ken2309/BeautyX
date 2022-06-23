@@ -1,7 +1,6 @@
 import { Checkbox } from "@mui/material";
-import React, { useContext } from "react";
-import icon from "../../../constants/icon";
-import { AppContext } from "../../../context/AppProvider";
+import React from "react";
+//import { AppContext } from "../../../context/AppProvider";
 //import formatPrice from "../../../utils/formatPrice";
 import { IUser_Service, IServiceSold } from '../../../interface/servicesUser';
 import onErrorImg from "../../../utils/errorImg";
@@ -16,12 +15,12 @@ interface IProps {
 }
 
 function ServiceItem(props: IProps) {
-  const { t } = useContext(AppContext);
+  //const { t } = useContext(AppContext);
   const {
     service,
     handleServiceBook,
     order_id,
-    service_sold
+    //service_sold
   } = props;
   const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
   const servicesBook = servicesBookSlice.servicesBook;
@@ -76,30 +75,34 @@ function ServiceItem(props: IProps) {
           <span className="ser-name">
             {service?.service_name}
           </span>
-          {
+          {/* {
             service.time_expired &&
             <p>Ngày hết hạn : {service.time_expired}</p>
-          }
+          } */}
           <span className="ser-desc">
             {service.description !== null && service.description}
           </span>
           <div className="flex-row-sp">
+            {
+              service.time_expired &&
+              <div className="quantity-text__time-ex">
+                Ngày hết hạn | {formatDate(service.time_expired)}
+              </div>
+            }
             <div className="flex-row quantity">
-              <img src={icon.DeskAlt} alt="" />
               <div className="quantity-text">
-                <span>{t("my_ser.count_unused")}</span>
                 {
                   service.unlimited === true ?
                     <span>Không giới hạn</span>
                     :
-                    <span>{service.times - service.remain_time}/{service.times}</span>
+                    <span>Còn lại {service.times - service.remain_time}/{service.times}</span>
                 }
               </div>
             </div>
-            {
+            {/* {
               service?.time_expired?.slice(0, 5) > 0 &&
               <span className="date-time_expired">HSD:{formatDate(service?.time_expired)}</span>
-            }
+            } */}
           </div>
         </div>
       </div>

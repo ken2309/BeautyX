@@ -37,7 +37,7 @@ function OrgItem(props: IProps) {
                     >
                         <div className="flexX-gap-4 org-img-cnt__rate-item">
                             <img src={icon.heart} alt="" />
-                            <span>{org.favorites_count}</span>
+                            <span>{org?.favorites_count}</span>
                         </div>
                         <div className="flexX-gap-4 org-img-cnt__rate-item">
                             <img src={icon.star} alt="" />
@@ -49,25 +49,25 @@ function OrgItem(props: IProps) {
             <div className="re-org-item__cnt">
                 <span className="org_name">{org.name}</span>
                 <div className="org_address">
-                    <img src={icon.pinMap} alt="" />
+                    <img src={icon.mapPinRed} alt="" />
                     <span>{org?.address}</span>
                 </div>
-                {org.distance ? (
+                {org?.distance ? (
                     <div className="flex-row org_distance">
                         <div></div>
                         khoảnh cách:
-                        {org.distance < 1000
-                            ? `${Math.round(org.distance)}(m)`
-                            : `${Math.round(org.distance / 1000)}(km)`}
+                        {org?.distance < 1000
+                            ? `${Math.round(org?.distance)}(m)`
+                            : `${Math.round(org?.distance / 1000)}(km)`}
                     </div>
                 ) : (
                     <></>
                 )}
-                {org.tags.length > 0 && (
+                {org?.tags && org?.tags.length > 0 && (
                     <>
                         <span className="org_tag">
                             <img src={icon.Menu} alt="" />
-                            {org.tags?.map((t: any) => t.name).join(",")}
+                            {org?.tags?.map((t: any) => t.name).join(",")}
                         </span>
                     </>
                 )}
