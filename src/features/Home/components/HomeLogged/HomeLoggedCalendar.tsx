@@ -49,7 +49,7 @@ export default function HomeLoggedCalendar() {
   let weekDayOfLast = dayObjOfLastMonth.day();
 
 
-  const callAppointments = () => {
+   const callAppointments = () => {
     if (status !== STATUS.SUCCESS) {
       const time = dayjs().format("YYYY-MM")
       dispatch(fetchAsyncApps(time))

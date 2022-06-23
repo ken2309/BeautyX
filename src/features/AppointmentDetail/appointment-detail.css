@@ -139,10 +139,12 @@
     height: max-content;
     min-height: 100%;
     border-radius: 0;
+    margin-top: 48px;
   }
   .app-de__head {
     padding: 12px 24px;
     background-color: var(--bgWhite);
+    border-bottom: none;
   }
   .app-de__head-status {
     font-size: 12px;
@@ -156,7 +158,7 @@
     font-weight: 600;
   }
   .app-de__ser {
-    padding: 12px 24px;
+    padding: 12px;
     background-color: var(--bgWhite);
     margin: 16px 0px;
   }
@@ -168,9 +170,11 @@
     padding: 8px 0px;
   }
   .app-de__ser-item .item {
-    padding: 4px;
+    padding: 8px;
     display: flex;
-    border-radius: 8px;
+    border-radius: 6px;
+    box-shadow: none;
+    border: solid 1px var(--grey);
   }
   .app-de__ser-item .item .item-img {
     width: 72px;

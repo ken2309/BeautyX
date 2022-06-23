@@ -4,15 +4,18 @@ import formatPrice from '../../../utils/formatPrice';
 import { useHistory } from 'react-router-dom';
 import UserPaymentInfo from '../../Account/components/UserPaymentInfo';
 import '../cart-status.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FLAT_FORM_TYPE } from '../../../rootComponents/flatForm';
 import { EXTRA_FLAT_FORM } from '../../../api/extraFlatForm';
 import { EXTRA_PAYMENT } from '../../../rootComponents/extraPayment';
 import doPostMakePaymentMessageTiki from '../../../rootComponents/tiki/doPostMessageTiki';
+import dayjs from 'dayjs';
+import { fetchAsyncApps } from '../../../redux/appointment/appSlice';
 
 function PaymentInfo(props: any) {
     const history = useHistory();
     const { data, handleCancelOrder, action, listPayment } = props;
+    const dispatch = useDispatch();
     const { organization } = data.res;
     const { cartList } = useSelector((state: any) => state.carts);
     const orderItems = listPayment ? listPayment : cartList.filter(
@@ -39,6 +42,12 @@ function PaymentInfo(props: any) {
                     break
             }
         }
+    }
+    //func appointment
+    const gotoAppointment = () => {
+        const time = dayjs().format("YYYY-MM")
+        dispatch(fetchAsyncApps(time))
+        history.push('/lich-hen?tab=1')
     }
     const onCheckStatus = () => {
         switch (data.orderStatus) {
@@ -72,16 +81,11 @@ function PaymentInfo(props: any) {
                     {
                         action ?
                             <div className="flex-row-sp control">
-                                {
-                                    data.services.length > 0 &&
-                                    <button
-                                        onClick={() => history.push({
-                                            pathname: '/Calendar',
-                                        })}
-                                    >
-                                        Xem lịch hẹn
-                                    </button>
-                                }
+                                <button
+                                    onClick={gotoAppointment}
+                                >
+                                    Xem lịch hẹn
+                                </button>
                                 <button
                                     onClick={() => history.push('/Home')}
                                 >
@@ -93,10 +97,7 @@ function PaymentInfo(props: any) {
                                 {
                                     (data.services.length > 0 && !listPayment) &&
                                     <button
-                                        onClick={() => history.push({
-                                            pathname: '/goi-dich-vu',
-                                            state: '/home'
-                                        })}
+                                        onClick={() => history.push('/lich-hen?tab=2')}
                                     >
                                         Đặt hẹn ngay
                                     </button>

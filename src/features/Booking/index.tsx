@@ -29,6 +29,7 @@ import { fetchAsyncOrg } from '../../redux/org/orgSlice';
 import { STATUS } from '../../redux/status';
 import apointmentApi from "../../api/apointmentApi";
 import Notification from "../../components/Notification";
+import { fetchAsyncApps } from "../../redux/appointment/appSlice";
 
 
 const date = dayjs();
@@ -184,6 +185,12 @@ function Booking() {
             })
         }
     }
+    //func appointment
+    const gotoAppointment = () => {
+        const time = dayjs().format("YYYY-MM")
+        dispatch(fetchAsyncApps(time))
+        history.push('/lich-hen?tab=1')
+    }
     const handlePostApps = async () => {
         try {
             await apointmentApi.postAppointment(action, org?.id);
@@ -192,7 +199,7 @@ function Booking() {
                 title: "Đặt hẹn thành công",
                 titleLeft: "Xem lịch hẹn",
                 titleRight: "Về trang chủ",
-                onClickLeft: () => history.push('/lich-hen?tab=1'),
+                onClickLeft: () => gotoAppointment(),
                 onClickRight: () => history.push('/home')
             })
         } catch (error) {
