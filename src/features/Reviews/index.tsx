@@ -134,7 +134,7 @@ function Review(props: IProps) {
             handlePostComment();
         }
     };
-    console.log(COMMENT.image_url)
+    
     return (
         <>
             <div className="org-evaluate__cnt">
