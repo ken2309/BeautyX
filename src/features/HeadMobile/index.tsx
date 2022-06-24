@@ -20,7 +20,7 @@ function HeadMobile(props: IProps) {
             handleCancelPayment()
         }
         if (onBack) {
-            onBack(false)
+            return onBack(false)
         }
         if (location?.state?.payment_url) {
             history.push("/");
