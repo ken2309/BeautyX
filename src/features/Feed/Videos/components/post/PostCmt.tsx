@@ -46,7 +46,7 @@ export default function PostComment(props: any) {
     };
     return (
         <div className="video-item_comments">
-            {data?.cmt?.totalItem && data?.cmt?.totalItem > 0 && (
+            {data?.cmt?.totalItem && data?.cmt?.totalItem > 0 ? (
                 <>
                     <div className="video-item-comments-preview">
                         {data?.cmt?.comments
@@ -63,7 +63,8 @@ export default function PostComment(props: any) {
                         <img src={icon.vector_down} alt="icon" />
                     </div>
                 </>
-            )}
+                ):''
+            }
             <EvaluateInput
                 handleOnchange={handleComment}
                 comment={comment}

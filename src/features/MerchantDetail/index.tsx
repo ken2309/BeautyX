@@ -25,6 +25,8 @@ import OrgContainer from "./components/OrgContainer";
 import './style.css';
 import { Container } from '@mui/material';
 import ModalLoad from "../../components/ModalLoad";
+import { clearServices } from '../../redux/org_services/orgServivesSlice';
+import { clearProducts } from '../../redux/org_products/orgProductsSlice';
 
 
 function MerchantDetail() {
@@ -46,6 +48,8 @@ function MerchantDetail() {
     if (sub_domain !== org?.subdomain) {
       dispatch(fetchAsyncOrg(sub_domain))
       dispatch(onActiveTab(1))
+      dispatch(clearServices())
+      dispatch(clearProducts())
     }
   }
   const callGalleriesOrg_DiscountsOrg = () => {
@@ -82,18 +86,18 @@ function MerchantDetail() {
     callOrgDetail()
   }, [sub_domain])
 
-  useEffect(() => {
-    if (ORG_DISCOUNTS.DISCOUNTS.status_list === STATUS.SUCCESS &&
-      status_ser === STATUS.SUCCESS && status_pr === STATUS.SUCCESS
-    ) {
-      if (ORG_DISCOUNTS.DISCOUNTS.totalItem === 0
-        && SERVICES_SPECIAL.totalItem === 0
-        && PRODUCTS_SPECIAL.totalItem === 0
-      ) {
-        dispatch(onActiveTab(tab === 1 ? 2 : tab))
-      }
-    }
-  }, [ORG_DISCOUNTS.DISCOUNTS, SERVICES_SPECIAL, PRODUCTS_SPECIAL])
+  // useEffect(() => {
+  //   if (ORG_DISCOUNTS.DISCOUNTS.status_list === STATUS.SUCCESS &&
+  //     status_ser === STATUS.SUCCESS && status_pr === STATUS.SUCCESS
+  //   ) {
+  //     if (ORG_DISCOUNTS.DISCOUNTS.totalItem === 0
+  //       && SERVICES_SPECIAL.totalItem === 0
+  //       && PRODUCTS_SPECIAL.totalItem === 0
+  //     ) {
+  //       dispatch(onActiveTab(tab === 1 ? 2 : tab))
+  //     }
+  //   }
+  // }, [ORG_DISCOUNTS.DISCOUNTS, SERVICES_SPECIAL, PRODUCTS_SPECIAL])
   return (
     <div className="mb-cnt">
       {status !== STATUS.SUCCESS && <ModalLoad />}

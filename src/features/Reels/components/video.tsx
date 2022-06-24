@@ -179,7 +179,7 @@ export default function Video(props: any) {
                 >
                     <source src={vd_url} type="video/mp4" />
                 </video>
-                <div>
+                <div className="reel-item-body">
                     <div>
                         <div>
                             <img src="" alt="" />
