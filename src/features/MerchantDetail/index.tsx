@@ -25,6 +25,8 @@ import OrgContainer from "./components/OrgContainer";
 import './style.css';
 import { Container } from '@mui/material';
 import ModalLoad from "../../components/ModalLoad";
+import { clearServices } from '../../redux/org_services/orgServivesSlice';
+import { clearProducts } from '../../redux/org_products/orgProductsSlice';
 
 
 function MerchantDetail() {
@@ -46,6 +48,8 @@ function MerchantDetail() {
     if (sub_domain !== org?.subdomain) {
       dispatch(fetchAsyncOrg(sub_domain))
       dispatch(onActiveTab(1))
+      dispatch(clearServices())
+      dispatch(clearProducts())
     }
   }
   const callGalleriesOrg_DiscountsOrg = () => {
