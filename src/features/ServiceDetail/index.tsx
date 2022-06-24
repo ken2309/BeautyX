@@ -26,6 +26,7 @@ import DetailPolicy from "./components/DetailPolicy";
 import DetailRecommend from "./components/DetailRecommend";
 import { handleScroll, handleChangeScroll } from "./onScrollChange";
 import ReviewsContainer from "../ReviewsContainer";
+import ModalLoad from "../../components/ModalLoad";
 
 function ServiceDetail(props: any) {
     const dispatch = useDispatch();
@@ -149,10 +150,12 @@ function ServiceDetail(props: any) {
         callServiceDetail();
         callOrgDetail();
         callServiceComments();
+
     }, [params.id]);
 
     return (
         <>
+            {SERVICE.status !== STATUS.SUCCESS && <ModalLoad />}
             {/* title page servive */}
             <HeadTitle
                 title={
@@ -221,7 +224,7 @@ function ServiceDetail(props: any) {
                                                 }
                                             />
                                             {COMMENTS.comments &&
-                                            COMMENTS.comments.length >= 8 ? (
+                                                COMMENTS.comments.length >= 8 ? (
                                                 <div
                                                     style={{
                                                         justifyContent:

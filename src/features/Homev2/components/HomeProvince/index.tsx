@@ -19,28 +19,14 @@ function HomeProvince(props: any) {
         });
         scrollTop();
     };
-    const gotoListProvince = () => {
-        history.push("/dia-diem-quan-tam");
-        scrollTop();
-    };
 
     return (
         <div className="home-province">
             <HomeTitleSection
                 title={`${t("home_2.places_you_are_interested_in")}`}
+                url={`/dia-diem-quan-tam`}
+                seemore={"Xem tất cả >"}
             />
-            {/* <div onClick={gotoListProvince}>
-                        <div className="flex-row cursor-pointer ">
-                            <p
-                                style={{
-                                    fontSize: "14px",
-                                    color: "var(--purple)",
-                                }}
-                            >
-                                Xem thêm {">"}
-                            </p>
-                        </div>
-                    </div> */}
             <div className="home-province_list">
                 {provinces_org
                     ?.slice(0, 6)

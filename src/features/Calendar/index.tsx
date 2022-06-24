@@ -11,13 +11,14 @@ import useFullScreen from '../../utils/useFullScreen';
 import icon from '../../constants/icon';
 import { clearAllServices } from '../../redux/servicesBookSlice';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { extraParamsUrl } from '../../utils/extraParamsUrl';
 
 function Calendar() {
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
     const history = useHistory();
+    const location: any = useLocation();
     const params: any = extraParamsUrl();
     const tabList = [
         { value: "1", title: "Lịch hẹn" },
@@ -33,7 +34,13 @@ function Calendar() {
     useEffect(() => {
         dispatch(clearAllServices())
     }, [])
-
+    const onGoBack = () => {
+        if (location.state?.prevUrl) {
+            history.goBack(`${location.state?.prevUrl}`)
+        } else {
+            history.push('/')
+        }
+    }
     return (
         <>
             <HeadTitle title="Lịch hẹn" />
@@ -43,7 +50,7 @@ function Calendar() {
                     <TabContext value={valueTab} >
                         <Container>
                             <div className="cal-cnt__tab-cnt-head">
-                                <button onClick={() => history.push('/')} className='back-btn'>
+                                <button onClick={onGoBack} className='back-btn'>
                                     <img src={icon.chevronLeft} alt="" />
                                 </button>
                                 <TabList

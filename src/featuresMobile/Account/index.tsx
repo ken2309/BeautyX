@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import "./account.css";
 import icon from "../../constants/icon";
 import Bottom from "../Bottom/index";
@@ -12,7 +13,6 @@ import authentication from "../../api/authApi";
 import { putUser } from "../../redux/USER/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Settings from "./Setting";
-import { useHistory } from "react-router-dom";
 
 function AccountMb() {
   const { t } = useContext(AppContext);
@@ -23,7 +23,6 @@ function AccountMb() {
   const [openSettings, setOpenSettings] = useState(false);
   const dispatch = useDispatch();
   const USER = useSelector((state: any) => state.USER.USER);
-  const history = useHistory();
 
   //const [avatarMb, setAvatarMb] = useState();
 
@@ -51,115 +50,113 @@ function AccountMb() {
     }
   };
   return (
-    <>
-
-        <div className="mb-ac">
-            <div className="mb-ac__cnt">
-                <div className="mb-ac__cnt-avt">
-                    <div className="mb-ac__cnt-avt-wrap">
-                        <div className="mb-ac__cnt-avt-box">
-                            <img
-                                src={USER?.avatar}
-                                alt=""
-                                className="mb-ac__cnt-avt-box-img"
-                            />
-                            <button>
-                                <label htmlFor="file_mb">
-                                    <img src={icon.Camera_purple} alt="" />
-                                </label>
-                            </button>
-                            <input
-                                hidden
-                                id="file_mb"
-                                type="file"
-                                name="file_mb"
-                                accept="image/jpeg"
-                                onChange={onFileChange}
-                            />
-                        </div>
-                        <div className="flex-column mb-ac__cnt-avt-name">
-                            {USER?.fullname}
-                            {/* <div className="mb-ac__cnt-avt-rank">
-                              <ul>
-                                <li>
-                                  <div className=" flex-row-sp item">
-                                    <img src={icon.Ticket} alt="" />
-                                    <div className="item-cnt">
-                                      <span>Điểm</span>
-                                      <span>2000</span>
-                                    </div>
-                                  </div>
-                                </li>
-                                <li>
-                                  <div className=" flex-row-sp item">
-                                    <img src={icon.Wallet} alt="" />
-                                    <div className="item-cnt">
-                                      <span>Số dư</span>
-                                      <span>200.000đ</span>
-                                    </div>
-                                  </div>
-                                </li>
-                                <li>
-                                  <div className=" flex-row-sp item">
-                                    <img src={icon.Crown} alt="" />
-                                    <div className="item-cnt">
-                                      <span>Hạng</span>
-                                      <span>Vàng</span>
-                                    </div>
-                                  </div>
-                                </li>
-                              </ul>
-                            </div> */}
-                        </div>
+    <div className="mb-ac">
+      <div className="mb-ac__cnt">
+        <div className="mb-ac__cnt-avt">
+          <div className="mb-ac__cnt-avt-wrap">
+            <div className="mb-ac__cnt-avt-box">
+              <img
+                src={USER?.avatar}
+                alt=""
+                className="mb-ac__cnt-avt-box-img"
+              />
+              <button>
+                <label htmlFor="file_mb">
+                  <img src={icon.Camera_purple} alt="" />
+                </label>
+              </button>
+              <input
+                hidden
+                id="file_mb"
+                type="file"
+                name="file_mb"
+                accept="image/jpeg"
+                onChange={onFileChange}
+              />
+            </div>
+            <div className="flex-column mb-ac__cnt-avt-name">
+              {USER?.fullname}
+              {/* <div className="mb-ac__cnt-avt-rank">
+                <ul>
+                  <li>
+                    <div className=" flex-row-sp item">
+                      <img src={icon.Ticket} alt="" />
+                      <div className="item-cnt">
+                        <span>Điểm</span>
+                        <span>2000</span>
+                      </div>
                     </div>
-                </div>
-                <div className="mb-ac__cnt-private">
-                    <ul>
-                        <li>
-                            <div
-                                onClick={() => setOpenAcc(true)}
-                                className="flex-column mb-ac__cnt-private-item"
-                            >
-                                <img src={icon.User_purple} alt="" />
-                                <span>{t("Header.my_acc")}</span>
-                            </div>
-                        </li>
-                        {/* <li>
+                  </li>
+                  <li>
+                    <div className=" flex-row-sp item">
+                      <img src={icon.Wallet} alt="" />
+                      <div className="item-cnt">
+                        <span>Số dư</span>
+                        <span>200.000đ</span>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className=" flex-row-sp item">
+                      <img src={icon.Crown} alt="" />
+                      <div className="item-cnt">
+                        <span>Hạng</span>
+                        <span>Vàng</span>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div> */}
+            </div>
+          </div>
+        </div>
+        <div className="mb-ac__cnt-private">
+          <ul>
+            <li>
+              <div
+                onClick={() => setOpenAcc(true)}
+                className="flex-column mb-ac__cnt-private-item"
+              >
+                <img src={icon.User_purple} alt="" />
+                <span>{t("Header.my_acc")}</span>
+              </div>
+            </li>
+            {/* <li>
                             <div className="flex-column mb-ac__cnt-private-item">
                                 <img src={icon.Credit_card} alt="" />
                                 <span>{t("pm.payment_method")}</span>
                             </div>
                         </li> */}
-                        <li>
-                            <div
-                                onClick={() => setOpenOrder(true)}
-                                className="flex-column mb-ac__cnt-private-item"
-                            >
-                                <img src={icon.Clock_purple} alt="" />
-                                <span>{t("Header.my_order")}</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div
-                                onClick={() => setOpenSer(true)}
-                                className="flex-column mb-ac__cnt-private-item"
-                            >
-                                <img src={icon.bag} alt="" />
-                                <span>{t("app.my_services")}</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div
-                                onClick={() => setOpenDiscount(true)}
-                                className="flex-column mb-ac__cnt-private-item"
-                            >
-                                <img src={icon.Ticket} alt="" />
-                                <span>{t("Header.my_codes")}</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                {/* <div className="mb-ac__cnt-private">
+            <li>
+              <div
+                onClick={() => setOpenOrder(true)}
+                className="flex-column mb-ac__cnt-private-item"
+              >
+                <img src={icon.Clock_purple} alt="" />
+                <span>{t("Header.my_order")}</span>
+              </div>
+            </li>
+            <li>
+              <div
+                onClick={() => setOpenSer(true)}
+                className="flex-column mb-ac__cnt-private-item"
+              >
+                <img src={icon.bag} alt="" />
+                <span>{t("app.my_services")}</span>
+              </div>
+            </li>
+            <li>
+              <div
+                onClick={() => setOpenDiscount(true)}
+                className="flex-column mb-ac__cnt-private-item"
+              >
+                <img src={icon.Ticket} alt="" />
+                <span>{t("Header.my_codes")}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        {/* <div className="mb-ac__cnt-private">
                     <ul>
                         <li>
                             <div className="flex-column mb-ac__cnt-private-item">
@@ -184,77 +181,16 @@ function AccountMb() {
                         </li>
                     </ul>
                 </div> */}
-            </div>
-          </div>
-      <div className="mb-ac__cnt-private">
-        <ul>
-          <li>
-            <div
-              onClick={() => setOpenAcc(true)}
-              className="flex-column mb-ac__cnt-private-item"
-            >
-              <img src={icon.User_purple} alt="" />
-              <span>{t("Header.my_acc")}</span>
-            </div>
-          </li>
-          <li>
-            <div className="flex-column mb-ac__cnt-private-item">
-              <img src={icon.Credit_card} alt="" />
-              <span>{t("pm.payment_method")}</span>
-            </div>
-          </li>
-          <li>
-            <div
-              onClick={() => setOpenOrder(true)}
-              className="flex-column mb-ac__cnt-private-item"
-            >
-              <img src={icon.Clock_purple} alt="" />
-              <span>{t("Header.my_order")}</span>
-            </div>
-          </li>
-          <li>
-            <div
-              onClick={() => history.push("/lich-hen?tab=2")}
-              className="flex-column mb-ac__cnt-private-item"
-            >
-              <img src={icon.bag} alt="" />
-              <span>{t("app.my_services")}</span>
-            </div>
-          </li>
-          <li>
-            <div
-              onClick={() => setOpenDiscount(true)}
-              className="flex-column mb-ac__cnt-private-item"
-            >
-              <img src={icon.Ticket} alt="" />
-              <span>{t("Header.my_codes")}</span>
-            </div>
-          </li>
-        </ul>
       </div>
-      <div className="mb-ac__cnt-private">
-        <ul>
-          <li>
-            <div className="flex-column mb-ac__cnt-private-item">
-              <img src={icon.Bell} alt="" />
-              <span>{t("Header.noti")}</span>
-            </div>
-          </li>
-          <li>
-            <div onClick={() => setOpenSettings(true)} className="flex-column mb-ac__cnt-private-item">
-              <img src={icon.Setting} alt="" />
-              <span>{t("Header.settings")}</span>
-            </div>
-          </li>
-          <li>
-            <div className="flex-column mb-ac__cnt-private-item">
-              <img src={icon.Headphones_purple} alt="" />
-              <span>{t("Header.support")}</span>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </>);
+      <Bottom />
+      {/* open dialog */}
+      <OrderMb openOrder={openOrder} setOpenOrder={setOpenOrder} />
+      <ServicesUserMb open={openSer} setOpen={setOpenSer} />
+      <AccountForm open={openAcc} setOpen={setOpenAcc} />
+      <DiscountUserMb open={openDiscount} setOpen={setOpenDiscount} />
+      <Settings open={openSettings} setOpen={setOpenSettings} />
+    </div>
+  );
 }
 
 export default AccountMb;

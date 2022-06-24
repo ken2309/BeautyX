@@ -36,6 +36,7 @@ import {
 import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
 import ReviewsContainer from "../ReviewsContainer";
 import Footer from "../Footer";
+import ModalLoad from "../../components/ModalLoad";
 
 function DiscountDetail() {
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
@@ -191,6 +192,7 @@ function DiscountDetail() {
 
     return (
         <>
+            {status_detail !== STATUS.SUCCESS && <ModalLoad title="Đang tải..." />}
             <HeadTitle
                 title={
                     status_detail === "LOADING" ? "Loading..." : discount?.title
@@ -257,7 +259,7 @@ function DiscountDetail() {
                                                     }
                                                 />
                                                 {COMMENTS.comments &&
-                                                COMMENTS.comments.length >=
+                                                    COMMENTS.comments.length >=
                                                     8 ? (
                                                     <div
                                                         style={{
@@ -292,20 +294,20 @@ function DiscountDetail() {
                                             >
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                    <>
-                                                        <p className="service-detail__title">
-                                                            Doanh nghiệp
-                                                        </p>
-                                                        <div className="service-detail__org-mb">
-                                                            <DetailOrgCard
+                                                        <>
+                                                            <p className="service-detail__title">
+                                                                Doanh nghiệp
+                                                            </p>
+                                                            <div className="service-detail__org-mb">
+                                                                <DetailOrgCard
+                                                                    org={ORG?.org}
+                                                                />
+                                                            </div>
+                                                            <OrgInformation
                                                                 org={ORG?.org}
                                                             />
-                                                        </div>
-                                                        <OrgInformation
-                                                            org={ORG?.org}
-                                                        />
-                                                    </>
-                                                )}
+                                                        </>
+                                                    )}
                                             </div>
                                         </TabPanel>
                                         <TabPanel value={value}>

@@ -153,8 +153,34 @@ import calendarPurpleBold from "../assets/icon/calendarPurpleBold.svg";
 import cardDiscountOrange from "../assets/icon/cardDiscountOrange.svg";
 import tumerGray from "../assets/icon/tumer-gray.svg";
 import searchGray from "../assets/icon/searchGray.svg";
+// acccount
+import emailWhite from "../assets/icon/email-white.svg";
+import phoneWhite from "../assets/icon/phone-white.svg";
+import editWhiteAcc from "../assets/icon/edit-white.svg";
+import boxAcc from "../assets/icon/box-acc.svg";
+import arownAcc from "../assets/icon/arown-acc.svg";
+import calendarAcc from "../assets/icon/calendar-acc.svg";
+import heartAcc from "../assets/icon/heart-acc.svg";
+import markerAcc from "../assets/icon/marker-acc.svg";
+import book from "../assets/icon/book-alt.svg";
+import cameraAcc from "../assets/icon/Camera-acc.svg";
+import emailPurple from "../assets/icon/email-purple.svg";
+import phonePurple from "../assets/icon/phone-purple.svg";
 import supportChat from "../assets/icon/messageChat.svg";
+
 const icon = {
+    phonePurple,
+    emailPurple,
+    cameraAcc,
+    book,
+    boxAcc,
+    arownAcc,
+    calendarAcc,
+    heartAcc,
+    editWhiteAcc,
+    markerAcc,
+    emailWhite,
+    phoneWhite,
     searchGray,
     tumerGray,
     arrownLeftWhite,

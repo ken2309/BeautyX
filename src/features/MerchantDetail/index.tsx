@@ -24,6 +24,7 @@ import OrgDetail from "./components/OrgDetail";
 import OrgContainer from "./components/OrgContainer";
 import './style.css';
 import { Container } from '@mui/material';
+import ModalLoad from "../../components/ModalLoad";
 
 
 function MerchantDetail() {
@@ -80,7 +81,7 @@ function MerchantDetail() {
   useEffect(() => {
     callOrgDetail()
   }, [sub_domain])
-  
+
   useEffect(() => {
     if (ORG_DISCOUNTS.DISCOUNTS.status_list === STATUS.SUCCESS &&
       status_ser === STATUS.SUCCESS && status_pr === STATUS.SUCCESS
@@ -89,12 +90,13 @@ function MerchantDetail() {
         && SERVICES_SPECIAL.totalItem === 0
         && PRODUCTS_SPECIAL.totalItem === 0
       ) {
-        dispatch(onActiveTab(2))
+        dispatch(onActiveTab(tab === 1 ? 2 : tab))
       }
     }
   }, [ORG_DISCOUNTS.DISCOUNTS, SERVICES_SPECIAL, PRODUCTS_SPECIAL])
   return (
     <div className="mb-cnt">
+      {status !== STATUS.SUCCESS && <ModalLoad />}
       <HeadTitle title={org?.name ? org.name : 'Đang tải...'} />
       {IS_MB ? <HeadOrg org={org} isShowSearch={true} /> : <Head />}
       <OrgDetail

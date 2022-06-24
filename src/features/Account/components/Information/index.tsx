@@ -38,17 +38,6 @@ function Information(props: any) {
           borderRadius="26px"
           backColor="transparent"
         />
-        {/* <ButtonCus
-          onClick={formik.handleSubmit}
-          text={t('acc.save')}
-          fontSize="14px"
-          lineHeight="20px"
-          color="#ffffff"
-          border="solid 1px var(--purple)"
-          borderRadius="26px"
-          backColor="var(--purple"
-          type="button"
-        /> */}
       </div>
       <hr className="purple_line" />
       <Address

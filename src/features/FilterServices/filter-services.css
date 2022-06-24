@@ -2,6 +2,7 @@
     width: 100%;
     overflow-x: scroll;
     padding: 8px 0px;
+    margin-top: 16px;
 }
 .filter-ser-list li {
     background-color: #fff;
@@ -26,6 +27,7 @@
     .filter-ser-cnt {
         padding: 12px;
         overflow-x: scroll;
+        margin-top: 0;
     }
     .filter-ser-list {
         width: max-content;
