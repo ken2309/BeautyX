@@ -18,9 +18,11 @@ import UserDiscounts from "./components/UserDiscounts";
 import Footer from "../Footer";
 import HeadTitle from "../HeadTitle";
 import { useEffect } from "react";
-import { fetchAsyncDiscountsUser } from '../../redux/USER/userSlice'
+import { fetchAsyncDiscountsUser } from "../../redux/USER/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { STATUS } from '../../redux/status'
+import { STATUS } from "../../redux/status";
+import AccountMobile from "../../featuresMobile/AccountPage";
+import useFullScreen from "../../utils/useFullScreen";
 const routes = [
     {
         path: `/tai-khoan/phuong-thuc-thanh-toan`,
@@ -69,34 +71,36 @@ function Account() {
     const { status_discount } = DISCOUNTS_USER;
     const callDiscountsUser = () => {
         if (status_discount !== STATUS.SUCCESS) {
-            dispatch(fetchAsyncDiscountsUser({ page: 1 }))
+            dispatch(fetchAsyncDiscountsUser({ page: 1 }));
         }
-    }
+    };
     useEffect(() => {
-        callDiscountsUser()
-    }, [])
+        callDiscountsUser();
+    }, []);
+    const IS_MB = useFullScreen();
     return (
-        <>
-            <HeadTitle title={headerTitle} />
-            <Head />
-            <div className="wrapper account_section">
-                <SideBar />
-                <div className="display_section">
-                    <Switch>
-                        {routes.map((item, index) => (
-                            <RouterPage
-                                key={index}
-                                path={`${item.path}`}
-                                pageComponent={item.component}
-                            />
-                        ))}
-                    </Switch>
+        IS_MB ?
+            <AccountMobile />
+            :
+            <>
+                <HeadTitle title={headerTitle} />
+                <Head />
+                <div className="wrapper account_section">
+                    <SideBar />
+                    <div className="display_section">
+                        <Switch>
+                            {routes.map((item, index) => (
+                                <RouterPage
+                                    key={index}
+                                    path={`${item.path}`}
+                                    pageComponent={item.component}
+                                />
+                            ))}
+                        </Switch>
+                    </div>
                 </div>
-            </div>
-            {/* for mobile */}
-            <AccountMb />
-            <Footer />
-        </>
+                <Footer />
+            </>
     );
 }
 export default Account;
