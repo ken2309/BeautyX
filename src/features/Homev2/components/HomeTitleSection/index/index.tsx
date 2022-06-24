@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import scrollTop from "../../../../../utils/scrollTop";
 import "../../../home-se.css";
 
 interface IProps {
@@ -11,19 +12,22 @@ interface IProps {
 function HomeTitleSection(props: IProps) {
     const { title, url, seemore } = props;
     const history = useHistory();
+    const gotoSeemore = () => {
+        history.push(`${url}`);
+        scrollTop();
+    };
     return (
         <div className="flex-row-sp home-se-promo__header">
             <div className="home-se-sec-title">{title}</div>
-            <div onClick={() => history.push({ url })}>
+            <div onClick={() => gotoSeemore()}>
                 <div className="flex-row cursor-pointer">
                     <p
                         style={{
-                            fontSize: "16px",
                             color: "var(--purple)",
                             fontWeight: "bold",
                         }}
                     >
-                        {seemore ? seemore : "Xem thêm >"}
+                        {seemore ? seemore : null}
                     </p>
                 </div>
             </div>

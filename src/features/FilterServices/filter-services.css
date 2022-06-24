@@ -2,6 +2,7 @@
     width: 100%;
     overflow-x: scroll;
     padding: 8px 0px;
+    margin-top: 16px;
 }
 .filter-ser-list li {
     background-color: #fff;
@@ -24,8 +25,9 @@
         font-size: 12px;
     }
     .filter-ser-cnt {
-        padding: 12px 0;
+        padding: 12px;
         overflow-x: scroll;
+        margin-top: 0;
     }
     .filter-ser-list {
         width: max-content;
@@ -34,7 +36,7 @@
         width: 100%;
         overflow-x: scroll;
     }
-    .home-se-re .home-promo-ser {
+    /* .home-se-re .home-promo-ser {
         margin-top: 16px;
-    }
+    } */
 }

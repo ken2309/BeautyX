@@ -40,9 +40,9 @@ function HomeTags(props: any) {
     };
     return (
         <>
-            <div className="home-title__tag">
+            {/* <div className="home-title__tag">
                 <HomeTitleSection title={`${t("home_2.categories")}`} />
-            </div>
+            </div> */}
             <div className="home-tags">
                 <ul className="home-tags-list">
                     {tags.map((item) => (

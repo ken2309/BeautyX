@@ -9,11 +9,10 @@ import DiscountUserMb from "./DiscountUser";
 import { AppContext } from "../../context/AppProvider";
 import mediaApi from "../../api/mediaApi";
 import authentication from "../../api/authApi";
-import { putUser } from '../../redux/USER/userSlice'
+import { putUser } from "../../redux/USER/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Settings from "./Setting";
 import { useHistory } from "react-router-dom";
-
 
 function AccountMb() {
   const { t } = useContext(AppContext);
@@ -24,30 +23,32 @@ function AccountMb() {
   const [openSettings, setOpenSettings] = useState(false);
   const dispatch = useDispatch();
   const USER = useSelector((state: any) => state.USER.USER);
-  const history = useHistory();
 
   //const [avatarMb, setAvatarMb] = useState();
 
   const onFileChange = (e: any) => {
     const form = e.target.files[0];
-    handlePostMedia(form)
-  }
+    handlePostMedia(form);
+  };
   const handlePostMedia = async (form: any) => {
     let formData = new FormData();
-    formData.append('file', form);
+    formData.append("file", form);
     try {
       const res = await mediaApi.postMedia(formData);
-      const action = putUser({ ...USER, avatar: res.data.context.original_url })
-      dispatch(action)
+      const action = putUser({
+        ...USER,
+        avatar: res.data.context.original_url,
+      });
+      dispatch(action);
       const model_id = await res.data.context.model_id;
       const params = {
-        media_id: model_id
-      }
-      await authentication.putUserProfile(params)
+        media_id: model_id,
+      };
+      await authentication.putUserProfile(params);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   return (
     <div className="mb-ac">
       <div className="mb-ac__cnt">
@@ -75,7 +76,7 @@ function AccountMb() {
             </div>
             <div className="flex-column mb-ac__cnt-avt-name">
               {USER?.fullname}
-              <div className="mb-ac__cnt-avt-rank">
+              {/* <div className="mb-ac__cnt-avt-rank">
                 <ul>
                   <li>
                     <div className=" flex-row-sp item">
@@ -105,7 +106,7 @@ function AccountMb() {
                     </div>
                   </li>
                 </ul>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -120,12 +121,12 @@ function AccountMb() {
                 <span>{t("Header.my_acc")}</span>
               </div>
             </li>
-            <li>
-              <div className="flex-column mb-ac__cnt-private-item">
-                <img src={icon.Credit_card} alt="" />
-                <span>{t("pm.payment_method")}</span>
-              </div>
-            </li>
+            {/* <li>
+                            <div className="flex-column mb-ac__cnt-private-item">
+                                <img src={icon.Credit_card} alt="" />
+                                <span>{t("pm.payment_method")}</span>
+                            </div>
+                        </li> */}
             <li>
               <div
                 onClick={() => setOpenOrder(true)}
@@ -137,7 +138,7 @@ function AccountMb() {
             </li>
             <li>
               <div
-                onClick={() => history.push("/lich-hen?tab=2")}
+                onClick={() => setOpenSer(true)}
                 className="flex-column mb-ac__cnt-private-item"
               >
                 <img src={icon.bag} alt="" />
@@ -155,28 +156,31 @@ function AccountMb() {
             </li>
           </ul>
         </div>
-        <div className="mb-ac__cnt-private">
-          <ul>
-            <li>
-              <div className="flex-column mb-ac__cnt-private-item">
-                <img src={icon.Bell} alt="" />
-                <span>{t("Header.noti")}</span>
-              </div>
-            </li>
-            <li>
-              <div onClick={() => setOpenSettings(true)} className="flex-column mb-ac__cnt-private-item">
-                <img src={icon.Setting} alt="" />
-                <span>{t("Header.settings")}</span>
-              </div>
-            </li>
-            <li>
-              <div className="flex-column mb-ac__cnt-private-item">
-                <img src={icon.Headphones_purple} alt="" />
-                <span>{t("Header.support")}</span>
-              </div>
-            </li>
-          </ul>
-        </div>
+        {/* <div className="mb-ac__cnt-private">
+                    <ul>
+                        <li>
+                            <div className="flex-column mb-ac__cnt-private-item">
+                                <img src={icon.Bell} alt="" />
+                                <span>{t("Header.noti")}</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div
+                                onClick={() => setOpenSettings(true)}
+                                className="flex-column mb-ac__cnt-private-item"
+                            >
+                                <img src={icon.Setting} alt="" />
+                                <span>{t("Header.settings")}</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="flex-column mb-ac__cnt-private-item">
+                                <img src={icon.Headphones_purple} alt="" />
+                                <span>{t("Header.support")}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div> */}
       </div>
       <Bottom />
       {/* open dialog */}
