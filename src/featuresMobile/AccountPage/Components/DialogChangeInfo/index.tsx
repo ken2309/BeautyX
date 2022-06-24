@@ -62,9 +62,13 @@ export default function DialogChangeInfo(props: any) {
             >
                 <div className="edit-user__img">
                     <img src={USER?.avatar} alt="" />
+<<<<<<< HEAD
                     <button
                         type="button"
                     >
+=======
+                    <button type="button">
+>>>>>>> 80cc411f7ad006e29dceb814e529ab6bebba4ea9
                         <label htmlFor="file_mb" className="img-overlay">
                             <img src={icon.cameraAcc} alt="" />
                         </label>

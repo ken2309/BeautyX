@@ -11,7 +11,7 @@ import HomeSecond from "../Homev2";
 import ExtraFlatForm from "../../rootComponents/extraFlatForm";
 import useFullScreen from "../../utils/useFullScreen";
 import HeadHomeMobile from "../HeadMobile/HeadHomeMobile";
-
+import ChatBox from '../ChatBox';
 function Home() {
   const IS_MB = useFullScreen();
 
@@ -23,6 +23,7 @@ function Home() {
         <HomeBanner />
       </Container>
       <HomeSecond />
+      <ChatBox/>
       <Footer />
       <Bottom />
     </div>

@@ -166,6 +166,7 @@ import book from "../assets/icon/book-alt.svg";
 import cameraAcc from "../assets/icon/Camera-acc.svg";
 import emailPurple from "../assets/icon/email-purple.svg";
 import phonePurple from "../assets/icon/phone-purple.svg";
+import supportChat from "../assets/icon/messageChat.svg";
 
 const icon = {
     phonePurple,
@@ -334,5 +335,6 @@ const icon = {
     cartPurpleBold,
     calendarPurpleBold,
     cardDiscountOrange,
+    supportChat
 };
 export default icon;
