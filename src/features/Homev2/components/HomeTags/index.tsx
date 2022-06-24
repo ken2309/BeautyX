@@ -9,15 +9,15 @@ function HomeTags(props: any) {
     const history = useHistory();
     const { t } = useContext(AppContext);
     const tags = [
+        { id: 4, title: "Spa", text: "Spa", img: imgTag.spa },
+        { id: 3, title: "Salon", text: "Salon", img: imgTag.hairSalon },
         { id: 1, title: "Nail", text: "Nail", img: imgTag.nails },
         {
-            id: 2,
-            title: "Phòng khám",
-            text: t("home_2.clinic"),
-            img: imgTag.nhaKhoa,
+            id: 6,
+            title: "Message Center",
+            text: "Message Center",
+            img: imgTag.message,
         },
-        { id: 3, title: "Salon", text: "Salon", img: imgTag.hairSalon },
-        { id: 4, title: "Spa", text: "Spa", img: imgTag.spa },
         {
             id: 5,
             title: "Thẩm mỹ viện",
@@ -25,10 +25,10 @@ function HomeTags(props: any) {
             img: imgTag.skinCare,
         },
         {
-            id: 6,
-            title: "Message Center",
-            text: "Message Center",
-            img: imgTag.message,
+            id: 2,
+            title: "Phòng khám",
+            text: t("home_2.clinic"),
+            img: imgTag.nhaKhoa,
         },
         //{ id: 7, title: 'Yoga', img: imgTag.yoga },
     ];
