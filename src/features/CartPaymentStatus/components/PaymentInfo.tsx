@@ -9,8 +9,7 @@ import { FLAT_FORM_TYPE } from '../../../rootComponents/flatForm';
 import { EXTRA_FLAT_FORM } from '../../../api/extraFlatForm';
 import { EXTRA_PAYMENT } from '../../../rootComponents/extraPayment';
 import doPostMakePaymentMessageTiki from '../../../rootComponents/tiki/doPostMessageTiki';
-import dayjs from 'dayjs';
-import { fetchAsyncApps } from '../../../redux/appointment/appSlice';
+import { onSetStatusApp } from '../../../redux/appointment/appSlice';
 
 function PaymentInfo(props: any) {
     const history = useHistory();
@@ -45,8 +44,7 @@ function PaymentInfo(props: any) {
     }
     //func appointment
     const gotoAppointment = () => {
-        const time = dayjs().format("YYYY-MM")
-        dispatch(fetchAsyncApps(time))
+        dispatch(onSetStatusApp())
         history.push('/lich-hen?tab=1')
     }
     const onCheckStatus = () => {
@@ -121,16 +119,6 @@ function PaymentInfo(props: any) {
                     </button>
                 </div>
             case "CANCELED_BY_USER":
-                return <div className='flex-column st-cancel__cnt' >
-                    <span>Đã hủy thanh toán</span>
-                    <button
-                        onClick={() => history.push('/Home')}
-                        className='st-pm-info__btn'
-                    >
-                        Về trang chủ
-                    </button>
-                </div>
-            case "REFUND":
                 return <div className='flex-column st-cancel__cnt' >
                     <span>Đã hủy thanh toán</span>
                     <button

@@ -1,16 +1,32 @@
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
+import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import Bottom from "../Bottom";
 import "./accountPage.css";
+import AccountForm from "./Components/AccountForm";
 import DialogChangeInfo from "./Components/DialogChangeInfo";
 
 export default function AccountMobile() {
     const { USER } = useSelector((state: any) => state.USER);
+    const params: any = extraParamsUrl();
+    const history = useHistory();
     const [open, setOpen] = useState(false);
+    const openAcc = params?.address ? true : false;
     const refOrder: any = useRef();
     const handleToggle = () => {
         refOrder.current.classList.toggle("active");
+    };
+    const gotoAppointment = () => {
+        const prevUrl = "/tai-khoan/thong-tin-ca-nhan";
+        history.push({
+            pathname: "/lich-hen",
+            state: { prevUrl },
+        });
+    };
+    const gotoAddress = () => {
+        history.push("/tai-khoan/thong-tin-ca-nhan?address=true");
     };
     return (
         <div className="accountMobile">
@@ -71,7 +87,10 @@ export default function AccountMobile() {
                         </div>
                     </li>
                     <li className="accountMobile-mid__item">
-                        <div className="item-left__wrap">
+                        <div
+                            onClick={gotoAppointment}
+                            className="item-left__wrap"
+                        >
                             <div className="item-left">
                                 <div>
                                     <img src={icon.calendarAcc} alt="" />
@@ -93,7 +112,7 @@ export default function AccountMobile() {
                         </div>
                     </li>
                     <li className="accountMobile-mid__item">
-                        <div className="item-left__wrap">
+                        <div onClick={gotoAddress} className="item-left__wrap">
                             <div className="item-left">
                                 <div>
                                     <img src={icon.markerAcc} alt="" />
@@ -113,6 +132,7 @@ export default function AccountMobile() {
                 </div>
             </div>
             <Bottom />
+            <AccountForm open={openAcc} />
         </div>
     );
 }

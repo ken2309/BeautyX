@@ -22,6 +22,7 @@ import { fetchAsyncDiscountsUser } from "../../redux/USER/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { STATUS } from "../../redux/status";
 import AccountMobile from "../../featuresMobile/AccountPage";
+import useFullScreen from "../../utils/useFullScreen";
 const routes = [
     {
         path: `/tai-khoan/phuong-thuc-thanh-toan`,
@@ -76,29 +77,30 @@ function Account() {
     useEffect(() => {
         callDiscountsUser();
     }, []);
+    const IS_MB = useFullScreen();
     return (
-        <>
-            <HeadTitle title={headerTitle} />
-            <Head />
-            <div className="wrapper account_section">
-                <SideBar />
-                <div className="display_section">
-                    <Switch>
-                        {routes.map((item, index) => (
-                            <RouterPage
-                                key={index}
-                                path={`${item.path}`}
-                                pageComponent={item.component}
-                            />
-                        ))}
-                    </Switch>
-                </div>
-            </div>
-            {/* for mobile */}
-            {/* <AccountMb /> */}
+        IS_MB ?
             <AccountMobile />
-            <Footer />
-        </>
+            :
+            <>
+                <HeadTitle title={headerTitle} />
+                <Head />
+                <div className="wrapper account_section">
+                    <SideBar />
+                    <div className="display_section">
+                        <Switch>
+                            {routes.map((item, index) => (
+                                <RouterPage
+                                    key={index}
+                                    path={`${item.path}`}
+                                    pageComponent={item.component}
+                                />
+                            ))}
+                        </Switch>
+                    </div>
+                </div>
+                <Footer />
+            </>
     );
 }
 export default Account;

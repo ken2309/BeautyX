@@ -29,7 +29,7 @@ import { fetchAsyncOrg } from '../../redux/org/orgSlice';
 import { STATUS } from '../../redux/status';
 import apointmentApi from "../../api/apointmentApi";
 import Notification from "../../components/Notification";
-import { fetchAsyncApps } from "../../redux/appointment/appSlice";
+import { onSetStatusApp } from "../../redux/appointment/appSlice";
 
 
 const date = dayjs();
@@ -187,8 +187,7 @@ function Booking() {
     }
     //func appointment
     const gotoAppointment = () => {
-        const time = dayjs().format("YYYY-MM")
-        dispatch(fetchAsyncApps(time))
+        dispatch(onSetStatusApp())
         history.push('/lich-hen?tab=1')
     }
     const handlePostApps = async () => {
