@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./order.css";
 import HeadTitle from "../HeadTitle";
 import { AppContext } from "../../context/AppProvider";
@@ -6,14 +6,35 @@ import TabOrderCancel from './components/TabOrderCancel';
 import TabOrderPaid from './components/TabOrderPaid';
 import { Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { fetchAsyncOrderCancel, fetchAsyncOrderPaid } from "../../redux/order/orderSlice";
+import { useDispatch } from "react-redux";
 
 
 function Orders() {
   const { t } = useContext(AppContext);
+  const dispatch = useDispatch();
   const [value, setValue] = useState("PAID")
   const onChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue)
   }
+
+  const callOrdersCancel = () => {
+    dispatch(fetchAsyncOrderCancel({
+      page: 1,
+      // status: "PAID"
+    }))
+  }
+  const callOrdersPaid = () => {
+    dispatch(fetchAsyncOrderPaid({
+      page: 1,
+      status: "PAID"
+    }))
+  }
+  useEffect(() => {
+    callOrdersPaid()
+    callOrdersCancel()
+  }, [])
+
 
   return (
     <div className="order">

@@ -31,6 +31,7 @@ import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
 import ProductDetailRecomment from "./components/ProductDetailRecomment";
 import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
 import ReviewsContainer from "../ReviewsContainer";
+import ModalLoad from "../../components/ModalLoad";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();
@@ -155,6 +156,7 @@ function ProductDetail(props: any) {
 
     return (
         <div className="product">
+            {PRODUCT.status !== STATUS.SUCCESS && <ModalLoad title="Đang tải" />}
             <HeadTitle
                 title={
                     product?.product_name ? product.product_name : "Loading..."
@@ -210,7 +212,7 @@ function ProductDetail(props: any) {
                                                 }
                                             />
                                             {COMMENTS.comments &&
-                                            COMMENTS.comments.length >= 8 ? (
+                                                COMMENTS.comments.length >= 8 ? (
                                                 <div
                                                     style={{
                                                         justifyContent:

@@ -76,7 +76,7 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 16px;
-    margin: 16px 0 24px 0;
+    margin: 24px 0 24px 0;
 }
 .home-promo-ser .ser-list li {
     background-color: var(--bgWhite);
@@ -185,7 +185,7 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 248px 84px 248px;
     gap: 16px;
-    margin-top: 24px !;
+    margin-top: 24px;
 }
 .home-province .home-province_item {
     overflow: hidden;

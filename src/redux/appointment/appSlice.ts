@@ -25,7 +25,9 @@ const appsSlice = createSlice({
     initialState,
     name: "APP",
     reducers: {
-        
+        onSetStatusApp: (state) => {
+            state.APPS.status = STATUS.LOADING
+        }
     },
     extraReducers: {
         [fetchAsyncApps.pending]: (state) => {
@@ -47,5 +49,6 @@ const appsSlice = createSlice({
         },
     }
 })
-// const { actions } = appsSlice;
+const { actions } = appsSlice;
+export const { onSetStatusApp } = actions;
 export default appsSlice.reducer;

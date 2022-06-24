@@ -81,7 +81,11 @@ const initialState: InitialState = {
 const orderSlice = createSlice({
     name: "ORDER",
     initialState,
-    reducers: {},
+    reducers: {
+        onSetStatusServicesUser: (state) => {
+            state.ORDER_SERVICES.status = STATUS.LOADING;
+        }
+    },
     extraReducers: {
         [fetchAsyncOrderServices.pending]: (state) => {
             return { ...state, ORDER_SERVICES: { ...state.ORDER_SERVICES, status: STATUS.LOADING } }
@@ -141,4 +145,6 @@ const orderSlice = createSlice({
         },
     }
 })
+const { actions } = orderSlice;
+export const { onSetStatusServicesUser } = actions
 export default orderSlice.reducer;

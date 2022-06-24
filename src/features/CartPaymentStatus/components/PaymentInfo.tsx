@@ -9,8 +9,8 @@ import { FLAT_FORM_TYPE } from '../../../rootComponents/flatForm';
 import { EXTRA_FLAT_FORM } from '../../../api/extraFlatForm';
 import { EXTRA_PAYMENT } from '../../../rootComponents/extraPayment';
 import doPostMakePaymentMessageTiki from '../../../rootComponents/tiki/doPostMessageTiki';
-import dayjs from 'dayjs';
-import { fetchAsyncApps } from '../../../redux/appointment/appSlice';
+import { onSetStatusApp } from '../../../redux/appointment/appSlice';
+import { onSetStatusServicesUser } from '../../../redux/order/orderSlice';
 
 function PaymentInfo(props: any) {
     const history = useHistory();
@@ -45,9 +45,17 @@ function PaymentInfo(props: any) {
     }
     //func appointment
     const gotoAppointment = () => {
-        const time = dayjs().format("YYYY-MM")
-        dispatch(fetchAsyncApps(time))
+        dispatch(onSetStatusApp())
         history.push('/lich-hen?tab=1')
+    }
+    const gotoServiceUser = () => {
+        dispatch(onSetStatusServicesUser())
+        history.push('/lich-hen?tab=2')
+    }
+    const goBackHome = () => {
+        dispatch(onSetStatusApp())
+        dispatch(onSetStatusServicesUser())
+        history.push('/home')
     }
     const onCheckStatus = () => {
         switch (data.orderStatus) {
@@ -87,7 +95,7 @@ function PaymentInfo(props: any) {
                                     Xem lịch hẹn
                                 </button>
                                 <button
-                                    onClick={() => history.push('/Home')}
+                                    onClick={goBackHome}
                                 >
                                     Về trang chủ
                                 </button>
@@ -97,13 +105,13 @@ function PaymentInfo(props: any) {
                                 {
                                     (data.services.length > 0 && !listPayment) &&
                                     <button
-                                        onClick={() => history.push('/lich-hen?tab=2')}
+                                        onClick={gotoServiceUser}
                                     >
                                         Đặt hẹn ngay
                                     </button>
                                 }
                                 <button
-                                    onClick={() => history.push('/Home')}
+                                    onClick={goBackHome}
                                 >
                                     Về trang chủ
                                 </button>
@@ -114,7 +122,7 @@ function PaymentInfo(props: any) {
                 return <div className='flex-column st-cancel__cnt' >
                     <span>Đã hủy thanh toán</span>
                     <button
-                        onClick={() => history.push('/Home')}
+                        onClick={goBackHome}
                         className='st-pm-info__btn'
                     >
                         Về trang chủ
@@ -124,17 +132,7 @@ function PaymentInfo(props: any) {
                 return <div className='flex-column st-cancel__cnt' >
                     <span>Đã hủy thanh toán</span>
                     <button
-                        onClick={() => history.push('/Home')}
-                        className='st-pm-info__btn'
-                    >
-                        Về trang chủ
-                    </button>
-                </div>
-            case "REFUND":
-                return <div className='flex-column st-cancel__cnt' >
-                    <span>Đã hủy thanh toán</span>
-                    <button
-                        onClick={() => history.push('/Home')}
+                        onClick={goBackHome}
                         className='st-pm-info__btn'
                     >
                         Về trang chủ
