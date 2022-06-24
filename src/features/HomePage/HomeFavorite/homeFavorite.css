@@ -1,5 +1,7 @@
 .home-favorite {
     margin-top: 24px;
+    padding: 10px;
+    background: #fff;
 }
 .home-favorite .home-favorite__list {
     display: grid;

@@ -1,5 +1,7 @@
 .home-recomment {
     margin-top: 24px;
+    padding: 10px;
+    background: #fff;
 }
 .home-recomment__list {
     display: grid;
