@@ -18,9 +18,10 @@ import UserDiscounts from "./components/UserDiscounts";
 import Footer from "../Footer";
 import HeadTitle from "../HeadTitle";
 import { useEffect } from "react";
-import { fetchAsyncDiscountsUser } from '../../redux/USER/userSlice'
+import { fetchAsyncDiscountsUser } from "../../redux/USER/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { STATUS } from '../../redux/status'
+import { STATUS } from "../../redux/status";
+import AccountMobile from "../../featuresMobile/AccountPage";
 const routes = [
     {
         path: `/tai-khoan/phuong-thuc-thanh-toan`,
@@ -69,12 +70,12 @@ function Account() {
     const { status_discount } = DISCOUNTS_USER;
     const callDiscountsUser = () => {
         if (status_discount !== STATUS.SUCCESS) {
-            dispatch(fetchAsyncDiscountsUser({ page: 1 }))
+            dispatch(fetchAsyncDiscountsUser({ page: 1 }));
         }
-    }
+    };
     useEffect(() => {
-        callDiscountsUser()
-    }, [])
+        callDiscountsUser();
+    }, []);
     return (
         <>
             <HeadTitle title={headerTitle} />
@@ -94,7 +95,8 @@ function Account() {
                 </div>
             </div>
             {/* for mobile */}
-            <AccountMb />
+            {/* <AccountMb /> */}
+            <AccountMobile />
             <Footer />
         </>
     );
