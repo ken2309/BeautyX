@@ -397,6 +397,7 @@
         padding: 24px;
         border-radius: 0px;
         box-shadow: none;
+        background-color: var(--white);
     }
     .sign-content {
         width: 100%;

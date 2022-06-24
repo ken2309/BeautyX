@@ -7,7 +7,10 @@ import { AppContext } from '../../../../context/AppProvider';
 import { STATUS } from '../../../../redux/status';
 import { fetchAsyncUserAddress } from '../../../../redux/USER/userAddressSlice';
 import { IUserAddress } from '../../../../interface/userAddress';
+import DialogChangeInfo from '../../../../featuresMobile/AccountPage/Components/DialogChangeInfo';
+
 import './style.css'
+import useFullScreen from '../../../../utils/useFullScreen';
 
 interface IProps {
     onSetAddressDefault?: (address?: any) => void,
@@ -16,12 +19,14 @@ interface IProps {
 
 function UserPaymentInfo(props: IProps) {
     const { t } = useContext(AppContext);
+    const IS_MB = useFullScreen();
     const { onSetAddressDefault, disableEdit } = props;
     const history = useHistory();
     const dispatch = useDispatch();
     const USER = useSelector((state: any) => state.USER.USER);
     const ADDRESS = useSelector((state: any) => state.ADDRESS);
     const { address, status } = ADDRESS;
+    const [openInfo, setOpenInfo] = useState(false);
     const [useAddress, setUserAddress] = useState<IUserAddress>();
     const callUserAddress = () => {
         if (status !== STATUS.SUCCESS) {
@@ -37,6 +42,13 @@ function UserPaymentInfo(props: IProps) {
     useEffect(() => {
         callUserAddress()
     }, [status])
+    const gotoEditInformation = () => {
+        if (IS_MB) {
+            setOpenInfo(true)
+        } else {
+            history.push('/tai-khoan/thong-tin-ca-nhan')
+        }
+    }
     return (
         <div className='user-address-form'>
             <span className='user-address-form__title'>{t('pm.payment_info')}</span>
@@ -60,7 +72,7 @@ function UserPaymentInfo(props: IProps) {
                                     :
                                     <td>
                                         <button
-                                            onClick={() => history.push('/tai-khoan/thong-tin-ca-nhan')}
+                                            onClick={gotoEditInformation}
                                         >
                                             <img src={icon.edit} alt="" />
                                         </button>
@@ -94,7 +106,7 @@ function UserPaymentInfo(props: IProps) {
                                     :
                                     <td>
                                         <button
-                                            onClick={() => history.push('/tai-khoan/thong-tin-ca-nhan')}
+                                            onClick={() => history.push('/tai-khoan/thong-tin-ca-nhan?address=true')}
                                         >
                                             <img src={icon.edit} alt="" />
                                         </button>
@@ -104,6 +116,13 @@ function UserPaymentInfo(props: IProps) {
                     </tbody>
                 </table>
             </div>
+            {
+                USER &&
+                <DialogChangeInfo
+                    open={openInfo}
+                    setOpen={setOpenInfo}
+                />
+            }
         </div>
     );
 }

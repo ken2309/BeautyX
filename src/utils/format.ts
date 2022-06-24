@@ -17,6 +17,11 @@ export const checkTimeExpired = (time_expired: any) => {
     }
     return dateExpired
 }
+export const formatTime = (dateParams: any) => {
+    const dateArr = dateParams?.split(' ');
+    const time = dateArr[1]?.slice(0, 5);
+    return time
+}
 
 export const formatDistance = (distance?: number) => {
     let dis: string = '';

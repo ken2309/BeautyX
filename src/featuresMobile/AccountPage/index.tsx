@@ -7,16 +7,19 @@ import Bottom from "../Bottom";
 import "./accountPage.css";
 import AccountForm from "./Components/AccountForm";
 import DialogChangeInfo from "./Components/DialogChangeInfo";
+import OrderMb from "./Components/Orders";
 
 export default function AccountMobile() {
     const { USER } = useSelector((state: any) => state.USER);
     const params: any = extraParamsUrl();
     const history = useHistory();
     const [open, setOpen] = useState(false);
-    const openAcc = params?.address ? true : false
+    const openAcc = params?.address ? true : false;
+    const openOrder = params?.order ? true : false;
     const refOrder: any = useRef();
     const handleToggle = () => {
         refOrder.current.classList.toggle("active");
+        history.push('/tai-khoan/lich-su-mua?order=true')
     };
     const gotoAppointment = () => {
         const prevUrl = '/tai-khoan/thong-tin-ca-nhan';
@@ -137,6 +140,7 @@ export default function AccountMobile() {
             </div>
             <Bottom />
             <AccountForm open={openAcc} />
+            <OrderMb openOrder={openOrder} />
         </div>
     );
 }
