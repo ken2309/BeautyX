@@ -10,6 +10,7 @@ import { EXTRA_FLAT_FORM } from '../../../api/extraFlatForm';
 import { EXTRA_PAYMENT } from '../../../rootComponents/extraPayment';
 import doPostMakePaymentMessageTiki from '../../../rootComponents/tiki/doPostMessageTiki';
 import { onSetStatusApp } from '../../../redux/appointment/appSlice';
+import { onSetStatusServicesUser } from '../../../redux/order/orderSlice';
 
 function PaymentInfo(props: any) {
     const history = useHistory();
@@ -46,6 +47,15 @@ function PaymentInfo(props: any) {
     const gotoAppointment = () => {
         dispatch(onSetStatusApp())
         history.push('/lich-hen?tab=1')
+    }
+    const gotoServiceUser = () => {
+        dispatch(onSetStatusServicesUser())
+        history.push('/lich-hen?tab=2')
+    }
+    const goBackHome = () => {
+        dispatch(onSetStatusApp())
+        dispatch(onSetStatusServicesUser())
+        history.push('/home')
     }
     const onCheckStatus = () => {
         switch (data.orderStatus) {
@@ -85,7 +95,7 @@ function PaymentInfo(props: any) {
                                     Xem lịch hẹn
                                 </button>
                                 <button
-                                    onClick={() => history.push('/Home')}
+                                    onClick={goBackHome}
                                 >
                                     Về trang chủ
                                 </button>
@@ -95,13 +105,13 @@ function PaymentInfo(props: any) {
                                 {
                                     (data.services.length > 0 && !listPayment) &&
                                     <button
-                                        onClick={() => history.push('/lich-hen?tab=2')}
+                                        onClick={gotoServiceUser}
                                     >
                                         Đặt hẹn ngay
                                     </button>
                                 }
                                 <button
-                                    onClick={() => history.push('/Home')}
+                                    onClick={goBackHome}
                                 >
                                     Về trang chủ
                                 </button>
@@ -112,7 +122,7 @@ function PaymentInfo(props: any) {
                 return <div className='flex-column st-cancel__cnt' >
                     <span>Đã hủy thanh toán</span>
                     <button
-                        onClick={() => history.push('/Home')}
+                        onClick={goBackHome}
                         className='st-pm-info__btn'
                     >
                         Về trang chủ
@@ -122,7 +132,7 @@ function PaymentInfo(props: any) {
                 return <div className='flex-column st-cancel__cnt' >
                     <span>Đã hủy thanh toán</span>
                     <button
-                        onClick={() => history.push('/Home')}
+                        onClick={goBackHome}
                         className='st-pm-info__btn'
                     >
                         Về trang chủ

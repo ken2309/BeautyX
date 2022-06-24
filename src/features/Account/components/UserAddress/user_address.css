@@ -133,10 +133,12 @@
         overflow-y: scroll;
     }
     .acc-add__btn{
+        z-index: 10;
         display: block;
         border: none;
         outline: none;
         background-color: transparent;
+        margin-top: -17px;
     }
     .us_address-cnt{
         height: 100%;
@@ -148,8 +150,9 @@
     }
     .us_address-cnt .form {
         height: 100%;
-        padding: 20px;
+        padding: 12px;
         border-radius: 0px;
         margin: 0px;
+        margin-top: 48px;
     }
 }

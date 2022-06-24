@@ -12,6 +12,7 @@ import { IServiceUser } from "../../interface/servicesUser";
 import TreatmentCardItem from "./ServiceNotBook/TreatmentCardItem";
 import { STATUS } from '../../redux/status';
 import { fetchAsyncOrderServices } from '../../redux/order/orderSlice';
+import ModalLoad from "../../components/ModalLoad";
 
 function ServicesUser(props: any) {
     const history = useHistory();
@@ -47,6 +48,7 @@ function ServicesUser(props: any) {
     };
     return (
         <>
+            {status !== STATUS.SUCCESS && <ModalLoad />}
             <Container>
                 <div className="flex-row-sp my-ser">
                     <div className="my-ser__right">

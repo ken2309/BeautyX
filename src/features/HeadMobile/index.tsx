@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import icon from '../../constants/icon';
 
 interface IProps {
@@ -12,6 +12,8 @@ interface IProps {
 
 function HeadMobile(props: IProps) {
     const { title, onBack, handleCancelPayment, element } = props;
+    const location: any = useLocation()
+
     const history = useHistory();
     const onBackClick = () => {
         if (handleCancelPayment) {
@@ -19,12 +21,16 @@ function HeadMobile(props: IProps) {
         }
         if (onBack) {
             onBack(false)
-        } else {
+        }
+        if (location?.state?.payment_url) {
+            history.push("/");
+        }
+        else {
             history.goBack()
         }
     }
     return (
-        <div style={{ ...style.headCnt, position: "fixed" }} className="flex-row-sp head-mobile">
+        <div style={{ ...style.headCnt, position: "fixed", zIndex: "100" }} className="flex-row-sp head-mobile">
             <button
                 onClick={onBackClick}
                 style={style.headBtn}

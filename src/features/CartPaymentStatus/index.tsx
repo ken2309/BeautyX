@@ -123,6 +123,13 @@ function CartPaymentStatus() {
         }
     }, [sec])
     //cancel payment TIKI
+    const onGoBackCart = () => {
+        const payment_url = location?.pathname;
+        history.push({
+            pathname: "/gio-hang",
+            state: { payment_url }
+        })
+    }
     const response = useGetMessageTiki();
     useMemo(() => {
         if (response?.requestId && response?.result.status === "fail") {
@@ -134,7 +141,7 @@ function CartPaymentStatus() {
                 titleLeft: "Về trang chủ",
                 titleRight: "Tiếp tục",
                 onClickLeft: () => history.push("/Home"),
-                onClickRight: () => history.push("/gio-hang")
+                onClickRight: () => onGoBackCart()
             })
         }
     }, [response])

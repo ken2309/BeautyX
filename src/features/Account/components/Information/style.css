@@ -327,4 +327,23 @@
   .dialog-forgot__password {
     margin: 0 24px;
   }
+  .info_section{
+    padding: 12px;
+  }
+  .info_section__form{
+    display: none;
+  }
+  .info_section .btn-success{
+    display: none;
+  }
+  .info_section .purple_line{
+    display: none;
+  }
+  .info_section .title_section{
+    display: flex;
+    justify-content: flex-end;
+  }
+  .info_section .title_section .title{
+    display: none;
+  }
 }

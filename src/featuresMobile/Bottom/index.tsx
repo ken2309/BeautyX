@@ -10,12 +10,13 @@ function Bottom(props: any) {
     const { t } = useContext(AppContext);
     const location = useLocation();
     const pathname = location.pathname;
+
     const Btns = [
         {
             id: 1,
             title: t("Home.location"),
-            icon: ICON.location,
-            iconAct: ICON.locationAct,
+            icon: ICON.home,
+            iconAct: ICON.homeAct,
             path: "/home",
         },
         {
@@ -46,48 +47,6 @@ function Bottom(props: any) {
             iconAct: ICON.userAct,
             path: "/tai-khoan/thong-tin-ca-nhan",
         },
-        // {
-        //       id: 2,
-        //       title: t('Bottom.appointment'),
-        //       icon_active: icon.Calendar,
-        //       icon: icon.Calendar_1,
-        //       path: '/Calendar',
-        //       is_badge: false,
-        // },
-        // {
-        //       id: 3,
-        //       title: t('cart.noti'),
-        //       icon_active: icon.Bell,
-        //       icon: icon.Bell_1,
-        //       path: '/Notifications',
-        //       is_badge: true,
-        //       count: notifications.filter((item: any) => item.isRead === false).length
-        // },
-        // {
-        //       id: 1,
-        //       title: t('Bottom.home'),
-        //       icon_active: icon.home,
-        //       icon: icon.home_1,
-        //       path: '/home',
-        //       is_badge: false,
-        // },
-        // {
-        //       id: 5,
-        //       title: "Video",
-        //       icon_active: icon.playCirclePurple,
-        //       icon: icon.playCircle,
-        //       path: '/beautyx-videos',
-        //       is_badge: false,
-        //       count: notifications.filter((item: any) => item.isRead === false).length
-        // },
-        // {
-        //       id: 4,
-        //       title: t('Bottom.account'),
-        //       icon_active: icon.User,
-        //       icon: icon.User_1,
-        //       path: '/tai-khoan/thong-tin-ca-nhan',
-        //       is_badge: false,
-        // },
     ];
     const history = useHistory();
     const chooseBtn = (item: any) => {
@@ -123,9 +82,9 @@ function Bottom(props: any) {
                             style={
                                 item.path === pathname
                                     ? {
-                                          color: "var(--purple)",
-                                          fontWeight: "700",
-                                      }
+                                        color: "var(--purple)",
+                                        fontWeight: "700",
+                                    }
                                     : {}
                             }
                             className="bt-cnt__item-title"
