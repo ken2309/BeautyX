@@ -11,11 +11,13 @@ import "./dialogChangeInfo.css";
 export default function DialogChangeInfo(props: any) {
     const { open, setOpen } = props;
     const { USER } = useSelector((state: any) => state.USER);
+    const dispatch = useDispatch();
+    // chose file
     const onFileChange = (e: any) => {
         const form = e.target.files[0];
         handlePostMedia(form);
     };
-    const dispatch = useDispatch();
+    // upload image
     const handlePostMedia = async (form: any) => {
         let formData = new FormData();
         formData.append("file", form);
@@ -36,23 +38,25 @@ export default function DialogChangeInfo(props: any) {
             console.log(error);
         }
     };
-
+    // form
     const formik = useFormik({
         initialValues: {
             fullname: USER?.fullname,
         },
         validationSchema: Yup.object({
-            fullname: Yup.string().required("Tên không để trống"),
+            fullname: Yup.string().required("Vui lòng nhập tên"),
         }),
         onSubmit: async (values) => {
             const params = {
                 fullname: values.fullname,
             };
-            await dispatch(updateAsyncUser(params));
+            if (values.fullname !== USER?.fullname) {
+                await dispatch(updateAsyncUser(params));
+            }
             setOpen(false);
         },
     });
-
+    console.log(formik.values.fullname);
     return (
         <Dialog open={open} onClose={() => setOpen(false)}>
             <form
@@ -106,7 +110,9 @@ export default function DialogChangeInfo(props: any) {
                 </div>
                 <div className="edit-user__option">
                     <button type="submit">Lưu thay đổi &#10003;</button>
-                    <button onClick={() => setOpen(false)}>Hủy &#x2715;</button>
+                    <button type="button" onClick={() => setOpen(false)}>
+                        Hủy &#x2715;
+                    </button>
                 </div>
             </form>
         </Dialog>
