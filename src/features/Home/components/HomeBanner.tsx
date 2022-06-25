@@ -79,7 +79,7 @@ function HomeBanner(props: any) {
                 case "PROMOTION":
                     return console.log("PROMOTION");
                 case "SEARCH_RESULT":
-                    console.log("SEARCH_RESULT");
+                    console.log(chooseBanner)
                     return history.push({
                         // pathname: `/home-banner-result`,
                         state: chooseBanner,

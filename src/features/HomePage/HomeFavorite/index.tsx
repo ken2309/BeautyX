@@ -12,7 +12,6 @@ export default function HomeFavorite() {
     const [data, setData] = useState<IData>({
         orgs: [],
     });
-    console.log("data :>> ", data);
     const getAllOrg = async () => {
         try {
             const res = await orgApi.getAll();
