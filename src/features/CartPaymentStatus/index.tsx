@@ -136,7 +136,7 @@ function CartPaymentStatus() {
             handleCancelPayment()
             setOpen({
                 ...open,
-                title: "Thanh toán thất bại \n Bạn có muốn tiếp tục thanh toán không ?",
+                title: `Thanh toán thất bại \n Bạn có muốn tiếp tục thanh toán không ?`,
                 open: true,
                 titleLeft: "Về trang chủ",
                 titleRight: "Tiếp tục",
