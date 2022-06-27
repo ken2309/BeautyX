@@ -11,7 +11,8 @@ import { AppContext } from "../../../../context/AppProvider";
 import { cleanup } from "@testing-library/react";
 import { fetchAsyncApps } from "../../../../redux/appointment/appSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { STATUS } from '../../../../redux/status'
+import { STATUS } from '../../../../redux/status';
+import ModalLoad from "../../../../components/ModalLoad";
 
 const todayObj = dayjs();
 export default function HomeLoggedCalendar() {
@@ -49,7 +50,7 @@ export default function HomeLoggedCalendar() {
   let weekDayOfLast = dayObjOfLastMonth.day();
 
 
-   const callAppointments = () => {
+  const callAppointments = () => {
     if (status !== STATUS.SUCCESS) {
       const time = dayjs().format("YYYY-MM")
       dispatch(fetchAsyncApps(time))
@@ -241,6 +242,9 @@ export default function HomeLoggedCalendar() {
   }, [appointments]);
   return (
     <div className="homelogged-calendar">
+      {
+        status !== STATUS.SUCCESS && <ModalLoad />
+      }
       <Container>
         <div className="homelogged-calendar__content">
           <SectionTitle title={t("Home.my_appointment")} textAlign="left" />

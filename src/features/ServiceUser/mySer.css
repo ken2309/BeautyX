@@ -136,6 +136,34 @@
     border-radius: 12px;
     padding: 12px;
     background-color: var(--bgWhite);
+    position: relative;
+}
+
+.treat-card-item__book {
+    position: absolute;
+    z-index: 1;
+    background-color: var(--orange);
+    color: var(--white);
+    top: 0;
+    right: 0;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 600;
+    padding: 0px 8px;
+    border-radius: 6px;
+    margin: -14px -12px 0px 0px;
+    cursor: pointer;
+    transition: all .3s;
+    height: 0px;
+    overflow: hidden;
+}
+
+.treat-card-item__book:hover {
+    opacity: .6;
+}
+
+.treat-card-item__book img {
+    margin-left: 4px;
 }
 
 .treat-card-item__head {
@@ -868,11 +896,17 @@
 
     .my-ser {
         flex-direction: column;
-        padding: 40px 4px 12px 12px;
+        padding: 50px 4px 12px 12px;
     }
 
     .my-ser-book__cnt-head {
         margin-top: -10px;
+    }
+
+    .treat-card-item__book {
+        font-size: 12px;
+        line-height: 22px;
+        margin: -14px 0px 0px 0px;
     }
 
     .my-ser__left {
@@ -1059,7 +1093,8 @@
     .my-ser-book__cnt-head-title {
         font-size: 18px;
     }
-    .treatment-ser-item__cnt{
+
+    .treatment-ser-item__cnt {
         width: calc(100% - 112px);
     }
 }

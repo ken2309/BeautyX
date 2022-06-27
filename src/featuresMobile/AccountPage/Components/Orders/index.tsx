@@ -1,7 +1,7 @@
 import React from 'react';
-import { Slide, Dialog } from '@mui/material'
+import { Dialog, Slide } from '@mui/material'
 import { TransitionProps } from '@mui/material/transitions';
-import Information from '../../../../features/Account/components/Information/index';
+import Orders from '../../../../features/Orders';
 import HeadMobile from '../../../../features/HeadMobile';
 
 const Transition = React.forwardRef(function Transition(
@@ -13,22 +13,20 @@ const Transition = React.forwardRef(function Transition(
       return <Slide direction="left" ref={ref} {...props} />;
 });
 
-function AccountForm(props: any) {
-      const { open } = props;
+function OrderMb(props: any) {
+      const { openOrder } = props;
       return (
             <Dialog
                   fullScreen
+                  open={openOrder}
                   TransitionComponent={Transition}
-                  open={open}
             >
-                  <div
-                        style={{ minHeight: '100vh' }}
-                  >
-                        <HeadMobile title='Địa chỉ giao hàng' />
-                        <Information />
+                  <div style={{ minHeight: "100vh" }} className="mb-order">
+                        <HeadMobile title="Đơn hàng" />
+                        <Orders />
                   </div>
             </Dialog>
       );
 }
 
-export default AccountForm;
+export default OrderMb;

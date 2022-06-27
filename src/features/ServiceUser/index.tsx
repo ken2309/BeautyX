@@ -3,25 +3,26 @@ import React, { useEffect } from "react";
 import { Container } from "@mui/material";
 import "./mySer.css";
 import Footer from "../Footer";
-import { useHistory } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import ButtonLoading from "../../components/ButtonLoading";
+//import ButtonLoading from "../../components/ButtonLoading";
 import useFullScreen from "../../utils/useFullScreen";
 import { Masonry } from "@mui/lab";
 import { IServiceUser } from "../../interface/servicesUser";
 import TreatmentCardItem from "./ServiceNotBook/TreatmentCardItem";
 import { STATUS } from '../../redux/status';
 import { fetchAsyncOrderServices } from '../../redux/order/orderSlice';
+import ModalLoad from "../../components/ModalLoad";
 
 function ServicesUser(props: any) {
-    const history = useHistory();
+    //const history = useHistory();
     const dispatch = useDispatch();
     const fullScreen = useFullScreen();
-    const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
+    //const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
     const { services, status } = useSelector((state: any) => state.ORDER.ORDER_SERVICES);
-    const servicesBook = servicesBookSlice.servicesBook;
-    const org = servicesBookSlice.org;
-    const order_id = servicesBookSlice?.order_id;
+    //const servicesBook = servicesBookSlice.servicesBook;
+    //const org = servicesBookSlice.org;
+    //const order_id = servicesBookSlice?.order_id;
     const callServicesUser = () => {
         if (status !== STATUS.SUCCESS) {
             dispatch(fetchAsyncOrderServices({ page: 1 }))
@@ -31,22 +32,23 @@ function ServicesUser(props: any) {
         callServicesUser()
     }, [])
 
-    const handleNextStep = () => {
-        if (servicesBook.length > 0) {
-            const services = servicesBook.map((item: any) => {
-                return {
-                    service: item,
-                    quantity: 1
-                }
-            });
-            history.push({
-                pathname: "/dat-hen",
-                state: { org, services, order_id }
-            })
-        }
-    };
+    // const handleNextStep = () => {
+    //     if (servicesBook.length > 0) {
+    //         const services = servicesBook.map((item: any) => {
+    //             return {
+    //                 service: item,
+    //                 quantity: 1
+    //             }
+    //         });
+    //         history.push({
+    //             pathname: "/dat-hen",
+    //             state: { org, services, order_id }
+    //         })
+    //     }
+    // };
     return (
         <>
+            {status !== STATUS.SUCCESS && <ModalLoad />}
             <Container>
                 <div className="flex-row-sp my-ser">
                     <div className="my-ser__right">
@@ -73,7 +75,7 @@ function ServicesUser(props: any) {
             <div
                 className="my-ser-bot"
             >
-                <Container>
+                {/* <Container>
                     <div className="my-ser-bot__cnt">
                         <ButtonLoading
                             onClick={handleNextStep}
@@ -81,7 +83,7 @@ function ServicesUser(props: any) {
                             loading={false}
                         />
                     </div>
-                </Container>
+                </Container> */}
             </div>
             <Footer />
         </>

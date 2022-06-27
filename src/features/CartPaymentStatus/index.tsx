@@ -123,18 +123,29 @@ function CartPaymentStatus() {
         }
     }, [sec])
     //cancel payment TIKI
+    const onGoBackCart = () => {
+        const payment_url = location?.pathname;
+        history.push({
+            pathname: "/gio-hang",
+            state: { payment_url }
+        })
+    }
     const response = useGetMessageTiki();
     useMemo(() => {
         if (response?.requestId && response?.result.status === "fail") {
             handleCancelPayment()
+            let title = `Thanh toán thất bại \n Bạn có muốn tiếp tục thanh toán không ?`
+            if (action) {
+                title = `Thanh toán và đặt hẹn thất bại`
+            }
             setOpen({
                 ...open,
-                title: "Thanh toán thất bại \n Bạn có muốn tiếp tục thanh toán không ?",
+                title: title,
                 open: true,
                 titleLeft: "Về trang chủ",
                 titleRight: "Tiếp tục",
                 onClickLeft: () => history.push("/Home"),
-                onClickRight: () => history.push("/gio-hang")
+                onClickRight: () => onGoBackCart()
             })
         }
     }, [response])
@@ -182,6 +193,7 @@ function CartPaymentStatus() {
                 titleBtnRight={open.titleRight}
                 onClickLeft={open.onClickLeft}
                 onClickRight={open.onClickRight}
+                disableRight={action && true}
             />
         </>
     );

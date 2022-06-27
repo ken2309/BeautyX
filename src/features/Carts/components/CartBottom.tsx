@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container } from '@mui/material';
-import icon from '../../../constants/icon';
+//import icon from '../../../constants/icon';
 import ButtonLoading from '../../../components/ButtonLoading';
 import formatPrice from '../../../utils/formatPrice';
 import { cartReducer } from '../../../utils/cart/cartReducer';
@@ -84,17 +84,15 @@ function CartBottom(props: any) {
         }
     }
 
-
-
     return (
         <div className="re-cart-bottom">
             <Container>
                 <div className="re-cart-bottom__cnt">
                     <div className="re-cart-bottom__total">
-                        <div className="flex-row re-cart-bottom__total-discount">
+                        {/* <div className="flex-row re-cart-bottom__total-discount">
                             <span>Mã khuyến mãi</span>
                             <img src={icon.cardDiscountOrange} alt="" className="icon" />
-                        </div>
+                        </div> */}
                         <div className="re-cart-bottom__cal">
                             <div className="flex-row-sp re-cart-bottom__cal-item">
                                 <span>Tổng tiền</span>

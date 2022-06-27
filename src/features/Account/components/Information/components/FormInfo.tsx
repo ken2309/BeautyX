@@ -24,6 +24,7 @@ function FormInfo() {
     })
     return (
         <form
+            className='info_section__form'
             autoComplete='off'
             onSubmit={formik.handleSubmit}
             style={{ paddingBottom: "24px" }}

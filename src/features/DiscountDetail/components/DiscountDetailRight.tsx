@@ -77,6 +77,7 @@ function DiscountDetailRight(props: IProps) {
         const TYPE = "BOOK_NOW";
         const service = { ...detail, discount: discount };
         const services = [{ service, quantity: quantity }];
+        console.log(service, services)
         history.push({
             pathname: "/dat-hen",
             state: { org, services, TYPE },

@@ -54,6 +54,7 @@ function Booking() {
     const branchRef = useRef<any>();
     const history = useHistory();
     const location: any = useLocation();
+    console.log(location)
     const callOrgDetail = () => {
         if (location.state.org.id !== org?.id || status !== STATUS.SUCCESS) {
             dispatch(fetchAsyncOrg(location.state.org.id))
@@ -138,7 +139,7 @@ function Booking() {
     const action = {
         note: "",
         time_start: `${dayBook} ${bookTime.time}:00`,
-        branch: bookTime.branch_id,
+        branch_id: bookTime.branch_id,
         order_id: location.state.order_id,
         service_ids: services?.map((item: any) => item?.id),
     };

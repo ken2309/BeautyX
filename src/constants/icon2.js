@@ -8,11 +8,14 @@ import calendar from '../assets/icons/calendar.svg';
 import calendarAct from '../assets/icons/calendarAct.svg';
 import user from '../assets/icons/user.svg';
 import userAct from '../assets/icons/userAct.svg';
+import home from '../assets/icons/home.svg';
+import homeAct from '../assets/icons/homePurple.svg';
 
 export const ICON = {
     location, locationAct,
     trend, trendAct,
     cate, cateAct,
     calendar, calendarAct,
-    user, userAct
+    user, userAct,
+    home, homeAct
 }

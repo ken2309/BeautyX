@@ -48,7 +48,7 @@ function HomeListProvince(props: any) {
                                     <div className="province-item-cnt">
                                         <span>{item.name}</span>
                                         <span>
-                                            {item.organizations_count}{" "}
+                                            {item.organizations_count + item?.branches_count}{" "}
                                             {t("home_2.beauty_places")}{" "}
                                         </span>
                                     </div>

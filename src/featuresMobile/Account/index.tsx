@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import "./account.css";
 import icon from "../../constants/icon";
 import Bottom from "../Bottom/index";
@@ -12,7 +13,6 @@ import authentication from "../../api/authApi";
 import { putUser } from "../../redux/USER/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Settings from "./Setting";
-import { useHistory } from "react-router-dom";
 
 function AccountMb() {
   const { t } = useContext(AppContext);
