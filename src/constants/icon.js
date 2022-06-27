@@ -169,6 +169,8 @@ import phonePurple from "../assets/icon/phone-purple.svg";
 import supportChat from "../assets/icon/messageChat.svg";
 import calendarWhite from "../assets/icon/calendarWhite.svg";
 import cardDiscountWhite from "../assets/icon/cardDiscountWhite.svg";
+import checkFlowOrange from "../assets/icon/checkFlowOrange.svg";
+import arrowSmallUpWhite from "../assets/icon/arrowSmallUpWhite.svg";
 
 const icon = {
     phonePurple,
@@ -339,6 +341,8 @@ const icon = {
     cardDiscountOrange,
     supportChat,
     calendarWhite,
-    cardDiscountWhite
+    cardDiscountWhite,
+    checkFlowOrange,
+    arrowSmallUpWhite
 };
 export default icon;

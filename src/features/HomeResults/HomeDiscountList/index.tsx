@@ -10,9 +10,12 @@ import { fetchAsyncDiscounts } from '../../../redux/home/homeSlice'
 import ButtonLoading from '../../../components/ButtonLoading';
 import './style.css';
 import Footer from '../../Footer';
+import HeadMobile from '../../HeadMobile';
+import useFullScreen from '../../../utils/useFullScreen';
 
 function HomeDiscountList() {
     const dispatch = useDispatch();
+    const IS_MB = useFullScreen();
     const { DISCOUNTS } = useSelector((state: any) => state.HOME);
     const { discounts, totalItem, page } = DISCOUNTS;
     const onViewMore = () => {
@@ -23,7 +26,7 @@ function HomeDiscountList() {
             <HeadTitle
                 title="Giá tốt, Ưu đãi khủng"
             />
-            <Head />
+            {IS_MB ? <HeadMobile title='Khuyến mãi HOT' /> : <Head />}
             <Container>
                 <div className="discount-list-cnt">
                     <ul className="discounts__list">

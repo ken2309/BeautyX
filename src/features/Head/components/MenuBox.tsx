@@ -62,17 +62,17 @@ function MenuBox(props: any) {
               <span className="hd-menu__item-text">{t("Header.my_codes")}</span>
             </div>
           </li>
-          <li className="{menu.menuBoxItem}">
+          {/* <li className="{menu.menuBoxItem}">
             <div className="flex-row hd-menu__item">
               <img src={icon.Bell} alt="" />
               <span className="hd-menu__item-text">{t("cart.noti")}</span>
             </div>
-          </li>
+          </li> */}
         </>
       ) : (
         ""
       )}
-      <li className="{menu.menuBoxItem}">
+      {/* <li className="{menu.menuBoxItem}">
         <div className="flex-row-sp hd-menu__item">
           <div className="flex-row">
             <img src={icon.Setting} alt="" />
@@ -86,7 +86,7 @@ function MenuBox(props: any) {
           <img src={icon.Headphones_purple} alt="" />
           <span className="hd-menu__item-text">{t("Header.support")}</span>
         </div>
-      </li>
+      </li> */}
     </ul>
   );
 }

@@ -8,12 +8,23 @@ import FilterOrgs from '../../FilterOrgs';
 import orgApi from '../../../api/organizationApi';
 import OrgItem from '../../ViewItemCommon/OrgItem';
 import { IOrganization } from '../../../interface/organization';
-import { Pagination, Drawer } from '@mui/material'
-import scrollTop from '../../../utils/scrollTop';
+import { Drawer } from '@mui/material'
 import icon from '../../../constants/icon';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import HeadMobile from '../../HeadMobile';
+import useFullScreen from '../../../utils/useFullScreen';
+import BackTopButton from '../../../components/BackTopButton';
+import Footer from '../../Footer';
+
+interface IData {
+    orgs: IOrganization[],
+    page: number,
+    totalItem: number
+}
 
 function HomeTags(props: any) {
     const location = useLocation();
+    const IS_MB = useFullScreen();
     const [openFilter, setOpenFilter] = useState(false);
     const [orgFilter, setOrgFilter] = useState({
         tags: [],
@@ -21,10 +32,10 @@ function HomeTags(props: any) {
         min_price: 0,
         max_price: 0
     })
-    const [data, setData] = useState({
+    const [data, setData] = useState<IData>({
         orgs: [],
         page: 1,
-        lastPage: 1
+        totalItem: 1
     })
     const tag_name = decodeURI(location.search.slice(1, location.search.length));
 
@@ -38,8 +49,8 @@ function HomeTags(props: any) {
             })
             setData({
                 ...data,
-                orgs: res.data.context.data,
-                lastPage: res.data.context.last_page
+                orgs: [...data.orgs, ...res.data.context.data],
+                totalItem: res.data.context.total
             })
         } catch (error) {
             console.log(error)
@@ -50,16 +61,26 @@ function HomeTags(props: any) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data.page, orgFilter.province_code])
 
-    const onPageChange = (e: any, value: any) => {
-        setData({
-            ...data,
-            page: value
-        })
-        scrollTop()
+    const onViewMore = () => {
+        if (data.orgs.length >= 15 && data.orgs.length < data.totalItem) {
+            setData({
+                ...data,
+                page: data.page + 1
+            })
+        }
     }
     return (
         <>
-            <Head />
+            {
+                IS_MB ?
+                    <HeadMobile title={tag_name}
+                        element={<button onClick={() => setOpenFilter(true)} className="filter-btn">
+                            <img src={icon.filter} alt="" />
+                        </button>}
+                    />
+                    :
+                    <Head />
+            }
             <HeadTitle
                 title={`Kết quả tìm kiếm cho : ${tag_name}`}
             />
@@ -78,10 +99,6 @@ function HomeTags(props: any) {
                     </div>
                     <div className="home-result-org-cnt__mb">
                         <div className="flex-row-sp cnt">
-                            <span className="title">Bộ lọc tìm kiếm</span>
-                            <button onClick={() => setOpenFilter(true)} className="filter-btn">
-                                <img src={icon.filter} alt="" />
-                            </button>
                             <Drawer
                                 anchor='right'
                                 open={openFilter}
@@ -102,28 +119,31 @@ function HomeTags(props: any) {
                         <span className="se-re-cnt-title">
                             Kết quả tìm kiếm cho : "{tag_name}"
                         </span>
-                        <ul className="re-ser-list">
-                            {
-                                data.orgs.map((item: IOrganization, index: number) => (
-                                    <li
-                                        key={index}
-                                    >
-                                        <OrgItem
-                                            org={item}
-                                        />
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                        <Pagination
-                            color="secondary"
-                            shape="rounded"
-                            count={data.lastPage}
-                            onChange={onPageChange}
-                        />
+                        <InfiniteScroll
+                            dataLength={data.orgs.length}
+                            hasMore={true}
+                            loader={<></>}
+                            next={onViewMore}
+                        >
+                            <ul className="re-ser-list">
+                                {
+                                    data.orgs.map((item: IOrganization, index: number) => (
+                                        <li
+                                            key={index}
+                                        >
+                                            <OrgItem
+                                                org={item}
+                                            />
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </InfiniteScroll>
                     </div>
                 </div>
             </Container>
+            <BackTopButton/>
+            <Footer/>
         </>
     );
 }

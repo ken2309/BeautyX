@@ -24,6 +24,7 @@ import trendReducer from './video/trendSlice';
 import appReducer from "./appointment/appSlice";
 import commentReducer from './commentSlice';
 import orderReducer from './order/orderSlice';
+import searchResultReducer from './search/searchResultSlice';
 
 const rootReducer = {
   carts: cartReducer,
@@ -50,7 +51,8 @@ const rootReducer = {
   TRENDs: trendReducer,
   APP: appReducer,
   COMMENT: commentReducer,
-  ORDER: orderReducer
+  ORDER: orderReducer,
+  SEARCH_RESULT: searchResultReducer,
 };
 const store = configureStore({
   reducer: rootReducer,
