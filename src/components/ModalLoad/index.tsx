@@ -1,6 +1,5 @@
 import React from 'react';
 import './style.css';
-import { CircularProgress } from '@mui/material';
 import img from '../../constants/img';
 
 interface IProps {

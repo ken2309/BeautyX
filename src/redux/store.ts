@@ -17,7 +17,7 @@ import loginFlatFromReducer from "./loginFlatForm/loginFlatFrom";
 import paymentsReducer from "./payments/paymentSlice";
 import searchReducer from './search/searchSlice';
 import blogReducer from "./blog/blogSlice";
-import cateReducer from "./cate/cateSlice";
+import cateReducer from "./CateTree/cateTreeSlice";
 import comboReducer from "./org_combos/comboSlice";
 import videosReducer from './video/videosSlice';
 import appReducer from "./appointment/appSlice";
@@ -43,7 +43,7 @@ const rootReducer = {
   PAYMENT: paymentsReducer,
   BLOG: blogReducer,
   SEARCH: searchReducer,
-  CATE: cateReducer,
+  CATE_TREE: cateReducer,
   COMBO: comboReducer,
   VID: videosReducer,
   APP: appReducer,

@@ -32,6 +32,7 @@ import ProductDetailRecomment from "./components/ProductDetailRecomment";
 import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
 import ReviewsContainer from "../ReviewsContainer";
 import ModalLoad from "../../components/ModalLoad";
+import PageNotFound from "../../components/PageNotFound";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();
@@ -156,7 +157,8 @@ function ProductDetail(props: any) {
 
     return (
         <div className="product">
-            {PRODUCT.status !== STATUS.SUCCESS && <ModalLoad title="Đang tải" />}
+            {PRODUCT.status === STATUS.LOADING && <ModalLoad title="Đang tải" />}
+            {PRODUCT.status === STATUS.FAIL && <PageNotFound />}
             <HeadTitle
                 title={
                     product?.product_name ? product.product_name : "Loading..."
@@ -272,41 +274,51 @@ function ProductDetail(props: any) {
                         </div>
                         <ProductDetailRecomment org={org} />
                     </div>
-                    {/* service bottom buttom add cart                                             */}
+                    {/* service bottom buttom add cart*/}
                     <div className="service-detail__bottom">
-                        <button
-                            onClick={() => {
-                                setOpen({ NOW: true, open: true });
-                            }}
-                            style={{ backgroundColor: "var(--orange)" }}
-                        >
-                            <p>Mua ngay</p>
-                        </button>
-                        <button
-                            onClick={() => {
-                                setOpen({ NOW: false, open: true });
-                            }}
-                            className="btn-addcart"
-                        >
-                            <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                            <p>Thêm vào giỏ hàng</p>
-                        </button>
-                        {/* drawer service detail */}
-                        <Drawer
-                            open={open.open}
-                            anchor="bottom"
-                            onClose={() => setOpen({ ...open, open: false })}
-                        >
-                            <div className="active-mb">
-                                <div className="service-detail">
-                                    <ProductDetailRight
-                                        product={product}
-                                        org={org}
-                                        NOW={open.NOW}
-                                    />
-                                </div>
-                            </div>
-                        </Drawer>
+                        {
+                            (product?.is_momo_ecommerce_enable === false || org?.is_momo_ecommerce_enable === false)
+                                ?
+                                <span className="detail-right__no">
+                                    Sản phẩm này chưa được kích hoạt bán hàng Online
+                                </span>
+                                :
+                                <>
+                                    <button
+                                        onClick={() => {
+                                            setOpen({ NOW: true, open: true });
+                                        }}
+                                        style={{ backgroundColor: "var(--orange)" }}
+                                    >
+                                        <p>Mua ngay</p>
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setOpen({ NOW: false, open: true });
+                                        }}
+                                        className="btn-addcart"
+                                    >
+                                        <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                                        <p>Thêm vào giỏ hàng</p>
+                                    </button>
+                                    {/* drawer service detail */}
+                                    <Drawer
+                                        open={open.open}
+                                        anchor="bottom"
+                                        onClose={() => setOpen({ ...open, open: false })}
+                                    >
+                                        <div className="active-mb">
+                                            <div className="service-detail">
+                                                <ProductDetailRight
+                                                    product={product}
+                                                    org={org}
+                                                    NOW={open.NOW}
+                                                />
+                                            </div>
+                                        </div>
+                                    </Drawer>
+                                </>
+                        }
                     </div>
                 </div>
             </Container>

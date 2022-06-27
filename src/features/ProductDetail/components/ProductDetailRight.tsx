@@ -69,31 +69,35 @@ function ProductDetailRight(props: IProps) {
         if (quantity > 1) setQuantity(quantity - 1);
     };
     const handleAddCart = () => {
-        const sale_price =
-            product?.special_price > 0
-                ? product?.special_price
-                : product.retail_price;
-        const is_type = 1;
-        const values = formatAddCart(
-            product,
-            org,
-            is_type,
-            quantity,
-            sale_price
-        );
-        dispatch(addCart(values));
-        setPopupSuccess(true);
-    };
+        if (product?.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable) {
+            const sale_price =
+                product?.special_price > 0
+                    ? product?.special_price
+                    : product.retail_price;
+            const is_type = 1;
+            const values = formatAddCart(
+                product,
+                org,
+                is_type,
+                quantity,
+                sale_price
+            );
+            dispatch(addCart(values));
+            setPopupSuccess(true);
+        };
+    }
     const onBuyNow = () => {
-        const TYPE = "BOOK_NOW";
-        const products = [{ product, quantity }]
-        if (USER) {
-            history.push({
-                pathname: "/mua-hang",
-                state: { org, products, TYPE }
-            })
-        } else {
-            history.push('/sign-in?1')
+        if (product?.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable) {
+            const TYPE = "BOOK_NOW";
+            const products = [{ product, quantity }]
+            if (USER) {
+                history.push({
+                    pathname: "/mua-hang",
+                    state: { org, products, TYPE }
+                })
+            } else {
+                history.push('/sign-in?1')
+            }
         }
     }
     return (
@@ -266,6 +270,12 @@ function ProductDetailRight(props: IProps) {
                 </div>
             </div>
             {/* button add cart */}
+            {
+                (product?.is_momo_ecommerce_enable === false || org?.is_momo_ecommerce_enable === false) &&
+                <span className="detail-right__no">
+                    Sản phẩm này chưa được kích hoạt bán hàng Online
+                </span>
+            }
             <div className="detail-right__bottom">
                 <div className="bottom-quantity">
                     <p className="bottom-quantity__text">Số lượng:</p>
@@ -318,10 +328,22 @@ function ProductDetailRight(props: IProps) {
                         <div
                             onClick={onBuyNow}
                             className="bottom-addCart bottom-buy__now"
+                            style={
+                                (product.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable)
+                                    ?
+                                    {} : { opacity: "0.4", cursor: "not-allowed" }
+                            }
                         >
                             <p>Mua ngay</p>
                         </div>
-                        <div onClick={handleAddCart} className="bottom-addCart">
+                        <div
+                            style={
+                                (product.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable)
+                                    ?
+                                    {} : { opacity: "0.4", cursor: "not-allowed" }
+                            }
+                            onClick={handleAddCart} className="bottom-addCart"
+                        >
                             <img src={icon.ShoppingCartSimpleWhite} alt="" />
                             <p>Thêm vào giỏ hàng</p>
                         </div>

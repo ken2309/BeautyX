@@ -27,6 +27,7 @@ import { Container } from '@mui/material';
 import ModalLoad from "../../components/ModalLoad";
 import { clearServices } from '../../redux/org_services/orgServivesSlice';
 import { clearProducts } from '../../redux/org_products/orgProductsSlice';
+import PageNotFound from "../../components/PageNotFound";
 
 
 function MerchantDetail() {
@@ -100,16 +101,22 @@ function MerchantDetail() {
   // }, [ORG_DISCOUNTS.DISCOUNTS, SERVICES_SPECIAL, PRODUCTS_SPECIAL])
   return (
     <div className="mb-cnt">
-      {status !== STATUS.SUCCESS && <ModalLoad />}
+      {status === STATUS.LOADING && <ModalLoad />}
+      {status === STATUS.FAIL && <PageNotFound />}
       <HeadTitle title={org?.name ? org.name : 'Đang tải...'} />
       {IS_MB ? <HeadOrg org={org} isShowSearch={true} /> : <Head />}
-      <OrgDetail
-        org={org}
-        galleries={GALLERIES?.galleries}
-      />
-      <Container>
-        <OrgContainer org={org} tab={tab} />
-      </Container>
+      {
+        status === STATUS.SUCCESS &&
+        <>
+          <OrgDetail
+            org={org}
+            galleries={GALLERIES?.galleries}
+          />
+          <Container>
+            <OrgContainer org={org} tab={tab} />
+          </Container>
+        </>
+      }
       <Footer />
     </div>
   );

@@ -90,6 +90,7 @@ class ServicePromo {
             page: 1,
             limit: 30,
             "filter[is_featured]": true,
+            "filter[min_price]": "1000",
             "filter[is_momo_ecommerce_enable]": true,
             sort: "random",
         };

@@ -26,13 +26,13 @@ function Bottom(props: any) {
             iconAct: ICON.trendAct,
             path: "/beautyx-videos",
         },
-        // {
-        //     id: 3,
-        //     title: t("Home.cate"),
-        //     icon: ICON.cate,
-        //     iconAct: ICON.cateAct,
-        //     path: "/-danh-muc",
-        // },
+        {
+            id: 3,
+            title: t("Home.cate"),
+            icon: ICON.cate,
+            iconAct: ICON.cateAct,
+            path: "/-danh-muc",
+        },
         {
             id: 4,
             title: t("Bottom.appointment"),

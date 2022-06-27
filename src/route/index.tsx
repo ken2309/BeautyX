@@ -47,6 +47,8 @@ import Calendar from "../features/Calendar";
 import BuyNow from "../features/BuyNow";
 import Carts from "../features/Carts";
 
+import ProductsByCate from "../features/CategoryTree/ProductsByCate";
+
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps
 ) => props.pageComponent;
@@ -189,6 +191,10 @@ function RouterConfig(props: any) {
     //   path: "/mua-hang",
     //   component: <BoyNow />
     // }
+    {
+      path: "/san-pham",
+      component: <ProductsByCate />
+    }
   ];
   const routesPrivate = [
     {
