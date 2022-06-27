@@ -9,7 +9,10 @@ export const fetchAsyncServiceDetail: any = createAsyncThunk(
     "SERVICE/fetchAsyncServiceDetail",
     async (values: any) => {
         const res = await serviceApi.getDetailById(values);
-        return res.data.context;
+        return {
+            service: res.data.context,
+            org_id: values.org_id,
+        };
     }
 );
 //get comment service
@@ -105,6 +108,7 @@ const initialState = {
     SERVICE: {
         service: {},
         status: "",
+        org_id: null
     },
     SERVICES_REC: {
         services: [],
@@ -148,11 +152,13 @@ const serviceSlice = createSlice({
             };
         },
         [fetchAsyncServiceDetail.fulfilled]: (state, { payload }) => {
+            const { service, org_id } = payload;
             return {
                 ...state,
                 SERVICE: {
-                    service: payload,
+                    service: service,
                     status: STATUS.SUCCESS,
+                    org_id: org_id
                 },
             };
         },

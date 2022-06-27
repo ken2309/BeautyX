@@ -66,6 +66,7 @@ function OrgServices(props: IProps) {
                 org_id: org?.id,
                 page: page + 1,
                 cate_id: choose_cate,
+                isEnable: org?.is_momo_ecommerce_enable && true
             };
             dispatch(fetchAsyncServices(values));
         }
