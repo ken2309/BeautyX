@@ -20,7 +20,7 @@ function ServiceItem(props: IProps) {
     service,
     handleServiceBook,
     order_id,
-    //service_sold
+    // service_sold
   } = props;
   const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
   const servicesBook = servicesBookSlice.servicesBook;
@@ -66,7 +66,7 @@ function ServiceItem(props: IProps) {
         <div className="treatment-ser-item__img">
           <img
             style={{ width: '100%', height: '100%' }}
-            src={service.image && service?.image_url}
+            src={service?.image_url}
             onError={(e) => onErrorImg(e)}
             alt=""
           />

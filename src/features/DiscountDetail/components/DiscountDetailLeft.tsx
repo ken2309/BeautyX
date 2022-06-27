@@ -18,13 +18,17 @@ interface IProps {
 }
 
 function DiscountDetailLeft(props: IProps) {
-    const { org, detail, discount } = props;
+    const {
+        org,
+        detail,
+        //discount
+    } = props;
     const ITEM_DISCOUNT: IITEMS_DISCOUNT = useSelector(
         (state: any) => state.ORG_DISCOUNTS.ITEM_DISCOUNT
     );
     const percent = Math.round(
         100 -
-            (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
+        (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
     );
     const history = useHistory();
     const dispatch = useDispatch();
@@ -94,9 +98,9 @@ function DiscountDetailLeft(props: IProps) {
                         </span>
                     </div>
                 </div>
-                <div className="service-detail__mobile-avi">
+                {/* <div className="service-detail__mobile-avi">
                     Lượt mua còn lại : {discount?.user_available_purchase_count}
-                </div>
+                </div> */}
             </div>
         </div>
     );

@@ -134,9 +134,13 @@ function CartPaymentStatus() {
     useMemo(() => {
         if (response?.requestId && response?.result.status === "fail") {
             handleCancelPayment()
+            let title = `Thanh toán thất bại \n Bạn có muốn tiếp tục thanh toán không ?`
+            if (action) {
+                title = `Thanh toán và đặt hẹn thất bại`
+            }
             setOpen({
                 ...open,
-                title: `Thanh toán thất bại \n Bạn có muốn tiếp tục thanh toán không ?`,
+                title: title,
                 open: true,
                 titleLeft: "Về trang chủ",
                 titleRight: "Tiếp tục",
@@ -189,6 +193,7 @@ function CartPaymentStatus() {
                 titleBtnRight={open.titleRight}
                 onClickLeft={open.onClickLeft}
                 onClickRight={open.onClickRight}
+                disableRight={action && true}
             />
         </>
     );

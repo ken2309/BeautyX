@@ -34,6 +34,7 @@ function ServiceDetail(props: any) {
     const ORG = useSelector((state: any) => state.ORG);
     const { SERVICE, COMMENTS } = useSelector((state: any) => state.SERVICE);
     const params: any = extraParamsUrl();
+
     const is_mobile = useFullScreen();
     const service = SERVICE.service;
     const org = ORG.org;

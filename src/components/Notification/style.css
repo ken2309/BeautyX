@@ -23,11 +23,12 @@
 .notification .control {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .notification .control button {
-    width: calc(50% - 18px);
+    margin: 0px 6px;
+    width: calc(50% - 24px);
 }
 
 @media only screen and (max-width: 1023px) {
@@ -48,7 +49,8 @@
         line-height: 22px;
         margin: 12px 0px 20px 0px;
     }
-    .notification .control button{
+
+    .notification .control button {
         padding: 8px 0px;
         width: calc(50% - 5px);
     }
