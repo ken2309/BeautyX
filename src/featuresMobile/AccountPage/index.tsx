@@ -129,6 +129,20 @@ export default function AccountMobile() {
                             <img src={icon.arownAcc} alt="" />
                         </div>
                     </li>
+                    <li className="accountMobile-mid__item">
+                        <div
+                            onClick={()=>history.push("/homepage")}
+                            className="item-left__wrap"
+                        >
+                            <div className="item-left">
+                                <div>
+                                    <img src={icon.markerAcc} alt="" />
+                                </div>
+                                <span>New Home</span>
+                            </div>
+                            <img src={icon.arownAcc} alt="" />
+                        </div>
+                    </li>
                 </ul>
             </div>
             {/* bot */}

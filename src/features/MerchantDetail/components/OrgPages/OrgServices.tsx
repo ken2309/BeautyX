@@ -20,7 +20,7 @@ interface IProps {
 
 function OrgServices(props: IProps) {
     const dispatch = useDispatch();
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const { CATE, SERVICES, choose_cate, org_id } = useSelector(
         (state: any) => state.ORG_SERVICES
     );
@@ -34,10 +34,12 @@ function OrgServices(props: IProps) {
     };
     const callServicesOrg = () => {
         if (org_id !== org?.id || status_ser !== STATUS.SUCCESS) {
+            console.log(org)
             const values = {
                 org_id: org?.id,
                 page: 1,
                 cate_id: choose_cate,
+                isEnable: org?.is_momo_ecommerce_enable && true
             };
             dispatch(clearServices());
             dispatch(fetchAsyncServices(values));
@@ -52,6 +54,7 @@ function OrgServices(props: IProps) {
             org_id: org?.id,
             page: 1,
             cate_id: id,
+            isEnable: org?.is_momo_ecommerce_enable && true
         };
         dispatch(clearServices());
         dispatch(onChooseCateServices(id));
@@ -63,6 +66,7 @@ function OrgServices(props: IProps) {
                 org_id: org?.id,
                 page: page + 1,
                 cate_id: choose_cate,
+                isEnable: org?.is_momo_ecommerce_enable && true
             };
             dispatch(fetchAsyncServices(values));
         }

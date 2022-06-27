@@ -1,31 +1,47 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import './style.css';
-import { category } from '../../data/category';
-import Bottom from '../../featuresMobile/Bottom/index';
 import CateLeft from './components/CateLeft';
 import CateRight from './components/CateRight';
-import { onChooseCate } from '../../redux/cate/cateSlice'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { STATUS } from '../../redux/status';
+import { fetchOrgsByTag } from '../../redux/CateTree/cateTreeSlice';
+import { cateChild1 } from '../../data/category';
+import Bottom from '../../featuresMobile/Bottom';
 
-function CategoryTree() {
+function HomeCategory(props: any) {
+    const { CATE, ORGS, SERVICES, VALUE, PRODUCTS } = useSelector((state: any) => state.CATE_TREE);
     const dispatch = useDispatch();
-    const { CATE } = useSelector((state: any) => state.CATE)
-    useEffect(() => {
-        if (!CATE) {
-            dispatch(onChooseCate(category[0]))
+    const catesChild = cateChild1.filter(item => item.cate_id === CATE.cate_id);
+    const callOrgsByCateTag = () => {
+        if (ORGS.status !== STATUS.SUCCESS) {
+            const action = {
+                tag: CATE.title,
+                page: 1
+            }
+            dispatch(fetchOrgsByTag(action))
         }
+    }
+    useEffect(() => {
+        callOrgsByCateTag()
     }, [])
 
     return (
         <>
-            <div className="cate-cnt">
-                <CateLeft />
-                <CateRight />
+            <div className="cate-tree-cnt">
+                <CateLeft CATE={CATE} VALUE={VALUE} />
+                <CateRight
+                    CATE={CATE}
+                    VALUE={VALUE}
+                    catesChild={catesChild}
+                    ORGS={ORGS}
+                    SERVICES={SERVICES}
+                    PRODUCTS={PRODUCTS}
+                />
             </div>
-            <Bottom />
+            <Bottom/>
         </>
     );
 }
 
-export default CategoryTree;
+export default HomeCategory;

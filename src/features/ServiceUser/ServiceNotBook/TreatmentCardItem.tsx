@@ -2,20 +2,55 @@ import React, { useState } from 'react';
 import { IServiceUser, IUser_Items } from '../../../interface/servicesUser';
 import ServiceSoldItem from './ServiceSoldItem';
 import { formatDate, formatTime } from '../../../utils/format';
+import { useSelector } from 'react-redux';
+import icon from '../../../constants/icon';
+import { useHistory } from 'react-router-dom';
 
 interface IProps {
     card_items: IServiceUser
 }
 
 function TreatmentCardItem(props: IProps) {
+    const history = useHistory();
     const { card_items } = props;
     const org = card_items.organization;
     const [enableCart, setEnableCart] = useState(true)
+    const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
+    const servicesBook = servicesBookSlice.servicesBook;
+    const order_id = servicesBookSlice?.order_id;
+    const handleNextStep = () => {
+        if (servicesBook.length > 0) {
+            const services = servicesBook.map((item: any) => {
+                return {
+                    service: item,
+                    quantity: 1
+                }
+            });
+            history.push({
+                pathname: "/dat-hen",
+                state: { org, services, order_id }
+            })
+        }
+    };
+
     return (
         <div
             className='treat-card-item'
             style={enableCart === true ? { opacity: 0.4 } : {}}
         >
+            <div
+                style={
+                    (order_id === card_items?.id
+                        && servicesBook.length > 0)
+                        ?
+                        { height: "24px" } : {}
+                }
+                className="flex-row treat-card-item__book"
+                onClick={handleNextStep}
+            >
+                Đặt hẹn ngay
+                <img src={icon.calendarWhite} alt="" />
+            </div>
             <div className="treat-card-item__head">
                 <span className="org-name">
                     {org?.name}

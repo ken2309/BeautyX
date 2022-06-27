@@ -10,6 +10,7 @@ class ServiceApi {
             limit: 15,
             "filter[keyword]": values.keyword,
             "filter[service_group_id]": values.cate_id,
+            "filter[is_momo_ecommerce_enable]": values.isEnable,
             include: "category|favorites_count",
             append: "is_favorite|rating|bought_count",
         };

@@ -2,7 +2,6 @@ import React from 'react';
 import { Dialog, Slide } from '@mui/material'
 import { TransitionProps } from '@mui/material/transitions';
 import Orders from '../../../../features/Orders';
-import Head from '../../../../features/Head';
 import HeadMobile from '../../../../features/HeadMobile';
 
 const Transition = React.forwardRef(function Transition(

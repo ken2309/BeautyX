@@ -128,7 +128,7 @@ function OrgDetail(props: IProps) {
                                     <div className="flexX-gap-8">
                                         <div className="org-avatar">
                                             <img
-                                                src={org.image_url}
+                                                src={org?.image_url}
                                                 onError={(e) => onErrorImg(e)}
                                                 alt=""
                                             />
@@ -175,7 +175,7 @@ function OrgDetail(props: IProps) {
                                                         className="icon"
                                                     />
                                                     <span className="text">
-                                                        {org.favorites_count}
+                                                        {org?.favorites_count}
                                                     </span>
                                                 </div>
                                             </div>

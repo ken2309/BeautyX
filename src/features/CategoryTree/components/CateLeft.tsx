@@ -1,37 +1,53 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { category } from '../../../data/category';
-import { onChooseCate, fetchAsyncOrgCate } from '../../../redux/cate/cateSlice'
+import { onChooseCate, fetchOrgsByTag } from '../../../redux/CateTree/cateTreeSlice';
+import { cateChild1 } from '../../../data/category';
+import { fetchServiceByCateChild, onSetFirstCateProducts } from '../../../redux/CateTree/cateTreeSlice'
 
 function CateLeft(props: any) {
+    const { CATE, VALUE } = props;
     const dispatch = useDispatch();
-    const { CATE } = useSelector((state: any) => state.CATE);
-    const onClickChooseCate = (item: any) => {
-        dispatch(onChooseCate(item))
-        const values = {
-            page: 1,
-            tag: item?.title
+    const handleChooseCate = (item: any) => {
+        const action = {
+            title: item.title,
+            cate_id: item.id
         }
-        dispatch(fetchAsyncOrgCate(values))
+        dispatch(onChooseCate(action))
+        dispatch(fetchOrgsByTag({
+            tag: item.title,
+            page: 1
+        }))
+
+        const cateChildFirst = cateChild1.filter(i => i.cate_id === item.id)[0];
+        if (VALUE === "SERVICE") {
+            const action_service = {
+                page: 1,
+                keyword: cateChildFirst?.title,
+                CATE_CHILD: cateChildFirst
+            }
+            dispatch(fetchServiceByCateChild(action_service))
+        } else if (VALUE === "PRODUCT") {
+            const cateProductsFirst = cateChild1.filter(i => (i.cate_id === item.id));
+            dispatch(onSetFirstCateProducts(cateProductsFirst.filter(i => i.type === "PRODUCT")[0]))
+        }
     }
     return (
-        <div className="cate-cnt__left">
+        <div className="cate-tree-cnt__left">
             <ul className="cate-list">
                 {
-                    category.map((item: any, index: number) => (
+                    category.map((item, index) => (
                         <li
-                            onClick={() => onClickChooseCate(item)}
+                            style={CATE.cate_id === item.id ? { backgroundColor: "var(--white)" } : {}}
+                            className='flex-column cate-list__item'
                             key={index}
-                            style={
-                                item.id === CATE?.id ? { backgroundColor: "var(--bgWhite)" } : {}
-                            }
+                            onClick={() => handleChooseCate(item)}
                         >
-                            <div className="flex-column cate-list__item">
-                                <img src={item.image} alt="" className="cate-list__item-img" />
-                                <span className="cate-list__item-title">
-                                    {item.title}
-                                </span>
-                            </div>
+                            <img
+                                src={item.image}
+                                alt=""
+                                className="cate-list__item-img" />
+                            <span>{item.title}</span>
                         </li>
                     ))
                 }

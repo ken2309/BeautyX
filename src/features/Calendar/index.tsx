@@ -13,6 +13,7 @@ import { clearAllServices } from '../../redux/servicesBookSlice';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { extraParamsUrl } from '../../utils/extraParamsUrl';
+import Bottom from '../../featuresMobile/Bottom';
 
 function Calendar() {
     const IS_MB = useFullScreen();
@@ -75,6 +76,7 @@ function Calendar() {
                     </TabContext>
                 </div>
             </div>
+            <Bottom />
         </>
     );
 }

@@ -77,27 +77,39 @@ function CartItem(props: IProps) {
     const goBackDetail = () => {
         if (cartItem.is_type === 1) {
             history.push({
-                pathname: `/Product-detail/${slugify(cartItem.name)}`,
-                search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`,
+                pathname: `/product-detail/${slugify(cartItem.name)}`,
+                search: `id=${cartItem.id}&org=${cartItem.org_id}`,
             });
         } else if (cartItem.is_type === 2) {
             if (cartItem.discount) {
+                const discount = cartItem.discount;
+                const discountItem = discount.items.find((val: any) => val.productable_id === cartItem.id);
+                const onCheckType = () => {
+                    let type;
+                    switch (discountItem.productable_type) {
+                        case "App\\Models\\CI\\Service":
+                            type = "service";
+                            break;
+                        case "App\\Models\\CI\\Product":
+                            type = "product";
+                            break;
+                    }
+                    return type;
+                };
+                const type = onCheckType();
                 history.push({
                     pathname: `/chi-tiet-giam-gia/${slugify(
-                        cartItem.discount.items[0].productable.service_name
+                        discountItem.productable.service_name ||
+                        discountItem.productable.product_name
                     )}`,
-                    search: `org_id=${cartItem.org_id}&id=${cartItem.discount?.id}`,
+                    search: `type=${type}&org_id=${cartItem.org_id}&dis_id=${discount?.id}&item_id=${discountItem.productable_id}`,
                 });
             } else {
                 history.push({
                     pathname: `/dich-vu/${slugify(cartItem.name)}`,
-                    search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`,
+                    search: `id=${cartItem.id}&org=${cartItem.org_id}`,
                 });
             }
-            // history.push({
-            //     pathname: `/dich-vu/${slugify(cartItem.name)}`,
-            //     search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`
-            // })
         } else if (cartItem.is_type === 3) {
             //page combo detail
         }
@@ -116,6 +128,16 @@ function CartItem(props: IProps) {
                 onSwipeProgress={progress => setProcess(progress)}
                 listType={Type.IOS}
             >
+                {
+                    cartItem?.discount &&
+                    <div
+                        style={cartItem.isConfirm === false ? { opacity: 0.4 } : {}}
+                        className="flex-row re-cart-item__discount"
+                    >
+                        <span>{cartItem.discount?.coupon_code}</span>
+                        <img style={{ marginLeft: "4px" }} src={icon.cardDiscountWhite} alt="" />
+                    </div>
+                }
                 <div
                     style={process > 15 ? { backgroundColor: "var(--grey)" } : {}}
                     className="flex-row-sp cart-item cart-item"

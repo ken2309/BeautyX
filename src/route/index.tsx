@@ -33,6 +33,7 @@ import ResetPassword from "../features/ResetPassword";
 import ComboDetail from "../features/ComboDetail";
 import DiscountDetail from "../features/DiscountDetail";
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
+import HomeBannerSearchResult from "../features/HomePage/HomeBanner/homeSearchReasult";
 
 // feature mobile
 //import Calendar from "../featuresMobile/Calendar";
@@ -46,6 +47,8 @@ import Booking from "../features/Booking";
 import Calendar from "../features/Calendar";
 import BuyNow from "../features/BuyNow";
 import Carts from "../features/Carts";
+
+import ProductsByCate from "../features/CategoryTree/ProductsByCate";
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps
@@ -185,10 +188,18 @@ function RouterConfig(props: any) {
       path: "/dat-hen",
       component: <Booking />
     },
+    {
+      path: "/home-banner-result",
+      component: <HomeBannerSearchResult/>,
+    },
     // {
     //   path: "/mua-hang",
     //   component: <BoyNow />
     // }
+    {
+      path: "/san-pham",
+      component: <ProductsByCate />
+    }
   ];
   const routesPrivate = [
     {

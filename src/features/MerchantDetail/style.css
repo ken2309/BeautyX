@@ -505,6 +505,7 @@
     height: 100%;
     border-radius: 100%;
     width: fit-content;
+    object-fit: contain;
 }
 
 .map-org-detail__item .branch-detail {

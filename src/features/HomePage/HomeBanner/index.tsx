@@ -116,11 +116,10 @@ export default function HomeBanner() {
                     return openWeb();
                 case "SEARCH_RESULT":
                     console.log(chooseBanner)
-                    // return history.push({
-                    //     // pathname: `/home-banner-result`,
-                    //     state: chooseBanner,
-                    // });
-                    break;
+                    return history.push({
+                        pathname: `/home-banner-result`,
+                        state: chooseBanner,
+                    });
                 case "PROMOTION":
                     return console.log("PROMOTION");
                 case "ORGANIZATION":
