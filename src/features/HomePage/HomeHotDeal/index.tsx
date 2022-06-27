@@ -56,7 +56,7 @@ export default function HomeHotDeal() {
     return (
         <div className="home-hot__deal">
             <HomeTitle title={`Top Deal Khủng`} url={"/deal-lam-dep-cuc-HOT"} />
-            <ul className="dealHot-listBanner">
+            {/* <ul className="dealHot-listBanner">
                 <Slider {...settings}>
                     <li className="dealHot-listBanner__item">
                         <img src={img.banner} alt="" />
@@ -77,7 +77,7 @@ export default function HomeHotDeal() {
                         />
                     </li>
                 </Slider>
-            </ul>
+            </ul> */}
 
             <HomePromo />
         </div>

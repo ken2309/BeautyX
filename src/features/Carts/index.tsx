@@ -18,6 +18,7 @@ import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
 import PaymentMethodCpn from '../PaymentMethod';
 import { extraPaymentMethodId } from '../PaymentMethod/extraPaymentMethodId';
+import CartNull from '../Cart/components/CartNull';
 
 function Carts() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
@@ -89,60 +90,67 @@ function Carts() {
                     />
                     : <Head />
             }
-            <Container>
-                <div className="re-cart-cnt">
-                    <div className="re-cart-cnt__head">
-                        <UserPaymentInfo
-                            onSetAddressDefault={setAddress}
+            {
+                cartList?.length === 0 || !cartList ?
+                    <CartNull />
+                    :
+                    <>
+                        <Container>
+                            <div className="re-cart-cnt">
+                                <div className="re-cart-cnt__head">
+                                    <UserPaymentInfo
+                                        onSetAddressDefault={setAddress}
+                                    />
+                                </div>
+                                {
+                                    FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
+                                    <div
+                                        onClick={() => setOpen(true)}
+                                        className="re-cart-cnt__pmt"
+                                    >
+                                        <span>Phương thức thanh toán</span><br />
+                                        <span>
+                                            {pmtMethod ? pmtMethod?.name_key : "Vui lòng chọn phương thức thanh toán"}
+                                        </span>
+                                    </div>
+                                }
+                                <div className="re-cart-cnt__body">
+                                    <ul className="re-cart-cnt__body-list">
+                                        {
+                                            cartListGroupOrg.map((item: any, index: number) => (
+                                                <li key={index} className="re-cart-cnt__body__item">
+                                                    <CartGroupItem
+                                                        item={item}
+                                                        org={org}
+                                                        cartList={cartList}
+                                                    />
+                                                </li>
+                                            ))
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </Container>
+                        <CartPaymentMethod
+                            open={open}
+                            setOpen={setOpen}
+                            pmtMethod={pmtMethod}
+                            setPmtMethod={setPmtMethod}
                         />
-                    </div>
-                    {
-                        FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
                         <div
-                            onClick={() => setOpen(true)}
-                            className="re-cart-cnt__pmt"
+                            style={{ display: "none" }}
                         >
-                            <span>Phương thức thanh toán</span><br />
-                            <span>
-                                {pmtMethod ? pmtMethod?.name_key : "Vui lòng chọn phương thức thanh toán"}
-                            </span>
+                            <PaymentMethodCpn
+                                e={pmtMethod}
+                                onPaymentMethodChange={setPmtMethod}
+                            />
                         </div>
-                    }
-                    <div className="re-cart-cnt__body">
-                        <ul className="re-cart-cnt__body-list">
-                            {
-                                cartListGroupOrg.map((item: any, index: number) => (
-                                    <li key={index} className="re-cart-cnt__body__item">
-                                        <CartGroupItem
-                                            item={item}
-                                            org={org}
-                                            cartList={cartList}
-                                        />
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </Container>
-            <CartPaymentMethod
-                open={open}
-                setOpen={setOpen}
-                pmtMethod={pmtMethod}
-                setPmtMethod={setPmtMethod}
-            />
-            <div
-                style={{ display: "none" }}
-            >
-                <PaymentMethodCpn
-                    e={pmtMethod}
-                    onPaymentMethodChange={setPmtMethod}
-                />
-            </div>
-            <CartBottom
-                DATA_CART={DATA_CART}
-                DATA_PMT={DATA_PMT}
-            />
+                        <CartBottom
+                            DATA_CART={DATA_CART}
+                            DATA_PMT={DATA_PMT}
+                        />
+                    </>
+            }
             <Footer />
         </>
     );

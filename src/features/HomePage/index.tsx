@@ -1,10 +1,11 @@
 import { Container } from "@mui/material";
 import React from "react";
-import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 import Bottom from "../../featuresMobile/Bottom";
 import ExtraFlatForm from "../../rootComponents/extraFlatForm";
+import useFullScreen from "../../utils/useFullScreen";
 import Footer from "../Footer";
 import Head from "../Head";
+import HeadHomeMobile from "../HeadMobile/HeadHomeMobile";
 import HomeDiscount from "../HomeDiscounts";
 import HomeProvince from "../Homev2/components/HomeProvince";
 import HomeTags from "../Homev2/components/HomeTags";
@@ -17,12 +18,11 @@ import HomeTopService from "./HomeTopService";
 import HomeBannerResult from "./HomeBanner/homeSearchReasult";
 
 export default function HomePage() {
-    const FLAT_FORM = EXTRA_FLAT_FORM();
-
+    const IS_MB = useFullScreen();
     return (
         <div className="homepage">
             <ExtraFlatForm />
-            {FLAT_FORM === "BEAUTYX" && <Head IN_HOME={true} />}
+            {IS_MB ? <HeadHomeMobile /> : <Head IN_HOME={true} />}
             <Container>
                 <HomeBanner />
                 <HomeTags />
@@ -33,6 +33,7 @@ export default function HomePage() {
                 <HomeTopService />
                 {/* <HomeHotTrend /> */}
                 <HomeFavorite />
+                <HomeProvince />
                 <HomeRecomment />
             </Container>
             <Footer />

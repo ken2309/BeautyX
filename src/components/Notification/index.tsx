@@ -10,7 +10,7 @@ interface IProps {
     titleBtnRight?: string,
     onClickLeft?: () => void
     onClickRight?: () => void
-
+    disableRight?: boolean,
 }
 
 function Notification(props: IProps) {
@@ -20,7 +20,8 @@ function Notification(props: IProps) {
         titleBtnLeft,
         titleBtnRight,
         onClickLeft,
-        onClickRight
+        onClickRight,
+        disableRight
     } = props;
     const onClickBtnLeft = () => {
         if (onClickLeft) {
@@ -49,11 +50,16 @@ function Notification(props: IProps) {
                         loading={false}
                         onClick={onClickBtnLeft}
                     />
-                    <ButtonLoading
-                        title={titleBtnRight}
-                        loading={false}
-                        onClick={onClickBtnRight}
-                    />
+                    {
+                        disableRight === true ?
+                            <></>
+                            :
+                            <ButtonLoading
+                                title={titleBtnRight}
+                                loading={false}
+                                onClick={onClickBtnRight}
+                            />
+                    }
                 </div>
             </div>
         </Dialog>

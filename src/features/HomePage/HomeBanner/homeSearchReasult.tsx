@@ -13,8 +13,13 @@ import './homeBannerSearchResult.css'
 import Footer from "../../Footer";
 import Bottom from "../../../featuresMobile/Bottom";
 import Head from "../../Head";
+import useFullScreen from "../../../utils/useFullScreen";
+import HeadMobile from '../../HeadMobile/index';
+
+
 export default function HomeBannerResult() {
   const location: any = useLocation();
+  const IS_MB = useFullScreen();
   const dataBanner = location.state;
   const apiBanner = location.state.url;
   const history = useHistory();
@@ -58,7 +63,7 @@ export default function HomeBannerResult() {
   return (
     <>
     <ExtraFlatForm />
-            {FLAT_FORM === "BEAUTYX" && <Head IN_HOME={true} />}
+            {FLAT_FORM === "BEAUTYX" && IS_MB ? <HeadMobile title={dataBanner.name}/>:<Head IN_HOME={false} />}
     <Container>
       <div className="landing-page">
         {/* <button
@@ -74,9 +79,9 @@ export default function HomeBannerResult() {
         </div>
 
         <Container className="landing-page__body">
-          <div className="landing-page__body__title">
+          {/* <div className="landing-page__body__title">
             {dataBanner.name}
-          </div>
+          </div> */}
           {
             data.loading
               ?

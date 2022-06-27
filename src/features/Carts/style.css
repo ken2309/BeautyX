@@ -42,6 +42,26 @@
     padding: 0px 12px;
 }
 
+.re-cart-item-cnt {
+    position: relative;
+}
+
+.re-cart-item__discount {
+    position: absolute;
+    background-color: var(--orange);
+    top: 0;
+    left: 0;
+    z-index: 1;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 600;
+    color: var(--white);
+    padding: 2px 4px;
+    border-radius: 4px;
+    margin: 2px 0px 0px 4px;
+    transition: all .3s;
+}
+
 .re-cart-item-cnt .cart-item__name-img {
     width: 100px;
     height: 100px;
@@ -349,5 +369,12 @@
         font-size: 12px;
         line-height: 16px;
         color: #E64D4A;
+    }
+
+    .re-cart-item__discount {
+        font-size: 10px;
+        line-height: 12px;
+        font-weight: 500;
+        margin: 0px 0px 0px 0px;
     }
 }

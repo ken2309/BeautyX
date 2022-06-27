@@ -30,5 +30,7 @@ export interface Service {
       rating: number,
       is_favorite: boolean,
       bought_count: number,
-      category: any
+      category: any,
+      is_moba_ecommerce_enable: boolean
+      is_momo_ecommerce_enable: boolean
 }

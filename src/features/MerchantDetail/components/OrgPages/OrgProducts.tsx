@@ -38,6 +38,7 @@ function OrgProducts(props: IProps) {
                 org_id: org?.id,
                 page: 1,
                 cate_id: choose_cate,
+                isEnable: org?.is_momo_ecommerce_enable && true
             };
             dispatch(clearProducts());
             dispatch(fetchAsyncProducts(values));
@@ -63,6 +64,7 @@ function OrgProducts(props: IProps) {
                 org_id: org?.id,
                 page: page + 1,
                 cate_id: choose_cate,
+                isEnable: org?.is_momo_ecommerce_enable && true
             };
             dispatch(fetchAsyncProducts(values));
         }
