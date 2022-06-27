@@ -33,7 +33,7 @@ export default function HomeRecomment() {
             <HomeTitle title={"Gợi ý dành cho bạn"} />
             <ul className="home-recomment__list">
                 {data?.services?.map((item: IServicePromo, index: number) => (
-                    <li className="home-recomment__item">
+                    <li className="home-recomment__item" key={index}>
                         <ServicePromoItem service={item} />
                     </li>
                 ))}

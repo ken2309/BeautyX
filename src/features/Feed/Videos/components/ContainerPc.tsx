@@ -22,7 +22,6 @@ function ContainerPc(props: any) {
         videos.data &&
             videos.data[0] &&
             videos.data.map(async (item: any, index: any) => {
-                console.log(index);
                 arr = await dispatch(fetchAsyncDataVideos(item));
                 return arr;
             });

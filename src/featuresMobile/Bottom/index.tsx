@@ -19,13 +19,13 @@ function Bottom(props: any) {
             iconAct: ICON.homeAct,
             path: "/home",
         },
-        {
-            id: 2,
-            title: t("Home.trending"),
-            icon: ICON.trend,
-            iconAct: ICON.trendAct,
-            path: "/beautyx-videos",
-        },
+        // {
+        //     id: 2,
+        //     title: t("Home.trending"),
+        //     icon: ICON.trend,
+        //     iconAct: ICON.trendAct,
+        //     path: "/beautyx-videos",
+        // },
         {
             id: 3,
             title: t("Home.cate"),

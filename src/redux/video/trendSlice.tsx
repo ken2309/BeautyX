@@ -45,8 +45,8 @@ const fetchAsyncData = async ({sub_domain,service_list}:any) => {
         console.log(error)
     }
 };
-export const fetchAsyncDataVideos: any = createAsyncThunk(
-    "VIDEOS/fetchAsyncDataVideos",
+export const fetchAsyncDataTrends: any = createAsyncThunk(
+    "TRENDs/fetchAsyncDataTrends",
     async (vid: any) => {
         try {
             let param_id = vid.slug.split('-');
@@ -67,11 +67,11 @@ export const fetchAsyncDataVideos: any = createAsyncThunk(
         }
     }
 )
-export const fetchAsyncVideos: any = createAsyncThunk(
-    "VIDEOS/fetchAsyncVideos",
+export const fetchAsyncTrendVideos: any = createAsyncThunk(
+    "TRENDs/fetchAsyncTrendVideos",
     async () => {
         try {
-            const res = await newsApi.getVideo();
+            const res = await newsApi.getTrendsVideo();
             return res.data
         } catch (error) {
             console.log(error)
@@ -79,7 +79,7 @@ export const fetchAsyncVideos: any = createAsyncThunk(
     }
 )
 export const onFavoriteOrg: any = createAsyncThunk(
-    "VIDEOS/onFavoriteOrg",
+    "TRENDs/onFavoriteOrg",
     async (org: any) => {
         console.log(org);
         await favorites.postFavorite(org?.id)
@@ -92,7 +92,7 @@ export const onFavoriteOrg: any = createAsyncThunk(
     }
 )
 export const onDeleteFavoriteOrg: any = createAsyncThunk(
-    "VIDEOS/onDeleteFavoriteOrg",
+    "TRENDs/onDeleteFavoriteOrg",
     async (org: any) => {
         console.log(org);
         await favorites.deleteFavorite(org?.id)
@@ -115,8 +115,8 @@ const initialState = {
     },
     RESET_STATE: true
 }
-const videosSlice = createSlice({
-    name: "VID",
+const trendsSlice = createSlice({
+    name: "TRENDs",
     initialState,
     reducers: {
         /**
@@ -133,7 +133,7 @@ const videosSlice = createSlice({
     },
     extraReducers: {
         // fetch list post 
-        [fetchAsyncVideos.pending]: (state) => {
+        [fetchAsyncTrendVideos.pending]: (state) => {
             return {
                 ...state, LISTVIDs: {
                     ...state.LISTVIDs,
@@ -141,25 +141,24 @@ const videosSlice = createSlice({
                 }
             }
         },
-        [fetchAsyncVideos.fulfilled]: (state, { payload }) => {
-            // console.log(payload)
+        [fetchAsyncTrendVideos.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
                 LISTVIDs: { data: payload, status: STATUS.SUCCESS }
             }
         },
-        [fetchAsyncVideos.rejected]: (state) => {
+        [fetchAsyncTrendVideos.rejected]: (state) => {
             return { ...state, LISTVIDs: { ...state.LISTVIDs, status: STATUS.LOADING } }
         },
         // fetch data of post -- org -- ser -- 
-        [fetchAsyncDataVideos.pending]: (state) => {
+        [fetchAsyncDataTrends.pending]: (state) => {
             return { ...state,
                         VIDEOs: { 
                             ...state.VIDEOs,
                             data:state.RESET_STATE?[]:[...state.VIDEOs.data],
                             status: STATUS.LOADING } }
         },
-        [fetchAsyncDataVideos.fulfilled]: (state, { payload }) => {
+        [fetchAsyncDataTrends.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
                 RESET_STATE: false,
@@ -169,7 +168,7 @@ const videosSlice = createSlice({
                 }
             }
         },
-        [fetchAsyncDataVideos.rejected]: (state) => {
+        [fetchAsyncDataTrends.rejected]: (state) => {
             return { ...state, VIDEOs: { ...state.VIDEOs, status: STATUS.LOADING } }
         },
         // favorites org
@@ -210,6 +209,6 @@ const videosSlice = createSlice({
         },
     }
 })
-const { reducer, actions } = videosSlice;
+const { reducer, actions } = trendsSlice;
 export const { setResetInitialState, resetVIDEOs } = actions;
 export default reducer;

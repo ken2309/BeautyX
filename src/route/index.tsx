@@ -33,6 +33,7 @@ import ResetPassword from "../features/ResetPassword";
 import ComboDetail from "../features/ComboDetail";
 import DiscountDetail from "../features/DiscountDetail";
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
+import HomeBannerSearchResult from "../features/HomePage/HomeBanner/homeSearchReasult";
 
 // feature mobile
 //import Calendar from "../featuresMobile/Calendar";
@@ -184,6 +185,10 @@ function RouterConfig(props: any) {
     {
       path: "/dat-hen",
       component: <Booking />
+    },
+    {
+      path: "/home-banner-result",
+      component: <HomeBannerSearchResult/>,
     },
     // {
     //   path: "/mua-hang",

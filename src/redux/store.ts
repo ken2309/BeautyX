@@ -20,6 +20,7 @@ import blogReducer from "./blog/blogSlice";
 import cateReducer from "./cate/cateSlice";
 import comboReducer from "./org_combos/comboSlice";
 import videosReducer from './video/videosSlice';
+import trendReducer from './video/trendSlice';
 import appReducer from "./appointment/appSlice";
 import commentReducer from './commentSlice';
 import orderReducer from './order/orderSlice';
@@ -46,6 +47,7 @@ const rootReducer = {
   CATE: cateReducer,
   COMBO: comboReducer,
   VID: videosReducer,
+  TRENDs: trendReducer,
   APP: appReducer,
   COMMENT: commentReducer,
   ORDER: orderReducer

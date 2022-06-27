@@ -30,7 +30,21 @@ class NewsApi {
             limit: 5,
             order: "desc",
             orderby: "modified",
-            categories: 7,
+            categories: 9,
+        };
+        return axiosClient.get(url, {
+            params,
+            baseURL: "https://beautyx.vn/blog/index.php/wp-json/wp/v2",
+        });
+    };
+    getTrendsVideo = () => {
+        const url = `/posts`;
+        const params = {
+            page: 1,
+            limit: 5,
+            order: "desc",
+            orderby: "modified",
+            categories: 9,
         };
         return axiosClient.get(url, {
             params,

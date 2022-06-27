@@ -14,6 +14,7 @@ import HomeHotDeal from "./HomeHotDeal";
 import HomeHotTrend from "./HomeHotTrend";
 import HomeRecomment from "./HomeRecomment";
 import HomeTopService from "./HomeTopService";
+import HomeBannerResult from "./HomeBanner/homeSearchReasult";
 
 export default function HomePage() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
@@ -30,7 +31,7 @@ export default function HomePage() {
             <Container>
                 <HomeHotDeal />
                 <HomeTopService />
-                <HomeHotTrend />
+                {/* <HomeHotTrend /> */}
                 <HomeFavorite />
                 <HomeRecomment />
             </Container>
