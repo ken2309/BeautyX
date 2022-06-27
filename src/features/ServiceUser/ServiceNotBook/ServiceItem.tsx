@@ -95,7 +95,7 @@ function ServiceItem(props: IProps) {
                   service.unlimited === true ?
                     <span>Không giới hạn</span>
                     :
-                    <span>Còn lại {service.times - service.remain_time}/{service.times}</span>
+                    <span>Sử dụng {service.times - service.remain_time}/{service.times}</span>
                 }
               </div>
             </div>
