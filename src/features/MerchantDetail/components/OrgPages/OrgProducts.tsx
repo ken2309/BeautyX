@@ -53,6 +53,7 @@ function OrgProducts(props: IProps) {
             org_id: org?.id,
             page: 1,
             cate_id: id,
+            isEnable: org?.is_momo_ecommerce_enable && true
         };
         dispatch(clearProducts());
         dispatch(onChooseCateServices(id));
