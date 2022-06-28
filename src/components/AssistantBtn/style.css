@@ -1,13 +1,18 @@
-.assistantBtn {
-    /* position: absolute;
+.active {
+    position: fixed;
     width: 100%;
     height: 100%;
-    background-color: #3c80f6;
-    z-index: 100000;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 101;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0; */
+    bottom: 0;
+}
+
+.visibility-hidden {
+    visibility: hidden;
+    opacity: 0;
 }
 
 #floating-button {
@@ -38,13 +43,13 @@
     animation: plus-out 0.3s;
     transition: all 0.3s;
 }
-.plus:hover {
+.plus-hover:hover {
     transform: rotate(90deg);
     animation: plus-in 0.3s;
     transition: all 0.3s;
 }
 
-#assistantBtn-wrap {
+.assistantBtn-wrap {
     position: fixed;
     width: 70px;
     height: 70px;
@@ -53,13 +58,13 @@
     z-index: 50px;
 }
 
-#assistantBtn-wrap:hover {
-    height: 400px;
-    width: 90px;
+.assistantBtn-wrap-hover:hover {
+    height: 250px;
+    width: 40px;
     padding: 30px;
 }
 
-#assistantBtn-wrap:hover .plus {
+.assistantBtn-wrap-hover:hover .plus {
     animation: plus-in 0.15s linear;
     animation-fill-mode: forwards;
 }
@@ -82,7 +87,7 @@
     height: 14px;
 }
 
-#assistantBtn-wrap:hover .edit {
+.assistantBtn-wrap-hover:hover .edit {
     animation: edit-in 0.2s;
     animation-delay: 0.1s;
     animation-fill-mode: forwards;
@@ -145,7 +150,7 @@
 .btn1 {
     background: #ba68c8;
     right: 24px;
-    bottom: 95px;
+    bottom: 80px;
     animation-delay: 0.2s;
     animation: bounce-out-buttons 0.3s linear;
     animation-fill-mode: forwards;
@@ -154,7 +159,7 @@
 .btn2 {
     background: var(--green);
     right: 24px;
-    bottom: 155px;
+    bottom: 137px;
     animation-delay: 0.15s;
     animation: bounce-out-buttons 0.15s linear;
     animation-fill-mode: forwards;
@@ -163,7 +168,7 @@
 .btn3 {
     background: #3c80f6;
     right: 24px;
-    bottom: 215px;
+    bottom: 192px;
     animation-delay: 0.1s;
     animation: bounce-out-buttons 0.1s linear;
     animation-fill-mode: forwards;
@@ -197,21 +202,21 @@
     }
 }
 
-#assistantBtn-wrap:hover .buttons {
+.assistantBtn-wrap-hover:hover .buttons {
     animation: bounce-buttons 0.1s linear;
     animation-fill-mode: forwards;
 }
 
-#assistantBtn-wrap:hover .btn1 {
+.assistantBtn-wrap-hover:hover .btn1 {
     animation-delay: 0.08s;
 }
-#assistantBtn-wrap:hover .btn2 {
+.assistantBtn-wrap-hover:hover .btn2 {
     animation-delay: 0.15s;
 }
-#assistantBtn-wrap:hover .btn3 {
+.assistantBtn-wrap-hover:hover .btn3 {
     animation-delay: 0.2s;
 }
-@media screen and (max-width: 767.98px) {
+@media screen and (max-width: 1023px) {
     #floating-button {
         bottom: 90px;
         right: 12px;

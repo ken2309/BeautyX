@@ -6,6 +6,7 @@
     overflow-y: scroll;
     background-color: var(--white);
     padding: 24px;
+    z-index: 103;
     border-radius: 10px;
 }
 
