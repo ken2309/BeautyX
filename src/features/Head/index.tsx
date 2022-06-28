@@ -155,7 +155,7 @@ function Head(props: any) {
               border="solid 1px var(--purple)"
               onClick={gotoPartner}
             />
-            <button
+            {/* <button
               onClick={() => history.push('/beautyx-videos')}
               className="flex-row hd-cnt__left-btn"
             >
@@ -165,7 +165,7 @@ function Head(props: any) {
             <button onClick={() => history.push('/tin-tuc')} className="flex-row hd-cnt__left-btn">
               <img src={icon.newsPurple} alt="" />
               Tin tức
-            </button>
+            </button> */}
           </div>
           <img
             onClick={handleBack}
@@ -274,15 +274,17 @@ function Head(props: any) {
                 {carts.cartQuantity}
               </div>
             </div>
-            <div className="hd-cnt__right-menu">
-              <img onClick={openMenuClick} src={icon.Menu} alt="" />
-              <Menu
-                //profile={profile}
-                USER={USER}
-                openMenu={openMenu}
-                setOpenMenu={setOpenMenu}
-              />
-            </div>
+            {
+              USER &&
+              <div className="hd-cnt__right-menu">
+                <img onClick={openMenuClick} src={icon.Menu} alt="" />
+                <Menu
+                  USER={USER}
+                  openMenu={openMenu}
+                  setOpenMenu={setOpenMenu}
+                />
+              </div>
+            }
             <div
               onClick={openLangClick}
               className="hd-cnt__right-lang"

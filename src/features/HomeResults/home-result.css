@@ -46,12 +46,15 @@
 }
 /* end home banner deal */
 /* Mobile */
-@media only screen and (max-width: 767px) {
-    .home-result-ser-cnt {
-        padding: 12px 0px;
-    }
+@media only screen and (max-width: 1023px) {
     .home-promo-ser__mb {
         width: 100%;
+        margin-top: 48px;
+    }
+    .filter-btn{
+        border: none;
+        outline: none;
+        background-color: transparent;
     }
     /* .ser-list__mb {
         width: 100% !important;
@@ -62,8 +65,9 @@
     } */
     .home-result__cus {
         display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-columns: repeat(1, 1fr) !important;
         gap: 16px !important;
+        padding: 0px 12px !important;
     }
     .ser-item__cus {
         width: 100% !important;
@@ -71,13 +75,14 @@
     .home-result-org-cnt {
         flex-direction: column;
         padding: 12px 0px;
+        margin-top: 48px;
     }
     .home-result-org-cnt__left {
         display: none;
     }
     .home-result-org-cnt__right {
         width: 100%;
-        padding: 0px 20px;
+        padding: 0px 12px;
     }
     .deal-banner {
         padding: 0px 0px 32px 0px;

@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useCallback, useContext, useState } from 'react';
 import Head from '../Head';
 import HeadTitle from '../HeadTitle';
 import { useLocation } from 'react-router-dom'
@@ -12,33 +13,42 @@ import TabOrgs from './components/TabOrgs';
 import TabLocation from './components/TabLocation';
 import orgApi from '../../api/organizationApi';
 import icon from '../../constants/icon';
-import { Drawer } from '@mui/material'
+import { Drawer } from '@mui/material';
+import { IOrganization } from '../../interface/organization';
+import TabProduct from './components/TabProduct';
+import { useDispatch, useSelector } from 'react-redux';
+import { onSetTabResult } from '../../redux/search/searchResultSlice';
+import useFullScreen from '../../utils/useFullScreen';
+import HeadMobile from '../HeadMobile';
+import BackTopButton from '../../components/BackTopButton';
 
-interface ITabs {
-    id: number,
-    title: string,
-    count: number
+interface IData {
+    orgs: IOrganization[],
+    page: number,
+    totalItem: number
 }
 
 function SearchResults(props: any) {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext);
+    const IS_MB = useFullScreen();
+    const dispatch = useDispatch();
     const location = useLocation();
     const searchKey = decodeURI(location.search.slice(1, location.search.length));
-    const [tabs, setTabs] = useState<ITabs[]>([]);
-    const [acTab, setAcTab] = useState(0);
+    const { tab } = useSelector((state: any) => state.SEARCH_RESULT);
+    const tabs = [
+        { id: 1, title: t("Mer_de.services") },
+        { id: 2, title: t("Mer_de.products") },
+        { id: 3, title: t("my_ser.business") },
+    ]
     const [openFilter, setOpenFilter] = useState(false);
-    const onActiveTab = (tab: any) => {
-        setAcTab(tab.id)
-    }
-    const [itemCount, setItemCount] = useState({
-        servicesCount: 0,
-        orgsCount: 0
-    })
+    const onActiveTab = useCallback((tab) => {
+        dispatch(onSetTabResult(tab.id))
+    }, [])
     //filter for org
-    const [data, setData] = useState({
+    const [data, setData] = useState<IData>({
         orgs: [],
         page: 1,
-        lastPage: 1
+        totalItem: 1
     })
     const [orgFilter, setOrgFilter] = useState({
         tags: [],
@@ -60,31 +70,18 @@ function SearchResults(props: any) {
             })
             setData({
                 ...data,
-                orgs: res.data.context.data,
-                lastPage: res.data.context.last_page
+                orgs: [...data.orgs, ...res.data.context.data],
+                totalItem: res.data.context.total
             })
-            setItemCount({ ...itemCount, orgsCount: res.data.context.total })
         } catch (error) {
             console.log(error)
         }
     }
     //
-    useEffect(() => {
-        const tags = [
-            { id: 1, title: t("Mer_de.services"), count: itemCount.servicesCount },
-            { id: 2, title: t("Mer_de.products"), count: itemCount.servicesCount },
-            { id: 3, title: t("my_ser.business"), count: itemCount.orgsCount },
-            { id: 4, title: t("Home.Filter_location"), count: itemCount.orgsCount },
-        ]
-        const tagsSort = tags.sort((a: any, b: any) => b.count - a.count);
-        setTabs(tagsSort)
-        setAcTab(tagsSort[0].id)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [itemCount])
     return (
         <>
             <HeadTitle title={`${t("Search_result.text_result")} : ${searchKey}`} />
-            <Head />
+            {IS_MB ? <HeadMobile title='Kết quả tìm kiếm' /> : <Head />}
             <Container>
                 <div className="se-re-cnt">
                     <div className="se-re-cnt__left">
@@ -93,7 +90,7 @@ function SearchResults(props: any) {
                                 {
                                     tabs.map(item => (
                                         <li
-                                            style={acTab === item.id ?
+                                            style={tab === item.id ?
                                                 { backgroundColor: 'var(--purple)', color: 'var(--bgWhite)' } : {}
                                             }
                                             onClick={() => onActiveTab(item)}
@@ -106,11 +103,12 @@ function SearchResults(props: any) {
                             </ul>
                         </div>
                         {
-                            acTab === 3 ?
+                            tab === 3 ?
                                 <>
                                     <FilterOrgs
                                         orgFilter={orgFilter}
                                         setOrgFilter={setOrgFilter}
+                                        data={data}
                                         setData={setData}
                                         handleOrgsByKeyword={handleOrgsByKeyword}
                                     />
@@ -146,25 +144,28 @@ function SearchResults(props: any) {
                         </span>
                         <TabService
                             keyword={searchKey}
-                            acTab={acTab}
-                            itemCount={itemCount}
-                            setItemCount={setItemCount}
+                            acTab={tab}
+                        />
+                        <TabProduct
+                            keyword={searchKey}
+                            acTab={tab}
                         />
                         <TabOrgs
                             orgFilter={orgFilter}
                             keyword={searchKey}
-                            acTab={acTab}
+                            acTab={tab}
                             data={data}
                             setData={setData}
                             handleOrgsByKeyword={handleOrgsByKeyword}
                         />
                         <TabLocation
-                            acTab={acTab}
+                            acTab={tab}
                             searchKey={searchKey}
                         />
                     </div>
                 </div>
             </Container>
+            <BackTopButton/>
             <Footer />
         </>
     );

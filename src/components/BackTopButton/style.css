@@ -1,0 +1,33 @@
+.back-top-btn {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 5;
+    background-color: var(--orange);
+    margin: 0px 54px 54px 0px;
+    padding: 6px;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: all .5s;
+    visibility: hidden;
+    margin-bottom: 38px;
+    opacity: 0;
+}
+
+.back-top-btn__act {
+    visibility: visible;
+    margin-bottom: 54px;
+    transition: all .5s;
+    opacity: 1;
+}
+
+@media only screen and (max-width: 1023px) {
+    .back-top-btn {
+        margin: 0px 14px 20px 0px;
+        margin-bottom: 12px;
+    }
+
+    .back-top-btn__act {
+        margin-bottom: 20px;
+    }
+}

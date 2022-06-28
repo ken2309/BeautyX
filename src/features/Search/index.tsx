@@ -93,15 +93,15 @@ function Search() {
 
     const listSection = [
         {
-            element: <SectionOrgs ORGS={ORGS} />,
+            element: <SectionOrgs onGotoFilterResult={onGotoFilterResult} ORGS={ORGS} />,
             total: ORGS.totalItem,
         },
         {
-            element: <SectionProducts PRODUCTS={PRODUCTS} />,
+            element: <SectionProducts onGotoFilterResult={onGotoFilterResult} PRODUCTS={PRODUCTS} />,
             total: PRODUCTS.totalItem,
         },
         {
-            element: <SectionServices SERVICES={SERVICES} />,
+            element: <SectionServices onGotoFilterResult={onGotoFilterResult} SERVICES={SERVICES} />,
             total: SERVICES.totalItem,
         },
     ];

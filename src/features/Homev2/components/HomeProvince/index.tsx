@@ -3,7 +3,6 @@ import { AppContext } from "../../../../context/AppProvider";
 import HomeTitleSection from "../HomeTitleSection/index";
 import { IProvince } from "../../../../interface/provinces";
 import { Container } from "@mui/material";
-import icon from "../../../../constants/icon";
 import { useHistory } from "react-router-dom";
 import scrollTop from "../../../../utils/scrollTop";
 import { useSelector } from "react-redux";
@@ -28,7 +27,6 @@ function HomeProvince(props: any) {
                 url={`/dia-diem-quan-tam`}
                 seemore={"Xem tất cả >"}
             />
-
             <div className="home-province_list">
                 {provinces_org
                     ?.slice(0, 6)

@@ -32,6 +32,7 @@
     object-fit: cover;
     object-position: top;
     z-index: 3;
+    border-radius: 8px;
 }
 .video-item__pc {
     object-fit: cover;

@@ -13,16 +13,12 @@ import TreatmentCardItem from "./ServiceNotBook/TreatmentCardItem";
 import { STATUS } from '../../redux/status';
 import { fetchAsyncOrderServices } from '../../redux/order/orderSlice';
 import ModalLoad from "../../components/ModalLoad";
+import ButtonLoading from "../../components/ButtonLoading";
 
 function ServicesUser(props: any) {
-    //const history = useHistory();
     const dispatch = useDispatch();
     const fullScreen = useFullScreen();
-    //const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
-    const { services, status } = useSelector((state: any) => state.ORDER.ORDER_SERVICES);
-    //const servicesBook = servicesBookSlice.servicesBook;
-    //const org = servicesBookSlice.org;
-    //const order_id = servicesBookSlice?.order_id;
+    const { services, status, totalItem, page } = useSelector((state: any) => state.ORDER.ORDER_SERVICES);
     const callServicesUser = () => {
         if (status !== STATUS.SUCCESS) {
             dispatch(fetchAsyncOrderServices({ page: 1 }))
@@ -31,24 +27,18 @@ function ServicesUser(props: any) {
     useEffect(() => {
         callServicesUser()
     }, [])
-
-    // const handleNextStep = () => {
-    //     if (servicesBook.length > 0) {
-    //         const services = servicesBook.map((item: any) => {
-    //             return {
-    //                 service: item,
-    //                 quantity: 1
-    //             }
-    //         });
-    //         history.push({
-    //             pathname: "/dat-hen",
-    //             state: { org, services, order_id }
-    //         })
-    //     }
-    // };
+    const onViewMore = () => {
+        dispatch(fetchAsyncOrderServices({
+            page: page + 1
+        }))
+    }
+    let loading = false;
+    if (status === STATUS.LOADING) {
+        loading = true
+    }
     return (
         <>
-            {status !== STATUS.SUCCESS && <ModalLoad />}
+            {status === STATUS.LOADING && page === 1 && <ModalLoad />}
             <Container>
                 <div className="flex-row-sp my-ser">
                     <div className="my-ser__right">
@@ -67,24 +57,23 @@ function ServicesUser(props: any) {
                                         ))
                                     }
                                 </Masonry>
+                                {
+                                    (services.length >= 15 && services.length < totalItem) &&
+                                    <div
+                                        className="my-ser-bot"
+                                    >
+                                        <ButtonLoading
+                                            title="Xem thêm dịch vụ"
+                                            onClick={onViewMore}
+                                            loading={loading}
+                                        />
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
             </Container>
-            <div
-                className="my-ser-bot"
-            >
-                {/* <Container>
-                    <div className="my-ser-bot__cnt">
-                        <ButtonLoading
-                            onClick={handleNextStep}
-                            title="Đặt lịch ngay"
-                            loading={false}
-                        />
-                    </div>
-                </Container> */}
-            </div>
             <Footer />
         </>
     );

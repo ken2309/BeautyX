@@ -1,5 +1,7 @@
 .home-top__service {
     margin-top: 48px;
+    padding: 10px;
+    background: #fff;
 }
 .home-top__service .top-service__list {
     display: grid;

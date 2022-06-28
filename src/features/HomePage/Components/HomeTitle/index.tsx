@@ -18,7 +18,7 @@ function HomeTitle(props: IProps) {
                 onClick={() => history.push(`${url}`)}
                 className="home-title__seemore"
             >
-                <p>{seemore ? seemore : "Xem thêm >"}</p>
+                <p>{seemore}</p>
             </div>
         </div>
     );

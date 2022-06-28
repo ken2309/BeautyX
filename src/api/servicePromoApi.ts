@@ -61,28 +61,16 @@ class ServicePromo {
         const url = `/services`;
         const LOCATION = AUTH_LOCATION();
         const paramsOb = {
-            page: values.page,
+            page: values.page || 1,
             limit: 24,
             "filter[special_price]": true,
             "filter[is_momo_ecommerce_enable]": true,
-            "filter[location]": values.sort === null ? LOCATION : null,
-            sort: values.sort,
+            "filter[location]": values.sort === "distance" ? LOCATION : null,
+            sort: values.sort === "distance" ? null : values.sort,
         };
         const params = pickBy(paramsOb, identity);
         return axiosClient.get(url, { params });
     };
-    //
-    // getServicesPromoLocation = (values: any) => {
-    //     const url = `/services`;
-    //     const params = {
-    //         page: values.page,
-    //         limit: 30,
-    //         "filter[special_price]": true,
-    //         "filter[is_momo_ecommerce_enable]": true,
-    //         "filter[location]": location_user ? `${location_user.lat},${location_user.long}` : ``
-    //     }
-    //     return axiosClient.get(url, { params })
-    // }
     //services recommend user
     getServicesRe = () => {
         const url = `/services`;
@@ -90,6 +78,7 @@ class ServicePromo {
             page: 1,
             limit: 30,
             "filter[is_featured]": true,
+            "filter[min_price]": "1000",
             "filter[is_momo_ecommerce_enable]": true,
             sort: "random",
         };

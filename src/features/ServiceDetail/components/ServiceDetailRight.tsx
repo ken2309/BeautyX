@@ -68,21 +68,25 @@ export default function ServiceDetailRight(props: IProps) {
             quantity,
             sale_price
         );
-        setPopupSuccess(true);
-        dispatch(addCart(values));
-        if (setOpenDrawer) {
-            setOpenDrawer({ NOW: true, open: false });
+        if (service.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable) {
+            setPopupSuccess(true);
+            dispatch(addCart(values));
+            if (setOpenDrawer) {
+                setOpenDrawer({ NOW: true, open: false });
+            }
         }
     };
     //handle booking now
     const onBookingNow = () => {
-        const services = [{ service, quantity }];
-        const TYPE = "BOOK_NOW";
-        history.push({
-            pathname: "/dat-hen",
-            state: { org, services, TYPE },
-        });
-        dispatch(clearAllServices());
+        if (service.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable) {
+            const services = [{ service, quantity }];
+            const TYPE = "BOOK_NOW";
+            history.push({
+                pathname: "/dat-hen",
+                state: { org, services, TYPE },
+            });
+            dispatch(clearAllServices());
+        }
     };
     return (
         <div className="service-detail__right">
@@ -171,6 +175,12 @@ export default function ServiceDetailRight(props: IProps) {
                 </div>
                 <DetailOrgCard org={org} />
             </div>
+            {
+                (service?.is_momo_ecommerce_enable === false || org?.is_momo_ecommerce_enable === false ) &&
+                <span className="detail-right__no">
+                    Dịch vụ này chưa được kích hoạt bán hàng Online
+                </span>
+            }
             <div className="detail-right__bottom">
                 <div className="bottom-quantity">
                     <p className="bottom-quantity__text">Số lượng:</p>
@@ -195,7 +205,6 @@ export default function ServiceDetailRight(props: IProps) {
                         </button>
                     </div>
                 </div>
-
                 {IS_MB ? (
                     <div className="flex-row flexX-gap-8">
                         {NOW ? (
@@ -221,12 +230,28 @@ export default function ServiceDetailRight(props: IProps) {
                 ) : (
                     <div className="flex-row flexX-gap-8">
                         <div
+                            style={
+                                (
+                                    service.is_momo_ecommerce_enable
+                                    && org.is_momo_ecommerce_enable
+                                )
+                                    ? {} : { opacity: "0.4", cursor: "not-allowed" }
+                            }
                             onClick={onBookingNow}
                             className="bottom-addCart bottom-buy__now"
                         >
                             <p>Đặt hẹn ngay</p>
                         </div>
-                        <div onClick={handleAddCart} className="bottom-addCart">
+                        <div
+                            style={
+                                (
+                                    service.is_momo_ecommerce_enable
+                                    && org.is_momo_ecommerce_enable
+                                )
+                                    ? {} : { opacity: "0.4", cursor: "not-allowed" }
+                            }
+                            onClick={handleAddCart} className="bottom-addCart"
+                        >
                             <img src={icon.ShoppingCartSimpleWhite} alt="" />
                             <p>Thêm vào giỏ hàng</p>
                         </div>

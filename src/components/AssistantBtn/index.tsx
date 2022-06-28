@@ -68,7 +68,7 @@ export default function AssistantBtn() {
                 >
                     <div
                         onClick={() => handleOpenSearch()}
-                        className="btn1 buttons"
+                        className="btn2 buttons"
                     >
                         <div className="btn-img">
                             <img src={icon.search} alt="" />
@@ -77,7 +77,7 @@ export default function AssistantBtn() {
 
                     <div
                         onClick={() => handleOpenSubiz()}
-                        className="btn2 buttons"
+                        className="btn1 buttons"
                     >
                         <div className="btn-img">
                             <img

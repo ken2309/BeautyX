@@ -508,6 +508,7 @@
     height: 100%;
     border-radius: 100%;
     width: fit-content;
+    object-fit: contain;
 }
 
 .map-org-detail__item .branch-detail {
@@ -871,6 +872,8 @@
 
 .MuiContainer-root .org-container .MuiTabs-indicator {
     background-color: var(--purple) !important;
+    width: 32px !important;
+    margin-left: calc(1% + 4px) !important;
 }
 .org-container .MuiTabPanel-root {
     padding: 0;

@@ -1,39 +1,37 @@
-import React, { useEffect, useState } from "react";
-import servicePromoApi from "../../../api/servicePromoApi";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import { IServicePromo } from "../../../interface/servicePromo";
 import ServicePromoItem from "../../ViewItemCommon/ServicePromoItem";
 import HomeTitle from "../Components/HomeTitle";
 import "./homeRecomment.css";
-interface IData {
-    services: IServicePromo[];
-    page: number;
-    lastPage: number;
-}
+import { fetchAsyncServicesRandom } from '../../../redux/home/homePageSlice'
+import { useDispatch, useSelector } from "react-redux";
+import { STATUS } from '../../../redux/status'
+
 export default function HomeRecomment() {
-    const [data, setData] = useState<IData>({
-        services: [],
-        page: 1,
-        lastPage: 1,
-    });
-    const getServiceRecomment = async () => {
-        try {
-            const res = await servicePromoApi.getServicesRe();
-            setData({ ...data, services: res.data.data.hits });
-        } catch (error) {
-            console.log(error);
+    const dispatch = useDispatch();
+    const { SERVICES_BOUGHT } = useSelector((state: any) => state.HOME_PAGE);
+    const { services, status } = SERVICES_BOUGHT;
+
+    const callServicesRandom = () => {
+        if (status !== STATUS.SUCCESS) {
+            dispatch(fetchAsyncServicesRandom({
+                page: 1,
+                sort: "random"
+            }))
         }
-    };
+    }
+
     useEffect(() => {
-        getServiceRecomment();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        callServicesRandom()
     }, []);
 
     return (
         <div className="home-recomment">
             <HomeTitle title={"Gợi ý dành cho bạn"} />
             <ul className="home-recomment__list">
-                {data?.services?.map((item: IServicePromo, index: number) => (
-                    <li className="home-recomment__item">
+                {services?.map((item: IServicePromo, index: number) => (
+                    <li className="home-recomment__item" key={index}>
                         <ServicePromoItem service={item} />
                     </li>
                 ))}

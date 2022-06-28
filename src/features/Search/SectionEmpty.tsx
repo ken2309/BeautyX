@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import {
     removeKeyWord,
@@ -30,6 +30,7 @@ const listRecomment = [
 ];
 function SectionEmpty() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { HISTORY } = useSelector((state: any) => state.SEARCH);
     const filterOrg = HISTORY.filter((item: any) => item.TYPE === "ORG").map(
         (i: any) => {
@@ -41,6 +42,13 @@ function SectionEmpty() {
     ).map((i: any) => i.item);
     const handleRemoveKeyWord = (item: any) => {
         dispatch(removeKeyWord(item));
+    };
+    const onGotoFilterResult = (keyword: string) => {
+        dispatch(onToggleSearchCnt(false));
+        history.push({
+            pathname: "/ket-qua-tim-kiem/",
+            search: `${keyword}`,
+        });
     };
 
     return (
@@ -71,7 +79,10 @@ function SectionEmpty() {
                     </ul>
                     <ul className="keyword-list">
                         {filterKeyWord.map((item: any, index: number) => (
-                            <li className="keyword-item" key={index}>
+                            <li 
+                                onClick={()=>onGotoFilterResult(item)}
+                                className="keyword-item" key={index}
+                            >
                                 <div className="flexX-gap-8">
                                     <img
                                         style={{ width: "20px" }}
@@ -101,6 +112,7 @@ function SectionEmpty() {
                 <ul className="keyword-list mt-24">
                     {listRecomment.map((item: any, index: number) => (
                         <li
+                            onClick={() => onGotoFilterResult(item.title)}
                             style={{ margin: "2px 0" }}
                             key={index}
                             className="keyword-item"

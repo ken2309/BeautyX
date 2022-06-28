@@ -1,10 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Slider from "react-slick";
 import img from "../../../constants/img";
 import HomeTitle from "../Components/HomeTitle";
 import HomePromo from "../HomePromo";
 import "./homeHotDeal.css";
 export default function HomeHotDeal() {
+    const { FILTER_PROMO } = useSelector((state: any) => state.FILTER);
     const settings = {
         dots: false,
         infinite: true,
@@ -55,8 +57,12 @@ export default function HomeHotDeal() {
     };
     return (
         <div className="home-hot__deal">
-            <HomeTitle title={`Top Deal Khủng`} url={"/deal-lam-dep-cuc-HOT"} />
-            <ul className="dealHot-listBanner">
+            <HomeTitle
+                title={`Top Deal Khủng`}
+                url={`/deal-lam-dep-cuc-HOT?sort=${FILTER_PROMO.query}`}
+                seemore="Xem tất cả > "
+            />
+            {/* <ul className="dealHot-listBanner">
                 <Slider {...settings}>
                     <li className="dealHot-listBanner__item">
                         <img src={img.banner} alt="" />
@@ -77,7 +83,7 @@ export default function HomeHotDeal() {
                         />
                     </li>
                 </Slider>
-            </ul>
+            </ul> */}
 
             <HomePromo />
         </div>

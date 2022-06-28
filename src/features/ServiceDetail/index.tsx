@@ -27,6 +27,7 @@ import DetailRecommend from "./components/DetailRecommend";
 import { handleScroll, handleChangeScroll } from "./onScrollChange";
 import ReviewsContainer from "../ReviewsContainer";
 import ModalLoad from "../../components/ModalLoad";
+import PageNotFound from "../../components/PageNotFound";
 
 function ServiceDetail(props: any) {
     const dispatch = useDispatch();
@@ -84,6 +85,7 @@ function ServiceDetail(props: any) {
     const callServiceDetail = () => {
         if (
             parseInt(params.id) !== SERVICE.service.id ||
+            SERVICE.org_id !== params.org ||
             SERVICE.status !== STATUS.SUCCESS
         ) {
             const values = {
@@ -156,7 +158,8 @@ function ServiceDetail(props: any) {
 
     return (
         <>
-            {SERVICE.status !== STATUS.SUCCESS && <ModalLoad />}
+            {SERVICE.status === STATUS.LOADING && <ModalLoad />}
+            {SERVICE.status === STATUS.FAIL && <PageNotFound />}
             {/* title page servive */}
             <HeadTitle
                 title={
@@ -164,165 +167,177 @@ function ServiceDetail(props: any) {
                 }
             />
             {IS_MB ? <HeadOrg org={org} /> : <Head />}
-            <Container>
-                {/* service detail */}
-                <div className="service-detail">
-                    {/* service head detail */}
-                    <div className="service-detail__head">
-                        <ServiceDetailLeft org={org} service={service} />
-                        <ServiceDetailRight
-                            org={org}
-                            service={service}
-                            NOW={open.NOW}
-                        />
-                    </div>
-                    {/* service body */}
-                    <div className="service-detail__body">
-                        {/* service tab detail */}
-                        <div className="service-detail__tab">
-                            {/* service tab menu */}
-                            <TabContext value={value}>
-                                <TabList onChange={handleChange}>
-                                    {tabs.map((item: any, i: number) => (
-                                        <Tab
-                                            key={i}
-                                            label={item.title}
-                                            value={item.id}
-                                        />
-                                    ))}
-                                </TabList>
-                                <div className="service-detail__tabitem">
-                                    {/* description */}
-                                    <TabPanel value={value}>
-                                        <div
-                                            ref={refDesc}
-                                            className="service-detail__description"
-                                        >
-                                            <p>
-                                                Mô tả:{" "}
-                                                {service.description
-                                                    ? service.description
-                                                    : "Đang cập nhật"}
-                                            </p>
-                                        </div>
-                                    </TabPanel>
-
-                                    {/* comment */}
-                                    <TabPanel value={value}>
-                                        <div
-                                            ref={refReview}
-                                            className="service-detail__comment"
-                                        >
-                                            <Review
-                                                comments={COMMENTS.comments}
-                                                totalItem={COMMENTS.totalItem}
-                                                commentable_type={"SERVICE"}
-                                                id={ORG.org?.id}
-                                                page={COMMENTS.page}
-                                                detail_id={service?.id}
-                                                openSeeMoreCmt={
-                                                    handleOpenSeemoreCmt
-                                                }
-                                            />
-                                            {COMMENTS.comments &&
-                                                COMMENTS.comments.length >= 8 ? (
-                                                <div
-                                                    style={{
-                                                        justifyContent:
-                                                            "center",
-                                                    }}
-                                                    onClick={() => {
-                                                        setOpenAllCmt(true);
-                                                    }}
-                                                    className="seemore-cmt"
-                                                >
-                                                    <p>{"Xem tất cả >>"}</p>
-                                                </div>
-                                            ) : null}
-                                            <ReviewsContainer
-                                                open={openAllCmt}
-                                                setOpen={setOpenAllCmt}
-                                                comments={COMMENTS.comments}
-                                                org_id={ORG.org?.id}
-                                                totalItem={COMMENTS.totalItem}
-                                                page={COMMENTS.page}
-                                                commentable_type="SERVICE"
-                                            />
-                                        </div>
-                                    </TabPanel>
-
-                                    {/* org */}
-                                    <TabPanel value={value}>
-                                        <div
-                                            ref={refMap}
-                                            className="service-detail__org"
-                                        >
-                                            {ORG.status === STATUS.SUCCESS && (
-                                                <>
-                                                    <p className="service-detail__title">
-                                                        Doanh nghiệp
-                                                    </p>
-                                                    <div className="service-detail__org-mb">
-                                                        <DetailOrgCard
-                                                            org={org}
-                                                        />
-                                                    </div>
-                                                    <OrgInformation org={org} />
-                                                </>
-                                            )}
-                                        </div>
-                                    </TabPanel>
-
-                                    {/* policy */}
-                                    <TabPanel value={value}>
-                                        <div ref={refPolicy}>
-                                            <DetailPolicy org={org} />
-                                        </div>
-                                    </TabPanel>
-                                </div>
-                            </TabContext>
+            {
+                SERVICE.status === STATUS.SUCCESS &&
+                <Container>
+                    {/* service detail */}
+                    <div className="service-detail">
+                        {/* service head detail */}
+                        <div className="service-detail__head">
+                            <ServiceDetailLeft org={org} service={service} />
+                            <ServiceDetailRight
+                                org={org}
+                                service={service}
+                                NOW={open.NOW}
+                            />
                         </div>
-                        <DetailRecommend org={org} />
-                    </div>
-                    {/* service bottom buttom add cart */}
-                    <div className="service-detail__bottom">
-                        <button
-                            onClick={() => {
-                                setOpen({ NOW: true, open: true });
-                            }}
-                            style={{ backgroundColor: "var(--orange)" }}
-                        >
-                            <p>Đặt hẹn ngay</p>
-                        </button>
-                        <button
-                            onClick={() => {
-                                setOpen({ NOW: false, open: true });
-                            }}
-                            className="btn-addcart"
-                        >
-                            <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                            <p>Thêm vào giỏ hàng</p>
-                        </button>
-                        {/* drawer service detail */}
-                        <Drawer
-                            open={open.open}
-                            anchor="bottom"
-                            onClose={() => setOpen({ ...open, open: false })}
-                        >
-                            <div className="active-mb">
-                                <div className="service-detail">
-                                    <ServiceDetailRight
-                                        service={service}
-                                        org={org}
-                                        setOpenDrawer={setOpen}
-                                        NOW={open.NOW}
-                                    />
-                                </div>
+                        {/* service body */}
+                        <div className="service-detail__body">
+                            {/* service tab detail */}
+                            <div className="service-detail__tab">
+                                {/* service tab menu */}
+                                <TabContext value={value}>
+                                    <TabList onChange={handleChange}>
+                                        {tabs.map((item: any, i: number) => (
+                                            <Tab
+                                                key={i}
+                                                label={item.title}
+                                                value={item.id}
+                                            />
+                                        ))}
+                                    </TabList>
+                                    <div className="service-detail__tabitem">
+                                        {/* description */}
+                                        <TabPanel value={value}>
+                                            <div
+                                                ref={refDesc}
+                                                className="service-detail__description"
+                                            >
+                                                <p>
+                                                    Mô tả:{" "}
+                                                    {service.description
+                                                        ? service.description
+                                                        : "Đang cập nhật"}
+                                                </p>
+                                            </div>
+                                        </TabPanel>
+
+                                        {/* comment */}
+                                        <TabPanel value={value}>
+                                            <div
+                                                ref={refReview}
+                                                className="service-detail__comment"
+                                            >
+                                                <Review
+                                                    comments={COMMENTS.comments}
+                                                    totalItem={COMMENTS.totalItem}
+                                                    commentable_type={"SERVICE"}
+                                                    id={ORG.org?.id}
+                                                    page={COMMENTS.page}
+                                                    detail_id={service?.id}
+                                                    openSeeMoreCmt={
+                                                        handleOpenSeemoreCmt
+                                                    }
+                                                />
+                                                {COMMENTS.comments &&
+                                                    COMMENTS.comments.length >= 8 ? (
+                                                    <div
+                                                        style={{
+                                                            justifyContent:
+                                                                "center",
+                                                        }}
+                                                        onClick={() => {
+                                                            setOpenAllCmt(true);
+                                                        }}
+                                                        className="seemore-cmt"
+                                                    >
+                                                        <p>{"Xem tất cả >>"}</p>
+                                                    </div>
+                                                ) : null}
+                                                <ReviewsContainer
+                                                    open={openAllCmt}
+                                                    setOpen={setOpenAllCmt}
+                                                    comments={COMMENTS.comments}
+                                                    org_id={ORG.org?.id}
+                                                    totalItem={COMMENTS.totalItem}
+                                                    page={COMMENTS.page}
+                                                    commentable_type="SERVICE"
+                                                />
+                                            </div>
+                                        </TabPanel>
+
+                                        {/* org */}
+                                        <TabPanel value={value}>
+                                            <div
+                                                ref={refMap}
+                                                className="service-detail__org"
+                                            >
+                                                {ORG.status === STATUS.SUCCESS && (
+                                                    <>
+                                                        <p className="service-detail__title">
+                                                            Doanh nghiệp
+                                                        </p>
+                                                        <div className="service-detail__org-mb">
+                                                            <DetailOrgCard
+                                                                org={org}
+                                                            />
+                                                        </div>
+                                                        <OrgInformation org={org} />
+                                                    </>
+                                                )}
+                                            </div>
+                                        </TabPanel>
+
+                                        {/* policy */}
+                                        <TabPanel value={value}>
+                                            <div ref={refPolicy}>
+                                                <DetailPolicy org={org} />
+                                            </div>
+                                        </TabPanel>
+                                    </div>
+                                </TabContext>
                             </div>
-                        </Drawer>
+                            <DetailRecommend org={org} />
+                        </div>
+                        {/* service bottom buttom add cart */}
+                        <div className="service-detail__bottom">
+                            {
+                                (service?.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable) ?
+                                    <>
+                                        <button
+                                            onClick={() => {
+                                                setOpen({ NOW: true, open: true });
+                                            }}
+                                            style={{ backgroundColor: "var(--orange)" }}
+                                        >
+                                            <p>Đặt hẹn ngay</p>
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                setOpen({ NOW: false, open: true });
+                                            }}
+                                            className="btn-addcart"
+                                        >
+                                            <img src={icon.ShoppingCartSimpleWhite} alt="" />
+                                            <p>Thêm vào giỏ hàng</p>
+                                        </button>
+                                        {/* drawer service detail */}
+                                        <Drawer
+                                            open={open.open}
+                                            anchor="bottom"
+                                            onClose={() => setOpen({ ...open, open: false })}
+                                        >
+                                            <div className="active-mb">
+                                                <div className="service-detail">
+                                                    <ServiceDetailRight
+                                                        service={service}
+                                                        org={org}
+                                                        setOpenDrawer={setOpen}
+                                                        NOW={open.NOW}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </Drawer>
+                                    </>
+                                    :
+                                    <span className="detail-right__no">
+                                        Dịch vụ này chưa được kích hoạt bán hàng Online
+                                    </span>
+                            }
+                        </div>
                     </div>
-                </div>
-            </Container>
+                </Container>
+            }
             {/* footer */}
             <Footer />
         </>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext } from "react";
 import "./bottom.css";
 import { ICON } from "../../constants/icon2";
@@ -6,18 +7,19 @@ import { AppContext } from "../../context/AppProvider";
 import scrollTop from "../../utils/scrollTop";
 import { useLocation } from "react-router-dom";
 
+
 function Bottom(props: any) {
+    
     const { t } = useContext(AppContext);
     const location = useLocation();
     const pathname = location.pathname;
-
     const Btns = [
         {
             id: 1,
             title: t("Home.location"),
             icon: ICON.home,
             iconAct: ICON.homeAct,
-            path: "/home",
+            path: "/homepage",
         },
         {
             id: 2,
@@ -26,13 +28,13 @@ function Bottom(props: any) {
             iconAct: ICON.trendAct,
             path: "/beautyx-videos",
         },
-        // {
-        //     id: 3,
-        //     title: t("Home.cate"),
-        //     icon: ICON.cate,
-        //     iconAct: ICON.cateAct,
-        //     path: "/-danh-muc",
-        // },
+        {
+            id: 3,
+            title: t("Home.cate"),
+            icon: ICON.cate,
+            iconAct: ICON.cateAct,
+            path: "/-danh-muc",
+        },
         {
             id: 4,
             title: t("Bottom.appointment"),

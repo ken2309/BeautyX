@@ -1,8 +1,8 @@
-import { Container } from "@mui/material";
-import React, { useState } from "react";
-import ReactPlayer from "react-player";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import ReactPlayer from "react-player";
+import { Container } from "@mui/material";
 import Slider from "react-slick";
 import icon from "../../../constants/icon";
 import { dealHot } from "../../../constants/img";
@@ -28,6 +28,7 @@ const NextButton = (props: any) => {
         </button>
     );
 };
+
 export const deals = [
     {
         id: 1,
@@ -59,40 +60,6 @@ export default function HomeBanner() {
     const [chooseBanner, setChooseBanner] = useState<IBanner>();
     const [open, setOpen] = useState(false);
     const [openVideo, setOpenVideo] = useState(false);
-    function openWeb() {
-        const payUrl = chooseBanner?.url;
-        window.open(`${payUrl}`, "_blank", "noopener,noreferrer");
-    }
-    function closePopupVideo() {
-        setOpenVideo(false);
-    }
-    const handleClick = () => {
-        if (chooseBanner) {
-            switch (chooseBanner.type) {
-                case "VIDEO":
-                    return setOpenVideo(true);
-                case "HTML":
-                    return setOpen(true);
-                case "WEB":
-                    return openWeb();
-                case "PROMOTION":
-                    return console.log("PROMOTION");
-                case "ORGANIZATION":
-                    return history.push({
-                        pathname: `/org/${chooseBanner.origin_id}`,
-                    });
-                default:
-                    break;
-            }
-        }
-    };
-    const gotoDetail = (item: any) => {
-        scrollTop();
-        history.push({
-            pathname: `/deal/${slugify(item.title)}`,
-            search: `${item.id}`,
-        });
-    };
     const settings = {
         dots: true,
         infinite: true,
@@ -131,6 +98,50 @@ export default function HomeBanner() {
             setChooseBanner(banners[index]);
         },
     };
+    function openWeb() {
+        const payUrl = chooseBanner?.url;
+        window.open(`${payUrl}`, "_blank", "noopener,noreferrer");
+    }
+    function closePopupVideo() {
+        setOpenVideo(false);
+    }
+    const handleClick = () => {
+        if (chooseBanner) {
+            switch (chooseBanner.type) {
+                case "VIDEO":
+                    return setOpenVideo(true);
+                case "HTML":
+                    return setOpen(true);
+                case "WEB":
+                    return openWeb();
+                case "SEARCH_RESULT":
+                    console.log(chooseBanner)
+                    return history.push({
+                        pathname: `/home-banner-result`,
+                        state: chooseBanner,
+                    });
+                case "PROMOTION":
+                    return console.log("PROMOTION");
+                case "ORGANIZATION":
+                    return history.push({
+                        pathname: `/org/${chooseBanner.origin_id}`,
+                    });
+                default:
+                    break;
+            }
+        }
+    };
+    const gotoDetail = (item: any) => {
+        scrollTop();
+        history.push({
+            pathname: `/deal/${slugify(item.title)}`,
+            search: `${item.id}`,
+        });
+    };
+    useEffect(() => {
+        banners.length>0&&setChooseBanner(banners[0])
+    }, [banners])
+    console.log(banners.length, 'chooseBanner', chooseBanner);
     return (
         <div className="homepage-banner">
             <Container>

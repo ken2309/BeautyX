@@ -20,7 +20,7 @@ interface IProps {
 
 function OrgServices(props: IProps) {
     const dispatch = useDispatch();
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const { CATE, SERVICES, choose_cate, org_id } = useSelector(
         (state: any) => state.ORG_SERVICES
     );
@@ -29,15 +29,18 @@ function OrgServices(props: IProps) {
     const { org } = props;
     const callServicesCate = () => {
         if (org_id !== org?.id || status !== STATUS.SUCCESS) {
+            dispatch(onChooseCateServices(null))
             dispatch(fetchAsyncCateServices(org?.id));
         }
     };
     const callServicesOrg = () => {
         if (org_id !== org?.id || status_ser !== STATUS.SUCCESS) {
+            console.log(org)
             const values = {
                 org_id: org?.id,
                 page: 1,
                 cate_id: choose_cate,
+                isEnable: org?.is_momo_ecommerce_enable && true
             };
             dispatch(clearServices());
             dispatch(fetchAsyncServices(values));
@@ -52,6 +55,7 @@ function OrgServices(props: IProps) {
             org_id: org?.id,
             page: 1,
             cate_id: id,
+            isEnable: org?.is_momo_ecommerce_enable && true
         };
         dispatch(clearServices());
         dispatch(onChooseCateServices(id));
@@ -63,6 +67,7 @@ function OrgServices(props: IProps) {
                 org_id: org?.id,
                 page: page + 1,
                 cate_id: choose_cate,
+                isEnable: org?.is_momo_ecommerce_enable && true
             };
             dispatch(fetchAsyncServices(values));
         }
@@ -97,34 +102,37 @@ function OrgServices(props: IProps) {
                             {t("cart.all")}
                         </span>
                     </li>
-                    {categories.map((item: any, index: number) => (
-                        <li
-                            style={
-                                choose_cate === item.id
-                                    ? {
-                                        color: "#fff",
-                                        backgroundColor: "var(--purple)",
+                    {
+                        categories
+                            .filter((i: any) => i.services_count > 0)
+                            .map((item: any, index: number) => (
+                                <li
+                                    style={
+                                        choose_cate === item.id
+                                            ? {
+                                                color: "#fff",
+                                                backgroundColor: "var(--purple)",
+                                            }
+                                            : {}
                                     }
-                                    : {}
-                            }
-                            onClick={() => handleChooseCate(item.id)}
-                            className="cate-list__item"
-                            key={index}
-                        >
-                            <span
-                                style={
-                                    choose_cate === item.id
-                                        ? {
-                                            color: "#fff",
+                                    onClick={() => handleChooseCate(item.id)}
+                                    className="cate-list__item"
+                                    key={index}
+                                >
+                                    <span
+                                        style={
+                                            choose_cate === item.id
+                                                ? {
+                                                    color: "#fff",
+                                                }
+                                                : {}
                                         }
-                                        : {}
-                                }
-                                className="cate-list__item-title"
-                            >
-                                {item.name}
-                            </span>
-                        </li>
-                    ))}
+                                        className="cate-list__item-title"
+                                    >
+                                        {item.name}
+                                    </span>
+                                </li>
+                            ))}
                 </ul>
             </div>
             <div className="org-services-cnt__right">

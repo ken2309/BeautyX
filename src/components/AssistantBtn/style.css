@@ -141,7 +141,7 @@
     cursor: pointer;
 }
 .btn1 {
-    background: #ba68c8;
+    background: #5c8d89;
     right: 24px;
     bottom: 80px;
     animation-delay: 0.2s;
@@ -150,7 +150,8 @@
 }
 
 .btn2 {
-    background: var(--green);
+    background: #ba68c8;
+
     right: 24px;
     bottom: 137px;
     animation-delay: 0.15s;
@@ -158,7 +159,7 @@
     animation-fill-mode: forwards;
 }
 .btn3 {
-    background: #3c80f6;
+    background: #0faff6;
     right: 24px;
     bottom: 192px;
     animation-delay: 0.1s;

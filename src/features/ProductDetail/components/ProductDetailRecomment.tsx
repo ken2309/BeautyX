@@ -25,6 +25,7 @@ export default function ProductDetailRecomment(props: IProps) {
                     page: 1,
                     org_id: params.org,
                     cate_id: PRODUCT.product.category?.id,
+                    isEnable: org?.is_momo_ecommerce_enable && true
                 };
                 dispatch(fetchAsynProductRecomment(values));
             }

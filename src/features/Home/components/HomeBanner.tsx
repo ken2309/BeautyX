@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { useHistory } from "react-router-dom";
 import { IBanner } from "../../../interface/banner";
@@ -66,7 +66,9 @@ function HomeBanner(props: any) {
     //   },
     // ];
     const handleClick = () => {
+        console.log(chooseBanner);
         if (chooseBanner) {
+          
             switch (chooseBanner.type) {
                 case "VIDEO":
                     return setOpenVideo(true);
@@ -76,6 +78,12 @@ function HomeBanner(props: any) {
                     return openWeb();
                 case "PROMOTION":
                     return console.log("PROMOTION");
+                case "SEARCH_RESULT":
+                    console.log(chooseBanner)
+                    return history.push({
+                        pathname: `/home-banner-result`,
+                        state: chooseBanner,
+                    });
                 case "ORGANIZATION":
                     return history.push({
                         pathname: `/org/${chooseBanner.origin_id}`,
@@ -85,6 +93,10 @@ function HomeBanner(props: any) {
             }
         }
     };
+    useEffect(() => {
+        banners.length>0&&setChooseBanner(banners[0])
+    }, [banners])
+    console.log(banners.length,'chooseBanner',chooseBanner);
     return (
         <div className="home-banner">
             <Slider {...settings}>

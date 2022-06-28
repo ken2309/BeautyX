@@ -16,9 +16,9 @@ export default function AccountMobile() {
     const [open, setOpen] = useState(false);
     const openAcc = params?.address ? true : false;
     const openOrder = params?.order ? true : false;
-    const refOrder: any = useRef();
+    // const refOrder: any = useRef();
     const handleToggle = () => {
-        refOrder.current.classList.toggle("active");
+        // refOrder.current.classList.toggle("active");
         history.push("/tai-khoan/lich-su-mua?order=true");
     };
     const gotoAppointment = () => {
@@ -78,7 +78,7 @@ export default function AccountMobile() {
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
-                        <div ref={refOrder} className="item-bot__wrap">
+                        {/* <div ref={refOrder} className="item-bot__wrap">
                             <div className="item-bot__item">
                                 <img src={icon.tickBlue} alt="" />
                                 <span>Đã thanh toán</span>
@@ -87,7 +87,7 @@ export default function AccountMobile() {
                                 <img src={icon.xCircleRed} alt="" />
                                 <span>Đã hủy</span>
                             </div>
-                        </div>
+                        </div> */}
                     </li>
                     <li className="accountMobile-mid__item">
                         <div
@@ -125,6 +125,20 @@ export default function AccountMobile() {
                             <img src={icon.arownAcc} alt="" />
                         </div>
                     </li>
+                    {/* <li className="accountMobile-mid__item">
+                        <div
+                            onClick={() => history.push("/homepage")}
+                            className="item-left__wrap"
+                        >
+                            <div className="item-left">
+                                <div>
+                                    <img src={icon.markerAcc} alt="" />
+                                </div>
+                                <span>New Home</span>
+                            </div>
+                            <img src={icon.arownAcc} alt="" />
+                        </div>
+                    </li> */}
                 </ul>
             </div>
             {/* bot */}

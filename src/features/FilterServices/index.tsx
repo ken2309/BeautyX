@@ -18,7 +18,7 @@ function FilterServices(props: any) {
     const onChooseSortType = (sort: any) => {
         if (dataSort !== sort.query) {
             setDataSort(sort.query)
-            setData({ services: [], lastPage: 1, page: 1 })
+            setData({ services: [], totalItem: 1, page: 1 })
         }
     }
     return (

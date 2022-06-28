@@ -1,50 +1,131 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { cateChild1 } from '../../../data/category';
-import { IOrganization } from '../../../interface/organization';
+import { useHistory } from 'react-router-dom';
 import onErrorImg from '../../../utils/errorImg';
+import { Tab } from '@mui/material';
+import { TabPanel, TabContext, TabList } from '@mui/lab'
+import { useDispatch } from 'react-redux';
+import {
+    fetchServiceByCateChild,
+    onChooseTab,
+    onSetFirstCateProducts
+} from '../../../redux/CateTree/cateTreeSlice';
+import TabService from './TabService';
+//import TabProduct from './TabProduct';
+import TabProduct2 from './TabProduct2';
 import { Link } from 'react-router-dom'
 
 function CateRight(props: any) {
-   const { CATE, ORGS } = useSelector((state: any) => state.CATE);
-   return (
-      <div className="cate-cnt__right">
-         <div className="cate-cnt__right-head">
-            <ul className="flex-row cate-cnt__right-list">
-               {
-                  cateChild1
-                     ?.filter((item: any) => item.cate_id === CATE?.id)
-                     ?.map((item: any, index: number) => (
-                        <li
-                           key={index}
-                        >
-                           <div className="flex-column cate-cnt__right-list-item">
-                              <img src={CATE?.image} alt="" />
-                              <span>{item.title}</span>
-                           </div>
-                        </li>
-                     ))
-               }
-            </ul>
-         </div>
-         <ul className="cate-cnt__right-org">
-            {
-               ORGS.orgs.slice(0, 12).map((item: IOrganization, index: number) => (
-                  <li key={index}>
-                     <Link
-                        className="flex-column"
-                        to={{
-                           pathname: `/org/${item.subdomain}`
-                        }}
-                     >
-                        <img onError={(e) => onErrorImg(e)} src={item?.image_url} alt="" />
-                     </Link>
-                  </li>
-               ))
+    const { CATE, ORGS, catesChild, SERVICES, VALUE, PRODUCTS } = props;
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const gotoTagsResult = () => {
+        history.push({
+            pathname: "/danh-muc/",
+            search: `${CATE.title}`,
+        });
+    };
+    //const [value, setValue] = useState('SERVICE');
+    const onChangeTab = (event: any, newValue: any) => {
+        dispatch(onChooseTab(newValue))
+    }
+    const handleGetServicesBtCateChild = (cateChild: any) => {
+        if (VALUE === "SERVICE") {
+            const action = {
+                page: 1,
+                keyword: cateChild.title,
+                CATE_CHILD: cateChild,
+                CATE: CATE
             }
-         </ul>
-      </div>
-   );
+            dispatch(fetchServiceByCateChild(action))
+        } else if (VALUE === "PRODUCT") {
+            dispatch(onSetFirstCateProducts(cateChild))
+        }
+    }
+    const catesChildByTab = catesChild.filter((item: any) => item.type === VALUE)
+
+    let cateChildId: any;
+    if (VALUE === "SERVICE") {
+        cateChildId = SERVICES.CATE_CHILD?.id
+    } else if (VALUE === "PRODUCT") {
+        cateChildId = PRODUCTS.CATE_CHILD?.id
+    }
+
+    return (
+        <div className="cate-tree-cnt__right">
+            <div className="cate-tree-cnt__right-head">
+                <ul className="cate-right-list">
+                    {
+                        catesChildByTab.map((item: any, index: number) => (
+                            <li
+                                onClick={() => handleGetServicesBtCateChild(item)}
+                                className='flex-column cate-right-list__item'
+                                key={index}
+                            >
+                                <img src={item.image} alt="" className="cate-right-list__item-img" />
+                                <span
+                                    style={
+                                        item.id === cateChildId ?
+                                            { color: "var(--hover)", fontWeight: "700" } : {}
+                                    }
+                                >
+                                    {item.title}
+                                </span>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+            <div className="cate-tree-cnt__right-orgs">
+                <ul className="cate-right-org-list">
+                    {
+                        ORGS.orgs.slice(0, 12).map((item: any, index: number) => (
+                            <li key={index} className="cate-org__item">
+                                <Link
+                                    to={{
+                                        pathname: `/org/${item.subdomain}`,
+                                        state: item,
+                                    }}
+                                >
+                                    <img
+                                        src={item.image_url}
+                                        alt=""
+                                        onError={(e) => onErrorImg(e)}
+                                        className="cate-org__item-img" />
+                                </Link>
+                            </li>
+                        ))
+                    }
+                </ul>
+                {
+                    ORGS.totalItem >= 12 &&
+                    <button onClick={gotoTagsResult}>
+                        Xem thêm ({ORGS.totalItem}+) địa điểm khác
+                    </button>
+                }
+            </div>
+            <div className="cate-tree-cnt__right-body">
+                <div className="cate-tree-cnt__right-tab">
+                    <TabContext value={VALUE}>
+                        <TabList onChange={onChangeTab}>
+                            <Tab label="Dịch vụ" value='SERVICE' />
+                            <Tab label="Sản phẩm" value='PRODUCT' />
+                        </TabList>
+                        <TabPanel value='SERVICE' >
+                            <TabService CATE={CATE} catesChild={catesChild} />
+                        </TabPanel>
+                        <TabPanel value='PRODUCT' >
+                            {/* <TabProduct
+                                catesChildByTab={catesChildByTab}
+                            /> */}
+                            <TabProduct2
+                                catesChildByTab={catesChildByTab}
+                            />
+                        </TabPanel>
+                    </TabContext>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export default CateRight;

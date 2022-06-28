@@ -50,7 +50,7 @@ const initialState = {
     provinces_org: [],
     provinces: [],
     status: STATUS.LOADING,
-};
+}
 const homeSlice = createSlice({
     name: "HOME",
     initialState,

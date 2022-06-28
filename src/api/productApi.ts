@@ -19,6 +19,7 @@ class ProductApi {
             limit: 15,
             "filter[keyword]": values.keyword,
             "filter[product_category_id]": values.cate_id,
+            "filter[is_momo_ecommerce_enable]": values.isEnable,
             include: "favorites_count",
             append: "is_favorite|rating",
         };
@@ -55,6 +56,7 @@ class ProductApi {
             "filter[keyword]": values.keyword,
             "filter[service_group_id]": values.cate_id,
             include: "category|favorites_count",
+            "filter[is_momo_ecommerce_enable]": values.isEnable,
             append: "is_favorite|rating",
         };
         const params = pickBy(paramsOb, identity);
@@ -72,6 +74,7 @@ class ProductApi {
             "filter[special_price]": values.special_price,
             "filter[min_price]": values.price?.min || 1000,
             "filter[max_price]": values.price?.max,
+            "filter[is_momo_ecommerce_enable]": true,
             "sort": values.sort
         }
         const params = pickBy(paramsOb, identity);

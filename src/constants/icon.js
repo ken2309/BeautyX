@@ -169,6 +169,8 @@ import phonePurple from "../assets/icon/phone-purple.svg";
 import supportChat from "../assets/icon/messageChat.svg";
 import calendarWhite from "../assets/icon/calendarWhite.svg";
 import cardDiscountWhite from "../assets/icon/cardDiscountWhite.svg";
+import checkFlowOrange from "../assets/icon/checkFlowOrange.svg";
+import arrowSmallUpWhite from "../assets/icon/arrowSmallUpWhite.svg";
 
 // btn assistan home
 import xWhite from "../assets/icon/x-white.svg";
@@ -348,5 +350,7 @@ const icon = {
     supportChat,
     calendarWhite,
     cardDiscountWhite,
+    checkFlowOrange,
+    arrowSmallUpWhite
 };
 export default icon;

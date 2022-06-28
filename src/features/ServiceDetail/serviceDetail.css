@@ -349,7 +349,12 @@
     width: 20px;
     height: 20px;
 }
-
+.service-detail .detail-right__no{
+    color: var(--red-cl);
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 700;
+}
 .service-detail .detail-right__bottom {
     display: flex;
     justify-content: space-between;
@@ -840,7 +845,10 @@
         font-size: 14px;
         margin: 0;
     }
-
+    .service-detail .detail-right__no{
+        text-align: center;
+        width: 100%;
+    }
     .active-mb .detail-right__bottom {
         flex-direction: column;
         align-items: unset;
