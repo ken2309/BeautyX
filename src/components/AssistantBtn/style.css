@@ -68,10 +68,7 @@
     animation: plus-in 0.15s linear;
     animation-fill-mode: forwards;
 }
-.pointer-events-none {
-    pointer-events: none !important;
-    display: none;
-}
+
 .edit {
     position: absolute;
     top: 0;
