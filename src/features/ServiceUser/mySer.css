@@ -205,14 +205,15 @@
 }
 
 .treatment-ser-item__out {
-    background-color: var(--red-cl);
+    background-color: #DDFFE9;
     padding: 2px 4px;
     margin-top: 2px;
     font-size: 12px;
     line-height: 14px;
     font-weight: 700;
-    color: var(--bgWhite);
+    color: #13B139;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 .treatment-ser-item__img {
@@ -1093,6 +1094,15 @@
 
     .treatment-ser-item__cnt {
         width: calc(100% - 112px);
+    }
+
+    .my-ser-bot {
+        margin-top: 0px;
+    }
+
+    .my-ser-bot button {
+        background-color: var(--white);
+        color: var(--purple);
     }
 }
 

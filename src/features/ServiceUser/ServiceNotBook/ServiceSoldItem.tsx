@@ -63,6 +63,7 @@ function ServiceSoldItem(props: IProps) {
                 service_sold?.services?.map((service: IUser_Service, index: number) => (
                     <ServiceItem
                         key={index}
+                        org={org}
                         service_sold={service_sold}
                         service={service}
                         order_id={order_id}
