@@ -13,7 +13,6 @@ export default function AssistantBtn() {
     const dispatch = useDispatch();
     const { open } = useSelector((state: any) => state.SEARCH);
     const [overLay, setOverLay] = useState(false);
-    console.log("overlay :>> ", overLay);
     const is_mb = useFullScreen();
     const history = useHistory();
 
@@ -101,10 +100,8 @@ export default function AssistantBtn() {
 
                     <div id="floating-button">
                         <div className="plus">
-                            {" "}
                             <img src={img.beautyx} alt="" />{" "}
                         </div>
-
                         <img alt="" className="edit" src={icon.xWhite}></img>
                     </div>
                 </div>
