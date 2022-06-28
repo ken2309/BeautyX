@@ -7,7 +7,7 @@
     --hover: #000000;
     --bgGray: #e5e5e5;
     /* --bgWhite: #f5f5f7; */
-    --bgWhite: #FFFFFF;
+    --bgWhite: #ffffff;
     --darkBlue: #4e4693;
     --white: #ffffff;
     --red_2: #e64d4a;
@@ -21,6 +21,9 @@
 .App-logo {
     height: 40vmin;
     pointer-events: none;
+}
+body {
+    position: relative;
 }
 
 @media (prefers-reduced-motion: no-preference) {

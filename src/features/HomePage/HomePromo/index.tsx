@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import servicePromoApi from "../../../api/servicePromoApi";
-import { AppContext } from "../../../context/AppProvider";
 import { IServicePromo } from "../../../interface/servicePromo";
+import { fetchAsyncHotDealPromo } from "../../../redux/home/HomeHotDeal/homeHotDealSlide";
 import FilterServices from "../../FilterServices";
 import ServicePromoItem from "../../ViewItemCommon/ServicePromoItem";
 
@@ -13,14 +13,15 @@ interface IData {
 }
 
 function HomePromo(props: any) {
-    //const [services, setServices] = useState<IServicePromo[]>([])
-    const history = useHistory();
-    const { t } = useContext(AppContext);
+    const dispatch = useDispatch();
+    const hotdeal = useSelector((state: any) => state.HOTDEAL.HOTDEAL);
+    console.log("hotdeal", hotdeal.hotdeal);
     const [data, setData] = useState<IData>({
-        services: [],
+        services: hotdeal.hotdeal,
         lastPage: 1,
         page: 1,
     });
+    // console.log("data", data.services);
     const [dataSort, setDataSort] = useState("-discount_percent");
     async function getServicesPromo() {
         try {
@@ -37,6 +38,11 @@ function HomePromo(props: any) {
         }
     }
     useEffect(() => {
+        // const values = {
+        //     page: data.page,
+        //     sort: dataSort,
+        // };
+        // dispatch(fetchAsyncHotDealPromo({ values }));
         getServicesPromo();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dataSort]);

@@ -133,7 +133,7 @@ function Search() {
                         {keyword.length > 0 && (
                             <img
                                 onClick={() => dispatch(onSetKeyword(""))}
-                                src={icon.closeCircle}
+                                src={icon.x}
                                 alt=""
                                 className="search-cnt__head-icon-x"
                             />
