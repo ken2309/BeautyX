@@ -8,6 +8,9 @@
     z-index: 100;
     transition: all 0.5s;
 }
+.pointer-events-none {
+    pointer-events: none;
+}
 
 .mb-head-act {
     background-color: var(--bgWhite);
