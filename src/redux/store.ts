@@ -25,6 +25,8 @@ import appReducer from "./appointment/appSlice";
 import commentReducer from './commentSlice';
 import orderReducer from './order/orderSlice';
 import searchResultReducer from './search/searchResultSlice';
+import filterReducer from "./filter/filterSlice";
+import homePageReducer from "./home/homePageSlice";
 
 const rootReducer = {
   carts: cartReducer,
@@ -53,6 +55,8 @@ const rootReducer = {
   COMMENT: commentReducer,
   ORDER: orderReducer,
   SEARCH_RESULT: searchResultReducer,
+  FILTER: filterReducer,
+  HOME_PAGE: homePageReducer
 };
 const store = configureStore({
   reducer: rootReducer,

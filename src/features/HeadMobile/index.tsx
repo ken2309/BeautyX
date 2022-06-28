@@ -4,6 +4,7 @@ import icon from '../../constants/icon';
 
 interface IProps {
     title: string,
+    prevUrl?:string,
     onBack?: (back: boolean) => void,
     handleCancelPayment?: () => void,
     element?: any,
@@ -11,7 +12,7 @@ interface IProps {
 
 
 function HeadMobile(props: IProps) {
-    const { title, onBack, handleCancelPayment, element } = props;
+    const { title, onBack, handleCancelPayment, element,prevUrl } = props;
     const location: any = useLocation()
 
     const history = useHistory();
@@ -24,6 +25,9 @@ function HeadMobile(props: IProps) {
         }
         if (location?.state?.payment_url) {
             history.push("/");
+        }
+        if(prevUrl){
+            history.push(prevUrl)
         }
         else {
             history.goBack()

@@ -61,7 +61,7 @@ class ServicePromo {
         const url = `/services`;
         const LOCATION = AUTH_LOCATION();
         const paramsOb = {
-            page: values.page,
+            page: values.page || 1,
             limit: 24,
             "filter[special_price]": true,
             "filter[is_momo_ecommerce_enable]": true,

@@ -1,55 +1,46 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import servicePromoApi from "../../../api/servicePromoApi";
-import { AppContext } from "../../../context/AppProvider";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import { IServicePromo } from "../../../interface/servicePromo";
-import FilterServices from "../../FilterServices";
+import FilterService from "../../Filter/FilterService";
 import ServicePromoItem from "../../ViewItemCommon/ServicePromoItem";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAsyncServicesPromo } from '../../../redux/home/homePageSlice';
+import { STATUS } from '../../../redux/status'
 
-interface IData {
-    services: IServicePromo[];
-    lastPage: number;
-    page: 1;
-}
 
 function HomePromo(props: any) {
-    //const [services, setServices] = useState<IServicePromo[]>([])
-    const history = useHistory();
-    const { t } = useContext(AppContext);
-    const [data, setData] = useState<IData>({
-        services: [],
-        lastPage: 1,
-        page: 1,
-    });
-    const [dataSort, setDataSort] = useState("-discount_percent");
-    async function getServicesPromo() {
-        try {
-            const res = await servicePromoApi.getServicesPromo({
-                page: data.page,
-                sort: dataSort,
-            });
-            setData({
-                ...data,
-                services: res.data.data.hits,
-            });
-        } catch (error) {
-            console.log(error);
+    const { SERVICES_PROMO } = useSelector((state: any) => state.HOME_PAGE);
+    const { FILTER_PROMO } = useSelector((state: any) => state.FILTER);
+    const dispatch = useDispatch();
+    const { services, status, query } = SERVICES_PROMO
+    const callServicesPromo = () => {
+        if (status !== STATUS.SUCCESS) {
+            dispatch(fetchAsyncServicesPromo({
+                page: 1,
+                sort: FILTER_PROMO.query
+            }))
         }
     }
     useEffect(() => {
-        getServicesPromo();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dataSort]);
+        callServicesPromo()
+    }, [])
+
+    const onChangeServicesByFilter = (item: any) => {
+        if (query !== item.query) {
+            dispatch(fetchAsyncServicesPromo({
+                page: 1,
+                sort: item.query
+            }))
+        }
+    }
     return (
         <div className="home-se-promo">
-            <FilterServices
-                dataSort={dataSort}
-                setDataSort={setDataSort}
-                setData={setData}
+            <FilterService
+                onChangeFilter={onChangeServicesByFilter}
             />
             <div className="home-promo-ser">
                 <ul className="ser-list">
-                    {data.services
+                    {services
                         .slice(0, 18)
                         .map((item: IServicePromo, index: number) => (
                             <li key={index}>

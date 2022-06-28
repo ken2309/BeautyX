@@ -1,49 +1,41 @@
-import React, { useEffect, useState } from "react";
-import servicePromoApi from "../../../api/servicePromoApi";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import { IServicePromo } from "../../../interface/servicePromo";
 import ServicePromoItem from "../../ViewItemCommon/ServicePromoItem";
 import HomeTitle from "../Components/HomeTitle";
 import "./homeTopService.css";
-interface IData {
-    services: IServicePromo[];
-    page: number;
-    sort: string;
-}
+import { fetchAsyncServicesBought } from '../../../redux/home/homePageSlice'
+import { useDispatch, useSelector } from "react-redux";
+import { STATUS } from '../../../redux/status'
+
+
 export default function HomeTopService() {
-    const [data, setData] = useState<IData>({
-        services: [],
-        page: 1,
-        sort: "bought_count",
-    });
-    const getBySort = async () => {
-        const values = {
-            page: data.page,
-            sort: data.sort,
-        };
-        try {
-            const res = await servicePromoApi.getBySort(values);
-            setData({
-                ...data,
-                services: res?.data?.data?.hits,
-            });
-        } catch (error) {
-            console.log("error", error);
+    const dispatch = useDispatch();
+    const { SERVICES_BOUGHT } = useSelector((state: any) => state.HOME_PAGE);
+    const { services, status } = SERVICES_BOUGHT;
+
+    const callServicesTopBought = () => {
+        if (status !== STATUS.SUCCESS) {
+            dispatch(fetchAsyncServicesBought({
+                page: 1,
+                sort: "-bought_count"
+            }))
         }
-    };
+    }
+
     useEffect(() => {
-        getBySort();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        callServicesTopBought()
     }, []);
 
     return (
         <div className="home-top__service">
             <HomeTitle
                 title={`Top Dịch Vụ Bán Chạy`}
-                url={"/"}
-                seemore={"Xem chi tiết >"}
+                // url={"/"}
+                // seemore={"Xem chi tiết >"}
             />
             <div className="top-service__list">
-                {data?.services?.map((item: IServicePromo, index: number) => (
+                {services?.map((item: IServicePromo, index: number) => (
                     <ServicePromoItem key={index} service={item} />
                 ))}
             </div>
