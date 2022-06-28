@@ -23,6 +23,7 @@ function DetailRecommend(props: any) {
                     page: 1,
                     org_id: params.org,
                     cate_id: SERVICE.service.category?.id,
+                    isEnable: org?.is_momo_ecommerce_enable && true
                 };
                 dispatch(fetchAsyncServicesRec(values));
             }
