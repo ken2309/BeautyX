@@ -7,7 +7,12 @@
     padding: 12px 12px 20px 12px;
     grid-gap: 0 12px;
     align-items: flex-end;
-    background-color: var(--purple);
+    /* background-color: var(--purple); */
+    background-image: url("https://source.unsplash.com/random");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: auto;
 }
 .accountMobile .accountMobile-top__img {
     width: 120px;

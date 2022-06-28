@@ -84,6 +84,7 @@ const orderSlice = createSlice({
     reducers: {
         onSetStatusServicesUser: (state) => {
             state.ORDER_SERVICES.status = STATUS.LOADING;
+            state.ORDER_SERVICES.services = []
         }
     },
     extraReducers: {
@@ -95,7 +96,7 @@ const orderSlice = createSlice({
             return {
                 ...state,
                 ORDER_SERVICES: {
-                    services: services,
+                    services: [...state.ORDER_SERVICES.services, ...services],
                     page: page,
                     totalItem: totalItem,
                     status: STATUS.SUCCESS

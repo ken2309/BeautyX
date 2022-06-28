@@ -29,6 +29,7 @@ function OrgServices(props: IProps) {
     const { org } = props;
     const callServicesCate = () => {
         if (org_id !== org?.id || status !== STATUS.SUCCESS) {
+            dispatch(onChooseCateServices(null))
             dispatch(fetchAsyncCateServices(org?.id));
         }
     };
@@ -101,34 +102,37 @@ function OrgServices(props: IProps) {
                             {t("cart.all")}
                         </span>
                     </li>
-                    {categories.map((item: any, index: number) => (
-                        <li
-                            style={
-                                choose_cate === item.id
-                                    ? {
-                                        color: "#fff",
-                                        backgroundColor: "var(--purple)",
+                    {
+                        categories
+                            .filter((i: any) => i.services_count > 0)
+                            .map((item: any, index: number) => (
+                                <li
+                                    style={
+                                        choose_cate === item.id
+                                            ? {
+                                                color: "#fff",
+                                                backgroundColor: "var(--purple)",
+                                            }
+                                            : {}
                                     }
-                                    : {}
-                            }
-                            onClick={() => handleChooseCate(item.id)}
-                            className="cate-list__item"
-                            key={index}
-                        >
-                            <span
-                                style={
-                                    choose_cate === item.id
-                                        ? {
-                                            color: "#fff",
+                                    onClick={() => handleChooseCate(item.id)}
+                                    className="cate-list__item"
+                                    key={index}
+                                >
+                                    <span
+                                        style={
+                                            choose_cate === item.id
+                                                ? {
+                                                    color: "#fff",
+                                                }
+                                                : {}
                                         }
-                                        : {}
-                                }
-                                className="cate-list__item-title"
-                            >
-                                {item.name}
-                            </span>
-                        </li>
-                    ))}
+                                        className="cate-list__item-title"
+                                    >
+                                        {item.name}
+                                    </span>
+                                </li>
+                            ))}
                 </ul>
             </div>
             <div className="org-services-cnt__right">

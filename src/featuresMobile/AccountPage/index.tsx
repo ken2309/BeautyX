@@ -19,24 +19,23 @@ export default function AccountMobile() {
     const refOrder: any = useRef();
     const handleToggle = () => {
         refOrder.current.classList.toggle("active");
-        history.push('/tai-khoan/lich-su-mua?order=true')
+        history.push("/tai-khoan/lich-su-mua?order=true");
     };
     const gotoAppointment = () => {
-        const prevUrl = '/tai-khoan/thong-tin-ca-nhan';
+        const prevUrl = "/tai-khoan/thong-tin-ca-nhan";
         history.push({
             pathname: "/lich-hen",
-            state: { prevUrl }
-        })
-    }
+            state: { prevUrl },
+        });
+    };
     const gotoAddress = () => {
-        history.push("/tai-khoan/thong-tin-ca-nhan?address=true")
-    }
+        history.push("/tai-khoan/thong-tin-ca-nhan?address=true");
+    };
     return (
         <div className="accountMobile">
-            {
-                USER &&
+            {USER && (
                 <DialogChangeInfo USER={USER} open={open} setOpen={setOpen} />
-            }
+            )}
             {/* top */}
             <div className="accountMobile-top">
                 <div className="accountMobile-top__img">
@@ -116,10 +115,7 @@ export default function AccountMobile() {
                         </div>
                     </li>
                     <li className="accountMobile-mid__item">
-                        <div
-                            onClick={gotoAddress}
-                            className="item-left__wrap"
-                        >
+                        <div onClick={gotoAddress} className="item-left__wrap">
                             <div className="item-left">
                                 <div>
                                     <img src={icon.markerAcc} alt="" />

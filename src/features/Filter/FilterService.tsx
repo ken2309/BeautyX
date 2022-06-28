@@ -15,7 +15,7 @@ function FilterService(props: IProps) {
     const dispatch = useDispatch();
     const sortList = [
         { id: 2, title: t("home_2.hot_promotion"), query: '-discount_percent' },
-        { id: 1, title: t("home_2.places_near_you"), query: null },
+        { id: 1, title: t("home_2.places_near_you"), query: 'distance' },
         //{ id: 8, title: 'Dịch vụ HOT', query: '-modified_date' },
         { id: 3, title: t("Mer_de.ascending_price"), query: 'price' },
         { id: 4, title: t("Mer_de.decrease_price"), query: '-price' },

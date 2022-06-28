@@ -72,9 +72,10 @@
 }
 .edit-user .edit-user__option button:nth-child(2) {
     color: var(--red-cl);
+    margin-left: 8px;
 }
 .edit-user .edit-user__option button {
-    padding: 4px 8px;
+    padding: 4px;
     font-weight: bold;
     font-size: 12px;
     line-height: 16px;

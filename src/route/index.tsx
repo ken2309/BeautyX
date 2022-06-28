@@ -47,6 +47,7 @@ import Booking from "../features/Booking";
 import Calendar from "../features/Calendar";
 import BuyNow from "../features/BuyNow";
 import Carts from "../features/Carts";
+import AssistantBtn from "../components/AssistantBtn";
 
 import ProductsByCate from "../features/CategoryTree/ProductsByCate";
 
@@ -255,6 +256,7 @@ function RouterConfig(props: any) {
           />
         ))}
       </Switch>
+      <AssistantBtn />
     </BrowserRouter>
   );
 }
