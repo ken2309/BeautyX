@@ -36,9 +36,11 @@ export default function AssistantBtn() {
             if (overLay === true) {
                 refOverLay.current.classList.add("active");
                 refAssisBtn.current.classList.add("assistantBtn-wrap-hover");
+                document.body.style.overflow = "hidden";
             } else {
                 refOverLay.current.classList.remove("active");
                 refAssisBtn.current.classList.remove("assistantBtn-wrap-hover");
+                document.body.style.overflow = "unset";
             }
         }
     };
@@ -67,19 +69,18 @@ export default function AssistantBtn() {
                     onMouseLeave={() => handleHoverLeave()}
                     className="assistantBtn-wrap"
                 >
-                    {
-                        location.pathname === "/ket-qua-tim-kiem/" ?
-                            <></>
-                            :
-                            <div
-                                onClick={() => handleOpenSearch()}
-                                className="btn2 buttons"
-                            >
-                                <div className="btn-img">
-                                    <img src={icon.search} alt="" />
-                                </div>
+                    {location.pathname === "/ket-qua-tim-kiem/" ? (
+                        <></>
+                    ) : (
+                        <div
+                            onClick={() => handleOpenSearch()}
+                            className="btn2 buttons"
+                        >
+                            <div className="btn-img">
+                                <img src={icon.search} alt="" />
                             </div>
-                    }
+                        </div>
+                    )}
                     <div
                         onClick={() => handleOpenSubiz()}
                         className="btn1 buttons"
