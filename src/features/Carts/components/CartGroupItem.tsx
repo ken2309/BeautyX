@@ -50,7 +50,7 @@ function CartGroupItem(props: any) {
                     <img src={icon.Storefront} alt="" />
                     <span>{item.org_name}</span>
                 </div>
-                <span className="right" >Sửa</span>
+                {/* <span className="right" >Sửa</span> */}
             </div>
             <ul className="re-cart-item-group__body">
                 {
