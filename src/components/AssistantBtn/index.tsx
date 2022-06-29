@@ -59,13 +59,14 @@ export default function AssistantBtn() {
                 document.body.style.overflow = "unset";
             }
         }
-    }, [is_mb, overLay]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [overLay]);
 
     return (
         <>
             <div
                 ref={refOverLay}
-                onClick={() => handleClickOverlay()}
+                onTouchStart={() => handleClickOverlay()}
                 className="assistantBtn"
             >
                 <div
