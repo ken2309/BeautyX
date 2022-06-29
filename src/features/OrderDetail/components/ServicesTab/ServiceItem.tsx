@@ -13,6 +13,7 @@ function ServiceItem(props: any) {
   const { serviceItem, org } = props;
   const service = serviceItem.productable;
   //const [service, setService] = useState<Service>();
+  console.log(service, serviceItem)
   const history = useHistory();
   const dispatch = useDispatch();
   const is_type = 2;
@@ -41,9 +42,8 @@ function ServiceItem(props: any) {
   const name = service?.service_name;
   const handleDetailService = () => {
     history.push({
-      pathname: `/service-detail/${slugify(service?.service_name)}`,
-      search: `${org.id},${serviceItem?.productable_id},${is_type}`,
-      state: { org, detail, name },
+      pathname: `/dich-vu/${slugify(service?.service_name)}`,
+      search: `id=${service.id}?org=${org?.id}`,
     });
   };
 
@@ -76,14 +76,17 @@ function ServiceItem(props: any) {
                 borderRadius="12px"
                 margin="0px 16px 0px 0px"
               />
-              <ButtonCus
-                onClick={handleAddCart}
-                text="Pre-Order"
-                padding="4px 8px"
-                color="var(--bgWhite)"
-                backColor="var(--purple)"
-                borderRadius="12px"
-              />
+              {
+                serviceItem.discount_value === 0 &&
+                <ButtonCus
+                  onClick={handleAddCart}
+                  text="Pre-Order"
+                  padding="4px 8px"
+                  color="var(--bgWhite)"
+                  backColor="var(--purple)"
+                  borderRadius="12px"
+                />
+              }
             </div>
           </div>
         </div>

@@ -35,7 +35,7 @@ export default function AppProvider({ children }) {
 
   useEffect(() => {
     if (lg === "en-US" || lg === "en") {
-      setLanguage("en");
+      setLanguage("vn");
     } else if (lg === "vi-VN" || lg === "vn") {
       setLanguage("vn");
     }

@@ -7,6 +7,7 @@ import { handleSubiz } from "../../utils/customChat";
 import useFullScreen from "../../utils/useFullScreen";
 import Search from "../../features/Search";
 import "./style.css";
+import img from "../../constants/img";
 
 export default function AssistantBtn() {
     const dispatch = useDispatch();
@@ -67,14 +68,17 @@ export default function AssistantBtn() {
                 >
                     <div
                         onClick={() => handleOpenSearch()}
-                        className="btn1 buttons"
+                        className="btn2 buttons"
                     >
                         <div className="btn-img">
                             <img src={icon.search} alt="" />
                         </div>
                     </div>
 
-                    <div onClick={() => handleOpenSubiz()} className="btn2 buttons">
+                    <div
+                        onClick={() => handleOpenSubiz()}
+                        className="btn1 buttons"
+                    >
                         <div className="btn-img">
                             <img
                                 style={{ width: "16px" }}
@@ -95,8 +99,9 @@ export default function AssistantBtn() {
                     </div>
 
                     <div id="floating-button">
-                        <img alt="" className="plus" src={icon.xWhite}></img>
-
+                        <div className="plus">
+                            <img src={img.beautyx} alt="" />{" "}
+                        </div>
                         <img alt="" className="edit" src={icon.xWhite}></img>
                     </div>
                 </div>

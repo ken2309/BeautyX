@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
@@ -8,6 +8,7 @@ import "./accountPage.css";
 import AccountForm from "./Components/AccountForm";
 import DialogChangeInfo from "./Components/DialogChangeInfo";
 import OrderMb from "./Components/Orders";
+import AccountGuide from "./Components/AccountGuide";
 
 export default function AccountMobile() {
     const { USER } = useSelector((state: any) => state.USER);
@@ -16,9 +17,10 @@ export default function AccountMobile() {
     const [open, setOpen] = useState(false);
     const openAcc = params?.address ? true : false;
     const openOrder = params?.order ? true : false;
-    const refOrder: any = useRef();
+    const openGuide = params?.guide ? true : false;
+    // const refOrder: any = useRef();
     const handleToggle = () => {
-        refOrder.current.classList.toggle("active");
+        // refOrder.current.classList.toggle("active");
         history.push("/tai-khoan/lich-su-mua?order=true");
     };
     const gotoAppointment = () => {
@@ -31,6 +33,9 @@ export default function AccountMobile() {
     const gotoAddress = () => {
         history.push("/tai-khoan/thong-tin-ca-nhan?address=true");
     };
+    const gotoAccountGuide = () => {
+        history.push("/tai-khoan/thong-tin-ca-nhan?guide=true")
+    }
     return (
         <div className="accountMobile">
             {USER && (
@@ -78,7 +83,7 @@ export default function AccountMobile() {
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
-                        <div ref={refOrder} className="item-bot__wrap">
+                        {/* <div ref={refOrder} className="item-bot__wrap">
                             <div className="item-bot__item">
                                 <img src={icon.tickBlue} alt="" />
                                 <span>Đã thanh toán</span>
@@ -87,7 +92,7 @@ export default function AccountMobile() {
                                 <img src={icon.xCircleRed} alt="" />
                                 <span>Đã hủy</span>
                             </div>
-                        </div>
+                        </div> */}
                     </li>
                     <li className="accountMobile-mid__item">
                         <div
@@ -103,7 +108,7 @@ export default function AccountMobile() {
                             <img src={icon.arownAcc} alt="" />
                         </div>
                     </li>
-                    <li className="accountMobile-mid__item">
+                    {/* <li className="accountMobile-mid__item">
                         <div className="item-left__wrap">
                             <div className="item-left">
                                 <div>
@@ -113,7 +118,7 @@ export default function AccountMobile() {
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
-                    </li>
+                    </li> */}
                     <li className="accountMobile-mid__item">
                         <div onClick={gotoAddress} className="item-left__wrap">
                             <div className="item-left">
@@ -125,9 +130,9 @@ export default function AccountMobile() {
                             <img src={icon.arownAcc} alt="" />
                         </div>
                     </li>
-                    <li className="accountMobile-mid__item">
+                    {/* <li className="accountMobile-mid__item">
                         <div
-                            onClick={()=>history.push("/homepage")}
+                            onClick={() => history.push("/homepage")}
                             className="item-left__wrap"
                         >
                             <div className="item-left">
@@ -138,11 +143,11 @@ export default function AccountMobile() {
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
             {/* bot */}
-            <div className="accountMobile-bot">
+            <div onClick={gotoAccountGuide} className="accountMobile-bot">
                 <div className="accountMobile-bot__tutorial">
                     <img src={icon.book} alt="" />
                     <p>Hướng dẩn sử dụng</p>
@@ -151,6 +156,7 @@ export default function AccountMobile() {
             <Bottom />
             <AccountForm open={openAcc} />
             <OrderMb openOrder={openOrder} />
+            <AccountGuide open={openGuide} />
         </div>
     );
 }

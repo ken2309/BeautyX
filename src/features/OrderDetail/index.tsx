@@ -13,6 +13,7 @@ import scrollTop from "../../utils/scrollTop";
 import onErrorImg from "../../utils/errorImg";
 import formatDate from "../../utils/formatDate";
 import useFullScreen from "../../utils/useFullScreen";
+import { IOrderV2 } from '../../interface/orderv2'
 
 const view = window.screen.width;
 const Transition = React.forwardRef(function Transition(
@@ -29,8 +30,10 @@ function OrderDetail(props: any) {
   const history = useHistory();
   const fullScreen = useFullScreen();
   const { t } = useContext(AppContext);
-  const { open, setOpen, org, order, countItem } = props;
-  if(open === true){
+  const { open, setOpen, org, countItem } = props;
+  const order: IOrderV2 = props.order;
+
+  if (open === true) {
     console.log(order)
   }
   const [acTab, setAcTab] = useState();
@@ -69,7 +72,7 @@ function OrderDetail(props: any) {
             {t("pr.total")}:
             <h4>
               {" "}
-              {formatPrice(order?.amount)}đ ({countItem} item)
+              {formatPrice(order?.payment_gateway?.amount)}đ ({countItem} item)
             </h4>
           </span>
         </div>
@@ -78,7 +81,7 @@ function OrderDetail(props: any) {
             src={org?.image_url}
             alt=""
             className="order-de__org-img"
-            onError={(e)=>onErrorImg(e)}
+            onError={(e) => onErrorImg(e)}
           />
           <div className="order-de__org-cnt">
             <span className="name">{org?.name}</span>

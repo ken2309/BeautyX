@@ -29,7 +29,7 @@ function ServiceReview(props: any) {
         star: 0,
         used: true
     })
-    const [alert, setAlert] = useState(false)
+    //const [alert, setAlert] = useState(false)
     const onRateStar = (id: number) => {
         setComment({
             ...comment,
@@ -47,7 +47,7 @@ function ServiceReview(props: any) {
             const res = await dispatch(postAsyncComment({ values }))
             if (res?.meta?.requestStatus === "fulfilled") {
                 setOpen(false)
-                setAlert(true)
+                //setAlert(true)
                 setComment({
                     text: "",
                     image_url: null,
@@ -63,7 +63,7 @@ function ServiceReview(props: any) {
     }
     return (
         <>
-            <Snackbar
+            {/* <Snackbar
                 anchorOrigin={{
                     vertical: 'top',
                     horizontal: 'center'
@@ -75,7 +75,7 @@ function ServiceReview(props: any) {
                 <Alert onClose={() => setAlert(false)} severity="success" sx={{ width: '100%' }}>
                     Cảm ơn {USER?.fullname} đã đánh giá dịch vụ
                 </Alert>
-            </Snackbar>
+            </Snackbar> */}
             <Dialog
                 fullScreen={IS_MB}
                 open={open}
