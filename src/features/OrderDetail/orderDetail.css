@@ -171,6 +171,7 @@
     height: 100vh;
     overflow-y: scroll;
     border-radius: 0;
+    padding: 12px;
   }
   .order-de__head {
     flex-direction: column;

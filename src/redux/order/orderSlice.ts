@@ -85,6 +85,10 @@ const orderSlice = createSlice({
         onSetStatusServicesUser: (state) => {
             state.ORDER_SERVICES.status = STATUS.LOADING;
             state.ORDER_SERVICES.services = []
+        },
+        onClearOrder: (state) => {
+            state.ORDER_CANCEL.orders = [];
+            state.ORDER.orders = []
         }
     },
     extraReducers: {
@@ -147,5 +151,5 @@ const orderSlice = createSlice({
     }
 })
 const { actions } = orderSlice;
-export const { onSetStatusServicesUser } = actions
+export const { onSetStatusServicesUser, onClearOrder } = actions
 export default orderSlice.reducer;

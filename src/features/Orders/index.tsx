@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import "./order.css";
 import HeadTitle from "../HeadTitle";
@@ -6,14 +7,17 @@ import TabOrderCancel from './components/TabOrderCancel';
 import TabOrderPaid from './components/TabOrderPaid';
 import { Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { fetchAsyncOrderCancel, fetchAsyncOrderPaid } from "../../redux/order/orderSlice";
+import { fetchAsyncOrderCancel, fetchAsyncOrderPaid, onClearOrder } from "../../redux/order/orderSlice";
 import { useDispatch } from "react-redux";
+import { extraParamsUrl } from "../../utils/extraParamsUrl";
 
 
 function Orders() {
   const { t } = useContext(AppContext);
   const dispatch = useDispatch();
   const [value, setValue] = useState("PAID")
+  const params:any = extraParamsUrl();
+  console.log(params)
   const onChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue)
   }
@@ -31,6 +35,7 @@ function Orders() {
     }))
   }
   useEffect(() => {
+    dispatch(onClearOrder())
     callOrdersPaid()
     callOrdersCancel()
   }, [])
@@ -46,7 +51,7 @@ function Orders() {
               onChange={onChangeTab}
             >
               <Tab label="Đã thanh toán" value="PAID" />
-              <Tab label="Đã hủy" value="CANCEL" />
+              <Tab label="Tất cả" value="CANCEL" />
             </TabList>
             <TabPanel value="PAID" >
               <TabOrderPaid />
