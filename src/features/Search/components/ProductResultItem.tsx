@@ -3,11 +3,13 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import icon from '../../../constants/icon';
 import { IProductPromo } from '../../../interface/productPromo';
+import { onSetStatusProduct } from '../../../redux/org_products/productSlice';
 import { onToggleSearchCnt } from '../../../redux/search/searchSlice';
 import onErrorImg from '../../../utils/errorImg';
 import { formatDistance } from '../../../utils/format';
 import formatPrice from '../../../utils/formatPrice';
 import slugify from '../../../utils/formatUrlString';
+import scrollTop from '../../../utils/scrollTop';
 
 interface IProps {
     product: IProductPromo
@@ -17,6 +19,13 @@ function ProductResultItem(props: IProps) {
     const { product } = props;
     const dispatch = useDispatch();
     const distance = formatDistance(product?._geoDistance)
+
+    const onItemClick = () => {
+        scrollTop();
+        dispatch(onToggleSearchCnt(false))
+        dispatch(onSetStatusProduct("LOADING"))
+    }
+
     return (
         <Link
             to={{
@@ -24,7 +33,7 @@ function ProductResultItem(props: IProps) {
                 search: `id=${product?.product_id}&org=${product?.org_id}`,
             }}
             className="service-result-item"
-            onClick={() => dispatch(onToggleSearchCnt(false))}
+            onClick={onItemClick}
         >
             <img
                 className='service-result-item__img'

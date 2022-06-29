@@ -111,7 +111,11 @@ const initialState = {
 const productSlice = createSlice({
     initialState,
     name: "PRODUCT",
-    reducers: {},
+    reducers: {
+        onSetStatusProduct: (state, action) => {
+            state.PRODUCT.status = action.payload
+        }
+    },
     extraReducers: {
         // get product detail
         [fetchAsyncProductDetail.pending]: (state) => {
@@ -250,6 +254,6 @@ const productSlice = createSlice({
         },
     },
 });
-// const { actions } = productSlice;
-// export const {  } = actions;
+const { actions } = productSlice;
+export const { onSetStatusProduct } = actions;
 export default productSlice.reducer;
