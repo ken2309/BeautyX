@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import icon from "../../constants/icon";
@@ -33,13 +33,6 @@ export default function AssistantBtn() {
     const handleClickOverlay = () => {
         if (is_mb === true) {
             setOverLay(!overLay);
-            if (overLay === true) {
-                refOverLay.current.classList.add("active");
-                refAssisBtn.current.classList.add("assistantBtn-wrap-hover");
-            } else {
-                refOverLay.current.classList.remove("active");
-                refAssisBtn.current.classList.remove("assistantBtn-wrap-hover");
-            }
         }
     };
 
@@ -54,6 +47,20 @@ export default function AssistantBtn() {
         }
     };
 
+    useEffect(() => {
+        if (is_mb === true) {
+            if (overLay === true) {
+                refOverLay.current.classList.add("active");
+                refAssisBtn.current.classList.add("assistantBtn-wrap-hover");
+                document.body.style.overflow = "hidden";
+            } else {
+                refOverLay.current.classList.remove("active");
+                refAssisBtn.current.classList.remove("assistantBtn-wrap-hover");
+                document.body.style.overflow = "unset";
+            }
+        }
+    }, [is_mb, overLay]);
+
     return (
         <>
             <div
@@ -67,19 +74,18 @@ export default function AssistantBtn() {
                     onMouseLeave={() => handleHoverLeave()}
                     className="assistantBtn-wrap"
                 >
-                    {
-                        location.pathname === "/ket-qua-tim-kiem/" ?
-                            <></>
-                            :
-                            <div
-                                onClick={() => handleOpenSearch()}
-                                className="btn2 buttons"
-                            >
-                                <div className="btn-img">
-                                    <img src={icon.search} alt="" />
-                                </div>
+                    {location.pathname === "/ket-qua-tim-kiem/" ? (
+                        <></>
+                    ) : (
+                        <div
+                            onClick={() => handleOpenSearch()}
+                            className="btn2 buttons"
+                        >
+                            <div className="btn-img">
+                                <img src={icon.search} alt="" />
                             </div>
-                    }
+                        </div>
+                    )}
                     <div
                         onClick={() => handleOpenSubiz()}
                         className="btn1 buttons"

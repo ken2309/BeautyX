@@ -65,6 +65,12 @@
     padding: 30px;
     right: 15px;
 }
+.assistantBtn-wrap-active {
+    height: 250px;
+    width: 40px;
+    padding: 30px;
+    right: 15px;
+}
 .assistantBtn-wrap-hover:hover .plus {
     animation: plus-in 0.15s linear;
     animation-fill-mode: forwards;
