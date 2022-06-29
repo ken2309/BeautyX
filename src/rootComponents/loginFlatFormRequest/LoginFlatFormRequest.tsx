@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useMemo, useState } from 'react';
 import icon from '../../constants/icon';
 import ButtonLoading from '../../components/ButtonLoading';
 import doPostMakePaymentMessageTiki from '../tiki/doPostMessageTiki';
@@ -27,7 +28,7 @@ function LoginFlatFormRequest(props: any) {
             const res = await tikiAuthApi.login(params);
             window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
             await dispatch(fetchAsyncUser())
-            if(setClose) return setClose(false)
+            if (setClose) return setClose(false)
             if (pathname && pathname === "/tai-khoan/thong-tin-ca-nhan") {
                 history.push('/home')
             } else {
@@ -41,10 +42,13 @@ function LoginFlatFormRequest(props: any) {
     }
 
     const response = useGetMessageTiki();
-    if (response?.requestId && response.result.status === "success") {
-        handleLoginTiki(response.result.res)
-        //alert(JSON.stringify(response.result.res))
-    }
+    useMemo(() => {
+        // alert(JSON.stringify(response))
+        if (response?.requestId && response.result.status === "success") {
+            // alert(JSON.stringify(response))
+            handleLoginTiki(response.result.res)
+        }
+    }, [response])
 
     return (
         <div className='flex-column login-re-cnt'>

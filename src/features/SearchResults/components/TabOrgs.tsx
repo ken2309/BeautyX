@@ -9,7 +9,7 @@ function TabOrgs(props: any) {
         handleOrgsByKeyword()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data.page, orgFilter.tags, orgFilter.province_code, keyword])
-   
+
     const onViewMore = () => {
         if (data.orgs.length >= 15 && data.orgs.length < data.totalItem) {
             setData({

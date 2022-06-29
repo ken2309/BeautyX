@@ -7,7 +7,8 @@ import formatPrice from '../../../utils/formatPrice';
 import icon from '../../../constants/icon';
 import { onToggleSearchCnt } from '../../../redux/search/searchSlice'
 import { useDispatch } from 'react-redux';
-import { formatDistance } from '../../../utils/format'
+import { formatDistance } from '../../../utils/format';
+import scrollTop from '../../../utils/scrollTop';
 
 interface IProps {
     service: IServicePromo
@@ -17,6 +18,10 @@ function ServiceResultItem(props: IProps) {
     const { service } = props;
     const dispatch = useDispatch();
     const distance = formatDistance(service?._geoDistance)
+    const onItemClick = () => {
+        scrollTop();
+        dispatch(onToggleSearchCnt(false))
+    }
     return (
         <Link
             to={{
@@ -24,7 +29,7 @@ function ServiceResultItem(props: IProps) {
                 search: `id=${service.service_id}&org=${service.org_id}`,
             }}
             className="service-result-item"
-            onClick={() => dispatch(onToggleSearchCnt(false))}
+            onClick={onItemClick}
         >
             <img
                 className='service-result-item__img'

@@ -7,7 +7,7 @@ import WrapperMap from "./MapWarraper/WrapperMap";
 
 function Map(props: any) {
     const { data, setData } = props;
-    const key = "AIzaSyDfxBgfHh5HeBw2kVRcpgxgG4lswl50jTg";
+    const key = `${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`
     const [location, setLocation] = useState({
         lat: 0,
         long: 0,

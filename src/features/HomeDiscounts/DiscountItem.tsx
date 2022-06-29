@@ -32,7 +32,6 @@ function DiscountItem(props: IProps) {
     const type = onCheckType();
     const history = useHistory();
     const onDetail = () => {
-        //console.log(type)
         history.push({
             pathname: `/chi-tiet-giam-gia/${slugify(
                 discountItem.productable.service_name ||

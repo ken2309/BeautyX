@@ -171,8 +171,17 @@ import calendarWhite from "../assets/icon/calendarWhite.svg";
 import cardDiscountWhite from "../assets/icon/cardDiscountWhite.svg";
 import checkFlowOrange from "../assets/icon/checkFlowOrange.svg";
 import arrowSmallUpWhite from "../assets/icon/arrowSmallUpWhite.svg";
+import starLine from "../assets/icon/star.svg";
+
+// btn assistan home
+import xWhite from "../assets/icon/x-white.svg";
+import homeWhite from "../assets/icon/home-white.svg";
+import chatWhite from "../assets/icon/chat-white.svg";
 
 const icon = {
+    chatWhite,
+    homeWhite,
+    xWhite,
     phonePurple,
     emailPurple,
     cameraAcc,
@@ -343,6 +352,7 @@ const icon = {
     calendarWhite,
     cardDiscountWhite,
     checkFlowOrange,
-    arrowSmallUpWhite
+    arrowSmallUpWhite,
+    starLine
 };
 export default icon;

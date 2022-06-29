@@ -68,7 +68,7 @@ function HomeBanner(props: any) {
     const handleClick = () => {
         console.log(chooseBanner);
         if (chooseBanner) {
-          
+
             switch (chooseBanner.type) {
                 case "VIDEO":
                     return setOpenVideo(true);
@@ -94,9 +94,8 @@ function HomeBanner(props: any) {
         }
     };
     useEffect(() => {
-        banners.length>0&&setChooseBanner(banners[0])
+        banners.length > 0 && setChooseBanner(banners[0])
     }, [banners])
-    console.log(banners.length,'chooseBanner',chooseBanner);
     return (
         <div className="home-banner">
             <Slider {...settings}>

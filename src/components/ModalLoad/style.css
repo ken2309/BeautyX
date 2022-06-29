@@ -23,7 +23,7 @@
 .modal-cnt__body-img {
     width: 94px;
     height: 94px;
-    animation: spin 4s linear infinite
+    animation: spin 4s linear infinite;
 }
 
 .modal-cnt__body .text {
@@ -31,7 +31,6 @@
     line-height: 28px;
     font-weight: 700;
     color: var(--purple);
-    margin-top: 18px;
 }
 
 @keyframes spin {
