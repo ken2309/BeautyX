@@ -141,6 +141,9 @@ const serviceSlice = createSlice({
                 };
             }
         },
+        onSetStatusService:(state,action)=>{
+            state.SERVICE.status = action.payload
+        }
     },
     extraReducers: {
         // get detail service
@@ -279,4 +282,6 @@ const serviceSlice = createSlice({
         },
     },
 });
+const {actions} = serviceSlice;
+export const {onSetStatusService} = actions;
 export default serviceSlice.reducer;

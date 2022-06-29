@@ -9,6 +9,7 @@ import { onToggleSearchCnt } from '../../../redux/search/searchSlice'
 import { useDispatch } from 'react-redux';
 import { formatDistance } from '../../../utils/format';
 import scrollTop from '../../../utils/scrollTop';
+import { onSetStatusService } from '../../../redux/org_services/serviceSlice'
 
 interface IProps {
     service: IServicePromo
@@ -21,6 +22,7 @@ function ServiceResultItem(props: IProps) {
     const onItemClick = () => {
         scrollTop();
         dispatch(onToggleSearchCnt(false))
+        dispatch(onSetStatusService("LOADING"))
     }
     return (
         <Link

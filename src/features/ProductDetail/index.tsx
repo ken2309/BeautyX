@@ -33,10 +33,12 @@ import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
 import ReviewsContainer from "../ReviewsContainer";
 import ModalLoad from "../../components/ModalLoad";
 import PageNotFound from "../../components/PageNotFound";
+import { useHistory } from "react-router-dom";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();
     const IS_MB = useFullScreen();
+    const history = useHistory();
     const ORG = useSelector((state: any) => state.ORG);
     const { PRODUCT, COMMENTS } = useSelector((state: any) => state.PRODUCT);
     const params: any = extraParamsUrl();
@@ -155,6 +157,15 @@ function ProductDetail(props: any) {
         callProductComments();
     }, [params.id]);
 
+    const handleBack = () => {
+        history.goBack();
+        const values = {
+            org_id: params.org,
+            ser_id: params.id,
+        };
+        dispatch(fetchAsyncProductDetail(values));
+    }
+
     return (
         <div className="product">
             {PRODUCT.status === STATUS.LOADING && <ModalLoad title="Đang tải" />}
@@ -164,7 +175,7 @@ function ProductDetail(props: any) {
                     product?.product_name ? product.product_name : "Loading..."
                 }
             />
-            {IS_MB ? <HeadOrg org={org} /> : <Head />}
+            {IS_MB ? <HeadOrg onBackFunc={handleBack} org={org} /> : <Head />}
             <Container>
                 <div className="service-detail">
                     <div className="service-detail__head">

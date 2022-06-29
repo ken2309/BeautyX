@@ -17,6 +17,7 @@ import { getTotal } from '../../../redux/cartSlice';
 interface IProps {
     org: IOrganization,
     isShowSearch?: boolean,
+    onBackFunc?: () => void
 }
 
 // onload event
@@ -33,7 +34,7 @@ function HeadOrg(props: IProps) {
     const { USER } = useSelector((state: any) => state.USER);
     const dispatch = useDispatch();
     const history = useHistory();
-    const { org, isShowSearch } = props;
+    const { org, isShowSearch, onBackFunc } = props;
     const orgHeadRef = useRef<any>();
     const orgSearchBtn = useRef<any>();
     const orgSearchCnt = useRef<any>();
@@ -45,11 +46,15 @@ function HeadOrg(props: IProps) {
             } else {
                 dispatch(onFavoriteOrg(org))
             }
-        } else {
+        }
+        else {
             history.push('/sign-in?1')
         }
     }
     const onBackClick = () => {
+        if (onBackFunc) {
+            return onBackFunc()
+        }
         if (orgSearchCnt.current.offsetHeight > 0) {
             if (window.scrollY <= 80) {
                 orgHeadRef.current.classList.remove('mb-head-act')
@@ -88,10 +93,10 @@ function HeadOrg(props: IProps) {
         dispatch(getTotal());
     }, [dispatch, carts]);
 
-    const onGotoCart = ()=>{
-        if(USER){
+    const onGotoCart = () => {
+        if (USER) {
             history.push("/gio-hang")
-        }else{
+        } else {
             history.push("/sign-in?1")
         }
     }

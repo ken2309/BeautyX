@@ -28,6 +28,7 @@ import { handleScroll, handleChangeScroll } from "./onScrollChange";
 import ReviewsContainer from "../ReviewsContainer";
 import ModalLoad from "../../components/ModalLoad";
 import PageNotFound from "../../components/PageNotFound";
+import { useHistory } from "react-router-dom";
 
 function ServiceDetail(props: any) {
     const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function ServiceDetail(props: any) {
     const ORG = useSelector((state: any) => state.ORG);
     const { SERVICE, COMMENTS } = useSelector((state: any) => state.SERVICE);
     const params: any = extraParamsUrl();
+    const history = useHistory();
 
     const is_mobile = useFullScreen();
     const service = SERVICE.service;
@@ -156,6 +158,15 @@ function ServiceDetail(props: any) {
 
     }, [params.id]);
 
+    const handleBack = () => {
+        history.goBack();
+        const values = {
+            org_id: params.org,
+            ser_id: params.id,
+        };
+        dispatch(fetchAsyncServiceDetail(values));
+    }
+
     return (
         <>
             {SERVICE.status === STATUS.LOADING && <ModalLoad />}
@@ -166,7 +177,7 @@ function ServiceDetail(props: any) {
                     service?.service_name ? service.service_name : "Loading..."
                 }
             />
-            {IS_MB ? <HeadOrg org={org} /> : <Head />}
+            {IS_MB ? <HeadOrg onBackFunc={handleBack} org={org} /> : <Head />}
             {
                 SERVICE.status === STATUS.SUCCESS &&
                 <Container>
