@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import icon from "../../constants/icon";
@@ -33,15 +33,6 @@ export default function AssistantBtn() {
     const handleClickOverlay = () => {
         if (is_mb === true) {
             setOverLay(!overLay);
-            if (overLay === true) {
-                refOverLay.current.classList.add("active");
-                refAssisBtn.current.classList.add("assistantBtn-wrap-hover");
-                document.body.style.overflow = "hidden";
-            } else {
-                refOverLay.current.classList.remove("active");
-                refAssisBtn.current.classList.remove("assistantBtn-wrap-hover");
-                document.body.style.overflow = "unset";
-            }
         }
     };
 
@@ -55,6 +46,20 @@ export default function AssistantBtn() {
             refAssisBtn.current.classList.remove("assistantBtn-wrap-hover");
         }
     };
+
+    useEffect(() => {
+        if (is_mb === true) {
+            if (overLay === true) {
+                refOverLay.current.classList.add("active");
+                refAssisBtn.current.classList.add("assistantBtn-wrap-hover");
+                document.body.style.overflow = "hidden";
+            } else {
+                refOverLay.current.classList.remove("active");
+                refAssisBtn.current.classList.remove("assistantBtn-wrap-hover");
+                document.body.style.overflow = "unset";
+            }
+        }
+    }, [is_mb, overLay]);
 
     return (
         <>
