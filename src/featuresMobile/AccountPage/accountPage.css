@@ -2,13 +2,20 @@
 .accountMobile {
     position: relative;
 }
+
 .accountMobile .accountMobile-top {
     display: flex;
     padding: 12px 12px 20px 12px;
     grid-gap: 0 12px;
     align-items: flex-end;
     background-color: var(--purple);
+    /* background-image: url("https://source.unsplash.com/random"); */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: auto;
 }
+
 .accountMobile .accountMobile-top__img {
     width: 120px;
     height: 120px;
@@ -16,22 +23,26 @@
     flex-shrink: 0;
     overflow: hidden;
 }
+
 .accountMobile .accountMobile-top__img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .accountMobile .accountMobile-top__info {
     display: flex;
     flex-direction: column;
     grid-gap: 2px 0;
 }
+
 .accountMobile .accountMobile-top__name {
     color: #fff;
     font-weight: 700;
     font-size: 20px;
     line-height: 28px;
 }
+
 .accountMobile .accountMobile-top__phone,
 .accountMobile .accountMobile-top__email {
     color: #fff;
@@ -41,6 +52,7 @@
     display: flex;
     grid-gap: 0 4px;
 }
+
 .accountMobile .accountMobile-top__edit {
     position: absolute;
     top: 12px;
@@ -48,6 +60,7 @@
     display: flex;
     grid-gap: 0 4px;
 }
+
 .accountMobile .accountMobile-top__edit p {
     color: #fff;
     font-weight: 500;
@@ -63,16 +76,19 @@
     overflow: hidden;
     margin-top: -8px;
 }
+
 .accountMobile-mid .accountMobile-mid__list {
     display: flex;
     flex-direction: column;
     grid-gap: 8px 0;
 }
+
 .accountMobile-mid .accountMobile-mid__item {
     padding: 16px 12px;
     background-color: #fff;
     z-index: 2;
 }
+
 .accountMobile-mid .item-left__wrap {
     display: flex;
     justify-content: space-between;
@@ -80,17 +96,20 @@
     align-items: center;
     z-index: 1;
 }
+
 .accountMobile-mid .item-left {
     display: flex;
     align-items: center;
     grid-gap: 0 8px;
 }
+
 .accountMobile-mid .item-left span {
     font-weight: 700;
     font-size: 16px;
     line-height: 24px;
     color: #1f1f1f;
 }
+
 .accountMobile-mid .item-bot__wrap {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -100,6 +119,7 @@
     z-index: 1;
     transition: visibility, opacity, max-height 0.2s ease-in;
 }
+
 .accountMobile-mid .active {
     max-height: 66px;
     visibility: visible;
@@ -107,10 +127,12 @@
     z-index: 1;
     transition: visibility, opacity, max-height 0.2s ease-out;
 }
-.accountMobile-mid .active > .item-bot__item {
+
+.accountMobile-mid .active>.item-bot__item {
     border: 1px solid #fafafa;
     transition: 0.2s ease-out;
 }
+
 .accountMobile-mid .item-bot__item {
     align-items: center;
     display: flex;
@@ -121,17 +143,20 @@
     grid-gap: 0 8px;
     transition: 0.2s ease-in;
 }
+
 .accountMobile-mid .item-bot__item span {
     font-weight: 700;
     font-size: 14px;
     line-height: 20px;
     color: #1f1f1f;
 }
+
 /* account bot */
 .accountMobile-bot {
     background-color: #fff;
     margin: 12px;
 }
+
 .accountMobile-bot .accountMobile-bot__tutorial {
     display: flex;
     align-items: center;
@@ -141,8 +166,51 @@
     background: #f5f5f5;
     border-radius: 8px;
 }
+
 .accountMobile-bot .accountMobile-bot__tutorial p {
     font-weight: 500;
     font-size: 12px;
+    line-height: 16px;
+}
+
+/* user guide */
+.account-guide-cnt {
+    padding: 74px 12px 0px 12px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--purple);
+    overflow-y: scroll;
+}
+.account-guide-cnt .step-list{
+    display: flex;
+    flex-direction: column;
+}
+.account-guide-cnt .step-list li{
+    margin: 8px 0px;
+}
+.account-guide-cnt .step-list img{
+    width: 124px;
+}
+.account-guide-cnt .step-list .right{
+    width: calc(100% - 124px);
+    padding-left: 12px;
+    color: var(--white);
+}
+.account-guide-cnt .step{
+    color: var(--purple);
+    background-color: var(--white);
+    width: 24px;
+    height: 24px;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 100%;
+}
+.account-guide-cnt .right .title{
+    margin-top: 4px;
+    font-size: 14px;
     line-height: 16px;
 }

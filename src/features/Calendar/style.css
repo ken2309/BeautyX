@@ -107,13 +107,21 @@
     .calendar-appointment__item p:nth-child(2) {
         margin-bottom: 0px;
     }
-    .calendar-appointment__item-detail{
+
+    .calendar-appointment__item-detail {
         width: fit-content;
         margin-right: 8px;
         color: var(--white);
         background-color: var(--orange);
     }
-    .calendar-appointment__item-detail:nth-child(2){
+
+    .calendar-appointment__item-detail:nth-child(2) {
         background-color: var(--purple);
+    }
+
+    .cal-cnt__tab-cnt .MuiTabs-indicator {
+        background-color: var(--purple);
+        width: 40px !important;
+        margin-left: 10% !important;
     }
 }

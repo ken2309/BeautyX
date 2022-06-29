@@ -56,6 +56,7 @@ class ProductApi {
             "filter[keyword]": values.keyword,
             "filter[service_group_id]": values.cate_id,
             include: "category|favorites_count",
+            "filter[is_momo_ecommerce_enable]": values.isEnable,
             append: "is_favorite|rating",
         };
         const params = pickBy(paramsOb, identity);

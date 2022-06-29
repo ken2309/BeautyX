@@ -205,14 +205,15 @@
 }
 
 .treatment-ser-item__out {
-    background-color: var(--red-cl);
+    background-color: #DDFFE9;
     padding: 2px 4px;
     margin-top: 2px;
     font-size: 12px;
     line-height: 14px;
     font-weight: 700;
-    color: var(--bgWhite);
+    color: #13B139;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 .treatment-ser-item__img {
@@ -410,17 +411,10 @@
 
 /* service bottom */
 .my-ser-bot {
-    position: sticky;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 2;
-    height: 67px;
-    background-color: var(--bgWhite);
-    box-shadow: 0px 0px 7px 1px rgb(0 0 0 / 12%);
-    transition: all 0.4s;
-    overflow: hidden;
-    padding-top: 16px;
+    width: 100%;
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
 }
 
 .my-ser-bot__up {
@@ -899,6 +893,10 @@
         padding: 50px 4px 12px 12px;
     }
 
+    .my-ser-book {
+        padding-bottom: 84px;
+    }
+
     .my-ser-book__cnt-head {
         margin-top: -10px;
     }
@@ -1096,6 +1094,15 @@
 
     .treatment-ser-item__cnt {
         width: calc(100% - 112px);
+    }
+
+    .my-ser-bot {
+        margin-top: 0px;
+    }
+
+    .my-ser-bot button {
+        background-color: var(--white);
+        color: var(--purple);
     }
 }
 

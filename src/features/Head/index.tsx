@@ -274,15 +274,17 @@ function Head(props: any) {
                 {carts.cartQuantity}
               </div>
             </div>
-            <div className="hd-cnt__right-menu">
-              <img onClick={openMenuClick} src={icon.Menu} alt="" />
-              <Menu
-                //profile={profile}
-                USER={USER}
-                openMenu={openMenu}
-                setOpenMenu={setOpenMenu}
-              />
-            </div>
+            {
+              USER &&
+              <div className="hd-cnt__right-menu">
+                <img onClick={openMenuClick} src={icon.Menu} alt="" />
+                <Menu
+                  USER={USER}
+                  openMenu={openMenu}
+                  setOpenMenu={setOpenMenu}
+                />
+              </div>
+            }
             <div
               onClick={openLangClick}
               className="hd-cnt__right-lang"

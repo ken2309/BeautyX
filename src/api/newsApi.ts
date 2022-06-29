@@ -30,7 +30,7 @@ class NewsApi {
             limit: 5,
             order: "desc",
             orderby: "modified",
-            categories: 9,
+            categories: 7,
         };
         return axiosClient.get(url, {
             params,
@@ -44,7 +44,7 @@ class NewsApi {
             limit: 5,
             order: "desc",
             orderby: "modified",
-            categories: 9,
+            categories: 10,
         };
         return axiosClient.get(url, {
             params,

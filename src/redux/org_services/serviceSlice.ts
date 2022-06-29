@@ -33,7 +33,6 @@ export const fetchAsyncServiceCmt: any = createAsyncThunk(
 export const postAsyncComment: any = createAsyncThunk(
     "SERVICE/postAsyncComment",
     async (params: any) => {
-        console.log("params", params);
         try {
             const res = await commentsApi.postComment(params.values);
             const payload = {

@@ -13,6 +13,8 @@ import scrollTop from "../../utils/scrollTop";
 import onErrorImg from "../../utils/errorImg";
 import formatDate from "../../utils/formatDate";
 import useFullScreen from "../../utils/useFullScreen";
+import { IOrderV2 } from '../../interface/orderv2';
+import HeadMobile from "../HeadMobile";
 
 const view = window.screen.width;
 const Transition = React.forwardRef(function Transition(
@@ -27,12 +29,11 @@ const Transition = React.forwardRef(function Transition(
 
 function OrderDetail(props: any) {
   const history = useHistory();
-  const fullScreen = useFullScreen();
+  const IS_MB = useFullScreen();
   const { t } = useContext(AppContext);
-  const { open, setOpen, org, order, countItem } = props;
-  if(open === true){
-    console.log(order)
-  }
+  const { open, setOpen, org, countItem } = props;
+  const order: IOrderV2 = props.order;
+
   const [acTab, setAcTab] = useState();
   const handleDetailMerchant = () => {
     scrollTop();
@@ -42,17 +43,21 @@ function OrderDetail(props: any) {
       state: org,
     });
   };
+  const handleBack = () => {
+    setOpen(false)
+  }
   return (
     <Dialog
       open={open}
-      onClose={() => setOpen(false)}
-      fullScreen={fullScreen}
+      onClose={handleBack}
+      fullScreen={IS_MB}
       TransitionComponent={Transition}
     >
+      {IS_MB && <HeadMobile onBackFunc={handleBack} title="Chi tiết đơn hàng" />}
       <div className="order-de">
         <div className="flex-row-sp order-de__head">
           <span className="flex-row order-de__head-title">
-            <img onClick={() => setOpen(false)} src={icon.chevronLeft} alt="" />
+            <img onClick={handleBack} src={icon.chevronLeft} alt="" />
             {t("order.order_de")}
           </span>
           <div className="flex-row order-de__head-date">
@@ -69,7 +74,7 @@ function OrderDetail(props: any) {
             {t("pr.total")}:
             <h4>
               {" "}
-              {formatPrice(order?.amount)}đ ({countItem} item)
+              {formatPrice(order?.payment_gateway?.amount)}đ ({countItem} item)
             </h4>
           </span>
         </div>
@@ -78,7 +83,7 @@ function OrderDetail(props: any) {
             src={org?.image_url}
             alt=""
             className="order-de__org-img"
-            onError={(e)=>onErrorImg(e)}
+            onError={(e) => onErrorImg(e)}
           />
           <div className="order-de__org-cnt">
             <span className="name">{org?.name}</span>
