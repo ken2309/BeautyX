@@ -20,7 +20,7 @@ interface IProps {
 
 function OrgProducts(props: IProps) {
     const { org } = props;
-    const {t} = useContext(AppContext);
+    const { t } = useContext(AppContext);
     const { CATE, PRODUCTS, choose_cate, org_id } = useSelector(
         (state: any) => state.ORG_PRODUCTS
     );
@@ -29,6 +29,7 @@ function OrgProducts(props: IProps) {
     const dispatch = useDispatch();
     const callCategories = () => {
         if (org_id !== org?.id || status !== STATUS.SUCCESS) {
+            dispatch(onChooseCateServices(null))
             dispatch(fetchAsyncCateProducts(org?.id));
         }
     };
@@ -53,6 +54,7 @@ function OrgProducts(props: IProps) {
             org_id: org?.id,
             page: 1,
             cate_id: id,
+            isEnable: org?.is_momo_ecommerce_enable && true
         };
         dispatch(clearProducts());
         dispatch(onChooseCateServices(id));
@@ -98,34 +100,37 @@ function OrgProducts(props: IProps) {
                             {t("cart.all")}
                         </span>
                     </li>
-                    {categories.map((item: any, index: number) => (
-                        <li
-                            style={
-                                choose_cate === item.id
-                                    ? {
-                                        color: "#fff",
-                                        backgroundColor: "var(--purple)",
+                    {
+                        categories
+                            .filter((i: any) => i.products_count > 0)
+                            .map((item: any, index: number) => (
+                                <li
+                                    style={
+                                        choose_cate === item.id
+                                            ? {
+                                                color: "#fff",
+                                                backgroundColor: "var(--purple)",
+                                            }
+                                            : {}
                                     }
-                                    : {}
-                            }
-                            onClick={() => handleChooseCate(item.id)}
-                            className="cate-list__item"
-                            key={index}
-                        >
-                            <span
-                                style={
-                                    choose_cate === item.id
-                                        ? {
-                                            color: "#fff",
+                                    onClick={() => handleChooseCate(item.id)}
+                                    className="cate-list__item"
+                                    key={index}
+                                >
+                                    <span
+                                        style={
+                                            choose_cate === item.id
+                                                ? {
+                                                    color: "#fff",
+                                                }
+                                                : {}
                                         }
-                                        : {}
-                                }
-                                className="cate-list__item-title"
-                            >
-                                {item.name}
-                            </span>
-                        </li>
-                    ))}
+                                        className="cate-list__item-title"
+                                    >
+                                        {item.name}
+                                    </span>
+                                </li>
+                            ))}
                 </ul>
             </div>
             <div className="org-services-cnt__right">

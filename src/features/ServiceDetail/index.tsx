@@ -85,6 +85,7 @@ function ServiceDetail(props: any) {
     const callServiceDetail = () => {
         if (
             parseInt(params.id) !== SERVICE.service.id ||
+            SERVICE.org_id !== params.org ||
             SERVICE.status !== STATUS.SUCCESS
         ) {
             const values = {

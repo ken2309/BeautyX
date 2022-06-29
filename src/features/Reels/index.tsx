@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Drawer } from "@mui/material";
+import { Drawer, formLabelClasses } from "@mui/material";
 import Video from "./components/video";
 import icon from "../../constants/icon";
 import "./style.css";
@@ -13,7 +13,7 @@ export default function Reels(props: any) {
     const slickRef = useRef<any>();
     const settings = {
         dots: true,
-        infinite: true,
+        infinite: false,
         speed: 500,
         arrows: true,
         slidesToShow: 1,

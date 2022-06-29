@@ -8,6 +8,11 @@ import { Container, Drawer } from '@mui/material';
 import FilterOrgs from '../../FilterOrgs';
 import OrgItem from '../../ViewItemCommon/OrgItem';
 import icon from '../../../constants/icon';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import HeadMobile from '../../HeadMobile';
+import useFullScreen from '../../../utils/useFullScreen';
+import BackTopButton from '../../../components/BackTopButton';
+import Footer from '../../Footer';
 
 interface IData {
     orgs: IOrganization[],
@@ -17,6 +22,7 @@ interface IData {
 
 function HomeCardResult() {
     const location = useLocation();
+    const IS_MB = useFullScreen();
     const KEY = parseInt(location.search.slice(1, location.search.length));
     const [openFilter, setOpenFilter] = useState(false);
     let hideProvinces;
@@ -46,7 +52,8 @@ function HomeCardResult() {
             });
             setData({
                 ...data,
-                orgs: res.data.context.data,
+                orgs: [...data.orgs, ...res.data.context.data],
+                totalItem: res.data.context.total
             })
         } catch (error) {
             console.log(error)
@@ -62,7 +69,8 @@ function HomeCardResult() {
             });
             setData({
                 ...data,
-                orgs: res.data.context.data,
+                orgs: [...data.orgs, ...res.data.context.data],
+                totalItem: res.data.context.total
             })
         } catch (error) {
             console.log(error)
@@ -79,7 +87,8 @@ function HomeCardResult() {
             });
             setData({
                 ...data,
-                orgs: res.data.context.data,
+                orgs: [...data.orgs, ...res.data.context.data],
+                totalItem: res.data.context.total
             })
         } catch (error) {
             console.log(error)
@@ -94,10 +103,30 @@ function HomeCardResult() {
             handleGetOrgsDistance()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [orgFilter.province_code, orgFilter.tags])
+    }, [orgFilter.province_code, orgFilter.tags, data.page])
+
+    const onViewMore = () => {
+        if (data.orgs.length >= 15 && data.orgs.length < data.totalItem) {
+            setData({
+                ...data,
+                page: data.page + 1
+            })
+        }
+    }
+
     return (
         <>
-            <Head />
+            {
+                IS_MB ?
+                    <HeadMobile
+                        title=''
+                        element={<button onClick={() => setOpenFilter(true)} className="filter-btn">
+                            <img src={icon.filter} alt="" />
+                        </button>}
+                    />
+                    :
+                    <Head />
+            }
             <Container>
                 <div className="se-re-cnt">
                     <div className="se-re-cnt__left">
@@ -116,10 +145,6 @@ function HomeCardResult() {
                     </div>
                     <div className="home-result-org-cnt__mb">
                         <div className="flex-row-sp cnt">
-                            <span className="title">Bộ lọc tìm kiếm</span>
-                            <button onClick={() => setOpenFilter(true)} className="filter-btn">
-                                <img src={icon.filter} alt="" />
-                            </button>
                             <Drawer
                                 anchor='right'
                                 open={openFilter}
@@ -141,22 +166,31 @@ function HomeCardResult() {
                         </div>
                     </div>
                     <div className="se-re-cnt__right">
-                        <ul className="re-ser-list">
-                            {
-                                data.orgs.map((item: IOrganization, index: number) => (
-                                    <li
-                                        key={index}
-                                    >
-                                        <OrgItem
-                                            org={item}
-                                        />
-                                    </li>
-                                ))
-                            }
-                        </ul>
+                        <InfiniteScroll
+                            hasMore={true}
+                            dataLength={data.orgs.length}
+                            loader={<></>}
+                            next={onViewMore}
+                        >
+                            <ul className="re-ser-list">
+                                {
+                                    data.orgs.map((item: IOrganization, index: number) => (
+                                        <li
+                                            key={index}
+                                        >
+                                            <OrgItem
+                                                org={item}
+                                            />
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </InfiniteScroll>
                     </div>
                 </div>
             </Container>
+            <BackTopButton />
+            <Footer />
         </>
     );
 }

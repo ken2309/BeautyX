@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "../features/Home/index";
+//import Home from "../features/Home/index";
 import SearchResult from "../features/SearchResult/index";
 import { BrowserRouter, Switch, Redirect } from "react-router-dom";
 import { RouteComponentProps } from "@reach/router";
@@ -47,6 +47,7 @@ import Booking from "../features/Booking";
 import Calendar from "../features/Calendar";
 import BuyNow from "../features/BuyNow";
 import Carts from "../features/Carts";
+import AssistantBtn from "../components/AssistantBtn";
 
 import ProductsByCate from "../features/CategoryTree/ProductsByCate";
 
@@ -58,7 +59,7 @@ function RouterConfig(props: any) {
   const routes = [
     {
       path: `/home`,
-      component: <Home />,
+      component: <HomePage />,
     },
     {
       path: `/homepage`,
@@ -66,11 +67,11 @@ function RouterConfig(props: any) {
     },
     {
       path: `/MOMO`,
-      component: <Home />
+      component: <HomePage />
     },
     {
       path: '/TIKI',
-      component: <Home />
+      component: <HomePage />
     },
     {
       path: `/otp`,
@@ -190,7 +191,7 @@ function RouterConfig(props: any) {
     },
     {
       path: "/home-banner-result",
-      component: <HomeBannerSearchResult/>,
+      component: <HomeBannerSearchResult />,
     },
     // {
     //   path: "/mua-hang",
@@ -238,7 +239,7 @@ function RouterConfig(props: any) {
   return (
     <BrowserRouter>
       <Switch>
-        <Redirect exact from="/" to="home" />
+        <Redirect exact from="/" to="homepage" />
         {routes.map((item, index) => (
           <RouterPage
             key={index}
@@ -255,6 +256,7 @@ function RouterConfig(props: any) {
           />
         ))}
       </Switch>
+      <AssistantBtn />
     </BrowserRouter>
   );
 }

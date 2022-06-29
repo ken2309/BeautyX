@@ -3,9 +3,10 @@ import { IOrganization } from "../../interface/organization";
 import { Link } from "react-router-dom";
 import { onToggleSearchCnt, addHistory } from "../../redux/search/searchSlice";
 import { useDispatch } from "react-redux";
+import { onSetTabResult } from "../../redux/search/searchResultSlice";
 
 function SectionOrgs(props: any) {
-    const { ORGS } = props;
+    const { ORGS, onGotoFilterResult } = props;
     const handleOnclickItem = (item: any) => {
         const values = {
             TYPE: "ORG",
@@ -15,10 +16,23 @@ function SectionOrgs(props: any) {
         dispatch(addHistory(values));
         dispatch(onToggleSearchCnt(false));
     };
+
+
+    const onViewMore = () => {
+        if (onGotoFilterResult) {
+            onGotoFilterResult()
+            dispatch(onSetTabResult(3))
+            dispatch(onToggleSearchCnt(false))
+        }
+    }
+
     const dispatch = useDispatch();
     return ORGS.orgs.length > 0 ? (
         <div className="search-section-item">
-            <span className="search-section-item__title">Doanh nghiệp</span>
+            <div className="flex-row-sp search-section-item__title">
+                Doanh nghiệp
+                <span onClick={onViewMore} >Xem tất cả</span>
+            </div>
             <div className="search-empty-item__list">
                 <ul className="list">
                     {ORGS.orgs

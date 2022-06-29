@@ -4,7 +4,8 @@ export const formatAddCart = (
     is_type: any,
     quantity: any,
     sale_price: any,
-    discount?: any
+    discount?: any,
+    isConfirm?: boolean
 ) => {
 
     const cartValues = {
@@ -16,7 +17,7 @@ export const formatAddCart = (
         name: item?.product_name || item?.service_name || item?.name,
         quantity: quantity,
         is_type: is_type,
-        isConfirm: false,
+        isConfirm: isConfirm ? isConfirm : false,
         price: sale_price,
         price_discount: discount ? sale_price - discount.discount_value : null,
         org: org,

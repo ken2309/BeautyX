@@ -9,7 +9,10 @@ export const fetchAsyncServiceDetail: any = createAsyncThunk(
     "SERVICE/fetchAsyncServiceDetail",
     async (values: any) => {
         const res = await serviceApi.getDetailById(values);
-        return res.data.context;
+        return {
+            service: res.data.context,
+            org_id: values.org_id,
+        };
     }
 );
 //get comment service
@@ -30,7 +33,6 @@ export const fetchAsyncServiceCmt: any = createAsyncThunk(
 export const postAsyncComment: any = createAsyncThunk(
     "SERVICE/postAsyncComment",
     async (params: any) => {
-        console.log("params", params);
         try {
             const res = await commentsApi.postComment(params.values);
             const payload = {
@@ -105,6 +107,7 @@ const initialState = {
     SERVICE: {
         service: {},
         status: "",
+        org_id: null
     },
     SERVICES_REC: {
         services: [],
@@ -148,11 +151,13 @@ const serviceSlice = createSlice({
             };
         },
         [fetchAsyncServiceDetail.fulfilled]: (state, { payload }) => {
+            const { service, org_id } = payload;
             return {
                 ...state,
                 SERVICE: {
-                    service: payload,
+                    service: service,
                     status: STATUS.SUCCESS,
+                    org_id: org_id
                 },
             };
         },

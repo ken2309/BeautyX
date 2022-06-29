@@ -62,9 +62,10 @@
 }
 
 /* Mobile */
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 1023px) {
     .se-re-cnt {
         flex-direction: column;
+        margin-top: 48px;
     }
     .se-re-cnt-title {
         font-size: 14px;

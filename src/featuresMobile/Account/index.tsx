@@ -1,9 +1,7 @@
 import React, { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
 import "./account.css";
 import icon from "../../constants/icon";
 import Bottom from "../Bottom/index";
-import OrderMb from "./Orders";
 import AccountForm from "./AccountForm/index";
 import ServicesUserMb from "./ServicesUser";
 import DiscountUserMb from "./DiscountUser";
@@ -16,7 +14,6 @@ import Settings from "./Setting";
 
 function AccountMb() {
   const { t } = useContext(AppContext);
-  const [openOrder, setOpenOrder] = useState(false);
   const [openAcc, setOpenAcc] = useState(false);
   const [openSer, setOpenSer] = useState(false);
   const [openDiscount, setOpenDiscount] = useState(false);
@@ -129,7 +126,7 @@ function AccountMb() {
                         </li> */}
             <li>
               <div
-                onClick={() => setOpenOrder(true)}
+
                 className="flex-column mb-ac__cnt-private-item"
               >
                 <img src={icon.Clock_purple} alt="" />
@@ -184,7 +181,6 @@ function AccountMb() {
       </div>
       <Bottom />
       {/* open dialog */}
-      <OrderMb openOrder={openOrder} setOpenOrder={setOpenOrder} />
       <ServicesUserMb open={openSer} setOpen={setOpenSer} />
       <AccountForm open={openAcc} setOpen={setOpenAcc} />
       <DiscountUserMb open={openDiscount} setOpen={setOpenDiscount} />

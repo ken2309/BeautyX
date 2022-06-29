@@ -23,6 +23,12 @@ function OrgItem(props: IProps) {
     };
     return (
         <div onClick={gotoDetail} className="re-org-item">
+            {
+                org?.is_momo_ecommerce_enable &&
+                <div className="re-org-item__enable">
+                    <img src={icon.checkFlowOrange} alt="" />
+                </div>
+            }
             <div className="org-img-cnt">
                 <img
                     src={org.image ? `${org.image_url}` : `${img.imgDefault}`}

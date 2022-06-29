@@ -2,12 +2,32 @@
     cursor: pointer;
     transition: all 0.4s;
     border-radius: 8px;
-    overflow: hidden;
+    /* overflow: hidden; */
     background-color: var(--bgWhite);
     display: flex;
     flex-direction: column;
     height: 100%;
     border: 1px solid transparent;
+    position: relative;
+}
+.re-org-item__enable{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    margin: -8px 0px 0px -11px;
+}
+.re-org-item__enable::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: var(--orange);
+    height: 22px;
+    width: 15px;
+    margin: 20px 0px 0px 4px;
+    clip-path: polygon(84% 0, 99% 100%, 51% 43%, 0 100%, 17% 0);
 }
 
 .re-org-item:hover {

@@ -37,7 +37,7 @@ function FilterOrgs(props: any) {
             setData({
                 orgs: [],
                 page: 1,
-                lastPage: 1
+                totalItem: 1
             })
             const isChoose = orgFilter.tags.includes(tag_item)
             if (isChoose) {
@@ -58,7 +58,7 @@ function FilterOrgs(props: any) {
             setData({
                 orgs: [],
                 page: 1,
-                lastPage: 1
+                totalItem: 1
             })
             setOrgFilter({
                 ...orgFilter,
@@ -82,14 +82,14 @@ function FilterOrgs(props: any) {
     }
     const onApplyFilter = () => {
         if (orgFilter.min_price > -1 && orgFilter.max_price >= 0 && orgFilter.min_price <= orgFilter.max_price) {
-            if(setOpenFilter){
+            if (setOpenFilter) {
                 setOpenFilter(false)
             }
             if (handleOrgsByKeyword) {
                 setData({
                     orgs: [],
                     page: 1,
-                    lastPage: 1
+                    totalItem: 1
                 })
                 removeFilter()
                 handleOrgsByKeyword()
@@ -97,7 +97,7 @@ function FilterOrgs(props: any) {
                 setData({
                     orgs: [],
                     page: 1,
-                    lastPage: 1
+                    totalItem: 1
                 })
                 removeFilter()
                 handleGetOrgsDealLocation()
@@ -105,7 +105,7 @@ function FilterOrgs(props: any) {
                 setData({
                     orgs: [],
                     page: 1,
-                    lastPage: 1
+                    totalItem: 1
                 })
                 removeFilter()
                 handleGetOrgsDistance()
@@ -113,7 +113,7 @@ function FilterOrgs(props: any) {
                 setData({
                     orgs: [],
                     page: 1,
-                    lastPage: 1
+                    totalItem: 1
                 })
                 removeFilter()
                 handleGetOrgsByTrust()

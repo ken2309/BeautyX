@@ -3,8 +3,8 @@ import formatPrice from "../../../utils/formatPrice";
 import icon from "../../../constants/icon";
 import OrderDetail from "../../OrderDetail";
 import { IOrderV2 } from '../../../interface/orderv2';
-
 import { formatDate } from '../../../utils/format';
+
 
 interface IProp {
   order: IOrderV2
@@ -13,7 +13,7 @@ interface IProp {
 function OrderItem(props: IProp) {
   const { order } = props;
   const countItem = order.items_count
-  const [openDetail, setOpenDetail] = useState(false);
+  const [open, setOpen] = useState(false);
   const checkStatus = (status: string) => {
     switch (status) {
       case "CANCELED":
@@ -30,7 +30,9 @@ function OrderItem(props: IProp) {
         break;
     }
   };
-
+  const handleOpenDetail = () => {
+    setOpen(true);
+  }
   return (
     <>
       <li>
@@ -39,7 +41,7 @@ function OrderItem(props: IProp) {
             <div className="left">
               Mã đơn hàng <span>#{order?.payment_gateway?.transaction_uuid}-{order?.origin_id}</span>
             </div>
-            <span onClick={() => setOpenDetail(true)} className="right">
+            <span onClick={handleOpenDetail} className="right">
               Xem chi tiết
             </span>
           </div>
@@ -79,8 +81,8 @@ function OrderItem(props: IProp) {
         </div>
       </li>
       <OrderDetail
-        open={openDetail}
-        setOpen={setOpenDetail}
+        open={open}
+        setOpen={setOpen}
         org={order?.organization}
         order={order}
         countItem={countItem}

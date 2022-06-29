@@ -99,7 +99,7 @@ function CateRight(props: any) {
                 {
                     ORGS.totalItem >= 12 &&
                     <button onClick={gotoTagsResult}>
-                        Xem thêm {ORGS.totalItem} + địa điểm khác
+                        Xem thêm ({ORGS.totalItem}+) địa điểm khác
                     </button>
                 }
             </div>
