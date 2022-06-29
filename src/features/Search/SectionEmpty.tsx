@@ -6,7 +6,7 @@ import {
     removeKeyWord,
     onToggleSearchCnt,
 } from "../../redux/search/searchSlice";
-const listRecomment = [
+export const listRecomment = [
     {
         id: 1,
         title: "Hồ Chí Minh",

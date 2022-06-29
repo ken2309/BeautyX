@@ -19,6 +19,7 @@ import SectionServices from "./SectionServices";
 import SectionProducts from "./SectionProducts";
 import SectionEmpty from "./SectionEmpty";
 import useFullScreen from "../../utils/useFullScreen";
+import SectionNull from "./SectionNull";
 
 function Search() {
     const IS_MB = useFullScreen();
@@ -141,17 +142,20 @@ function Search() {
                     </div>
                 </div>
                 {keyword.length > 0 ? (
-                    <div className="search-cnt__body">
-                        <p
-                            className="search-cnt__keyword cursor-pointer"
-                            onClick={() => handleSearch()}
-                        >
-                            Xem kết quả cho <span>{keyword}</span>
-                        </p>
-                        {listSectionDisplay.map((item, index) => (
-                            <div key={index}>{item.element}</div>
-                        ))}
-                    </div>
+                    <>
+                        <div className="search-cnt__body">
+                            <p
+                                className="search-cnt__keyword cursor-pointer"
+                                onClick={() => handleSearch()}
+                            >
+                                Xem kết quả cho <span>{keyword}</span>
+                            </p>
+                            {listSectionDisplay.map((item, index) => (
+                                <div key={index}>{item.element}</div>
+                            ))}
+                        </div>
+                        <SectionNull keyword={keyword} ORGS={ORGS} SERVICES={SERVICES} PRODUCTS={PRODUCTS} />
+                    </>
                 ) : (
                     <div className="search-cnt__body">
                         <SectionEmpty />

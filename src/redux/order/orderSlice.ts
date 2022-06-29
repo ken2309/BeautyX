@@ -38,6 +38,11 @@ export const fetchAsyncOrderCancel: any = createAsyncThunk(
 )
 
 interface InitialState {
+    tab: string,
+    openDetail: {
+        open: boolean,
+        order_id: any
+    },
     ORDER_SERVICES: {
         services: any[],
         page: number,
@@ -59,6 +64,11 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
+    tab: "PAID",
+    openDetail: {
+        open: false,
+        order_id: null
+    },
     ORDER_SERVICES: {
         services: [],
         page: 1,
@@ -89,6 +99,13 @@ const orderSlice = createSlice({
         onClearOrder: (state) => {
             state.ORDER_CANCEL.orders = [];
             state.ORDER.orders = []
+        },
+        onSetTab: (state, action) => {
+            state.tab = action.payload;
+        },
+        onSetOpenDetail: (state, action) => {
+            state.openDetail.open = action.payload.open;
+            state.openDetail.order_id = action.payload.order_id
         }
     },
     extraReducers: {
@@ -151,5 +168,5 @@ const orderSlice = createSlice({
     }
 })
 const { actions } = orderSlice;
-export const { onSetStatusServicesUser, onClearOrder } = actions
+export const { onSetStatusServicesUser, onClearOrder, onSetTab, onSetOpenDetail } = actions
 export default orderSlice.reducer;

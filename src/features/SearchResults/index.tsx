@@ -2,7 +2,7 @@
 import React, { useCallback, useContext, useState } from 'react';
 import Head from '../Head';
 import HeadTitle from '../HeadTitle';
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { AppContext } from '../../context/AppProvider';
 import './search-results.css';
 import { Container } from '@mui/material';
@@ -21,6 +21,7 @@ import { onSetTabResult } from '../../redux/search/searchResultSlice';
 import useFullScreen from '../../utils/useFullScreen';
 import HeadMobile from '../HeadMobile';
 import BackTopButton from '../../components/BackTopButton';
+import { onToggleSearchCnt } from '../../redux/search/searchSlice'
 
 interface IData {
     orgs: IOrganization[],
@@ -29,6 +30,7 @@ interface IData {
 }
 
 function SearchResults(props: any) {
+    const history = useHistory();
     const { t } = useContext(AppContext);
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
@@ -78,10 +80,14 @@ function SearchResults(props: any) {
         }
     }
     //
+    const onGoBack = () => {
+        history.goBack();
+        dispatch(onToggleSearchCnt(true))
+    }
     return (
         <>
             <HeadTitle title={`${t("Search_result.text_result")} : ${searchKey}`} />
-            {IS_MB ? <HeadMobile title='Kết quả tìm kiếm' /> : <Head />}
+            {IS_MB ? <HeadMobile onBackFunc={onGoBack} title='Kết quả tìm kiếm' /> : <Head />}
             <Container>
                 <div className="se-re-cnt">
                     <div className="se-re-cnt__left">
@@ -165,7 +171,7 @@ function SearchResults(props: any) {
                     </div>
                 </div>
             </Container>
-            <BackTopButton/>
+            <BackTopButton />
             <Footer />
         </>
     );

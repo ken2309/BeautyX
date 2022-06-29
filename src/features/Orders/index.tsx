@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import "./order.css";
 import HeadTitle from "../HeadTitle";
 import { AppContext } from "../../context/AppProvider";
@@ -7,19 +7,21 @@ import TabOrderCancel from './components/TabOrderCancel';
 import TabOrderPaid from './components/TabOrderPaid';
 import { Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { fetchAsyncOrderCancel, fetchAsyncOrderPaid, onClearOrder } from "../../redux/order/orderSlice";
-import { useDispatch } from "react-redux";
-import { extraParamsUrl } from "../../utils/extraParamsUrl";
+import {
+  fetchAsyncOrderCancel,
+  fetchAsyncOrderPaid,
+  onClearOrder,
+  onSetTab
+} from "../../redux/order/orderSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 
 function Orders() {
   const { t } = useContext(AppContext);
+  const { tab } = useSelector((state: any) => state.ORDER);
   const dispatch = useDispatch();
-  const [value, setValue] = useState("PAID")
-  const params:any = extraParamsUrl();
-  console.log(params)
   const onChangeTab = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue)
+    dispatch(onSetTab(newValue))
   }
 
   const callOrdersCancel = () => {
@@ -46,7 +48,7 @@ function Orders() {
       <HeadTitle title={t("order.order_his")} />
       <div className="order-list">
         <div className="order-list-tab">
-          <TabContext value={value}>
+          <TabContext value={tab}>
             <TabList
               onChange={onChangeTab}
             >

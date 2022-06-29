@@ -40,7 +40,7 @@ function TabProduct(props: any) {
     }
     useEffect(() => {
         callProductsList()
-    }, [data.page])
+    }, [data.page, keyword])
 
     const onViewMore = () => {
         if (data.products.length >= 15 && data.products.length < data.totalItem) {

@@ -56,7 +56,7 @@ export default function DialogChangeInfo(props: any) {
             setOpen(false);
         },
     });
-    console.log(formik.values.fullname);
+    
     return (
         <Dialog open={open} onClose={() => setOpen(false)}>
             <form

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import icon from "../../constants/icon";
 import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 import { handleSubiz } from "../../utils/customChat";
@@ -11,6 +11,7 @@ import img from "../../constants/img";
 
 export default function AssistantBtn() {
     const dispatch = useDispatch();
+    const location: any = useLocation();
     const { open } = useSelector((state: any) => state.SEARCH);
     const [overLay, setOverLay] = useState(false);
     const is_mb = useFullScreen();
@@ -66,15 +67,19 @@ export default function AssistantBtn() {
                     onMouseLeave={() => handleHoverLeave()}
                     className="assistantBtn-wrap"
                 >
-                    <div
-                        onClick={() => handleOpenSearch()}
-                        className="btn2 buttons"
-                    >
-                        <div className="btn-img">
-                            <img src={icon.search} alt="" />
-                        </div>
-                    </div>
-
+                    {
+                        location.pathname === "/ket-qua-tim-kiem/" ?
+                            <></>
+                            :
+                            <div
+                                onClick={() => handleOpenSearch()}
+                                className="btn2 buttons"
+                            >
+                                <div className="btn-img">
+                                    <img src={icon.search} alt="" />
+                                </div>
+                            </div>
+                    }
                     <div
                         onClick={() => handleOpenSubiz()}
                         className="btn1 buttons"
@@ -87,7 +92,6 @@ export default function AssistantBtn() {
                             />
                         </div>
                     </div>
-
                     <div onClick={handleGoToHome} className="btn3 buttons">
                         <div className="btn-img">
                             <img
@@ -97,7 +101,6 @@ export default function AssistantBtn() {
                             />
                         </div>
                     </div>
-
                     <div id="floating-button">
                         <div className="plus">
                             <img src={img.beautyx} alt="" />{" "}
