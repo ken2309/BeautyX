@@ -52,10 +52,11 @@
 }
 .assistantBtn-wrap {
     position: fixed;
-    width: 70px;
-    height: 70px;
-    bottom: 0px;
-    right: 10px;
+    width: 40px;
+    height: 40px;
+    bottom: 24px;
+    border-radius: 100px;
+    right: 24px;
     z-index: 50;
 }
 .assistantBtn-wrap-hover:hover {
