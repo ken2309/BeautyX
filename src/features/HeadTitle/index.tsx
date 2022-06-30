@@ -14,7 +14,7 @@ function HeadTitle(props: IProps) {
 
       let t: string = "BeautyX";
       if (IS_MB) {
-            return document.title = t
+            document.title = t
       }
       else {
             document.title = FLAT_FORM === FLAT_FORM_TYPE.MOMO ? 'BeautyX' : `${title} - ${FLAT_FORM}`
