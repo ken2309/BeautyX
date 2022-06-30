@@ -62,44 +62,44 @@ export default function HomeBannerResult() {
 
   return (
     <>
-    <ExtraFlatForm />
-            {FLAT_FORM === "BEAUTYX" && IS_MB ? <HeadMobile title={dataBanner.name}/>:<Head IN_HOME={false} />}
-    <Container>
-      <div className="landing-page">
-        {/* <button
+      <ExtraFlatForm />
+      {IS_MB ? <HeadMobile title={dataBanner.name} /> : <Head IN_HOME={false} />}
+      <Container>
+        <div className="landing-page">
+          {/* <button
           onClick={() => history.goBack()}
           className="landing-page__back-btn"
         >
           <img src={icon.backWhite} alt="" />
         </button> */}
-        <div
-          className="landing-page__hero-banner"
-        >
-          <img src={dataBanner.imageURL} onError={(e) => onErrorImg(e)} alt="" />
-        </div>
+          <div
+            className="landing-page__hero-banner"
+          >
+            <img src={dataBanner.imageURL} onError={(e) => onErrorImg(e)} alt="" />
+          </div>
 
-        <Container className="landing-page__body">
-          {/* <div className="landing-page__body__title">
+          <Container className="landing-page__body">
+            {/* <div className="landing-page__body__title">
             {dataBanner.name}
           </div> */}
-          {
-            data.loading
-              ?
-              'loading'
-              :
-              <ul className="landing-page__body__list-items">
-                {data.services.map((item: IServicePromo, index: number) => (
-                  <li className="home-recomment__item" key={index}>
-                    <ServicePromoItem service={item} />
-                  </li>
-                ))}
-              </ul>
-          }
-        </Container>
-      </div>
-    </Container>
-    <Footer />
-    <Bottom />
+            {
+              data.loading
+                ?
+                'loading'
+                :
+                <ul className="landing-page__body__list-items">
+                  {data.services.map((item: IServicePromo, index: number) => (
+                    <li className="home-recomment__item" key={index}>
+                      <ServicePromoItem service={item} />
+                    </li>
+                  ))}
+                </ul>
+            }
+          </Container>
+        </div>
+      </Container>
+      <Footer />
+      <Bottom />
     </>
   )
 }
