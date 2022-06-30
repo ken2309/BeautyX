@@ -40,31 +40,26 @@ function OrgCombos(props: IProps) {
     }
     return (
         <div className="org-services-cnt">
-            {
-                (totalItem > 0 && status === STATUS.SUCCESS)
-                    ?
-                    <InfiniteScroll
-                        dataLength={combos.length}
-                        hasMore={true}
-                        next={onViewMore}
-                        loader={<></>}
-                    >
-                        <ul className="org-combos-cnt__right">
-                            {
-                                combos.map((item: any, index: number) => (
-                                    <li key={index}>
-                                        <OrgComboItem
-                                            org={org}
-                                            combo={item}
-                                        />
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                    </InfiniteScroll>
-                    :
-                    <EmptyRes title='Không có combo phù hợp!'/>
-            }
+            {totalItem === 0 && status === STATUS.SUCCESS && <EmptyRes title='Không có dịch vụ phù hợp!' />}
+            <InfiniteScroll
+                dataLength={combos.length}
+                hasMore={true}
+                next={onViewMore}
+                loader={<></>}
+            >
+                <ul className="org-combos-cnt__right">
+                    {
+                        combos.map((item: any, index: number) => (
+                            <li key={index}>
+                                <OrgComboItem
+                                    org={org}
+                                    combo={item}
+                                />
+                            </li>
+                        ))
+                    }
+                </ul>
+            </InfiniteScroll>
         </div>
     );
 }

@@ -77,7 +77,7 @@ function OrgServices(props: IProps) {
         <div className="org-services-cnt">
             {
                 totalItem > 0 && (
-                    (categories && categories.filter((e:any) => e.services_count > 0).length > 0)
+                    (categories && categories.filter((e: any) => e.services_count > 0).length > 0)
                     &&
                     <div className="org-services-cnt__left">
                         <ul className="cates-list">
@@ -142,26 +142,21 @@ function OrgServices(props: IProps) {
                 )
             }
             <div className="org-services-cnt__right">
-                {
-                    (totalItem > 0 && status === STATUS.SUCCESS)
-                        ?
-                        <InfiniteScroll
-                            dataLength={services.length}
-                            hasMore={true}
-                            next={onViewMore}
-                            loader={<></>}
-                        >
-                            <ul className="org-services-cnt__right-list">
-                                {services.map((item: Service, index: number) => (
-                                    <li key={index}>
-                                        <OrgServiceItem org={org} service={item} />
-                                    </li>
-                                ))}
-                            </ul>
-                        </InfiniteScroll>
-                        :
-                        <EmptyRes title='Không có dịch vụ phù hợp!' />
-                }
+                {totalItem === 0 && status === STATUS.SUCCESS && <EmptyRes title='Không có dịch vụ phù hợp!' />}
+                <InfiniteScroll
+                    dataLength={services.length}
+                    hasMore={true}
+                    next={onViewMore}
+                    loader={<></>}
+                >
+                    <ul className="org-services-cnt__right-list">
+                        {services.map((item: Service, index: number) => (
+                            <li key={index}>
+                                <OrgServiceItem org={org} service={item} />
+                            </li>
+                        ))}
+                    </ul>
+                </InfiniteScroll>
             </div>
         </div>
     );

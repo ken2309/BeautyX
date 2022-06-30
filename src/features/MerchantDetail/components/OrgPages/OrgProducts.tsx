@@ -75,71 +75,71 @@ function OrgProducts(props: IProps) {
         <div className="org-services-cnt">
             {
                 totalItem > 0 && (
-                    (categories && categories.filter((e:any)=>e.products_count>0).length > 0)
+                    (categories && categories.filter((e: any) => e.products_count > 0).length > 0)
                     &&
-            <div className="org-services-cnt__left">
-                <ul className="cates-list">
-                    <li
-                        onClick={() => handleChooseCate(null)}
-                        style={
-                            !choose_cate
-                                ? {
-                                    color: "#fff",
-                                    backgroundColor: "var(--purple)",
+                    <div className="org-services-cnt__left">
+                        <ul className="cates-list">
+                            <li
+                                onClick={() => handleChooseCate(null)}
+                                style={
+                                    !choose_cate
+                                        ? {
+                                            color: "#fff",
+                                            backgroundColor: "var(--purple)",
+                                        }
+                                        : {}
                                 }
-                                : {}
-                        }
-                        className="cate-list__item"
-                    >
-                        <span
-                            style={
-                                !choose_cate
-                                    ? {
-                                        color: "#fff",
-                                    }
-                                    : {}
-                            }
-                            className="cate-list__item-title"
-                        >
-                            {t("cart.all")}
-                        </span>
-                    </li>
-                    {
-                        categories
-                            .filter((i: any) => i.products_count > 0)
-                            .map((item: any, index: number) => (
-                                <li
+                                className="cate-list__item"
+                            >
+                                <span
                                     style={
-                                        choose_cate === item.id
+                                        !choose_cate
                                             ? {
                                                 color: "#fff",
-                                                backgroundColor: "var(--purple)",
                                             }
                                             : {}
                                     }
-                                    onClick={() => handleChooseCate(item.id)}
-                                    className="cate-list__item"
-                                    key={index}
+                                    className="cate-list__item-title"
                                 >
-                                    <span
-                                        style={
-                                            choose_cate === item.id
-                                                ? {
-                                                    color: "#fff",
+                                    {t("cart.all")}
+                                </span>
+                            </li>
+                            {
+                                categories
+                                    .filter((i: any) => i.products_count > 0)
+                                    .map((item: any, index: number) => (
+                                        <li
+                                            style={
+                                                choose_cate === item.id
+                                                    ? {
+                                                        color: "#fff",
+                                                        backgroundColor: "var(--purple)",
+                                                    }
+                                                    : {}
+                                            }
+                                            onClick={() => handleChooseCate(item.id)}
+                                            className="cate-list__item"
+                                            key={index}
+                                        >
+                                            <span
+                                                style={
+                                                    choose_cate === item.id
+                                                        ? {
+                                                            color: "#fff",
+                                                        }
+                                                        : {}
                                                 }
-                                                : {}
-                                        }
-                                        className="cate-list__item-title"
-                                    >
-                                        {item.name}
-                                    </span>
-                                </li>
-                            ))}
-                </ul>
-            </div>
+                                                className="cate-list__item-title"
+                                            >
+                                                {item.name}
+                                            </span>
+                                        </li>
+                                    ))}
+                        </ul>
+                    </div>
                 )
             }
-            <div className="org-services-cnt__right">
+            {/* <div className="org-services-cnt__right">
                 {
                     (totalItem > 0 && status === STATUS.SUCCESS)
                         ?
@@ -160,6 +160,23 @@ function OrgProducts(props: IProps) {
                         :
                         <EmptyRes title='Không có sản phẩm phù hợp!' />
                 }
+            </div> */}
+            <div className="org-services-cnt__right">
+                {totalItem === 0 && status === STATUS.SUCCESS && <EmptyRes title='Không có sản phẩm phù hợp!' />}
+                <InfiniteScroll
+                    dataLength={products.length}
+                    hasMore={true}
+                    next={onViewMore}
+                    loader={<></>}
+                >
+                    <ul className="org-services-cnt__right-list">
+                        {products.map((item: Product, index: number) => (
+                            <li key={index}>
+                                <OrgProductItem org={org} product={item} />
+                            </li>
+                        ))}
+                    </ul>
+                </InfiniteScroll>
             </div>
         </div>
     );
