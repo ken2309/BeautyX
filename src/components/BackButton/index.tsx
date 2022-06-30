@@ -15,7 +15,7 @@ function BackButton(props: any) {
                   setStep(1)
             }
             else {
-                  history.goBack()
+                  history.goBack()||history.push('/')
             }
       }
       return (
