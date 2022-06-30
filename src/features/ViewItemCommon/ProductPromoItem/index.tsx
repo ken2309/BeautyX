@@ -2,11 +2,11 @@ import React from 'react';
 import '../ServicePromoItem/service-promo-item.css';
 import { IProductPromo } from '../../../interface/productPromo'
 import { Link } from 'react-router-dom';
-import slugify from '../../../utils/formatUrlString';
 import onErrorImg from '../../../utils/errorImg';
 import icon from '../../../constants/icon';
 import formatPrice from '../../../utils/formatPrice';
 import scrollTop from '../../../utils/scrollTop';
+import { formatRouterLinkProductPromo } from '../../../utils/formatRouterLink/formatRouter';
 
 interface IProps {
     product: IProductPromo
@@ -14,12 +14,10 @@ interface IProps {
 
 function ProductPromoItem(props: IProps) {
     const { product } = props;
+    const pathProductOb = formatRouterLinkProductPromo(product);
     return (
         <Link
-            to={{
-                pathname: `/product-detail/${slugify(product?.product_name)}`,
-                search: `id=${product?.product_id}&org=${product?.org_id}`,
-            }}
+            to={pathProductOb}
             onClick={() => scrollTop()}
             className="ser-pro-item"
         >

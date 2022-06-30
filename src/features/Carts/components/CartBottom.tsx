@@ -46,11 +46,10 @@ function CartBottom(props: any) {
         try {
             const response = await order.postOrder(DATA_PMT.org.id, pickBy(pramsOrder, identity));
             const state_payment = await response.data.context
-            const desc = await state_payment.payment_gateway.description;
             const transaction_uuid = state_payment.payment_gateway.transaction_uuid;
             if (response.data.context.status !== "CANCELED") {
                 history.push({
-                    pathname: `/trang-thai-don-hang/${desc}`,
+                    pathname: `/trang-thai-don-hang/`,
                     search: transaction_uuid,
                     state: { state_payment }
                 })

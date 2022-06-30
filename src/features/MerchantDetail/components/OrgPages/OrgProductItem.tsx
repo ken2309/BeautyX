@@ -5,8 +5,8 @@ import onErrorImg from '../../../../utils/errorImg';
 import formatPrice from '../../../../utils/formatPrice';
 import icon from '../../../../constants/icon';
 import scrollTop from '../../../../utils/scrollTop';
-import slugify from '../../../../utils/formatUrlString';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { formatRouterLinkProduct } from '../../../../utils/formatRouterLink/formatRouter';
 
 interface IProps {
     product: Product,
@@ -15,13 +15,10 @@ interface IProps {
 
 function OrgProductItem(props: IProps) {
     const { product, org } = props;
+    const pathProductOb = formatRouterLinkProduct(product, org);
     return (
         <Link
-            to={{
-                pathname: `/product-detail/${slugify(product?.product_name)}`,
-                search: `id=${product.id}&org=${org.id}`,
-                state: { org, product },
-            }}
+            to={pathProductOb}
             onClick={() => scrollTop()}
         >
             <div className="org-special-item">

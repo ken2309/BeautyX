@@ -1,7 +1,6 @@
 import React from 'react';
 import { IServicePromo } from '../../../interface/servicePromo';
 import { Link } from 'react-router-dom'
-import slugify from '../../../utils/formatUrlString';
 import onErrorImg from '../../../utils/errorImg';
 import formatPrice from '../../../utils/formatPrice';
 import icon from '../../../constants/icon';
@@ -10,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { formatDistance } from '../../../utils/format';
 import scrollTop from '../../../utils/scrollTop';
 import { onSetStatusService } from '../../../redux/org_services/serviceSlice'
+import { formatRouterLinkServicePromo } from '../../../utils/formatRouterLink/formatRouter';
 
 interface IProps {
     service: IServicePromo
@@ -24,12 +24,10 @@ function ServiceResultItem(props: IProps) {
         dispatch(onToggleSearchCnt(false))
         dispatch(onSetStatusService("LOADING"))
     }
+    const pathServiceOb = formatRouterLinkServicePromo(service)
     return (
         <Link
-            to={{
-                pathname: `/dich-vu/${slugify(service?.service_name)}`,
-                search: `id=${service.service_id}&org=${service.org_id}`,
-            }}
+            to={pathServiceOb}
             className="service-result-item"
             onClick={onItemClick}
         >

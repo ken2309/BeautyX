@@ -5,8 +5,8 @@ import { IOrganization } from "../../../interface/organization";
 import formatPrice from "../../../utils/formatPrice";
 import onErrorImg from "../../../utils/errorImg";
 import { Link } from "react-router-dom";
-import slugify from "../../../utils/formatUrlString";
 import scrollTop from "../../../utils/scrollTop";
+import { formatRouterLinkProduct } from "../../../utils/formatRouterLink/formatRouter";
 
 interface IProps {
     product: Product;
@@ -19,13 +19,10 @@ function ProductItem(props: IProps) {
     const percent = Math.round(
         100 - (product?.special_price / product?.retail_price) * 100
     );
+    const pathProductOb = formatRouterLinkProduct(product, org);
     return (
         <Link
-            to={{
-                pathname: `/product-detail/${slugify(product?.product_name)}`,
-                search: `id=${product?.id}&org=${org?.id}`,
-                state: { org, product },
-            }}
+            to={pathProductOb}
             onClick={() => scrollTop()}
             className={
                 changeStyle

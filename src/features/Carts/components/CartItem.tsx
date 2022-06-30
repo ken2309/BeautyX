@@ -13,7 +13,6 @@ import { useDispatch } from "react-redux";
 import icon from "../../../constants/icon";
 import formatPrice from "../../../utils/formatPrice";
 import PopupConfirm from "../../popupConfirm/index";
-import slugify from "../../../utils/formatUrlString";
 import { useHistory } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import onErrorImg from "../../../utils/errorImg";
@@ -27,6 +26,11 @@ import {
     Type,
 } from 'react-swipeable-list';
 import 'react-swipeable-list/dist/styles.css';
+import {
+    formatRouterLinkDiscount,
+    formatRouterLinkProduct,
+    formatRouterLinkService
+} from "../../../utils/formatRouterLink/formatRouter";
 
 interface IProps {
     inPayment?: boolean;
@@ -76,39 +80,17 @@ function CartItem(props: IProps) {
     };
     const goBackDetail = () => {
         if (cartItem.is_type === 1) {
-            history.push({
-                pathname: `/product-detail/${slugify(cartItem.name)}`,
-                search: `id=${cartItem.id}&org=${cartItem.org_id}`,
-            });
+            const pathProductOb = formatRouterLinkProduct(cartItem.cart_item, cartItem.org)
+            history.push(pathProductOb);
         } else if (cartItem.is_type === 2) {
             if (cartItem.discount) {
                 const discount = cartItem.discount;
                 const discountItem = discount.items.find((val: any) => val.productable_id === cartItem.id);
-                const onCheckType = () => {
-                    let type;
-                    switch (discountItem.productable_type) {
-                        case "App\\Models\\CI\\Service":
-                            type = "service";
-                            break;
-                        case "App\\Models\\CI\\Product":
-                            type = "product";
-                            break;
-                    }
-                    return type;
-                };
-                const type = onCheckType();
-                history.push({
-                    pathname: `/chi-tiet-giam-gia/${slugify(
-                        discountItem.productable.service_name ||
-                        discountItem.productable.product_name
-                    )}`,
-                    search: `type=${type}&org_id=${cartItem.org_id}&dis_id=${discount?.id}&item_id=${discountItem.productable_id}`,
-                });
+                const pathDiscountOb = formatRouterLinkDiscount(discount, discountItem)
+                history.push(pathDiscountOb);
             } else {
-                history.push({
-                    pathname: `/dich-vu/${slugify(cartItem.name)}`,
-                    search: `id=${cartItem.id}&org=${cartItem.org_id}`,
-                });
+                const pathServiceOb = formatRouterLinkService(cartItem.cart_item, cartItem.org)
+                history.push(pathServiceOb);
             }
         } else if (cartItem.is_type === 3) {
             //page combo detail

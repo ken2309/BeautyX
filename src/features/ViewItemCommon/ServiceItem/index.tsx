@@ -5,8 +5,8 @@ import "../ServicePromoItem/service-promo-item.css";
 import { Service } from "../../../interface/service";
 import { IOrganization } from "../../../interface/organization";
 import { useHistory } from "react-router-dom";
-import slugify from "../../../utils/formatUrlString";
 import scrollTop from "../../../utils/scrollTop";
+import { formatRouterLinkService } from "../../../utils/formatRouterLink/formatRouter";
 
 interface IProps {
     service: Service;
@@ -20,13 +20,10 @@ function ServiceItem(props: IProps) {
     const percent: any = Math.round(
         100 - (service?.special_price / service?.price) * 100
     );
+    const pathServiceOb = formatRouterLinkService(service, org)
     const onDetail = () => {
         scrollTop();
-        history.push({
-            pathname: `/dich-vu/${slugify(service?.service_name)}`,
-            search: `id=${service.id}?org=${org?.id}`,
-            state: { org, service },
-        });
+        history.push(pathServiceOb);
     };
     return (
         <div

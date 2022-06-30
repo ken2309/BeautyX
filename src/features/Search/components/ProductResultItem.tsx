@@ -8,8 +8,8 @@ import { onToggleSearchCnt } from '../../../redux/search/searchSlice';
 import onErrorImg from '../../../utils/errorImg';
 import { formatDistance } from '../../../utils/format';
 import formatPrice from '../../../utils/formatPrice';
-import slugify from '../../../utils/formatUrlString';
 import scrollTop from '../../../utils/scrollTop';
+import { formatRouterLinkProductPromo } from '../../../utils/formatRouterLink/formatRouter';
 
 interface IProps {
     product: IProductPromo
@@ -25,13 +25,11 @@ function ProductResultItem(props: IProps) {
         dispatch(onToggleSearchCnt(false))
         dispatch(onSetStatusProduct("LOADING"))
     }
+    const pathProductOb = formatRouterLinkProductPromo(product);
 
     return (
         <Link
-            to={{
-                pathname: `/product-detail/${slugify(product?.product_name)}`,
-                search: `id=${product?.product_id}&org=${product?.org_id}`,
-            }}
+            to={pathProductOb}
             className="service-result-item"
             onClick={onItemClick}
         >

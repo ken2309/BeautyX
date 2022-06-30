@@ -3,7 +3,7 @@ import { IDiscountPar, IITEMS_DISCOUNT } from "../../../../interface/discount";
 import formatDate from "../../../../utils/formatDate";
 import formatPrice from "../../../../utils/formatPrice";
 import { useHistory } from "react-router-dom";
-import slugify from "../../../../utils/formatUrlString";
+import { formatRouterLinkDiscount } from "../../../../utils/formatRouterLink/formatRouter";
 
 interface IProps {
     discountPar: IDiscountPar;
@@ -13,28 +13,9 @@ interface IProps {
 function DiscountItem(props: IProps) {
     const history = useHistory();
     const { discountPar, discountItem } = props;
-    const org = discountItem?.organization;
-    const onCheckType = () => {
-        let type;
-        switch (discountItem.productable_type) {
-            case "App\\Models\\CI\\Service":
-                type = "service";
-                break;
-            case "App\\Models\\CI\\Product":
-                type = "product";
-                break;
-        }
-        return type;
-    };
+    const pathDiscountOb = formatRouterLinkDiscount(discountPar, discountItem);
     const onDetail = () => {
-        const type = onCheckType();
-        history.push({
-            pathname: `/chi-tiet-giam-gia/${slugify(
-                discountItem.productable.service_name ||
-                discountItem.productable.product_name
-            )}`,
-            search: `type=${type}&org_id=${org?.id}&dis_id=${discountPar?.id}&item_id=${discountItem.productable_id}`,
-        });
+        history.push(pathDiscountOb);
     };
     return (
         <li onClick={onDetail} className="discount-item">

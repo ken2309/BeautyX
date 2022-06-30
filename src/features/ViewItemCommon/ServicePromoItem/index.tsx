@@ -4,21 +4,19 @@ import { IServicePromo } from "../../../interface/servicePromo";
 import icon from "../../../constants/icon";
 import formatPrice from "../../../utils/formatPrice";
 import { Link } from "react-router-dom";
-import slugify from "../../../utils/formatUrlString";
 import onErrorImg from "../../../utils/errorImg";
 import scrollTop from "../../../utils/scrollTop";
+import { formatRouterLinkServicePromo } from "../../../utils/formatRouterLink/formatRouter";
 interface IProps {
     service: IServicePromo;
 }
 
 function ServicePromoItem(props: IProps) {
     const { service } = props;
+    const patchServiceOb = formatRouterLinkServicePromo(service);
     return (
         <Link
-            to={{
-                pathname: `/dich-vu/${slugify(service?.service_name)}`,
-                search: `id=${service.service_id}&org=${service.org_id}`,
-            }}
+            to={patchServiceOb}
             onClick={() => scrollTop()}
             className="ser-pro-item"
         >
@@ -35,7 +33,7 @@ function ServicePromoItem(props: IProps) {
                 />
                 <div className="ser-promo">
                     {service.discount_percent > 0 &&
-                    service.discount_percent < 50 ? (
+                        service.discount_percent < 50 ? (
                         <div className="ser-promo__percent">
                             Giảm {Math.round(service?.discount_percent)}%
                         </div>
@@ -78,8 +76,8 @@ function ServicePromoItem(props: IProps) {
                             {service._geoDistance < 1000
                                 ? `${service._geoDistance}(m)`
                                 : `${Math.round(
-                                      service._geoDistance / 1000
-                                  )}(km)`}
+                                    service._geoDistance / 1000
+                                )}(km)`}
                         </span>
                     </div>
                 ) : (

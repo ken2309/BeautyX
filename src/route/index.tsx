@@ -224,7 +224,7 @@ function RouterConfig(props: any) {
       component: Notification,
     },
     {
-      path: '/trang-thai-don-hang/:desc',
+      path: '/trang-thai-don-hang/',
       component: CartPaymentStatus
     },
     {

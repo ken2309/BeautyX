@@ -54,7 +54,7 @@ function Booking() {
     const branchRef = useRef<any>();
     const history = useHistory();
     const location: any = useLocation();
-    console.log(location)
+    
     const callOrgDetail = () => {
         if (location.state.org.id !== org?.id || status !== STATUS.SUCCESS) {
             dispatch(fetchAsyncOrg(location.state.org.id))
@@ -137,7 +137,7 @@ function Booking() {
     })
     const dayBook = formatDatePost(bookTime.date);
     const action = {
-        note: "",
+        note: bookTime.note,
         time_start: `${dayBook} ${bookTime.time}:00`,
         branch_id: bookTime.branch_id,
         order_id: location.state.order_id,
@@ -362,6 +362,7 @@ function Booking() {
                             <span className="book-section-title">Ghi chú</span>
                             <br />
                             <textarea
+                                onChange={(e) => setBookTime({ ...bookTime, note: e.target.value })}
                                 name=""
                                 id=""
                                 cols={30}

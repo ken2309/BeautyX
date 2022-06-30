@@ -5,8 +5,8 @@ import onErrorImg from '../../../../utils/errorImg';
 import formatPrice from '../../../../utils/formatPrice';
 import icon from '../../../../constants/icon';
 import scrollTop from '../../../../utils/scrollTop';
-import slugify from '../../../../utils/formatUrlString';
 import { Link } from 'react-router-dom';
+import { formatRouterLinkService } from '../../../../utils/formatRouterLink/formatRouter';
 interface IProps {
     service: Service,
     org: IOrganization
@@ -14,13 +14,10 @@ interface IProps {
 
 function OrgServiceItem(props: IProps) {
     const { org, service } = props;
+    const pathServiceOb = formatRouterLinkService(service, org);
     return (
         <Link
-            to={{
-                pathname: `/dich-vu/${slugify(service?.service_name)}`,
-                search: `id=${service.id}&org=${org?.id}`,
-                state: { org, service },
-            }}
+            to={pathServiceOb}
             onClick={() => scrollTop()}
         >
             <div

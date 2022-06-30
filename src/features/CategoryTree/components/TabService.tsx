@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import onErrorImg from '../../../utils/errorImg';
 import formatNumber from '../../../utils/formatPrice';
-import slugify from '../../../utils/formatUrlString';
 import { fetchServiceByCateChild } from '../../../redux/CateTree/cateTreeSlice';
 import { STATUS } from '../../../redux/status'
 import { useEffect } from 'react';
 import scrollTop from '../../../utils/scrollTop';
+import { formatRouterLinkServicePromo } from '../../../utils/formatRouterLink/formatRouter';
 
 function TabService(props: any) {
     const { catesChild, CATE } = props;
@@ -35,10 +35,8 @@ function TabService(props: any) {
     const history = useHistory();
     const onServiceDetail = (service: any) => {
         scrollTop();
-        history.push({
-            pathname: `/dich-vu/${slugify(service?.service_name)}`,
-            search: `id=${service.service_id}&org=${service?.org_id}`,
-        })
+        const pathServiceOb = formatRouterLinkServicePromo(service);
+        history.push(pathServiceOb)
     }
     return (
         <div>

@@ -1,44 +1,25 @@
 import React from "react";
 import {
     IDiscountPar,
-    //IITEMS_DISCOUNT
+    IITEMS_DISCOUNT
 } from "../../interface/discount";
 import onErrorImg from "../../utils/errorImg";
 import formatPrice from "../../utils/formatPrice";
 import icon from "../../constants/icon";
 import { useHistory } from "react-router-dom";
-import slugify from "../../utils/formatUrlString";
+import { formatRouterLinkDiscount } from "../../utils/formatRouterLink/formatRouter";
 
 interface IProps {
     discountPar: IDiscountPar;
-    discountItem: any;
+    discountItem: IITEMS_DISCOUNT;
 }
 
 function DiscountItem(props: IProps) {
     const { discountPar, discountItem } = props;
-    const org = discountItem?.organization;
-    const onCheckType = () => {
-        let type;
-        switch (discountItem.productable_type) {
-            case "App\\Models\\CI\\Service":
-                type = "service";
-                break;
-            case "App\\Models\\CI\\Product":
-                type = "product";
-                break;
-        }
-        return type;
-    };
-    const type = onCheckType();
+    const pathDiscountOb = formatRouterLinkDiscount(discountPar, discountItem)
     const history = useHistory();
     const onDetail = () => {
-        history.push({
-            pathname: `/chi-tiet-giam-gia/${slugify(
-                discountItem.productable.service_name ||
-                    discountItem.productable.product_name
-            )}`,
-            search: `type=${type}&org_id=${org?.id}&dis_id=${discountPar?.id}&item_id=${discountItem.productable_id}`,
-        });
+        history.push(pathDiscountOb);
     };
     return (
         <div onClick={onDetail} className="home-discount-item__cnt">
@@ -72,15 +53,14 @@ function DiscountItem(props: IProps) {
                     <div
                         style={
                             !discountPar.total ||
-                            discountPar.total === discountPar.used
+                                discountPar.total === discountPar.used
                                 ? { width: "100%" }
                                 : {
-                                      width: `${
-                                          (discountPar.used /
-                                              discountPar.total) *
-                                          100
-                                      }%`,
-                                  }
+                                    width: `${(discountPar.used /
+                                        discountPar.total) *
+                                        100
+                                        }%`,
+                                }
                         }
                         className="limit-bar__used"
                     ></div>
