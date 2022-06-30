@@ -1,10 +1,9 @@
 import { Dialog } from "@mui/material";
 import React from "react";
-import icon from "../../../../constants/icon";
-import useFullScreen from "../../../../utils/useFullScreen";
+import icon from "../../constants/icon";
 import MapContent from "./MapContent";
 import "./style.css";
-export default function MapTags(props: any) {
+export default function Map(props: any) {
     const { open, setOpenMap, data } = props;
     return (
         <Dialog
@@ -14,7 +13,7 @@ export default function MapTags(props: any) {
                 setOpenMap(false);
             }}
         >
-            <div className="maptags">
+            <div className="map">
                 <div
                     onClick={() => setOpenMap(false)}
                     className="dialog-map__close"

@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import icon from "../../../../constants/icon";
+import icon from "../../constants/icon";
 
 export default function MapTagsItemMB(props: any) {
     const { item } = props;
