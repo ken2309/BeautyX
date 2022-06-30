@@ -29,7 +29,6 @@ import ModalLoad from "../../components/ModalLoad";
 //import { clearProducts } from '../../redux/org_products/orgProductsSlice';
 import PageNotFound from "../../components/PageNotFound";
 
-
 function MerchantDetail() {
   const IS_MB = useFullScreen();
   const location: any = useLocation();

@@ -13,7 +13,7 @@ import {
 } from "../../../../redux/org_products/orgProductsSlice";
 import OrgProductItem from "./OrgProductItem";
 import { AppContext } from "../../../../context/AppProvider";
-
+import EmptyRes from '../../../EmptyRes';
 interface IProps {
     org: IOrganization;
 }
@@ -73,6 +73,10 @@ function OrgProducts(props: IProps) {
     };
     return (
         <div className="org-services-cnt">
+            {
+                totalItem > 0 && (
+                    (categories && categories.filter((e:any)=>e.products_count>0).length > 0)
+                    &&
             <div className="org-services-cnt__left">
                 <ul className="cates-list">
                     <li
@@ -133,21 +137,29 @@ function OrgProducts(props: IProps) {
                             ))}
                 </ul>
             </div>
+                )
+            }
             <div className="org-services-cnt__right">
-                <InfiniteScroll
-                    dataLength={products.length}
-                    hasMore={true}
-                    next={onViewMore}
-                    loader={<></>}
-                >
-                    <ul className="org-services-cnt__right-list">
-                        {products.map((item: Product, index: number) => (
-                            <li key={index}>
-                                <OrgProductItem org={org} product={item} />
-                            </li>
-                        ))}
-                    </ul>
-                </InfiniteScroll>
+                {
+                    (totalItem > 0 && status === STATUS.SUCCESS)
+                        ?
+                        <InfiniteScroll
+                            dataLength={products.length}
+                            hasMore={true}
+                            next={onViewMore}
+                            loader={<></>}
+                        >
+                            <ul className="org-services-cnt__right-list">
+                                {products.map((item: Product, index: number) => (
+                                    <li key={index}>
+                                        <OrgProductItem org={org} product={item} />
+                                    </li>
+                                ))}
+                            </ul>
+                        </InfiniteScroll>
+                        :
+                        <EmptyRes title='Không có sản phẩm phù hợp!' />
+                }
             </div>
         </div>
     );

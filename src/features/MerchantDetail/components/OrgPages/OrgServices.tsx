@@ -13,7 +13,7 @@ import OrgServiceItem from "./OrgServiceItem";
 import { STATUS } from "../../../../redux/status";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { AppContext } from "../../../../context/AppProvider";
-
+import EmptyRes from '../../../EmptyRes';
 interface IProps {
     org: IOrganization;
 }
@@ -75,81 +75,93 @@ function OrgServices(props: IProps) {
 
     return (
         <div className="org-services-cnt">
-            <div className="org-services-cnt__left">
-                <ul className="cates-list">
-                    <li
-                        onClick={() => handleChooseCate(null)}
-                        style={
-                            !choose_cate
-                                ? {
-                                    color: "var(--bgWhite)",
-                                    backgroundColor: "var(--purple)",
+            {
+                totalItem > 0 && (
+                    (categories && categories.filter((e:any) => e.services_count > 0).length > 0)
+                    &&
+                    <div className="org-services-cnt__left">
+                        <ul className="cates-list">
+                            <li
+                                onClick={() => handleChooseCate(null)}
+                                style={
+                                    !choose_cate
+                                        ? {
+                                            color: "var(--bgWhite)",
+                                            backgroundColor: "var(--purple)",
+                                        }
+                                        : {}
                                 }
-                                : {}
-                        }
-                        className="cate-list__item"
-                    >
-                        <span
-                            style={
-                                !choose_cate
-                                    ? {
-                                        color: "var(--bgWhite)",
-                                    }
-                                    : {}
-                            }
-                            className="cate-list__item-title"
-                        >
-                            {t("cart.all")}
-                        </span>
-                    </li>
-                    {
-                        categories
-                            .filter((i: any) => i.services_count > 0)
-                            .map((item: any, index: number) => (
-                                <li
+                                className="cate-list__item"
+                            >
+                                <span
                                     style={
-                                        choose_cate === item.id
+                                        !choose_cate
                                             ? {
-                                                color: "#fff",
-                                                backgroundColor: "var(--purple)",
+                                                color: "var(--bgWhite)",
                                             }
                                             : {}
                                     }
-                                    onClick={() => handleChooseCate(item.id)}
-                                    className="cate-list__item"
-                                    key={index}
+                                    className="cate-list__item-title"
                                 >
-                                    <span
-                                        style={
-                                            choose_cate === item.id
-                                                ? {
-                                                    color: "#fff",
-                                                }
-                                                : {}
-                                        }
-                                        className="cate-list__item-title"
-                                    >
-                                        {item.name}
-                                    </span>
-                                </li>
-                            ))}
-                </ul>
-            </div>
-            <div className="org-services-cnt__right">
-                <InfiniteScroll
-                    dataLength={services.length}
-                    hasMore={true}
-                    next={onViewMore}
-                    loader={<></>}
-                >
-                    <ul className="org-services-cnt__right-list">
-                        {services.map((item: Service, index: number) => (
-                            <li key={index}>
-                                <OrgServiceItem org={org} service={item} />
+                                    {t("cart.all")}
+                                </span>
                             </li>
-                        ))}
-                    </ul>
-                </InfiniteScroll>
+                            {
+                                categories
+                                    .filter((i: any) => i.services_count > 0)
+                                    .map((item: any, index: number) => (
+                                        <li
+                                            style={
+                                                choose_cate === item.id
+                                                    ? {
+                                                        color: "#fff",
+                                                        backgroundColor: "var(--purple)",
+                                                    }
+                                                    : {}
+                                            }
+                                            onClick={() => handleChooseCate(item.id)}
+                                            className="cate-list__item"
+                                            key={index}
+                                        >
+                                            <span
+                                                style={
+                                                    choose_cate === item.id
+                                                        ? {
+                                                            color: "#fff",
+                                                        }
+                                                        : {}
+                                                }
+                                                className="cate-list__item-title"
+                                            >
+                                                {item.name}
+                                            </span>
+                                        </li>
+                                    ))}
+                        </ul>
+                    </div>
+                )
+            }
+            <div className="org-services-cnt__right">
+                {
+                    (totalItem > 0 && status === STATUS.SUCCESS)
+                        ?
+                        <InfiniteScroll
+                            dataLength={services.length}
+                            hasMore={true}
+                            next={onViewMore}
+                            loader={<></>}
+                        >
+                            <ul className="org-services-cnt__right-list">
+                                {services.map((item: Service, index: number) => (
+                                    <li key={index}>
+                                        <OrgServiceItem org={org} service={item} />
+                                    </li>
+                                ))}
+                            </ul>
+                        </InfiniteScroll>
+                        :
+                        <EmptyRes title='Không có dịch vụ phù hợp!' />
+                }
             </div>
         </div>
     );
