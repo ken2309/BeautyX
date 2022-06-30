@@ -145,7 +145,6 @@ export default function HomeBanner() {
     useEffect(() => {
         banners.length>0&&setChooseBanner(banners[0])
     }, [banners])
-    console.log(banners.length, 'chooseBanner', chooseBanner);
     return (
         <div className="homepage-banner">
             <Container>
