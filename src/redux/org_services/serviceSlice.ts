@@ -107,7 +107,7 @@ const initialState = {
     SERVICE: {
         service: {},
         status: "",
-        org_id: null
+        org_id: null,
     },
     SERVICES_REC: {
         services: [],
@@ -122,7 +122,7 @@ const initialState = {
         status_cmt: "",
     },
 };
-const serviceSlice = createSlice({
+const serviceSlice: any = createSlice({
     initialState,
     name: "SERVICE",
     reducers: {
@@ -160,7 +160,7 @@ const serviceSlice = createSlice({
                 SERVICE: {
                     service: service,
                     status: STATUS.SUCCESS,
-                    org_id: org_id
+                    org_id: org_id,
                 },
             };
         },

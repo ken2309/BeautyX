@@ -45,9 +45,7 @@ function EvaluateInput(props: IProps) {
         let formData = new FormData();
         formData.append("file", media);
         try {
-            // const res = await mediaApi.postMedia(formData);
-            const res = await dispatch(postAsyncMediaComment(media));
-            console.log(res);
+            await dispatch(postAsyncMediaComment(media));
             setComment({
                 ...comment,
                 image_url: COMMENT_STORE.image_url,

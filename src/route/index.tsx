@@ -52,7 +52,7 @@ import AssistantBtn from "../components/AssistantBtn";
 import ProductsByCate from "../features/CategoryTree/ProductsByCate";
 
 const RouterPage = (
-  props: { pageComponent: JSX.Element } & RouteComponentProps
+    props: { pageComponent: JSX.Element } & RouteComponentProps
 ) => props.pageComponent;
 function RouterConfig(props: any) {
   const USER = useSelector((state: any) => state.USER);

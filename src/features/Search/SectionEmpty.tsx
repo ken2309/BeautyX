@@ -79,9 +79,10 @@ function SectionEmpty() {
                     </ul>
                     <ul className="keyword-list">
                         {filterKeyWord.map((item: any, index: number) => (
-                            <li 
-                                onClick={()=>onGotoFilterResult(item)}
-                                className="keyword-item" key={index}
+                            <li
+                                onClick={() => onGotoFilterResult(item)}
+                                className="keyword-item"
+                                key={index}
                             >
                                 <div className="flexX-gap-8">
                                     <img
@@ -96,7 +97,11 @@ function SectionEmpty() {
                                 <img
                                     className="cursor-pointer"
                                     style={{ width: "24px" }}
-                                    onClick={() => handleRemoveKeyWord(item)}
+                                    onClick={(e) => {
+                                        handleRemoveKeyWord(item);
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                    }}
                                     src={icon.x}
                                     alt=""
                                 />

@@ -5,10 +5,10 @@ import React, {
     useRef,
     useState,
 } from "react";
-import icon from "../../../../constants/icon";
-import MapTagsGoogle from "./MapTagsGoogle";
-import MapTagsListMB from "./MapTagsListMB";
-import MapTagsOrgItem from "./MapTagsOrgItem";
+import icon from "../../constants/icon";
+import MapTagsGoogle from "./MapGoogle";
+import MapTagsListMB from "./MapListMB";
+import MapTagsOrgItem from "./MapOrgItem";
 
 export default function MapContent(props: any) {
     const key = process.env.REACT_APP_GOOGLE_MAP_API_KEY;

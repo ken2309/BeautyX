@@ -1,8 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import icon from "../../../../constants/icon";
-import { IOrganization } from "../../../../interface/organization";
-import onErrorImg from "../../../../utils/errorImg";
+import icon from "../../constants/icon";
+import { IOrganization } from "../../interface/organization";
+import onErrorImg from "../../utils/errorImg";
 interface IProps {
     item: IOrganization;
     handleSetLocation: any;

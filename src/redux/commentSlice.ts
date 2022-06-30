@@ -24,7 +24,7 @@ export const postAsyncMediaComment: any = createAsyncThunk(
     }
 );
 const initialState: IInitialState = {
-    image_url: "", 
+    image_url: "",
     status: "",
 };
 const commentSlice = createSlice({
@@ -32,7 +32,7 @@ const commentSlice = createSlice({
     name: "COMMENT",
     reducers: {
         clearPrevState: (state: any) => {
-            console.log('clearPrevState');
+            console.log("clearPrevState");
             state.image_url = "";
         },
     },
@@ -42,10 +42,10 @@ const commentSlice = createSlice({
             return { ...state, status: STATUS.LOADING };
         },
         [postAsyncMediaComment.fulfilled]: (state, { payload }) => {
-            console.log(payload)
+            console.log(payload);
             return {
                 ...state,
-                image_url: payload, 
+                image_url: payload,
                 status: STATUS.SUCCESS,
             };
         },

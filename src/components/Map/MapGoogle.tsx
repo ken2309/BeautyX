@@ -5,9 +5,9 @@ import {
     GoogleMap,
     Marker,
 } from "react-google-maps";
-import icon from "../../../../constants/icon";
 import InfoWindow from "react-google-maps/lib/components/InfoWindow";
-import { IOrganization } from "../../../../interface/organization";
+import icon from "../../constants/icon";
+import { IOrganization } from "../../interface/organization";
 
 const MapTagsGoogle = (props: any) => {
     const { zoom, location, org } = props;

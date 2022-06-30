@@ -16,7 +16,7 @@ import HeadMobile from "../../HeadMobile";
 import useFullScreen from "../../../utils/useFullScreen";
 import BackTopButton from "../../../components/BackTopButton";
 import Footer from "../../Footer";
-import MapTags from "./Components/MapTags";
+import Map from "../../../components/Map/Map";
 
 interface IData {
     orgs: IOrganization[];
@@ -161,7 +161,7 @@ function HomeTags(props: any) {
                     </div>
                 </div>
             </Container>
-            <MapTags data={data.orgs} open={openMap} setOpenMap={setOpenMap} />
+            <Map data={data.orgs} open={openMap} setOpenMap={setOpenMap} />
             <BackTopButton />
             <Footer />
         </>

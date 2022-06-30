@@ -6,7 +6,6 @@ import EvaluateInput from "./EvaluateInput";
 import TotalStartEvaluate from "./TotalStartEvaluate";
 import { useDispatch, useSelector } from "react-redux";
 
-
 import { postAsyncComment } from "../../redux/org_services/serviceSlice";
 import { postAsyncProductComment } from "../../redux/org_products/productSlice";
 import { postCommentCombo } from "../../redux/org_combos/comboSlice";
@@ -80,7 +79,7 @@ function Review(props: IProps) {
         page: 1,
         org_id: id,
         type: commentable_type,
-        body: JSON.stringify({...comment,image_url:COMMENT.image_url}),
+        body: JSON.stringify({ ...comment, image_url: COMMENT.image_url }),
         id: detail_id,
     };
     const values = pickBy(valuesStr, identity);
@@ -93,7 +92,6 @@ function Review(props: IProps) {
                 image_url: null,
             });
             dispatch(clearPrevState());
-            console.log(values);
             switch (commentable_type) {
                 case "ORGANIZATION":
                     return dispatch(
@@ -134,7 +132,7 @@ function Review(props: IProps) {
             handlePostComment();
         }
     };
-    
+
     return (
         <>
             <div className="org-evaluate__cnt">

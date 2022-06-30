@@ -890,6 +890,9 @@
     .mb-cnt {
         z-index: 1;
     }
+    .mb-org-search-cnt {
+        z-index: 99;
+    }
     .org-detail__cnt-bot .org-detail__info {
         grid-gap: 12px 0;
     }
@@ -934,7 +937,7 @@
         padding: 12px 12px 0 12px;
         margin-top: 120px;
         border: none;
-        z-index: 100;
+        z-index: 1;
     }
 
     .org-detail__cnt-bot {

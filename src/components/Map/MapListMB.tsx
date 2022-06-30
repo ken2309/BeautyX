@@ -1,6 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
-import MapTagsItemMB from "./MapTagsItemMB";
+import MapTagsItemMB from "./MapItemMB";
 
 export default function MapTagsListMB(props: any) {
     const { listOrg, handleSetLocation } = props;

@@ -7,15 +7,15 @@ import Footer from "../Footer";
 import Head from "../Head";
 import HeadHomeMobile from "../HeadMobile/HeadHomeMobile";
 import HomeDiscount from "../HomeDiscounts";
-import HomeProvince from "../Homev2/components/HomeProvince";
-import HomeTags from "../Homev2/components/HomeTags";
 import HomeBanner from "./HomeBanner";
 import HomeFavorite from "./HomeFavorite";
 import HomeHotDeal from "./HomeHotDeal";
 //import HomeHotTrend from "./HomeHotTrend";
 import HomeRecomment from "./HomeRecomment";
 import HomeTopService from "./HomeTopService";
-//import HomeBannerResult from "./HomeBanner/homeSearchReasult";
+import HomeBannerResult from "./HomeBanner/homeSearchReasult";
+import HomeTags from "./HomeTags";
+import HomeProvince from "./HomeProvince";
 
 export default function HomePage() {
     const IS_MB = useFullScreen();

@@ -111,10 +111,11 @@
     line-height: 14px;
     font-weight: 500;
 }
-.review-service__text{
+.review-service__text {
     margin-top: 8px;
+    position: relative;
 }
-.review-service__text .review-service__ip{
+.review-service__text .review-service__ip {
     padding: 12px;
     max-width: 100%;
     min-width: 100%;
@@ -124,26 +125,33 @@
     line-height: 26px;
     font-weight: 500;
 }
-.review-service__btn{
+.review-service__btn {
     padding: 12px;
     display: flex;
     justify-content: center;
 }
-.review-service__btn button{
+.review-service__btn button {
     background-color: var(--orange);
     width: 33.33%;
     border-radius: 6px;
 }
+.review-service__upload {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    display: flex;
+    grid-gap: 8px;
+}
 @media only screen and (max-width: 1023px) {
-    .review-service{
+    .review-service {
         width: 100%;
         height: 100%;
         margin-top: 48px;
     }
-    .review-service__star .star-list li{
+    .review-service__star .star-list li {
         width: 20%;
     }
-    .review-service__btn button{
+    .review-service__btn button {
         width: 100%;
     }
 }
