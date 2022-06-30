@@ -53,20 +53,24 @@ function ServiceItem(props: IProps) {
           <span
             onClick={onOpenServiceReview}
             className="treatment-ser-item__out"
+            style={{marginRight:"4px"}}
           >
             Dịch vụ đã sử dụng | Đánh giá
           </span>
         }
         {
           dateExpired &&
-          <span className="treatment-ser-item__out" >
+          <span
+            style={{ backgroundColor: "var(--red-cl)", color: "var(--white)" }}
+            className="treatment-ser-item__out"
+          >
             Dịch vụ đã hết hạn
           </span>
         }
         <div
-          style={
-            service.remain_time === 0 || dateExpired ? { opacity: 0.6 } : {}
-          }
+          // style={
+          //   service.remain_time === 0 || dateExpired ? { opacity: 0.6 } : {}
+          // }
           className="treatment-ser-item"
           onClick={handleAddService}
         >

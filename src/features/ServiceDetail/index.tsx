@@ -160,11 +160,14 @@ function ServiceDetail(props: any) {
 
     const handleBack = () => {
         history.goBack();
+        //console.log(params)
         const values = {
             org_id: params.org,
             ser_id: params.id,
         };
-        dispatch(fetchAsyncServiceDetail(values));
+        if (params.org && params.id) {
+            dispatch(fetchAsyncServiceDetail(values));
+        }
     }
 
     return (

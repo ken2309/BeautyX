@@ -8,7 +8,7 @@ interface IProps {
     user: any;
 }
 export default function CommentItem(props: IProps) {
-    const { comment, user } = props;
+    const { comment } = props;
     const [open, setOpen] = useState(false);
     let body;
     try {
@@ -47,16 +47,20 @@ export default function CommentItem(props: IProps) {
                                 readOnly
                                 name="simple-controlled"
                                 value={body.star}
-                                // onChange={(event, newValue) => {
-                                //     setValue(newValue);
-                                // }}
+                            // onChange={(event, newValue) => {
+                            //     setValue(newValue);
+                            // }}
                             />
                         </div>
                     </div>
                 </div>
-                <div className="evaluate-comment__tick">
-                    <img src={icon.tickBlue} alt="" />
-                </div>
+                {
+                    body.used &&
+                    <div className="flex-row evaluate-comment__tick">
+                        <span>Đã sử dụng</span>
+                        <img src={icon.checkFlowGreen} alt="" />
+                    </div>
+                }
             </div>
 
             <div className="evaluate-comment__body">

@@ -49,7 +49,7 @@ function Review(props: IProps) {
     const [comment, setComment] = useState<any>({
         text: "",
         image_url: COMMENT.image_url,
-        used: true,
+        used: false,
         star: 5,
     });
 

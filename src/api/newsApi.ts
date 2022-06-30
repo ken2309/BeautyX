@@ -1,4 +1,4 @@
-import axiosClient from "./axios";
+import axiosClient,{baseURL} from "./axios";
 
 class NewsApi {
     getAll = () => {
@@ -30,7 +30,7 @@ class NewsApi {
             limit: 5,
             order: "desc",
             orderby: "modified",
-            categories: 7,
+            categories: (baseURL === process.env.REACT_APP_API_URL)?7:9,
         };
         return axiosClient.get(url, {
             params,
@@ -44,7 +44,7 @@ class NewsApi {
             limit: 5,
             order: "desc",
             orderby: "modified",
-            categories: 10,
+            categories: (baseURL === process.env.REACT_APP_API_URL)?10:11,
         };
         return axiosClient.get(url, {
             params,

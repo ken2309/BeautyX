@@ -36,7 +36,7 @@ function TreatmentCardItem(props: IProps) {
     return (
         <div
             className='treat-card-item'
-            style={enableCart === true ? { opacity: 0.4 } : {}}
+            // style={enableCart === true ? { opacity: 0.6 } : {}}
         >
             <div
                 style={

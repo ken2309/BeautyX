@@ -116,6 +116,10 @@ export default function HomeBanner() {
                     return openWeb();
                 case "SEARCH_RESULT":
                     console.log(chooseBanner)
+                    // return history.push({
+                    //     // pathname: `/home-banner-result`,
+                    //     state: chooseBanner,
+                    // });
                     return history.push({
                         pathname: `/home-banner-result`,
                         state: chooseBanner,
