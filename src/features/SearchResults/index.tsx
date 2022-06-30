@@ -23,6 +23,7 @@ import HeadMobile from "../HeadMobile";
 import BackTopButton from "../../components/BackTopButton";
 import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 import Map from "../../components/Map/Map";
+import EmptyRes from '../EmptyRes';
 
 interface IData {
     orgs: IOrganization[];
@@ -55,7 +56,7 @@ function SearchResults(props: any) {
     const [data, setData] = useState<IData>({
         orgs: [],
         page: 1,
-        totalItem: 1,
+        totalItem: 0,
     });
     const [orgFilter, setOrgFilter] = useState({
         tags: [],
@@ -109,10 +110,10 @@ function SearchResults(props: any) {
                                         style={
                                             tab === item.id
                                                 ? {
-                                                      backgroundColor:
-                                                          "var(--purple)",
-                                                      color: "var(--bgWhite)",
-                                                  }
+                                                    backgroundColor:
+                                                        "var(--purple)",
+                                                    color: "var(--bgWhite)",
+                                                }
                                                 : {}
                                         }
                                         onClick={() => onActiveTab(item)}
@@ -123,47 +124,51 @@ function SearchResults(props: any) {
                                 ))}
                             </ul>
                         </div>
-                        {tab === 3 ? (
-                            <>
-                                <FilterOrgs
-                                    orgFilter={orgFilter}
-                                    setOrgFilter={setOrgFilter}
-                                    data={data}
-                                    setData={setData}
-                                    handleOrgsByKeyword={handleOrgsByKeyword}
-                                />
-                                <div className="home-result-org-cnt__mb">
-                                    <div className="flex-row-sp cnt">
-                                        <span className="title">
-                                            Bộ lọc tìm kiếm
+                        {tab === 3 ?
+                            data.orgs.length > 0 &&
+                            (
+                                <>
+                                    <FilterOrgs
+                                        orgFilter={orgFilter}
+                                        setOrgFilter={setOrgFilter}
+                                        data={data}
+                                        setData={setData}
+                                        handleOrgsByKeyword={handleOrgsByKeyword}
+                                    />
+                                    <div className="home-result-org-cnt__mb">
+                                        <div className="flex-row-sp cnt">
+                                            <span className="title">
+                                                Bộ lọc tìm kiếm
                                         </span>
-                                        <button
-                                            onClick={() => setOpenFilter(true)}
-                                            className="filter-btn"
-                                        >
-                                            <img src={icon.filter} alt="" />
-                                        </button>
-                                        <Drawer
-                                            anchor="right"
-                                            open={openFilter}
-                                            onClose={() => setOpenFilter(false)}
-                                        >
-                                            <FilterOrgs
-                                                orgFilter={orgFilter}
-                                                setOrgFilter={setOrgFilter}
-                                                setData={setData}
-                                                handleOrgsByKeyword={
-                                                    handleOrgsByKeyword
-                                                }
-                                                setOpenFilter={setOpenFilter}
-                                            />
-                                        </Drawer>
+                                            <button
+                                                onClick={() => setOpenFilter(true)}
+                                                className="filter-btn"
+                                            >
+                                                <img src={icon.filter} alt="" />
+                                            </button>
+                                            <Drawer
+                                                anchor="right"
+                                                open={openFilter}
+                                                onClose={() => setOpenFilter(false)}
+                                            >
+                                                <FilterOrgs
+                                                    orgFilter={orgFilter}
+                                                    setOrgFilter={setOrgFilter}
+                                                    setData={setData}
+                                                    handleOrgsByKeyword={
+                                                        handleOrgsByKeyword
+                                                    }
+                                                    setOpenFilter={setOpenFilter}
+                                                />
+                                            </Drawer>
+                                        </div>
                                     </div>
-                                </div>
-                            </>
-                        ) : (
-                            <></>
-                        )}
+
+                                </>
+                            )
+                            : (
+                                <></>
+                            )}
                     </div>
                     <div className="se-re-cnt__right">
                         <div
@@ -177,7 +182,8 @@ function SearchResults(props: any) {
                                 {t("se.search_results_for_keyword")} : "
                                 {searchKey}"
                             </span>
-                            {tab === 1 || tab === 2 ? null : (
+
+                            {tab === 1 || tab === 2 || (data?.orgs.length == 0) ? null : (
                                 <div
                                     onClick={() => {
                                         setOpenMap(true);
@@ -197,6 +203,9 @@ function SearchResults(props: any) {
                         </div>
                         <TabService keyword={searchKey} acTab={tab} />
                         <TabProduct keyword={searchKey} acTab={tab} />
+                        {
+                            tab === 3 && (data?.orgs.length == 0) && <EmptyRes title={'Không tìm được kết quả phù hợp cho "' + searchKey + '"'} />
+                        }
                         <TabOrgs
                             orgFilter={orgFilter}
                             keyword={searchKey}
@@ -205,11 +214,12 @@ function SearchResults(props: any) {
                             setData={setData}
                             handleOrgsByKeyword={handleOrgsByKeyword}
                         />
+
                         <TabLocation acTab={tab} searchKey={searchKey} />
                     </div>
                 </div>
             </Container>
-            <Map data={data.orgs} open={openMap} setOpenMap={setOpenMap} />
+            {data.orgs.length > 0 && <Map data={data.orgs} open={openMap} setOpenMap={setOpenMap} />}
             <BackTopButton />
             <Footer />
         </>

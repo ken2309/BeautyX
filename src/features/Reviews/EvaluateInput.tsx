@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import mediaApi from "../../api/mediaApi";
 import icon from "../../constants/icon";
-
+import BeautyLoading from "../../components/BeautyxLoading";
 import {
     postAsyncMediaComment,
     clearPrevState,
 } from "../../redux/commentSlice";
+import { STATUS } from "../../redux/status";
 interface IProps {
     handleOnchange: any;
     comment: any;
@@ -30,7 +31,7 @@ function EvaluateInput(props: IProps) {
         changeStyle,
     } = props;
     const dispatch = useDispatch();
-    const COMMENT_STORE = useSelector((state: any) => state.COMMENT);
+    const {image_url,status} = useSelector((state: any) => state.COMMENT);
     const history = useHistory();
     //handle post media
     const onChangeMedia = (e: any) => {
@@ -48,7 +49,7 @@ function EvaluateInput(props: IProps) {
             await dispatch(postAsyncMediaComment(media));
             setComment({
                 ...comment,
-                image_url: COMMENT_STORE.image_url,
+                image_url: image_url,
             });
         } catch (error) {
             console.log(error);
@@ -112,10 +113,10 @@ function EvaluateInput(props: IProps) {
                     </div>
                 </div>
             </div>
-            {COMMENT_STORE.image_url && (
+            {image_url && status === STATUS.SUCCESS  && (
                 <div className="evaluate-input__upload">
                     <img
-                        src={COMMENT_STORE.image_url}
+                        src={image_url}
                         className="evaluate-upload__img"
                         alt=""
                     />
@@ -124,6 +125,11 @@ function EvaluateInput(props: IProps) {
                     </button>
                 </div>
             )}
+            {
+                status === STATUS.LOADING && (
+                    <BeautyLoading/>
+                )
+            }
         </>
     );
 }
