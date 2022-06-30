@@ -43,10 +43,13 @@ function LoginFlatFormRequest(props: any) {
 
     const response = useGetMessageTiki();
     useMemo(() => {
-        // alert(JSON.stringify(response))
+        alert(JSON.stringify(response))
         if (response?.requestId && response.result.status === "success") {
             // alert(JSON.stringify(response))
             handleLoginTiki(response.result.res)
+        }
+        else if (response?.requestId && response.result.status === "fail"){
+            setLoad(false);
         }
     }, [response])
 
