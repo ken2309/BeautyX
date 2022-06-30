@@ -76,71 +76,70 @@ function OrgServices(props: IProps) {
     return (
         <div className="org-services-cnt">
             {
-                totalItem > 0 && (
-                    (categories && categories.filter((e: any) => e.services_count > 0).length > 0)
-                    &&
-                    <div className="org-services-cnt__left">
-                        <ul className="cates-list">
-                            <li
-                                onClick={() => handleChooseCate(null)}
+                (categories && categories.filter((e: any) => e.services_count > 0).length > 0)
+                &&
+                <div className="org-services-cnt__left">
+                    <ul className="cates-list">
+                        <li
+                            onClick={() => handleChooseCate(null)}
+                            style={
+                                !choose_cate
+                                    ? {
+                                        color: "var(--bgWhite)",
+                                        backgroundColor: "var(--purple)",
+                                    }
+                                    : {}
+                            }
+                            className="cate-list__item"
+                        >
+                            <span
                                 style={
                                     !choose_cate
                                         ? {
                                             color: "var(--bgWhite)",
-                                            backgroundColor: "var(--purple)",
                                         }
                                         : {}
                                 }
-                                className="cate-list__item"
+                                className="cate-list__item-title"
                             >
-                                <span
-                                    style={
-                                        !choose_cate
-                                            ? {
-                                                color: "var(--bgWhite)",
-                                            }
-                                            : {}
-                                    }
-                                    className="cate-list__item-title"
-                                >
-                                    {t("cart.all")}
-                                </span>
-                            </li>
-                            {
-                                categories
-                                    .filter((i: any) => i.services_count > 0)
-                                    .map((item: any, index: number) => (
-                                        <li
+                                {t("cart.all")}
+                            </span>
+                        </li>
+                        {
+                            categories
+                                .filter((i: any) => i.services_count > 0)
+                                .map((item: any, index: number) => (
+                                    <li
+                                        style={
+                                            choose_cate === item.id
+                                                ? {
+                                                    color: "#fff",
+                                                    backgroundColor: "var(--purple)",
+                                                }
+                                                : {}
+                                        }
+                                        onClick={() => handleChooseCate(item.id)}
+                                        className="cate-list__item"
+                                        key={index}
+                                    >
+                                        <span
                                             style={
                                                 choose_cate === item.id
                                                     ? {
                                                         color: "#fff",
-                                                        backgroundColor: "var(--purple)",
                                                     }
                                                     : {}
                                             }
-                                            onClick={() => handleChooseCate(item.id)}
-                                            className="cate-list__item"
-                                            key={index}
+                                            className="cate-list__item-title"
                                         >
-                                            <span
-                                                style={
-                                                    choose_cate === item.id
-                                                        ? {
-                                                            color: "#fff",
-                                                        }
-                                                        : {}
-                                                }
-                                                className="cate-list__item-title"
-                                            >
-                                                {item.name}
-                                            </span>
-                                        </li>
-                                    ))}
-                        </ul>
-                    </div>
-                )
+                                            {item.name}
+                                        </span>
+                                    </li>
+                                ))}
+                    </ul>
+                </div>
             }
+
             <div className="org-services-cnt__right">
                 {totalItem === 0 && status === STATUS.SUCCESS && <EmptyRes title='Không có dịch vụ phù hợp!' />}
                 <InfiniteScroll
