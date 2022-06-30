@@ -108,6 +108,7 @@ function ServiceReview(props: any) {
             );
             if (res?.meta?.requestStatus === "fulfilled") {
                 setOpen(false);
+                dispatch(clearPrevState());
                 setComment({
                     ...comment,
                     text: "",
@@ -156,8 +157,11 @@ function ServiceReview(props: any) {
                         </div>
                         <div className="flex-row-sp review-service__item">
                             <img
-                                // src={service?.image ? service?.image_url : org?.image_url}
-                                src="https://cdn2.cellphones.com.vn/358x/media/catalog/product/o/p/op-lung-samsung-galaxy-s22-ultra-plyo-ice-2_.jpg"
+                                src={
+                                    service?.image
+                                        ? service?.image_url
+                                        : org?.image_url
+                                }
                                 alt=""
                                 className="left"
                                 onError={(e) => onErrorImg(e)}
@@ -215,6 +219,7 @@ function ServiceReview(props: any) {
                         </div>
                         <div className="review-service__text">
                             <textarea
+                                placeholder="Vui lòng để lại đánh giá của bạn ..."
                                 value={comment.text}
                                 onChange={(e) => handleOnchangeText(e)}
                                 rows={4}
