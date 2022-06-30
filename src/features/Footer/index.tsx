@@ -96,7 +96,7 @@ function Footer() {
             id: 1,
             img: social.facebook,
             type: "SOCIAL",
-            url: "https://www.facebook.com/MyspaVietnam/",
+            url: "https://www.facebook.com/beautyxdatlichlamdep/",
         },
         {
             id: 2,

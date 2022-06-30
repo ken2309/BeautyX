@@ -7,20 +7,33 @@ import slugify from "../../../../utils/formatUrlString";
 
 interface IProps {
     discountPar: IDiscountPar;
-    discountItem: IITEMS_DISCOUNT;
+    discountItem: any;
 }
 
 function DiscountItem(props: IProps) {
     const history = useHistory();
     const { discountPar, discountItem } = props;
     const org = discountItem?.organization;
+    const onCheckType = () => {
+        let type;
+        switch (discountItem.productable_type) {
+            case "App\\Models\\CI\\Service":
+                type = "service";
+                break;
+            case "App\\Models\\CI\\Product":
+                type = "product";
+                break;
+        }
+        return type;
+    };
+    const type = onCheckType();
     const onDetail = () => {
         history.push({
             pathname: `/chi-tiet-giam-gia/${slugify(
-                discountItem.productable.service_name
+                discountItem.productable.service_name ||
+                    discountItem.productable.product_name
             )}`,
-            search: `org_id=${org?.id}&id=${discountPar?.id}`,
-            state: org,
+            search: `type=${type}&org_id=${org?.id}&dis_id=${discountPar?.id}&item_id=${discountItem.productable_id}`,
         });
     };
     return (
