@@ -12,10 +12,10 @@ import HomeTags from "../Homev2/components/HomeTags";
 import HomeBanner from "./HomeBanner";
 import HomeFavorite from "./HomeFavorite";
 import HomeHotDeal from "./HomeHotDeal";
-import HomeHotTrend from "./HomeHotTrend";
+//import HomeHotTrend from "./HomeHotTrend";
 import HomeRecomment from "./HomeRecomment";
 import HomeTopService from "./HomeTopService";
-import HomeBannerResult from "./HomeBanner/homeSearchReasult";
+//import HomeBannerResult from "./HomeBanner/homeSearchReasult";
 
 export default function HomePage() {
     const IS_MB = useFullScreen();
@@ -31,7 +31,11 @@ export default function HomePage() {
             <Container>
                 <HomeHotDeal />
                 <HomeTopService />
+<<<<<<< HEAD
                 {IS_MB && <HomeHotTrend />}
+=======
+                {/* <HomeHotTrend /> */}
+>>>>>>> c698eb8c89f370da95050e8235455ed3a5b11aed
                 <HomeFavorite />
                 <HomeProvince />
                 <HomeRecomment />

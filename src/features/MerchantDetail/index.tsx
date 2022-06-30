@@ -25,8 +25,8 @@ import OrgContainer from "./components/OrgContainer";
 import './style.css';
 import { Container } from '@mui/material';
 import ModalLoad from "../../components/ModalLoad";
-import { clearServices } from '../../redux/org_services/orgServivesSlice';
-import { clearProducts } from '../../redux/org_products/orgProductsSlice';
+//import { clearServices } from '../../redux/org_services/orgServivesSlice';
+//import { clearProducts } from '../../redux/org_products/orgProductsSlice';
 import PageNotFound from "../../components/PageNotFound";
 
 
@@ -49,8 +49,8 @@ function MerchantDetail() {
     if (sub_domain !== org?.subdomain) {
       dispatch(fetchAsyncOrg(sub_domain))
       dispatch(onActiveTab(1))
-      dispatch(clearServices())
-      dispatch(clearProducts())
+      //dispatch(clearServices())
+      //dispatch(clearProducts())
     }
   }
   const callGalleriesOrg_DiscountsOrg = () => {
@@ -102,7 +102,7 @@ function MerchantDetail() {
   return (
     <div className="mb-cnt">
       {status === STATUS.LOADING && <ModalLoad />}
-      {status === STATUS.FAIL && <PageNotFound />}
+      {!ORG.org && <PageNotFound />}
       <HeadTitle title={org?.name ? org.name : 'Đang tải...'} />
       {IS_MB ? <HeadOrg org={org} isShowSearch={true} /> : <Head />}
       {

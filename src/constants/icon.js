@@ -177,6 +177,7 @@ import starLine from "../assets/icon/star.svg";
 import xWhite from "../assets/icon/x-white.svg";
 import homeWhite from "../assets/icon/home-white.svg";
 import chatWhite from "../assets/icon/chat-white.svg";
+import checkFlowGreen from "../assets/icon/checkFlowGreen.svg";
 
 const icon = {
     chatWhite,
@@ -353,6 +354,7 @@ const icon = {
     cardDiscountWhite,
     checkFlowOrange,
     arrowSmallUpWhite,
-    starLine
+    starLine,
+    checkFlowGreen
 };
 export default icon;

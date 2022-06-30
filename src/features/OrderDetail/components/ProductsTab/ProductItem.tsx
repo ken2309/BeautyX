@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import formatPrice from "../../../../utils/formatPrice";
 import ButtonCus from "../../../../components/ButtonCus";
 import { addCart, onClearPrevCartItem } from "../../../../redux/cartSlice";
@@ -9,6 +9,8 @@ import { AppContext } from "../../../../context/AppProvider";
 import scrollTop from "../../../../utils/scrollTop";
 import onErrorImg from "../../../../utils/errorImg";
 import { formatAddCart } from "../../../../utils/cart/formatAddCart";
+import { fetchAsyncProductDetail } from '../../../../redux/org_products/productSlice'
+import { Alert, Snackbar } from "@mui/material";
 
 function ProductItem(props: any) {
   const { productItem, org } = props;
@@ -16,6 +18,10 @@ function ProductItem(props: any) {
   const { t } = useContext(AppContext);
   const history = useHistory();
   const dispatch = useDispatch();
+  const [openNoti, setOpenNoti] = useState({
+    open: false,
+    title: ""
+  })
   const handleDetailProduct = () => {
     scrollTop();
     history.push({
@@ -33,13 +39,45 @@ function ProductItem(props: any) {
     null,
     true
   )
-  const handleAddCart = () => {
-    dispatch(onClearPrevCartItem())
-    dispatch(addCart(cartValues))
-    history.push('/gio-hang')
+  const handleAddCart = async () => {
+    //check exits discount or service detail in merchant
+    //check org and services on commerce
+    const res = await dispatch(fetchAsyncProductDetail({
+      org_id: org.id, id: product.id
+    }))
+    if (res?.meta?.requestStatus === "fulfilled") {
+      //check org and services on commerce
+      console.log(res)
+      if (res?.payload?.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable) {
+        dispatch(onClearPrevCartItem())
+        dispatch(addCart(cartValues))
+        history.push('/gio-hang')
+      } else {
+        setOpenNoti({
+          open: true,
+          title: "Hiện tại sản phẩm này không còn được bán Online !"
+        })
+      }
+    } else {
+      setOpenNoti({
+        open: true,
+        title: "Hiện tại sản phẩm này không còn tồn tại !"
+      })
+    }
   };
   return (
     <li>
+      <Snackbar open={openNoti.open} autoHideDuration={4000}
+        onClose={() => setOpenNoti({ ...openNoti, open: false })}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={() => setOpenNoti({ ...openNoti, open: false })}
+          severity="warning" sx={{ width: '100%' }}
+        >
+          {openNoti.title}
+        </Alert>
+      </Snackbar>
       <div className="order-de-list__item">
         <img
           src={product?.image_url ? product?.image_url : org.image_url}

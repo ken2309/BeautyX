@@ -29,7 +29,7 @@ function ServiceReview(props: any) {
         star: 0,
         used: true
     })
-    //const [alert, setAlert] = useState(false)
+    const [alert, setAlert] = useState(false)
     const onRateStar = (id: number) => {
         setComment({
             ...comment,
@@ -47,7 +47,7 @@ function ServiceReview(props: any) {
             const res = await dispatch(postAsyncComment({ values }))
             if (res?.meta?.requestStatus === "fulfilled") {
                 setOpen(false)
-                //setAlert(true)
+                setAlert(true)
                 setComment({
                     text: "",
                     image_url: null,
@@ -63,19 +63,19 @@ function ServiceReview(props: any) {
     }
     return (
         <>
-            {/* <Snackbar
+            <Snackbar
                 anchorOrigin={{
                     vertical: 'top',
                     horizontal: 'center'
                 }}
                 open={alert}
-                autoHideDuration={3500}
+                autoHideDuration={4000}
                 onClose={() => setAlert(false)}
             >
                 <Alert onClose={() => setAlert(false)} severity="success" sx={{ width: '100%' }}>
                     Cảm ơn {USER?.fullname} đã đánh giá dịch vụ
                 </Alert>
-            </Snackbar> */}
+            </Snackbar>
             <Dialog
                 fullScreen={IS_MB}
                 open={open}
@@ -89,8 +89,7 @@ function ServiceReview(props: any) {
                         </div>
                         <div className="flex-row-sp review-service__item">
                             <img
-                                // src={service?.image ? service?.image_url : org?.image_url}
-                                src='https://cdn2.cellphones.com.vn/358x/media/catalog/product/o/p/op-lung-samsung-galaxy-s22-ultra-plyo-ice-2_.jpg'
+                                src={service?.image ? service?.image_url : org?.image_url}
                                 alt=""
                                 className="left"
                                 onError={(e) => onErrorImg(e)}

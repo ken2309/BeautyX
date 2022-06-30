@@ -161,9 +161,11 @@ function ProductDetail(props: any) {
         history.goBack();
         const values = {
             org_id: params.org,
-            ser_id: params.id,
+            id: params.id,
         };
-        dispatch(fetchAsyncProductDetail(values));
+        if (params?.org && params?.org) {
+            dispatch(fetchAsyncProductDetail(values));
+        }
     }
 
     return (

@@ -7,7 +7,7 @@ import slugify from "../../../../utils/formatUrlString";
 
 interface IProps {
     discountPar: IDiscountPar;
-    discountItem: any;
+    discountItem: IITEMS_DISCOUNT;
 }
 
 function DiscountItem(props: IProps) {
@@ -26,12 +26,12 @@ function DiscountItem(props: IProps) {
         }
         return type;
     };
-    const type = onCheckType();
     const onDetail = () => {
+        const type = onCheckType();
         history.push({
             pathname: `/chi-tiet-giam-gia/${slugify(
                 discountItem.productable.service_name ||
-                    discountItem.productable.product_name
+                discountItem.productable.product_name
             )}`,
             search: `type=${type}&org_id=${org?.id}&dis_id=${discountPar?.id}&item_id=${discountItem.productable_id}`,
         });

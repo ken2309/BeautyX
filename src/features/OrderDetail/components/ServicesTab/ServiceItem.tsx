@@ -1,20 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import ButtonCus from "../../../../components/ButtonCus";
 import formatPrice from "../../../../utils/formatPrice";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addCart, onClearPrevCartItem } from "../../../../redux/cartSlice";
-import { fetchAsyncServiceDetail } from '../../../../redux/org_services/serviceSlice'
+import { fetchAsyncServiceDetail } from '../../../../redux/org_services/serviceSlice';
 import slugify from "../../../../utils/formatUrlString";
 import { AppContext } from "../../../../context/AppProvider";
 import onErrorImg from "../../../../utils/errorImg";
 import { formatAddCart } from "../../../../utils/cart/formatAddCart";
+import { Alert, Snackbar } from "@mui/material";
 
 function ServiceItem(props: any) {
   const { t } = useContext(AppContext);
   const { serviceItem, org, itemsDiscountOrg } = props;
   const service = serviceItem.productable;
   const IS_DISCOUNT = itemsDiscountOrg.find((i: any) => i.productable_id === service?.id);
+  const [openNoti, setOpenNoti] = useState({
+    open: false,
+    title: ""
+  })
 
   const onCheckType = () => {
     let type;
@@ -41,13 +46,27 @@ function ServiceItem(props: any) {
   )
   const handleAddCart = async () => {
     //check exits discount or service detail in merchant
+    //check org and services on commerce
     const res = await dispatch(fetchAsyncServiceDetail({
       org_id: org.id, ser_id: service.id
     }))
     if (res?.meta?.requestStatus === "fulfilled" || IS_DISCOUNT) {
-      dispatch(onClearPrevCartItem())
-      dispatch(addCart(cartValues))
-      history.push('/gio-hang')
+      //check org and services on commerce
+      if (res?.payload?.service?.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable) {
+        dispatch(onClearPrevCartItem())
+        dispatch(addCart(cartValues))
+        history.push('/gio-hang')
+      } else {
+        setOpenNoti({
+          open: true,
+          title: "Hiện tại dịch vụ này này không còn được bán Online !"
+        })
+      }
+    } else {
+      setOpenNoti({
+        open: true,
+        title: "Hiện tại dịch vụ này này không còn tồn tại !"
+      })
     }
   };
   const handleDetailService = () => {
@@ -70,6 +89,17 @@ function ServiceItem(props: any) {
 
   return (
     <li>
+      <Snackbar open={openNoti.open} autoHideDuration={4000}
+        onClose={() => setOpenNoti({ ...openNoti, open: false })}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={() => setOpenNoti({ ...openNoti, open: false })}
+          severity="warning" sx={{ width: '100%' }}
+        >
+          {openNoti.title}
+        </Alert>
+      </Snackbar>
       <div className="order-de-list__item">
         {
           IS_DISCOUNT &&
