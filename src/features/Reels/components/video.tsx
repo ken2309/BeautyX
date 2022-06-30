@@ -16,12 +16,11 @@ export default function Video(props: any) {
     const isVisable = useElementOnScreen(options, videoRef);
 
     const { data, videoCur, setVideoCur } = props;
-    const {
-        org,
-        ser,
-        cmt
-    } = data.resVidData
-    const vd_url = data.video?.excerpt?.rendered?.slice(10, data.video?.excerpt?.rendered?.length - 12);
+    const { org, ser, cmt } = data?.resVidData;
+    const vd_url = data.video?.excerpt?.rendered?.slice(
+        10,
+        data.video?.excerpt?.rendered?.length - 12
+    );
     useEffect(() => {
         if (isVisable) {
             videoRef.current.play();
@@ -190,11 +189,7 @@ export default function Video(props: any) {
                                 <span>alo</span>
                             </div>
                             <div className="share_link">
-                                <img
-                                    className="icon"
-                                    src={icon.share}
-                                    alt=""
-                                />
+                                <img className="icon" src={icon.share} alt="" />
                             </div>
                         </div>
                     </div>

@@ -167,28 +167,33 @@ function SearchResults(props: any) {
                     </div>
                     <div className="se-re-cnt__right">
                         <div
-                            style={{ paddingRight: "12px" }}
+                            style={{
+                                paddingRight: "6px 12px",
+                                paddingBottom: "6px",
+                            }}
                             className="cnt-right__top"
                         >
                             <span className="se-re-cnt-title">
                                 {t("se.search_results_for_keyword")} : "
                                 {searchKey}"
                             </span>
-                            <div
-                                onClick={() => {
-                                    setOpenMap(true);
-                                }}
-                                className="open-map"
-                            >
-                                <div className="flexX-gap-4">
-                                    <p>Bản đồ</p>
-                                    <img
-                                        src="/static/media/mapPinRed.2be9ae82.svg"
-                                        alt=""
-                                        style={{ width: "16px" }}
-                                    ></img>
+                            {tab === 1 || tab === 2 ? null : (
+                                <div
+                                    onClick={() => {
+                                        setOpenMap(true);
+                                    }}
+                                    className="open-map"
+                                >
+                                    <div className="flexX-gap-4">
+                                        <p>Bản đồ</p>
+                                        <img
+                                            src="/static/media/mapPinRed.2be9ae82.svg"
+                                            alt=""
+                                            style={{ width: "16px" }}
+                                        ></img>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                         <TabService keyword={searchKey} acTab={tab} />
                         <TabProduct keyword={searchKey} acTab={tab} />

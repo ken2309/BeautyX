@@ -68,7 +68,7 @@ const orgServicesSlice = createSlice({
     name: "ORG_SERVICES",
     initialState,
     reducers: {
-        onChooseCateServices: (state, { payload }) => {
+        onChooseCateServices: (state: any, { payload }) => {
             state.choose_cate = payload;
         },
         clearServices: (state: any) => {
