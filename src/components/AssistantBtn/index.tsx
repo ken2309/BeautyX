@@ -77,19 +77,21 @@ export default function AssistantBtn() {
                 <div
                     ref={refOverLay}
                     onTouchStart={() => handleClickOverlay()}
+                    onMouseEnter={() => handleHover()}
+                    onMouseLeave={() => handleHoverLeave()}
                     className="assistantBtn"
                 >
                     {location.pathname ===
-                    "/ket-qua-tim-kiem/" ? null : is_mb === true ? (
-                        <div
-                            onTouchStart={() => handleOpenSearch()}
-                            className="btn2 buttons"
-                        >
-                            <div className="btn-img">
-                                <img src={icon.search} alt="" />
+                        "/ket-qua-tim-kiem/" ? null : is_mb === true ? (
+                            <div
+                                onTouchStart={() => handleOpenSearch()}
+                                className="btn2 buttons"
+                            >
+                                <div className="btn-img">
+                                    <img src={icon.search} alt="" />
+                                </div>
                             </div>
-                        </div>
-                    ) : (
+                        ) : (
                         <div
                             onClick={() => handleOpenSubiz()}
                             className="btn1 buttons"
