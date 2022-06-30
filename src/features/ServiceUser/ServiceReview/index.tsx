@@ -106,8 +106,8 @@ function ServiceReview(props: any) {
                 postAsyncComment({ values, user: USER.USER })
             );
             if (res?.meta?.requestStatus === "fulfilled") {
-                setOpen(false)
-                setAlert(true)
+                setOpen(false);
+                dispatch(clearPrevState());
                 setComment({
                     ...comment,
                     text: "",
@@ -156,7 +156,11 @@ function ServiceReview(props: any) {
                         </div>
                         <div className="flex-row-sp review-service__item">
                             <img
-                                src={service?.image ? service?.image_url : org?.image_url}
+                                src={
+                                    service?.image
+                                        ? service?.image_url
+                                        : org?.image_url
+                                }
                                 alt=""
                                 className="left"
                                 onError={(e) => onErrorImg(e)}
@@ -214,6 +218,7 @@ function ServiceReview(props: any) {
                         </div>
                         <div className="review-service__text">
                             <textarea
+                                placeholder="Vui lòng để lại đánh giá của bạn ..."
                                 value={comment.text}
                                 onChange={(e) => handleOnchangeText(e)}
                                 rows={4}
