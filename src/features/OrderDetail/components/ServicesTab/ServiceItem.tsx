@@ -4,11 +4,12 @@ import formatPrice from "../../../../utils/formatPrice";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addCart, onClearPrevCartItem } from "../../../../redux/cartSlice";
-import { fetchAsyncServiceDetail } from '../../../../redux/org_services/serviceSlice'
+import { fetchAsyncServiceDetail } from '../../../../redux/org_services/serviceSlice';
 import slugify from "../../../../utils/formatUrlString";
 import { AppContext } from "../../../../context/AppProvider";
 import onErrorImg from "../../../../utils/errorImg";
 import { formatAddCart } from "../../../../utils/cart/formatAddCart";
+import { Alert, Snackbar } from "@mui/material";
 
 function ServiceItem(props: any) {
   const { t } = useContext(AppContext);
@@ -41,13 +42,17 @@ function ServiceItem(props: any) {
   )
   const handleAddCart = async () => {
     //check exits discount or service detail in merchant
+    //check org and services on commerce
     const res = await dispatch(fetchAsyncServiceDetail({
       org_id: org.id, ser_id: service.id
     }))
     if (res?.meta?.requestStatus === "fulfilled" || IS_DISCOUNT) {
-      dispatch(onClearPrevCartItem())
-      dispatch(addCart(cartValues))
-      history.push('/gio-hang')
+      //check org and services on commerce
+      if (res?.payload?.service?.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable) {
+        dispatch(onClearPrevCartItem())
+        dispatch(addCart(cartValues))
+        history.push('/gio-hang')
+      }
     }
   };
   const handleDetailService = () => {
@@ -70,6 +75,16 @@ function ServiceItem(props: any) {
 
   return (
     <li>
+      <Snackbar open={true} autoHideDuration={6000}
+      //onClose={handleClose}
+      >
+        <Alert
+          //onClose={handleClose} 
+          severity="warning" sx={{ width: '100%' }}
+        >
+          This is a success message!
+        </Alert>
+      </Snackbar>
       <div className="order-de-list__item">
         {
           IS_DISCOUNT &&

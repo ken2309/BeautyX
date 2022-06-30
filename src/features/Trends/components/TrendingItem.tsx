@@ -7,7 +7,7 @@ export default function TrendItem(props:any){
         org,
         ser,
         cmt
-    } = data.resVidData
+    } = data?.resVidData
     const vd_url = data.video?.excerpt?.rendered?.slice(10, data.video?.excerpt?.rendered?.length - 12);
     const videoRef = useRef<any>();
     const handleReels = () =>{
