@@ -70,9 +70,9 @@ export default function AssistantBtn() {
                 className="assistantBtn"
             >
                 <div
-                    ref={refAssisBtn}
                     onMouseEnter={() => handleHover()}
                     onMouseLeave={() => handleHoverLeave()}
+                    ref={refAssisBtn}
                     className="assistantBtn-wrap"
                 >
                     {location.pathname ===
