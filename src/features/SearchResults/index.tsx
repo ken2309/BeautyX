@@ -178,16 +178,11 @@ function SearchResults(props: any) {
                             }}
                             className="cnt-right__top"
                         >
-                            {
-                                data.orgs.length > 0
-                                    ?
-                                    <span className="se-re-cnt-title">
-                                        {t("se.search_results_for_keyword")} : "
-                                        {searchKey}"
-                                    </span>
-                                    :
-                                    <EmptyRes title={'Không tìm được kết quả phù hợp cho "' + searchKey+'"'} />
-                            }
+                            <span className="se-re-cnt-title">
+                                {t("se.search_results_for_keyword")} : "
+                                {searchKey}"
+                            </span>
+
                             {tab === 1 || tab === 2 || (data?.orgs.length == 0) ? null : (
                                 <div
                                     onClick={() => {
@@ -208,6 +203,9 @@ function SearchResults(props: any) {
                         </div>
                         <TabService keyword={searchKey} acTab={tab} />
                         <TabProduct keyword={searchKey} acTab={tab} />
+                        {
+                            tab === 3 && (data?.orgs.length == 0) && <EmptyRes title={'Không tìm được kết quả phù hợp cho "' + searchKey + '"'} />
+                        }
                         <TabOrgs
                             orgFilter={orgFilter}
                             keyword={searchKey}
