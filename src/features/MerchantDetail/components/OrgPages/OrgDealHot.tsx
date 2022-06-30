@@ -6,7 +6,7 @@ import { Service } from '../../../../interface/service';
 import { Product } from '../../../../interface/product'
 import OrgServiceItem from './OrgServiceItem';
 import OrgProductItem from './OrgProductItem';
-
+import EmptyRes from '../../../EmptyRes';
 function OrgDealHot() {
     const ORG = useSelector((state: any) => state.ORG);
     const ORG_SPECIALS = useSelector((state: any) => state.ORG_SPECIALS);
@@ -73,6 +73,7 @@ function OrgDealHot() {
                     </ul>
                 </div>
             }
+            { (discounts.length + SERVICES_SPECIAL.services_special.length + PRODUCTS_SPECIAL.products_special.length) == 0 && <EmptyRes title="Hiện chưa có deal hot nào dành cho bạn!" />}
         </div>
     );
 }

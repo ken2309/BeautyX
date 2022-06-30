@@ -6,6 +6,7 @@ import { STATUS } from '../../../../redux/status';
 import { fetchAsyncCombosOrg, clearPrevCombos } from '../../../../redux/org_combos/orgCombosSlice'
 import OrgComboItem from './OrgComboItem';
 import InfiniteScroll from "react-infinite-scroll-component";
+import EmptyRes from '../../../EmptyRes';
 
 interface IProps {
     org: IOrganization
@@ -39,25 +40,31 @@ function OrgCombos(props: IProps) {
     }
     return (
         <div className="org-services-cnt">
-            <InfiniteScroll
-                dataLength={combos.length}
-                hasMore={true}
-                next={onViewMore}
-                loader={<></>}
-            >
-                <ul className="org-combos-cnt__right">
-                    {
-                        combos.map((item: any, index: number) => (
-                            <li key={index}>
-                                <OrgComboItem
-                                    org={org}
-                                    combo={item}
-                                />
-                            </li>
-                        ))
-                    }
-                </ul>
-            </InfiniteScroll>
+            {
+                (totalItem > 0 && status === STATUS.SUCCESS)
+                    ?
+                    <InfiniteScroll
+                        dataLength={combos.length}
+                        hasMore={true}
+                        next={onViewMore}
+                        loader={<></>}
+                    >
+                        <ul className="org-combos-cnt__right">
+                            {
+                                combos.map((item: any, index: number) => (
+                                    <li key={index}>
+                                        <OrgComboItem
+                                            org={org}
+                                            combo={item}
+                                        />
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </InfiniteScroll>
+                    :
+                    <EmptyRes title='Không có combo phù hợp!'/>
+            }
         </div>
     );
 }
