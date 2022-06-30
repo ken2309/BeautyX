@@ -83,7 +83,7 @@ function Account() {
             <AccountMobile />
             :
             <>
-                <HeadTitle title={headerTitle} />
+                {!IS_MB && <HeadTitle title={headerTitle} />}
                 <Head />
                 <div className="wrapper account_section">
                     <SideBar />
