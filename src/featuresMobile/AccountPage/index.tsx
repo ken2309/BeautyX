@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useContext, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
@@ -9,18 +9,31 @@ import AccountForm from "./Components/AccountForm";
 import DialogChangeInfo from "./Components/DialogChangeInfo";
 import OrderMb from "./Components/Orders";
 import AccountGuide from "./Components/AccountGuide";
+import ButtonLoading from "../../components/ButtonLoading";
+import { AppContext } from "../../context/AppProvider";
+import { logoutUser } from '../../redux/USER/userSlice'
+import { onClearApps } from "../../redux/appointment/appSlice";
+import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
+import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
+import languages from "../../data/languages";
+import i18next from "i18next";
 
 export default function AccountMobile() {
     const { USER } = useSelector((state: any) => state.USER);
+    const FLAT_FORM = EXTRA_FLAT_FORM();
+    const dispatch = useDispatch();
+    const { setSign, language, setLanguage } = useContext(AppContext);
     const params: any = extraParamsUrl();
     const history = useHistory();
     const [open, setOpen] = useState(false);
     const openAcc = params?.address ? true : false;
     const openOrder = params?.order ? true : false;
     const openGuide = params?.guide ? true : false;
-    // const refOrder: any = useRef();
-    const handleToggle = () => {
-        // refOrder.current.classList.toggle("active");
+    const refUserGuide: any = useRef();
+    const handleToggleUserGuide = () => {
+        refUserGuide.current.classList.toggle("userGuid-active");
+    };
+    const gotoOrder = () => {
         history.push("/tai-khoan/lich-su-mua?order=true");
     };
     const gotoAppointment = () => {
@@ -34,7 +47,19 @@ export default function AccountMobile() {
         history.push("/tai-khoan/thong-tin-ca-nhan?address=true");
     };
     const gotoAccountGuide = () => {
-        history.push("/tai-khoan/thong-tin-ca-nhan?guide=true")
+        history.push("/tai-khoan/thong-tin-ca-nhan?guide=true");
+    };
+    const handleSignOut = () => {
+        setSign(false);
+        dispatch(logoutUser());
+        dispatch(onClearApps())
+        history.push("/homepage")
+        localStorage.removeItem('_WEB_TK')
+        window.sessionStorage.removeItem('_WEB_TK')
+    }
+    const onChangeLanguage = (item:any)=>{
+        setLanguage(item.code)
+        i18next.changeLanguage(item.code);
     }
     return (
         <div className="accountMobile">
@@ -70,7 +95,7 @@ export default function AccountMobile() {
                 <ul className="accountMobile-mid__list">
                     <li
                         onClick={() => {
-                            handleToggle();
+                            gotoOrder();
                         }}
                         className="accountMobile-mid__item"
                     >
@@ -83,16 +108,6 @@ export default function AccountMobile() {
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
-                        {/* <div ref={refOrder} className="item-bot__wrap">
-                            <div className="item-bot__item">
-                                <img src={icon.tickBlue} alt="" />
-                                <span>Đã thanh toán</span>
-                            </div>
-                            <div className="item-bot__item">
-                                <img src={icon.xCircleRed} alt="" />
-                                <span>Đã hủy</span>
-                            </div>
-                        </div> */}
                     </li>
                     <li className="accountMobile-mid__item">
                         <div
@@ -131,24 +146,38 @@ export default function AccountMobile() {
                         </div>
                     </li>
                     <li className="accountMobile-mid__item">
-                        <div className="item-left__wrap">
+                        <div
+                            onClick={() => handleToggleUserGuide()}
+                            className="item-left__wrap"
+                        >
                             <div className="item-left">
                                 <div>
-                                    <img style={{ width: "16px", height: "16px" }} src={icon.Setting} alt="" />
+                                    <img
+                                        style={{ width: "18px" }}
+                                        src={icon.settingPurple}
+                                        alt=""
+                                    />
                                 </div>
                                 <span>Cài đặt</span>
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
-                        <div className="item-bot__wrap">
-                            <div className="item-bot__item">
-                                <img src={icon.tickBlue} alt="" />
-                                <span>Đã thanh toán</span>
-                            </div>
-                            <div className="item-bot__item">
-                                <img src={icon.xCircleRed} alt="" />
-                                <span>Đã hủy</span>
-                            </div>
+                        <div ref={refUserGuide} className="item-bot__wrap ">
+                            {
+                                languages.map((i, index) => (
+                                    <div 
+                                        onClick={()=>onChangeLanguage(i)}
+                                        key={index} className="item-bot__item"
+                                    >
+                                        <img
+                                            style={{ width: "32px" }}
+                                            src={i.icon}
+                                            alt=""
+                                        />
+                                        <span style={i.code === language ? {color:"var(--purple)"}:{}} >{i.title}</span>
+                                    </div>
+                                ))
+                            }
                         </div>
                     </li>
                 </ul>
@@ -160,6 +189,16 @@ export default function AccountMobile() {
                     <p>Hướng dẩn sử dụng</p>
                 </div>
             </div>
+            {
+                FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
+                <div className="accountMobile-out">
+                    <ButtonLoading
+                        title="Đăng xuất"
+                        onClick={handleSignOut}
+                        loading={false}
+                    />
+                </div>
+            }
             <Bottom />
             <AccountForm open={openAcc} />
             <OrderMb openOrder={openOrder} />

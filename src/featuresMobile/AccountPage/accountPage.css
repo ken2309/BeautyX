@@ -1,7 +1,4 @@
 /* account top */
-.accountMobile {
-    position: relative;
-}
 
 .accountMobile .accountMobile-top {
     display: flex;
@@ -87,6 +84,7 @@
     padding: 16px 12px;
     background-color: #fff;
     z-index: 2;
+    height: 100%;
 }
 
 .accountMobile-mid .item-left__wrap {
@@ -114,34 +112,28 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 0 12px;
+    /* opacity: 0; */
+    /* visibility: hidden; */
     max-height: 0;
     transform: translateY(12px);
     z-index: 1;
-    transition: visibility, opacity, max-height 0.2s ease-in;
+    transition: visibility, opacity, max-height 0.3s ease-out;
 }
 
-.accountMobile-mid .active {
-    max-height: 66px;
-    visibility: visible;
-    opacity: 1;
-    z-index: 1;
-    transition: visibility, opacity, max-height 0.2s ease-out;
-}
-
-.accountMobile-mid .active>.item-bot__item {
-    border: 1px solid #fafafa;
-    transition: 0.2s ease-out;
+.accountMobile-mid .userGuid-active > .item-bot__item {
+    border: 1px solid rgba(204, 204, 204, 0.481);
+    transition: 0.3s ease-out;
 }
 
 .accountMobile-mid .item-bot__item {
     align-items: center;
     display: flex;
     justify-content: center;
-    padding: 20px 16.5px;
+    padding: 16px 8px;
     border: 1px solid transparent;
     border-radius: 8px;
     grid-gap: 0 8px;
-    transition: 0.2s ease-in;
+    transition: 0.3s ease-out;
 }
 
 .accountMobile-mid .item-bot__item span {
@@ -183,22 +175,22 @@
     background-color: var(--purple);
     overflow-y: scroll;
 }
-.account-guide-cnt .step-list{
+.account-guide-cnt .step-list {
     display: flex;
     flex-direction: column;
 }
-.account-guide-cnt .step-list li{
+.account-guide-cnt .step-list li {
     margin: 8px 0px;
 }
-.account-guide-cnt .step-list img{
+.account-guide-cnt .step-list img {
     width: 124px;
 }
-.account-guide-cnt .step-list .right{
+.account-guide-cnt .step-list .right {
     width: calc(100% - 124px);
     padding-left: 12px;
     color: var(--white);
 }
-.account-guide-cnt .step{
+.account-guide-cnt .step {
     color: var(--purple);
     background-color: var(--white);
     width: 24px;
@@ -209,8 +201,30 @@
     font-weight: 600;
     border-radius: 100%;
 }
-.account-guide-cnt .right .title{
+.account-guide-cnt .right .title {
     margin-top: 4px;
     font-size: 14px;
     line-height: 16px;
+}
+
+.userGuid-active {
+    max-height: 78px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    margin-bottom: 12px;
+    transition: visibility, opacity, max-height 0.3s ease-out !important;
+}
+.accountMobile-out{
+    position: fixed;
+    z-index: 2;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: 84px;
+    display: flex;
+    justify-content: center;
+}
+.accountMobile-out button{
+    width: 70%;
+    background-color: var(--orange);
 }

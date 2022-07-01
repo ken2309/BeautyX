@@ -13,6 +13,8 @@ import PopupNoti from "./PopupNoti";
 import authentication from "../../../api/authApi";
 import { useDispatch } from "react-redux";
 import { fetchAsyncUser } from "../../../redux/USER/userSlice";
+import dayjs from "dayjs";
+import { fetchAsyncApps } from "../../../redux/appointment/appSlice";
 
 function SignIn(props: any) {
     const { t } = useContext(AppContext);
@@ -38,7 +40,10 @@ function SignIn(props: any) {
                     response.data.context.token
                 );
             }
-            dispatch(fetchAsyncUser());
+            const res = await dispatch(fetchAsyncUser());
+            if (res?.payload) {
+                dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
+            }
             setLoading(false);
             history.goBack();
         } catch (error) {

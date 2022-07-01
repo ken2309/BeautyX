@@ -110,6 +110,7 @@ function MerchantDetail() {
           <OrgDetail
             org={org}
             galleries={GALLERIES?.galleries}
+            status_galleries={GALLERIES.status}
           />
           <Container>
             <OrgContainer org={org} tab={tab} />

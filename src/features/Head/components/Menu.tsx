@@ -9,7 +9,6 @@ function Menu(props:any) {
       const { t, setSign } = useContext(AppContext)
       const handleSignOut = () => {
             setSign(false);
-            //const token = null;
             setOpenMenu(!openMenu)
             localStorage.removeItem('_WEB_TK')
             window.sessionStorage.removeItem('_WEB_TK')

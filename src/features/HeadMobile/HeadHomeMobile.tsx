@@ -10,7 +10,8 @@ import { getTotal } from '../../redux/cartSlice';
 import { AppContext } from '../../context/AppProvider';
 
 function HeadHomeMobile() {
-    const {t} = useContext(AppContext);
+    const { t } = useContext(AppContext);
+    const { appsToday } = useSelector((state: any) => state.APP.APPS);
     const dispatch = useDispatch();
     const history = useHistory();
     const { cartList, cartQuantity } = useSelector((state: any) => state.carts);
@@ -42,6 +43,10 @@ function HeadHomeMobile() {
                         onClick={() => history.push("/lich-hen")}
                         className="head-home-mb__button-item"
                     >
+                        {
+                            appsToday.length > 0 &&
+                            <span className="badge">{appsToday.length}</span>
+                        }
                         <img src={icon.calendarPurpleBold} alt="" className="img-con" />
                     </button>
                     <button
