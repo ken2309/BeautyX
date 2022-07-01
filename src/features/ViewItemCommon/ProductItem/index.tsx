@@ -7,7 +7,9 @@ import onErrorImg from "../../../utils/errorImg";
 import { Link } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import { formatRouterLinkProduct } from "../../../utils/formatRouterLink/formatRouter";
-
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+// end 
 interface IProps {
     product: Product;
     org: IOrganization;
@@ -23,7 +25,7 @@ function ProductItem(props: IProps) {
     return (
         <Link
             to={pathProductOb}
-            onClick={() => scrollTop()}
+            onClick={() =>{scrollTop();GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);}}
             className={
                 changeStyle
                     ? "ser-pro-item ser-pro-item__change"

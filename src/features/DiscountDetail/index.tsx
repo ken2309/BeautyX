@@ -38,6 +38,9 @@ import ReviewsContainer from "../ReviewsContainer";
 import Footer from "../Footer";
 import ModalLoad from "../../components/ModalLoad";
 
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../utils/dataLayer';
+// end 
 function DiscountDetail() {
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
     const IS_MB = useFullScreen();
@@ -180,6 +183,7 @@ function DiscountDetail() {
     });
 
     useEffect(() => {
+        GoogleTagPush(GoogleTagEvents.PROMOTION_LOAD);
         callDiscountDetail();
         callServiceDetail();
         callServiceComments();

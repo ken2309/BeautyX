@@ -1,4 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../utils/dataLayer';
+// end 
 
 const storageName = 'web-booking-cart'
 const storage = JSON.parse(`${localStorage.getItem(storageName)}`);
@@ -14,6 +17,7 @@ const cart = createSlice({
     initialState,
     reducers: {
         addCart: (state, action) => {
+            GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
             const iIndex = state.cartList.findIndex((item: any) =>
                 item.cart_id === action.payload.cart_id
             );
@@ -62,6 +66,7 @@ const cart = createSlice({
             localStorage.setItem(storageName, JSON.stringify(state.cartList))
         },
         removeItem: (state, action) => {
+            GoogleTagPush(GoogleTagEvents.REMOVE_FROM_CART);
             const nextItem = state.cartList.filter((item: any) =>
                 item.cart_id !== action.payload.cart_id
             )

@@ -17,6 +17,9 @@ import useFullScreen from "../../../utils/useFullScreen";
 import PopupSuccess from "../../PopupSuccess";
 import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
 
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+// end 
 interface IProps {
     discount: IDiscountPar;
     org: IOrganization;
@@ -69,6 +72,7 @@ function DiscountDetailRight(props: IProps) {
         discount
     );
     const handleAddCart = () => {
+        GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
         dispatch(addCart(values));
         setPopupSuccess(true);
     };
@@ -77,7 +81,8 @@ function DiscountDetailRight(props: IProps) {
         const TYPE = "BOOK_NOW";
         const service = { ...detail, discount: discount };
         const services = [{ service, quantity: quantity }];
-        console.log(service, services)
+        console.log(service, services);
+        GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
         history.push({
             pathname: "/dat-hen",
             state: { org, services, TYPE },

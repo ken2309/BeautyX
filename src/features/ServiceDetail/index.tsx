@@ -30,6 +30,10 @@ import ModalLoad from "../../components/ModalLoad";
 import PageNotFound from "../../components/PageNotFound";
 import { useHistory } from "react-router-dom";
 
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../utils/dataLayer';
+// end 
+
 function ServiceDetail(props: any) {
     const dispatch = useDispatch();
     const IS_MB = useFullScreen();
@@ -152,6 +156,7 @@ function ServiceDetail(props: any) {
     });
 
     useEffect(() => {
+        GoogleTagPush(GoogleTagEvents.PROMOTION_LOAD);
         callServiceDetail();
         callOrgDetail();
         callServiceComments();

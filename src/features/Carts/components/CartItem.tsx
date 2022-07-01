@@ -32,6 +32,9 @@ import {
     formatRouterLinkService
 } from "../../../utils/formatRouterLink/formatRouter";
 
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+// end 
 interface IProps {
     inPayment?: boolean;
     cartItem: any;
@@ -79,6 +82,7 @@ function CartItem(props: IProps) {
         setOpenConfirm(true);
     };
     const goBackDetail = () => {
+        GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         if (cartItem.is_type === 1) {
             const pathProductOb = formatRouterLinkProduct(cartItem.cart_item, cartItem.org)
             history.push(pathProductOb);

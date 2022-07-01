@@ -10,6 +10,9 @@ import { useEffect } from 'react';
 import scrollTop from '../../../utils/scrollTop';
 import { formatRouterLinkServicePromo } from '../../../utils/formatRouterLink/formatRouter';
 
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+// end 
 function TabService(props: any) {
     const { catesChild, CATE } = props;
     const dispatch = useDispatch();
@@ -35,6 +38,7 @@ function TabService(props: any) {
     const history = useHistory();
     const onServiceDetail = (service: any) => {
         scrollTop();
+        GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         const pathServiceOb = formatRouterLinkServicePromo(service);
         history.push(pathServiceOb)
     }

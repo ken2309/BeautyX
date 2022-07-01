@@ -4,6 +4,9 @@ import { Service } from '../../../interface/service';
 import serviceApi from '../../../api/serviceApi';
 import { Pagination } from '@mui/material';
 import scrollTop_2 from '../../../utils/scrollTop_2';
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+// end 
 
 function Services(props: any) {
     const { org, act } = props;
@@ -13,7 +16,8 @@ function Services(props: any) {
         page_count: 1
     })
     async function handleGetServicesSpecial() {
-        const ORG = await org
+        const ORG = await org;
+        GoogleTagPush(GoogleTagEvents.PRODUCT_LIST_LOAD);
         try {
             const res_services = await serviceApi.getSpecialPriceByOrg_id({
                 org_id: ORG?.id,

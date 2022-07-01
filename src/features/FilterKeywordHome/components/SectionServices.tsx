@@ -9,11 +9,15 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { fetchAsyncServiceDetail } from '../../../redux/org_services/serviceSlice';
 
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+// end 
 function SectionServices(props: any) {
     const { services, setOpenSearch, hiddenFilter } = props;
     const history = useHistory();
     const dispatch = useDispatch();
     const gotoDetail = (service: IServicePromo) => {
+        GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         if (hiddenFilter) {
             hiddenFilter()
         }

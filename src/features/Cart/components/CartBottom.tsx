@@ -10,6 +10,9 @@ import scrollTop from "../../../utils/scrollTop";
 import CartPopupNotiSign from "./CartPopupNotiSign";
 import { AppContext } from "../../../context/AppProvider";
 
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+// end 
 function CartBottom(props: any) {
   const { orgs, chooseOrg, chooseOrgClick } = props;
   const { t } = useContext(AppContext);
@@ -35,6 +38,7 @@ function CartBottom(props: any) {
     (item: any) => item.org_id === firstItem.org_id
   );
   const gotoPayment = () => {
+    GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
     if (USER) {
       if (carts.cartAmount > 0 && cartFirstList.length === cartConfirm.length) {
         scrollTop();
