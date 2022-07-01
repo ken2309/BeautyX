@@ -159,7 +159,7 @@ function Booking() {
                     quantity: services[0]?.quantity,
                 }
                 history.push({
-                    pathname: `/trang-thai-don-hang/${desc}`,
+                    pathname: `/trang-thai-don-hang`,
                     search: transaction_uuid,
                     state: { state_payment, actionAfter, listPayment },
                 });
