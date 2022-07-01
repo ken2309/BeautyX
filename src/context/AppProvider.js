@@ -34,11 +34,12 @@ export default function AppProvider({ children }) {
   }
 
   useEffect(() => {
-    if (lg === "en-US" || lg === "en") {
-      setLanguage("vn");
-    } else if (lg === "vi-VN" || lg === "vn") {
-      setLanguage("vn");
-    }
+    // if (lg === "en-US" || lg === "en") {
+    //   setLanguage("en");
+    // } else if (lg === "vi-VN" || lg === "vn") {
+    //   setLanguage("vn");
+    // }
+    setLanguage("vn");
   }, [lg]);
   useEffect(() => {
     dispatch(fetchAsyncUser())

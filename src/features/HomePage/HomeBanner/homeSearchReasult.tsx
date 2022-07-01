@@ -77,7 +77,6 @@ export default function HomeBannerResult() {
           >
             <img src={dataBanner.imageURL} onError={(e) => onErrorImg(e)} alt="" />
           </div>
-
           <Container className="landing-page__body">
             {/* <div className="landing-page__body__title">
             {dataBanner.name}

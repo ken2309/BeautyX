@@ -56,7 +56,7 @@ function SectionEmpty() {
             <div className="search-empty-item">
                 <div className="flex-row-sp search-empty-item__head">
                     <span>Tìm kiếm gần đây</span>
-                    <span>{"Xem tất cả >"}</span>
+                    {/* <span>{"Xem tất cả >"}</span> */}
                 </div>
                 <div className="search-empty-item__list">
                     <ul className="list">

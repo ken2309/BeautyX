@@ -45,7 +45,7 @@ i18n
     debug: true,
     whitelist: availableLanguages,
     detection: options,
-
+    lng: "vi",
     interpolation: {
       escapeValue: false
     },
