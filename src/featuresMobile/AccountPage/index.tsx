@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
@@ -9,6 +9,7 @@ import AccountForm from "./Components/AccountForm";
 import DialogChangeInfo from "./Components/DialogChangeInfo";
 import OrderMb from "./Components/Orders";
 import AccountGuide from "./Components/AccountGuide";
+import img from "../../constants/img";
 
 export default function AccountMobile() {
     const { USER } = useSelector((state: any) => state.USER);
@@ -18,9 +19,11 @@ export default function AccountMobile() {
     const openAcc = params?.address ? true : false;
     const openOrder = params?.order ? true : false;
     const openGuide = params?.guide ? true : false;
-    // const refOrder: any = useRef();
-    const handleToggle = () => {
-        // refOrder.current.classList.toggle("active");
+    const refUserGuide: any = useRef();
+    const handleToggleUserGuide = () => {
+        refUserGuide.current.classList.toggle("userGuid-active");
+    };
+    const gotoOrder = () => {
         history.push("/tai-khoan/lich-su-mua?order=true");
     };
     const gotoAppointment = () => {
@@ -34,8 +37,8 @@ export default function AccountMobile() {
         history.push("/tai-khoan/thong-tin-ca-nhan?address=true");
     };
     const gotoAccountGuide = () => {
-        history.push("/tai-khoan/thong-tin-ca-nhan?guide=true")
-    }
+        history.push("/tai-khoan/thong-tin-ca-nhan?guide=true");
+    };
     return (
         <div className="accountMobile">
             {USER && (
@@ -70,7 +73,7 @@ export default function AccountMobile() {
                 <ul className="accountMobile-mid__list">
                     <li
                         onClick={() => {
-                            handleToggle();
+                            gotoOrder();
                         }}
                         className="accountMobile-mid__item"
                     >
@@ -83,16 +86,6 @@ export default function AccountMobile() {
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
-                        {/* <div ref={refOrder} className="item-bot__wrap">
-                            <div className="item-bot__item">
-                                <img src={icon.tickBlue} alt="" />
-                                <span>Đã thanh toán</span>
-                            </div>
-                            <div className="item-bot__item">
-                                <img src={icon.xCircleRed} alt="" />
-                                <span>Đã hủy</span>
-                            </div>
-                        </div> */}
                     </li>
                     <li className="accountMobile-mid__item">
                         <div
@@ -130,20 +123,42 @@ export default function AccountMobile() {
                             <img src={icon.arownAcc} alt="" />
                         </div>
                     </li>
-                    {/* <li className="accountMobile-mid__item">
+                    <li className="accountMobile-mid__item">
                         <div
-                            onClick={() => history.push("/homepage")}
+                            onClick={() => handleToggleUserGuide()}
                             className="item-left__wrap"
                         >
                             <div className="item-left">
                                 <div>
-                                    <img src={icon.markerAcc} alt="" />
+                                    <img
+                                        style={{ width: "18px" }}
+                                        src={icon.settingPurple}
+                                        alt=""
+                                    />
                                 </div>
-                                <span>New Home</span>
+                                <span>Cài đặt</span>
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
-                    </li> */}
+                        <div ref={refUserGuide} className="item-bot__wrap ">
+                            <div className="item-bot__item">
+                                <img
+                                    style={{ width: "32px" }}
+                                    src={icon.VietnamFlat}
+                                    alt=""
+                                />
+                                <span>Tiếng Việt</span>
+                            </div>
+                            <div className="item-bot__item">
+                                <img
+                                    style={{ width: "32px" }}
+                                    src={icon.EngFlat}
+                                    alt=""
+                                />
+                                <span>English</span>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
             {/* bot */}

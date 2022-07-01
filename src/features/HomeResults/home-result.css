@@ -58,6 +58,9 @@
 
 /* Mobile */
 @media only screen and (max-width: 1023px) {
+    .cnt-right__top {
+        padding: 12px 0;
+    }
     .home-promo-ser__mb {
         width: 100%;
         margin-top: 48px;
