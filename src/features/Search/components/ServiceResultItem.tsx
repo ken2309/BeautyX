@@ -11,6 +11,9 @@ import scrollTop from '../../../utils/scrollTop';
 import { onSetStatusService } from '../../../redux/org_services/serviceSlice'
 import { formatRouterLinkServicePromo } from '../../../utils/formatRouterLink/formatRouter';
 
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+// end 
 interface IProps {
     service: IServicePromo
 }
@@ -21,7 +24,8 @@ function ServiceResultItem(props: IProps) {
     const distance = formatDistance(service?._geoDistance)
     const onItemClick = () => {
         scrollTop();
-        dispatch(onToggleSearchCnt(false))
+        GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
+        dispatch(onToggleSearchCnt(false));
         dispatch(onSetStatusService("LOADING"))
     }
     const pathServiceOb = formatRouterLinkServicePromo(service)

@@ -5,6 +5,10 @@ import { onSetFirstCateProducts } from '../../../redux/CateTree/cateTreeSlice';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+// end 
+
 function TabProduct2(props: any) {
     const dispatch = useDispatch();
     const { PRODUCTS } = useSelector((state: any) => state.CATE_TREE);
@@ -26,6 +30,7 @@ function TabProduct2(props: any) {
                                     pathname: `/san-pham`,
                                     search: `keyword=${item.title}`
                                 }}
+                                onClick={()=>GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK)}
                                 className="flex-column home-tree__pr-cate-child__item"
                             >
                                 <div className="item-img__box">

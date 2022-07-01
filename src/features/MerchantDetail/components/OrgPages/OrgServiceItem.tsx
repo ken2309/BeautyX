@@ -7,6 +7,9 @@ import icon from '../../../../constants/icon';
 import scrollTop from '../../../../utils/scrollTop';
 import { Link } from 'react-router-dom';
 import { formatRouterLinkService } from '../../../../utils/formatRouterLink/formatRouter';
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../../utils/dataLayer';
+// end 
 interface IProps {
     service: Service,
     org: IOrganization
@@ -18,7 +21,7 @@ function OrgServiceItem(props: IProps) {
     return (
         <Link
             to={pathServiceOb}
-            onClick={() => scrollTop()}
+            onClick={() => {scrollTop();GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK)}}
         >
             <div
                 className="org-special-item"

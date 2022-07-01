@@ -32,6 +32,10 @@ import { useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
 
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../utils/dataLayer';
+// end 
+
 function ServiceDetail(props: any) {
     const { t } = useContext(AppContext);
     const dispatch = useDispatch();
@@ -155,6 +159,7 @@ function ServiceDetail(props: any) {
     });
 
     useEffect(() => {
+        GoogleTagPush(GoogleTagEvents.PROMOTION_LOAD);
         callServiceDetail();
         callOrgDetail();
         callServiceComments();

@@ -11,6 +11,9 @@ import formatPrice from '../../../utils/formatPrice';
 import scrollTop from '../../../utils/scrollTop';
 import { formatRouterLinkProductPromo } from '../../../utils/formatRouterLink/formatRouter';
 
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+// end 
 interface IProps {
     product: IProductPromo
 }
@@ -22,6 +25,7 @@ function ProductResultItem(props: IProps) {
 
     const onItemClick = () => {
         scrollTop();
+        GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         dispatch(onToggleSearchCnt(false))
         dispatch(onSetStatusProduct("LOADING"))
     }

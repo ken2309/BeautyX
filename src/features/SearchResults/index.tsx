@@ -193,7 +193,7 @@ function SearchResults(props: any) {
                                     <div className="flexX-gap-4">
                                         <p>Bản đồ</p>
                                         <img
-                                            src="/static/media/mapPinRed.2be9ae82.svg"
+                                            src={icon.mapPinRed}
                                             alt=""
                                             style={{ width: "16px" }}
                                         ></img>

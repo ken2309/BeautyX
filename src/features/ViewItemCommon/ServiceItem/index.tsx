@@ -8,6 +8,9 @@ import { useHistory } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import { formatRouterLinkService } from "../../../utils/formatRouterLink/formatRouter";
 
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+// end 
 interface IProps {
     service: Service;
     org: IOrganization;
@@ -23,6 +26,7 @@ function ServiceItem(props: IProps) {
     const pathServiceOb = formatRouterLinkService(service, org)
     const onDetail = () => {
         scrollTop();
+        GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         history.push(pathServiceOb);
     };
     return (

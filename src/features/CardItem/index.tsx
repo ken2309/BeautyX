@@ -6,6 +6,9 @@ import { useHistory } from "react-router-dom";
 import scrollTop from "../../utils/scrollTop";
 import slugify from "../../utils/formatUrlString";
 import onErrorImg from "../../utils/errorImg";
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../utils/dataLayer';
+// end 
 
 //note: product : is_type = 1, service: is_type = 2
 function CardItem(props: any) {
@@ -15,14 +18,7 @@ function CardItem(props: any) {
     const discount = 100 - (special_price / retail_price) * 100;
     const gotoDetail = () => {
         scrollTop();
-        // const param = {
-        //       org: org_id,
-        //       id: detail.id
-        // }
-        // const search = JSON.stringify(param);
-        //console.log(org_id)
-        //products: is_type = 1, services: is_type = 2
-        //console.log(is_type);
+        GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         if (is_type === 1) {
             history.push({
                 pathname: `/product-detail/${slugify(name)}`,

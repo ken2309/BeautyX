@@ -11,6 +11,9 @@ import onErrorImg from "../../../../utils/errorImg";
 import { formatAddCart } from "../../../../utils/cart/formatAddCart";
 import AlertSnack from "../../../../components/AlertSnack";
 
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../../utils/dataLayer';
+// end 
 function ServiceItem(props: any) {
   const { t } = useContext(AppContext);
   const { serviceItem, org, itemsDiscountOrg } = props;
@@ -70,6 +73,7 @@ function ServiceItem(props: any) {
     }
   };
   const handleDetailService = () => {
+    GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
     if (IS_DISCOUNT) {
       const type = onCheckType();
       history.push({

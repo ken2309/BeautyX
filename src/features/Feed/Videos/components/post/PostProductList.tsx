@@ -18,11 +18,14 @@ import slugify from "../../../../../utils/formatUrlString";
 //     totalItem?:number
 // }
  // ---- end ----
+ // google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../../../utils/dataLayer';
+// end 
 export default function PostProductList (props:any) {
     const {data} = props;
     const history = useHistory();
     const goDetail=(item:any)=>{
-        console.log(item);
+        GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         history.push({
             pathname: `/dich-vu/${slugify(item?.service_name)}`,
             search: `id=${item.id}&org=${data.org.id}`,

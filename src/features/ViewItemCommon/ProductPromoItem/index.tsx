@@ -7,7 +7,9 @@ import icon from '../../../constants/icon';
 import formatPrice from '../../../utils/formatPrice';
 import scrollTop from '../../../utils/scrollTop';
 import { formatRouterLinkProductPromo } from '../../../utils/formatRouterLink/formatRouter';
-
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+// end 
 interface IProps {
     product: IProductPromo
 }
@@ -18,7 +20,7 @@ function ProductPromoItem(props: IProps) {
     return (
         <Link
             to={pathProductOb}
-            onClick={() => scrollTop()}
+            onClick={() => {scrollTop();GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);}}
             className="ser-pro-item"
         >
             <div className="ser-img-cnt">

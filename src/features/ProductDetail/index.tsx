@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import "./product.css";
 import Head from "../Head";
 import Footer from "../Footer";
@@ -33,7 +34,6 @@ import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
 import ReviewsContainer from "../ReviewsContainer";
 import ModalLoad from "../../components/ModalLoad";
 import PageNotFound from "../../components/PageNotFound";
-import { useHistory } from "react-router-dom";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();

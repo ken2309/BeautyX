@@ -16,7 +16,9 @@ import { useHistory } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import onErrorImg from "../../../utils/errorImg";
 import PopupDiscountQuantity from "./PopupDiscountQuantity";
-
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+// end 
 interface IProps {
     inPayment?: boolean;
     cartItem: any;
@@ -58,6 +60,7 @@ function CartItem(props: IProps) {
         setOpenConfirm(true);
     };
     const goBackDetail = () => {
+        GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         if (cartItem.is_type === 1) {
             history.push({
                 pathname: `/Product-detail/${slugify(cartItem.name)}`,

@@ -5,6 +5,9 @@ import serviceApi from "../../api/serviceApi";
 import favorites from "../../api/favorite";
 import productsApi from "../../api/productApi";
 import { STATUS } from "../status";
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../utils/dataLayer';
+// end 
 
 export const fetchAsyncOrg: any = createAsyncThunk(
     "ORG/fetchAsyncOrg",
