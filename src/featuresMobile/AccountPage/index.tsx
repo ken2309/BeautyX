@@ -9,7 +9,6 @@ import AccountForm from "./Components/AccountForm";
 import DialogChangeInfo from "./Components/DialogChangeInfo";
 import OrderMb from "./Components/Orders";
 import AccountGuide from "./Components/AccountGuide";
-import img from "../../constants/img";
 
 export default function AccountMobile() {
     const { USER } = useSelector((state: any) => state.USER);
