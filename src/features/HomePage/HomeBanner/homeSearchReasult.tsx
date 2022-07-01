@@ -63,7 +63,7 @@ export default function HomeBannerResult() {
   return (
     <>
     <ExtraFlatForm />
-            {FLAT_FORM === "BEAUTYX" && IS_MB ? <HeadMobile title={dataBanner.name}/>:<Head IN_HOME={false} />}
+            {IS_MB ? <HeadMobile title={dataBanner.name}/>:<Head IN_HOME={false} />}
     <Container>
       <div className="landing-page">
         {/* <button

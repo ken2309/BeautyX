@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { IOrganization } from "../../interface/organization";
 import { Link } from "react-router-dom";
 import { onToggleSearchCnt, addHistory } from "../../redux/search/searchSlice";
 import { useDispatch } from "react-redux";
 import { onSetTabResult } from "../../redux/search/searchResultSlice";
+import { AppContext } from "../../context/AppProvider";
 
 function SectionOrgs(props: any) {
+    const {t} = useContext(AppContext);
     const { ORGS, onGotoFilterResult } = props;
     const handleOnclickItem = (item: any) => {
         const values = {
@@ -30,8 +32,8 @@ function SectionOrgs(props: any) {
     return ORGS.orgs.length > 0 ? (
         <div className="search-section-item">
             <div className="flex-row-sp search-section-item__title">
-                Doanh nghiệp
-                <span onClick={onViewMore} >Xem tất cả</span>
+                {t("my_ser.business")}
+                <span onClick={onViewMore} >{t("trending.watch_all")}</span>
             </div>
             <div className="search-empty-item__list">
                 <ul className="list">

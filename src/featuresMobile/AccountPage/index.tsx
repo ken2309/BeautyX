@@ -130,20 +130,27 @@ export default function AccountMobile() {
                             <img src={icon.arownAcc} alt="" />
                         </div>
                     </li>
-                    {/* <li className="accountMobile-mid__item">
-                        <div
-                            onClick={() => history.push("/homepage")}
-                            className="item-left__wrap"
-                        >
+                    <li className="accountMobile-mid__item">
+                        <div className="item-left__wrap">
                             <div className="item-left">
                                 <div>
-                                    <img src={icon.markerAcc} alt="" />
+                                    <img style={{ width: "16px", height: "16px" }} src={icon.Setting} alt="" />
                                 </div>
-                                <span>New Home</span>
+                                <span>Cài đặt</span>
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
-                    </li> */}
+                        <div className="item-bot__wrap">
+                            <div className="item-bot__item">
+                                <img src={icon.tickBlue} alt="" />
+                                <span>Đã thanh toán</span>
+                            </div>
+                            <div className="item-bot__item">
+                                <img src={icon.xCircleRed} alt="" />
+                                <span>Đã hủy</span>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
             {/* bot */}

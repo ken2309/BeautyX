@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { IServicePromo } from "../../../interface/servicePromo";
 import ServicePromoItem from "../../ViewItemCommon/ServicePromoItem";
 import HomeTitle from "../Components/HomeTitle";
@@ -7,11 +7,13 @@ import "./homeRecomment.css";
 import { fetchAsyncServicesRandom } from '../../../redux/home/homePageSlice'
 import { useDispatch, useSelector } from "react-redux";
 import { STATUS } from '../../../redux/status'
+import { AppContext } from "../../../context/AppProvider";
 
 export default function HomeRecomment() {
+    const {t} = useContext(AppContext);
     const dispatch = useDispatch();
-    const { SERVICES_BOUGHT } = useSelector((state: any) => state.HOME_PAGE);
-    const { services, status } = SERVICES_BOUGHT;
+    const { SERVICES_RANDOM } = useSelector((state: any) => state.HOME_PAGE);
+    const { services, status } = SERVICES_RANDOM;
 
     const callServicesRandom = () => {
         if (status !== STATUS.SUCCESS) {
@@ -28,7 +30,7 @@ export default function HomeRecomment() {
 
     return (
         <div className="home-recomment">
-            <HomeTitle title={"Gợi ý dành cho bạn"} />
+            <HomeTitle title={t("home_2.suggestions_for_you")} />
             <ul className="home-recomment__list">
                 {services?.map((item: IServicePromo, index: number) => (
                     <li className="home-recomment__item" key={index}>

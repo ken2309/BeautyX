@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import Slider from "react-slick";
 import img from "../../../constants/img";
+import { AppContext } from "../../../context/AppProvider";
 import HomeTitle from "../Components/HomeTitle";
 import HomePromo from "../HomePromo";
 import "./homeHotDeal.css";
 export default function HomeHotDeal() {
+    const { t } = useContext(AppContext);
     const { FILTER_PROMO } = useSelector((state: any) => state.FILTER);
     const settings = {
         dots: false,
@@ -58,9 +60,9 @@ export default function HomeHotDeal() {
     return (
         <div className="home-hot__deal">
             <HomeTitle
-                title={`Top Deal Khủng`}
+                title={t("home_2.top_deal")}
                 url={`/deal-lam-dep-cuc-HOT?sort=${FILTER_PROMO.query}`}
-                seemore="Xem tất cả > "
+                seemore={t("trending.watch_all") + " > "}
             />
             {/* <ul className="dealHot-listBanner">
                 <Slider {...settings}>

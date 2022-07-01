@@ -351,7 +351,11 @@
     "trusted_place":"Trusted place",
     "places_near_you_2":"Places near you",
     "places_you_are_interested_in":"Places you are interested in",
-    "beauty_places":"Beauty places"
+    "beauty_places":"Beauty places",
+    "top_deal":"Top Deal",
+    "top_selling_services":"Top Selling Services",
+    "favorite_places":"Favorite places",
+    "suggestions_for_you":"Suggestions for you"
   },
   "se":{
     "search_results_for_keyword":"Search results for keyword",
@@ -360,7 +364,16 @@
     "from":"from",
     "to":"to",
     "invalid":"invalid",
-    "apply":"Apply"
+    "apply":"Apply",
+    "search_title":"Search for a service, product,...",
+    "recent_search":"Recent search",
+    "search_recommend":"Search recommend",
+    "view_the_results_for":"View the results for",
+    "no_results_found_for":"No results found for",
+    "try":"Try searching",
+    "off_service":"This service has not been activated for online sales",
+    "booking_now":"Booking now",
+    "instructions_terms":"Instructions & Terms"
   },
   "Contact":{
     "success":"submit success"

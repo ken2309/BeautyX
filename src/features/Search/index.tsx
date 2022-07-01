@@ -20,9 +20,12 @@ import SectionProducts from "./SectionProducts";
 import SectionEmpty from "./SectionEmpty";
 import useFullScreen from "../../utils/useFullScreen";
 import SectionNull from "./SectionNull";
+import { useContext } from "react";
+import { AppContext } from "../../context/AppProvider";
 
 function Search() {
     const IS_MB = useFullScreen();
+    const {t} = useContext(AppContext);
     const { open, keyword, ORGS, SERVICES, PRODUCTS } = useSelector(
         (state: any) => state.SEARCH
     );
@@ -129,7 +132,7 @@ function Search() {
                             onChange={handleOnChangeInput}
                             onKeyDown={handleKeyDown}
                             type="text"
-                            placeholder="Nhập từ khóa tìm kiếm..."
+                            placeholder={t("se.search_title")}
                         />
                         {keyword.length > 0 && (
                             <img
@@ -148,7 +151,7 @@ function Search() {
                                 className="search-cnt__keyword cursor-pointer"
                                 onClick={() => handleSearch()}
                             >
-                                Xem kết quả cho <span>{keyword}</span>
+                                {t("se.view_the_results_for")} <span>{keyword}</span>
                             </p>
                             {listSectionDisplay.map((item, index) => (
                                 <div key={index}>{item.element}</div>

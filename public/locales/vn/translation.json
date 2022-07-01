@@ -350,7 +350,11 @@
     "trusted_place": "Địa điểm đáng tin cậy",
     "places_near_you_2": "Địa điểm gần bạn",
     "places_you_are_interested_in": "Địa điểm bạn quan tâm",
-    "beauty_places": "Địa điểm làm đẹp"
+    "beauty_places": "Địa điểm làm đẹp",
+    "top_deal":"Top Deal Khủng",
+    "top_selling_services":"Top Dịch Vụ Bán Chạy",
+    "favorite_places":"Địa điểm yêu thích",
+    "suggestions_for_you":"Gợi ý dành cho bạn"
   },
   "se": {
     "search_results_for_keyword": "Kết quả tìm kiếm cho từ khóa",
@@ -359,7 +363,16 @@
     "form": "từ",
     "to": "đến",
     "invalid": "Không hợp lệ",
-    "apply": "Áp dụng khoảng giá"
+    "apply": "Áp dụng khoảng giá",
+    "search_title":"Bạn muốn tìm gì ?",
+    "recent_search":"Tìm kếm gần đây",
+    "search_recommend":"Gợi ý tìm kiếm",
+    "view_the_results_for":"Xem kết quả cho",
+    "no_results_found_for":"Không tìm thấy kết quả cho",
+    "try":"Hãy thử tìm kiếm",
+    "off_service":"Dịch vụ này chưa được kích hoạt bán hàng Online",
+    "booking_now":"Đặt hẹn ngay",
+    "instructions_terms":"Hướng dẫn & Điều khoản"
   },
   "Contact": {
     "success": "Đã nhận thông tin"

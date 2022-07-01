@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import Search from '../Search';
 import icon from '../../constants/icon';
 import './style.css'
@@ -7,8 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { onToggleSearchCnt } from '../../redux/search/searchSlice';
 import { useHistory } from 'react-router-dom';
 import { getTotal } from '../../redux/cartSlice';
+import { AppContext } from '../../context/AppProvider';
 
 function HeadHomeMobile() {
+    const {t} = useContext(AppContext);
     const dispatch = useDispatch();
     const history = useHistory();
     const { cartList, cartQuantity } = useSelector((state: any) => state.carts);
@@ -33,7 +35,7 @@ function HeadHomeMobile() {
                     className="flex-row head-home-mb__input"
                 >
                     <img src={icon.searchPurple} alt="" />
-                    <span>Bạn muốn tìm gì ?</span>
+                    <span>{t("se.search_title")}</span>
                 </div>
                 <div className="head-home-mb__button">
                     <button

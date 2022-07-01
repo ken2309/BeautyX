@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import imgNull from '../../assets/image/user_guide/searchNull.png';
@@ -6,8 +6,10 @@ import icon from '../../constants/icon';
 import { onToggleSearchCnt } from '../../redux/search/searchSlice';
 import { listRecomment } from './SectionEmpty';
 import { STATUS } from '../../redux/status'
+import { AppContext } from '../../context/AppProvider';
 
 function SectionNull(props: any) {
+    const {t} = useContext(AppContext);
     const { ORGS, SERVICES, PRODUCTS, keyword } = props;
     const dispatch = useDispatch();
     const history = useHistory();
@@ -34,11 +36,11 @@ function SectionNull(props: any) {
             <>
                 <div className="search-null">
                     <img src={imgNull} alt="" />
-                    <div className="title">Không tìm thấy kết quả cho <span>{keyword}</span></div>
+                    <div className="title">{t("se.no_results_found_for")} <span>{keyword}</span></div>
                 </div>
                 <div className="search-empty-item">
                     <div className="flex-row-sp search-empty-item__head">
-                        <span>Hãy thử tìm kiếm</span>
+                        <span>{t("se.try")}</span>
                     </div>
                     <ul className="keyword-list mt-24">
                         {listRecomment.map((item: any, index: number) => (

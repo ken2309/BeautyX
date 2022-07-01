@@ -29,8 +29,11 @@ import ReviewsContainer from "../ReviewsContainer";
 import ModalLoad from "../../components/ModalLoad";
 import PageNotFound from "../../components/PageNotFound";
 import { useHistory } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../../context/AppProvider";
 
 function ServiceDetail(props: any) {
+    const { t } = useContext(AppContext);
     const dispatch = useDispatch();
     const IS_MB = useFullScreen();
     const ORG = useSelector((state: any) => state.ORG);
@@ -52,10 +55,10 @@ function ServiceDetail(props: any) {
     const [value, setValue] = useState<any>(1);
 
     let tabs = [
-        { id: 1, title: "Mô tả" },
-        { id: 2, title: "Đánh giá" },
-        { id: 3, title: "Doanh nghiệp" },
-        { id: 4, title: "Hướng dẫn & Điều khoản" },
+        { id: 1, title: t("pr.description") },
+        { id: 2, title: t("Mer_de.feedback") },
+        { id: 3, title: t("my_ser.business") },
+        { id: 4, title: t("se.instructions_terms") },
     ];
 
     let refDesc = useRef<any>();
@@ -218,7 +221,7 @@ function ServiceDetail(props: any) {
                                                 className="service-detail__description"
                                             >
                                                 <p>
-                                                    Mô tả:{" "}
+                                                    {t("pr.description")}:{" "}
                                                     {service.description
                                                         ? service.description
                                                         : "Đang cập nhật"}
@@ -314,7 +317,7 @@ function ServiceDetail(props: any) {
                                             }}
                                             style={{ backgroundColor: "var(--orange)" }}
                                         >
-                                            <p>Đặt hẹn ngay</p>
+                                            <p>{t("se.booking_now")}</p>
                                         </button>
                                         <button
                                             onClick={() => {
@@ -323,7 +326,7 @@ function ServiceDetail(props: any) {
                                             className="btn-addcart"
                                         >
                                             <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                                            <p>Thêm vào giỏ hàng</p>
+                                            <p>{t("pr.add_to_cart")}</p>
                                         </button>
                                         {/* drawer service detail */}
                                         <Drawer
@@ -345,7 +348,7 @@ function ServiceDetail(props: any) {
                                     </>
                                     :
                                     <span className="detail-right__no">
-                                        Dịch vụ này chưa được kích hoạt bán hàng Online
+                                        {t("se.off_service")}
                                     </span>
                             }
                         </div>

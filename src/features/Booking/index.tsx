@@ -54,7 +54,7 @@ function Booking() {
     const branchRef = useRef<any>();
     const history = useHistory();
     const location: any = useLocation();
-    
+
     const callOrgDetail = () => {
         if (location.state.org.id !== org?.id || status !== STATUS.SUCCESS) {
             dispatch(fetchAsyncOrg(location.state.org.id))
@@ -148,7 +148,6 @@ function Booking() {
         try {
             const response = await order.postOrder(org?.id, params);
             const state_payment = await response.data.context;
-            const desc = await state_payment.payment_gateway.description;
             const transaction_uuid =
                 state_payment.payment_gateway.transaction_uuid;
             if (response.data.context.status !== "CANCELED") {
@@ -159,7 +158,7 @@ function Booking() {
                     quantity: services[0]?.quantity,
                 }
                 history.push({
-                    pathname: `/trang-thai-don-hang/${desc}`,
+                    pathname: `/trang-thai-don-hang/`,
                     search: transaction_uuid,
                     state: { state_payment, actionAfter, listPayment },
                 });

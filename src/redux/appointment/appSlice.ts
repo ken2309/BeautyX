@@ -7,18 +7,40 @@ export const fetchAsyncApps: any = createAsyncThunk(
     "APP/fetchAsyncApps",
     async (time: any) => {
         const res = await apointmentApi.getAppoitment(time);
+        const appsList = res.data?.context?.data?.map((i: any) => {
+            return {
+                ...i,
+                time_query: time
+            }
+        })
         return {
-            apps: res.data.context.data,
+            apps: appsList,
             time
         }
     }
 )
 
-const initialState = {
+interface IInitialState {
+    APPS: {
+        appointments: any[],
+        status: string,
+        time: any
+    },
+    APP_POST_RES: {
+        res: any,
+        status: any
+    }
+}
+
+const initialState: IInitialState = {
     APPS: {
         appointments: [],
         status: '',
         time: dayjs().format("YYYY-MM")
+    },
+    APP_POST_RES: {
+        res: null,
+        status: ""
     }
 }
 const appsSlice = createSlice({
@@ -44,7 +66,7 @@ const appsSlice = createSlice({
                 }
             }
         },
-        [fetchAsyncApps.pending]: (state) => {
+        [fetchAsyncApps.rejected]: (state) => {
             return { ...state, APPS: { ...state.APPS, status: STATUS.FAIL } }
         },
     }
