@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import slugify from "../../utils/formatUrlString";
 import scrollTop from "../../utils/scrollTop";
 import img, { social } from "../../constants/img";
+import icon from "../../constants/icon";
 
 function Footer() {
     const url_map = `https://maps.google.com/?q=10.79319953408399,106.69011243982503`;
@@ -187,22 +188,63 @@ function Footer() {
                     </div>
                     <div className="footer-right">
                         <div className="wrap">
-                            <div className="footer-cnt__item-title">
-                                Kết nối với chúng tôi
-                            </div>
-                            <div className="social-list">
-                                {social_list.map((item: any, index: number) => (
-                                    <div
-                                        key={index}
-                                        onClick={() => gotoPolicy(item)}
-                                        className="social-item"
-                                    >
+                            <>
+                                <div className="footer-cnt__item-title">
+                                    Kết nối với chúng tôi
+                                </div>
+                                <div className="social-list">
+                                    {social_list.map(
+                                        (item: any, index: number) => (
+                                            <div
+                                                key={index}
+                                                onClick={() => gotoPolicy(item)}
+                                                className="social-item"
+                                            >
+                                                <div className="social-item__img">
+                                                    <img
+                                                        src={item.img}
+                                                        alt=""
+                                                    />
+                                                </div>
+                                            </div>
+                                        )
+                                    )}
+                                </div>
+                            </>
+                            <>
+                                <div
+                                    style={{ marginTop: "24px" }}
+                                    className="footer-cnt__item-title"
+                                >
+                                    Phương thức thanh toán
+                                </div>
+                                <div
+                                    style={{ marginTop: "16px" }}
+                                    className="flexX-gap-16"
+                                >
+                                    <div className="social-item">
                                         <div className="social-item__img">
-                                            <img src={item.img} alt="" />
+                                            <img src={icon.momo} alt="" />
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                    <div className="social-item">
+                                        <div
+                                            style={{
+                                                borderRadius: "4px",
+                                                overflow: "hidden",
+                                                width: "36px",
+                                            }}
+                                            className="social-item__img"
+                                        >
+                                            <img
+                                                style={{ width: "100%" }}
+                                                src={icon.payon}
+                                                alt=""
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
                         </div>
                         <div className="wrap">
                             <div className="footer-cnt__item-title">

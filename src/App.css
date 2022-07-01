@@ -53,6 +53,12 @@ body {
     grid-gap: 0 12px;
     align-items: center;
 }
+.flexX-gap-16 {
+    display: flex;
+    gap: 0 16px;
+    grid-gap: 0 16px;
+    align-items: center;
+}
 
 .flexX-gap-8 {
     display: flex;
