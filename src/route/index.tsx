@@ -10,7 +10,6 @@ import CartPayment from "../features/CartPayment/index";
 import Account from "../features/Account";
 import ProductDetail from "../features/ProductDetail";
 import ServiceDetail from "../features/ServiceDetail";
-import PopupAppointInfor from "../features/PopupAppointInfor";
 import SignPage from "../features/SignPage/index";
 import SignPageRequest from "../features/SignPageRequest/index";
 import Notification from "../features/Notification/index";
@@ -104,10 +103,6 @@ function RouterConfig(props: any) {
     {
       path: "/dich-vu/",
       component: <ServiceDetail />,
-    },
-    {
-      path: "/popup",
-      component: <PopupAppointInfor />,
     },
     {
       path: "/sign-up",

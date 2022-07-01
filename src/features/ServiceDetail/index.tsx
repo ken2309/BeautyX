@@ -31,9 +31,10 @@ import PageNotFound from "../../components/PageNotFound";
 import { useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
+//import ServiceVideo from "./components/ServiceVideo";
 
 // google tag event
-import {GoogleTagPush,GoogleTagEvents} from '../../utils/dataLayer';
+import { GoogleTagPush, GoogleTagEvents } from '../../utils/dataLayer';
 // end 
 
 function ServiceDetail(props: any) {
@@ -221,6 +222,7 @@ function ServiceDetail(props: any) {
                                     <div className="service-detail__tabitem">
                                         {/* description */}
                                         <TabPanel value={value}>
+                                            {/* {service?.video && <ServiceVideo service={service} />} */}
                                             <div
                                                 ref={refDesc}
                                                 className="service-detail__description"
