@@ -50,6 +50,8 @@ import AssistantBtn from "../components/AssistantBtn";
 
 import ProductsByCate from "../features/CategoryTree/ProductsByCate";
 
+import Result from "../features/Results";
+
 const RouterPage = (
     props: { pageComponent: JSX.Element } & RouteComponentProps
 ) => props.pageComponent;
@@ -195,6 +197,10 @@ function RouterConfig(props: any) {
     {
       path: "/san-pham",
       component: <ProductsByCate />
+    },
+    {
+      path:"/ket-qua",
+      component: <Result />
     }
   ];
   const routesPrivate = [

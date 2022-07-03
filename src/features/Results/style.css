@@ -1,0 +1,7 @@
+.result-cont{
+    width: 100%;
+    display: flex;
+}
+.result-cont__left{
+    width: 16.6%;
+}

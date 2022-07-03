@@ -34,7 +34,8 @@ function CartBottom(props: any) {
 
     const pramsOrder = {
         user_address_id: DATA_PMT.address?.id,
-        payment_method_id: DATA_PMT.payment_method_id ? DATA_PMT.payment_method_id : DATA_PMT.pmtMethod?.id,
+        // payment_method_id: DATA_PMT.payment_method_id ? DATA_PMT.payment_method_id : DATA_PMT.pmtMethod?.id,
+        payment_method_id: 5,
         products: products.map((item: any) => { return { id: item.id, quantity: item.quantity } }),
         services: services.map((item: any) => { return { id: item.id, quantity: item.quantity } }),
         combos: combos.map((item: any) => { return { id: item.id, quantity: item.quantity } }),
