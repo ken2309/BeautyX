@@ -8,6 +8,9 @@ import { onToggleSearchCnt } from '../../redux/search/searchSlice';
 import { useHistory } from 'react-router-dom';
 import { getTotal } from '../../redux/cartSlice';
 import { AppContext } from '../../context/AppProvider';
+ // ==== api tracking ====
+ import tracking from "../../api/trackApi";
+ // end
 
 function HeadHomeMobile() {
     const { t } = useContext(AppContext);
@@ -32,7 +35,9 @@ function HeadHomeMobile() {
             <Search />
             <div className='flex-row-sp head-home-mb'>
                 <div
-                    onClick={() => dispatch(onToggleSearchCnt(true))}
+                    onClick={() => {
+                        tracking.SEARCH_CLICK(); dispatch(onToggleSearchCnt(true))
+                    }}
                     className="flex-row head-home-mb__input"
                 >
                     <img src={icon.searchPurple} alt="" />
@@ -40,7 +45,10 @@ function HeadHomeMobile() {
                 </div>
                 <div className="head-home-mb__button">
                     <button
-                        onClick={() => history.push("/lich-hen")}
+                        onClick={() => {
+                            tracking.CALENDAR_CLICK()
+                            history.push("/lich-hen")
+                        }}
                         className="head-home-mb__button-item"
                     >
                         {

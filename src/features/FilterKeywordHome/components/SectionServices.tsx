@@ -9,6 +9,9 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { fetchAsyncServiceDetail } from '../../../redux/org_services/serviceSlice';
 
+ // ==== api tracking ====
+ import tracking from "../../../api/trackApi";
+ // end
 // google tag event
 import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
 // end 
@@ -17,6 +20,8 @@ function SectionServices(props: any) {
     const history = useHistory();
     const dispatch = useDispatch();
     const gotoDetail = (service: IServicePromo) => {
+
+        tracking.USER_ITEM_CLICK(service.org_id,service.service_id);
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         if (hiddenFilter) {
             hiddenFilter()

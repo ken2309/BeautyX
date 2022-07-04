@@ -31,7 +31,10 @@ import apointmentApi from "../../api/apointmentApi";
 import Notification from "../../components/Notification";
 import { onSetStatusApp } from "../../redux/appointment/appSlice";
 
-
+ // ==== api tracking ====
+ import tracking from "../../api/trackApi";
+ import {formatProductList} from "../../utils/tracking";
+ // end
 const date = dayjs();
 function Booking() {
     const dispatch = useDispatch();
@@ -146,6 +149,7 @@ function Booking() {
     async function handlePostOrder() {
         const params = pickBy(params_string, identity);
         try {
+            tracking.PAY_CONFIRM_CLICK(org?.id,formatProductList(params.products))
             const response = await order.postOrder(org?.id, params);
             const state_payment = await response.data.context;
             const transaction_uuid =

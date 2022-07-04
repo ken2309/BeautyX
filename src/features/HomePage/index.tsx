@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@mui/material";
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import Bottom from "../../featuresMobile/Bottom";
 import ExtraFlatForm from "../../rootComponents/extraFlatForm";
 import useFullScreen from "../../utils/useFullScreen";
@@ -20,6 +20,9 @@ import HomeProvince from "./HomeProvince";
 import { useDispatch } from "react-redux";
 import { onResetFilter, onSetOrgsEmpty } from "../../redux/filter/filterSlice";
 
+ // ==== api tracking ====
+ import tracking from "../../api/trackApi";
+ // end
 export default function HomePage() {
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
@@ -27,6 +30,7 @@ export default function HomePage() {
         dispatch(onResetFilter())
         dispatch(onSetOrgsEmpty())
     }, [])
+    useEffect(() => {tracking.HOME_LOAD()},[])
     return (
         <div className="homepage">
             <ExtraFlatForm />

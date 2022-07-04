@@ -20,6 +20,9 @@ import PaymentMethodCpn from '../PaymentMethod';
 import { extraPaymentMethodId } from '../PaymentMethod/extraPaymentMethodId';
 import CartNull from '../Cart/components/CartNull';
 
+// ==== api tracking ====
+import tracking from "../../api/trackApi";
+// end
 function Carts() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const dispatch = useDispatch();
@@ -37,6 +40,7 @@ function Carts() {
     const handleClearByCheck = () => {
         if (cartConfirm.length > 0) {
             const action = intersection;
+            tracking.CART_DELETE_ALL_CLICK()
             dispatch(clearByCheck(action));
         }
     };

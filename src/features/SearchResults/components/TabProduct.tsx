@@ -74,7 +74,7 @@ function TabProduct(props: any) {
                                 >
                                     {
                                         IS_MB ?
-                                            <ProductResultItem product={item} />
+                                            <ProductResultItem keyword={keyword} product={item} />
                                             :
                                             <ProductPromoItem product={item}
                                             />

@@ -18,6 +18,10 @@ import useFullScreen from '../../utils/useFullScreen';
 import Notification from '../../components/Notification/index';
 import { useHistory } from 'react-router-dom';
 
+// ==== api tracking ====
+import tracking from "../../api/trackApi";
+import {formatProductList} from "../../utils/tracking";
+// end
 const timerRender = [0];
 const ORDER_STATUS = ['PENDING', 'PAID', 'CANCELED_BY_USER']
 
@@ -108,6 +112,7 @@ function CartPaymentStatus() {
     useEffect(() => {
         if (transaction_uuid) {
             setInter();
+            tracking.CONFIRM_SCREEN_LOAD(listPayment[0].org_id,formatProductList(listPayment),res.amount)
         }
     }, []);
     const handleCancelPayment = () => {

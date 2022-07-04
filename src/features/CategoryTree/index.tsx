@@ -8,6 +8,9 @@ import { STATUS } from '../../redux/status';
 import { fetchOrgsByTag } from '../../redux/CateTree/cateTreeSlice';
 import { cateChild1 } from '../../data/category';
 import Bottom from '../../featuresMobile/Bottom';
+ // ==== api tracking ====
+ import tracking from "../../api/trackApi";
+ // end
 
 function HomeCategory(props: any) {
     const { CATE, ORGS, SERVICES, VALUE, PRODUCTS } = useSelector((state: any) => state.CATE_TREE);
@@ -23,7 +26,10 @@ function HomeCategory(props: any) {
         }
     }
     useEffect(() => {
-        callOrgsByCateTag()
+        callOrgsByCateTag();
+        (ORGS.status === STATUS.SUCCESS ||
+        SERVICES.status === STATUS.SUCCESS ||
+        PRODUCTS.status === STATUS.SUCCESS ) && tracking.CATEGORY_TREE_LOAD();
     }, [])
 
     return (

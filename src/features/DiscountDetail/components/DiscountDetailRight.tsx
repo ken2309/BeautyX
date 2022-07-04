@@ -17,6 +17,9 @@ import useFullScreen from "../../../utils/useFullScreen";
 import PopupSuccess from "../../PopupSuccess";
 import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
 
+ // ==== api tracking ====
+ import tracking from "../../../api/trackApi";
+ // end
 // google tag event
 import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
 // end 
@@ -72,6 +75,7 @@ function DiscountDetailRight(props: IProps) {
         discount
     );
     const handleAddCart = () => {
+        tracking.ADD_CART_CLICK(values.org_id,values.id,values.price,values.quantity)
         GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
         dispatch(addCart(values));
         setPopupSuccess(true);
@@ -82,6 +86,7 @@ function DiscountDetailRight(props: IProps) {
         const service = { ...detail, discount: discount };
         const services = [{ service, quantity: quantity }];
         console.log(service, services);
+        tracking.ADD_CART_CLICK(values.org_id,values.id,values.price,values.quantity)
         GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
         history.push({
             pathname: "/dat-hen",

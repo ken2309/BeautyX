@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Head from "../../Head";
 import HeadTitle from "../../HeadTitle";
 import { useLocation } from "react-router-dom";
@@ -20,6 +20,9 @@ interface IData {
     page: number;
     totalItem: number;
 }
+// ==== api tracking ====
+import tracking from "../../../api/trackApi";
+// end
 
 function HomeProvince(props: any) {
     const location = useLocation();
@@ -60,9 +63,9 @@ function HomeProvince(props: any) {
     }
     useEffect(() => {
         getOrgsByProvince();
+        tracking.LIST_ORG_LOAD();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [orgFilter.tags, data.page]);
-
     const onViewMore = () => {
         if (data.orgs.length >= 15 && data.orgs.length < data.totalItem) {
             setData({
