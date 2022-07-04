@@ -73,6 +73,10 @@ function RouterConfig(props: any) {
       component: <HomePage />
     },
     {
+      path: '/MB',
+      component: <HomePage />
+    },
+    {
       path: `/otp`,
       component: <Otp />,
     },

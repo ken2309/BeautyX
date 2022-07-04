@@ -30,6 +30,17 @@ function LoginFlatForm(props: any) {
         await dispatch(loginAsyncTiki(PARAMS))
         await dispatch(fetchAsyncUser())
     }
+    const onLoginFlatFormMB = async () => {
+        let $:any = window;
+        const res = await $['ReactNativeWebView'].postMessage({
+            type: 'OPEN_NEW_WEBVIEW',
+            name: 'Bảo hiểm tai nạn',
+            link: 'https://www.mbageas.life/',
+        });
+        window.addEventListener("message", event => {
+            if (event.data) alert("msg: " + JSON.stringify(event.data)); 
+        });
+    }
     const handleLoginFlatform = () => {
         if (params) {
             switch (flatForm) {
@@ -38,6 +49,9 @@ function LoginFlatForm(props: any) {
                     break;
                 case FLAT_FORM_TYPE.TIKI:
                     onLoginFlatFormTiki()
+                    break;
+                case FLAT_FORM_TYPE.MB:
+                    onLoginFlatFormMB();
                     break;
                 default:
                     break

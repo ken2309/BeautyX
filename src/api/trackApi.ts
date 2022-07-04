@@ -9,15 +9,17 @@ MiniApi.init({ appId: process.env.REACT_APP_MOMO_APP_ID });
  * @description send event tracking to MOMO APPLITCATION
  * @returns {object} message
  */
+
+
 export async function MOMO_API(EVENT_NAME:String,PARAMs:Object){
     try{
         const params = pickBy(PARAMs, identity)
-        const res = await MiniApi.track(EVENT_NAME, {
-            service_name: 'myspa',
-            ...params
-          });
-        //   alert(JSON.stringify(EVENT_NAME+JSON.stringify(params)+JSON.stringify(res)));
-          return res
+        // const res = await MiniApi.track(EVENT_NAME, {
+        //     service_name: 'myspa',
+        //     ...params
+        // });
+        // //   alert(JSON.stringify(EVENT_NAME+JSON.stringify(params)+JSON.stringify(res)));
+        // return res
     }catch(err){
         console.log(err);
     }
@@ -259,3 +261,7 @@ class TRACKING_EVENT {
 }
 export const EVENT = new TRACKING_EVENT();
 export default EVENT;
+
+function extraParamsUrl() {
+    throw new Error('Function not implemented.');
+}
