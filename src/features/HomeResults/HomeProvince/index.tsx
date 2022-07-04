@@ -14,15 +14,15 @@ import icon from "../../../constants/icon";
 import BackTopButton from "../../../components/BackTopButton";
 import Footer from "../../Footer";
 import Map from "../../../components/Map/Map";
-
+// ==== api tracking ====
+import EVENT from "../../../api/trackApi";
+// end
 interface IData {
     orgs: IOrganization[];
     page: number;
     totalItem: number;
 }
-// ==== api tracking ====
-import tracking from "../../../api/trackApi";
-// end
+
 
 function HomeProvince(props: any) {
     const location = useLocation();
@@ -63,7 +63,7 @@ function HomeProvince(props: any) {
     }
     useEffect(() => {
         getOrgsByProvince();
-        tracking.LIST_ORG_LOAD();
+        EVENT.LIST_ORG_LOAD();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [orgFilter.tags, data.page]);
     const onViewMore = () => {

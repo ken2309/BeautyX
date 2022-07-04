@@ -10,7 +10,7 @@ import { STATUS } from '../../../redux/status'
 import { AppContext } from "../../../context/AppProvider";
 
 export default function HomeRecomment() {
-    const {t} = useContext(AppContext);
+    const { t } = useContext(AppContext);
     const dispatch = useDispatch();
     const { SERVICES_RANDOM } = useSelector((state: any) => state.HOME_PAGE);
     const { services, status } = SERVICES_RANDOM;
