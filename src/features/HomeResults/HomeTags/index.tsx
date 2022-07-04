@@ -17,6 +17,7 @@ import useFullScreen from "../../../utils/useFullScreen";
 import BackTopButton from "../../../components/BackTopButton";
 import Footer from "../../Footer";
 import Map from "../../../components/Map/Map";
+import EVENT from "../../../api/trackApi";
 
 interface IData {
     orgs: IOrganization[];
@@ -24,7 +25,6 @@ interface IData {
     totalItem: number;
 }
 // ==== api tracking ====
-import tracking from "../../../api/trackApi";
 // end
 
 function HomeTags(props: any) {
@@ -66,7 +66,7 @@ function HomeTags(props: any) {
     }
     useEffect(() => {
         handleGetOrgsSingleTag();
-        tracking.LIST_ORG_LOAD();
+        EVENT.LIST_ORG_LOAD();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data.page, orgFilter.province_code]);
 

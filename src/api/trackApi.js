@@ -1,38 +1,36 @@
-/* eslint-disable */
-// @ts-ignore
+
 import MiniApi from '@momo-miniapp/api';
 import { pickBy, identity } from 'lodash';
-/* eslint-enable */
 MiniApi.init({ appId: process.env.REACT_APP_MOMO_APP_ID });
 /**
  * @name MOMO_API
  * @description send event tracking to MOMO APPLITCATION
  * @returns {object} message
  */
-export async function MOMO_API(EVENT_NAME:String,PARAMs:Object){
-    try{
+export async function MOMO_API(EVENT_NAME, PARAMs) {
+    try {
         const params = pickBy(PARAMs, identity)
         const res = await MiniApi.track(EVENT_NAME, {
             service_name: 'myspa',
             ...params
-          });
+        });
         //   alert(JSON.stringify(EVENT_NAME+JSON.stringify(params)+JSON.stringify(res)));
-          return res
-    }catch(err){
+        return res
+    } catch (err) {
         console.log(err);
     }
 }
 // ==== interface for params ====
-interface PRODUCT_LIST {
-    product_id: Number,
-    quantity: Number,
-    price: Number
+// interface PRODUCT_LIST {
+//     product_id: Number,
+//     quantity: Number,
+//     price: Number
 
-}
-interface RESULT {
-    store_id: any,
-    product_id?: String | Number
-}
+// }
+// interface RESULT {
+//     store_id: any,
+//     product_id?: String | Number
+// }
 // ==== end ====
 
 export const COMPONENT_NAME = {
@@ -54,7 +52,7 @@ class TRACKING_EVENT {
                 screen_name: 'home',
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
     SEARCH_CLICK = () => {
         const params = {
@@ -63,9 +61,9 @@ class TRACKING_EVENT {
                 screen_name: 'home',
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
-    SEARCH_ON_CHANGE = (keyword:String) => {
+    SEARCH_ON_CHANGE = (keyword) => {
         const params = {
             EVENT_NAME: 'service_search_inputed',
             PARAMs: {
@@ -73,9 +71,9 @@ class TRACKING_EVENT {
                 keyword: keyword
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
-    SEARCH_RESULT_LOAD = (quantity:Number,keyword:String) => {
+    SEARCH_RESULT_LOAD = (quantity, keyword) => {
         const params = {
             EVENT_NAME: 'service_search_result_viewed',
             PARAMs: {
@@ -84,9 +82,9 @@ class TRACKING_EVENT {
                 keyword: keyword
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
-    SEARCH_RESULT_ITEM_CLICK = (keyword?:String,result?:RESULT,component_name?:String, position?:any) => {
+    SEARCH_RESULT_ITEM_CLICK = (keyword, result, component_name, position) => {
         const params = {
             EVENT_NAME: 'service_search_result_clicked',
             PARAMs: {
@@ -97,9 +95,9 @@ class TRACKING_EVENT {
                 position: position
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
-    SEARCH_RESULT_ORG_LOAD = (store_id?:String) => {
+    SEARCH_RESULT_ORG_LOAD = (store_id) => {
         const params = {
             EVENT_NAME: 'service_screen_viewed',
             PARAMs: {
@@ -107,9 +105,9 @@ class TRACKING_EVENT {
                 store_id: store_id
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
-    LIST_ORG_LOAD = (store_id?:String) => {
+    LIST_ORG_LOAD = (store_id) => {
         const params = {
             EVENT_NAME: 'service_screen_viewed',
             PARAMs: {
@@ -117,9 +115,9 @@ class TRACKING_EVENT {
                 store_id: store_id
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
-    DISCOOUNT_ITEM_CLICK = (store_id:String|Number,component_name:String,voucher_id:String|Number) => {
+    DISCOOUNT_ITEM_CLICK = (store_id, component_name, voucher_id) => {
         const params = {
             EVENT_NAME: 'service_product_clicked',
             PARAMs: {
@@ -130,9 +128,9 @@ class TRACKING_EVENT {
                 product_id: voucher_id
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
-    BANNER_CLICK = (banner_id:String|Number) => {
+    BANNER_CLICK = (banner_id) => {
         const params = {
             EVENT_NAME: 'service_button_clicked',
             PARAMs: {
@@ -141,7 +139,7 @@ class TRACKING_EVENT {
                 banner_id: banner_id
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
     VIDEO_SCREEN_LOAD = () => {
         const params = {
@@ -150,7 +148,7 @@ class TRACKING_EVENT {
                 screen_name: 'trending'
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
     CALENDAR_CLICK = () => {
         const params = {
@@ -159,7 +157,7 @@ class TRACKING_EVENT {
                 screen_name: 'appointment'
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
     CATEGORY_TREE_LOAD = () => {
         const params = {
@@ -168,9 +166,9 @@ class TRACKING_EVENT {
                 screen_name: 'category'
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
-    CATEGORY_TREE_ITEM_CLICK = (category_id?:String,store_id?:String,product_id?:String) => {
+    CATEGORY_TREE_ITEM_CLICK = (category_id, store_id, product_id) => {
         const params = {
             EVENT_NAME: 'service_product_clicked',
             PARAMs: {
@@ -180,9 +178,9 @@ class TRACKING_EVENT {
                 product_id: product_id
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
-    USER_ITEM_CLICK = (store_id:String|Number,product_id:String|Number|null) => {
+    USER_ITEM_CLICK = (store_id, product_id) => {
         const params = {
             EVENT_NAME: 'service_product_clicked',
             PARAMs: {
@@ -191,9 +189,9 @@ class TRACKING_EVENT {
                 product_id: product_id
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
-    ADD_CART_CLICK = (store_id:String,product_id:String,price:Number,quantity:Number,option?:Object[]) => {
+    ADD_CART_CLICK = (store_id, product_id, price, quantity, option) => {
         const params = {
             EVENT_NAME: 'service_button_clicked',
             PARAMs: {
@@ -202,17 +200,17 @@ class TRACKING_EVENT {
                 store_id: store_id,
                 product_id: product_id,
                 price: price,
-                option:[
-                    ...(option||[]),
+                option: [
+                    ...(option || []),
                     {
-                        quantity:quantity
+                        quantity: quantity
                     }
                 ]
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
-    PAY_CLICK = (store_id:String,product_list:PRODUCT_LIST[]) => {
+    PAY_CLICK = (store_id, product_list) => {
         const params = {
             EVENT_NAME: 'service_product_continued',
             PARAMs: {
@@ -221,9 +219,9 @@ class TRACKING_EVENT {
                 product_list: product_list
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
-    CONFIRM_SCREEN_LOAD = (store_id:String,product_list:PRODUCT_LIST[],price:Number) => {
+    CONFIRM_SCREEN_LOAD = (store_id, product_list, price) => {
         const params = {
             EVENT_NAME: 'service_screen_viewed',
             PARAMs: {
@@ -233,7 +231,7 @@ class TRACKING_EVENT {
                 product_list: product_list,
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
     CART_DELETE_ALL_CLICK = () => {
         const params = {
@@ -243,9 +241,9 @@ class TRACKING_EVENT {
                 button_name: 'delete_cart',
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
-    PAY_CONFIRM_CLICK = (store_id:String|Number,product_list:PRODUCT_LIST[]) => {
+    PAY_CONFIRM_CLICK = (store_id, product_list) => {
         const params = {
             EVENT_NAME: 'service_product_continued',
             PARAMs: {
@@ -254,7 +252,7 @@ class TRACKING_EVENT {
                 product_list: product_list
             }
         }
-        return MOMO_API(params.EVENT_NAME,params.PARAMs);
+        return MOMO_API(params.EVENT_NAME, params.PARAMs);
     }
 }
 export const EVENT = new TRACKING_EVENT();
