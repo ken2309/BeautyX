@@ -33,12 +33,10 @@ function LoginFlatForm(props: any) {
     const onLoginFlatFormMB = async () => {
         let $:any = window;
         const res = await $['ReactNativeWebView'].postMessage({
-            type: 'OPEN_NEW_WEBVIEW',
-            name: 'Bảo hiểm tai nạn',
-            link: 'https://www.mbageas.life/',
+            type: 'GET_LOCATION'
         });
-        window.addEventListener("message", event => {
-            if (event.data) alert("msg: " + JSON.stringify(event.data)); 
+        $.addEventListener("message", (event:any) => {
+            alert("msg: " + JSON.stringify(event.data)); 
         });
     }
     const handleLoginFlatform = () => {
