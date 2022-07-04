@@ -140,7 +140,8 @@
     object-fit: contain;
 }
 .service-detail .detail-left__slider-nav {
-    margin-top: 16px;
+    margin-top: 24px;
+    width: 100%;
 }
 .slick-current .slider-nav__video,
 .slick-current .slider-nav__img {
@@ -148,6 +149,13 @@
 }
 .service-detail .slick-track {
     margin: unset;
+}
+.service-detail .detail-left__slider-nav .slick-slide {
+    width: unset !important;
+    display: flex;
+}
+.service-detail .detail-left__slider-nav .slick-slide > div {
+    margin-right: 16px;
 }
 /* cus btn arr img */
 .detail-btn__prev,
@@ -698,34 +706,27 @@
     }
 
     .service-detail .service-detail__tab {
-        margin: 80px 0 0 0;
+        margin: 12px 0 0 0;
         padding: 0 12px;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     }
 
     .service-detail .service-detail__left {
         width: 100%;
         padding: 0;
-        position: relative;
     }
 
     .service-detail .service-detail__mobile {
         display: block;
-        width: calc(100% - 24px);
+        width: 100%;
         background-color: #fff;
         padding: 12px;
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translate(-50%, 74%);
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         border-radius: 8px;
         display: flex;
         flex-direction: column;
         gap: 8px 0;
-    }
-
-    .service-detail .detail-left__img {
-        width: 100%;
+        position: relative;
     }
 
     .service-detail .service-detail__comment {
@@ -735,11 +736,12 @@
 
     .service-detail .detail-left__img {
         width: 100%;
-        height: 375px;
+        height: 100%;
     }
     .service-detail .service-detail__wrap {
         width: 100%;
         height: 100%;
+        position: relative;
     }
     .service-detail .service-detail__mobile-name {
         font-weight: 700;
@@ -753,12 +755,11 @@
         text-overflow: ellipsis;
         word-break: break-word;
     }
-    .detail-left__img-item {
-        height: 345px;
-    }
+    .detail-left__img-item,
     .detail-left__img-item-vd {
         height: 345px;
     }
+
     .service-detail .slick-slider {
         position: unset;
     }
@@ -767,7 +768,7 @@
         position: absolute;
         padding: 8px;
         top: 12px;
-        right: 12px;
+        right: 13px;
         background-color: #eeedf2;
         width: 36px;
         height: 36px;

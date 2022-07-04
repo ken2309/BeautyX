@@ -65,16 +65,6 @@ export default function ServiceDetailLeft(props: any) {
     };
 
     const setting: any = {
-        // infinite: true,
-        // speed: 500,
-        // arrows: true,
-        // slidesToShow: 1,
-        // slidesToScroll: 1,
-        // //autoplay: true,
-        // nextArrow: <NextButton />,
-        // prevArrow: <PrevButton />,
-        // swipe: true,
-        // autoplaySpeed: 2000,
         infinite: is_mb === true ? true : false,
         speed: 100,
         asNavFor: is_mb === true ? null : nav2,
@@ -86,6 +76,20 @@ export default function ServiceDetailLeft(props: any) {
         prevArrow: <PrevButton />,
         swipe: true,
         ref: is_mb === true ? null : (slider1: any) => setNav1(slider1),
+    };
+
+    const settingNav: any = {
+        infinite: true,
+        // arrows: true,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        asNavFor: is_mb === true ? null : nav1,
+        ref: is_mb === true ? null : (slider2: any) => setNav2(slider2),
+        // nextArrow: <NextButton />,
+        // prevArrow: <PrevButton />,
+        swipe: true,
+        swipeToSlide: true,
+        focusOnSelect: true,
     };
     return (
         <div className="service-detail__left flex-column">
@@ -127,45 +131,34 @@ export default function ServiceDetailLeft(props: any) {
                         </div>
                     </Slider>
                 </div>
-                <div className="detail-left__slider-nav">
-                    <Slider
-                        asNavFor={nav1}
-                        ref={(slider2: any) => setNav2(slider2)}
-                        slidesToScroll={1}
-                        // slidesToShow={
-                        //     service?.image_url.length + service?.video.length > 2
-                        //         ? 2
-                        //         : service?.image_url.length + service?.video.length
-                        // }
-                        infinite={false}
-                        slidesToShow={5}
-                        swipeToSlide={true}
-                        focusOnSelect={true}
-                    >
-                        {service?.video && (
-                            <div className="slider-nav__video">
-                                <video
-                                    className="slider-video"
-                                    autoPlay={false}
-                                    muted
-                                >
-                                    <source src={service?.video_url} />
-                                </video>
+                {service?.video ? (
+                    <div className="detail-left__slider-nav">
+                        <Slider {...settingNav}>
+                            {service?.video && (
+                                <div className="slider-nav__video">
+                                    <video
+                                        className="slider-video"
+                                        autoPlay={false}
+                                        muted
+                                    >
+                                        <source src={service?.video_url} />
+                                    </video>
+                                </div>
+                            )}
+                            <div className="slider-nav__img">
+                                <img
+                                    src={
+                                        service?.image_url
+                                            ? service?.image_url
+                                            : org?.image_url
+                                    }
+                                    alt=""
+                                    onError={(e) => onErrorImg(e)}
+                                />
                             </div>
-                        )}
-                        <div className="slider-nav__img">
-                            <img
-                                src={
-                                    service?.image_url
-                                        ? service?.image_url
-                                        : org?.image_url
-                                }
-                                alt=""
-                                onError={(e) => onErrorImg(e)}
-                            />
-                        </div>
-                    </Slider>
-                </div>
+                        </Slider>
+                    </div>
+                ) : null}
             </div>
             {/* detail service mobile */}
             <div className="service-detail__mobile">

@@ -11,11 +11,11 @@ import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
 import ModalLoad from './components/ModalLoad/index';
 
-Sentry.init({
-  dsn: "https://847a92f5f1924cd2a67b303d23a132d0@o1115240.ingest.sentry.io/6147072",
-  integrations: [new Integrations.BrowserTracing()],
-  tracesSampleRate: 1.0,
-});
+// Sentry.init({
+//   dsn: "https://847a92f5f1924cd2a67b303d23a132d0@o1115240.ingest.sentry.io/6147072",
+//   integrations: [new Integrations.BrowserTracing()],
+//   tracesSampleRate: 1.0,
+// });
 
 ReactDOM.render(
   <React.StrictMode>
