@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@mui/material";
-import React from "react";
+import React, { useMemo } from "react";
 import Bottom from "../../featuresMobile/Bottom";
 import ExtraFlatForm from "../../rootComponents/extraFlatForm";
 import useFullScreen from "../../utils/useFullScreen";
@@ -16,9 +17,16 @@ import HomeTopService from "./HomeTopService";
 import HomeBannerResult from "./HomeBanner/homeSearchReasult";
 import HomeTags from "./HomeTags";
 import HomeProvince from "./HomeProvince";
+import { useDispatch } from "react-redux";
+import { onResetFilter, onSetOrgsEmpty } from "../../redux/filter/filterSlice";
 
 export default function HomePage() {
     const IS_MB = useFullScreen();
+    const dispatch = useDispatch();
+    useMemo(() => {
+        dispatch(onResetFilter())
+        dispatch(onSetOrgsEmpty())
+    }, [])
     return (
         <div className="homepage">
             <ExtraFlatForm />

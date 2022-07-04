@@ -101,7 +101,8 @@
     font-weight: 500 !important;
     margin-left: 4px !important;
 }
-.filter-org-province-list{
+
+.filter-org-province-list {
     width: 40vw;
     height: 90vh;
     background-color: var(--white);
@@ -109,12 +110,14 @@
     padding: 12px;
     position: relative;
 }
-.filter-org-province-list .title{
+
+.filter-org-province-list .title {
     font-size: 16px;
     line-height: 18px;
     font-weight: 700;
 }
-.filter-org-province-list__input{
+
+.filter-org-province-list__input {
     margin: 8px 0px;
     width: 100%;
     /* position: absolute;
@@ -123,7 +126,8 @@
     z-index: 2;
     background-color: var(--white); */
 }
-.filter-org-province-list__input input{
+
+.filter-org-province-list__input input {
     width: 100%;
     padding: 6px 12px;
     border: solid 1px var(--grey);
@@ -133,10 +137,12 @@
     font-weight: 600;
     border-radius: 8px;
 }
-.filter-org-province-list .list-item{
+
+.filter-org-province-list .list-item {
     margin: 12px 0px;
 }
-.filter-org-province-list .left-checkbox{
+
+.filter-org-province-list .left-checkbox {
     width: 20px;
     height: 20px;
     border-radius: 100%;
@@ -145,21 +151,29 @@
     margin-right: 6px;
     padding: 3px;
 }
-.filter-org-province-list .left-checkbox-act{
+
+.filter-org-province-list .left-checkbox-act {
     width: 100%;
     height: 100%;
     border-radius: 100%;
     background-color: var(--purple);
 }
-.filter-org-province-list .list-item .left{
+
+.filter-org-province-list .list-item .left {
     font-size: 14px;
     line-height: 16px;
     font-weight: 600;
     color: var(--text-black);
 }
-.filter-org-province-list .list-item button{
+
+.filter-org-province-list .list-item button {
     border: none;
-    background-color: transparent;    
+    background-color: transparent;
+}
+
+.filter-orgs-cnt .btn-loading {
+    width: 100%;
+    border-radius: 8px;
 }
 
 /* Mobile */
@@ -188,4 +202,17 @@
     /* .home-se-re .home-promo-ser {
         margin-top: 16px;
     } */
+    .filter-orgs-cnt {
+        padding: 12px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .filter-org-province-list {
+        width: 80vw;
+        height: 100vh;
+        margin-left: 20vw;
+    }
 }

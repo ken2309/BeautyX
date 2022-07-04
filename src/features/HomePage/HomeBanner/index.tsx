@@ -115,7 +115,7 @@ export default function HomeBanner() {
                 case "WEB":
                     return openWeb();
                 case "SEARCH_RESULT":
-                    console.log(chooseBanner)
+                    console.log(chooseBanner);
                     // return history.push({
                     //     // pathname: `/home-banner-result`,
                     //     state: chooseBanner,
@@ -143,8 +143,8 @@ export default function HomeBanner() {
         });
     };
     useEffect(() => {
-        banners.length>0&&setChooseBanner(banners[0])
-    }, [banners])
+        banners.length > 0 && setChooseBanner(banners[0]);
+    }, [banners]);
     return (
         <div className="homepage-banner">
             <Container>
