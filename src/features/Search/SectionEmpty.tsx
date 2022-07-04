@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
+import { AppContext } from "../../context/AppProvider";
 import {
     removeKeyWord,
     onToggleSearchCnt,
@@ -30,6 +31,7 @@ export const listRecomment = [
 ];
 function SectionEmpty() {
     const dispatch = useDispatch();
+    const { t } = useContext(AppContext);
     const history = useHistory();
     const { HISTORY } = useSelector((state: any) => state.SEARCH);
     const filterOrg = HISTORY.filter((item: any) => item.TYPE === "ORG").map(
@@ -55,8 +57,8 @@ function SectionEmpty() {
         <>
             <div className="search-empty-item">
                 <div className="flex-row-sp search-empty-item__head">
-                    <span>Tìm kiếm gần đây</span>
-                    {/* <span>{"Xem tất cả >"}</span> */}
+                    <span>{t("se.recent_search")}</span>
+                    <span>{t("trending.watch_all") + " >"}</span>
                 </div>
                 <div className="search-empty-item__list">
                     <ul className="list">
@@ -112,7 +114,7 @@ function SectionEmpty() {
             </div>
             <div className="search-empty-item">
                 <div className="flex-row-sp search-empty-item__head">
-                    <span>Gợi ý tìm kiếm</span>
+                    <span>{t("se.search_recommend")}</span>
                 </div>
                 <ul className="keyword-list mt-24">
                     {listRecomment.map((item: any, index: number) => (

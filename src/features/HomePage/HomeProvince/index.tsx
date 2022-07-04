@@ -7,9 +7,9 @@ import scrollTop from "../../../utils/scrollTop";
 import HomeTitle from "../Components/HomeTitle";
 
 function HomeProvince(props: any) {
+    const { t } = useContext(AppContext);
     const HOME = useSelector((state: any) => state.HOME);
     const { provinces_org } = HOME;
-    const { t } = useContext(AppContext);
     const history = useHistory();
     const gotoResult = (province: IProvince) => {
         history.push({
@@ -22,9 +22,9 @@ function HomeProvince(props: any) {
     return (
         <div className="home-province">
             <HomeTitle
-                title={`Địa điểm bạn quan tâm`}
+                title={t("home_2.places_you_are_interested_in")}
                 url={"/dia-diem-quan-tam"}
-                seemore={"Xem chi tiết >"}
+                seemore={t("trending.watch_all") + " > "}
             />
             <div className="home-province_list">
                 {provinces_org

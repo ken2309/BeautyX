@@ -172,14 +172,20 @@ import cardDiscountWhite from "../assets/icon/cardDiscountWhite.svg";
 import checkFlowOrange from "../assets/icon/checkFlowOrange.svg";
 import arrowSmallUpWhite from "../assets/icon/arrowSmallUpWhite.svg";
 import starLine from "../assets/icon/star.svg";
+import settingPurple from "../assets/icon/setting-purple.svg";
 
 // btn assistan home
 import xWhite from "../assets/icon/x-white.svg";
 import homeWhite from "../assets/icon/home-white.svg";
 import chatWhite from "../assets/icon/chat-white.svg";
 import checkFlowGreen from "../assets/icon/checkFlowGreen.svg";
+import momo from "../assets/icon/momo.ico";
+import payon from "../assets/icon/payon.jpg";
 
 const icon = {
+    payon,
+    momo,
+    settingPurple,
     chatWhite,
     homeWhite,
     xWhite,

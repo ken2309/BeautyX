@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import icon from "../../../constants/icon";
 import onErrorImg from "../../../utils/errorImg";
@@ -16,6 +16,7 @@ import { clearAllServices } from "../../../redux/servicesBookSlice";
 import { IOrganization } from "../../../interface/organization";
 import { Service } from "../../../interface/service";
 import useFullScreen from "../../../utils/useFullScreen";
+import { AppContext } from "../../../context/AppProvider";
 
 interface IProps {
     org: IOrganization;
@@ -26,6 +27,7 @@ interface IProps {
 
 export default function ServiceDetailRight(props: IProps) {
     const { org, service, setOpenDrawer, NOW } = props;
+    const {t} = useContext(AppContext);
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -166,7 +168,7 @@ export default function ServiceDetailRight(props: IProps) {
                     </div>
 
                     <div className="detail-right__duration-wrap">
-                        <p>Thời gian:</p>
+                        <p>{t("order.time")}:</p>
                         <div className="detail-right__duration flexX-gap-4">
                             <img src={icon.alarmClock} alt="" />
                             <p>{service.duration} Phút</p>
@@ -178,12 +180,12 @@ export default function ServiceDetailRight(props: IProps) {
             {
                 (service?.is_momo_ecommerce_enable === false || org?.is_momo_ecommerce_enable === false ) &&
                 <span className="detail-right__no">
-                    Dịch vụ này chưa được kích hoạt bán hàng Online
+                    {t("se.off_service")}
                 </span>
             }
             <div className="detail-right__bottom">
                 <div className="bottom-quantity">
-                    <p className="bottom-quantity__text">Số lượng:</p>
+                    <p className="bottom-quantity__text">{t("pr.quantity")}:</p>
                     <div className="bottom-quantity__wrap">
                         <button
                             onClick={onDescQuantity}
@@ -212,7 +214,7 @@ export default function ServiceDetailRight(props: IProps) {
                                 onClick={onBookingNow}
                                 className="bottom-addCart bottom-buy__now"
                             >
-                                <p>Đặt hẹn ngay</p>
+                                <p>{t("se.booking_now")}</p>
                             </div>
                         ) : (
                             <div
@@ -223,7 +225,7 @@ export default function ServiceDetailRight(props: IProps) {
                                     src={icon.ShoppingCartSimpleWhite}
                                     alt=""
                                 />
-                                <p>Thêm vào giỏ hàng</p>
+                                <p>{t("pr.add_to_cart")}</p>
                             </div>
                         )}
                     </div>
@@ -240,7 +242,7 @@ export default function ServiceDetailRight(props: IProps) {
                             onClick={onBookingNow}
                             className="bottom-addCart bottom-buy__now"
                         >
-                            <p>Đặt hẹn ngay</p>
+                             <p>{t("se.booking_now")}</p>
                         </div>
                         <div
                             style={
@@ -253,7 +255,7 @@ export default function ServiceDetailRight(props: IProps) {
                             onClick={handleAddCart} className="bottom-addCart"
                         >
                             <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                            <p>Thêm vào giỏ hàng</p>
+                            <p>{t("pr.add_to_cart")}</p>
                         </div>
                     </div>
                 )}

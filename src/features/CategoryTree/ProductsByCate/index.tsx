@@ -11,6 +11,10 @@ import { extraParamsUrl } from '../../../utils/extraParamsUrl';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import './style.css'
 
+ // ==== api tracking ====
+ import tracking from "../../../api/trackApi";
+ // end
+
 function ProductsByCate(props: any) {
     const params: any = extraParamsUrl();
     const { PRODUCTS } = useSelector((state: any) => state.CATE_TREE);
@@ -50,7 +54,11 @@ function ProductsByCate(props: any) {
                     <ul className="pr-result-cnt__list">
                         {
                             products.map((item: any, index: any) => (
-                                <li key={index} >
+                                <li key={index} 
+                                    onClick={
+                                        () => tracking.CATEGORY_TREE_ITEM_CLICK(PRODUCTS.CATE_CHILD.id,item.org_id,item.product_id)
+                                    }
+                                >
                                     <ProductCateItem
                                         item={item}
                                     />

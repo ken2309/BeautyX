@@ -7,6 +7,10 @@ import icon from '../../../../constants/icon';
 import scrollTop from '../../../../utils/scrollTop';
 import { Link } from 'react-router-dom';
 import { formatRouterLinkProduct } from '../../../../utils/formatRouterLink/formatRouter';
+
+ // ==== api tracking ====
+ import tracking from "../../../../api/trackApi";
+ // end
 // google tag event
 import {GoogleTagPush,GoogleTagEvents} from '../../../../utils/dataLayer';
 // end 
@@ -21,7 +25,7 @@ function OrgProductItem(props: IProps) {
     return (
         <Link
             to={pathProductOb}
-            onClick={() => {scrollTop();GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);}}
+            onClick={() => {scrollTop();GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);tracking.USER_ITEM_CLICK(org.id,product.id)}}
         >
             <div className="org-special-item">
                 <div className="org-special-item__img">

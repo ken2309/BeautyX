@@ -30,3 +30,12 @@ export const formatDistance = (distance?: number) => {
     }
     return dis;
 }
+export const uniqueArr = (arr: any) => {
+    var newArr = []
+    for (var i = 0; i < arr.length; i++) {
+        if (newArr.indexOf(arr[i]) === -1) {
+            newArr.push(arr[i])
+        }
+    }
+    return newArr
+}

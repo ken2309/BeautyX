@@ -15,7 +15,9 @@
 .se-re-cnt__left-top {
     padding: 0px 4px;
 }
-
+.se-re-cnt .filter-ser-cnt {
+    margin-top: 0;
+}
 .se-re-cnt-title {
     font-size: 18px;
     line-height: 24px;
@@ -23,9 +25,9 @@
 }
 
 .se-re-cnt__left-list li {
-    margin: 6px 0px;
+    margin: 0 0px 12px 12px;
     background-color: var(--grey);
-    padding: 6px 12px;
+    padding: 8px 16px;
     cursor: pointer;
     color: var(--purple);
     font-size: 14px;

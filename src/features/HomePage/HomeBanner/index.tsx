@@ -11,7 +11,9 @@ import slugify from "../../../utils/formatUrlString";
 import scrollTop from "../../../utils/scrollTop";
 import HomeBannerPopup from "../../Home/components/HomeBannerPopup";
 import "./homeBanner.css";
-
+ // ==== api tracking ====
+ import tracking from "../../../api/trackApi";
+ // end
 const PrevButton = (props: any) => {
     const { onClick } = props;
     return (
@@ -106,6 +108,7 @@ export default function HomeBanner() {
         setOpenVideo(false);
     }
     const handleClick = () => {
+        tracking.BANNER_CLICK(banners.id);
         if (chooseBanner) {
             switch (chooseBanner.type) {
                 case "VIDEO":

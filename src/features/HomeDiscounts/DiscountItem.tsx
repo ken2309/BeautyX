@@ -8,7 +8,9 @@ import formatPrice from "../../utils/formatPrice";
 import icon from "../../constants/icon";
 import { useHistory } from "react-router-dom";
 import { formatRouterLinkDiscount } from "../../utils/formatRouterLink/formatRouter";
-
+ // ==== api tracking ====
+ import tracking,{COMPONENT_NAME} from "../../api/trackApi";
+ // end
 interface IProps {
     discountPar: IDiscountPar;
     discountItem: IITEMS_DISCOUNT;
@@ -19,6 +21,7 @@ function DiscountItem(props: IProps) {
     const pathDiscountOb = formatRouterLinkDiscount(discountPar, discountItem)
     const history = useHistory();
     const onDetail = () => {
+        tracking.DISCOOUNT_ITEM_CLICK(discountItem.organization.id,COMPONENT_NAME.HOT_DEAL,discountItem.discount_id)
         history.push(pathDiscountOb);
     };
     return (

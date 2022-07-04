@@ -2,13 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import icon from "../../constants/icon";
+import Search from "../../features/Search";
 import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 import { handleSubiz } from "../../utils/customChat";
 import useFullScreen from "../../utils/useFullScreen";
-import Search from "../../features/Search";
-import "./style.css";
 import img from "../../constants/img";
-
+import "./style.css";
+// ==== api tracking ====
+import tracking from "../../api/trackApi";
+// end
 export default function AssistantBtn() {
     const dispatch = useDispatch();
     const location: any = useLocation();
@@ -25,6 +27,7 @@ export default function AssistantBtn() {
 
     const handleOpenSearch = () => {
         const action = open ? false : true;
+        tracking.SEARCH_CLICK();
         dispatch(onToggleSearchCnt(action));
     };
     const handleGoToHome = () => {

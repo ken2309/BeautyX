@@ -9,9 +9,9 @@ function LanguageBox(props: any) {
             setLanguage(code)
             i18next.changeLanguage(code);
       }
-      const handleChangeUnit = (unit: string) => {
-            //setUnit(unit)
-      }
+      // const handleChangeUnit = (unit: string) => {
+      //       //setUnit(unit)
+      // }
       return (
             <>
                   <div className="hd-lang-box__left"

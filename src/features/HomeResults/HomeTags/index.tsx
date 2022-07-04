@@ -23,6 +23,9 @@ interface IData {
     page: number;
     totalItem: number;
 }
+// ==== api tracking ====
+import tracking from "../../../api/trackApi";
+// end
 
 function HomeTags(props: any) {
     const location = useLocation();
@@ -63,6 +66,7 @@ function HomeTags(props: any) {
     }
     useEffect(() => {
         handleGetOrgsSingleTag();
+        tracking.LIST_ORG_LOAD();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data.page, orgFilter.province_code]);
 

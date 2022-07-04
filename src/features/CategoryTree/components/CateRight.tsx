@@ -13,7 +13,9 @@ import TabService from './TabService';
 //import TabProduct from './TabProduct';
 import TabProduct2 from './TabProduct2';
 import { Link } from 'react-router-dom'
-
+ // ==== api tracking ====
+ import tracking from "../../../api/trackApi";
+ // end
 function CateRight(props: any) {
     const { CATE, ORGS, catesChild, SERVICES, VALUE, PRODUCTS } = props;
     const dispatch = useDispatch();
@@ -29,6 +31,7 @@ function CateRight(props: any) {
         dispatch(onChooseTab(newValue))
     }
     const handleGetServicesBtCateChild = (cateChild: any) => {
+        tracking.CATEGORY_TREE_ITEM_CLICK(cateChild.id)
         if (VALUE === "SERVICE") {
             const action = {
                 page: 1,

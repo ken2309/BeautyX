@@ -5,10 +5,14 @@ import { onChooseCate, fetchOrgsByTag } from '../../../redux/CateTree/cateTreeSl
 import { cateChild1 } from '../../../data/category';
 import { fetchServiceByCateChild, onSetFirstCateProducts } from '../../../redux/CateTree/cateTreeSlice'
 
+ // ==== api tracking ====
+ import tracking from "../../../api/trackApi";
+ // end
 function CateLeft(props: any) {
     const { CATE, VALUE } = props;
     const dispatch = useDispatch();
     const handleChooseCate = (item: any) => {
+        tracking.CATEGORY_TREE_ITEM_CLICK(item.id);
         const action = {
             title: item.title,
             cate_id: item.id

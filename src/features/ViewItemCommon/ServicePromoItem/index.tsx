@@ -7,6 +7,10 @@ import { Link } from "react-router-dom";
 import onErrorImg from "../../../utils/errorImg";
 import scrollTop from "../../../utils/scrollTop";
 import { formatRouterLinkServicePromo } from "../../../utils/formatRouterLink/formatRouter";
+
+ // ==== api tracking ====
+ import tracking from "../../../api/trackApi";
+ // end
 // google tag event
 import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
 // end 
@@ -21,7 +25,7 @@ function ServicePromoItem(props: IProps) {
     return (
         <Link
             to={patchServiceOb}
-            onClick={() => {scrollTop();GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);}}
+            onClick={() => {scrollTop();GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);tracking.USER_ITEM_CLICK(service.org_id,service.id)}}
             className="ser-pro-item"
         >
             <div className="ser-img-cnt">

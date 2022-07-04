@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { fetchAsyncUser } from '../redux/USER/userSlice';
 import { fetchAsyncHome, fetchAsyncDiscounts } from '../redux/home/homeSlice';
 import { fetchAsyncNews, fetchAsyncVideos } from '../redux/blog/blogSlice';
+import { fetchAsyncApps } from '../redux/appointment/appSlice';
 
 
 
@@ -34,20 +35,26 @@ export default function AppProvider({ children }) {
   }
 
   useEffect(() => {
-    // if (lg === "en-US" || lg === "en") {
-    //   setLanguage("en");
-    // } else if (lg === "vi-VN" || lg === "vn") {
-    //   setLanguage("vn");
-    // }
-    setLanguage("vn");
+    if (lg === "en-US" || lg === "en") {
+      setLanguage("en");
+    } else if (lg === "vi-VN" || lg === "vn") {
+      setLanguage("vn");
+    }
   }, [lg]);
   useEffect(() => {
-    dispatch(fetchAsyncUser())
+    const callUserProfile = async () => {
+      const res = await dispatch(fetchAsyncUser());
+      if (res?.payload) {
+        const time = dayjs().format("YYYY-MM");
+        dispatch(fetchAsyncApps(time))
+      }
+    }
+    callUserProfile()
   }, [sign, dispatch]);
   useEffect(() => {
     dispatch(fetchAsyncHome())
     dispatch(fetchAsyncDiscounts({
-      page:1
+      page: 1
     }))
     dispatch(fetchAsyncNews());
     dispatch(fetchAsyncVideos());

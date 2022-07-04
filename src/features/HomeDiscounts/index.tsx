@@ -6,8 +6,11 @@ import DiscountItem from "./DiscountItem";
 import "./style.css";
 import { useHistory } from "react-router-dom";
 import scrollTop from "../../utils/scrollTop";
+import { useContext } from "react";
+import { AppContext } from "../../context/AppProvider";
 
 function HomeDiscount() {
+    const {t} = useContext(AppContext);
     const { DISCOUNTS } = useSelector((state: any) => state.HOME);
     const { discounts } = DISCOUNTS;
     const history = useHistory();
@@ -19,9 +22,9 @@ function HomeDiscount() {
         <div className="home-discounts">
             <Container>
                 <div className="flex-row-sp home-discounts__title">
-                    <span>KHUYẾN MÃI HOT</span>
+                    <span>{t("home_2.hot_promotion")}</span>
                     <span onClick={onViewMore}>
-                        Xem thêm {">"}
+                        {t("trending.watch_all")} {">"}
                     </span>
                 </div>
                 <div className="home-discounts__list-wrap">

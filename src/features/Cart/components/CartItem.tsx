@@ -16,6 +16,11 @@ import { useHistory } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import onErrorImg from "../../../utils/errorImg";
 import PopupDiscountQuantity from "./PopupDiscountQuantity";
+
+ // ==== api tracking ====
+ import tracking from "../../../api/trackApi";
+ // end
+
 // google tag event
 import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
 // end 
@@ -60,6 +65,7 @@ function CartItem(props: IProps) {
         setOpenConfirm(true);
     };
     const goBackDetail = () => {
+        tracking.USER_ITEM_CLICK(cartItem.org_id,cartItem.id)
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         if (cartItem.is_type === 1) {
             history.push({

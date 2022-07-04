@@ -9,6 +9,8 @@ import { useHistory } from 'react-router-dom';
 import { fetchAsyncUser } from '../../redux/USER/userSlice'
 import './style.css'
 import { useDispatch } from 'react-redux';
+import { fetchAsyncApps } from '../../redux/appointment/appSlice'
+import dayjs from 'dayjs';
 
 function LoginFlatFormRequest(props: any) {
     const { pathname, setClose } = props;
@@ -27,7 +29,10 @@ function LoginFlatFormRequest(props: any) {
         try {
             const res = await tikiAuthApi.login(params);
             window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
-            await dispatch(fetchAsyncUser())
+            const res_user = await dispatch(fetchAsyncUser());
+            if (res_user.payload) {
+                dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
+            }
             if (setClose) return setClose(false)
             if (pathname && pathname === "/tai-khoan/thong-tin-ca-nhan") {
                 history.push('/home')
@@ -47,7 +52,7 @@ function LoginFlatFormRequest(props: any) {
         if (response?.requestId && response.result.status === "success") {
             handleLoginTiki(response.result.res)
         }
-        else if (response?.requestId && response.result.status === "fail"){
+        else if (response?.requestId && response.result.status === "fail") {
             setLoad(false);
         }
     }, [response])

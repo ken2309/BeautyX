@@ -1,4 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+ // ==== api tracking ====
+ import tracking from "../api/trackApi";
+ // end
 // google tag event
 import {GoogleTagPush,GoogleTagEvents} from '../utils/dataLayer';
 // end 
@@ -23,8 +26,10 @@ const cart = createSlice({
             );
             if (iIndex >= 0) {
                 state.cartList[iIndex].quantity += action.payload.quantity;
+                tracking.ADD_CART_CLICK(state.cartList[iIndex].org_id,state.cartList[iIndex].id,state.cartList[iIndex].price,state.cartList[iIndex].quantity)
             } else {
                 const templeCart = { ...action.payload, quantity: action.payload.quantity };
+                tracking.ADD_CART_CLICK(templeCart.org_id,templeCart.id,templeCart.price,templeCart.quantity)
                 state.cartList.push(templeCart);
             }
             localStorage.setItem(storageName, JSON.stringify(state.cartList))

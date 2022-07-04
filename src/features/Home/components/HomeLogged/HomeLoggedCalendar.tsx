@@ -86,16 +86,11 @@ export default function HomeLoggedCalendar() {
     dataAppoint.push(app);
   }
   const handlePrev = () => {
-    //console.log(dayObj.subtract(1, "month"))
-    //const action = dayObj.subtract(1, "month")
     setDayObj(dayObj.subtract(1, "month"));
-    //dispatch(onSetDayObj(action));
     const time = dayObj.subtract(1, "month").format("YYYY-MM");
     dispatch(fetchAsyncApps(time))
   };
   const handleNext = () => {
-    //const action = dayObj.add(1, "month");
-    //dispatch(onSetDayObj(action));
     setDayObj(dayObj.add(1, "month"))
     const time = dayObj.add(1, "month").format("YYYY-MM");
     dispatch(fetchAsyncApps(time))

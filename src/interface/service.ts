@@ -27,6 +27,7 @@ export interface Service {
       status: boolean | null,
       favorites_count: number,
       video_url: any,
+      video: any,
       rating: number,
       is_favorite: boolean,
       bought_count: number,

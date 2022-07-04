@@ -9,8 +9,11 @@ import slugify from "../../../../utils/formatUrlString";
 import { AppContext } from "../../../../context/AppProvider";
 import onErrorImg from "../../../../utils/errorImg";
 import { formatAddCart } from "../../../../utils/cart/formatAddCart";
-import { Alert, Snackbar } from "@mui/material";
+import AlertSnack from "../../../../components/AlertSnack";
 
+ // ==== api tracking ====
+ import tracking from "../../../../api/trackApi";
+ // end
 // google tag event
 import {GoogleTagPush,GoogleTagEvents} from '../../../../utils/dataLayer';
 // end 
@@ -73,6 +76,7 @@ function ServiceItem(props: any) {
     }
   };
   const handleDetailService = () => {
+    tracking.USER_ITEM_CLICK(org.id,service.id)
     GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
     if (IS_DISCOUNT) {
       const type = onCheckType();
@@ -93,17 +97,14 @@ function ServiceItem(props: any) {
 
   return (
     <li>
-      <Snackbar open={openNoti.open} autoHideDuration={4000}
-        onClose={() => setOpenNoti({ ...openNoti, open: false })}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert
-          onClose={() => setOpenNoti({ ...openNoti, open: false })}
-          severity="warning" sx={{ width: '100%' }}
-        >
-          {openNoti.title}
-        </Alert>
-      </Snackbar>
+      <AlertSnack
+        title={openNoti.title}
+        open={openNoti.open}
+        status="WARNING"
+        onClose={() => setOpenNoti({
+          ...openNoti, open: false
+        })}
+      />
       <div className="order-de-list__item">
         {
           IS_DISCOUNT &&

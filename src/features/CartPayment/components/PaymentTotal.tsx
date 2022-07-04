@@ -14,6 +14,10 @@ import { FLAT_FORM_TYPE } from "../../../rootComponents/flatForm";
 import PaymentCreateFail from "./PaymentCreateFail";
 import { extraPaymentMethodId } from "../../PaymentMethod/extraPaymentMethodId";
 
+// ==== api tracking ====
+import tracking from "../../../api/trackApi";
+import {formatProductList} from "../../../utils/tracking";
+// end
 const useInPayment: boolean = true;
 function PaymentTotal(props: any) {
   const { t } = useContext(AppContext);
@@ -47,9 +51,10 @@ function PaymentTotal(props: any) {
     description: data_cart.note,
     branch_id: data_cart.chooseBr?.id
   }
-  async function handlePostOrder(org_id: number, params: object) {
+  async function handlePostOrder(org_id: number, params: any) {
     setLoading(true)
     try {
+      tracking.PAY_CONFIRM_CLICK(org_id, formatProductList(params.products))
       const response = await order.postOrder(org_id, params);
       const state_payment = await response.data.context
       const desc = await state_payment.payment_gateway.description;

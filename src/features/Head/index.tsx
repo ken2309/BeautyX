@@ -50,7 +50,7 @@ function Head(props: any) {
   const [openLang, setOpenLang] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [openMbMenu, setOpenMbMenu] = useState(false);
-  //const [openSearch, setOpenSearch] = useState(false);
+  const { appsToday } = useSelector((state: any) => state.APP.APPS)
   const [unit, setUnit] = useState("VND");
   const history = useHistory();
 
@@ -226,7 +226,10 @@ function Head(props: any) {
                         {USER?.fullname?.slice(0, 1)}
                       </div>
                   }
-                  <div className="hd-cnt__right-avatar-dot"></div>
+                  {
+                    appsToday.length > 0 &&
+                    <div className="hd-cnt__right-avatar-dot"></div>
+                  }
                   <Notification openNo={openNo} />
                 </div>
               </div>

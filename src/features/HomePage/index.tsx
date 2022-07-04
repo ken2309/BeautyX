@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import Bottom from "../../featuresMobile/Bottom";
 import ExtraFlatForm from "../../rootComponents/extraFlatForm";
 import useFullScreen from "../../utils/useFullScreen";
@@ -17,8 +17,12 @@ import HomeBannerResult from "./HomeBanner/homeSearchReasult";
 import HomeTags from "./HomeTags";
 import HomeProvince from "./HomeProvince";
 
+ // ==== api tracking ====
+ import tracking from "../../api/trackApi";
+ // end
 export default function HomePage() {
     const IS_MB = useFullScreen();
+    useEffect(() => {tracking.HOME_LOAD()},[])
     return (
         <div className="homepage">
             <ExtraFlatForm />

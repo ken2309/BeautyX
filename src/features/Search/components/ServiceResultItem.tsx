@@ -10,20 +10,30 @@ import { formatDistance } from '../../../utils/format';
 import scrollTop from '../../../utils/scrollTop';
 import { onSetStatusService } from '../../../redux/org_services/serviceSlice'
 import { formatRouterLinkServicePromo } from '../../../utils/formatRouterLink/formatRouter';
-
+import {AUTH_LOCATION} from '../../../api/authLocation';
+ // ==== api tracking ====
+ import tracking, {COMPONENT_NAME} from "../../../api/trackApi";
+ // end
 // google tag event
-import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+import { GoogleTagPush, GoogleTagEvents } from '../../../utils/dataLayer';
 // end 
 interface IProps {
     service: IServicePromo
+    keyword?: String
 }
 
 function ServiceResultItem(props: IProps) {
-    const { service } = props;
+    const { service,keyword } = props;
     const dispatch = useDispatch();
     const distance = formatDistance(service?._geoDistance)
+
     const onItemClick = () => {
         scrollTop();
+        const result = {
+            store_id: service.org_id,
+            product_id: service.id
+        };
+        tracking.SEARCH_RESULT_ITEM_CLICK(keyword, result, COMPONENT_NAME.SERVICE, AUTH_LOCATION)
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         dispatch(onToggleSearchCnt(false));
         dispatch(onSetStatusService("LOADING"))

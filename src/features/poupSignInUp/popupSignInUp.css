@@ -385,7 +385,6 @@
     .sign-content__left-logo-mb {
         display: block;
         width: 90px;
-        height: 80px;
         margin-bottom: 8;
     }
     .sign-content__left {
@@ -411,5 +410,8 @@
     }
     .err-text {
         margin: 0;
+    }
+    .sign-form .sign-btn {
+        width: 100%;
     }
 }

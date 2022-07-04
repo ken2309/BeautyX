@@ -10,21 +10,29 @@ import { formatDistance } from '../../../utils/format';
 import formatPrice from '../../../utils/formatPrice';
 import scrollTop from '../../../utils/scrollTop';
 import { formatRouterLinkProductPromo } from '../../../utils/formatRouterLink/formatRouter';
-
+import {AUTH_LOCATION} from '../../../api/authLocation';
+ // ==== api tracking ====
+ import tracking, {COMPONENT_NAME} from "../../../api/trackApi";
+ // end
 // google tag event
 import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
 // end 
 interface IProps {
     product: IProductPromo
+    keyword: String
 }
 
 function ProductResultItem(props: IProps) {
-    const { product } = props;
+    const { product, keyword } = props;
     const dispatch = useDispatch();
     const distance = formatDistance(product?._geoDistance)
-
     const onItemClick = () => {
         scrollTop();
+        const result= {
+            store_id: product.org_id, 
+            product_id: product.id
+        };
+        tracking.SEARCH_RESULT_ITEM_CLICK(keyword,result,COMPONENT_NAME.PRODUCT,AUTH_LOCATION)
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         dispatch(onToggleSearchCnt(false))
         dispatch(onSetStatusProduct("LOADING"))

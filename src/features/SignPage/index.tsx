@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import img from "../../constants/img";
-import icon from "../../constants/icon";
 import SignIn from "./components/SignIn";
 import { AppContext } from "../../context/AppProvider";
 import { Container } from "@mui/material";
@@ -52,7 +51,7 @@ function SignPage(props: any) {
             <Container>
               <div className="flex-row-sp sign-content page-sign__cnt">
                 <img
-                  src={icon.Logo}
+                  src={img.beautyx}
                   alt=""
                   className="sign-content__left-logo-mb"
                 />
@@ -60,7 +59,7 @@ function SignPage(props: any) {
                   className="flex-column sign-content__left"
                   style={{ justifyContent: "center" }}
                 >
-                  <img className="sign-content__left-logo" src={icon.Logo} alt="" />
+                  <img style={{width:"120px"}} className="sign-content__left-logo" src={img.beautyX} alt="" />
                   <img
                     className="sign-content__left-partner"
                     src={img.Partner}
