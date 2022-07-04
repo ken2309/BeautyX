@@ -1,7 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import orgApi from '../../api/organizationApi';
 
-const initialState = {
-    tab: 1
+export const fetchAsyncOrgsByFilter: any = createAsyncThunk(
+    "SEARCH_RESULT/fetchAsyncOrgsByTag",
+    async (values: any) => {
+        const res = await orgApi.getAll(values);
+        return {
+            orgs: res.data.context.data,
+            totalItem: res.data.context.total,
+            page: values.page
+        }
+    }
+)
+
+interface IInitialState {
+    tab: number,
+}
+
+const initialState: IInitialState = {
+    tab: 1,
 }
 const searchResultSlice = createSlice({
     name: "SEARCH_RESULT",
@@ -9,8 +26,8 @@ const searchResultSlice = createSlice({
     reducers: {
         onSetTabResult: (state, action) => {
             state.tab = action.payload
-        }
-    }
+        },
+    },
 })
 const { actions } = searchResultSlice;
 export const { onSetTabResult } = actions;

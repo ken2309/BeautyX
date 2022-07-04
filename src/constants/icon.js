@@ -181,6 +181,7 @@ import chatWhite from "../assets/icon/chat-white.svg";
 import checkFlowGreen from "../assets/icon/checkFlowGreen.svg";
 import momo from "../assets/icon/momo.ico";
 import payon from "../assets/icon/payon.jpg";
+import settingsSliders from "../assets/icon/settingsSliders.svg";
 
 const icon = {
     payon,
@@ -361,6 +362,7 @@ const icon = {
     checkFlowOrange,
     arrowSmallUpWhite,
     starLine,
-    checkFlowGreen
+    checkFlowGreen,
+    settingsSliders
 };
 export default icon;

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AppContext } from "../../../context/AppProvider";
 import { IProvince } from "../../../interface/provinces";
@@ -10,14 +10,14 @@ function HomeProvince(props: any) {
     const { t } = useContext(AppContext);
     const HOME = useSelector((state: any) => state.HOME);
     const { provinces_org } = HOME;
-    const history = useHistory();
-    const gotoResult = (province: IProvince) => {
-        history.push({
-            pathname: `/khu-vuc/`,
-            search: `${province.name},${province.province_code}`,
-        });
-        scrollTop();
-    };
+    //const history = useHistory();
+    // const gotoResult = (province: IProvince) => {
+    //     history.push({
+    //         pathname: `/khu-vuc/`,
+    //         search: `${province.name},${province.province_code}`,
+    //     });
+    //     scrollTop();
+    // };
 
     return (
         <div className="home-province">
@@ -30,8 +30,12 @@ function HomeProvince(props: any) {
                 {provinces_org
                     ?.slice(0, 6)
                     .map((item: IProvince, index: number) => (
-                        <div
-                            onClick={() => gotoResult(item)}
+                        <Link
+                            to={{
+                                pathname: "/ket-qua/",
+                                search: `?province=${item.province_code}&&name=${item.name}`,
+                            }}
+                            onClick={() => scrollTop()}
                             key={index}
                             className="home-province_item"
                         >
@@ -44,7 +48,7 @@ function HomeProvince(props: any) {
                                     {t("home_2.beauty_places")}{" "}
                                 </span>
                             </div>
-                        </div>
+                        </Link>
                     ))}
             </div>
         </div>
