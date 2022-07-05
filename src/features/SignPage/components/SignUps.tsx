@@ -15,10 +15,10 @@ function SignUps(props: any) {
     //const sec = useCountDown(90)
     const { t } = useContext(AppContext)
     const { setActiveTabSign } = props;
-    const [errAlready, setErrAlready] = useState({
-        errMail: '',
-        errPhone: ''
-    })
+    // const [errAlready, setErrAlready] = useState({
+    //     errMail: '',
+    //     errPhone: ''
+    // })
     const [loading, setLoading] = useState(false);
     const [popup, setPopup] = useState(false);
     const [openOtp, setOpenOtp] = useState(true);
@@ -26,6 +26,21 @@ function SignUps(props: any) {
         telephone: '',
         verification_id: ''
     })
+    const handleAsyncForgotPass = async (val: any) => {
+        const params = {
+            telephone: val.telephone,
+            new_password: val.password,
+            code: val.code,
+            verification_id: val.verification_id
+        }
+        try {
+            await authentication.forgotPassword(params);
+            setLoading(false);
+            setPopup(true)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     async function handleSubmitForm(values: any) {
         const params = {
             fullname: values.name,
@@ -44,10 +59,11 @@ function SignUps(props: any) {
             setLoading(false);
             const err = error as AxiosError;
             if (err.response?.status === 400) {
-                setErrAlready({
-                    errMail: err.response.data.context.email ? t("form.email_already") : ``,
-                    errPhone: err.response.data.context.telephone ? t("form.phone_already") : ``
-                })
+                handleAsyncForgotPass(params)
+                // setErrAlready({
+                //     errMail: err.response.data.context.email ? t("form.email_already") : ``,
+                //     errPhone: err.response.data.context.telephone ? t("form.phone_already") : ``
+                // })
             }
         }
     }
@@ -208,7 +224,7 @@ function SignUps(props: any) {
                     {formik.errors.email && formik.touched.email && (
                         <p className="err-text">{formik.errors.email}</p>
                     )}
-                    <p className="err-text">{errAlready.errMail}</p>
+                    {/* <p className="err-text">{errAlready.errMail}</p> */}
                 </div>
                 <div className="flex-column w-100">
                     <div
@@ -240,7 +256,7 @@ function SignUps(props: any) {
                     {formik.errors.code && formik.touched.code && (
                         <p className="err-text">{formik.errors.code}</p>
                     )}
-                    <p className="err-text">{errAlready.errPhone}</p>
+                    {/* <p className="err-text">{errAlready.errPhone}</p> */}
                 </div>
                 <div className="flex-column w-100">
                     <div className="sign-form__box mb-16">

@@ -160,7 +160,6 @@ export default function HomeLoggedCalendar() {
   // hiển thị status ở calendar dựa api
   async function handleAppointDot() {
     let appointList: any = [];
-    // eslint-disable-next-line array-callback-return
     await dataAppoint.map((date: any) => {
       let objIndex = appointList.findIndex((obj: any) => {
         // eslint-disable-next-line eqeqeq
@@ -269,6 +268,9 @@ export default function HomeLoggedCalendar() {
               </div>
               <HomeLoggedCalendarStatus />
             </div>
+            {
+
+            }
             <HomeLoggedCalendarList
               weekDays={weekDays}
               weekDayOfFirst={weekDayOfFirst}

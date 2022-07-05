@@ -1,7 +1,8 @@
 import axiosClient from "./axios";
+import {identity, pickBy} from 'lodash'
 
 class TIKIAuth {
-    login = (params: any) => {
+    login = (paramsOb: any) => {
         const url = `/auth/tiki`;
         // "customerId": "string",
         // "avatar": "string",
@@ -9,6 +10,7 @@ class TIKIAuth {
         // "name": "string",
         // "phone": "string",
         // "authCode": "string"
+        const params = pickBy(paramsOb, identity)
         return axiosClient.post(url, params)
     }
 }

@@ -9,14 +9,17 @@ import order from '../../../api/orderApi';
 import { useHistory } from 'react-router-dom';
 import { identity, pickBy } from 'lodash';
 import Notification from '../../../components/Notification';
-
+import AlertSnack from "../../../components/AlertSnack";
 // ==== api tracking ====
 import tracking from "../../../api/trackApi";
 import {formatProductList} from "../../../utils/tracking";
 // end
 function CartBottom(props: any) {
     const { DATA_CART, DATA_PMT } = props;
-
+    const [openAlertSnack, setOpenAlertSnack] = useState({
+        title: "",
+        open: false,
+    });
     const [openNoti, setOpenNoti] = useState({
         title: "",
         open: false,
@@ -85,11 +88,31 @@ function CartBottom(props: any) {
     const handleSubmitOrder = () => {
         if (USER && DATA_PMT.org && pramsOrder.payment_method_id) {
             handlePostOrder()
+            // setOpenAlertSnack({
+            //     ...openAlertSnack,
+            //     open: true,
+            //     title: 'Good!'
+            // })
+        }
+        else if (!pramsOrder.payment_method_id){
+            setOpenAlertSnack({
+                ...openAlertSnack,
+                open: true,
+                title: 'Bạn Chưa chọn phương thức thanh toán!'
+            })
         }
     }
-
+    console.log(DATA_PMT,pramsOrder);
     return (
         <div className="re-cart-bottom">
+            <AlertSnack
+                title={openAlertSnack.title}
+                open={openAlertSnack.open}
+                status="FAIL"
+                onClose={() => setOpenAlertSnack({
+                    ...openAlertSnack, open: false
+                })}
+            />
             <Container>
                 <div className="re-cart-bottom__cnt">
                     <div className="re-cart-bottom__total">
