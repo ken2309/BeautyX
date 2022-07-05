@@ -25,8 +25,8 @@ import { extraPaymentMethodId } from "../PaymentMethod/extraPaymentMethodId";
 import MapOrg from "../MerchantDetail/components/OrgMap/MapOrg";
 import BookingNowBill from "./components/BookingNowBill";
 import { formatAddCart } from "../../utils/cart/formatAddCart";
-import { fetchAsyncOrg } from '../../redux/org/orgSlice';
-import { STATUS } from '../../redux/status';
+import { fetchAsyncOrg } from "../../redux/org/orgSlice";
+import { STATUS } from "../../redux/status";
 import apointmentApi from "../../api/apointmentApi";
 import Notification from "../../components/Notification";
 import { onSetStatusApp } from "../../redux/appointment/appSlice";
@@ -47,9 +47,9 @@ function Booking() {
         open: false,
         titleLeft: "",
         titleRight: "",
-        onClickLeft: () => { },
-        onClickRight: () => { }
-    })
+        onClickLeft: () => {},
+        onClickRight: () => {},
+    });
     const { USER } = useSelector((state: any) => state.USER);
     const { payments_method } = useSelector(
         (state: any) => state.PAYMENT.PAYMENT
@@ -60,12 +60,12 @@ function Booking() {
 
     const callOrgDetail = () => {
         if (location.state.org.id !== org?.id || status !== STATUS.SUCCESS) {
-            dispatch(fetchAsyncOrg(location.state.org.id))
+            dispatch(fetchAsyncOrg(location.state.org.id));
         }
-    }
+    };
     useEffect(() => {
         if (location.state) {
-            callOrgDetail()
+            callOrgDetail();
             const action = {
                 org: location.state.org,
                 services: location.state.services,
@@ -136,8 +136,8 @@ function Booking() {
             sale_price,
             item.service.discount
         );
-        return values
-    })
+        return values;
+    });
     const dayBook = formatDatePost(bookTime.date);
     const action = {
         note: bookTime.note,
@@ -160,7 +160,7 @@ function Booking() {
                     org_id: org?.id,
                     order_id: response.data.context.id,
                     quantity: services[0]?.quantity,
-                }
+                };
                 history.push({
                     pathname: `/trang-thai-don-hang/`,
                     search: transaction_uuid,
@@ -172,9 +172,10 @@ function Booking() {
                     title: "Tạo đơn hàng thất bại",
                     titleLeft: "Đã hiểu",
                     titleRight: "Về trang chủ",
-                    onClickLeft: () => setOpenNoti({ ...openNoti, open: false }),
-                    onClickRight: () => history.push('/home')
-                })
+                    onClickLeft: () =>
+                        setOpenNoti({ ...openNoti, open: false }),
+                    onClickRight: () => history.push("/home"),
+                });
             }
             //setLoading(false);
         } catch (err) {
@@ -185,15 +186,15 @@ function Booking() {
                 titleLeft: "Đã hiểu",
                 titleRight: "Về trang chủ",
                 onClickLeft: () => setOpenNoti({ ...openNoti, open: false }),
-                onClickRight: () => history.push('/home')
-            })
+                onClickRight: () => history.push("/home"),
+            });
         }
     }
     //func appointment
     const gotoAppointment = () => {
-        dispatch(onSetStatusApp())
-        history.push('/lich-hen?tab=1')
-    }
+        dispatch(onSetStatusApp());
+        history.push("/lich-hen?tab=1");
+    };
     const handlePostApps = async () => {
         try {
             await apointmentApi.postAppointment(action, org?.id);
@@ -203,20 +204,20 @@ function Booking() {
                 titleLeft: "Xem lịch hẹn",
                 titleRight: "Về trang chủ",
                 onClickLeft: () => gotoAppointment(),
-                onClickRight: () => history.push('/home')
-            })
+                onClickRight: () => history.push("/home"),
+            });
         } catch (error) {
-            console.log(error)
+            console.log(error);
             setOpenNoti({
                 open: true,
                 title: "Có lỗi xảy ra trong quá trình đặt hẹn",
                 titleLeft: "Đã hiểu",
                 titleRight: "Về trang chủ",
                 onClickLeft: () => setOpenNoti({ ...openNoti, open: false }),
-                onClickRight: () => history.push('/home')
-            })
+                onClickRight: () => history.push("/home"),
+            });
         }
-    }
+    };
     const onChangeCardMap = (itemMap: any) => {
         setBookTime({
             ...bookTime,
@@ -234,7 +235,7 @@ function Booking() {
                         return handlePostOrder();
                     }
                 } else {
-                    handlePostApps()
+                    handlePostApps();
                 }
             } else {
                 //pop up choose time request
@@ -247,12 +248,10 @@ function Booking() {
         <>
             <HeadTitle title="Đặt hẹn" />
             {IS_MB ? <HeadMobile title="Đặt hẹn" /> : <Head />}
-            <div
-                className="booking-wrap"
-            >
+            <div className="booking-wrap">
                 <div className="booking-cnt">
                     <div className="booking-cnt__left">
-                        {(IS_MB === false && org) && (
+                        {IS_MB === false && org && (
                             <MapOrg
                                 onChangeCardMap={onChangeCardMap}
                                 org={org}
@@ -303,10 +302,10 @@ function Booking() {
                                         />
                                         {bookTime.branch_id
                                             ? org?.branches?.find(
-                                                (i: any) =>
-                                                    i.id ===
-                                                    bookTime.branch_id
-                                            )?.full_address
+                                                  (i: any) =>
+                                                      i.id ===
+                                                      bookTime.branch_id
+                                              )?.full_address
                                             : org?.full_address}
                                     </span>
                                     {org?.branches?.length > 0 && (
@@ -326,10 +325,10 @@ function Booking() {
                                                     }
                                                     style={
                                                         bookTime.branch_id ===
-                                                            item.id
+                                                        item.id
                                                             ? {
-                                                                color: "var(--text-black)",
-                                                            }
+                                                                  color: "var(--text-black)",
+                                                              }
                                                             : {}
                                                     }
                                                     key={index}
@@ -352,7 +351,9 @@ function Booking() {
                                         {bookTime.date} {bookTime.time}
                                     </span>
                                 ) : (
-                                    <span style={{ color: "var(--red-cl)" }} >Vui lòng chọn thời gian</span>
+                                    <span style={{ color: "var(--red-cl)" }}>
+                                        Vui lòng chọn thời gian
+                                    </span>
                                 )}
                             </div>
                             <ButtonLoading
@@ -365,7 +366,12 @@ function Booking() {
                             <span className="book-section-title">Ghi chú</span>
                             <br />
                             <textarea
-                                onChange={(e) => setBookTime({ ...bookTime, note: e.target.value })}
+                                onChange={(e) =>
+                                    setBookTime({
+                                        ...bookTime,
+                                        note: e.target.value,
+                                    })
+                                }
                                 name=""
                                 id=""
                                 cols={30}
@@ -375,7 +381,7 @@ function Booking() {
                         <div
                             style={
                                 FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
-                                    location.state.TYPE === "BOOK_NOW"
+                                location.state.TYPE === "BOOK_NOW"
                                     ? { display: "block" }
                                     : { display: "none" }
                             }
@@ -386,10 +392,9 @@ function Booking() {
                             />
                         </div>
                         <div className="booking-cnt__bot">
-                            {
-                                location.state.TYPE === "BOOK_NOW" &&
+                            {location.state.TYPE === "BOOK_NOW" && (
                                 <BookingNowBill />
-                            }
+                            )}
                             <ButtonLoading
                                 title={
                                     location.state?.TYPE === "BOOK_NOW"
@@ -408,6 +413,7 @@ function Booking() {
                 setBookTime={setBookTime}
                 open={open}
                 setOpen={setOpen}
+                org={org}
             />
             <Notification
                 content={openNoti.title}

@@ -5,7 +5,7 @@
     grid-gap: 0 16px;
 }
 .homepage-banner .banner-slide {
-    width: 66.66%;
+    width: calc(4 / 6 * 100%);
 }
 .homepage-banner .banner-slide__img {
     width: 100%;
@@ -20,7 +20,7 @@
     /* border-radius: 8px; */
 }
 .homepage-banner .banner-right {
-    width: 33.33%;
+    width: calc(2 / 6 * 100%);
     display: flex;
     flex-direction: column;
     grid-gap: 16px 0;

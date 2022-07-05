@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-
 import { fetchAsyncUser } from '../../redux/USER/userSlice';
 import { FLAT_FORM_TYPE } from '../flatForm';
-import { loginAsyncMomo, loginAsyncTiki } from '../../redux/loginFlatForm/loginFlatFrom'
+import { loginAsyncMomo, loginAsyncTiki } from '../../redux/loginFlatForm/loginFlatFrom';
+import { pickBy, identity } from 'lodash';
 
 function LoginFlatForm(props: any) {
     const dispatch = useDispatch();
@@ -19,7 +19,7 @@ function LoginFlatForm(props: any) {
         await dispatch(fetchAsyncUser())
     }
     const onLoginFlatFormTiki = async () => {
-        const PARAMS = {
+        const PARAMS_OB = {
             "customerId": params?.customerId,
             "avatar": params?.avatar,
             "email": params?.email,
@@ -27,6 +27,7 @@ function LoginFlatForm(props: any) {
             "phone": params?.telephone,
             "authCode": params?.authCode
         }
+        const PARAMS = pickBy(PARAMS_OB, identity);
         await dispatch(loginAsyncTiki(PARAMS))
         await dispatch(fetchAsyncUser())
     }

@@ -34,9 +34,9 @@
     font-size: 14px;
     line-height: 20px;
 }
-.MuiPaper-root {
+/* .MuiPaper-root {
     max-width: max-content !important;
-}
+} */
 
 .sign-content {
     padding: 36px;

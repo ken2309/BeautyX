@@ -1,7 +1,7 @@
-import React from 'react';
-import icon from '../../../constants/icon';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom'
+import React from "react";
+import icon from "../../../constants/icon";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function Notification(props: any) {
     const { openNo } = props;
@@ -10,42 +10,51 @@ function Notification(props: any) {
     const history = useHistory();
     return (
         <div
-            style={openNo === true ? { top: '3rem', opacity: '1', visibility: 'visible' } : { top: '5rem', opacity: '0', visibility: 'hidden' }}
-            className='hd-noti' id="notification"
+            style={
+                openNo === true
+                    ? { top: "3rem", opacity: "1", visibility: "visible" }
+                    : { top: "5rem", opacity: "0", visibility: "hidden" }
+            }
+            className="hd-noti"
+            id="notification"
         >
-            <div className='flex-row-sp hd-noti__head'>
-                <span className='hd-noti__head-text'>
-                    Thông báo
-                </span>
-                <span className='flex-row hd-noti__head-count'>
+            <div className="flex-row-sp hd-noti__head">
+                <span className="hd-noti__head-text">Thông báo</span>
+                <span className="flex-row hd-noti__head-count  cursor-pointer">
                     Đánh dấu tất cả đã xem
-                    <img src={icon.Check} alt="" />
+                    <img
+                        className="hd-noti__head-imgcheck"
+                        src={icon.Check}
+                        alt=""
+                    />
                 </span>
             </div>
-            <ul className='hd-noti__list'>
-                {
-                    appsToday.length > 0 &&
-                    <li
-                        onClick={() => history.push('/lich-hen?tab=1')}
-                    >
-                        <div
-                            className='flex-row'
-                        >
-                            <img style={{ width: "12px", height: "12px" }} src={icon.dotPurple} alt="" />
-                            <div
-                                className='no-box-item__text'
-                            >
-                                <p className='no-box-item__text-name'>
+            <ul className="hd-noti__list">
+                {appsToday.length > 0 ? (
+                    <li onClick={() => history.push("/lich-hen?tab=1")}>
+                        <div className="flex-row">
+                            <img
+                                style={{ width: "12px", height: "12px" }}
+                                src={icon.dotPurple}
+                                alt=""
+                            />
+                            <div className="no-box-item__text">
+                                <p className="no-box-item__text-name">
                                     Thông báo lịch hẹn
                                 </p>
-                                <p className='no-box-item__text-content'>
-                                    {USER?.fullname} ơi ! Hôm nay bạn có {appsToday.length} lịch hẹn. Xem ngay nhé
+                                <p className="no-box-item__text-content">
+                                    {USER?.fullname} ơi ! Hôm nay bạn có{" "}
+                                    {appsToday.length} lịch hẹn. Xem ngay nhé
                                 </p>
-                                <p className='no-box-item__text-time'>Xem lịch hẹn</p>
+                                <p className="no-box-item__text-time">
+                                    Xem lịch hẹn
+                                </p>
                             </div>
                         </div>
                     </li>
-                }
+                ) : (
+                    <p className="noti-empty">Bạn không có thông báo !</p>
+                )}
             </ul>
             {/* <ButtonCus
                 width='fit-content'
