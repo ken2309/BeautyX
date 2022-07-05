@@ -20,9 +20,9 @@ function Videos() {
             <Head />
             <Container maxWidth="xl">
                 <Container maxWidth="md">
-                    {/* <Trends
-                    videos={videos.data}
-                /> */}
+                    <Trends
+                        videos={videos.data}
+                    />
                     <div className="video-cnt-des">
                         <ContainerPc videos={videos} />
                     </div>

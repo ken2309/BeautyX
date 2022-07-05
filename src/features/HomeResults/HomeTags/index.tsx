@@ -17,16 +17,14 @@ import useFullScreen from "../../../utils/useFullScreen";
 import BackTopButton from "../../../components/BackTopButton";
 import Footer from "../../Footer";
 import Map from "../../../components/Map/Map";
+// ==== api tracking ====
 import EVENT from "../../../api/trackApi";
-
+// end
 interface IData {
     orgs: IOrganization[];
     page: number;
     totalItem: number;
 }
-// ==== api tracking ====
-// end
-
 function HomeTags(props: any) {
     const location = useLocation();
     const IS_MB = useFullScreen();

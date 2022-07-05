@@ -30,11 +30,12 @@ import { STATUS } from "../../redux/status";
 import apointmentApi from "../../api/apointmentApi";
 import Notification from "../../components/Notification";
 import { onSetStatusApp } from "../../redux/appointment/appSlice";
+import AlertSnack from "../../components/AlertSnack";
 
- // ==== api tracking ====
- import tracking from "../../api/trackApi";
- import {formatProductList} from "../../utils/tracking";
- // end
+// ==== api tracking ====
+import tracking from "../../api/trackApi";
+import { formatProductList } from "../../utils/tracking";
+// end
 const date = dayjs();
 function Booking() {
     const dispatch = useDispatch();
@@ -42,13 +43,17 @@ function Booking() {
     const { org, status } = useSelector((state: any) => state.ORG);
     const IS_MB = useFullScreen();
     const FLAT_FORM = EXTRA_FLAT_FORM();
+    const [openAlertSnack, setOpenAlertSnack] = useState({
+        title: "",
+        open: false,
+    });
     const [openNoti, setOpenNoti] = useState({
         title: "",
         open: false,
         titleLeft: "",
         titleRight: "",
-        onClickLeft: () => {},
-        onClickRight: () => {},
+        onClickLeft: () => { },
+        onClickRight: () => { },
     });
     const { USER } = useSelector((state: any) => state.USER);
     const { payments_method } = useSelector(
@@ -109,10 +114,7 @@ function Booking() {
     });
 
     //
-    const payment_method_id = extraPaymentMethodId(
-        payments_method,
-        chooseE_wall
-    );
+    const payment_method_id = extraPaymentMethodId(payments_method,chooseE_wall);
     const params_string = {
         products: [],
         services: services,
@@ -149,7 +151,7 @@ function Booking() {
     async function handlePostOrder() {
         const params = pickBy(params_string, identity);
         try {
-            tracking.PAY_CONFIRM_CLICK(org?.id,formatProductList(params.products))
+            tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(params.products))
             const response = await order.postOrder(org?.id, params);
             const state_payment = await response.data.context;
             const transaction_uuid =
@@ -231,6 +233,13 @@ function Booking() {
                 if (location.state.TYPE === "BOOK_NOW") {
                     if (FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX) {
                         if (chooseE_wall) return handlePostOrder();
+                        else {
+                            setOpenAlertSnack({
+                                ...openAlertSnack,
+                                open: true,
+                                title: 'Bạn Chưa chọn phương thức thanh toán!'
+                            })
+                        }
                     } else {
                         return handlePostOrder();
                     }
@@ -239,6 +248,11 @@ function Booking() {
                 }
             } else {
                 //pop up choose time request
+                setOpenAlertSnack({
+                    ...openAlertSnack,
+                    open: true,
+                    title: 'Bạn cần chọn Thời Gian cho buổi hẹn!'
+                })
             }
         } else {
             history.push("/sign-in?1");
@@ -246,6 +260,14 @@ function Booking() {
     };
     return (
         <>
+            <AlertSnack
+                title={openAlertSnack.title}
+                open={openAlertSnack.open}
+                status="FAIL"
+                onClose={() => setOpenAlertSnack({
+                    ...openAlertSnack, open: false
+                })}
+            />
             <HeadTitle title="Đặt hẹn" />
             {IS_MB ? <HeadMobile title="Đặt hẹn" /> : <Head />}
             <div className="booking-wrap">
@@ -302,10 +324,10 @@ function Booking() {
                                         />
                                         {bookTime.branch_id
                                             ? org?.branches?.find(
-                                                  (i: any) =>
-                                                      i.id ===
-                                                      bookTime.branch_id
-                                              )?.full_address
+                                                (i: any) =>
+                                                    i.id ===
+                                                    bookTime.branch_id
+                                            )?.full_address
                                             : org?.full_address}
                                     </span>
                                     {org?.branches?.length > 0 && (
@@ -325,10 +347,10 @@ function Booking() {
                                                     }
                                                     style={
                                                         bookTime.branch_id ===
-                                                        item.id
+                                                            item.id
                                                             ? {
-                                                                  color: "var(--text-black)",
-                                                              }
+                                                                color: "var(--text-black)",
+                                                            }
                                                             : {}
                                                     }
                                                     key={index}
@@ -381,7 +403,7 @@ function Booking() {
                         <div
                             style={
                                 FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
-                                location.state.TYPE === "BOOK_NOW"
+                                    location.state.TYPE === "BOOK_NOW"
                                     ? { display: "block" }
                                     : { display: "none" }
                             }
