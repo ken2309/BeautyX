@@ -51,7 +51,7 @@ function CartBottom(props: any) {
     async function handlePostOrder() {
         //setLoading(true)
         try {
-            tracking.PAY_CONFIRM_CLICK(DATA_PMT.org.id, formatProductList(pramsOrder.products))
+            // tracking.PAY_CONFIRM_CLICK(DATA_PMT.org.id, formatProductList(pramsOrder.products))
             const response = await order.postOrder(DATA_PMT.org.id, pickBy(pramsOrder, identity));
             const state_payment = await response.data.context
             const transaction_uuid = state_payment.payment_gateway.transaction_uuid;
