@@ -22,7 +22,6 @@ function TabService(props: any) {
         page: 1,
         totalItem: 1
     })
-    console.log(keyword)
     async function getServicesByKeyword() {
         try {
             const res = await servicePromoApi.getByKeyword({

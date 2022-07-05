@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Checkbox, Dialog, FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import {
@@ -34,6 +34,15 @@ function FilterOrgs(props: IProps) {
     const { DISTRICTS } = useSelector((state: any) => state.FILTER);
     const [openProvince, setOpenProvince] = useState(false);
     const [openDistrict, setOpenDistrict] = useState(false);
+
+    useEffect(() => {
+        if (params.tag) {
+            dispatch(onSetTagsOrg(params.tag))
+        } else if (params.province) {
+            const provinceInit = provinces?.find((i: IProvince) => i.province_code === parseInt(params.province));
+            dispatch(onSetOrgsProvince(provinceInit))
+        }
+    }, [])
 
     const sortList = [
         { id: 1, title: "Độ phổ biến", sort: "priority" },

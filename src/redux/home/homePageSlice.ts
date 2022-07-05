@@ -113,7 +113,8 @@ const homePageSlice = createSlice({
     initialState,
     reducers: {
         clearServicesPromo: (state) => {
-            state.SERVICES_PROMO.services = []
+            state.SERVICES_PROMO.services = [];
+            state.SERVICES_PROMO.page = 1
         }
     },
     extraReducers: {

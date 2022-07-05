@@ -110,7 +110,6 @@ const searchSlice = createSlice({
             };
         },
         [fetchOrgsBySearch.fulfilled]: (state, { payload }) => {
-            console.log("payload", payload);
             const { orgs, page, totalItem } = payload;
             return {
                 ...state,

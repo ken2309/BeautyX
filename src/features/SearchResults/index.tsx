@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import Head from "../Head";
 import HeadTitle from "../HeadTitle";
 import { useHistory, useLocation } from "react-router-dom";
@@ -17,7 +17,10 @@ import { Drawer } from "@mui/material";
 import { IOrganization } from "../../interface/organization";
 import TabProduct from "./components/TabProduct";
 import { useDispatch, useSelector } from "react-redux";
-import { onSetTabResult } from "../../redux/search/searchResultSlice";
+import { 
+    onSetTabResult,
+    fetchAsyncOrgsByFilter 
+} from "../../redux/search/searchResultSlice";
 import useFullScreen from "../../utils/useFullScreen";
 import HeadMobile from "../HeadMobile";
 import BackTopButton from "../../components/BackTopButton";
@@ -36,18 +39,32 @@ function SearchResults(props: any) {
     const { t } = useContext(AppContext);
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
-    const location = useLocation();
+    const location: any = useLocation();
     const searchKey = decodeURI(
         location.search.slice(1, location.search.length)
     );
     const { tab } = useSelector((state: any) => state.SEARCH_RESULT);
     const [openMap, setOpenMap] = useState(false);
 
-    const tabs = [
-        { id: 1, title: t("Mer_de.services") },
-        { id: 2, title: t("Mer_de.products") },
-        { id: 3, title: t("my_ser.business") },
+    let tabs = [
+        { id: 1, title: t("Mer_de.services"), total: location.state?.servicesTotal },
+        { id: 2, title: t("Mer_de.products"), total: location.state?.productsTotal },
+        { id: 3, title: t("my_ser.business"), total: location.state?.orgsTotal },
     ];
+    if (location.state) {
+        tabs = tabs.sort((a, b) => b.total - a.total)
+    }
+
+    const callOrgsByKeyword = () =>{
+        dispatch(fetchAsyncOrgsByFilter({
+            keyword: searchKey
+        }))
+    }
+
+    useEffect(() => {
+        dispatch(onSetTabResult(tabs[0].id))
+        callOrgsByKeyword()
+    }, [])
     const [openFilter, setOpenFilter] = useState(false);
     const onActiveTab = useCallback((tab) => {
         dispatch(onSetTabResult(tab.id));
@@ -139,7 +156,7 @@ function SearchResults(props: any) {
                                         <div className="flex-row-sp cnt">
                                             <span className="title">
                                                 Bộ lọc tìm kiếm
-                                        </span>
+                                            </span>
                                             <button
                                                 onClick={() => setOpenFilter(true)}
                                                 className="filter-btn"

@@ -22,13 +22,13 @@ import useFullScreen from "../../utils/useFullScreen";
 import SectionNull from "./SectionNull";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
- // ==== api tracking ====
- import tracking from "../../api/trackApi";
- // end
+// ==== api tracking ====
+import tracking from "../../api/trackApi";
+// end
 
 function Search() {
     const IS_MB = useFullScreen();
-    const {t} = useContext(AppContext);
+    const { t } = useContext(AppContext);
     const { open, keyword, ORGS, SERVICES, PRODUCTS } = useSelector(
         (state: any) => state.SEARCH
     );
@@ -63,17 +63,23 @@ function Search() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debounceDropDown = useCallback(
-        debounce((nextValue) => {callByFilter(nextValue);tracking.SEARCH_ON_CHANGE(nextValue)}, 1000),
+        debounce((nextValue) => { callByFilter(nextValue); tracking.SEARCH_ON_CHANGE(nextValue) }, 1000),
         []
     );
     const handleOnChangeInput = (e: any) => {
         debounceDropDown(e.target.value);
         dispatch(onSetKeyword(e.target.value));
     };
+    console.log(ORGS)
     const onGotoFilterResult = () => {
         history.push({
             pathname: "/ket-qua-tim-kiem/",
             search: `${keyword}`,
+            state: {
+                orgsTotal: ORGS.totalItem,
+                servicesTotal: SERVICES.totalItem,
+                productsTotal: PRODUCTS.totalItem
+            }
         });
     };
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -115,7 +121,7 @@ function Search() {
             total: PRODUCTS.totalItem,
         },
         {
-            element: <SectionServices  keyword={keyword} onGotoFilterResult={onGotoFilterResult} SERVICES={SERVICES} />,
+            element: <SectionServices keyword={keyword} onGotoFilterResult={onGotoFilterResult} SERVICES={SERVICES} />,
             total: SERVICES.totalItem,
         },
     ];
