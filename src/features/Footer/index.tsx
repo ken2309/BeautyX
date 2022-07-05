@@ -4,7 +4,7 @@ import { Container } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import slugify from "../../utils/formatUrlString";
 import scrollTop from "../../utils/scrollTop";
-import img, { social } from "../../constants/img";
+import img, { paymentMethod, social } from "../../constants/img";
 import icon from "../../constants/icon";
 
 function Footer() {
@@ -132,6 +132,70 @@ function Footer() {
             url: "https://apps.apple.com/vn/app/beautyx/id1614767784?l=vi",
         },
     ];
+    const payment = [
+        {
+            id: 1,
+            img: paymentMethod.tikiPay,
+        },
+        {
+            id: 2,
+            img: paymentMethod.visa,
+        },
+        {
+            id: 3,
+            img: paymentMethod.masterCard,
+        },
+        {
+            id: 4,
+            img: paymentMethod.jcb,
+        },
+        {
+            id: 5,
+            img: paymentMethod.atm,
+        },
+        {
+            id: 6,
+            img: paymentMethod.momoPayment,
+        },
+        {
+            id: 7,
+            img: paymentMethod.zaloPay,
+        },
+        {
+            id: 8,
+            img: paymentMethod.mocaGrap,
+        },
+        {
+            id: 9,
+            img: paymentMethod.phonePay,
+        },
+        {
+            id: 10,
+            img: paymentMethod.vnPay,
+        },
+        {
+            id: 11,
+            img: paymentMethod.handPay,
+        },
+        {
+            id: 12,
+            img: icon.payon,
+        },
+    ];
+    const app = [
+        {
+            id: 1,
+            img: icon.momo,
+            type: "APP",
+            url: "bit.ly/myspamomo",
+        },
+        {
+            id: 2,
+            img: paymentMethod.tikiPay,
+            type: "APP",
+            url: "https://ti.ki/beautyx12 ",
+        },
+    ];
     const history = useHistory();
     const gotoPolicy = (item: any) => {
         scrollTop();
@@ -152,6 +216,12 @@ function Footer() {
                     "noopener,noreferrer"
                 );
             case "DOWN":
+                return window.open(
+                    `${item.url}`,
+                    "_blank",
+                    "noopener,noreferrer"
+                );
+            case "APP":
                 return window.open(
                     `${item.url}`,
                     "_blank",
@@ -190,6 +260,47 @@ function Footer() {
                         <div className="wrap">
                             <>
                                 <div className="footer-cnt__item-title">
+                                    Phương thức thanh toán
+                                </div>
+                                <div
+                                    style={{ marginTop: "16px" }}
+                                    className="social-list"
+                                >
+                                    {payment.map((item: any, index: number) => (
+                                        <div
+                                            key={index}
+                                            className="social-item__method social-item"
+                                        >
+                                            <div className="social-item__img">
+                                                <img src={item.img} alt="" />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div
+                                    style={{ marginTop: "24px" }}
+                                    className="footer-cnt__item-title"
+                                >
+                                    BeautyX đã có mặt trên
+                                </div>
+                                <div className="social-list">
+                                    <div className="flexX-gap-16">
+                                        {app.map((item: any, index: number) => (
+                                            <div
+                                                key={index}
+                                                onClick={() => gotoPolicy(item)}
+                                                className="social-item__img cursor-pointer"
+                                            >
+                                                <img src={item.img} alt="" />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </>
+                        </div>
+                        <div className="wrap">
+                            <>
+                                <div className="footer-cnt__item-title">
                                     Kết nối với chúng tôi
                                 </div>
                                 <div className="social-list">
@@ -210,69 +321,36 @@ function Footer() {
                                         )
                                     )}
                                 </div>
-                            </>
-                            <>
                                 <div
                                     style={{ marginTop: "24px" }}
                                     className="footer-cnt__item-title"
                                 >
-                                    Phương thức thanh toán
+                                    Tải ứng dụng trên điện thoại
                                 </div>
-                                <div
-                                    style={{ marginTop: "16px" }}
-                                    className="flexX-gap-16"
-                                >
-                                    <div className="social-item">
-                                        <div className="social-item__img">
-                                            <img src={icon.momo} alt="" />
-                                        </div>
+                                <div className="down-app">
+                                    <div className="down-app__qr">
+                                        <img src={img.qrCode} alt="" />
                                     </div>
-                                    <div className="social-item">
-                                        <div
-                                            style={{
-                                                borderRadius: "4px",
-                                                overflow: "hidden",
-                                                width: "36px",
-                                            }}
-                                            className="social-item__img"
-                                        >
-                                            <img
-                                                style={{ width: "100%" }}
-                                                src={icon.payon}
-                                                alt=""
-                                            />
-                                        </div>
+                                    <div className="down-app__wrap">
+                                        {downList.map(
+                                            (item: any, index: number) => (
+                                                <div
+                                                    key={index}
+                                                    className="down-app__btn"
+                                                >
+                                                    <img
+                                                        onClick={() =>
+                                                            gotoPolicy(item)
+                                                        }
+                                                        src={item.img}
+                                                        alt=""
+                                                    />
+                                                </div>
+                                            )
+                                        )}
                                     </div>
                                 </div>
                             </>
-                        </div>
-                        <div className="wrap">
-                            <div className="footer-cnt__item-title">
-                                Tải ứng dụng trên điện thoại
-                            </div>
-                            <div className="down-app">
-                                <div className="down-app__qr">
-                                    <img src={img.qrCode} alt="" />
-                                </div>
-                                <div className="down-app__wrap">
-                                    {downList.map(
-                                        (item: any, index: number) => (
-                                            <div
-                                                key={index}
-                                                className="down-app__btn"
-                                            >
-                                                <img
-                                                    onClick={() =>
-                                                        gotoPolicy(item)
-                                                    }
-                                                    src={item.img}
-                                                    alt=""
-                                                />
-                                            </div>
-                                        )
-                                    )}
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

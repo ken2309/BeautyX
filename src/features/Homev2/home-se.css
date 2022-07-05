@@ -392,18 +392,21 @@
 
     .home-tags-list {
         width: max-content;
-        padding: 16px 4px 0 4px;
+        padding: 16px 12px 0 12px;
         display: flex;
+        grid-gap: 0 8px;
     }
 
     .home-tags-list li {
-        width: 25%;
+        width: 96px;
         padding: 0;
     }
 
     .home-tags .tag-item-cnt {
         box-shadow: none;
         padding: 0;
+        background-color: #fafafa;
+        padding: 4px 0;
     }
 
     .home-tags .tag-item-cnt img {
