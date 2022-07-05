@@ -13,7 +13,7 @@ import useFullScreen from "../../../utils/useFullScreen";
 import icon from "../../../constants/icon";
 import BackTopButton from "../../../components/BackTopButton";
 import Footer from "../../Footer";
-import Map from "../../../components/Map/Map";
+import Map from "../../../components/Map";
 
 interface IData {
     orgs: IOrganization[];
