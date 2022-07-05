@@ -44,13 +44,16 @@ export default function HomeLoggedCalendarAppointmentItem(props: any) {
                     {!IS_MB && checkdotstt(datingList.status)}
                     <div className="appointment-item-time-mb">
                         <div className="flex-column container">
-                            <span className="time">
-                                {datingList.time_start}
-                            </span>
-                            <span className="day-week">
+                            <span
+                                style={{ fontSize: "14px" }}
+                                className="day-week"
+                            >
                                 {dateDayjs !== 1
                                     ? `Thứ ${dateDayjs}`
                                     : "Chủ nhật"}
+                            </span>
+                            <span className="time">
+                                {datingList.time_start}
                             </span>
                             <span className="day">{datingList.date}</span>
                         </div>
