@@ -1,5 +1,6 @@
 import React from "react";
 import HomeLoggedCalendarAppointmentItem from "./HomeLoggedCalendarAppointmentItem";
+import EmptyRes from '../../../EmptyRes';
 interface IAppointmentList {
   datingList: any;
 }
@@ -50,17 +51,27 @@ export default function HomeLoggedCalendarAppointmentList(
     });
   };
   const sortedDatingList = sortDatingList();
-
+  // console.log(sortedDatingList.filter(Boolean).map(e=>e.length));
   return (
     <>
-      {sortedDatingList.map((item: any, index: any) => (
-        <div key={index} className="calendar-appointment__list">
-          {item &&
-            item.map((item: any, i: number) => (
-              <HomeLoggedCalendarAppointmentItem key={i} datingList={item} />
-            ))}
-        </div>
-      ))}
+      {
+        sortedDatingList.length > 0
+          ?
+          sortedDatingList.map((item: any, index: any) => (
+            <div key={index} className="calendar-appointment__list">
+              {
+                item &&
+                item.map((item: any, i: number) => (
+                  <HomeLoggedCalendarAppointmentItem key={i} datingList={item} />
+                ))
+              }
+            </div>
+          ))
+          :
+          <EmptyRes
+              title="Bạn không có lịch hẹn nào hôm nay!"
+          />
+      }
     </>
   );
 }

@@ -45,7 +45,7 @@ function SignIn(props: any) {
                 dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
             }
             setLoading(false);
-            history.goBack();
+            history.push("/homepage");
         } catch (error) {
             setLoading(false);
             const err = error as AxiosError;
