@@ -33,7 +33,7 @@ import { onSetStatusApp } from "../../redux/appointment/appSlice";
 import AlertSnack from "../../components/AlertSnack";
 
 // ==== api tracking ====
-import tracking from "../../api/trackApi";
+//import tracking from "../../api/trackApi";
 import { formatProductList } from "../../utils/tracking";
 // end
 const date = dayjs();
@@ -151,7 +151,7 @@ function Booking() {
     async function handlePostOrder() {
         const params = pickBy(params_string, identity);
         try {
-            tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(params.products))
+            //tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(params.products))
             const response = await order.postOrder(org?.id, params);
             const state_payment = await response.data.context;
             const transaction_uuid =

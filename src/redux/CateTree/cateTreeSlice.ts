@@ -37,7 +37,7 @@ export const fetProductsByCateChild: any = createAsyncThunk(
     "CATE_TREE/fetProductsByCateChild",
     async (values: any) => {
        
-        const res = await productsApi.getProductsSingle(values);
+        const res = await productsApi.getProductsAll(values);
         return {
             products: res.data.data.hits.map((item: any) => {
                 return {

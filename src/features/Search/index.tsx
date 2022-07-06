@@ -24,6 +24,7 @@ import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
+import { onSetEmptyOrgs, onSetEmptyProducts, onSetEmptyServices } from "../../redux/search/searchResultSlice";
 // end
 
 function Search() {
@@ -70,8 +71,10 @@ function Search() {
         debounceDropDown(e.target.value);
         dispatch(onSetKeyword(e.target.value));
     };
-    console.log(ORGS)
     const onGotoFilterResult = () => {
+        dispatch(onSetEmptyOrgs())
+        dispatch(onSetEmptyServices())
+        dispatch(onSetEmptyProducts())
         history.push({
             pathname: "/ket-qua-tim-kiem/",
             search: `${keyword}`,
@@ -184,5 +187,5 @@ function Search() {
         </Dialog>
     );
 }
-
 export default Search;
+

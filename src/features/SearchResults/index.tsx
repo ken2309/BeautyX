@@ -6,33 +6,29 @@ import { useHistory, useLocation } from "react-router-dom";
 import { AppContext } from "../../context/AppProvider";
 import "./search-results.css";
 import { Container } from "@mui/material";
-import FilterOrgs from "../FilterOrgs";
 import TabService from "./components/TabService";
 import Footer from "../Footer";
 import TabOrgs from "./components/TabOrgs";
 import TabLocation from "./components/TabLocation";
-import orgApi from "../../api/organizationApi";
 import icon from "../../constants/icon";
 import { Drawer } from "@mui/material";
-import { IOrganization } from "../../interface/organization";
 import TabProduct from "./components/TabProduct";
 import { useDispatch, useSelector } from "react-redux";
-import { 
+import {
     onSetTabResult,
-    fetchAsyncOrgsByFilter 
+    fetchAsyncOrgsByFilter,
+    fetchServicesByFilter,
+    fetchProductsByFilter,
+    onSetEmptyOrgs
 } from "../../redux/search/searchResultSlice";
 import useFullScreen from "../../utils/useFullScreen";
 import HeadMobile from "../HeadMobile";
 import BackTopButton from "../../components/BackTopButton";
 import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 import Map from "../../components/Map/Map";
-import EmptyRes from '../EmptyRes';
+import { STATUS } from "../../redux/status";
+import FilterOrgs from "../Filter/FilterOrgs";
 
-interface IData {
-    orgs: IOrganization[];
-    page: number;
-    totalItem: number;
-}
 
 function SearchResults(props: any) {
     const history = useHistory();
@@ -43,7 +39,15 @@ function SearchResults(props: any) {
     const searchKey = decodeURI(
         location.search.slice(1, location.search.length)
     );
-    const { tab } = useSelector((state: any) => state.SEARCH_RESULT);
+    const { tab, RE_ORGS, RE_SERVICES, RE_PRODUCTS } = useSelector((state: any) => state.SEARCH_RESULT);
+
+    const { FILTER_ORG } = useSelector((state: any) => state.FILTER);
+    const FILTER_ORGS_VAL = {
+        ...FILTER_ORG,
+        tags: FILTER_ORG.tags.join("|"),
+        province_code : FILTER_ORG.province?.province_code,
+        district_code : FILTER_ORG.district?.district_code,
+    }
     const [openMap, setOpenMap] = useState(false);
 
     let tabs = [
@@ -54,54 +58,53 @@ function SearchResults(props: any) {
     if (location.state) {
         tabs = tabs.sort((a, b) => b.total - a.total)
     }
-
-    const callOrgsByKeyword = () =>{
-        dispatch(fetchAsyncOrgsByFilter({
-            keyword: searchKey
-        }))
+    const callOrgsByKeyword = () => {
+        if (RE_ORGS.status !== STATUS.SUCCESS) {
+            dispatch(onSetTabResult(tabs[0].id))
+            dispatch(fetchAsyncOrgsByFilter({
+                keyword: searchKey,
+                page: 1
+            }))
+        }
+    }
+    const callServicesByKeyword = () => {
+        if (RE_SERVICES.status !== STATUS.SUCCESS) {
+            dispatch(fetchServicesByFilter({
+                page: 1,
+                keyword: searchKey
+            }))
+        }
+    }
+    const callProductsByKeyword = () => {
+        if (RE_PRODUCTS.status !== STATUS.SUCCESS) {
+            dispatch(fetchProductsByFilter({
+                page: 1,
+                keyword: searchKey
+            }))
+        }
     }
 
     useEffect(() => {
-        dispatch(onSetTabResult(tabs[0].id))
         callOrgsByKeyword()
-    }, [])
+        callServicesByKeyword()
+        callProductsByKeyword()
+    }, [searchKey])
     const [openFilter, setOpenFilter] = useState(false);
     const onActiveTab = useCallback((tab) => {
         dispatch(onSetTabResult(tab.id));
     }, []);
-    //filter for org
-    const [data, setData] = useState<IData>({
-        orgs: [],
-        page: 1,
-        totalItem: 0,
-    });
-    const [orgFilter, setOrgFilter] = useState({
-        tags: [],
-        province_code: 0,
-        min_price: 0,
-        max_price: 0,
-    });
-    async function handleOrgsByKeyword() {
-        try {
-            const res = await orgApi.getOrgByKeyword({
-                keyword: searchKey,
-                page: data.page,
-                tags: orgFilter.tags.join("|"),
-                province: orgFilter.province_code,
-                price: {
-                    min: orgFilter.min_price,
-                    max: orgFilter.max_price,
-                },
-            });
-            setData({
-                ...data,
-                orgs: [...data.orgs, ...res.data.context.data],
-                totalItem: res.data.context.total,
-            });
-        } catch (error) {
-            console.log(error);
-        }
+
+
+    const handleApplyFilterOrgs = () => {
+        setOpenFilter(false)
+        dispatch(onSetEmptyOrgs())
+        dispatch(fetchAsyncOrgsByFilter({
+            ...FILTER_ORGS_VAL,
+            page: 1,
+            keyword: searchKey,
+        }))
     }
+
     //
     const onGoBack = () => {
         history.goBack();
@@ -113,7 +116,18 @@ function SearchResults(props: any) {
                 title={`${t("Search_result.text_result")} : ${searchKey}`}
             />
             {IS_MB ? (
-                <HeadMobile onBackFunc={onGoBack} title="Kết quả tìm kiếm" />
+                <HeadMobile
+                    element={
+                        tab === 3 &&
+                        <button
+                            onClick={() => setOpenFilter(true)}
+                        >
+                            <img src={icon.settingsSliders} alt="" />
+                        </button>
+                    }
+                    onBackFunc={onGoBack}
+                    title="Kết quả tìm kiếm"
+                />
             ) : (
                 <Head />
             )}
@@ -141,51 +155,30 @@ function SearchResults(props: any) {
                                 ))}
                             </ul>
                         </div>
-                        {tab === 3 ?
-                            data.orgs.length > 0 &&
-                            (
-                                <>
-                                    <FilterOrgs
-                                        orgFilter={orgFilter}
-                                        setOrgFilter={setOrgFilter}
-                                        data={data}
-                                        setData={setData}
-                                        handleOrgsByKeyword={handleOrgsByKeyword}
-                                    />
-                                    <div className="home-result-org-cnt__mb">
-                                        <div className="flex-row-sp cnt">
-                                            <span className="title">
-                                                Bộ lọc tìm kiếm
-                                            </span>
-                                            <button
-                                                onClick={() => setOpenFilter(true)}
-                                                className="filter-btn"
-                                            >
-                                                <img src={icon.filter} alt="" />
-                                            </button>
-                                            <Drawer
-                                                anchor="right"
-                                                open={openFilter}
-                                                onClose={() => setOpenFilter(false)}
+                        {tab === 3 &&
+                            <>
+                                {
+                                    IS_MB ?
+                                        <Drawer
+                                            anchor="right"
+                                            open={openFilter}
+                                            onClose={() => setOpenFilter(false)}
+                                        >
+                                            <div
+                                                style={{ width: "80vw", height: "100vh" }}
                                             >
                                                 <FilterOrgs
-                                                    orgFilter={orgFilter}
-                                                    setOrgFilter={setOrgFilter}
-                                                    setData={setData}
-                                                    handleOrgsByKeyword={
-                                                        handleOrgsByKeyword
-                                                    }
-                                                    setOpenFilter={setOpenFilter}
+                                                    onApplyFilterOrgs={handleApplyFilterOrgs}
                                                 />
-                                            </Drawer>
-                                        </div>
-                                    </div>
-
-                                </>
-                            )
-                            : (
-                                <></>
-                            )}
+                                            </div>
+                                        </Drawer>
+                                        :
+                                        <FilterOrgs
+                                            onApplyFilterOrgs={handleApplyFilterOrgs}
+                                        />
+                                }
+                            </>
+                        }
                     </div>
                     <div className="se-re-cnt__right">
                         <div
@@ -200,7 +193,8 @@ function SearchResults(props: any) {
                                 {searchKey}"
                             </span>
 
-                            {tab === 1 || tab === 2 || (data?.orgs.length == 0) ? null : (
+                            {
+                                tab === 3 &&
                                 <div
                                     onClick={() => {
                                         setOpenMap(true);
@@ -216,27 +210,24 @@ function SearchResults(props: any) {
                                         ></img>
                                     </div>
                                 </div>
-                            )}
+                            }
                         </div>
                         <TabService keyword={searchKey} acTab={tab} />
                         <TabProduct keyword={searchKey} acTab={tab} />
                         {
-                            tab === 3 && (data?.orgs.length == 0) && <EmptyRes title={'Không tìm được kết quả phù hợp cho "' + searchKey + '"'} />
+                            // tab === 3 && (data?.orgs.length == 0) && <EmptyRes title={'Không tìm được kết quả phù hợp cho "' + searchKey + '"'} />
                         }
                         <TabOrgs
-                            orgFilter={orgFilter}
-                            keyword={searchKey}
                             acTab={tab}
-                            data={data}
-                            setData={setData}
-                            handleOrgsByKeyword={handleOrgsByKeyword}
+                            keyword={searchKey}
+                            FILTER_ORGS_VAL={FILTER_ORGS_VAL}
                         />
 
                         <TabLocation acTab={tab} searchKey={searchKey} />
                     </div>
                 </div>
             </Container>
-            {data.orgs.length > 0 && <Map data={data.orgs} open={openMap} setOpenMap={setOpenMap} />}
+            {RE_ORGS.orgs.length > 0 && <Map data={RE_ORGS.orgs} open={openMap} setOpenMap={setOpenMap} />}
             <BackTopButton />
             <Footer />
         </>

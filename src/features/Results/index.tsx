@@ -81,13 +81,11 @@ function Result() {
                 <div className="result-cont">
                     <div className="result-cont__left">
                         <FilterOrgs
-                            // disableTags={params.tag && true}
-                            // disableProvince={params.province && true}
                             onApplyFilterOrgs={handleApplyByFilter}
                         />
                     </div>
                     <div className="result-cont__right">
-                        {(status !== STATUS.SUCCESS && page === 1) && <LoadingOrgs/>}
+                        {(status !== STATUS.SUCCESS && page === 1) && <LoadingOrgs />}
                         <InfiniteScroll
                             dataLength={orgs.length}
                             hasMore={true}
@@ -121,7 +119,6 @@ export default Result;
 
 function HeaderFilterMobile(props: any) {
     const { handleApplyByFilter } = props;
-    const params: any = extraParamsUrl();
     const [open, setOpen] = useState(false);
     const onApplyFilterMb = () => {
         handleApplyByFilter()
@@ -147,8 +144,6 @@ function HeaderFilterMobile(props: any) {
             >
                 <div className="result-cont__mobile">
                     <FilterOrgs
-                        disableTags={params.tag && true}
-                        disableProvince={params.province && true}
                         onApplyFilterOrgs={onApplyFilterMb}
                     />
                 </div>

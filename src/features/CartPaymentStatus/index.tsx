@@ -112,7 +112,7 @@ function CartPaymentStatus() {
     useEffect(() => {
         if (transaction_uuid) {
             setInter();
-            tracking.CONFIRM_SCREEN_LOAD(listPayment[0].org_id,formatProductList(listPayment),res.amount)
+            //tracking.CONFIRM_SCREEN_LOAD(listPayment[0].org_id,formatProductList(listPayment),res.amount)
         }
     }, []);
     const handleCancelPayment = () => {

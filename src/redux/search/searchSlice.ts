@@ -19,7 +19,7 @@ export const fetchOrgsBySearch: any = createAsyncThunk(
 export const fetchProductsBySearch: any = createAsyncThunk(
     "SEARCH/fetchProductsBySearch",
     async (values: any) => {
-        const res = await productsApi.getProductsSingle(values);
+        const res = await productsApi.getProductsAll(values);
         return {
             products: res.data.data.hits,
             totalItem: res.data.total,
