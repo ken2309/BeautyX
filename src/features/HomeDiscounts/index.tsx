@@ -10,14 +10,14 @@ import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
 
 function HomeDiscount() {
-    const {t} = useContext(AppContext);
+    const { t } = useContext(AppContext);
     const { DISCOUNTS } = useSelector((state: any) => state.HOME);
     const { discounts } = DISCOUNTS;
     const history = useHistory();
     const onViewMore = () => {
-        history.push("/giam-gia")
-        scrollTop()
-    }
+        history.push("/giam-gia");
+        scrollTop();
+    };
     return (
         <div className="home-discounts">
             <Container>
@@ -32,7 +32,7 @@ function HomeDiscount() {
                         {discounts
                             .slice(0, 12)
                             .map((discount: IDiscountPar, index: number) => (
-                                <>
+                                <div key={index}>
                                     {discount.items.map(
                                         (item: IITEMS_DISCOUNT, i: number) => (
                                             <li key={i}>
@@ -43,7 +43,7 @@ function HomeDiscount() {
                                             </li>
                                         )
                                     )}
-                                </>
+                                </div>
                             ))}
                     </ul>
                 </div>

@@ -13,10 +13,9 @@ import useFullScreen from "../../../utils/useFullScreen";
 import icon from "../../../constants/icon";
 import BackTopButton from "../../../components/BackTopButton";
 import Footer from "../../Footer";
-import Map from "../../../components/Map/Map";
-// ==== api tracking ====
+import Map from "../../../components/Map";
 import EVENT from "../../../api/trackApi";
-// end
+
 interface IData {
     orgs: IOrganization[];
     page: number;

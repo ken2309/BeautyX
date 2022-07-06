@@ -13,8 +13,7 @@ function Calendar(props: any) {
         dayObjOfLastMonth,
         datepick,
         handleGetDate,
-        dayObj,
-    } = props;    
+    } = props;
     return (
         <>
             <div className="calendar">
@@ -46,13 +45,15 @@ function Calendar(props: any) {
                                 thisYear === datepick.year
                                     ? "  day-cell--today-cur"
                                     : ""
-                            } ${
+                            } 
+                            ${
                                 i + 1 < dayjs().date() &&
                                 thisMonth === dayjs().month() &&
                                 thisYear === dayjs().year()
                                     ? " day-cell--faded"
                                     : " "
-                            } ${
+                            } 
+                            ${
                                 i + 1 === dayjs().date() &&
                                 thisMonth === dayjs().month() &&
                                 thisYear === dayjs().year()
