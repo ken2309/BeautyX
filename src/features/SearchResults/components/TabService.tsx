@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import FilterServices from '../../FilterServices';
+import React from 'react';
 import { IServicePromo } from '../../../interface/servicePromo';
 import ServicePromoItem from '../../ViewItemCommon/ServicePromoItem';
 import useFullScreen from '../../../utils/useFullScreen';
@@ -13,7 +12,6 @@ function TabService(props: any) {
     const { keyword, acTab } = props;
     const dispatch = useDispatch();
     const IS_MB = useFullScreen();
-    const [dataSort, setDataSort] = useState('default')
     const { services, page, totalItem } = useSelector((state: any) => state.SEARCH_RESULT.RE_SERVICES);
     const onViewMore = () => {
         if (services.length >= 30 && services.length < totalItem) {
@@ -27,10 +25,6 @@ function TabService(props: any) {
     return (
         acTab === 1 ?
             <div>
-                <FilterServices
-                    dataSort={dataSort}
-                    setDataSort={setDataSort}
-                />
                 <InfiniteScroll
                     dataLength={services.length}
                     hasMore={true}

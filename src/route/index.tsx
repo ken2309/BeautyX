@@ -18,11 +18,8 @@ import CartPaymentStatus from "../features/CartPaymentStatus";
 import ServicesUser from "../features/ServiceUser";
 //import DatePicker from "../components/DatePicker"
 import SearchResults from "../features/SearchResults/index";
-import HomeTags from "../features/HomeResults/HomeTags";
 import HomePromo from "../features/HomeResults/HomePromo";
-import HomeProvince from "../features/HomeResults/HomeProvince";
 import HomeListProvince from "../features/HomeResults/HomeListProvince";
-import HomeCardResult from "../features/HomeResults/HomeCardResult";
 import HomeDealBanner from "../features/HomeResults/HomeDealBanner";
 import Policy from "../features/Policy";
 import SellerCenter from "../features/SellerCenter";
@@ -127,24 +124,12 @@ function RouterConfig(props: any) {
       component: <MerchantDetail />,
     },
     {
-      path: '/danh-muc/',
-      component: <HomeTags />
-    },
-    {
       path: '/deal-lam-dep-cuc-HOT',
       component: <HomePromo />
     },
     {
-      path: '/khu-vuc/',
-      component: <HomeProvince />
-    },
-    {
       path: '/dia-diem-quan-tam',
       component: <HomeListProvince />
-    },
-    {
-      path: '/doanh-nghiep/:title',
-      component: <HomeCardResult />
     },
     {
       path: '/chinh-sach/',
