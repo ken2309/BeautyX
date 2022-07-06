@@ -87,14 +87,26 @@ export default function AssistantBtn() {
                         ref={refAssisBtn}
                         className="assistantBtn-wrap"
                     >
-                        <div
-                            onTouchStart={() => handleOpenSearch()}
-                            className="btn2 buttons"
-                        >
-                            <div className="btn-img">
-                                <img src={icon.search} alt="" />
+                        {location.pathname ===
+                            "/ket-qua-tim-kiem/" ? null : is_mb === true ? (
+                                <div
+                                    onTouchStart={() => handleOpenSearch()}
+                                    className="btn2 buttons"
+                                >
+                                    <div className="btn-img">
+                                        <img src={icon.search} alt="" />
+                                    </div>
+                                </div>
+                            ) : (
+                            <div
+                                onClick={() => handleOpenSearch()}
+                                className="btn2 buttons"
+                            >
+                                <div className="btn-img">
+                                    <img src={icon.search} alt="" />
+                                </div>
                             </div>
-                        </div>
+                        )}
 
                         {is_mb === true ? (
                             <div

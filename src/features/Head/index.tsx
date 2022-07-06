@@ -59,6 +59,7 @@ function Head(props: IProps) {
     const { appsToday } = useSelector((state: any) => state.APP.APPS);
     const [unit, setUnit] = useState("VND");
     const history = useHistory();
+    const { ORDER_SERVICES_NOT_BOOK_COUNT } = useSelector((state: any) => state.ORDER);
 
     //get total amount cart
 
@@ -266,7 +267,7 @@ function Head(props: IProps) {
                                             {USER?.fullname?.slice(0, 1)}
                                         </div>
                                     )}
-                                    {appsToday.length > 0 && (
+                                    {(appsToday.length > 0 || ORDER_SERVICES_NOT_BOOK_COUNT > 0) && (
                                         <div className="hd-cnt__right-avatar-dot"></div>
                                     )}
                                     <Notification openNo={openNo} />

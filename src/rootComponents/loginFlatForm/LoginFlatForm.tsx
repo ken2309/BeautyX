@@ -44,7 +44,6 @@ function LoginFlatForm(props: any) {
             if (event.data) alert("msg: " + JSON.stringify(event.data, res));
         });
     }
-    console.log(params)
     const handleLoginFlatform = () => {
         if (params) {
             switch (flatForm) {

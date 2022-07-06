@@ -12,7 +12,7 @@ import Notification from '../../../components/Notification';
 import AlertSnack from "../../../components/AlertSnack";
 // ==== api tracking ====
 import tracking from "../../../api/trackApi";
-import {formatProductList} from "../../../utils/tracking";
+import { formatProductList } from "../../../utils/tracking";
 // end
 function CartBottom(props: any) {
     const { DATA_CART, DATA_PMT } = props;
@@ -94,7 +94,7 @@ function CartBottom(props: any) {
             //     title: 'Good!'
             // })
         }
-        else if (!pramsOrder.payment_method_id){
+        else if (!pramsOrder.payment_method_id) {
             setOpenAlertSnack({
                 ...openAlertSnack,
                 open: true,
@@ -102,7 +102,6 @@ function CartBottom(props: any) {
             })
         }
     }
-    console.log(DATA_PMT,pramsOrder);
     return (
         <div className="re-cart-bottom">
             <AlertSnack

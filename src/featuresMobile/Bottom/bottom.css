@@ -21,7 +21,9 @@
     position: relative;
   }
   .bt-cnt__item-badge {
-    margin: -4px 0px 0px 16px;
+    margin: -2px 0px 0px 10px;
+    width: 8px;
+    height: 8px;
     position: absolute;
     font-size: 10px;
     text-align: center;
@@ -30,7 +32,6 @@
     border-radius: 100%;
     background-color: var(--red-cl);
     color: var(--bg-gray);
-    width: 14px;
   }
   .bt-cnt__item img {
     width: 20px;

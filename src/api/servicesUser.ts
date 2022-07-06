@@ -12,7 +12,7 @@ class ServicesUser {
             limit: 15,
             "filter[status]": "PAID",
             "filter[withServicesSold]": true,
-            "include": "items|items_count|organization",
+            "include": "items|items_count|organization|appointments",
             "sort": "-created_at",
             'filter[platform]': FLAT_FORM
         }

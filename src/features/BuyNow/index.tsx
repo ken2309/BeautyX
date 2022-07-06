@@ -24,10 +24,10 @@ import { IUserAddress } from '../../interface/userAddress'
 import Footer from '../Footer';
 import { formatAddCart } from '../../utils/cart/formatAddCart';
 
- // ==== api tracking ====
- import tracking from "../../api/trackApi";
- import {formatProductList} from "../../utils/tracking";
- // end
+// ==== api tracking ====
+// import tracking from "../../api/trackApi";
+// import { formatProductList } from "../../utils/tracking";
+// end
 function BuyNow() {
     const IS_MB = useFullScreen();
     const location: any = useLocation();
@@ -90,7 +90,13 @@ function BuyNow() {
         //setLoading(true)
         const params = pickBy(params_string, identity);
         try {
-            tracking.PAY_CONFIRM_CLICK(org?.id,formatProductList(params.products))
+            // const productsForTracking = products.map((i: any) => {
+            //     return {
+            //         ...i.product,
+            //         quantity: i.quantity
+            //     }
+            // })
+            // tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(productsForTracking))
             const response = await order.postOrder(org?.id, params);
             const state_payment = await response.data.context;
             const desc = await state_payment.payment_gateway.description;
@@ -190,7 +196,7 @@ function BuyNow() {
                     </div>
                 </div>
             </Container>
-            <Footer/>
+            <Footer />
         </>
     );
 }

@@ -7,13 +7,16 @@ import ProductResultItem from '../../Search/components/ProductResultItem';
 import useFullScreen from '../../../utils/useFullScreen';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsByFilter } from '../../../redux/search/searchResultSlice';
+import { STATUS } from '../../../redux/status';
+import { LoadingServices } from '../../../components/LoadingSketion';
+import LoadingMore from '../../../components/LoadingMore';
 
 
 
 function TabProduct(props: any) {
     const { acTab, keyword } = props;
     const IS_MB = useFullScreen();
-    const { products, page, totalItem } = useSelector((state: any) => state.SEARCH_RESULT.RE_PRODUCTS);
+    const { products, page, totalItem, status } = useSelector((state: any) => state.SEARCH_RESULT.RE_PRODUCTS);
     const dispatch = useDispatch();
 
     const onViewMore = () => {
@@ -28,12 +31,7 @@ function TabProduct(props: any) {
     return (
         acTab === 2 ?
             <div>
-                {/* <FilterServices
-                    dataSort={dataSort}
-                    setDataSort={setDataSort}
-                    data={data}
-                    setData={setData}
-                /> */}
+                {(page === 1 && status !== STATUS.SUCCESS) && <LoadingServices />}
                 <InfiniteScroll
                     dataLength={products.length}
                     hasMore={true}
@@ -58,6 +56,7 @@ function TabProduct(props: any) {
                         }
                     </ul>
                 </InfiniteScroll>
+                {products.length < totalItem && <LoadingMore />}
             </div>
             :
             <></>

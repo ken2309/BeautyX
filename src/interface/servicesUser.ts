@@ -76,5 +76,6 @@ export interface IServiceUser {
         updated_at: string,
         deleted_at: null | string
     },
-    items: IUser_Items[]
+    items: IUser_Items[],
+    appointments:any[]
 }
