@@ -29,9 +29,15 @@ import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 // });
 //////
 
+interface IProps {
+    IN_HOME?: boolean,
+    setCloseDialog?: (closeDialog?: boolean) => void,
+    headerStyle?: any,
+    handleCancelPayment?: () => void,
+    prev_url?: string,
+}
 
-
-function Head(props: any) {
+function Head(props: IProps) {
     const {
         t,
         //profile,

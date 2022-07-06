@@ -25,7 +25,7 @@ import useFullScreen from "../../utils/useFullScreen";
 import HeadMobile from "../HeadMobile";
 import BackTopButton from "../../components/BackTopButton";
 import { onToggleSearchCnt } from "../../redux/search/searchSlice";
-import Map from "../../components/Map/Map";
+import Map from "../../components/Map";
 import { STATUS } from "../../redux/status";
 import FilterOrgs from "../Filter/FilterOrgs";
 
@@ -45,8 +45,8 @@ function SearchResults(props: any) {
     const FILTER_ORGS_VAL = {
         ...FILTER_ORG,
         tags: FILTER_ORG.tags.join("|"),
-        province_code : FILTER_ORG.province?.province_code,
-        district_code : FILTER_ORG.district?.district_code,
+        province_code: FILTER_ORG.province?.province_code,
+        district_code: FILTER_ORG.district?.district_code,
     }
     const [openMap, setOpenMap] = useState(false);
 
@@ -129,7 +129,7 @@ function SearchResults(props: any) {
                     title="Kết quả tìm kiếm"
                 />
             ) : (
-                <Head />
+                <Head prev_url="/homepage" />
             )}
             <Container>
                 <div className="se-re-cnt">

@@ -40,7 +40,7 @@ export default function MapTagsOrgItem(props: IProps) {
             <div className="map-item__img">
                 <img
                     onError={(e) => onErrorImg(e)}
-                    src={item?.image_url}
+                    src={item?.image_url ? item?.image_url : item?.image}
                     alt=""
                 />
             </div>
