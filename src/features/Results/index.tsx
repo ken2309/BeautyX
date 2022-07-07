@@ -18,6 +18,8 @@ import { fetchAsyncOrgsByFilter, onSetFilterType, onSetOrgsEmpty } from '../../r
 import HeadMobile from '../HeadMobile';
 import useFullScreen from '../../utils/useFullScreen';
 import icon from '../../constants/icon';
+import LoadingMore from '../../components/LoadingMore';
+import { LoadingOrgs } from '../../components/LoadingSketion';
 
 function Result() {
     const IS_MB = useFullScreen();
@@ -79,12 +81,11 @@ function Result() {
                 <div className="result-cont">
                     <div className="result-cont__left">
                         <FilterOrgs
-                            disableTags={params.tag && true}
-                            disableProvince={params.province && true}
                             onApplyFilterOrgs={handleApplyByFilter}
                         />
                     </div>
                     <div className="result-cont__right">
+                        {(status !== STATUS.SUCCESS && page === 1) && <LoadingOrgs />}
                         <InfiniteScroll
                             dataLength={orgs.length}
                             hasMore={true}
@@ -104,6 +105,7 @@ function Result() {
                                 }
                             </ul>
                         </InfiniteScroll>
+                        {orgs.length === totalItem ? <></> : <LoadingMore />}
                     </div>
                 </div>
             </Container>
@@ -117,7 +119,6 @@ export default Result;
 
 function HeaderFilterMobile(props: any) {
     const { handleApplyByFilter } = props;
-    const params: any = extraParamsUrl();
     const [open, setOpen] = useState(false);
     const onApplyFilterMb = () => {
         handleApplyByFilter()
@@ -143,8 +144,6 @@ function HeaderFilterMobile(props: any) {
             >
                 <div className="result-cont__mobile">
                     <FilterOrgs
-                        disableTags={params.tag && true}
-                        disableProvince={params.province && true}
                         onApplyFilterOrgs={onApplyFilterMb}
                     />
                 </div>

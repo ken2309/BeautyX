@@ -123,7 +123,8 @@ const filterSlice = createSlice({
             }
         },
         onSetOrgsEmpty: (state) => {
-            state.ORGS.orgs = []
+            state.ORGS.orgs = [];
+            state.ORGS.page = 1
         },
         onSetFilterType: (state, action) => {
             state.TYPE_FILTER = action.payload

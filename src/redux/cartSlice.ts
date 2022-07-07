@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
- // ==== api tracking ====
- import tracking from "../api/trackApi";
- // end
+// ==== api tracking ====
+import tracking from "../api/trackApi";
+// end
 // google tag event
-import {GoogleTagPush,GoogleTagEvents} from '../utils/dataLayer';
+import { GoogleTagPush, GoogleTagEvents } from '../utils/dataLayer';
 // end 
 
 const storageName = 'web-booking-cart'
@@ -26,10 +26,10 @@ const cart = createSlice({
             );
             if (iIndex >= 0) {
                 state.cartList[iIndex].quantity += action.payload.quantity;
-                tracking.ADD_CART_CLICK(state.cartList[iIndex].org_id,state.cartList[iIndex].id,state.cartList[iIndex].price,state.cartList[iIndex].quantity)
+                tracking.ADD_CART_CLICK(state.cartList[iIndex].org_id, state.cartList[iIndex].id, state.cartList[iIndex].price, state.cartList[iIndex].quantity)
             } else {
                 const templeCart = { ...action.payload, quantity: action.payload.quantity };
-                tracking.ADD_CART_CLICK(templeCart.org_id,templeCart.id,templeCart.price,templeCart.quantity)
+                tracking.ADD_CART_CLICK(templeCart.org_id, templeCart.id, templeCart.price, templeCart.quantity)
                 state.cartList.push(templeCart);
             }
             localStorage.setItem(storageName, JSON.stringify(state.cartList))
@@ -124,12 +124,17 @@ const cart = createSlice({
             state.cartList = [];
             localStorage.setItem(storageName, JSON.stringify(state.cartList))
         },
-        clearByCheck: (state, action) => {
-            state.cartList = action.payload
+        clearByCheck: (state) => {
+            const cartConfirm = state.cartList.filter((val: any) => val.isConfirm === true);
+            const intersection = state.cartList.filter(
+                (x: any) => !cartConfirm.includes(x)
+            );
+            console.log(intersection)
+            state.cartList = intersection
             localStorage.setItem(storageName, JSON.stringify(state.cartList))
         },
-        onClearPrevCartItem:(state)=>{
-            const newCartList = state.cartList.map((item:any)=>{
+        onClearPrevCartItem: (state) => {
+            const newCartList = state.cartList.map((item: any) => {
                 return {
                     ...item,
                     isConfirm: false

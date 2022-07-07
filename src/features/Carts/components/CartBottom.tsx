@@ -12,7 +12,7 @@ import Notification from '../../../components/Notification';
 import AlertSnack from "../../../components/AlertSnack";
 // ==== api tracking ====
 import tracking from "../../../api/trackApi";
-import {formatProductList} from "../../../utils/tracking";
+import { formatProductList } from "../../../utils/tracking";
 // end
 function CartBottom(props: any) {
     const { DATA_CART, DATA_PMT } = props;
@@ -51,7 +51,7 @@ function CartBottom(props: any) {
     async function handlePostOrder() {
         //setLoading(true)
         try {
-            // tracking.PAY_CONFIRM_CLICK(DATA_PMT.org.id, formatProductList(pramsOrder.products))
+            tracking.PAY_CONFIRM_CLICK(DATA_PMT.org.id, formatProductList(pramsOrder.products))
             const response = await order.postOrder(DATA_PMT.org.id, pickBy(pramsOrder, identity));
             const state_payment = await response.data.context
             const transaction_uuid = state_payment.payment_gateway.transaction_uuid;
@@ -64,7 +64,7 @@ function CartBottom(props: any) {
             } else {
                 setOpenNoti({
                     open: true,
-                    title: "Tạo đơn hàng thất bại",
+                    title: "Đơn hàng bị huỷ",
                     titleLeft: "Đã hiểu",
                     titleRight: "Về trang chủ",
                     onClickLeft: () => setOpenNoti({ ...openNoti, open: false }),
@@ -94,7 +94,7 @@ function CartBottom(props: any) {
             //     title: 'Good!'
             // })
         }
-        else if (!pramsOrder.payment_method_id){
+        else if (!pramsOrder.payment_method_id) {
             setOpenAlertSnack({
                 ...openAlertSnack,
                 open: true,
@@ -102,7 +102,6 @@ function CartBottom(props: any) {
             })
         }
     }
-    console.log(DATA_PMT,pramsOrder);
     return (
         <div className="re-cart-bottom">
             <AlertSnack

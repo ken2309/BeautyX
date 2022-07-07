@@ -16,7 +16,9 @@
 
 @media screen and (max-width: 767.98px) {
     .home-title .home-title__text {
-        font-size: 16px;
+        font-weight: 800;
+        font-size: 18px;
+        line-height: 24px;
     }
     .home-title .home-title__seemore {
         font-size: 12px;

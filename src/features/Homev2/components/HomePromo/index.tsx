@@ -1,12 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import HomeTitleSection from "../HomeTitleSection/index";
-import FilterServices from "../../../FilterServices";
 import { IServicePromo } from "../../../../interface/servicePromo";
 import servicePromoApi from "../../../../api/servicePromoApi";
 import ServicePromoItem from "../../../ViewItemCommon/ServicePromoItem";
-import icon from "../../../../constants/icon";
-import { useHistory } from "react-router-dom";
-import { AppContext } from "../../../../context/AppProvider";
 
 interface IData {
     services: IServicePromo[];
@@ -15,9 +11,6 @@ interface IData {
 }
 
 function HomePromo(props: any) {
-    //const [services, setServices] = useState<IServicePromo[]>([])
-    const history = useHistory();
-    const { t } = useContext(AppContext);
     const [data, setData] = useState<IData>({
         services: [],
         lastPage: 1,
@@ -45,11 +38,6 @@ function HomePromo(props: any) {
     return (
         <div className="home-se-promo">
             <HomeTitleSection title={"Deal làm đẹp cực HOT"} />
-            <FilterServices
-                dataSort={dataSort}
-                setDataSort={setDataSort}
-                setData={setData}
-            />
             <div className="home-promo-ser">
                 <ul className="ser-list">
                     {data.services

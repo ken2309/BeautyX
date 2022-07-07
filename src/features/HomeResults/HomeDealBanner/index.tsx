@@ -7,7 +7,6 @@ import { Container } from '@mui/material';
 import servicePromoApi from '../../../api/servicePromoApi';
 import { IServicePromo } from '../../../interface/servicePromo'
 import ServicePromoItem from '../../ViewItemCommon/ServicePromoItem';
-import FilterServices from '../../FilterServices';
 import ButtonLoading from '../../../components/ButtonLoading';
 
 interface IBanner {
@@ -80,11 +79,6 @@ function HomeDealBanner() {
                 <Container>
                     <div className="deal-banner__wr">
                         <img src={bannerDeals?.img} alt="" className="deal-banner__img" />
-                        <FilterServices
-                            dataSort={dataSort}
-                            setDataSort={setDataSort}
-                            setData={setData}
-                        />
                         <ul className="deal-banner__list">
                             {
                                 data.services.map((item: IServicePromo, index: number) => (

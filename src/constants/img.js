@@ -41,7 +41,7 @@ import dealhot from "../assets/image/homeBannerDeal/dealhot.png";
 import dealhot1 from "../assets/image/homeBannerDeal/dealhot1.png";
 import dealhot2 from "../assets/image/homeBannerDeal/dealhot2.png";
 import sellerCenterImg from "../assets/image/sellerCenterImg.jpeg";
-import beautyx from '../assets/image/beautyx_icon.png';
+import beautyx from "../assets/image/beautyx_icon.png";
 
 // social
 import facebook from "../assets/image/social/facebook.png";
@@ -51,6 +51,19 @@ import instagram from "../assets/image/social/instagram.png";
 import qrCode from "../assets/icon/qr-code.svg";
 import appStore from "../assets/image/appstore.png";
 import playStore from "../assets/image/playstore.png";
+
+// payment method
+import atm from "../assets/image/paymentMethod/atm.svg";
+import jcb from "../assets/image/paymentMethod/jcb.svg";
+import masterCard from "../assets/image/paymentMethod/masterCard.svg";
+import mocaGrap from "../assets/image/paymentMethod/mocaGrap.svg";
+import momoPayment from "../assets/image/paymentMethod/momoPay.svg";
+import handPay from "../assets/image/paymentMethod/payHand.svg";
+import phonePay from "../assets/image/paymentMethod/phonePay.svg";
+import tikiPay from "../assets/image/social/tiki.png";
+import visa from "../assets/image/paymentMethod/visa.svg";
+import vnPay from "../assets/image/paymentMethod/vnPay.svg";
+import zaloPay from "../assets/image/paymentMethod/zaloPay.svg";
 
 const img = {
     appStore,
@@ -87,13 +100,26 @@ const img = {
     thumb_2,
     imgDefault,
     sellerCenterImg,
-    beautyx
+    beautyx,
 };
 export const social = {
     facebook,
     tiktok,
     instagram,
     youtube,
+};
+export const paymentMethod = {
+    vnPay,
+    zaloPay,
+    handPay,
+    visa,
+    tikiPay,
+    atm,
+    jcb,
+    masterCard,
+    mocaGrap,
+    phonePay,
+    momoPayment,
 };
 
 export const imgTag = {

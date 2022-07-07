@@ -1,6 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
+import img from "../../constants/img";
+import onErrorImg from "../../utils/errorImg";
 
 export default function MapTagsItemMB(props: any) {
     const { item } = props;
@@ -16,7 +18,11 @@ export default function MapTagsItemMB(props: any) {
         <div onClick={gotoDetail} className="map-item__wrap">
             <div className="map-item__mobile">
                 <div className="item-img">
-                    <img src={item?.image_url} alt="" />
+                    <img
+                        onError={(e) => onErrorImg(e)}
+                        src={item?.image_url ? item?.image_url : img.beautyX}
+                        alt=""
+                    />
                 </div>
                 <div className="item-content">
                     <div className="item-content__name">

@@ -6,13 +6,19 @@ import { useHistory } from "react-router-dom";
 import { AppContext } from "../../context/AppProvider";
 import scrollTop from "../../utils/scrollTop";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+//import { IServiceUser } from '../../interface/servicesUser'
 
 
 function Bottom(props: any) {
-    
     const { t } = useContext(AppContext);
     const location = useLocation();
     const pathname = location.pathname;
+    //const { services } = useSelector((state: any) => state.ORDER.ORDER_SERVICES);
+    //console.log(services);
+    //const services_not_book = services.filter((i: IServiceUser) => i?.appointments?.length === 0);
+    //console.log(services_not_book);
+    const { ORDER_SERVICES_NOT_BOOK_COUNT } = useSelector((state: any) => state.ORDER);
     const Btns = [
         {
             id: 1,
@@ -20,6 +26,7 @@ function Bottom(props: any) {
             icon: ICON.home,
             iconAct: ICON.homeAct,
             path: "/homepage",
+            badge: 0
         },
         // {
         //     id: 2,
@@ -34,6 +41,7 @@ function Bottom(props: any) {
             icon: ICON.cate,
             iconAct: ICON.cateAct,
             path: "/-danh-muc",
+            badge: 0
         },
         {
             id: 4,
@@ -41,6 +49,7 @@ function Bottom(props: any) {
             icon: ICON.calendar,
             iconAct: ICON.calendarAct,
             path: "/lich-hen",
+            badge: 0
         },
         {
             id: 5,
@@ -48,6 +57,7 @@ function Bottom(props: any) {
             icon: ICON.user,
             iconAct: ICON.userAct,
             path: "/tai-khoan/thong-tin-ca-nhan",
+            badge: ORDER_SERVICES_NOT_BOOK_COUNT
         },
     ];
     const history = useHistory();
@@ -72,14 +82,12 @@ function Bottom(props: any) {
                             }
                             alt=""
                         />
-                        {/* {
-                                item.is_badge === true ?
-                                    <span className="bt-cnt__item-badge">
-                                        {item.count}
-                                    </span>
-                                    :
-                                    <></>
-                            } */}
+                        {
+                            item.badge > 0 &&
+                            <span className="bt-cnt__item-badge">
+                                {/* {item.badge} */}
+                            </span>
+                        }
                         <span
                             style={
                                 item.path === pathname

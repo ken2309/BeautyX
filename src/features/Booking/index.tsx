@@ -33,8 +33,9 @@ import { onSetStatusApp } from "../../redux/appointment/appSlice";
 import AlertSnack from "../../components/AlertSnack";
 
 // ==== api tracking ====
-import tracking from "../../api/trackApi";
+//import tracking from "../../api/trackApi";
 import { formatProductList } from "../../utils/tracking";
+import { onRefreshServicesNoBookCount } from "../../redux/order/orderSlice";
 // end
 const date = dayjs();
 function Booking() {
@@ -114,7 +115,7 @@ function Booking() {
     });
 
     //
-    const payment_method_id = extraPaymentMethodId(payments_method,chooseE_wall);
+    const payment_method_id = extraPaymentMethodId(payments_method, chooseE_wall);
     const params_string = {
         products: [],
         services: services,
@@ -151,7 +152,7 @@ function Booking() {
     async function handlePostOrder() {
         const params = pickBy(params_string, identity);
         try {
-            tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(params.products))
+            //tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(params.products))
             const response = await order.postOrder(org?.id, params);
             const state_payment = await response.data.context;
             const transaction_uuid =
@@ -200,6 +201,7 @@ function Booking() {
     const handlePostApps = async () => {
         try {
             await apointmentApi.postAppointment(action, org?.id);
+            dispatch(onRefreshServicesNoBookCount())
             setOpenNoti({
                 open: true,
                 title: "Đặt hẹn thành công",

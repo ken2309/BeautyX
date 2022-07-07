@@ -30,9 +30,6 @@ function CartBottom(props: any) {
     (item: any) => item.isConfirm === true
   );
 
-  const intersection = carts.cartList.filter(
-    (x: any) => !cartConfirm.includes(x)
-  );
 
   const firstItem = cartConfirm[0];
   const cartFirstList = cartConfirm.filter(
@@ -54,8 +51,7 @@ function CartBottom(props: any) {
   const handleClearByCheck = () => {
     scrollTop();
     if (cartConfirm.length > 0) {
-      const action = intersection;
-      dispatch(clearByCheck(action));
+      dispatch(clearByCheck());
     }
   };
   return (

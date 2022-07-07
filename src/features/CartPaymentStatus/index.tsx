@@ -7,7 +7,7 @@ import { Container } from '@mui/material';
 import useCountDown from '../../utils/useCountDown';
 import { useLocation } from 'react-router-dom';
 import paymentGatewayApi from '../../api/paymentGatewayApi';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PaymentQr from './components/PaymentQr';
 import PaymentInfo from './components/PaymentInfo';
 import PaymentConfirm from './components/PaymentConfirm';
@@ -17,10 +17,12 @@ import HeadMobile from '../HeadMobile';
 import useFullScreen from '../../utils/useFullScreen';
 import Notification from '../../components/Notification/index';
 import { useHistory } from 'react-router-dom';
+import { clearByCheck } from '../../redux/cartSlice'
 
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
-import {formatProductList} from "../../utils/tracking";
+import { formatProductList } from "../../utils/tracking";
+import { onAddServicesNoBookCount } from '../../redux/order/orderSlice';
 // end
 const timerRender = [0];
 const ORDER_STATUS = ['PENDING', 'PAID', 'CANCELED_BY_USER']
@@ -28,6 +30,7 @@ const ORDER_STATUS = ['PENDING', 'PAID', 'CANCELED_BY_USER']
 function CartPaymentStatus() {
     const sec = useCountDown(600);
     const IS_MB = useFullScreen();
+    const dispatch = useDispatch();
     const [orderStatus, setOrderStatus] = useState(ORDER_STATUS[0])
     const [openConf, setOpenConf] = useState(false);
     const history = useHistory();
@@ -65,6 +68,10 @@ function CartPaymentStatus() {
             console.log(error)
         }
     }
+    const handleClearCartItemAfterOrder = () => {
+        dispatch(clearByCheck());
+        dispatch(onAddServicesNoBookCount())
+    }
     const handleGetPaymentStatus = async (_status: boolean) => {
         try {
             const res_status = await paymentGatewayApi.getStatus({
@@ -76,6 +83,8 @@ function CartPaymentStatus() {
                 case "PAID":
                     if (action) {
                         handlePostApp()
+                    } else {
+                        handleClearCartItemAfterOrder()
                     }
                     setOrderStatus(status)
                     timerRender[0] = -1;
@@ -112,7 +121,7 @@ function CartPaymentStatus() {
     useEffect(() => {
         if (transaction_uuid) {
             setInter();
-            // tracking.CONFIRM_SCREEN_LOAD(listPayment[0].org_id,formatProductList(listPayment),res.amount)
+            tracking.CONFIRM_SCREEN_LOAD(listPayment[0].org_id,formatProductList(listPayment),res.amount)
         }
     }, []);
     const handleCancelPayment = () => {

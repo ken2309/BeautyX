@@ -85,6 +85,15 @@
     background-color: #fff;
     z-index: 2;
     height: 100%;
+    position: relative;
+}
+.accountMobile-mid__item .accountMobile-mid__item-noti{
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: var(--red-cl);
+    position: absolute;
+    margin: -2px 0px 0px 12px;
 }
 
 .accountMobile-mid .item-left__wrap {

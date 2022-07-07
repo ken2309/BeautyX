@@ -17,12 +17,13 @@ const today = day.getDay() + 1;
 
 function OrgInformation(props: IProps) {
     const { org, refMap } = props;
-    const {t} = useContext(AppContext);
+    const { t } = useContext(AppContext);
     const branchesCntRef = useRef<any>();
     const sliderRef = useRef<any>();
     const [branch, setBranch] = useState<any>(org?.branches[0] || org);
     const settings = {
         className: "map-org-detail__slide",
+        arrows: false,
     };
     const [openPopupSeemoreMap, setOpenPopupSeemoreMap] = useState(false);
     const onDropBranches = () => {

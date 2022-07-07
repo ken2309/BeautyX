@@ -33,15 +33,12 @@ function Carts() {
         (item: any) => item.isConfirm === true
     );
 
-    const intersection = cartList.filter(
-        (x: any) => !cartConfirm.includes(x)
-    );
+    
 
     const handleClearByCheck = () => {
         if (cartConfirm.length > 0) {
-            const action = intersection;
             tracking.CART_DELETE_ALL_CLICK()
-            dispatch(clearByCheck(action));
+            dispatch(clearByCheck());
         }
     };
 

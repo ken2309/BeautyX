@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@mui/material";
-import React, { useMemo, useEffect } from "react";
+import React, {  useEffect } from "react";
 import Bottom from "../../featuresMobile/Bottom";
 import ExtraFlatForm from "../../rootComponents/extraFlatForm";
 import useFullScreen from "../../utils/useFullScreen";
@@ -14,23 +14,22 @@ import HomeHotDeal from "./HomeHotDeal";
 //import HomeHotTrend from "./HomeHotTrend";
 import HomeRecomment from "./HomeRecomment";
 import HomeTopService from "./HomeTopService";
-import HomeBannerResult from "./HomeBanner/homeSearchReasult";
 import HomeTags from "./HomeTags";
 import HomeProvince from "./HomeProvince";
 import { useDispatch } from "react-redux";
 import { onResetFilter, onSetOrgsEmpty } from "../../redux/filter/filterSlice";
 
- // ==== api tracking ====
- import tracking from "../../api/trackApi";
- // end
+// ==== api tracking ====
+import tracking from "../../api/trackApi";
+// end
 export default function HomePage() {
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
-    useMemo(() => {
+    useEffect(() => {
+        tracking.HOME_LOAD()
         dispatch(onResetFilter())
         dispatch(onSetOrgsEmpty())
     }, [])
-    useEffect(() => {tracking.HOME_LOAD()},[])
     return (
         <div className="homepage">
             <ExtraFlatForm />

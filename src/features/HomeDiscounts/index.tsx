@@ -8,16 +8,19 @@ import { useHistory } from "react-router-dom";
 import scrollTop from "../../utils/scrollTop";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
+import { STATUS } from "../../redux/status";
+
+import { LoadingServicesRow } from '../../components/LoadingSketion';
 
 function HomeDiscount() {
-    const {t} = useContext(AppContext);
+    const { t } = useContext(AppContext);
     const { DISCOUNTS } = useSelector((state: any) => state.HOME);
     const { discounts } = DISCOUNTS;
     const history = useHistory();
     const onViewMore = () => {
-        history.push("/giam-gia")
-        scrollTop()
-    }
+        history.push("/giam-gia");
+        scrollTop();
+    };
     return (
         <div className="home-discounts">
             <Container>
@@ -28,24 +31,36 @@ function HomeDiscount() {
                     </span>
                 </div>
                 <div className="home-discounts__list-wrap">
-                    <ul className="home-discounts__list">
-                        {discounts
-                            .slice(0, 12)
-                            .map((discount: IDiscountPar, index: number) => (
-                                <>
-                                    {discount.items.map(
-                                        (item: IITEMS_DISCOUNT, i: number) => (
-                                            <li key={i}>
-                                                <DiscountItem
-                                                    discountItem={item}
-                                                    discountPar={discount}
-                                                />
-                                            </li>
-                                        )
-                                    )}
-                                </>
-                            ))}
-                    </ul>
+                    {
+                        DISCOUNTS.status_discount === STATUS.LOADING
+                            ?
+                            <LoadingServicesRow />
+                            :
+                            <ul className="home-discounts__list">
+                                {discounts
+                                    .slice(0, 11)
+                                    .map((discount: IDiscountPar, index: number) => (
+                                        <div key={index}>
+                                            {discount.items.map(
+                                                (item: IITEMS_DISCOUNT, i: number) => (
+                                                    <li key={i}>
+                                                        <DiscountItem
+                                                            discountItem={item}
+                                                            discountPar={discount}
+                                                        />
+                                                    </li>
+                                                )
+                                            )}
+                                        </div>
+                                    ))}
+                                <div className="watch-more-card" onClick={onViewMore}>
+                                    <li>
+                                        <div>{'>'}</div>
+                                        <span>Xem thêm</span>
+                                    </li>
+                                </div>
+                            </ul>
+                    }
                 </div>
             </Container>
         </div>

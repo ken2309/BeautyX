@@ -1,10 +1,4 @@
-import React, {
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import icon from "../../constants/icon";
 import MapTagsGoogle from "./MapGoogle";
 import MapTagsListMB from "./MapListMB";

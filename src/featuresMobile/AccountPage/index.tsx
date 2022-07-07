@@ -17,9 +17,11 @@ import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
 import languages from "../../data/languages";
 import i18next from "i18next";
+import { onSetStatusServicesUser } from "../../redux/order/orderSlice";
 
 export default function AccountMobile() {
     const { USER } = useSelector((state: any) => state.USER);
+    const { ORDER_SERVICES_NOT_BOOK_COUNT } = useSelector((state: any) => state.ORDER);
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const dispatch = useDispatch();
     const { setSign, language, setLanguage } = useContext(AppContext);
@@ -52,12 +54,13 @@ export default function AccountMobile() {
     const handleSignOut = () => {
         setSign(false);
         dispatch(logoutUser());
-        dispatch(onClearApps())
+        dispatch(onClearApps());
+        dispatch(onSetStatusServicesUser())
         history.push("/homepage")
         localStorage.removeItem('_WEB_TK')
         window.sessionStorage.removeItem('_WEB_TK')
     }
-    const onChangeLanguage = (item:any)=>{
+    const onChangeLanguage = (item: any) => {
         setLanguage(item.code)
         i18next.changeLanguage(item.code);
     }
@@ -123,6 +126,24 @@ export default function AccountMobile() {
                             <img src={icon.arownAcc} alt="" />
                         </div>
                     </li>
+                    <li className="accountMobile-mid__item">
+                        {
+                            ORDER_SERVICES_NOT_BOOK_COUNT > 0 &&
+                            <span className="accountMobile-mid__item-noti"></span>
+                        }
+                        <div
+                            onClick={() => history.push("/lich-hen?tab=2")}
+                            className="item-left__wrap"
+                        >
+                            <div className="item-left">
+                                <div>
+                                    <img style={{ width: "16px", height: "16px" }} src={icon.servicesPurpleBold} alt="" />
+                                </div>
+                                <span>Gói dịch vụ</span>
+                            </div>
+                            <img src={icon.arownAcc} alt="" />
+                        </div>
+                    </li>
                     {/* <li className="accountMobile-mid__item">
                         <div className="item-left__wrap">
                             <div className="item-left">
@@ -165,8 +186,8 @@ export default function AccountMobile() {
                         <div ref={refUserGuide} className="item-bot__wrap ">
                             {
                                 languages.map((i, index) => (
-                                    <div 
-                                        onClick={()=>onChangeLanguage(i)}
+                                    <div
+                                        onClick={() => onChangeLanguage(i)}
                                         key={index} className="item-bot__item"
                                     >
                                         <img
@@ -174,7 +195,7 @@ export default function AccountMobile() {
                                             src={i.icon}
                                             alt=""
                                         />
-                                        <span style={i.code === language ? {color:"var(--purple)"}:{}} >{i.title}</span>
+                                        <span style={i.code === language ? { color: "var(--purple)" } : {}} >{i.title}</span>
                                     </div>
                                 ))
                             }
