@@ -38,7 +38,7 @@ function HomeDiscount() {
                             :
                             <ul className="home-discounts__list">
                                 {discounts
-                                    .slice(0, 11)
+                                    .slice(0, 12)
                                     .map((discount: IDiscountPar, index: number) => (
                                         <div key={index}>
                                             {discount.items.map(
