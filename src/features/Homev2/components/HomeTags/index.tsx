@@ -34,7 +34,7 @@ function HomeTags(props: any) {
     ];
     const gotoDetail = (tag: string) => {
         history.push({
-            pathname: "/danh-muc/",
+            pathname: "/ket-qua/",
             search: `${tag}`,
         });
     };

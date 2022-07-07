@@ -22,7 +22,7 @@ function CateRight(props: any) {
     const history = useHistory();
     const gotoTagsResult = () => {
         history.push({
-            pathname: "/danh-muc/",
+            pathname: "/ket-qua/",
             search: `${CATE.title}`,
         });
     };
