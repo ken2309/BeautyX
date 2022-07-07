@@ -17,12 +17,13 @@ import HeadMobile from '../HeadMobile';
 import useFullScreen from '../../utils/useFullScreen';
 import Notification from '../../components/Notification/index';
 import { useHistory } from 'react-router-dom';
-import { clearByCheck } from '../../redux/cartSlice'
+import { clearByCheck } from '../../redux/cartSlice';
+import { onClearOrder } from '../../redux/order/orderSlice';
 
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
 import { formatProductList } from "../../utils/tracking";
-import { onAddServicesNoBookCount } from '../../redux/order/orderSlice';
+import { onAddServicesNoBookCount, onSetStatusServicesUser } from '../../redux/order/orderSlice';
 // end
 const timerRender = [0];
 const ORDER_STATUS = ['PENDING', 'PAID', 'CANCELED_BY_USER']
@@ -68,9 +69,10 @@ function CartPaymentStatus() {
             console.log(error)
         }
     }
-    const handleClearCartItemAfterOrder = () => {
+    const handleAfterOrder = () => {
         dispatch(clearByCheck());
         dispatch(onAddServicesNoBookCount())
+        dispatch(onSetStatusServicesUser())
     }
     const handleGetPaymentStatus = async (_status: boolean) => {
         try {
@@ -84,8 +86,9 @@ function CartPaymentStatus() {
                     if (action) {
                         handlePostApp()
                     } else {
-                        handleClearCartItemAfterOrder()
+                        handleAfterOrder()
                     }
+                    dispatch(onClearOrder())
                     setOrderStatus(status)
                     timerRender[0] = -1;
                     break;
@@ -95,10 +98,12 @@ function CartPaymentStatus() {
                 case "CANCELED_BY_USER":
                     setOrderStatus(status)
                     timerRender[0] = -1;
+                    dispatch(onClearOrder())
                     break;
                 case "CANCELED":
                     setOrderStatus(status)
                     timerRender[0] = -1;
+                    dispatch(onClearOrder())
                     break;
                 default:
                     break;

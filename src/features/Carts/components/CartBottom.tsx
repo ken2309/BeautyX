@@ -87,12 +87,15 @@ function CartBottom(props: any) {
 
     const handleSubmitOrder = () => {
         if (USER && DATA_PMT.org && pramsOrder.payment_method_id) {
-            handlePostOrder()
-            // setOpenAlertSnack({
-            //     ...openAlertSnack,
-            //     open: true,
-            //     title: 'Good!'
-            // })
+            if (!DATA_PMT.address && products.length > 0) {
+                setOpenAlertSnack({
+                    ...openAlertSnack,
+                    open: true,
+                    title: 'Chưa có địa chỉ giao hàng !'
+                })
+            } else {
+                handlePostOrder()
+            }
         }
         else if (!pramsOrder.payment_method_id) {
             setOpenAlertSnack({

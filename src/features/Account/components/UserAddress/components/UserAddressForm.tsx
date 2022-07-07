@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { IProvince } from '../../../../../interface/provinces';
 import { IDistrict, IWard } from '../../../../../interface/district';
 import provincesApi from '../../../../../api/provinceApi';
 import ButtonLoading from '../../../../../components/ButtonLoading';
 import { useDispatch, useSelector } from 'react-redux';
-import { postAsyncAddress, removeDefaultItem } from '../../../../../redux/USER/userAddressSlice';
+import { postAsyncAddress } from '../../../../../redux/USER/userAddressSlice';
 import { STATUS } from '../../../../../redux/status';
 import { useHistory } from 'react-router-dom';
 import useFullScreen from '../../../../../utils/useFullScreen';
+import { AppContext } from '../../../../../context/AppProvider';
 
 interface IDataAdd {
     districts: IDistrict[],
@@ -46,11 +47,11 @@ const onToggleWard = () => {
 }
 function UserAddressForm(props: any) {
     const { setOpen } = props;
+    const {t} = useContext(AppContext);
     const ADDRESS = useSelector((state: any) => state.ADDRESS);
     const { provinces } = useSelector((state: any) => state.HOME);
     const fullScreen = useFullScreen();
     const { status_up } = ADDRESS;
-    const address_default = ADDRESS.address.find((item: any) => item.is_default === true);
     const dispatch = useDispatch();
     const history = useHistory();
     const [address, setAddress] = useState<IAddress>({
@@ -152,8 +153,8 @@ function UserAddressForm(props: any) {
                 is_default: true
             }
             await dispatch(postAsyncAddress(values))
-            const action = removeDefaultItem(address_default);
-            dispatch(action)
+            //const action = removeDefaultItem(address_default);
+            //dispatch(action)
             if (fullScreen === false) return history.goBack();
             if (setOpen && fullScreen === true) return setOpen(false)
         }
@@ -163,7 +164,7 @@ function UserAddressForm(props: any) {
             className='us_address-cnt'
         >
             <span className="title">
-                Thêm mới địa chỉ
+                {t("acc.add_new_address")}
             </span>
             <div className="form">
                 <div
@@ -171,7 +172,7 @@ function UserAddressForm(props: any) {
                     className="from-label"
                 >
                     <span className="text-bold from-label_title">
-                        Tỉnh / Thành phố
+                        {t("acc.province")}
                     </span>
                     <div className="from-label_ip">
                         {

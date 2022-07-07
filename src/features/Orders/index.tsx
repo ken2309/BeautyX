@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "./order.css";
 import HeadTitle from "../HeadTitle";
 import { AppContext } from "../../context/AppProvider";
@@ -8,9 +8,6 @@ import TabOrderPaid from './components/TabOrderPaid';
 import { Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import {
-  fetchAsyncOrderCancel,
-  fetchAsyncOrderPaid,
-  onClearOrder,
   onSetTab
 } from "../../redux/order/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,26 +20,6 @@ function Orders() {
   const onChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     dispatch(onSetTab(newValue))
   }
-
-  const callOrdersCancel = () => {
-    dispatch(fetchAsyncOrderCancel({
-      page: 1,
-      // status: "PAID"
-    }))
-  }
-  const callOrdersPaid = () => {
-    dispatch(fetchAsyncOrderPaid({
-      page: 1,
-      status: "PAID"
-    }))
-  }
-  useEffect(() => {
-    dispatch(onClearOrder())
-    callOrdersPaid()
-    callOrdersCancel()
-  }, [])
-
-
   return (
     <div className="order">
       <HeadTitle title={t("order.order_his")} />

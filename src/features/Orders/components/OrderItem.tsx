@@ -58,7 +58,7 @@ function OrderItem(props: IProp) {
               <span className="org__address">{order?.organization?.full_address}</span>
               <div className="flex-row price">
                 {
-                  order.amount !== order.payment_gateway.amount ?
+                  order?.amount !== order?.payment_gateway?.amount ?
                     <>
                       <span style={{ color: "var(--orange)" }} >{formatPrice(order?.payment_gateway?.amount)}đ</span>
                       <span>{formatPrice(order?.amount)}đ</span>

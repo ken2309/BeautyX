@@ -298,10 +298,14 @@
     "add_other_address": "Thêm địa điểm khác",
     "default": "Mặc định",
     "change_pass": "Thay đổi mật khẩu",
-    "save": "Lưu thay đổi"
+    "save": "Lưu thay đổi",
+    "guide":"Hướng dẫn sử dụng",
+    "set_default_address":"Đặt làm địa chỉ mặc định",
+    "add_new_address":"Thêm mới địa chỉ",
+    "province":"Tỉnh / Thành phố"
   },
   "order": {
-    "order_his": "Lịch sử đơn hàng",
+    "order_his": "Đơn hàng",
     "pending": "Đang xử lý",
     "complete": "Hoàn thành",
     "order_de": "Chi tiết đơn hàng",
@@ -335,7 +339,9 @@
     "bk_fail": "Đặt hẹn thất bại",
     "rv_booked": "Bạn có thể xem lại dịch vụ đã đặt hẹn",
     "bk_fail_title": "Có lỗi xảy ra trong quá trình đặt hẹn",
-    "code_err": "Mã lỗi"
+    "code_err": "Mã lỗi",
+    "booking":"Đặt lịch",
+    "booking_his":"Lịch sử"
   },
   "home_2": {
     "categories": "Danh mục",
@@ -372,7 +378,8 @@
     "try":"Hãy thử tìm kiếm",
     "off_service":"Dịch vụ này chưa được kích hoạt bán hàng Online",
     "booking_now":"Đặt hẹn ngay",
-    "instructions_terms":"Hướng dẫn & Điều khoản"
+    "instructions_terms":"Hướng dẫn & Điều khoản",
+    "edit":"Sửa"
   },
   "Contact": {
     "success": "Đã nhận thông tin"

@@ -14,6 +14,9 @@ import { STATUS } from "../../../../redux/status";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { AppContext } from "../../../../context/AppProvider";
 import EmptyRes from '../../../EmptyRes';
+import { LoadingServices } from "../../../../components/LoadingSketion";
+import LoadingMore from "../../../../components/LoadingMore";
+
 interface IProps {
     org: IOrganization;
 }
@@ -35,7 +38,6 @@ function OrgServices(props: IProps) {
     };
     const callServicesOrg = () => {
         if (org_id !== org?.id || status_ser !== STATUS.SUCCESS) {
-            console.log(org)
             const values = {
                 org_id: org?.id,
                 page: 1,
@@ -72,7 +74,6 @@ function OrgServices(props: IProps) {
             dispatch(fetchAsyncServices(values));
         }
     };
-
     return (
         <div className="org-services-cnt">
             {
@@ -141,6 +142,7 @@ function OrgServices(props: IProps) {
             }
 
             <div className="org-services-cnt__right">
+                {page === 1 && status_ser !== STATUS.SUCCESS && <LoadingServices width="20%" />}
                 {totalItem === 0 && status === STATUS.SUCCESS && <EmptyRes title='Không có dịch vụ phù hợp!' />}
                 <InfiniteScroll
                     dataLength={services.length}
@@ -156,6 +158,7 @@ function OrgServices(props: IProps) {
                         ))}
                     </ul>
                 </InfiniteScroll>
+                {services.length < totalItem && <LoadingMore />}
             </div>
         </div>
     );

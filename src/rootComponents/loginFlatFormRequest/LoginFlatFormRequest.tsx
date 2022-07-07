@@ -17,12 +17,35 @@ function LoginFlatFormRequest(props: any) {
     const history = useHistory();
     const [load, setLoad] = useState(false);
     const dispatch = useDispatch();
-    const handleLogin = () => {
+    const handleLogin = async () => {
         setLoad(true)
         doPostMakePaymentMessageTiki({
             TYPE: "LOGIN",
             params: 1
         })
+        // let $: any = window;
+        // $['ReactNativeWebView']?.postMessage(JSON.stringify(
+        //     {
+        //         type: 'PAYMENT_HUB_TRANSACTION',
+        //         data: {
+        //             merchant: {
+        //                 code: 'MBAL',
+        //                 name: 'Bảo hiểm nhân thọ MB AGEAS LIFE',
+        //             },
+        //             type: {
+        //                 code: 'BHUT',
+        //                 name: 'Mua bảo hiểm ung thư',
+        //                 allowCard: true,
+        //             },
+        //             id: 'AJX014TUYI1121',
+        //             amount: 1000000,
+        //             description: 'Mua bao hiem ung thu MBAL 615000',
+        //             successMessage: 'Cám ơn bạn đã mua bảo hiểm. MBAL sẽ liên lạc lại với bạn trong vòng 24h'
+        //         }
+        //     }
+        // ))
+        // console.log(res)
+        // alert(JSON.stringify(res))
     }
 
     const handleLoginTiki = async (params: any) => {

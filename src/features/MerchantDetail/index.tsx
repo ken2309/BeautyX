@@ -86,18 +86,18 @@ function MerchantDetail() {
     callOrgDetail()
   }, [sub_domain])
 
-  // useEffect(() => {
-  //   if (ORG_DISCOUNTS.DISCOUNTS.status_list === STATUS.SUCCESS &&
-  //     status_ser === STATUS.SUCCESS && status_pr === STATUS.SUCCESS
-  //   ) {
-  //     if (ORG_DISCOUNTS.DISCOUNTS.totalItem === 0
-  //       && SERVICES_SPECIAL.totalItem === 0
-  //       && PRODUCTS_SPECIAL.totalItem === 0
-  //     ) {
-  //       dispatch(onActiveTab(tab === 1 ? 2 : tab))
-  //     }
-  //   }
-  // }, [ORG_DISCOUNTS.DISCOUNTS, SERVICES_SPECIAL, PRODUCTS_SPECIAL])
+  useEffect(() => {
+    if (ORG_DISCOUNTS.DISCOUNTS.status_list === STATUS.SUCCESS &&
+      status_ser === STATUS.SUCCESS && status_pr === STATUS.SUCCESS
+    ) {
+      if (ORG_DISCOUNTS.DISCOUNTS.totalItem === 0
+        && SERVICES_SPECIAL.totalItem === 0
+        && PRODUCTS_SPECIAL.totalItem === 0
+      ) {
+        dispatch(onActiveTab(tab === 1 ? 2 : tab))
+      }
+    }
+  }, [ORG_DISCOUNTS.DISCOUNTS, SERVICES_SPECIAL, PRODUCTS_SPECIAL])
   return (
     <div className="mb-cnt">
       {status === STATUS.LOADING && <ModalLoad />}

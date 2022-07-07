@@ -38,8 +38,6 @@ function LoginFlatForm(props: any) {
             name: 'Bảo hiểm tai nạn',
             link: 'https://www.mbageas.life/',
         });
-        alert('xxxx')
-        //alert(JSON.stringify(res))
         window.addEventListener("message", event => {
             if (event.data) alert("msg: " + JSON.stringify(event.data, res));
         });

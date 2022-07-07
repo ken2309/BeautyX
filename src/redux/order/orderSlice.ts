@@ -6,11 +6,11 @@ import { IServiceUser } from '../../interface/servicesUser'
 
 export const fetchAsyncOrderServices: any = createAsyncThunk(
     "ORDER/fetchAsyncOrderServices",
-    async (page: number) => {
-        const res = await servicesUserApi.getServices();
+    async (values: any) => {
+        const res = await servicesUserApi.getServices(values);
         return {
             services: res.data.context.data,
-            page: page,
+            page: values.page,
             totalItem: res.data.context.total,
             services_not_book: res.data.context.data
                 .filter((val: IServiceUser) => val.appointments?.length === 0).length
@@ -76,7 +76,7 @@ const initialState: InitialState = {
     ORDER_SERVICES_NOT_BOOK_COUNT: 0,
     ORDER_SERVICES: {
         services: [],
-        page: 1,
+        page: 0,
         totalItem: 1,
         status: ""
     },
@@ -99,9 +99,12 @@ const orderSlice = createSlice({
     reducers: {
         onSetStatusServicesUser: (state) => {
             state.ORDER_SERVICES.status = STATUS.LOADING;
-            state.ORDER_SERVICES.services = []
+            state.ORDER_SERVICES.services = [];
+            state.ORDER_SERVICES.page = 1
         },
         onClearOrder: (state) => {
+            state.ORDER_CANCEL.status = "";
+            state.ORDER.status = "";
             state.ORDER_CANCEL.orders = [];
             state.ORDER.orders = []
         },
@@ -137,8 +140,7 @@ const orderSlice = createSlice({
                 ...state,
                 ORDER_SERVICES_NOT_BOOK_COUNT: services_not_book,
                 ORDER_SERVICES: {
-                    // services: [...state.ORDER_SERVICES.services, ...services],
-                    services: services,
+                    services: page === 1 ? services : [...state.ORDER_SERVICES.services, ...services],
                     page: page,
                     totalItem: totalItem,
                     status: STATUS.SUCCESS
@@ -157,7 +159,7 @@ const orderSlice = createSlice({
             return {
                 ...state,
                 ORDER: {
-                    orders: orders,
+                    orders: [...state.ORDER.orders, ...orders],
                     page: page,
                     status: STATUS.SUCCESS,
                     totalItem: totalItem

@@ -78,6 +78,7 @@ const orgServicesSlice = createSlice({
                     ...state.SERVICES,
                     services: [],
                     page: 1,
+                    status_ser:""
                 },
             };
         },

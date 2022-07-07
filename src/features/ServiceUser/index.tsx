@@ -19,9 +19,12 @@ function ServicesUser(props: any) {
     const dispatch = useDispatch();
     const fullScreen = useFullScreen();
     const { services, status, totalItem, page } = useSelector((state: any) => state.ORDER.ORDER_SERVICES);
+
     const callServicesUser = () => {
         if (status !== STATUS.SUCCESS) {
-            dispatch(fetchAsyncOrderServices({ page: 1 }))
+            dispatch(fetchAsyncOrderServices({
+                page:1
+            }))
         }
     }
     useEffect(() => {
@@ -38,7 +41,7 @@ function ServicesUser(props: any) {
     }
     return (
         <>
-            {status === STATUS.LOADING && page === 1 && <ModalLoad />}
+            {(page === 0 && status !== STATUS.SUCCESS) && <ModalLoad />}
             <Container>
                 <div className="flex-row-sp my-ser">
                     <div className="my-ser__right">

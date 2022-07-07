@@ -9,7 +9,6 @@ import AccountForm from "./Components/AccountForm";
 import DialogChangeInfo from "./Components/DialogChangeInfo";
 import OrderMb from "./Components/Orders";
 import AccountGuide from "./Components/AccountGuide";
-import ButtonLoading from "../../components/ButtonLoading";
 import { AppContext } from "../../context/AppProvider";
 import { logoutUser } from '../../redux/USER/userSlice'
 import { onClearApps } from "../../redux/appointment/appSlice";
@@ -20,6 +19,7 @@ import i18next from "i18next";
 import { onSetStatusServicesUser } from "../../redux/order/orderSlice";
 
 export default function AccountMobile() {
+    const {t} = useContext(AppContext);
     const { USER } = useSelector((state: any) => state.USER);
     const { ORDER_SERVICES_NOT_BOOK_COUNT } = useSelector((state: any) => state.ORDER);
     const FLAT_FORM = EXTRA_FLAT_FORM();
@@ -89,7 +89,7 @@ export default function AccountMobile() {
                     onClick={() => setOpen(true)}
                     className="accountMobile-top__edit"
                 >
-                    <p>Sửa</p>
+                    <p>{t("se.edit")}</p>
                     <img src={icon.editWhiteAcc} alt="" />
                 </div>
             </div>
@@ -107,7 +107,7 @@ export default function AccountMobile() {
                                 <div>
                                     <img src={icon.boxAcc} alt="" />
                                 </div>
-                                <span>Đơn hàng</span>
+                                <span>{t("order.order_his")}</span>
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
@@ -121,7 +121,7 @@ export default function AccountMobile() {
                                 <div>
                                     <img src={icon.calendarAcc} alt="" />
                                 </div>
-                                <span>Lịch hẹn</span>
+                                <span>{t("Bottom.appointment")}</span>
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
@@ -139,7 +139,7 @@ export default function AccountMobile() {
                                 <div>
                                     <img style={{ width: "16px", height: "16px" }} src={icon.servicesPurpleBold} alt="" />
                                 </div>
-                                <span>Gói dịch vụ</span>
+                                <span>{t("app.my_services")}</span>
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
@@ -161,7 +161,7 @@ export default function AccountMobile() {
                                 <div>
                                     <img src={icon.markerAcc} alt="" />
                                 </div>
-                                <span>Địa chỉ giao hàng</span>
+                                <span>{t("acc.order_address")}</span>
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
@@ -179,7 +179,7 @@ export default function AccountMobile() {
                                         alt=""
                                     />
                                 </div>
-                                <span>Cài đặt</span>
+                                <span>{t("Header.settings")}</span>
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
@@ -201,25 +201,30 @@ export default function AccountMobile() {
                             }
                         </div>
                     </li>
+                    {
+                        FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
+                        <li className="accountMobile-mid__item">
+                            <div onClick={handleSignOut} className="item-left__wrap">
+                                <div className="item-left">
+                                    <div>
+                                        <img
+                                            style={{ width: "16px", height: "16px" }}
+                                            src={icon.SignOutPurple} alt="" />
+                                    </div>
+                                    <span>{t("Header.sign_out")}</span>
+                                </div>
+                            </div>
+                        </li>
+                    }
                 </ul>
             </div>
             {/* bot */}
             <div onClick={gotoAccountGuide} className="accountMobile-bot">
                 <div className="accountMobile-bot__tutorial">
                     <img src={icon.book} alt="" />
-                    <p>Hướng dẩn sử dụng</p>
+                    <p>{t("acc.guide")}</p>
                 </div>
             </div>
-            {
-                FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
-                <div className="accountMobile-out">
-                    <ButtonLoading
-                        title="Đăng xuất"
-                        onClick={handleSignOut}
-                        loading={false}
-                    />
-                </div>
-            }
             <Bottom />
             <AccountForm open={openAcc} />
             <OrderMb openOrder={openOrder} />

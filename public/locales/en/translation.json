@@ -18,7 +18,7 @@
     "noti":"Notifications"
   },
   "Bottom": {
-    "appointment": "Appo",
+    "appointment": "Appointment",
     "home": "Home",
     "account": "Account",
     "search": "Search"
@@ -299,7 +299,11 @@
     "add_other_address":"Add other address",
     "default":"Default",
     "change_pass":"Change the password",
-    "save":"Save"
+    "save":"Save",
+    "guide":"Instructions for use",
+    "set_default_address":"Set as default address",
+    "add_new_address":"Add new address",
+    "province":"Province / City"
   },
   "order":{
     "order_his":"Orders history",
@@ -336,7 +340,10 @@
     "bk_fail":"Booking failed !",
     "rv_booked":"You can review your booked services",
     "bk_fail_title":"An error occurred during the booking process",
-    "code_err":"Code error"
+    "code_err":"Code error",
+    "booking":"Booking",
+    "booking_his":"Booking history"
+
   },
   "home_2":{
     "categories":"Categories",
@@ -373,7 +380,8 @@
     "try":"Try searching",
     "off_service":"This service has not been activated for online sales",
     "booking_now":"Booking now",
-    "instructions_terms":"Instructions & Terms"
+    "instructions_terms":"Instructions & Terms",
+    "edit":"Edit"
   },
   "Contact":{
     "success":"submit success"

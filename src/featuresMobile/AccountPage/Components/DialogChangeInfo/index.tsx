@@ -1,6 +1,6 @@
 import { Dialog } from "@mui/material";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import authentication from "../../../../api/authApi";
 import mediaApi from "../../../../api/mediaApi";
@@ -8,8 +8,11 @@ import icon from "../../../../constants/icon";
 import { putUser, updateAsyncUser } from "../../../../redux/USER/userSlice";
 import * as Yup from "yup";
 import "./dialogChangeInfo.css";
+import { AppContext } from "../../../../context/AppProvider";
+
 export default function DialogChangeInfo(props: any) {
     const { open, setOpen } = props;
+    const {t} = useContext(AppContext);
     const { USER } = useSelector((state: any) => state.USER);
     const dispatch = useDispatch();
     // chose file
@@ -44,7 +47,7 @@ export default function DialogChangeInfo(props: any) {
             fullname: USER?.fullname,
         },
         validationSchema: Yup.object({
-            fullname: Yup.string().required("Vui lòng nhập tên"),
+            fullname: Yup.string().required(t("form.please_enter_full_name")),
         }),
         onSubmit: async (values) => {
             const params = {
@@ -89,7 +92,7 @@ export default function DialogChangeInfo(props: any) {
                             value={formik.values?.fullname}
                             onChange={formik.handleChange}
                             type="text"
-                            placeholder="Nhập tên của bạn"
+                            placeholder={t("form.please_enter_full_name")}
                             name="fullname"
                         />
                         {formik.errors.fullname && formik.touched.fullname && (
@@ -111,9 +114,9 @@ export default function DialogChangeInfo(props: any) {
                     </div>
                 </div>
                 <div className="edit-user__option">
-                    <button type="submit">Lưu thay đổi &#10003;</button>
+                    <button type="submit">{t("acc.save")} &#10003;</button>
                     <button type="button" onClick={() => setOpen(false)}>
-                        Hủy &#x2715;
+                        {t("Home.cancel")} &#x2715;
                     </button>
                 </div>
             </form>

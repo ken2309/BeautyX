@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import HeadTitle from '../HeadTitle';
 import Head from '../Head';
 import { Container, Tab } from '@mui/material';
@@ -14,17 +14,19 @@ import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { extraParamsUrl } from '../../utils/extraParamsUrl';
 import Bottom from '../../featuresMobile/Bottom';
+import { AppContext } from '../../context/AppProvider';
 
 function Calendar() {
+    const {t} = useContext(AppContext);
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
     const history = useHistory();
     const location: any = useLocation();
     const params: any = extraParamsUrl();
     const tabList = [
-        { value: "1", title: "Lịch hẹn" },
-        { value: "2", title: "Đặt lịch" },
-        { value: "3", title: "Lịch sử" },
+        { value: "1", title: t("Bottom.appointment") },
+        { value: "2", title: t("my_ser.booking") },
+        { value: "3", title: t("my_ser.booking_his") },
     ]
     const [valueTab, setValueTab] = useState(params?.tab || "1");
     const onChangeTab = (event: React.SyntheticEvent, newValue: string) => {

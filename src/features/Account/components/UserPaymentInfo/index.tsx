@@ -6,7 +6,6 @@ import icon from '../../../../constants/icon';
 import { AppContext } from '../../../../context/AppProvider';
 import { STATUS } from '../../../../redux/status';
 import { fetchAsyncUserAddress } from '../../../../redux/USER/userAddressSlice';
-import { IUserAddress } from '../../../../interface/userAddress';
 import DialogChangeInfo from '../../../../featuresMobile/AccountPage/Components/DialogChangeInfo';
 
 import './style.css'
@@ -25,18 +24,15 @@ function UserPaymentInfo(props: IProps) {
     const dispatch = useDispatch();
     const USER = useSelector((state: any) => state.USER.USER);
     const ADDRESS = useSelector((state: any) => state.ADDRESS);
-    const { address, status } = ADDRESS;
+    const { status, address_default } = ADDRESS;
     const [openInfo, setOpenInfo] = useState(false);
-    const [useAddress, setUserAddress] = useState<IUserAddress>();
+    //const [useAddress, setUserAddress] = useState<IUserAddress>();
     const callUserAddress = () => {
         if (status !== STATUS.SUCCESS) {
             dispatch(fetchAsyncUserAddress())
-        } else if (status === STATUS.SUCCESS) {
-            const addressDefault = address?.find((item: any) => item.is_default === true);
-            setUserAddress(addressDefault)
-            if (onSetAddressDefault) {
-                onSetAddressDefault(addressDefault)
-            }
+        }
+        if (onSetAddressDefault) {
+            onSetAddressDefault(address_default)
         }
     }
     useEffect(() => {
@@ -98,7 +94,10 @@ function UserPaymentInfo(props: IProps) {
                             <td
                                 style={{ color: "var(--black)" }}
                                 className='user-pm-de-cnt__tb-left'>
-                                {useAddress?.address}
+                                {address_default ? address_default?.address
+                                    :
+                                    "Chưa có địa chỉ giao hàng"
+                                }
                             </td>
                             {
                                 disableEdit ?
@@ -108,7 +107,7 @@ function UserPaymentInfo(props: IProps) {
                                         <button
                                             onClick={() => history.push('/tai-khoan/thong-tin-ca-nhan?address=true')}
                                         >
-                                            <img src={icon.edit} alt="" />
+                                            <img className='img-icon' src={address_default ? icon.edit : icon.plus} alt="" />
                                         </button>
                                     </td>
                             }
