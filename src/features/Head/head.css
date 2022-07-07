@@ -215,6 +215,14 @@
 }
 .hd-noti__list li {
     padding: 8px 0px;
+    transition: all .3s ease-in-out;
+    background-color: transparent;
+}
+.hd-noti__list li:hover{
+    cursor: pointer;
+    padding-left: 5px;
+    /* transform: translateX(5px); */
+    background-color: var(--bg-gray-dark);
 }
 .no-box-item__text {
     padding-left: 16px;

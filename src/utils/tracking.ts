@@ -1,6 +1,5 @@
-export const formatProductList = (listItem: any) => {
-    console.log(listItem)
-    let pr_list = listItem.products.map((e: any) => {
+export const formatProductList = (listItem:any) => {
+    let pr_list = listItem.products?.map((e:any)=>{
         const res = {
             id: e.product.id || e.id,
             quantity: e.quantity,
