@@ -53,6 +53,7 @@ function CartPaymentStatus() {
     const intervalRef = useRef<any>();
     const transaction_uuid = res?.payment_gateway?.transaction_uuid;
     const action = location?.state?.actionAfter
+    //listPayment from page buy now product
     const listPayment = location.state?.listPayment;
 
     const handlePostApp = async () => {

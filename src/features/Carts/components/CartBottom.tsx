@@ -40,6 +40,7 @@ function CartBottom(props: any) {
 
     const pramsOrder = {
         user_address_id: DATA_PMT.address?.id,
+        branch_id: DATA_PMT.branch?.id,
         payment_method_id: DATA_PMT.payment_method_id ? DATA_PMT.payment_method_id : DATA_PMT.pmtMethod?.id,
         // payment_method_id: 5,
         products: products.map((item: any) => { return { id: item.id, quantity: item.quantity } }),

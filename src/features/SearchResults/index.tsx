@@ -28,6 +28,7 @@ import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 import Map from "../../components/Map";
 import { STATUS } from "../../redux/status";
 import FilterOrgs from "../Filter/FilterOrgs";
+import { extraParamsUrl } from "../../utils/extraParamsUrl";
 
 
 function SearchResults(props: any) {
@@ -36,9 +37,11 @@ function SearchResults(props: any) {
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
     const location: any = useLocation();
-    const searchKey = decodeURI(
-        location.search.slice(1, location.search.length)
-    );
+    const params:any = extraParamsUrl();
+    // const searchKey = decodeURI(
+    //     location.search.slice(1, location.search.length)
+    // );
+    const searchKey = params?.keyword
     const { tab, RE_ORGS, RE_SERVICES, RE_PRODUCTS } = useSelector((state: any) => state.SEARCH_RESULT);
 
     const { FILTER_ORG } = useSelector((state: any) => state.FILTER);

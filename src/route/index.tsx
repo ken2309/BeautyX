@@ -96,7 +96,7 @@ function RouterConfig(props: any) {
       component: <Cart />,
     },
     {
-      path: "/product-detail/:name",
+      path: "/san-pham/:name",
       component: <ProductDetail />,
     },
     {

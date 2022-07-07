@@ -56,7 +56,7 @@ function HomeFilter(props: any) {
   const searchFunc = () => {
     history.push({
       pathname: "/ket-qua-tim-kiem/",
-      search: `${searchText}`,
+      search: `?keyword=${searchText}`,
     });
     if (setData) {
       setData({

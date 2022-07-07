@@ -10,7 +10,7 @@ export default function HomeLoggedForYouItem(props: any) {
   const goDetail = () => {
     scrollTop();
     history.push({
-      pathname: `/Product-detail/${slugify(products?.product_name)}`,
+      pathname: `/san-pham/${slugify(products?.product_name)}`,
       search: `${1},${products.id},${1}`,
     });
   };

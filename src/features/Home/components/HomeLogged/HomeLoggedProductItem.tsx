@@ -11,7 +11,7 @@ export default function HomeLoggedProductItem(props: any) {
   const goDetail = () => {
     scrollTop();
     history.push({
-      pathname: `/Product-detail/${slugify(product.product_name)}`,
+      pathname: `/san-pham/${slugify(product.product_name)}`,
       search: `${1},${product.id},${1}`,
     });
   };
