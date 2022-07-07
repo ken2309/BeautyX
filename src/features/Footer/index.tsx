@@ -133,54 +133,54 @@ function Footer() {
         },
     ];
     const payment = [
-        {
-            id: 1,
-            img: paymentMethod.tikiPay,
-        },
-        {
-            id: 2,
-            img: paymentMethod.visa,
-        },
-        {
-            id: 3,
-            img: paymentMethod.masterCard,
-        },
-        {
-            id: 4,
-            img: paymentMethod.jcb,
-        },
-        {
-            id: 5,
-            img: paymentMethod.atm,
-        },
+        // {
+        //     id: 1,
+        //     img: paymentMethod.tikiPay,
+        // },
+        // {
+        //     id: 2,
+        //     img: paymentMethod.visa,
+        // },
+        // {
+        //     id: 3,
+        //     img: paymentMethod.masterCard,
+        // },
+        // {
+        //     id: 4,
+        //     img: paymentMethod.jcb,
+        // },
+        // {
+        //     id: 5,
+        //     img: paymentMethod.atm,
+        // },
         {
             id: 6,
             img: paymentMethod.momoPayment,
         },
-        {
-            id: 7,
-            img: paymentMethod.zaloPay,
-        },
-        {
-            id: 8,
-            img: paymentMethod.mocaGrap,
-        },
-        {
-            id: 9,
-            img: paymentMethod.phonePay,
-        },
-        {
-            id: 10,
-            img: paymentMethod.vnPay,
-        },
+        // {
+        //     id: 7,
+        //     img: paymentMethod.zaloPay,
+        // },
+        // {
+        //     id: 8,
+        //     img: paymentMethod.mocaGrap,
+        // },
+        // {
+        //     id: 9,
+        //     img: paymentMethod.phonePay,
+        // },
+        // {
+        //     id: 10,
+        //     img: paymentMethod.vnPay,
+        // },
         {
             id: 11,
             img: paymentMethod.handPay,
         },
-        {
-            id: 12,
-            img: icon.payon,
-        },
+        // {
+        //     id: 12,
+        //     img: icon.payon,
+        // },
     ];
     const app = [
         {

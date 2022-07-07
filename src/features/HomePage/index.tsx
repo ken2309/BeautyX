@@ -11,7 +11,7 @@ import HomeDiscount from "../HomeDiscounts";
 import HomeBanner from "./HomeBanner";
 import HomeFavorite from "./HomeFavorite";
 import HomeHotDeal from "./HomeHotDeal";
-//import HomeHotTrend from "./HomeHotTrend";
+import HomeHotTrend from "./HomeHotTrend";
 import HomeRecomment from "./HomeRecomment";
 import HomeTopService from "./HomeTopService";
 import HomeTags from "./HomeTags";

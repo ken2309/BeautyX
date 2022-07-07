@@ -8,11 +8,7 @@ export const LoadingOrgs = () => {
     return (
         <ul className="result-orgs-loading-cnt">
             {
-<<<<<<< HEAD
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((i: number, index: number) => (
-=======
                arr.map((i:number, index:number) => (
->>>>>>> 9da253a08397015fb54540801fe24651cf140229
                     <li key={index} className="result-orgs-loading-cnt__item">
                         <Skeleton animation="wave" />
                         <Skeleton animation="wave" />
@@ -31,13 +27,8 @@ export const LoadingServices = (props: IPropsSer) => {
     return (
         <ul className="result-orgs-loading-cnt">
             {
-<<<<<<< HEAD
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((i: number, index: number) => (
-                    <li style={(!IS_MB && width) ? { width: width } : {}} key={index} className="result-orgs-loading-cnt__item service-item">
-=======
                arr.map((i:number, index:number) => (
                     <li key={index} className="result-orgs-loading-cnt__item service-item">
->>>>>>> 9da253a08397015fb54540801fe24651cf140229
                         <Skeleton animation="wave" />
                         <Skeleton animation="wave" />
                     </li>

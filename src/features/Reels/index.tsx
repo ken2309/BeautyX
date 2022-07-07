@@ -10,7 +10,6 @@ export default function Reels(props: any) {
     const [videoCur, setVideoCur] = useState<any>();
     const TRENDs_VIDEOs = useSelector((state: any) => state.TRENDs).VIDEOs;
     const slickRef = useRef<any>();
-    console.log(initialIndex);
     return (
         <>
             <Drawer
