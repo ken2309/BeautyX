@@ -9,7 +9,6 @@ import { Container } from "@mui/material";
 import TabService from "./components/TabService";
 import Footer from "../Footer";
 import TabOrgs from "./components/TabOrgs";
-import TabLocation from "./components/TabLocation";
 import icon from "../../constants/icon";
 import { Drawer } from "@mui/material";
 import TabProduct from "./components/TabProduct";
@@ -225,8 +224,6 @@ function SearchResults(props: any) {
                             keyword={searchKey}
                             FILTER_ORGS_VAL={FILTER_ORGS_VAL}
                         />
-
-                        <TabLocation acTab={tab} searchKey={searchKey} />
                     </div>
                 </div>
             </Container>

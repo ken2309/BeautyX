@@ -37,7 +37,7 @@ function HomeDealBanner() {
     })
     const handleGetServices = async () => {
         try {
-            const res = await servicePromoApi.getServicesDealBanner({
+            const res = await servicePromoApi.getServicesPromo({
                 page: data.page,
                 min_price: bannerDeals?.min_price,
                 max_price: bannerDeals?.max_price,

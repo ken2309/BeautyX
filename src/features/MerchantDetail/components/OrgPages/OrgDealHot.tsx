@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { IDiscountPar, IITEMS_DISCOUNT } from '../../../../interface/discount'
@@ -73,7 +74,7 @@ function OrgDealHot() {
                     </ul>
                 </div>
             }
-            { (discounts.length + SERVICES_SPECIAL.services_special.length + PRODUCTS_SPECIAL.products_special.length) == 0 && <EmptyRes title="Hiện chưa có deal hot nào dành cho bạn!" />}
+            {(discounts.length + SERVICES_SPECIAL.services_special.length + PRODUCTS_SPECIAL.products_special.length) == 0 && <EmptyRes title="Hiện chưa có deal hot nào dành cho bạn!" />}
         </div>
     );
 }

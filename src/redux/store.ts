@@ -27,6 +27,7 @@ import orderReducer from './order/orderSlice';
 import searchResultReducer from './search/searchResultSlice';
 import filterReducer from "./filter/filterSlice";
 import homePageReducer from "./home/homePageSlice";
+import chatOrgReducer from "./chat/chatOrgSlice";
 
 const rootReducer = {
   carts: cartReducer,
@@ -56,7 +57,8 @@ const rootReducer = {
   ORDER: orderReducer,
   SEARCH_RESULT: searchResultReducer,
   FILTER: filterReducer,
-  HOME_PAGE: homePageReducer
+  HOME_PAGE: homePageReducer,
+  CHAT_ORG : chatOrgReducer,
 };
 const store = configureStore({
     reducer: rootReducer,

@@ -10,7 +10,7 @@ import { IServicePromo } from '../../interface/servicePromo';
 export const fetchOrgsByTag: any = createAsyncThunk(
     "CATE_TREE/fetchOrgsByTag",
     async (values: any) => {
-        const res = await orgApi.getOrgsByTag(values);
+        const res = await orgApi.getAll(values);
         const payload = {
             orgs: res.data.context.data,
             totalItem: res.data.context.total,
@@ -22,7 +22,7 @@ export const fetchOrgsByTag: any = createAsyncThunk(
 export const fetchServiceByCateChild: any = createAsyncThunk(
     "CATE_TREE/fetchServiceByCateChild",
     async (values: any) => {
-        const res = await servicePromoApi.getByKeyword(values);
+        const res = await servicePromoApi.getServicesPromo(values);
         const payload = {
             services: res.data.data.hits,
             page: values.page,

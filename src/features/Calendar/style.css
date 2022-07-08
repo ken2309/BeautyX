@@ -13,11 +13,16 @@
 }
 
 .cal-cnt__tab-cnt .Mui-selected {
-    color: var(--purple) !important;
+    color: var(--white) !important;
+    transition: all .3s;
+    z-index:  3 !important;
 }
 
 .cal-cnt__tab-cnt .MuiTabs-indicator {
     background-color: var(--purple);
+    height: 44px !important;
+    border-radius: 22px !important;
+    z-index: 2 !important;
 }
 
 .cal-cnt__tab-cnt .MuiTabs-root {
@@ -118,10 +123,8 @@
     .calendar-appointment__item-detail:nth-child(2) {
         background-color: var(--purple);
     }
-
-    .cal-cnt__tab-cnt .MuiTabs-indicator {
-        background-color: var(--purple);
-        width: 40px !important;
-        margin-left: 10% !important;
+    .cal-cnt__tab-cnt .MuiTabs-indicator{
+        height: 36px !important;
+        margin-bottom: 4px !important;
     }
 }

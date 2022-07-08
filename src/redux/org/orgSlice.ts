@@ -56,13 +56,13 @@ export const fetchAsyncByKeyword: any = createAsyncThunk(
     "ORG/fetchAsyncByKeyword",
     async (values: any) => {
         try {
-            const res = await serviceApi.getByOrg_id(values);
-            const res_products = await productsApi.getByOrgId_cateId(values);
+            const res = await serviceApi.getByOrgId(values);
+            const res_products = await productsApi.getByOrgId(values);
             const payload = {
-                services: res.data.context.data,
-                totalServices: res.data.context.total,
-                totalProducts: res_products.data.context.total,
-                products: res_products.data.context.data,
+                services: res?.data.context.data,
+                totalServices: res?.data.context.total,
+                totalProducts: res_products?.data.context.total,
+                products: res_products?.data.context.data,
             };
             return payload;
         } catch (error) {

@@ -8,7 +8,7 @@ const storage = JSON.parse(`${localStorage.getItem(storageName)}`);
 export const fetchOrgsBySearch: any = createAsyncThunk(
     "SEARCH/fetchOrgsBySearch",
     async (values: any) => {
-        const res = await orgApi.getOrgByKeyword(values);
+        const res = await orgApi.getAll(values);
         return {
             orgs: res.data.context.data,
             totalItem: res.data.context.total,
@@ -30,7 +30,7 @@ export const fetchProductsBySearch: any = createAsyncThunk(
 export const fetchServicesBySearch: any = createAsyncThunk(
     "SEARCH/fetchServicesBySearch",
     async (values: any) => {
-        const res = await servicePromoApi.getByKeyword(values);
+        const res = await servicePromoApi.getServicesPromo(values);
         return {
             services: res.data.data.hits,
             totalItem: res.data.total,

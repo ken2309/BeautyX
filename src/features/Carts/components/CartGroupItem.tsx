@@ -66,7 +66,7 @@ function CartGroupItem(props: any) {
                 }
             </div>
             <div className="flex-row re-cart-item-group__add">
-                <div className="re-cart-item-group__add-dot"></div>
+                {/* <div className="re-cart-item-group__add-dot"></div> */}
                 {
                     (org?.id === item.org_id &&
                         org?.branches?.length > 0 &&

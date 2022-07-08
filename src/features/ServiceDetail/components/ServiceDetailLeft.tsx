@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import icon from "../../../constants/icon";
@@ -36,8 +36,7 @@ const NextButton = (props: any) => {
 };
 export default function ServiceDetailLeft(props: any) {
     const { org, service } = props;
-    const videoRef = useRef<any>();
-    console.log(videoRef);
+    
     const history = useHistory();
     const dispatch = useDispatch();
     const percent = service

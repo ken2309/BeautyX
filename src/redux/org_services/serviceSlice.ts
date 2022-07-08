@@ -95,9 +95,9 @@ export const fetchAsyncCancelFavoriteService: any = createAsyncThunk(
 export const fetchAsyncServicesRec: any = createAsyncThunk(
     "SERVICE/fetchAsyncServicesRec",
     async (values: any) => {
-        const res = await serviceApi.getByOrg_id(values);
+        const res = await serviceApi.getByOrgId(values);
         const payload = {
-            services: res.data.context.data,
+            services: res?.data.context.data,
             cate_id: values.cate_id,
         };
         return payload;

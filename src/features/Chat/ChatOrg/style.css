@@ -1,0 +1,16 @@
+.chat-org-cnt{
+    position: fixed;
+    bottom: 0;
+    width: 328px;
+    height: 480px;
+    z-index: 100;
+    background-color: burlywood;
+    right: 0;
+    margin-right: calc(50vw - 600px);
+    margin-bottom: -480px;
+    transition: all .1s;
+}
+.chat-org-cnt__act{
+    margin-bottom: 0px;
+    transition: all .1s;
+}

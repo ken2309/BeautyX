@@ -39,7 +39,7 @@ function SearchResult(props: any) {
   async function handleGetOrgs() {
     setData({ ...data, loading: true })
     try {
-      const res = await orgApi.getOrgByKeyword({
+      const res = await orgApi.getAll({
         page: data.curPage,
         keySearch: keySearch,
       });
@@ -57,7 +57,7 @@ function SearchResult(props: any) {
 
   async function handleGetOrgsByFilter() {
     try {
-      const res = await orgApi.getOrgByFilter({
+      const res = await orgApi.getAll({
         page: 1,
         limit: 15,
         params: paramsFilter

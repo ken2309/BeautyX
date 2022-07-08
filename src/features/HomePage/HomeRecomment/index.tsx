@@ -50,7 +50,7 @@ export default function HomeRecomment() {
             callServicesRecentSearch()
         }
     }, [ORDER_SERVICES.status]);
-
+   
     return (
         <div className="home-recomment">
             <HomeTitle title={t("home_2.suggestions_for_you")} />

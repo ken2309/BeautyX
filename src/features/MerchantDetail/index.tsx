@@ -28,6 +28,8 @@ import ModalLoad from "../../components/ModalLoad";
 //import { clearServices } from '../../redux/org_services/orgServivesSlice';
 //import { clearProducts } from '../../redux/org_products/orgProductsSlice';
 import PageNotFound from "../../components/PageNotFound";
+import { onSetEmptyChooseCatePr } from "../../redux/org_products/orgProductsSlice";
+import { onSetEmptyChooseCate } from "../../redux/org_services/orgServivesSlice";
 
 function MerchantDetail() {
   const IS_MB = useFullScreen();
@@ -48,6 +50,8 @@ function MerchantDetail() {
     if (sub_domain !== org?.subdomain) {
       dispatch(fetchAsyncOrg(sub_domain))
       dispatch(onActiveTab(1))
+      dispatch(onSetEmptyChooseCatePr())
+      dispatch(onSetEmptyChooseCate())
       //dispatch(clearServices())
       //dispatch(clearProducts())
     }
@@ -67,7 +71,9 @@ function MerchantDetail() {
     if (status === STATUS.SUCCESS) {
       const values = {
         org_id: org?.id,
-        page: 1
+        page: 1,
+        special: true,
+        isEnable: org?.is_momo_ecommerce_enable && true
       }
       dispatch(onSaveOrgId(org?.id))
       if (org?.id !== org_id || status_ser !== STATUS.SUCCESS) {

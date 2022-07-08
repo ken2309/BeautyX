@@ -4,7 +4,6 @@ import { IOrganization } from "../../../../interface/organization";
 import OrgItem from "../../../ViewItemCommon/OrgItem/index";
 import { useHistory } from "react-router-dom";
 import slugify from "../../../../utils/formatUrlString";
-import icon from "../../../../constants/icon";
 interface IData {
     orgs: IOrganization[];
     page: number;
@@ -21,7 +20,7 @@ function TabDealHot(props: any) {
     });
     async function getOrgsManyDealHot() {
         try {
-            const res = await orgApi.getOrgsByManyDealHot({
+            const res = await orgApi.getAll({
                 page: 1,
             });
             setData({
