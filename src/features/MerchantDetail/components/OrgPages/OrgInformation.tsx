@@ -26,7 +26,7 @@ function OrgInformation(props: IProps) {
         arrows: false,
     };
     const [openPopupSeemoreMap, setOpenPopupSeemoreMap] = useState(false);
-    const onDropBranches = () => {
+    const onDropBranches: any = () => {
         branchesCntRef.current.classList.toggle("branches-list-cnt__drop");
     };
     const handleSetBranch = (item: any, index: number) => {
@@ -172,7 +172,7 @@ function OrgInformation(props: IProps) {
             </div>
             {org?.branches?.length > 0 && (
                 <div className="org-information__branches">
-                    <span className="title">Chi nhánh</span>
+                    <span className="title">{t("Mer_de.branch")}</span>
                     <div ref={branchesCntRef} className="branches-list-cnt">
                         <ul className="list">
                             <li
@@ -236,7 +236,7 @@ function OrgInformation(props: IProps) {
                 <ul className="org-information-utils">
                     <li className="flex-row utils-item">
                         <img src={icon.carBlack} alt="" className="icon" />
-                        <span>Chỗ đỗ xe</span>
+                        <span>{t("detail_item.parking")}</span>
                     </li>
                     <li className="flex-row utils-item">
                         <img src={icon.wifiBlack} alt="" className="icon" />
@@ -248,7 +248,7 @@ function OrgInformation(props: IProps) {
                             alt=""
                             className="icon"
                         />
-                        <span>Chấp nhận thanh toán thẻ</span>
+                        <span>{t("detail_item.accept_card_payment")}</span>
                     </li>
                 </ul>
             </div>

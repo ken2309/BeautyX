@@ -37,7 +37,6 @@ const NextButton = (props: any) => {
 export default function ServiceDetailLeft(props: any) {
     const { org, service } = props;
     const videoRef = useRef<any>();
-    console.log(videoRef);
     const history = useHistory();
     const dispatch = useDispatch();
     const percent = service

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import icon from "../../../constants/icon";
+import { AppContext } from "../../../context/AppProvider";
 import { IOrganization } from "../../../interface/organization";
 import {
     onDeleteFavoriteOrg,
@@ -14,6 +15,7 @@ interface IProps {
 }
 
 function DetailOrgCard(props: IProps) {
+    const { t } = useContext(AppContext);
     const { org } = props;
     const ORG = useSelector((state: any) => state.ORG);
     const { USER } = useSelector((state: any) => state.USER);
@@ -55,21 +57,27 @@ function DetailOrgCard(props: IProps) {
                             <p>{"4.5/5"}</p>
                             <img src={icon.star} alt="" />
                         </div>
-                        <p className="infoMer-item__text">Đánh giá</p>
+                        <p className="infoMer-item__text">
+                            {t("detail_item.evaluate")}
+                        </p>
                     </div>
                     <div className="infoMer-item">
                         <div className="infoMer-item__wrap flexX-gap-4">
                             <p>{ORG.org?.favorites_count}</p>
                             <img src={icon.Favorite} alt="" />
                         </div>
-                        <p className="infoMer-item__text">Yêu thích</p>
+                        <p className="infoMer-item__text">
+                            {t("detail_item.favourite")}
+                        </p>
                     </div>
                     <div className="infoMer-item">
                         <div className="infoMer-item__wrap flexX-gap-4">
                             <p>{"5"}</p>
                             <img src={icon.chatAll} alt="" />
                         </div>
-                        <p className="infoMer-item__text">Bình luận</p>
+                        <p className="infoMer-item__text">
+                            {t("detail_item.comment")}
+                        </p>
                     </div>
                 </div>
 
@@ -84,7 +92,7 @@ function DetailOrgCard(props: IProps) {
                                 src={icon.archive}
                                 alt=""
                             />
-                            <p>Xem Spa</p>
+                            <p>{t("detail_item.seemore_spa")}</p>
                         </Link>
                     </button>
                     {org?.is_favorite === true ? (
@@ -93,7 +101,7 @@ function DetailOrgCard(props: IProps) {
                             className="infoMer-bottom__right infoMer-bottom__right-active"
                         >
                             <p className="infoMer-bottom__right-active">
-                                Đang Theo dõi
+                                {t("detail_item.followed")}
                             </p>
                         </button>
                     ) : (

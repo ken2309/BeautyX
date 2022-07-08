@@ -171,7 +171,7 @@
     padding-bottom: 24px;
 }
 
-.evaluate-comment:not(:nth-child(3)) {
+.evaluate-comment {
     margin-top: 24px;
 }
 
@@ -189,14 +189,14 @@
 .evaluate-comment__tick {
     flex-shrink: 0;
 }
-.evaluate-comment__tick span{
+.evaluate-comment__tick span {
     font-size: 12px;
     line-height: 20px;
     font-weight: 500;
     color: var(--green);
     margin-right: 4px;
 }
-.evaluate-comment__tick img{
+.evaluate-comment__tick img {
     width: 20px;
     height: 20px;
 }
