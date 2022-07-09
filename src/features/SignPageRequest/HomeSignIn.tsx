@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import ButtonCus from "../../../components/ButtonCus";
-import SectionTitle from "../../SectionTitle";
-import SignInUp from "../../poupSignInUp/index";
-import { AppContext } from "../../../context/AppProvider";
+import ButtonCus from "../../components/ButtonCus";
+import SectionTitle from "../SectionTitle";
+import SignInUp from "../poupSignInUp/index";
+import { AppContext } from "../../context/AppProvider";
 import { useHistory } from "react-router-dom";
-import scrollTop from "../../../utils/scrollTop";
+import scrollTop from "../../utils/scrollTop";
 
 function HomeSignIn(props: any) {
   const { t } = useContext(AppContext);

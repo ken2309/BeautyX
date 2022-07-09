@@ -1,6 +1,6 @@
 import React from "react";
 import HomeLoggedCalendarAppointmentItem from "./HomeLoggedCalendarAppointmentItem";
-import EmptyRes from '../../../EmptyRes';
+import EmptyRes from '../EmptyRes';
 interface IAppointmentList {
   datingList: any;
 }

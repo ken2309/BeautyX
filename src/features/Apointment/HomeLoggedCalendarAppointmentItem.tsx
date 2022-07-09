@@ -1,13 +1,13 @@
 import React, { useState, useContext } from "react";
-import { AppContext } from "../../../../context/AppProvider";
-import AppointmentDetail from "../../../AppointmentDetail/index";
-import { STATUS } from "../../../../utils/statusApp";
-import useFullScreen from "../../../../utils/useFullScreen";
-import PopupQr from "../../../AppointmentDetail/PopupQr";
+import AppointmentDetail from "../AppointmentDetail";
+import { STATUS } from "../../utils/statusApp";
+import useFullScreen from "../../utils/useFullScreen";
+import PopupQr from "../AppointmentDetail/PopupQr";
 import dayjs from "dayjs";
+import { AppContext } from "../../context/AppProvider";
 
 export default function HomeLoggedCalendarAppointmentItem(props: any) {
-    const { t } = useContext(AppContext);
+    const {t} = useContext(AppContext);
     const IS_MB = useFullScreen();
     const { datingList } = props;
     // day of week

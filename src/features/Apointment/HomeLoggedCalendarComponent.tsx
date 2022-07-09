@@ -1,6 +1,6 @@
 import React from "react";
 import range from "lodash-es/range";
-import { STATUS } from "../../../../utils/statusApp";
+import { STATUS } from "../../utils/statusApp";
 import dayjs from "dayjs";
 interface IHomeLoggedCalendarComponent {
     weekDays: any;

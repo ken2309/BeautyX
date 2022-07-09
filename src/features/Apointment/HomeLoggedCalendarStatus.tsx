@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import icon from "../../../../constants/icon";
-import { AppContext } from "../../../../context/AppProvider";
+import icon from "../../constants/icon";
+import { AppContext } from "../../context/AppProvider";
 
 export default function HomeLoggedCalendarStatus() {
   const { t } = useContext(AppContext);

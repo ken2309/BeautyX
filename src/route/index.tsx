@@ -1,6 +1,5 @@
 import React from "react";
 //import Home from "../features/Home/index";
-import SearchResult from "../features/SearchResult/index";
 import { BrowserRouter, Switch, Redirect } from "react-router-dom";
 import { RouteComponentProps } from "@reach/router";
 import MerchantDetail from "../features/MerchantDetail/index";
@@ -83,10 +82,6 @@ function RouterConfig(props: any) {
     {
       path: '/doi-mat-khau',
       component: <ResetPassword />
-    },
-    {
-      path: "/search-result/",
-      component: <SearchResult />,
     },
     {
       path: '/ket-qua-tim-kiem/',

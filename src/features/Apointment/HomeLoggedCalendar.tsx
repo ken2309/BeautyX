@@ -1,18 +1,20 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext } from "react";
-import SectionTitle from "../../../SectionTitle/index";
+import SectionTitle from "../SectionTitle/index";
 import dayjs from "dayjs";
 import HomeLoggedCalendarComponent from "./HomeLoggedCalendarComponent";
 import HomeLoggedCalendarChooseMonth from "./HomeLoggedCalendarChooseMonth";
 import HomeLoggedCalendarStatus from "./HomeLoggedCalendarStatus";
 import HomeLoggedCalendarList from "./HomeLoggedCalendarList";
 import { Container } from "@mui/material";
-import { AppContext } from "../../../../context/AppProvider";
+import { AppContext } from "../../context/AppProvider";
 import { cleanup } from "@testing-library/react";
-import { fetchAsyncApps } from "../../../../redux/appointment/appSlice";
+import { fetchAsyncApps } from "../../redux/appointment/appSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { STATUS } from '../../../../redux/status';
-import ModalLoad from "../../../../components/ModalLoad";
+import { STATUS } from '../../redux/status';
+import ModalLoad from "../../components/ModalLoad";
+import '../../assets/styles/main.css'
 
 const todayObj = dayjs();
 export default function HomeLoggedCalendar() {

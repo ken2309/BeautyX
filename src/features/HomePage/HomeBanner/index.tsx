@@ -9,7 +9,8 @@ import { dealHot } from "../../../constants/img";
 import { IBanner } from "../../../interface/banner";
 import slugify from "../../../utils/formatUrlString";
 import scrollTop from "../../../utils/scrollTop";
-import HomeBannerPopup from "../../Home/components/HomeBannerPopup";
+import HomeBannerPopup from "./HomeBannerPopup";
+import '../../../assets/styles/main.css'
 import "./homeBanner.css";
 // ==== api tracking ====
 import tracking from "../../../api/trackApi";
@@ -59,6 +60,7 @@ export default function HomeBanner() {
     const history = useHistory();
     const HOME = useSelector((state: any) => state.HOME);
     const { banners } = HOME;
+    console.log(banners)
     const [chooseBanner, setChooseBanner] = useState<IBanner>();
     const [open, setOpen] = useState(false);
     const [openVideo, setOpenVideo] = useState(false);
