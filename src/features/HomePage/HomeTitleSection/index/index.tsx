@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import scrollTop from "../../../../../utils/scrollTop";
-import "../../../home-se.css";
+import scrollTop from "../../../../utils/scrollTop";
+import "../../home-se.css";
 
 interface IProps {
     title: string;
