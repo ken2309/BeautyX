@@ -10,7 +10,7 @@ import { IBanner } from "../../../interface/banner";
 import slugify from "../../../utils/formatUrlString";
 import scrollTop from "../../../utils/scrollTop";
 import HomeBannerPopup from "./HomeBannerPopup";
-import '../../../assets/styles.css'
+import '../../../assets/styles/main.css'
 import "./homeBanner.css";
 // ==== api tracking ====
 import tracking from "../../../api/trackApi";
