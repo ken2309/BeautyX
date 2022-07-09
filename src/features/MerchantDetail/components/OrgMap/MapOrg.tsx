@@ -35,6 +35,7 @@ export default function MapOrg(props: IProps) {
     //         long: cardMapItem?.longitude,
     //     });
     // };
+    
     const handleSetLocation = useCallback((cardMapItem: any) => {
         if (onChangeCardMap) {
             onChangeCardMap(cardMapItem);

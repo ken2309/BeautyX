@@ -2,6 +2,9 @@
     width: 90vw;
     height: 90vh;
 }
+.map-list__mobile{
+    display: none;
+}
 .dialog-map__org .dialog-map__close {
     position: absolute;
     top: 14px;
@@ -210,6 +213,7 @@
         border-radius: unset;
     }
     .map-list__mobile {
+        display: block !important;
         width: 100%;
         z-index: 2;
         position: absolute;

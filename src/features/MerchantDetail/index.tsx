@@ -5,25 +5,25 @@ import Head from "../Head/index";
 import Footer from "../Footer";
 import HeadTitle from "../HeadTitle/index";
 import {
-  fetchAsyncOrg,
-  fetchOrgGalleries,
-  onActiveTab,
-} from '../../redux/org/orgSlice';
+    fetchAsyncOrg,
+    fetchOrgGalleries,
+    onActiveTab,
+} from "../../redux/org/orgSlice";
 import {
-  fetchAsyncServicesSpecial,
-  fetchProductsSpecial,
-  onSaveOrgId,
-} from '../../redux/org_specials/orgSpecialSlice';
-import { fetchAsyncOrgDiscounts } from '../../redux/org_discounts/orgDiscountsSlice'
-import { useDispatch, useSelector } from 'react-redux';
+    fetchAsyncServicesSpecial,
+    fetchProductsSpecial,
+    onSaveOrgId,
+} from "../../redux/org_specials/orgSpecialSlice";
+import { fetchAsyncOrgDiscounts } from "../../redux/org_discounts/orgDiscountsSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { formatOrgParam } from "../../utils/formatParams";
-import { STATUS } from '../../redux/status';
+import { STATUS } from "../../redux/status";
 import HeadOrg from "./components/HeadOrg";
 import useFullScreen from "../../utils/useFullScreen";
 import OrgDetail from "./components/OrgDetail";
 import OrgContainer from "./components/OrgContainer";
-import './style.css';
-import { Container } from '@mui/material';
+import "./style.css";
+import { Container } from "@mui/material";
 import ModalLoad from "../../components/ModalLoad";
 //import { clearServices } from '../../redux/org_services/orgServivesSlice';
 //import { clearProducts } from '../../redux/org_products/orgProductsSlice';
@@ -32,18 +32,18 @@ import { onSetEmptyChooseCatePr } from "../../redux/org_products/orgProductsSlic
 import { onSetEmptyChooseCate } from "../../redux/org_services/orgServivesSlice";
 
 function MerchantDetail() {
-  const IS_MB = useFullScreen();
-  const location: any = useLocation();
-  const dispatch = useDispatch();
-  const param = formatOrgParam(location.pathname);
-  const { sub_domain } = param;
+    const IS_MB = useFullScreen();
+    const location: any = useLocation();
+    const dispatch = useDispatch();
+    const param = formatOrgParam(location.pathname);
+    const { sub_domain } = param;
 
-  const ORG = useSelector((state: any) => state.ORG);
-  const ORG_SPECIALS = useSelector((state: any) => state.ORG_SPECIALS);
-  const { SERVICES_SPECIAL, PRODUCTS_SPECIAL, org_id } = ORG_SPECIALS;
-  const { status_ser } = SERVICES_SPECIAL;
-  const { status_pr } = PRODUCTS_SPECIAL;
-  const ORG_DISCOUNTS = useSelector((state: any) => state.ORG_DISCOUNTS);
+    const ORG = useSelector((state: any) => state.ORG);
+    const ORG_SPECIALS = useSelector((state: any) => state.ORG_SPECIALS);
+    const { SERVICES_SPECIAL, PRODUCTS_SPECIAL, org_id } = ORG_SPECIALS;
+    const { status_ser } = SERVICES_SPECIAL;
+    const { status_pr } = PRODUCTS_SPECIAL;
+    const ORG_DISCOUNTS = useSelector((state: any) => state.ORG_DISCOUNTS);
 
   const { org, status, tab, GALLERIES } = ORG;
   const callOrgDetail = () => {

@@ -82,11 +82,11 @@ function Carts() {
         }
     })
 
-    const branch:any = openBranch.branch;
+    const branch: any = openBranch.branch;
 
     const { payments_method } = useSelector((state: any) => state.PAYMENT.PAYMENT);
     const payment_method_id = extraPaymentMethodId(payments_method, setPmtMethod);
-    const DATA_PMT = { pmtMethod, address, payment_method_id, org , branch}
+    const DATA_PMT = { pmtMethod, address, payment_method_id, org, branch }
     return (
         <>
             <HeadTitle title="Giỏ hàng" />

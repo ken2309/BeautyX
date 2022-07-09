@@ -28,19 +28,19 @@ function LoginFlatFormRequest(props: any) {
         //     {
         //         type: 'PAYMENT_HUB_TRANSACTION',
         //         data: {
-        //             merchant: {
-        //                 code: 'MBAL',
-        //                 name: 'Bảo hiểm nhân thọ MB AGEAS LIFE',
+        //             "id": "AW1125WDEIWH",
+        //             "amount": 600000,
+        //             "description": "Test 11dat",
+        //             "successMessage": null,
+        //             "merchant": {
+        //                 "code": "PHZMSP",
+        //                 "name": "Công ty cổ phần MySpa"
         //             },
-        //             type: {
-        //                 code: 'BHUT',
-        //                 name: 'Mua bảo hiểm ung thư',
-        //                 allowCard: true,
+        //             "type": {
+        //                 "name": "Thanh toán sản phẩm làm đẹp",
+        //                 "code": "MSPPROD",
+        //                 "allowCard": true
         //             },
-        //             id: 'AJX014TUYI1121',
-        //             amount: 1000000,
-        //             description: 'Mua bao hiem ung thu MBAL 615000',
-        //             successMessage: 'Cám ơn bạn đã mua bảo hiểm. MBAL sẽ liên lạc lại với bạn trong vòng 24h'
         //         }
         //     }
         // ))

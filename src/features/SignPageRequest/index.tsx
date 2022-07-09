@@ -4,7 +4,7 @@ import img from "../../constants/img";
 import HomeSignIn from "../Home/components/HomeSignIn";
 import "./signPageRequest.css";
 
-function SignPageRequest(props) {
+function SignPageRequest() {
   const useForSignRes = true;
   return (
     <div className="sign-page-request">

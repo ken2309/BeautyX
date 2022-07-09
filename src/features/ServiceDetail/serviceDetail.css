@@ -255,7 +255,7 @@
     font-size: 16px;
     font-weight: bold;
     color: var(--purple);
-    padding: 0 16px;
+    padding: 0 10px;
 }
 
 .service-detail .detail-right__org p:nth-child(1) {
@@ -264,26 +264,31 @@
 
 .service-detail .detail-right__org {
     display: flex;
-    margin-left: -16px;
+    margin-left: -10px;
     margin-bottom: 8px;
 }
 
 .service-detail .detail-right__evaluate {
     display: flex;
-    grid-gap: 0 8px;
     align-items: center;
     width: 100%;
-    margin: 8px 0;
+    margin: 8px 0 8px -10px;
 }
 
 .service-detail .evaluate-item {
     display: flex;
     align-items: center;
     grid-gap: 0 4px;
+    padding: 0 10px;
+}
+.service-detail .evaluate-item:not(:last-child) {
+    border-right: 1px solid gray;
 }
 
 .service-detail .evaluate-item p {
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: normal;
+    color: gray;
     font-weight: bold;
 }
 
@@ -544,7 +549,8 @@
 }
 .service-detail .service-detail__description p {
     margin-bottom: 24px;
-    line-height: 20px;
+    line-height: 24px;
+    font-size: 16px;
 }
 
 .service-detail .service-detail__comment {

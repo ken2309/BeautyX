@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AppContext } from "../../../context/AppProvider";
 import { imgTag } from "../../../constants/img";
+//import { useSelector } from "react-redux";
 
 function HomeTags(props: any) {
-    const history = useHistory();
+    //const history = useHistory();
     const { t } = useContext(AppContext);
+    // const tagsList = useSelector((state:any) => state.HOME.tags);
+    // console.log(t)
     const tags = [
         { id: 4, title: "Spa", text: "Spa", img: imgTag.spa },
         { id: 3, title: "Salon", text: "Salon", img: imgTag.hairSalon },
