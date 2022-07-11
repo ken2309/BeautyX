@@ -30,6 +30,7 @@ import ModalLoad from "../../components/ModalLoad";
 import PageNotFound from "../../components/PageNotFound";
 import { onSetEmptyChooseCatePr } from "../../redux/org_products/orgProductsSlice";
 import { onSetEmptyChooseCate } from "../../redux/org_services/orgServivesSlice";
+import '../../assets/styles/main.css';
 
 function MerchantDetail() {
     const IS_MB = useFullScreen();

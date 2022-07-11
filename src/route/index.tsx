@@ -1,6 +1,5 @@
 import React from "react";
 //import Home from "../features/Home/index";
-import SearchResult from "../features/SearchResult/index";
 import { BrowserRouter, Switch, Redirect } from "react-router-dom";
 import { RouteComponentProps } from "@reach/router";
 import MerchantDetail from "../features/MerchantDetail/index";
@@ -49,9 +48,10 @@ import ProductsByCate from "../features/CategoryTree/ProductsByCate";
 
 import Result from "../features/Results";
 import ChatOrg from "../features/Chat/ChatOrg";
+import ChatAll from "../features/Chat/ChatAll";
 
 const RouterPage = (
-    props: { pageComponent: JSX.Element } & RouteComponentProps
+  props: { pageComponent: JSX.Element } & RouteComponentProps
 ) => props.pageComponent;
 function RouterConfig(props: any) {
   const USER = useSelector((state: any) => state.USER);
@@ -83,10 +83,6 @@ function RouterConfig(props: any) {
     {
       path: '/doi-mat-khau',
       component: <ResetPassword />
-    },
-    {
-      path: "/search-result/",
-      component: <SearchResult />,
     },
     {
       path: '/ket-qua-tim-kiem/',
@@ -189,7 +185,7 @@ function RouterConfig(props: any) {
       component: <ProductsByCate />
     },
     {
-      path:"/ket-qua",
+      path: "/ket-qua",
       component: <Result />
     }
   ];
@@ -225,6 +221,10 @@ function RouterConfig(props: any) {
     {
       path: "/gio-hang",
       component: Carts
+    },
+    {
+      path:"/chat",
+      component: ChatAll
     }
   ];
   return (
@@ -248,7 +248,7 @@ function RouterConfig(props: any) {
         ))}
       </Switch>
       <AssistantBtn />
-      <ChatOrg/>
+      {USER?.USER && <ChatOrg />}
     </BrowserRouter>
   );
 }

@@ -90,9 +90,13 @@ function OrgDetail(props: IProps) {
     const onActiveTabGallery = () => {
         dispatch(onActiveTab(7));
     };
-    const onOpenChatOrg = () => {
-        dispatch(onToggleOpenChat(true))
-    }
+    // const onOpenChatOrg = () => {
+    //     if (USER) {
+    //         dispatch(onToggleOpenChat(true))
+    //     } else {
+    //         history.push("/sign-in?1");
+    //     }
+    // }
     return (
         <div className="org-detail">
             <Container>
@@ -303,18 +307,18 @@ function OrgDetail(props: IProps) {
                                         : t("Mer_de.flow")}
                                 </button>
                                 <br />
-                                {/* <button
+                                <button
                                     onClick={() => {
                                         setOpenPopupContact(true);
                                     }}
                                 >
                                     {t("Mer_de.contact")}
-                                </button> */}
-                                <button
+                                </button>
+                                {/* <button
                                     onClick={onOpenChatOrg}
                                 >
                                     Chat
-                                </button>
+                                </button> */}
                             </div>
                         </div>
                     </div>

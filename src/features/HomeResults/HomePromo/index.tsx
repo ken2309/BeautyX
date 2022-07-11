@@ -4,7 +4,7 @@ import Head from "../../Head";
 import HeadTitle from "../../HeadTitle";
 import { Container } from "@mui/material";
 import "../home-result.css";
-import HomeTitleSection from "../../Homev2/components/HomeTitleSection/index";
+import HomeTitleSection from "../../HomePage/HomeTitleSection/index/index";
 import ServicePromoItem from "../../ViewItemCommon/ServicePromoItem";
 import { IServicePromo } from "../../../interface/servicePromo";
 import { AppContext } from "../../../context/AppProvider";

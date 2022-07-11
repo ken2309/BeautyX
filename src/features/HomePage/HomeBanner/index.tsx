@@ -9,7 +9,8 @@ import { dealHot } from "../../../constants/img";
 import { IBanner } from "../../../interface/banner";
 import slugify from "../../../utils/formatUrlString";
 import scrollTop from "../../../utils/scrollTop";
-import HomeBannerPopup from "../../Home/components/HomeBannerPopup";
+import HomeBannerPopup from "./HomeBannerPopup";
+import "../../../assets/styles/main.css";
 import "./homeBanner.css";
 // ==== api tracking ====
 import tracking from "../../../api/trackApi";
@@ -169,27 +170,25 @@ export default function HomeBanner() {
                             }}
                             className="banner-right__top"
                         >
-                            <img
-                                src={dealHot.dealhot}
-                                alt=""
-                            />
+                            <img src={dealHot.dealhot} alt="" />
                         </Link>
                         <div className="banner-right__bottom">
                             <Link
                                 to={{
-                                    pathname: `/deal/${slugify(deals[1].title)}`,
+                                    pathname: `/deal/${slugify(
+                                        deals[1].title
+                                    )}`,
                                     search: `${deals[1].id}`,
                                 }}
                                 className="banner-bottom__item"
                             >
-                                <img
-                                    src={dealHot.dealhot1}
-                                    alt=""
-                                />
+                                <img src={dealHot.dealhot1} alt="" />
                             </Link>
                             <Link
                                 to={{
-                                    pathname: `/deal/${slugify(deals[2].title)}`,
+                                    pathname: `/deal/${slugify(
+                                        deals[2].title
+                                    )}`,
                                     search: `${deals[2].id}`,
                                 }}
                                 className="banner-bottom__item"

@@ -311,7 +311,8 @@
         "add_other_address": "Thêm địa điểm khác",
         "default": "Mặc định",
         "change_pass": "Thay đổi mật khẩu",
-        "save": "Lưu thay đổi"
+        "save": "Lưu thay đổi",
+        "set_default_address": "Đặt làm địa chỉ mặc định"
     },
     "order": {
         "order_his": "Lịch sử đơn hàng",
@@ -348,7 +349,9 @@
         "bk_fail": "Đặt hẹn thất bại",
         "rv_booked": "Bạn có thể xem lại dịch vụ đã đặt hẹn",
         "bk_fail_title": "Có lỗi xảy ra trong quá trình đặt hẹn",
-        "code_err": "Mã lỗi"
+        "code_err": "Mã lỗi",
+        "booking":"Đặt lịch",
+        "booking_his":"Lịch sử"
     },
     "home_2": {
         "categories": "Danh mục",
@@ -385,7 +388,9 @@
         "try": "Hãy thử tìm kiếm",
         "off_service": "Dịch vụ này chưa được kích hoạt bán hàng Online",
         "booking_now": "Đặt hẹn ngay",
-        "instructions_terms": "Hướng dẫn & Điều khoản"
+        "instructions_terms": "Hướng dẫn & Điều khoản",
+        "guide":"Hướng dẫn sử dụng",
+        "edit":"Chỉnh sửa"
     },
     "Contact": {
         "success": "Đã nhận thông tin"

@@ -4,7 +4,7 @@ import "./head.css";
 import { Container } from "@mui/material";
 import ButtonCus from "../../components/ButtonCus";
 import { AppContext } from "../../context/AppProvider";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import img from "../../constants/img";
 import Notification from "./components/Notification";
@@ -272,6 +272,12 @@ function Head(props: IProps) {
                                     )}
                                     <Notification openNo={openNo} />
                                 </div>
+                                <Link
+                                    to={{ pathname: "/chat" }}
+                                    className="head-chat-btn"
+                                >
+                                    <img src={icon.chatPurple} alt="" />
+                                </Link>
                             </div>
                         )}
                         {/* menu for mobile */}

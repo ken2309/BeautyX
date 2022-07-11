@@ -312,7 +312,8 @@
         "add_other_address": "Add other address",
         "default": "Default",
         "change_pass": "Change the password",
-        "save": "Save"
+        "save": "Save",
+        "set_default_address": "Set default address"
     },
     "order": {
         "order_his": "Orders history",
@@ -349,7 +350,9 @@
         "bk_fail": "Booking failed !",
         "rv_booked": "You can review your booked services",
         "bk_fail_title": "An error occurred during the booking process",
-        "code_err": "Code error"
+        "code_err": "Code error",
+        "booking": "Booking",
+        "booking_his": "History"
     },
     "home_2": {
         "categories": "Categories",
@@ -386,7 +389,9 @@
         "try": "Try searching",
         "off_service": "This service has not been activated for online sales",
         "booking_now": "Booking now",
-        "instructions_terms": "Instructions & Terms"
+        "instructions_terms": "Instructions & Terms",
+        "guide": "Guides",
+        "edit": "Edit"
     },
     "Contact": {
         "success": "submit success"

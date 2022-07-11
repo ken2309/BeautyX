@@ -13,9 +13,8 @@ class Tag {
       getServicesChild = () => {
             const url = `/tags`;
             const params = {
-                  "page":2,
                   "filter[group]": "SERVICE",
-                  "include": "children.media|media",
+                  "include": "parent.media|media",
                   "sort": "-organizations_count"
             }
             return axiosClient.get(url, { params })

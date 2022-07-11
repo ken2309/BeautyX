@@ -5,7 +5,7 @@ import Head from '../Head';
 import { Container, Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import './style.css';
-import HomeLoggedCalendar from '../Home/components/HomeLogged/HomeLoggedCalendar';
+import HomeLoggedCalendar from '../Apointment/HomeLoggedCalendar';
 import ServicesUser from '../ServiceUser';
 import useFullScreen from '../../utils/useFullScreen';
 import icon from '../../constants/icon';

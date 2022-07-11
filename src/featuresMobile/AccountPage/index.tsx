@@ -222,7 +222,7 @@ export default function AccountMobile() {
             <div onClick={gotoAccountGuide} className="accountMobile-bot">
                 <div className="accountMobile-bot__tutorial">
                     <img src={icon.book} alt="" />
-                    <p>{t("acc.guide")}</p>
+                    <p>{t("se.guide")}</p>
                 </div>
             </div>
             <Bottom />

@@ -1,15 +1,15 @@
-import React, { Suspense } from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import './assets/font/style.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import './i18n';
-import { Provider } from 'react-redux';
-import store from './redux/store';
+import React, { Suspense } from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import "./assets/font/style.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import "./i18n";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
-import ModalLoad from './components/ModalLoad/index';
+import ModalLoad from "./components/ModalLoad/index";
 
 // Sentry.init({
 //   dsn: "https://847a92f5f1924cd2a67b303d23a132d0@o1115240.ingest.sentry.io/6147072",
@@ -18,14 +18,14 @@ import ModalLoad from './components/ModalLoad/index';
 // });
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <Suspense fallback={(<ModalLoad title='Đang tải...' />)}>
-        <App />
-      </Suspense>
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <Provider store={store}>
+            <Suspense fallback={<ModalLoad title="Đang tải..." />}>
+                <App />
+            </Suspense>
+        </Provider>
+    </React.StrictMode>,
+    document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

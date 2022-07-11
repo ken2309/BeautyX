@@ -184,6 +184,12 @@ import checkFlowGreen from "../assets/icon/checkFlowGreen.svg";
 import momo from "../assets/icon/momo.ico";
 import payon from "../assets/icon/payon.jpg";
 import settingsSliders from "../assets/icon/settingsSliders.svg";
+import crossPurple from "../assets/icon/crossPurple.svg";
+import minusPurple from "../assets/icon/minusPurple.svg";
+import chatPurple from '../assets/icon/chatPurple.svg';
+import friendsPurple from "../assets/icon/friendsPurple.png";
+import plusPurple from "../assets/icon/plusPurple.svg";
+import exclamationPurple from "../assets/icon/exclamationPurple.svg";
 
 const icon = {
     payon,
@@ -367,6 +373,12 @@ const icon = {
     checkFlowGreen,
     settingsSliders,
     servicesPurpleBold,
-    mapMarkerOrg
+    mapMarkerOrg,
+    crossPurple,
+    minusPurple,
+    chatPurple,
+    friendsPurple,
+    plusPurple,
+    exclamationPurple
 };
 export default icon;
