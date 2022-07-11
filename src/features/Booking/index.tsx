@@ -83,7 +83,6 @@ function Booking() {
     }, [location.state]);
     const { servicesBook } = SERVICES_BOOK;
     const branches = org?.branches?.concat(org);
-    //const [branch, setChooseBranch] = useState<any>();
     const [open, setOpen] = useState(false);
     const [chooseE_wall, setChooseE_wall] = useState<any>();
     const [bookTime, setBookTime] = useState({
@@ -92,6 +91,7 @@ function Booking() {
         note: "",
         branch_id: null,
     });
+    const [seatAmount, SetSeatAmount] = useState(1);
     const onDropBranchList = () => {
         branchRef?.current?.classList?.toggle("drop-show-branches");
     };
@@ -141,10 +141,10 @@ function Booking() {
         );
         return values;
     });
-    
+
     const dayBook = formatDatePost(bookTime.date);
     const action = {
-        note: bookTime.note,
+        note: '[ Số lượng người: '+seatAmount+' ] '+bookTime.note,
         time_start: `${dayBook} ${bookTime.time}:00`,
         branch_id: bookTime.branch_id,
         order_id: location.state.order_id,
@@ -229,6 +229,18 @@ function Booking() {
             branch_id: itemMap.subdomain ? null : itemMap.id,
         });
     };
+    const handleSeatsAmount = (props:any) => {
+        switch(props){
+            case 'asc':
+                SetSeatAmount(seatAmount+1);
+                break;
+            case 'desc':
+                SetSeatAmount(seatAmount-1);
+                break;
+            default:
+                break;
+        }
+    }
 
     const handleBooking = () => {
         if (USER) {
@@ -386,6 +398,19 @@ function Booking() {
                                 onClick={() => setOpen(true)}
                                 loading={false}
                             />
+                        </div>
+                        <div className="flex-row-sp booking-cnt__right-time">
+                            <div className="book-seats-amount">
+                                <span className="book-section-title">
+                                    Số lượng người
+                                </span>
+                                <div className="seats_amount-cnt">
+                                    <button className="desc" disabled={(seatAmount === 1)?true:false} onClick={()=>handleSeatsAmount('desc')}>{'-'}</button>
+                                    <div className="book-section-title amount">{seatAmount}</div>
+                                    <button className="asc"  disabled={(seatAmount >= 10)?true:false} onClick={()=>handleSeatsAmount('asc')}>{'+'}</button>
+                                </div>
+                            </div>
+
                         </div>
                         <div className="booking-cnt__right-time">
                             <span className="book-section-title">Ghi chú</span>
