@@ -74,7 +74,7 @@ function FullImage(props: IProps) {
                                 </span>
                             </div>
                             <span className="full-name">
-                                {comment?.user.fullname || "Khách"}
+                                {comment?.user?.fullname || "Khách"}
                             </span>
                             <span className="create">
                                 {formatDate(comment?.created_at)}

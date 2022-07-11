@@ -69,7 +69,7 @@ function CartItem(props: IProps) {
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         if (cartItem.is_type === 1) {
             history.push({
-                pathname: `/Product-detail/${slugify(cartItem.name)}`,
+                pathname: `/san-pham/${slugify(cartItem.name)}`,
                 search: `${cartItem.org_id},${cartItem.id},${cartItem.is_type}`,
             });
         } else if (cartItem.is_type === 2) {

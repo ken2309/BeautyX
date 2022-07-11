@@ -32,20 +32,22 @@ import {
     formatRouterLinkService
 } from "../../../utils/formatRouterLink/formatRouter";
 
- // ==== api tracking ====
- import tracking from "../../../api/trackApi";
- // end
+// ==== api tracking ====
+import tracking from "../../../api/trackApi";
+// end
 // google tag event
-import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+import { GoogleTagPush, GoogleTagEvents } from '../../../utils/dataLayer';
 // end 
 interface IProps {
     inPayment?: boolean;
     cartItem: any;
-    org?: any
+    org?: any,
+    setOpenBranch?: any,
+    openBranch?: any,
 }
 
 function CartItem(props: IProps) {
-    const { cartItem, inPayment, org } = props;
+    const { cartItem, inPayment, org, setOpenBranch, openBranch } = props;
     const [open, setOpen] = useState(false);
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
@@ -60,6 +62,14 @@ function CartItem(props: IProps) {
             dispatch(onClearPrevCartItem())
             const action = checkConfirm({ ...cartItem, isConfirm: !cartItem.isConfirm });
             dispatch(action);
+        }
+        //clear branch choose 
+        if (cartItem.org_id !== org?.id) {
+            setOpenBranch({
+                ...openBranch,
+                branch: null,
+                org: cartItem.org
+            })
         }
     };
     const handleAscCart = () => {
@@ -85,7 +95,7 @@ function CartItem(props: IProps) {
         setOpenConfirm(true);
     };
     const goBackDetail = () => {
-        tracking.USER_ITEM_CLICK(cartItem.org.id,cartItem.id)
+        tracking.USER_ITEM_CLICK(cartItem.org.id, cartItem.id)
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         if (cartItem.is_type === 1) {
             const pathProductOb = formatRouterLinkProduct(cartItem.cart_item, cartItem.org)

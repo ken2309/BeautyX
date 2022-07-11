@@ -174,6 +174,7 @@ import arrowSmallUpWhite from "../assets/icon/arrowSmallUpWhite.svg";
 import starLine from "../assets/icon/star.svg";
 import settingPurple from "../assets/icon/setting-purple.svg";
 import servicesPurpleBold from "../assets/icon/servicesPurpleBold.svg";
+import mapMarkerOrg from "../assets/icon/mapMarkerOrg.svg";
 
 // btn assistan home
 import xWhite from "../assets/icon/x-white.svg";
@@ -365,6 +366,7 @@ const icon = {
     starLine,
     checkFlowGreen,
     settingsSliders,
-    servicesPurpleBold
+    servicesPurpleBold,
+    mapMarkerOrg
 };
 export default icon;

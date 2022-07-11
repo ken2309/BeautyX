@@ -3,7 +3,9 @@
     height: 100vh;
     position: relative;
 }
-
+.map-cnt{
+    height: 100%;
+}
 .open-map {
     padding: 8px 16px;
     background-color: var(--purple);

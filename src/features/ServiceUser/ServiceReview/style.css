@@ -2,7 +2,9 @@
     width: 38vw;
     height: 92vh;
     background-color: var(--white);
-    padding: 0px 12px;
+    padding: 24px;
+    border-radius: 16px;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

@@ -4,7 +4,6 @@ import HomePromo from "./components/HomePromo";
 import HomeDeal from "./components/HomeDeal";
 import HomeCard from "./components/HomeCard";
 import HomeProvince from "./components/HomeProvince";
-import HomeServicesRe from "./components/HomeServicesRe";
 import HomeDiscount from "../HomeDiscounts";
 //import CategoryTree from '../CategoryTree';
 
@@ -29,7 +28,6 @@ function HomeSecond(props: any) {
                 <HomeDeal />
                 <HomeCard />
                 <HomeProvince />
-                <HomeServicesRe />
             </Container>
         </div>
     );

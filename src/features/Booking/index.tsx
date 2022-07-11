@@ -141,6 +141,7 @@ function Booking() {
         );
         return values;
     });
+    
     const dayBook = formatDatePost(bookTime.date);
     const action = {
         note: bookTime.note,

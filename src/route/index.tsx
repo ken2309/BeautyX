@@ -48,6 +48,7 @@ import AssistantBtn from "../components/AssistantBtn";
 import ProductsByCate from "../features/CategoryTree/ProductsByCate";
 
 import Result from "../features/Results";
+import ChatOrg from "../features/Chat/ChatOrg";
 
 const RouterPage = (
     props: { pageComponent: JSX.Element } & RouteComponentProps
@@ -96,7 +97,7 @@ function RouterConfig(props: any) {
       component: <Cart />,
     },
     {
-      path: "/product-detail/:name",
+      path: "/san-pham/:name",
       component: <ProductDetail />,
     },
     {
@@ -247,6 +248,7 @@ function RouterConfig(props: any) {
         ))}
       </Switch>
       <AssistantBtn />
+      <ChatOrg/>
     </BrowserRouter>
   );
 }

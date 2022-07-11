@@ -4,32 +4,35 @@ import { AppContext } from "../../context/AppProvider";
 interface IProps {
     totalItem: number | undefined;
     openSeeMoreCmt: any;
+    item?: any;
 }
 export default function TotalStartEvaluate(props: IProps) {
-    const {t} = useContext(AppContext);
-    const [value, setValue] = React.useState<number | null>(4);
-    const { totalItem, openSeeMoreCmt } = props;
+    const { t } = useContext(AppContext);
+    const [value, setValue] = React.useState<number | null>(5);
+    const { totalItem, openSeeMoreCmt, item } = props;
     return (
         <>
             {/* rating pc */}
             <div className="evaluate-rating">
                 <div className="evaluate-rating__left">
                     <div className="evaluate-rating__total">
-                        <span>4.8/</span>
+                        <span>{item.rating}/</span>
                         <span>5</span>
                     </div>
                     <div className="evaluate-rating__start">
                         <Rating
                             readOnly
                             name="simple-controlled"
-                            value={value}
-                            onChange={(event, newValue) => {
-                                setValue(newValue);
-                            }}
+                            value={item.rating}
+                            // onChange={(event, newValue) => {
+                            //     setValue(item.rating);
+                            // }}
                         />
                     </div>
                     <div className="evaluate-rating__quantity">
-                        <span>{totalItem} {t("Mer_de.feedback")}</span>
+                        <span>
+                            {totalItem} {t("Mer_de.feedback")}
+                        </span>
                     </div>
                 </div>
                 <div className="evaluate-rating__right">

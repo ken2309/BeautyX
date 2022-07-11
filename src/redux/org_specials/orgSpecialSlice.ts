@@ -6,14 +6,11 @@ import { STATUS } from '../status'
 export const fetchAsyncServicesSpecial: any = createAsyncThunk(
     "ORG_SPECIALS/fetchAsyncServicesSpecial",
     async (values: any) => {
-        const res = await serviceApi.getSpecialPriceByOrg_id({
-            page: values.page,
-            org_id: values.org_id
-        })
+        const res = await serviceApi.getByOrgId(values)
         const payload = {
-            services_special: res.data.context.data,
+            services_special: res?.data.context.data,
             page: values.page,
-            totalItem: res.data.context.total,
+            totalItem: res?.data.context.total,
         }
         return payload
     }
@@ -21,14 +18,11 @@ export const fetchAsyncServicesSpecial: any = createAsyncThunk(
 export const fetchProductsSpecial: any = createAsyncThunk(
     "ORG/fetchProductsSpecial",
     async (values: any) => {
-        const res = await productsApi.getSpecialPriceByOrg_id({
-            page: values.page,
-            org_id: values.org_id
-        })
+        const res = await productsApi.getByOrgId(values)
         const payload = {
-            products_special: res.data.context.data,
+            products_special: res?.data.context.data,
             page: values.page,
-            totalItem: res.data.context.total
+            totalItem: res?.data.context.total
         }
         return payload
     }

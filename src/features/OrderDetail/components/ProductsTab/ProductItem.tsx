@@ -25,7 +25,7 @@ function ProductItem(props: any) {
   const handleDetailProduct = () => {
     scrollTop();
     history.push({
-      pathname: `/product-detail/${slugify(product?.product_name)}`,
+      pathname: `/san-pham/${slugify(product?.product_name)}`,
       search: `id=${product?.id}&org=${org?.id}`,
     })
   };

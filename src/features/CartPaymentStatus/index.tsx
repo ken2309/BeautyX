@@ -19,6 +19,7 @@ import Notification from '../../components/Notification/index';
 import { useHistory } from 'react-router-dom';
 import { clearByCheck } from '../../redux/cartSlice';
 import { onClearOrder } from '../../redux/order/orderSlice';
+import { ICart } from '../../interface/cart'
 
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
@@ -53,8 +54,8 @@ function CartPaymentStatus() {
     const intervalRef = useRef<any>();
     const transaction_uuid = res?.payment_gateway?.transaction_uuid;
     const action = location?.state?.actionAfter
-    const listPayment = location.state?.listPayment;
-
+    //listPayment from page buy now product, booking now
+    const listPayment: ICart[] = location.state?.listPayment;
     const handlePostApp = async () => {
         const params = {
             order_id: action.order_id,
@@ -126,7 +127,9 @@ function CartPaymentStatus() {
     useEffect(() => {
         if (transaction_uuid) {
             setInter();
-            // tracking.CONFIRM_SCREEN_LOAD(listPayment[0].org_id,formatProductList(listPayment),res.amount)
+            if (listPayment) {
+                tracking.CONFIRM_SCREEN_LOAD(listPayment[0].org_id, formatProductList(listPayment), res.amount)
+            }
         }
     }, []);
     const handleCancelPayment = () => {

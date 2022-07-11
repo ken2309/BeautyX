@@ -15,6 +15,7 @@ import PopupDetailContact from "./PopupDetailContact";
 import { extraOrgTimeWork } from "./Functions/extraOrg";
 import { AppContext } from "../../../context/AppProvider";
 import { STATUS } from "../../../redux/status";
+import { onToggleOpenChat } from '../../../redux/chat/chatOrgSlice'
 
 interface IProps {
     org: IOrganization;
@@ -89,6 +90,9 @@ function OrgDetail(props: IProps) {
     const onActiveTabGallery = () => {
         dispatch(onActiveTab(7));
     };
+    const onOpenChatOrg = () => {
+        dispatch(onToggleOpenChat(true))
+    }
     return (
         <div className="org-detail">
             <Container>
@@ -252,10 +256,10 @@ function OrgDetail(props: IProps) {
                                                         <li
                                                             style={
                                                                 index + 2 ===
-                                                                today
+                                                                    today
                                                                     ? {
-                                                                          color: "var(--purple)",
-                                                                      }
+                                                                        color: "var(--purple)",
+                                                                    }
                                                                     : {}
                                                             }
                                                             key={index}
@@ -286,10 +290,10 @@ function OrgDetail(props: IProps) {
                                     style={
                                         org?.is_favorite
                                             ? {
-                                                  backgroundColor:
-                                                      "var(--purple)",
-                                                  color: "var(--bgWhite)",
-                                              }
+                                                backgroundColor:
+                                                    "var(--purple)",
+                                                color: "var(--bgWhite)",
+                                            }
                                             : {}
                                     }
                                     onClick={handleFavoriteOrg}
@@ -299,12 +303,17 @@ function OrgDetail(props: IProps) {
                                         : t("Mer_de.flow")}
                                 </button>
                                 <br />
-                                <button
+                                {/* <button
                                     onClick={() => {
                                         setOpenPopupContact(true);
                                     }}
                                 >
                                     {t("Mer_de.contact")}
+                                </button> */}
+                                <button
+                                    onClick={onOpenChatOrg}
+                                >
+                                    Chat
                                 </button>
                             </div>
                         </div>

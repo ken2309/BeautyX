@@ -22,7 +22,7 @@ function TabTrust(props: any) {
     const history = useHistory();
     async function getOrgsByTrust() {
         try {
-            const res = await orgApi.getOrgsByTrust({
+            const res = await orgApi.getAll({
                 page: 1
             });
             setData({

@@ -39,7 +39,7 @@ function Result() {
     }
     const paramsFilter = {
         page: 1,
-        tags: params?.tag || tags.join("|"),
+        tags: params?.tag ? [params?.tag, ...tags].join("|") : tags.join("|"),
         province_code: params?.province || province?.province_code,
         district_code: district?.district_code,
         sort: sort

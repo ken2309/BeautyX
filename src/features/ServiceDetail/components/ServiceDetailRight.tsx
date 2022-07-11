@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import icon from "../../../constants/icon";
 import onErrorImg from "../../../utils/errorImg";
@@ -17,25 +17,38 @@ import { IOrganization } from "../../../interface/organization";
 import { Service } from "../../../interface/service";
 import useFullScreen from "../../../utils/useFullScreen";
 import { AppContext } from "../../../context/AppProvider";
+import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
+import { handleScroll } from "../onScrollChange";
+import { Rating } from "@mui/material";
 
 interface IProps {
     org: IOrganization;
     service: Service;
     setOpenDrawer?: any;
     NOW?: boolean;
+    setValue?: any;
 }
 
 export default function ServiceDetailRight(props: IProps) {
-    const { org, service, setOpenDrawer, NOW } = props;
-    const {t} = useContext(AppContext);
+    const { org, service, setOpenDrawer, NOW, setValue } = props;
+    const { t } = useContext(AppContext);
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
+    const { COMMENTS } = useSelector((state: any) => state.SERVICE);
     const history = useHistory();
     const [popupSuccess, setPopupSuccess] = useState(false);
     const percent: any = service
         ? Math.round(100 - (service.special_price / service?.price) * 100)
         : null;
     const { USER } = useSelector((state: any) => state.USER);
+
+    // get today's activity date in org
+    const now = new Date();
+    const today = now.getDay() + 1;
+    const orgTimes: any = org && extraOrgTimeWork(org?.opening_time);
+    const time_works_today = orgTimes?.find(
+        (item: any, index: number) => index + 2 === today
+    );
 
     const valueService = {
         org_id: org?.id,
@@ -90,6 +103,7 @@ export default function ServiceDetailRight(props: IProps) {
             dispatch(clearAllServices());
         }
     };
+
     return (
         <div className="service-detail__right">
             <div className="detail-right__head">
@@ -107,7 +121,19 @@ export default function ServiceDetailRight(props: IProps) {
                 <div className="detail-right__head-info">
                     <div className="detail-right__org">
                         <p>{org.name}</p>
-                        <p>{"Đang mở cửa"}</p>
+                        {time_works_today?.status && (
+                            <>
+                                {time_works_today?.status === "on" ? (
+                                    <p style={{ color: "var(--green)" }}>{`${t(
+                                        "detail_item.open"
+                                    )}`}</p>
+                                ) : (
+                                    <p style={{ color: "var(--red_2)" }}>{`${t(
+                                        "detail_item.close"
+                                    )}`}</p>
+                                )}
+                            </>
+                        )}
                     </div>
                     <div className="detail-right__name">
                         <p>{service.service_name}</p>
@@ -123,17 +149,37 @@ export default function ServiceDetailRight(props: IProps) {
                         </div>
                     </div>
                     <div className="detail-right__evaluate">
-                        <div className="evaluate-item">
-                            <p>{service.rating}</p>
-                            <img src={icon.star} alt="" />
+                        <div
+                            onClick={() => setValue(2)}
+                            className="evaluate-item cursor-pointer"
+                        >
+                            <Rating
+                                size="small"
+                                readOnly
+                                name="simple-controlled"
+                                value={service.rating}
+                            />
+
+                            {COMMENTS.totalItem > 0 ? (
+                                <p>
+                                    {`(${t("detail_item.see")} ${
+                                        COMMENTS.totalItem
+                                    } ${t("detail_item.evaluate")})`}
+                                </p>
+                            ) : (
+                                <p>{`(${t("detail_item.not_evaluate")})`}</p>
+                            )}
                         </div>
                         <div className="evaluate-item">
-                            <p>{service.favorites_count}</p>
                             <img src={icon.Favorite} alt="" />
+                            <p>{service.favorites_count}</p>
                         </div>
                         <div className="evaluate-item">
-                            <p>10</p>
                             <img src={icon.ShoppingCartSimple} alt="" />
+                            <p>
+                                {`${t("detail_item.sold")}`}{" "}
+                                {service.bought_count}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -146,7 +192,10 @@ export default function ServiceDetailRight(props: IProps) {
                             percent < 50 &&
                             percent !== 0 && (
                                 <div className="detail-right__percent">
-                                    <p>Giảm {percent}%</p>
+                                    <p>
+                                        {`${t("detail_item.off")}`}
+                                        {percent}%
+                                    </p>
                                 </div>
                             )}
                         <div className="detail-right__price">
@@ -171,18 +220,19 @@ export default function ServiceDetailRight(props: IProps) {
                         <p>{t("order.time")}:</p>
                         <div className="detail-right__duration flexX-gap-4">
                             <img src={icon.alarmClock} alt="" />
-                            <p>{service.duration} Phút</p>
+                            <p>
+                                {service.duration}{" "}
+                                {`${t("detail_item.minute")}`}
+                            </p>
                         </div>
                     </div>
                 </div>
                 <DetailOrgCard org={org} />
             </div>
-            {
-                (service?.is_momo_ecommerce_enable === false || org?.is_momo_ecommerce_enable === false ) &&
-                <span className="detail-right__no">
-                    {t("se.off_service")}
-                </span>
-            }
+            {(service?.is_momo_ecommerce_enable === false ||
+                org?.is_momo_ecommerce_enable === false) && (
+                <span className="detail-right__no">{t("se.off_service")}</span>
+            )}
             <div className="detail-right__bottom">
                 <div className="bottom-quantity">
                     <p className="bottom-quantity__text">{t("pr.quantity")}:</p>
@@ -233,26 +283,25 @@ export default function ServiceDetailRight(props: IProps) {
                     <div className="flex-row flexX-gap-8">
                         <div
                             style={
-                                (
-                                    service.is_momo_ecommerce_enable
-                                    && org.is_momo_ecommerce_enable
-                                )
-                                    ? {} : { opacity: "0.4", cursor: "not-allowed" }
+                                service.is_momo_ecommerce_enable &&
+                                org.is_momo_ecommerce_enable
+                                    ? {}
+                                    : { opacity: "0.4", cursor: "not-allowed" }
                             }
                             onClick={onBookingNow}
                             className="bottom-addCart bottom-buy__now"
                         >
-                             <p>{t("se.booking_now")}</p>
+                            <p>{t("se.booking_now")}</p>
                         </div>
                         <div
                             style={
-                                (
-                                    service.is_momo_ecommerce_enable
-                                    && org.is_momo_ecommerce_enable
-                                )
-                                    ? {} : { opacity: "0.4", cursor: "not-allowed" }
+                                service.is_momo_ecommerce_enable &&
+                                org.is_momo_ecommerce_enable
+                                    ? {}
+                                    : { opacity: "0.4", cursor: "not-allowed" }
                             }
-                            onClick={handleAddCart} className="bottom-addCart"
+                            onClick={handleAddCart}
+                            className="bottom-addCart"
                         >
                             <img src={icon.ShoppingCartSimpleWhite} alt="" />
                             <p>{t("pr.add_to_cart")}</p>
@@ -263,7 +312,7 @@ export default function ServiceDetailRight(props: IProps) {
             <PopupSuccess
                 popup={popupSuccess}
                 setPopup={setPopupSuccess}
-                title={`Đã thêm ${service.service_name} vào giỏ hàng`}
+                title={service.service_name}
             />
         </div>
     );

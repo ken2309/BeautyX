@@ -8,7 +8,7 @@ import img, { paymentMethod, social } from "../../constants/img";
 import icon from "../../constants/icon";
 
 function Footer() {
-    const url_map = `https://maps.google.com/?q=10.79319953408399,106.69011243982503`;
+    const url_map = `https://goo.gl/maps/dnGMKnfdeB91xCj7A`;
     const data_footer = [
         {
             id: 1,
@@ -79,7 +79,7 @@ function Footer() {
                 },
                 {
                     id: 26,
-                    title: "Trách nhiệm và trách nhiệm",
+                    title: "Trách nhiệm",
                     type: "URL",
                     url: "/",
                 },
@@ -364,10 +364,10 @@ function Footer() {
                         )
                     }
                 >
-                    Công ty CP MYSPA - Lầu 3, 27K Trần Nhật Duật, Phường Tân
-                    Định, Quận 1, TP.HCM - GPĐKKD: 0314964245, cấp
-                    ngày:03/04/2018, bởi Phòng Đăng ký kinh doanh – Sở kế hoạch
-                    và Đầu tư TP.HCM
+                    © 2018 MYSPA JSC - Công ty CP MYSPA - Lầu 4, Nam Giao
+                    building 261-263 Phan Xích Long, Phường 2, Quận Phú Nhuận,
+                    TP.HCM - GPĐKKD: 0314964245, cấp ngày: 03/04/2018, bởi Phòng
+                    Đăng ký kinh doanh – Sở kế hoạch và Đầu tư TP.HCM
                 </div>
             </Container>
         </div>

@@ -15,6 +15,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { extraParamsUrl } from '../../utils/extraParamsUrl';
 import Bottom from '../../featuresMobile/Bottom';
 import { AppContext } from '../../context/AppProvider';
+import Footer from '../Footer';
 
 function Calendar() {
     const {t} = useContext(AppContext);
@@ -79,6 +80,7 @@ function Calendar() {
                 </div>
             </div>
             <Bottom />
+            <Footer/>
         </>
     );
 }

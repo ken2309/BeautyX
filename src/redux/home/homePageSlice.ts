@@ -44,7 +44,7 @@ export const fetchAsyncServicesRandom: any = createAsyncThunk(
 export const fetchAsyncOrgsFavorite: any = createAsyncThunk(
     "HOME_PAGE/fetchAsyncOrgsFavorite",
     async (values: any) => {
-        const res = await orgApi.getOrgByKeyword(values);
+        const res = await orgApi.getAll(values);
         return {
             orgs: res.data.context.data,
             page: values.page,

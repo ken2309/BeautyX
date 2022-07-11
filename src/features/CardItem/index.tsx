@@ -25,7 +25,7 @@ function CardItem(props: any) {
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         if (is_type === 1) {
             history.push({
-                pathname: `/product-detail/${slugify(name)}`,
+                pathname: `/span-pham/${slugify(name)}`,
                 search: `${org.id},${detail.id},${is_type}`,
                 state: { org, detail, name },
             });

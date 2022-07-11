@@ -27,8 +27,8 @@ export const LoadingServices = (props: IPropsSer) => {
     return (
         <ul className="result-orgs-loading-cnt">
             {
-               arr.map((i:number, index:number) => (
-                    <li key={index} className="result-orgs-loading-cnt__item service-item">
+                arr.map((i: number, index: number) => (
+                    <li style={(!IS_MB && width) ? { width: width } : {}} key={index} className="result-orgs-loading-cnt__item service-item">
                         <Skeleton animation="wave" />
                         <Skeleton animation="wave" />
                     </li>
@@ -41,7 +41,7 @@ export const LoadingServicesRow = () => {
     return (
         <ul className="result-orgs-loading-cnt-row">
             {
-               arr.map((i:number, index:number) => (
+                arr.map((i: number, index: number) => (
                     <li key={index} className="result-orgs-loading-cnt__item service-item">
                         <Skeleton animation="wave" />
                         <Skeleton animation="wave" />
