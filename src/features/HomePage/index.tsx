@@ -43,7 +43,7 @@ export default function HomePage() {
             <Container>
                 <HomeHotDeal />
                 <HomeTopService />
-                {IS_MB && <HomeHotTrend />}
+                {/* {IS_MB && <HomeHotTrend />} */}
                 <HomeFavorite />
                 <HomeProvince />
                 <HomeRecomment />
