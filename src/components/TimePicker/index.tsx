@@ -15,7 +15,10 @@ interface IProps {
 function TimePicker(props: IProps) {
     const { onChange, disablePrev, org, bookTime } = props;
     const now = new Date();
-    const today = now.getDay() + 1;
+    let today = now.getDay() + 1;
+    if (now.getDay() + 1 === 1) {
+        today = 8
+    }
     const orgTimes = org && extraOrgTimeWork(org?.opening_time);
     const time_works_today = orgTimes?.find(
         (item: any, index: number) => index + 2 === today
