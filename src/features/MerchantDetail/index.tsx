@@ -44,7 +44,6 @@ function MerchantDetail() {
     const ORG_DISCOUNTS = useSelector((state: any) => state.ORG_DISCOUNTS);
 
     const { org, status, tab, GALLERIES } = ORG;
-    console.log("org", org);
     const callOrgDetail = () => {
         if (sub_domain !== org?.subdomain) {
             dispatch(fetchAsyncOrg(sub_domain));

@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { AppContext } from "../../../context/AppProvider";
 import { IOrganization } from "../../../interface/organization";
 import { Product } from "../../../interface/product";
 import { fetchAsynProductRecomment } from "../../../redux/org_products/productSlice";
@@ -12,6 +13,7 @@ interface IProps {
 }
 export default function ProductDetailRecomment(props: IProps) {
     const params: any = extraParamsUrl();
+    const { t } = useContext(AppContext);
     const { org } = props;
     const dispatch = useDispatch();
     const { PRODUCT, PRODUCT_REC } = useSelector((state: any) => state.PRODUCT);
@@ -25,7 +27,7 @@ export default function ProductDetailRecomment(props: IProps) {
                     page: 1,
                     org_id: params.org,
                     cate_id: PRODUCT.product.category?.id,
-                    isEnable: org?.is_momo_ecommerce_enable && true
+                    isEnable: org?.is_momo_ecommerce_enable && true,
                 };
                 dispatch(fetchAsynProductRecomment(values));
             }
@@ -38,7 +40,9 @@ export default function ProductDetailRecomment(props: IProps) {
 
     return (
         <div className="detail-recommend">
-            <div className="detail-recommend__title">Sản phẩm tương tự</div>
+            <div className="detail-recommend__title">
+                {t("detail_item.similar_product")}
+            </div>
             <ul className="detail-recommend__list">
                 {PRODUCT_REC?.products?.map((item: Product, index: number) => (
                     <li key={index}>

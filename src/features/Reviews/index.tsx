@@ -157,11 +157,14 @@ function Review(props: IProps) {
                 {totalItem && totalItem > 0 ? (
                     <div className="total-comment__wrap">
                         <span className="total-comment">
-                            Tổng {totalItem} đánh giá
+                            {`${t("detail_item.total")}`} {totalItem}{" "}
+                            {`${t("detail_item.evaluate")}`}
                         </span>
                     </div>
                 ) : (
-                    <span className="total-comment">Chưa có bình luận nào</span>
+                    <span className="total-comment">
+                        {t("detail_item.not_comment")}
+                    </span>
                 )}
                 {/* {data.comments.length > 0 ? (
                     <InfiniteScroll

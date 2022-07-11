@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
 import "../ServicePromoItem/service-promo-item.css";
@@ -9,8 +9,9 @@ import scrollTop from "../../../utils/scrollTop";
 import { formatRouterLinkService } from "../../../utils/formatRouterLink/formatRouter";
 
 // google tag event
-import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
-// end 
+import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
+import { AppContext } from "../../../context/AppProvider";
+// end
 interface IProps {
     service: Service;
     org: IOrganization;
@@ -23,7 +24,9 @@ function ServiceItem(props: IProps) {
     const percent: any = Math.round(
         100 - (service?.special_price / service?.price) * 100
     );
-    const pathServiceOb = formatRouterLinkService(service, org)
+    const { t } = useContext(AppContext);
+
+    const pathServiceOb = formatRouterLinkService(service, org);
     const onDetail = () => {
         scrollTop();
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);

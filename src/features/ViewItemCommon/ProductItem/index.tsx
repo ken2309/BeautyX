@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../ServicePromoItem/service-promo-item.css";
 import { Product } from "../../../interface/product";
 import { IOrganization } from "../../../interface/organization";
@@ -8,8 +8,9 @@ import { Link } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import { formatRouterLinkProduct } from "../../../utils/formatRouterLink/formatRouter";
 // google tag event
-import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
-// end 
+import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
+import { AppContext } from "../../../context/AppProvider";
+// end
 interface IProps {
     product: Product;
     org: IOrganization;
@@ -18,6 +19,8 @@ interface IProps {
 
 function ProductItem(props: IProps) {
     const { product, org, changeStyle } = props;
+    const { t } = useContext(AppContext);
+
     const percent = Math.round(
         100 - (product?.special_price / product?.retail_price) * 100
     );
@@ -25,7 +28,10 @@ function ProductItem(props: IProps) {
     return (
         <Link
             to={pathProductOb}
-            onClick={() =>{scrollTop();GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);}}
+            onClick={() => {
+                scrollTop();
+                GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
+            }}
             className={
                 changeStyle
                     ? "ser-pro-item ser-pro-item__change"
@@ -50,7 +56,7 @@ function ProductItem(props: IProps) {
                 <div className="ser-promo">
                     {product?.special_price > 0 && (
                         <div className="ser-promo__percent">
-                            Giảm {percent} %
+                            {`${t("detail_iten.off")}`} {percent}%
                         </div>
                     )}
                     {/* <div className="flex-row ser-promo__bot">

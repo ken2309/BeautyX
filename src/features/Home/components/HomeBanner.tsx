@@ -66,9 +66,8 @@ function HomeBanner(props: any) {
     //   },
     // ];
     const handleClick = () => {
-        console.log(chooseBanner);
+        // console.log(chooseBanner);
         if (chooseBanner) {
-
             switch (chooseBanner.type) {
                 case "VIDEO":
                     return setOpenVideo(true);
@@ -79,7 +78,6 @@ function HomeBanner(props: any) {
                 case "PROMOTION":
                     return console.log("PROMOTION");
                 case "SEARCH_RESULT":
-                    console.log(chooseBanner)
                     return history.push({
                         pathname: `/home-banner-result`,
                         state: chooseBanner,
@@ -94,8 +92,8 @@ function HomeBanner(props: any) {
         }
     };
     useEffect(() => {
-        banners.length > 0 && setChooseBanner(banners[0])
-    }, [banners])
+        banners.length > 0 && setChooseBanner(banners[0]);
+    }, [banners]);
     return (
         <div className="home-banner">
             <Slider {...settings}>

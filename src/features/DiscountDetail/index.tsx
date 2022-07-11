@@ -1,6 +1,6 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Head from "../Head";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,14 +39,16 @@ import Footer from "../Footer";
 import ModalLoad from "../../components/ModalLoad";
 
 // google tag event
-import {GoogleTagPush,GoogleTagEvents} from '../../utils/dataLayer';
-// end 
+import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
+import { AppContext } from "../../context/AppProvider";
+// end
 function DiscountDetail() {
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
     const IS_MB = useFullScreen();
     const discount: IDiscountPar = DISCOUNT.discount;
     const status_detail = DISCOUNT.status;
     const is_mobile = useFullScreen();
+    const { t } = useContext(AppContext);
     const [open, setOpen] = useState({
         NOW: true,
         open: false,
@@ -121,10 +123,10 @@ function DiscountDetail() {
 
     const [value, setValue] = useState<any>(1);
     let tabs = [
-        { id: 1, title: "Mô tả" },
-        { id: 2, title: "Đánh giá" },
-        { id: 3, title: "Doanh nghiệp" },
-        { id: 4, title: "Hướng dẫn & Điều khoản" },
+        { id: 1, title: t("pr.description") },
+        { id: 2, title: t("Mer_de.feedback") },
+        { id: 3, title: t("my_ser.business") },
+        { id: 4, title: t("se.instructions_terms") },
     ];
 
     let refDesc = useRef<any>();
@@ -196,7 +198,9 @@ function DiscountDetail() {
 
     return (
         <>
-            {status_detail !== STATUS.SUCCESS && <ModalLoad title="Đang tải..." />}
+            {status_detail !== STATUS.SUCCESS && (
+                <ModalLoad title="Đang tải..." />
+            )}
             <HeadTitle
                 title={
                     status_detail === "LOADING" ? "Loading..." : discount?.title
@@ -237,10 +241,12 @@ function DiscountDetail() {
                                                 className="service-detail__description"
                                             >
                                                 <p>
-                                                    Mô tả:{" "}
+                                                    {t("pr.description")}:{" "}
                                                     {service.description
                                                         ? service.description
-                                                        : "Đang cập nhật"}
+                                                        : t(
+                                                              "detail_item.updating"
+                                                          )}
                                                 </p>
                                             </div>
                                         </TabPanel>
@@ -263,7 +269,7 @@ function DiscountDetail() {
                                                     }
                                                 />
                                                 {COMMENTS.comments &&
-                                                    COMMENTS.comments.length >=
+                                                COMMENTS.comments.length >=
                                                     8 ? (
                                                     <div
                                                         style={{
@@ -275,7 +281,11 @@ function DiscountDetail() {
                                                         }}
                                                         className="seemore-cmt"
                                                     >
-                                                        <p>{"Xem tất cả >>"}</p>
+                                                        <p>
+                                                            {t(
+                                                                "detail_item.see_more"
+                                                            )}
+                                                        </p>
                                                     </div>
                                                 ) : null}
                                                 <ReviewsContainer
@@ -298,20 +308,22 @@ function DiscountDetail() {
                                             >
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                        <>
-                                                            <p className="service-detail__title">
-                                                                Doanh nghiệp
-                                                            </p>
-                                                            <div className="service-detail__org-mb">
-                                                                <DetailOrgCard
-                                                                    org={ORG?.org}
-                                                                />
-                                                            </div>
-                                                            <OrgInformation
+                                                    <>
+                                                        <p className="service-detail__title">
+                                                            {t(
+                                                                "detail_item.merchant"
+                                                            )}
+                                                        </p>
+                                                        <div className="service-detail__org-mb">
+                                                            <DetailOrgCard
                                                                 org={ORG?.org}
                                                             />
-                                                        </>
-                                                    )}
+                                                        </div>
+                                                        <OrgInformation
+                                                            org={ORG?.org}
+                                                        />
+                                                    </>
+                                                )}
                                             </div>
                                         </TabPanel>
                                         <TabPanel value={value}>
@@ -330,7 +342,7 @@ function DiscountDetail() {
                                 }}
                                 style={{ backgroundColor: "var(--orange)" }}
                             >
-                                <p>Đặt hẹn ngay</p>
+                                <p>{t("detail_item.booking_now")}</p>
                             </button>
                             <button
                                 onClick={() => {
@@ -342,7 +354,7 @@ function DiscountDetail() {
                                     src={icon.ShoppingCartSimpleWhite}
                                     alt=""
                                 />
-                                <p>Thêm vào giỏ hàng</p>
+                                <p>{t("detail_item.add_cart")}</p>
                             </button>
                         </div>
                         <Drawer

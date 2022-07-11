@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import icon from "../../../constants/icon";
@@ -10,8 +10,11 @@ import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
 import Slider from "react-slick";
 import useFullScreen from "../../../utils/useFullScreen";
+import { AppContext } from "../../../context/AppProvider";
 const PrevButton = (props: any) => {
     const { onClick } = props;
+    const { t } = useContext(AppContext);
+
     return (
         <button onClick={onClick} className="detail-btn__prev">
             <img
@@ -39,6 +42,8 @@ export default function ServiceDetailLeft(props: any) {
     const videoRef = useRef<any>();
     const history = useHistory();
     const dispatch = useDispatch();
+    const { t } = useContext(AppContext);
+
     const percent = service
         ? Math.round(100 - (service.special_price / service?.price) * 100)
         : null;
@@ -181,14 +186,14 @@ export default function ServiceDetailLeft(props: any) {
                 <div className="service-detail__mobile-mid">
                     <img src={icon.alarmClock} alt="" />
                     <p className="service-detail__mobile-duration">
-                        {service.duration} phút
+                        {service.duration} {t("detail_item.minute")}
                     </p>
                 </div>
 
                 <div className="service-detail__mobile-bottom">
                     {service?.special_price > 0 && (
                         <div className="service-detail__mobile-percent">
-                            Giảm {percent}%
+                            {t("detail_item.off")} {percent}%
                         </div>
                     )}
                     <div className="service-detail__mobile-price">

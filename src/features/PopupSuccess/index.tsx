@@ -34,12 +34,8 @@ function PopupSuccess(props: any) {
         <Dialog open={popup}>
             <div className="flex-column pu-success">
                 <img className="pu-success__img" src={icon.success} alt="" />
-                <p
-                    style={{ color: "var(--black)" }}
-                    className="pu-success__title"
-                >
-                    {`${t("detail_item.add")} `} <span> {title} </span>
-                    {` ${t("detail_item.to_cart")}`}
+                <p style={{ color: "unset" }} className="pu-success__title">
+                    <span className="pu-success__title">{title}</span>
                 </p>
                 <div
                     style={

@@ -185,7 +185,8 @@
         "cancel": "Hủy",
         "delete_all": "Xóa tất cả",
         "payment_now": "Mua ngay",
-        "must_sign_in": "Vui lòng đăng nhập trước khi thanh toán"
+        "must_sign_in": "Vui lòng đăng nhập trước khi thanh toán",
+        "limit_item_discount": "Giá dịch vụ đã thay đổi vì bạn chọn nhiều hơn số lượng được áp dụng mã"
     },
     "pm": {
         "payment": "THANH TOÁN",
@@ -447,17 +448,24 @@
         "cancellation_policy": "Chính sách hủy",
         "policy_desc": "Không hoàn, huỷ hay thay đổi sau khi đã mua dịch vụ",
         "similar_service": "Dịch vụ tương tự",
+        "similar_product": "Sản phẩm tương tự",
         "close": "Đang đóng cửa",
         "open": "Đang mở cửa",
+        "updating": "Đang cập nhật",
         "minute": "phút",
         "not_evaluate": "Chưa có đánh giá nào",
+        "not_comment": "Chưa có bình luận nào",
         "see": "Xem",
         "sold": "Đã bán",
         "off": "Giảm",
         "write_a_comment": "Viết bình luận",
         "add": "Đã thêm",
         "to_cart": "Vào giỏ hàng",
-        "user_manual": "Hướng dẫ sử dụng",
-        "general_terms": "Điều khoản chung"
+        "user_manual": "Hướng dẫn sử dụng",
+        "general_terms": "Điều khoản chung",
+        "used": "Đã sử dụng",
+        "total": "Tổng",
+        "not_sale": "Sản phẩm này chưa được kích hoạt bán hàng Online",
+        "see_more": "Xem thêm"
     }
 }

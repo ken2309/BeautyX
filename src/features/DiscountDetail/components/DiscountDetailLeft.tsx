@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import icon from "../../../constants/icon";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../../interface/discount";
 import { IOrganization } from "../../../interface/organization";
@@ -10,6 +10,7 @@ import {
     fetchAsyncCancelFavoriteService,
     fetchAsyncFavoriteService,
 } from "../../../redux/org_services/serviceSlice";
+import { AppContext } from "../../../context/AppProvider";
 
 interface IProps {
     discount: IDiscountPar;
@@ -26,9 +27,11 @@ function DiscountDetailLeft(props: IProps) {
     const ITEM_DISCOUNT: IITEMS_DISCOUNT = useSelector(
         (state: any) => state.ORG_DISCOUNTS.ITEM_DISCOUNT
     );
+    const { t } = useContext(AppContext);
+
     const percent = Math.round(
         100 -
-        (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
+            (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
     );
     const history = useHistory();
     const dispatch = useDispatch();
@@ -83,13 +86,16 @@ function DiscountDetailLeft(props: IProps) {
                 {detail?.service_name ? (
                     <div className="service-detail__mobile-mid">
                         <img src={icon.alarmClock} alt="" />
-                        <p>{ITEM_DISCOUNT?.productable.duration} phút</p>
+                        <p>
+                            {ITEM_DISCOUNT?.productable.duration}{" "}
+                            {t("detail_item.minute")}
+                        </p>
                     </div>
                 ) : null}
 
                 <div className="service-detail__mobile-bottom">
                     <div className="service-detail__mobile-percent">
-                        Giảm {percent}%
+                        {t("detail_item.off")} {percent}%
                     </div>
                     <div className="service-detail__mobile-price">
                         <span>{formatPrice(ITEM_DISCOUNT?.view_price)}đ</span>

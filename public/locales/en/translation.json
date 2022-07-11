@@ -185,7 +185,8 @@
         "cancel": "Cancel",
         "delete_all": "Delete all",
         "payment_now": "Payment now",
-        "must_sign_in": "Please sign in before paying"
+        "must_sign_in": "Please sign in before paying",
+        "limit_item_discount": "The service price has changed because you choose more than the quantity to which the code is applied"
     },
     "pm": {
         "payment": "PAYMENT",
@@ -434,10 +435,11 @@
         "booking_now": "Booking now",
         "add_cart": "Add cart",
         "desc": "Descript",
-        "merchant": "Merchant",
+        "merchant": "Business",
         "tutorial_rules": "Tutorial & rules",
         "utilities": "Utilities",
         "parking": "Parking",
+        "updating": "Updating",
         "accept_card_payment": "Accept card payment",
         "step_1": "Step 1: Select and pay for products/services",
         "step_2": "Step 2: Book an appointment at the time of payment or book an appointment later at \"Make an appointment\"",
@@ -448,10 +450,12 @@
         "cancellation_policy": "Cancellation policy",
         "policy_desc": "There are no refunds, cancellations or changes after the service has been purchased",
         "similar_service": "Similar service",
+        "similar_product": "Similar product",
         "open": "Open",
         "close": "Close",
         "minute": "minute",
         "not_evaluate": "There are no reviews yet",
+        "not_comment": "There are no comment yet",
         "see": "See",
         "sold": "Sold",
         "off": "off",
@@ -459,6 +463,10 @@
         "add": "Add",
         "to_cart": "To cart",
         "user_manual": "User manual",
-        "general_terms": "General terms"
+        "general_terms": "General terms",
+        "used": "Used",
+        "total": "Total",
+        "not_sale": "This product has not been activated for online sales",
+        "see_more": "See more"
     }
 }
