@@ -26,7 +26,7 @@ export default function HomeHotDeal() {
             {
                 breakpoint: 1024,
                 settings: {
-                    swipe: true,
+                    swipe: false,
                     className: "center",
                     centerMode: true,
                     centerPadding: "100px",
@@ -38,7 +38,7 @@ export default function HomeHotDeal() {
                 breakpoint: 480,
                 settings: {
                     swipe: true,
-                    dots: true,
+                    dots: false,
                     speed: 500,
                     autoplaySpeed: 3000,
                     slidesToShow: 1,
@@ -64,7 +64,7 @@ export default function HomeHotDeal() {
                 url={`/deal-lam-dep-cuc-HOT?sort=${FILTER_PROMO.query}`}
                 seemore={t("trending.watch_all") + " > "}
             />
-            {/* <ul className="dealHot-listBanner">
+            <ul className="dealHot-listBanner">
                 <Slider {...settings}>
                     <li className="dealHot-listBanner__item">
                         <img src={img.banner} alt="" />
@@ -85,7 +85,7 @@ export default function HomeHotDeal() {
                         />
                     </li>
                 </Slider>
-            </ul> */}
+            </ul>
 
             <HomePromo />
         </div>

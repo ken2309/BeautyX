@@ -43,7 +43,7 @@ function CateLeft(props: any) {
                     category.map((item, index) => (
                         <li
                             style={CATE.cate_id === item.id ? { backgroundColor: "var(--white)" } : {}}
-                            className='flex-column cate-list__item'
+                            className={CATE.cate_id === item.id ? 'flex-column cate-list__item active_cate' : 'flex-column cate-list__item'}
                             key={index}
                             onClick={() => handleChooseCate(item)}
                         >

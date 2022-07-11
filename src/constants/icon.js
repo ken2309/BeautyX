@@ -184,6 +184,7 @@ import checkFlowGreen from "../assets/icon/checkFlowGreen.svg";
 import momo from "../assets/icon/momo.ico";
 import payon from "../assets/icon/payon.jpg";
 import settingsSliders from "../assets/icon/settingsSliders.svg";
+import settingsSlidersPurple from "../assets/icon/settingsSlidersPurple.svg";
 
 const icon = {
     payon,
@@ -366,6 +367,7 @@ const icon = {
     starLine,
     checkFlowGreen,
     settingsSliders,
+    settingsSlidersPurple,
     servicesPurpleBold,
     mapMarkerOrg
 };
