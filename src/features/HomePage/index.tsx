@@ -16,6 +16,7 @@ import HomeRecomment from "./HomeRecomment";
 import HomeTopService from "./HomeTopService";
 import HomeTags from "./HomeTags";
 import HomeProvince from "./HomeProvince";
+import FooterCate from "../FooterCates";
 import { useDispatch } from "react-redux";
 import { onResetFilter, onSetOrgsEmpty } from "../../redux/filter/filterSlice";
 
@@ -47,6 +48,7 @@ export default function HomePage() {
                 <HomeProvince />
                 <HomeRecomment />
             </Container>
+            <FooterCate/>
             <Footer />
             <Bottom />
         </div>
