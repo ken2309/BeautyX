@@ -215,6 +215,7 @@
 }
 .hd-noti__list li {
     padding: 8px 0px;
+    cursor: pointer;
 }
 .no-box-item__text {
     padding-left: 16px;

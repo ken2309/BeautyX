@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./service-promo-item.css";
 import { IServicePromo } from "../../../interface/servicePromo";
 import icon from "../../../constants/icon";
@@ -9,6 +9,7 @@ import scrollTop from "../../../utils/scrollTop";
 import { formatRouterLinkServicePromo } from "../../../utils/formatRouterLink/formatRouter";
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
+import { AppContext } from "../../../context/AppProvider";
 // end
 
 interface IProps {
@@ -17,6 +18,7 @@ interface IProps {
 
 function ServicePromoItem(props: IProps) {
     const { service } = props;
+    const { t } = useContext(AppContext);
     const patchServiceOb = formatRouterLinkServicePromo(service);
     return (
         <Link
@@ -42,7 +44,8 @@ function ServicePromoItem(props: IProps) {
                     {service.discount_percent > 0 &&
                     service.discount_percent < 50 ? (
                         <div className="ser-promo__percent">
-                            Giảm {Math.round(service?.discount_percent)}%
+                            {t("detail_item.off")}{" "}
+                            {Math.round(service?.discount_percent)}%
                         </div>
                     ) : (
                         <div></div>
@@ -79,7 +82,8 @@ function ServicePromoItem(props: IProps) {
                     <div className="flex-row ser-distance">
                         <div></div>
                         <span>
-                            khoảng cách:
+                            {t("se.distance")}
+                            {": "}
                             {service._geoDistance < 1000
                                 ? `${service._geoDistance}(m)`
                                 : `${Math.round(

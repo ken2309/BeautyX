@@ -1,5 +1,6 @@
 .cal-cnt__tab-cnt .MuiTabPanel-root {
-    padding: 12px 0px !important;
+    /* padding: 12px 0px !important; */
+    padding: 0px !important;
 }
 .css-nzlq59:hover {
     background-color: unset !important;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Head from "../../Head";
 import HeadTitle from "../../HeadTitle";
 import { useLocation } from "react-router-dom";
@@ -14,6 +14,7 @@ import icon from "../../../constants/icon";
 import BackTopButton from "../../../components/BackTopButton";
 import Footer from "../../Footer";
 import Map from "../../../components/Map";
+import { AppContext } from "../../../context/AppProvider";
 
 interface IData {
     orgs: IOrganization[];
@@ -25,6 +26,7 @@ function HomeProvince(props: any) {
     const location = useLocation();
     const search = location.search.slice(1, location.search.length);
     const searchArr = search.split(",");
+    const { t } = useContext(AppContext);
     const IS_MB = useFullScreen();
     const [openMap, setOpenMap] = useState(false);
     const [openFilter, setOpenFilter] = useState(false);
@@ -128,7 +130,7 @@ function HomeProvince(props: any) {
                                 className="open-map"
                             >
                                 <div className="flexX-gap-4">
-                                    <p>Bản đồ</p>
+                                    <p>{t("pr.map")}</p>
                                     <img
                                         src={icon.mapPinRed}
                                         alt=""

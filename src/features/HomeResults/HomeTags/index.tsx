@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Head from "../../Head";
 import { Container } from "@mui/material";
 import { useLocation } from "react-router-dom";
@@ -17,6 +17,7 @@ import useFullScreen from "../../../utils/useFullScreen";
 import BackTopButton from "../../../components/BackTopButton";
 import Footer from "../../Footer";
 import Map from "../../../components/Map";
+import { AppContext } from "../../../context/AppProvider";
 
 interface IData {
     orgs: IOrganization[];
@@ -29,6 +30,7 @@ function HomeTags(props: any) {
     const IS_MB = useFullScreen();
     const [openFilter, setOpenFilter] = useState(false);
     const [openMap, setOpenMap] = useState(false);
+    const { t } = useContext(AppContext);
     const [orgFilter, setOrgFilter] = useState({
         tags: [],
         province_code: 0,
@@ -91,7 +93,9 @@ function HomeTags(props: any) {
             ) : (
                 <Head />
             )}
-            <HeadTitle title={`Kết quả tìm kiếm cho : ${tag_name}`} />
+            <HeadTitle
+                title={`${t("se.search_results_for_keyword")} : ${tag_name}`}
+            />
             <Container>
                 <div className="home-result-org-cnt">
                     <div className="home-result-org-cnt__left">
@@ -124,7 +128,8 @@ function HomeTags(props: any) {
                     <div className="home-result-org-cnt__right">
                         <div className="cnt-right__top">
                             <span className="se-re-cnt-title">
-                                Kết quả tìm kiếm cho : "{tag_name}"
+                                {t("se.search_results_for_keyword")} : "
+                                {tag_name}"
                             </span>
                             <div
                                 onClick={() => {
@@ -133,7 +138,7 @@ function HomeTags(props: any) {
                                 className="open-map"
                             >
                                 <div className="flexX-gap-4">
-                                    <p>Bản đồ</p>
+                                    <p>{t("pr.map")}</p>
                                     <img
                                         style={{ width: "16px" }}
                                         src={icon.mapPinRed}

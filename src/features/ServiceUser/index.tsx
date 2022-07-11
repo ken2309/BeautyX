@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Container } from "@mui/material";
 import "./mySer.css";
 import Footer from "../Footer";
@@ -10,31 +10,37 @@ import useFullScreen from "../../utils/useFullScreen";
 import { Masonry } from "@mui/lab";
 import { IServiceUser } from "../../interface/servicesUser";
 import TreatmentCardItem from "./ServiceNotBook/TreatmentCardItem";
-import { STATUS } from '../../redux/status';
-import { fetchAsyncOrderServices } from '../../redux/order/orderSlice';
+import { STATUS } from "../../redux/status";
+import { fetchAsyncOrderServices } from "../../redux/order/orderSlice";
 import ModalLoad from "../../components/ModalLoad";
 import ButtonLoading from "../../components/ButtonLoading";
+import { AppContext } from "../../context/AppProvider";
 
 function ServicesUser(props: any) {
     const dispatch = useDispatch();
+    const { t } = useContext(AppContext);
     const fullScreen = useFullScreen();
-    const { services, status, totalItem, page } = useSelector((state: any) => state.ORDER.ORDER_SERVICES);
+    const { services, status, totalItem, page } = useSelector(
+        (state: any) => state.ORDER.ORDER_SERVICES
+    );
     const callServicesUser = () => {
         if (status !== STATUS.SUCCESS) {
-            dispatch(fetchAsyncOrderServices({ page: 1 }))
+            dispatch(fetchAsyncOrderServices({ page: 1 }));
         }
-    }
+    };
     useEffect(() => {
-        callServicesUser()
-    }, [])
+        callServicesUser();
+    }, []);
     const onViewMore = () => {
-        dispatch(fetchAsyncOrderServices({
-            page: page + 1
-        }))
-    }
+        dispatch(
+            fetchAsyncOrderServices({
+                page: page + 1,
+            })
+        );
+    };
     let loading = false;
     if (status === STATUS.LOADING) {
-        loading = true
+        loading = true;
     }
     return (
         <>
@@ -48,27 +54,27 @@ function ServicesUser(props: any) {
                                     columns={fullScreen ? 1 : 2}
                                     spacing={fullScreen ? 1 : 3}
                                 >
-                                    {
-                                        services.map((item: IServiceUser, index: number) => (
+                                    {services.map(
+                                        (item: IServiceUser, index: number) => (
                                             <TreatmentCardItem
                                                 key={index}
                                                 card_items={item}
                                             />
-                                        ))
-                                    }
+                                        )
+                                    )}
                                 </Masonry>
-                                {
-                                    (services.length >= 15 && services.length < totalItem) &&
-                                    <div
-                                        className="my-ser-bot"
-                                    >
-                                        <ButtonLoading
-                                            title="Xem thêm dịch vụ"
-                                            onClick={onViewMore}
-                                            loading={loading}
-                                        />
-                                    </div>
-                                }
+                                {services.length >= 15 &&
+                                    services.length < totalItem && (
+                                        <div className="my-ser-bot">
+                                            <ButtonLoading
+                                                title={`${t(
+                                                    "trending.watch_all"
+                                                )}`}
+                                                onClick={onViewMore}
+                                                loading={loading}
+                                            />
+                                        </div>
+                                    )}
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { IOrganization } from "../../../interface/organization";
 import "./org-item.css";
 import icon from "../../../constants/icon";
@@ -6,6 +6,7 @@ import img from "../../../constants/img";
 import { useHistory } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import onErrorImg from "../../../utils/errorImg";
+import { AppContext } from "../../../context/AppProvider";
 
 interface IProps {
     org: IOrganization;
@@ -13,6 +14,7 @@ interface IProps {
 
 function OrgItem(props: IProps) {
     const { org } = props;
+    const { t } = useContext(AppContext);
     const history = useHistory();
     const gotoDetail = () => {
         scrollTop();
@@ -23,12 +25,11 @@ function OrgItem(props: IProps) {
     };
     return (
         <div onClick={gotoDetail} className="re-org-item">
-            {
-                org?.is_momo_ecommerce_enable &&
+            {org?.is_momo_ecommerce_enable && (
                 <div className="re-org-item__enable">
                     <img src={icon.checkFlowOrange} alt="" />
                 </div>
-            }
+            )}
             <div className="org-img-cnt">
                 <img
                     src={org.image ? `${org.image_url}` : `${img.imgDefault}`}
@@ -61,7 +62,8 @@ function OrgItem(props: IProps) {
                 {org?.distance ? (
                     <div className="flex-row org_distance">
                         <div></div>
-                        khoảnh cách:
+                        {t("se.distance")}
+                        {": "}
                         {org?.distance < 1000
                             ? `${Math.round(org?.distance)}(m)`
                             : `${Math.round(org?.distance / 1000)}(km)`}

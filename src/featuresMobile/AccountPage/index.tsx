@@ -11,7 +11,7 @@ import OrderMb from "./Components/Orders";
 import AccountGuide from "./Components/AccountGuide";
 import ButtonLoading from "../../components/ButtonLoading";
 import { AppContext } from "../../context/AppProvider";
-import { logoutUser } from '../../redux/USER/userSlice'
+import { logoutUser } from "../../redux/USER/userSlice";
 import { onClearApps } from "../../redux/appointment/appSlice";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
@@ -22,6 +22,7 @@ export default function AccountMobile() {
     const { USER } = useSelector((state: any) => state.USER);
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const dispatch = useDispatch();
+    const { t } = useContext(AppContext);
     const { setSign, language, setLanguage } = useContext(AppContext);
     const params: any = extraParamsUrl();
     const history = useHistory();
@@ -52,15 +53,15 @@ export default function AccountMobile() {
     const handleSignOut = () => {
         setSign(false);
         dispatch(logoutUser());
-        dispatch(onClearApps())
-        history.push("/homepage")
-        localStorage.removeItem('_WEB_TK')
-        window.sessionStorage.removeItem('_WEB_TK')
-    }
-    const onChangeLanguage = (item:any)=>{
-        setLanguage(item.code)
+        dispatch(onClearApps());
+        history.push("/homepage");
+        localStorage.removeItem("_WEB_TK");
+        window.sessionStorage.removeItem("_WEB_TK");
+    };
+    const onChangeLanguage = (item: any) => {
+        setLanguage(item.code);
         i18next.changeLanguage(item.code);
-    }
+    };
     return (
         <div className="accountMobile">
             {USER && (
@@ -86,7 +87,7 @@ export default function AccountMobile() {
                     onClick={() => setOpen(true)}
                     className="accountMobile-top__edit"
                 >
-                    <p>Sửa</p>
+                    <p>{t("se.edit")}</p>
                     <img src={icon.editWhiteAcc} alt="" />
                 </div>
             </div>
@@ -104,7 +105,7 @@ export default function AccountMobile() {
                                 <div>
                                     <img src={icon.boxAcc} alt="" />
                                 </div>
-                                <span>Đơn hàng</span>
+                                <span>{t("cart.order")}</span>
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
@@ -118,7 +119,7 @@ export default function AccountMobile() {
                                 <div>
                                     <img src={icon.calendarAcc} alt="" />
                                 </div>
-                                <span>Lịch hẹn</span>
+                                <span>{t("Home.appointment")}</span>
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
@@ -140,7 +141,7 @@ export default function AccountMobile() {
                                 <div>
                                     <img src={icon.markerAcc} alt="" />
                                 </div>
-                                <span>Địa chỉ giao hàng</span>
+                                <span>{t("acc.order_address")}</span>
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
@@ -158,26 +159,33 @@ export default function AccountMobile() {
                                         alt=""
                                     />
                                 </div>
-                                <span>Cài đặt</span>
+                                <span>{t("Header.settings")}</span>
                             </div>
                             <img src={icon.arownAcc} alt="" />
                         </div>
                         <div ref={refUserGuide} className="item-bot__wrap ">
-                            {
-                                languages.map((i, index) => (
-                                    <div 
-                                        onClick={()=>onChangeLanguage(i)}
-                                        key={index} className="item-bot__item"
+                            {languages.map((i, index) => (
+                                <div
+                                    onClick={() => onChangeLanguage(i)}
+                                    key={index}
+                                    className="item-bot__item"
+                                >
+                                    <img
+                                        style={{ width: "32px" }}
+                                        src={i.icon}
+                                        alt=""
+                                    />
+                                    <span
+                                        style={
+                                            i.code === language
+                                                ? { color: "var(--purple)" }
+                                                : {}
+                                        }
                                     >
-                                        <img
-                                            style={{ width: "32px" }}
-                                            src={i.icon}
-                                            alt=""
-                                        />
-                                        <span style={i.code === language ? {color:"var(--purple)"}:{}} >{i.title}</span>
-                                    </div>
-                                ))
-                            }
+                                        {i.title}
+                                    </span>
+                                </div>
+                            ))}
                         </div>
                     </li>
                 </ul>
@@ -186,19 +194,18 @@ export default function AccountMobile() {
             <div onClick={gotoAccountGuide} className="accountMobile-bot">
                 <div className="accountMobile-bot__tutorial">
                     <img src={icon.book} alt="" />
-                    <p>Hướng dẩn sử dụng</p>
+                    <p>{t("detail_item.user_manual")}</p>
                 </div>
             </div>
-            {
-                FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
+            {FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX && (
                 <div className="accountMobile-out">
                     <ButtonLoading
-                        title="Đăng xuất"
+                        title={`${t("Header.sign_out")}`}
                         onClick={handleSignOut}
                         loading={false}
                     />
                 </div>
-            }
+            )}
             <Bottom />
             <AccountForm open={openAcc} />
             <OrderMb openOrder={openOrder} />

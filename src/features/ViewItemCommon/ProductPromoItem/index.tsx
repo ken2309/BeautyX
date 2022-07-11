@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../ServicePromoItem/service-promo-item.css";
 import { IProductPromo } from "../../../interface/productPromo";
 import { Link } from "react-router-dom";
@@ -9,6 +9,7 @@ import scrollTop from "../../../utils/scrollTop";
 import { formatRouterLinkProductPromo } from "../../../utils/formatRouterLink/formatRouter";
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
+import { AppContext } from "../../../context/AppProvider";
 // end
 interface IProps {
     product: IProductPromo;
@@ -16,6 +17,7 @@ interface IProps {
 
 function ProductPromoItem(props: IProps) {
     const { product } = props;
+    const { t } = useContext(AppContext);
     const pathProductOb = formatRouterLinkProductPromo(product);
     return (
         <Link
@@ -41,7 +43,8 @@ function ProductPromoItem(props: IProps) {
                     {product.discount_percent > 0 &&
                     product.discount_percent < 50 ? (
                         <div className="ser-promo__percent">
-                            Giảm {Math.round(product?.discount_percent)}%
+                            {t("detail_item.off")}{" "}
+                            {Math.round(product?.discount_percent)}%
                         </div>
                     ) : (
                         <div></div>
@@ -80,7 +83,8 @@ function ProductPromoItem(props: IProps) {
                     <div className="flex-row ser-distance">
                         <div></div>
                         <span>
-                            khoảng cách:
+                            {t("se.distance")}
+                            {": "}
                             {product?._geoDistance < 1000
                                 ? `${product?._geoDistance}(m)`
                                 : `${Math.round(

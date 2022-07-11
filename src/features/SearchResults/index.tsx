@@ -96,7 +96,10 @@ function SearchResults(props: any) {
                 title={`${t("Search_result.text_result")} : ${searchKey}`}
             />
             {IS_MB ? (
-                <HeadMobile onBackFunc={onGoBack} title="Kết quả tìm kiếm" />
+                <HeadMobile
+                    onBackFunc={onGoBack}
+                    title={t("se.search_result")}
+                />
             ) : (
                 <Head />
             )}
@@ -139,7 +142,7 @@ function SearchResults(props: any) {
                                     <div className="home-result-org-cnt__mb">
                                         <div className="flex-row-sp cnt">
                                             <span className="title">
-                                                Bộ lọc tìm kiếm
+                                                {t("se.filters")}
                                             </span>
                                             <button
                                                 onClick={() =>
@@ -199,7 +202,7 @@ function SearchResults(props: any) {
                                     className="open-map"
                                 >
                                     <div className="flexX-gap-4">
-                                        <p>Bản đồ</p>
+                                        <p>{t("pr.map")}</p>
                                         <img
                                             src={icon.mapPinRed}
                                             alt=""
@@ -213,11 +216,7 @@ function SearchResults(props: any) {
                         <TabProduct keyword={searchKey} acTab={tab} />
                         {tab === 3 && data?.orgs.length == 0 && (
                             <EmptyRes
-                                title={
-                                    'Không tìm được kết quả phù hợp cho "' +
-                                    searchKey +
-                                    '"'
-                                }
+                                title={`${t("pr.no_result")} "${searchKey}"`}
                             />
                         )}
                         <TabOrgs
