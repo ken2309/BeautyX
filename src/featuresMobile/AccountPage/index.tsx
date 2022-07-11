@@ -148,7 +148,7 @@ export default function AccountMobile() {
                         <div className="item-left__wrap">
                             <div className="item-left">
                                 <div>
-                                    <img src={icon.heartAcc} alt="" />
+                                    <img src={icon.Clock_purple} alt="" />
                                 </div>
                                 <span>Đang theo dõi</span>
                             </div>

@@ -190,6 +190,7 @@ import chatPurple from '../assets/icon/chatPurple.svg';
 import friendsPurple from "../assets/icon/friendsPurple.png";
 import plusPurple from "../assets/icon/plusPurple.svg";
 import exclamationPurple from "../assets/icon/exclamationPurple.svg";
+import settingsSlidersPurple from "../assets/icon/settingsSlidersPurple.svg";
 
 const icon = {
     payon,
@@ -372,6 +373,7 @@ const icon = {
     starLine,
     checkFlowGreen,
     settingsSliders,
+    settingsSlidersPurple,
     servicesPurpleBold,
     mapMarkerOrg,
     crossPurple,

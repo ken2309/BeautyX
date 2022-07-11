@@ -2,9 +2,9 @@
     position: relative;
     width: 100%;
     height: 100%;
-    /* overflow: scroll; */
-    /* -ms-scroll-snap-type: y mandatory; */
-    /* scroll-snap-type: y mandatory; */
+    overflow: scroll;
+    -ms-scroll-snap-type: y mandatory;
+    scroll-snap-type: y mandatory;
 }
 .reel .slick-slide{
     border: none;

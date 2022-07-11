@@ -11,7 +11,7 @@ import HomeDiscount from "../HomeDiscounts";
 import HomeBanner from "./HomeBanner";
 import HomeFavorite from "./HomeFavorite";
 import HomeHotDeal from "./HomeHotDeal";
-//import HomeHotTrend from "./HomeHotTrend";
+import HomeHotTrend from "./HomeHotTrend";
 import HomeRecomment from "./HomeRecomment";
 import HomeTopService from "./HomeTopService";
 import HomeTags from "./HomeTags";
@@ -43,7 +43,7 @@ export default function HomePage() {
             <Container>
                 <HomeHotDeal />
                 <HomeTopService />
-                {/* {IS_MB && <HomeHotTrend />} */}
+                {IS_MB && <HomeHotTrend />}
                 <HomeFavorite />
                 <HomeProvince />
                 <HomeRecomment />

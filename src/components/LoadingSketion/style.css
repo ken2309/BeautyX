@@ -30,6 +30,13 @@
     overflow: scroll;
     scrollbar-width: none;
 }
+.result-orgs-loading-cnt-row .result-orgs-loading-cnt__item .MuiSkeleton-root:nth-child(1){
+    width: 146px !important;
+    height: calc(7% - 4px) !important;
+}
+.result-orgs-loading-cnt-row .result-orgs-loading-cnt__item .MuiSkeleton-root:nth-child(2){
+    height: auto !important;
+}
 .result-orgs-loading-cnt-row .result-orgs-loading-cnt__item{
     height: 262px;
 }

@@ -12,8 +12,12 @@ import { Integrations } from "@sentry/tracing";
 import ModalLoad from "./components/ModalLoad/index";
 
 // Sentry.init({
-//   dsn: "https://847a92f5f1924cd2a67b303d23a132d0@o1115240.ingest.sentry.io/6147072",
-//   integrations: [new Integrations.BrowserTracing()],
+//   dsn: "https://38eb6d00469546558bd815998210f77f@o1108259.ingest.sentry.io/6554425",
+//   integrations: [new BrowserTracing()],
+
+//   // Set tracesSampleRate to 1.0 to capture 100%
+//   // of transactions for performance monitoring.
+//   // We recommend adjusting this value in production
 //   tracesSampleRate: 1.0,
 // });
 
