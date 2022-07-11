@@ -312,7 +312,8 @@
         "add_other_address": "Add other address",
         "default": "Default",
         "change_pass": "Change the password",
-        "save": "Save"
+        "save": "Save",
+        "set_default_address": "Set default address"
     },
     "order": {
         "order_his": "Orders history",

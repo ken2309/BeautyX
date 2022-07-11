@@ -311,7 +311,8 @@
         "add_other_address": "Thêm địa điểm khác",
         "default": "Mặc định",
         "change_pass": "Thay đổi mật khẩu",
-        "save": "Lưu thay đổi"
+        "save": "Lưu thay đổi",
+        "set_default_address": "Đặt làm địa chỉ mặc định"
     },
     "order": {
         "order_his": "Lịch sử đơn hàng",
