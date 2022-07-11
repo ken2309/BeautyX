@@ -350,7 +350,9 @@
         "bk_fail": "Booking failed !",
         "rv_booked": "You can review your booked services",
         "bk_fail_title": "An error occurred during the booking process",
-        "code_err": "Code error"
+        "code_err": "Code error",
+        "booking":"Booking",
+        "booking_his":"History"
     },
     "home_2": {
         "categories": "Categories",
