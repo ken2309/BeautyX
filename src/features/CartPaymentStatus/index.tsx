@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PaymentQr from './components/PaymentQr';
 import PaymentInfo from './components/PaymentInfo';
 import PaymentConfirm from './components/PaymentConfirm';
-import useGetMessageTiki from '../../rootComponents/tiki/useGetMessageTiki';
+import useGetMessageTiki from '../../rootComponents/useGetMessageTiki';
 import apointmentApi from '../../api/apointmentApi';
 import HeadMobile from '../HeadMobile';
 import useFullScreen from '../../utils/useFullScreen';

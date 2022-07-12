@@ -1,6 +1,6 @@
 import { Dialog, Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import parse from "html-react-parser";
+// import parse from "html-react-parser";
 import React from "react";
 import icon from "../../../constants/icon";
 
@@ -27,7 +27,7 @@ export default function HomeBannerPopup(props: any) {
                 <img src={icon.chevronLeft} alt="" />
               </button>
             </div>
-            <div className="popup-banner">{parse(`${data?.htmlTemplate}`)}</div>
+            <div className="popup-banner" dangerouslySetInnerHTML={{__html: data?.htmlTemplate}}></div>
           </>
         );
       default:

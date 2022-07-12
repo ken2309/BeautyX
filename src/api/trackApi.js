@@ -1,6 +1,7 @@
+import momoApi from './_momoImport';
 import MiniApi from '@momo-miniapp/api';
 import { pickBy, identity } from "lodash";
-MiniApi.init({ appId: process.env.REACT_APP_MOMO_APP_ID });
+momoApi.init({ appId: process.env.REACT_APP_MOMO_APP_ID });
 /**
  * @name MOMO_API
  * @description send event tracking to MOMO APPLITCATION
@@ -9,7 +10,7 @@ MiniApi.init({ appId: process.env.REACT_APP_MOMO_APP_ID });
 export async function MOMO_API(EVENT_NAME, PARAMs) {
     try {
         const params = pickBy(PARAMs, identity)
-        const res = await MiniApi.track(EVENT_NAME, {
+        const res = await momoApi.track(EVENT_NAME, {
             service_name: 'myspa',
             ...params
         });
