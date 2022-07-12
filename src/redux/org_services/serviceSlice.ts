@@ -10,7 +10,7 @@ export const fetchAsyncServiceDetail: any = createAsyncThunk(
     async (values: any) => {
         const res = await serviceApi.getDetailById(values);
         return {
-            service: res.data.context,
+            service: res?.data.context,
             org_id: values.org_id,
         };
     }

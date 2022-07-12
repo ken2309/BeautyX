@@ -48,7 +48,7 @@ export default function HomePage() {
                 <HomeProvince />
                 <HomeRecomment />
             </Container>
-            <FooterCate/>
+            {/* <FooterCate/> */}
             <Footer />
             <Bottom />
         </div>

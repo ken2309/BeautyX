@@ -4,7 +4,7 @@ import "./head.css";
 import { Container } from "@mui/material";
 import ButtonCus from "../../components/ButtonCus";
 import { AppContext } from "../../context/AppProvider";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import icon from "../../constants/icon";
 import img from "../../constants/img";
 import Notification from "./components/Notification";
@@ -43,6 +43,8 @@ function Head(props: IProps) {
         //profile,
         //userInfo
     } = useContext(AppContext);
+    const location = useLocation();
+    const currentUrl = location.pathname;
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const dispatch = useDispatch();
     const {
@@ -272,12 +274,12 @@ function Head(props: IProps) {
                                     )}
                                     <Notification openNo={openNo} />
                                 </div>
-                                <Link
-                                    to={{ pathname: "/chat" }}
+                                {/* <Link
+                                    to={{ pathname: "/chat", state: `${currentUrl}${location.search}` }}
                                     className="head-chat-btn"
                                 >
                                     <img src={icon.chatPurple} alt="" />
-                                </Link>
+                                </Link> */}
                             </div>
                         )}
                         {/* menu for mobile */}

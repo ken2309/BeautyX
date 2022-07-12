@@ -2,13 +2,20 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import icon from '../../../constants/icon';
-import { onToggleOpenChat } from '../../../redux/chat/chatOrgSlice'
+import { onToggleOpenChat } from '../../../redux/chat/chatOrgSlice';
+import MessageItem from '../ChatAll/components/MessageItem';
 import './style.css'
 
-const chats = [
+export const chats = [
     { uid: 1, text: "Thành lập năm 2018, PMT AESTHETIC CLINIC là thương hiệu uy tín hàng đầu trong ngành công nghệ spa," },
     { uid: 8, text: "Hế lô" },
     { uid: 1, text: "Sương Nguyệt Ánh, Phường Bến Thành, Quận 1, Thành phố Hồ Chí Minh" },
+    { uid: 1, text: "Sương Nguyệt Ánh, Phường Bến Thành, Quận 1, Thành phố Hồ Chí Minh" },
+    { uid: 8, text: "Tư vấn đê" },
+    { uid: 1, text: "Sương Nguyệt Ánh, Phường Bến Thành, Quận 1, Thành phố Hồ Chí Minh" },
+    { uid: 1, text: "Sương Nguyệt Ánh, Phường Bến Thành, Quận 1, Thành phố Hồ Chí Minh" },
+    { uid: 8, text: "Tư vấn đê" },
+    { uid: 1, text: "Tư vấn cái ... á man" },
     { uid: 1, text: "Sương Nguyệt Ánh, Phường Bến Thành, Quận 1, Thành phố Hồ Chí Minh" },
     { uid: 8, text: "Tư vấn đê" },
     { uid: 1, text: "Sương Nguyệt Ánh, Phường Bến Thành, Quận 1, Thành phố Hồ Chí Minh" },
@@ -19,7 +26,6 @@ const chats = [
 
 function ChatOrg(props: any) {
     const { openChat } = useSelector((state: any) => state.CHAT_ORG)
-    const { USER } = useSelector((state: any) => state.USER);
     const dispatch = useDispatch();
     const onCloseChatCnt = useCallback(() => {
         dispatch(onToggleOpenChat(false));
@@ -51,37 +57,10 @@ function ChatOrg(props: any) {
                 <div className="chat-org__body">
                     {
                         chats.map((item: any, index: number) => (
-                            <div
-                                style={item.uid === USER?.id ? {
-                                    justifyContent: "flex-end"
-                                } : {}}
+                            <MessageItem
                                 key={index}
-                                className="chat-org__body-wrap-item"
-                            >
-                                <div
-                                    style={item.uid === USER?.id ? { flexDirection: "row-reverse" } : {}}
-                                    className="chat-org__body-item"
-                                >
-                                    <img
-                                        src={
-                                            item.uid === USER?.id ?
-                                                USER?.avatar : "https://pmt.myspa.vn/files/pmt/avatar/20211208223905.jpg"
-                                        }
-                                        alt=""
-                                        className="avatar"
-                                    />
-                                    <div
-                                        className={
-                                            item.uid === USER?.id ?
-                                                "chat-org__body-item__text chat-item-user"
-                                                :
-                                                "chat-org__body-item__text"
-                                        }
-                                    >
-                                        {item.text}
-                                    </div>
-                                </div>
-                            </div>
+                                item={item}
+                            />
                         ))
                     }
                 </div>

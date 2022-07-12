@@ -29,7 +29,7 @@ const fetchAsyncData = async ({ sub_domain, service_list }: any) => {
                     org_id: resOrg.data.context.id,
                     ser_id: service_list[i],
                 });
-                resSerList[i] = res.data.context;
+                resSerList[i] = res?.data.context;
             }
         }catch(err){
             console.log(err)
