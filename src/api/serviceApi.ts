@@ -26,7 +26,9 @@ class ServiceApi {
             include: "category|favorites_count",
             append: "is_favorite|rating|bought_count",
         };
-        return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params));
+        if (values.org_id && values.ser_id) {
+            return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params));
+        }
     };
 }
 const serviceApi = new ServiceApi();

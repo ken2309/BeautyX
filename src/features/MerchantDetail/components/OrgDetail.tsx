@@ -90,13 +90,13 @@ function OrgDetail(props: IProps) {
     const onActiveTabGallery = () => {
         dispatch(onActiveTab(7));
     };
-    // const onOpenChatOrg = () => {
-    //     if (USER) {
-    //         dispatch(onToggleOpenChat(true))
-    //     } else {
-    //         history.push("/sign-in?1");
-    //     }
-    // }
+    const onOpenChatOrg = () => {
+        if (USER) {
+            dispatch(onToggleOpenChat(true))
+        } else {
+            history.push("/sign-in?1");
+        }
+    }
     return (
         <div className="org-detail">
             <Container>

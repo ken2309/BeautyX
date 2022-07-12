@@ -51,6 +51,14 @@ function Bottom(props: any) {
             path: "/lich-hen",
             badge: 0
         },
+        // {
+        //     id: 7,
+        //     title: "Chat",
+        //     icon: ICON.comments,
+        //     iconAct: ICON.commentPurpleAct,
+        //     path: "/chat",
+        //     badge: 0
+        // },
         {
             id: 5,
             title: t("Bottom.account"),

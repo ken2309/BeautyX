@@ -369,6 +369,9 @@ function Footer() {
                     TP.HCM - GPĐKKD: 0314964245, cấp ngày: 03/04/2018, bởi Phòng
                     Đăng ký kinh doanh – Sở kế hoạch và Đầu tư TP.HCM
                 </div>
+                <div className="footer-copy-right">
+                    © Copyright 2022 Myspa | ProductX teams.
+                </div>
             </Container>
         </div>
     );
