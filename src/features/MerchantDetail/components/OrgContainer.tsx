@@ -9,7 +9,7 @@ import OrgCombos from "./OrgPages/OrgCombos";
 import OrgInformation from "./OrgPages/OrgInformation";
 import OrgReviews from "./OrgPages/OrgReviews";
 import OrgGalleries from "./OrgPages/OrgGalleries/OrgGalleries";
-import useFullScreen from "../../../utils/useFullScreen";
+import useFullScreen from "../../../utils/useDeviceMobile";
 import { Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { AppContext } from "../../../context/AppProvider";

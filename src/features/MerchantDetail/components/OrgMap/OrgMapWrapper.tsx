@@ -1,6 +1,6 @@
 import { Dialog } from "@mui/material";
 import icon from "../../../../constants/icon";
-import useFullScreen from "../../../../utils/useFullScreen";
+import useFullScreen from "../../../../utils/useDeviceMobile";
 import MapOrg from "./MapOrg";
 import "./orgMap.css";
 

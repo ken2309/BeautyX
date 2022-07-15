@@ -13,7 +13,6 @@ import { clearAllServices } from "../../../redux/servicesBookSlice";
 import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
-import useFullScreen from "../../../utils/useFullScreen";
 import PopupSuccess from "../../PopupSuccess";
 import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
 
@@ -22,6 +21,7 @@ import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
  // end
 // google tag event
 import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+import useDeviceMobile from "../../../utils/useDeviceMobile";
 // end 
 interface IProps {
     discount: IDiscountPar;
@@ -32,7 +32,7 @@ interface IProps {
 
 function DiscountDetailRight(props: IProps) {
     const { discount, org, detail, NOW } = props;
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
     const ITEM_DISCOUNT: IITEMS_DISCOUNT = useSelector(

@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Container } from "@mui/material";
 import "./mySer.css";
 import { useDispatch, useSelector } from "react-redux";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 import { Masonry } from "@mui/lab";
 import { IServiceUser } from "../../interface/servicesUser";
 import TreatmentCardItem from "./ServiceNotBook/TreatmentCardItem";

@@ -9,7 +9,7 @@ import { fetchAsyncUserAddress } from '../../../../redux/USER/userAddressSlice';
 import DialogChangeInfo from '../../../../featuresMobile/AccountPage/Components/DialogChangeInfo';
 
 import "./style.css";
-import useFullScreen from "../../../../utils/useFullScreen";
+import useDeviceMobile from '../../../../utils/useDeviceMobile';
 
 interface IProps {
     onSetAddressDefault?: (address?: any) => void;
@@ -18,7 +18,7 @@ interface IProps {
 
 function UserPaymentInfo(props: IProps) {
     const { t } = useContext(AppContext);
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const { onSetAddressDefault, disableEdit } = props;
     const history = useHistory();
     const dispatch = useDispatch();

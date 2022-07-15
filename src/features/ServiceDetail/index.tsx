@@ -20,7 +20,7 @@ import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation
 import Review from "../Reviews";
 import icon from "../../constants/icon";
 import DetailOrgCard from "./components/DetailOrgCard";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 import HeadOrg from "../MerchantDetail/components/HeadOrg";
 import DetailPolicy from "./components/DetailPolicy";
 import DetailRecommend from "./components/DetailRecommend";

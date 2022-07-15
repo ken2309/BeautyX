@@ -4,7 +4,7 @@ import { IProductPromo } from '../../../interface/productPromo'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ProductPromoItem from '../../ViewItemCommon/ProductPromoItem';
 import ProductResultItem from '../../Search/components/ProductResultItem';
-import useFullScreen from '../../../utils/useFullScreen';
+import useFullScreen from '../../../utils/useDeviceMobile';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsByFilter } from '../../../redux/search/searchResultSlice';
 import { STATUS } from '../../../redux/status';

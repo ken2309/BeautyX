@@ -17,7 +17,6 @@ import { useHistory } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import onErrorImg from "../../../utils/errorImg";
 import PopupDiscountQuantity from "../../Cart/components/PopupDiscountQuantity";
-import useFullScreen from "../../../utils/useFullScreen";
 import {
     SwipeableList,
     SwipeableListItem,
@@ -37,6 +36,7 @@ import tracking from "../../../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from '../../../utils/dataLayer';
+import useDeviceMobile from "../../../utils/useDeviceMobile";
 // end 
 interface IProps {
     inPayment?: boolean;
@@ -49,7 +49,7 @@ interface IProps {
 function CartItem(props: IProps) {
     const { cartItem, inPayment, org, setOpenBranch, openBranch } = props;
     const [open, setOpen] = useState(false);
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const dispatch = useDispatch();
     const history = useHistory();
     const [process, setProcess] = useState(0);

@@ -5,8 +5,8 @@ import { TransitionProps } from "@mui/material/transitions";
 import formatPrice from "../../utils/formatPrice";
 import onErrorImg from "../../utils/errorImg";
 import { Service } from '../../interface/service';
-import useFullScreen from "../../utils/useFullScreen";
 import HeadMobile from "../HeadMobile";
+import useDeviceMobile from "../../utils/useDeviceMobile";
 
 const view = window.screen.width;
 const Transition = React.forwardRef(function Transition(
@@ -20,8 +20,8 @@ const Transition = React.forwardRef(function Transition(
 
 function AppointmentDetail(props: any) {
   const { openPopupDetail, setOpenPopupDetail, datingList } = props;
-  const fullScreen = useFullScreen();
-  const IS_MB = useFullScreen();
+  const fullScreen = useDeviceMobile();
+  const IS_MB = useDeviceMobile();
   function handleClosePopupDetail() {
     setOpenPopupDetail(false);
   }

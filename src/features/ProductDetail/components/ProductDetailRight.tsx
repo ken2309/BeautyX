@@ -17,7 +17,7 @@ import {
     onFavoriteOrg,
 } from "../../../redux/org/orgSlice";
 import PopupSuccess from "../../PopupSuccess";
-import useFullScreen from "../../../utils/useFullScreen";
+import useFullScreen from "../../../utils/useDeviceMobile";
 import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
 import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
 import { AppContext } from "../../../context/AppProvider";

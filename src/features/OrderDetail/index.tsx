@@ -12,7 +12,7 @@ import { AppContext } from "../../context/AppProvider";
 import scrollTop from "../../utils/scrollTop";
 import onErrorImg from "../../utils/errorImg";
 import formatDate from "../../utils/formatDate";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 import { IOrderV2 } from '../../interface/orderv2';
 import HeadMobile from "../HeadMobile";
 

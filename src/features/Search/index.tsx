@@ -18,7 +18,7 @@ import SectionOrgs from "./SectionOrgs";
 import SectionServices from "./SectionServices";
 import SectionProducts from "./SectionProducts";
 import SectionEmpty from "./SectionEmpty";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 import SectionNull from "./SectionNull";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";

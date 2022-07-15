@@ -14,7 +14,6 @@ import PaymentConfirm from './components/PaymentConfirm';
 import useGetMessageTiki from '../../rootComponents/tiki/useGetMessageTiki';
 import apointmentApi from '../../api/apointmentApi';
 import HeadMobile from '../HeadMobile';
-import useFullScreen from '../../utils/useFullScreen';
 import Notification from '../../components/Notification/index';
 import { useHistory } from 'react-router-dom';
 import { clearByCheck } from '../../redux/cartSlice';
@@ -25,13 +24,14 @@ import { ICart } from '../../interface/cart'
 import tracking from "../../api/trackApi";
 import { formatProductList } from "../../utils/tracking";
 import { onAddServicesNoBookCount, onSetStatusServicesUser } from '../../redux/order/orderSlice';
+import useDeviceMobile from '../../utils/useDeviceMobile';
 // end
 const timerRender = [0];
 const ORDER_STATUS = ['PENDING', 'PAID', 'CANCELED_BY_USER']
 
 function CartPaymentStatus() {
     const sec = useCountDown(600);
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const dispatch = useDispatch();
     const [orderStatus, setOrderStatus] = useState(ORDER_STATUS[0])
     const [openConf, setOpenConf] = useState(false);

@@ -20,7 +20,7 @@ import {
     fetchProductsByFilter,
     onSetEmptyOrgs
 } from "../../redux/search/searchResultSlice";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 import HeadMobile from "../HeadMobile";
 import BackTopButton from "../../components/BackTopButton";
 import { onToggleSearchCnt } from "../../redux/search/searchSlice";

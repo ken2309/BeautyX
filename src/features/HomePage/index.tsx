@@ -3,7 +3,7 @@ import { Container } from "@mui/material";
 import React, {  useEffect } from "react";
 import Bottom from "../../featuresMobile/Bottom";
 import ExtraFlatForm from "../../rootComponents/extraFlatForm";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 import Footer from "../Footer";
 import Head from "../Head";
 import HeadHomeMobile from "../HeadMobile/HeadHomeMobile";

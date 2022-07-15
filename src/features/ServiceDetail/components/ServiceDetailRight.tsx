@@ -15,7 +15,7 @@ import DetailOrgCard from "./DetailOrgCard";
 import { clearAllServices } from "../../../redux/servicesBookSlice";
 import { IOrganization } from "../../../interface/organization";
 import { Service } from "../../../interface/service";
-import useFullScreen from "../../../utils/useFullScreen";
+import useFullScreen from "../../../utils/useDeviceMobile";
 import { AppContext } from "../../../context/AppProvider";
 import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
 import { handleScroll } from "../onScrollChange";

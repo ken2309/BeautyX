@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { formatOrgParam } from "../../utils/formatParams";
 import { STATUS } from "../../redux/status";
 import HeadOrg from "./components/HeadOrg";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 import OrgDetail from "./components/OrgDetail";
 import OrgContainer from "./components/OrgContainer";
 import "./style.css";

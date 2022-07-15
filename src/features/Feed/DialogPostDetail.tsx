@@ -13,7 +13,7 @@ import {
     fetchAsyncOrgComments,
 } from "../../redux/org/orgCommentsSlice";
 import { useElementOnScreen } from "../../utils/useElementScreen";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 // end
 
 function PopupPostDetail(props: any) {

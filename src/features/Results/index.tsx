@@ -16,7 +16,7 @@ import BackTopButton from '../../components/BackTopButton';
 import Footer from '../Footer';
 import { fetchAsyncOrgsByFilter, onSetFilterType, onSetOrgsEmpty } from '../../redux/filter/filterSlice';
 import HeadMobile from '../HeadMobile';
-import useFullScreen from '../../utils/useFullScreen';
+import useFullScreen from '../../utils/useDeviceMobile';
 import icon from '../../constants/icon';
 import LoadingMore from '../../components/LoadingMore';
 import { LoadingOrgs } from '../../components/LoadingSketion';

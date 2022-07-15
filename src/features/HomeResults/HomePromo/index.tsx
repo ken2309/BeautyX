@@ -16,7 +16,7 @@ import { STATUS } from "../../../redux/status";
 import { onSetFilterPromo } from '../../../redux/filter/filterSlice';
 import { useHistory } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
-import useFullScreen from "../../../utils/useFullScreen";
+import useFullScreen from "../../../utils/useDeviceMobile";
 import HeadMobile from "../../HeadMobile";
 import ServiceResultItem from "../../Search/components/ServiceResultItem";
 import BackTopButton from "../../../components/BackTopButton";

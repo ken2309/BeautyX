@@ -6,7 +6,6 @@ import icon from '../../constants/icon';
 import Head from '../Head';
 import HeadMobile from '../HeadMobile';
 import HeadTitle from '../HeadTitle';
-import useFullScreen from '../../utils/useFullScreen';
 import { Container, Dialog } from '@mui/material';
 import UserPaymentInfo from '../Account/components/UserPaymentInfo';
 import CartGroupItem from './components/CartGroupItem';
@@ -26,6 +25,7 @@ import tracking from "../../api/trackApi";
 import { IOrganization } from '../../interface/organization';
 import { IBranch } from '../../interface/branch';
 import onErrorImg from '../../utils/errorImg';
+import useDeviceMobile from '../../utils/useDeviceMobile';
 // end
 function Carts() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
@@ -62,7 +62,7 @@ function Carts() {
 
     const DATA_CART = { cartList, cartAmountDiscount, cartAmount };
     const orgs_id = cartList.map((item: any) => item.org_id);
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     function unique(arr: any) {
         var newArr = []
         for (var i = 0; i < arr.length; i++) {

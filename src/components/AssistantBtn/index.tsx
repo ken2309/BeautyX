@@ -5,11 +5,11 @@ import icon from "../../constants/icon";
 import Search from "../../features/Search";
 import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 import { handleSubiz } from "../../utils/customChat";
-import useFullScreen from "../../utils/useFullScreen";
 import img from "../../constants/img";
 import "./style.css";
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
+import useDeviceMobile from "../../utils/useDeviceMobile";
 // end
 export default function AssistantBtn() {
     const dispatch = useDispatch();
@@ -22,7 +22,7 @@ export default function AssistantBtn() {
     }
     const { open } = useSelector((state: any) => state.SEARCH);
     const [overLay, setOverLay] = useState(false);
-    const is_mb = useFullScreen();
+    const is_mb = useDeviceMobile();
     const history = useHistory();
 
     const handleOpenSearch = () => {

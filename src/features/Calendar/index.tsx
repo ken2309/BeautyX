@@ -7,7 +7,6 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import './style.css';
 import HomeLoggedCalendar from '../Apointment/HomeLoggedCalendar';
 import ServicesUser from '../ServiceUser';
-import useFullScreen from '../../utils/useFullScreen';
 import icon from '../../constants/icon';
 import { clearAllServices } from '../../redux/servicesBookSlice';
 import { useDispatch } from 'react-redux';
@@ -16,10 +15,11 @@ import { extraParamsUrl } from '../../utils/extraParamsUrl';
 import Bottom from '../../featuresMobile/Bottom';
 import { AppContext } from '../../context/AppProvider';
 import Footer from '../Footer';
+import useDeviceMobile from '../../utils/useDeviceMobile';
 
 function Calendar() {
     const {t} = useContext(AppContext);
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const dispatch = useDispatch();
     const history = useHistory();
     const location: any = useLocation();

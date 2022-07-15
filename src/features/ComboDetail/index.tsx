@@ -24,22 +24,22 @@ import "../ProductDetail/product.css";
 import icon from "../../constants/icon";
 import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
 import HeadOrg from "../MerchantDetail/components/HeadOrg";
-import useFullScreen from "../../utils/useFullScreen";
 import {
     handleChangeScroll,
     handleScroll,
 } from "../ServiceDetail/onScrollChange";
 import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
 import ReviewsContainer from "../ReviewsContainer";
+import useDeviceMobile from "../../utils/useDeviceMobile";
 
 function ComboDetail() {
     const { t } = useContext(AppContext);
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const params: any = shareLink();
     const dispatch = useDispatch();
     const ORG = useSelector((state: any) => state.ORG);
     const { COMBO, COMMENTS } = useSelector((state: any) => state.COMBO);
-    const is_mobile = useFullScreen();
+    const is_mobile = useDeviceMobile();
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState<any>(1);
     const [openAllCmt, setOpenAllCmt] = useState(false);

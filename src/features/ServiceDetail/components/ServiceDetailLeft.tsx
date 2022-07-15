@@ -9,7 +9,7 @@ import {
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
 import Slider from "react-slick";
-import useFullScreen from "../../../utils/useFullScreen";
+import useFullScreen from "../../../utils/useDeviceMobile";
 const PrevButton = (props: any) => {
     const { onClick } = props;
     return (

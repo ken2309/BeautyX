@@ -1,7 +1,7 @@
 import React from 'react';
 import { IServicePromo } from '../../../interface/servicePromo';
 import ServicePromoItem from '../../ViewItemCommon/ServicePromoItem';
-import useFullScreen from '../../../utils/useFullScreen';
+import useFullScreen from '../../../utils/useDeviceMobile';
 import ServiceResultItem from '../../Search/components/ServiceResultItem';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
