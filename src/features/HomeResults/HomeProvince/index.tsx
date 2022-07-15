@@ -3,7 +3,6 @@ import Head from "../../Head";
 import HeadTitle from "../../HeadTitle";
 import { useLocation } from "react-router-dom";
 import { Container, Drawer } from "@mui/material";
-import FilterOrgs from "../../FilterOrgs";
 import orgApi from "../../../api/organizationApi";
 import OrgItem from "../../ViewItemCommon/OrgItem";
 import { IOrganization } from "../../../interface/organization";
@@ -15,6 +14,7 @@ import BackTopButton from "../../../components/BackTopButton";
 import Footer from "../../Footer";
 import Map from "../../../components/Map";
 import { AppContext } from "../../../context/AppProvider";
+import FilterOrgs from "../../Filter/FilterOrgs";
 
 interface IData {
     orgs: IOrganization[];

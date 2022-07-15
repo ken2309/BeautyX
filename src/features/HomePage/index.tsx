@@ -16,6 +16,7 @@ import HomeTopService from "./HomeTopService";
 import HomeBannerResult from "./HomeBanner/homeSearchReasult";
 import HomeTags from "./HomeTags";
 import HomeProvince from "./HomeProvince";
+import HomeTagsProducts from "./Components/HomeTagsList/HomeTagsProducts";
 
 export default function HomePage() {
     const IS_MB = useFullScreen();
@@ -23,6 +24,7 @@ export default function HomePage() {
         <div className="homepage">
             <ExtraFlatForm />
             {IS_MB ? <HeadHomeMobile /> : <Head IN_HOME={true} />}
+            <HomeTagsProducts />
             <Container>
                 <HomeBanner />
                 <HomeTags />
