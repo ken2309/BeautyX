@@ -30,7 +30,7 @@ function PaymentInfo(props: any) {
         if (FLAT_FORM) {
             switch (FLAT_FORM) {
                 case FLAT_FORM_TYPE.MOMO:
-                    return window.location.assign(EXTRA_PAYMENT_ID);
+                    return window.location.assign(EX_PAYMENT?.deepLink);
                 case FLAT_FORM_TYPE.TIKI:
                     return doPostMakePaymentMessageTiki({
                         TYPE: "ORDER",

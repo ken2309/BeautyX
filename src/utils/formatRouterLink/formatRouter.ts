@@ -11,7 +11,7 @@ export const formatRouterLinkProduct = (
     org: IOrganization
 ) => {
     const pathProductOb = {
-        pathname: `/product-detail/${slugify(product?.product_name)}`,
+        pathname: `/san-pham/${slugify(product?.product_name)}`,
         search: `id=${product.id}&org=${org.id}`,
     }
     return pathProductOb
@@ -20,7 +20,7 @@ export const formatRouterLinkProductPromo = (
     productPromo: IProductPromo
 ) => {
     const pathProductOb = {
-        pathname: `/product-detail/${slugify(productPromo?.product_name)}`,
+        pathname: `/san-pham/${slugify(productPromo?.product_name)}`,
         search: `id=${productPromo.product_id}&org=${productPromo.org_id}`,
     }
     return pathProductOb

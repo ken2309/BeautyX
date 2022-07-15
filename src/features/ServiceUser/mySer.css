@@ -138,6 +138,16 @@
     background-color: var(--bgWhite);
     position: relative;
 }
+.treat-card-item__dot{
+    width: 10px;
+    height: 10px;
+    background-color: var(--red-cl);
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: -4px -4px 0px 0px;
+    border-radius: 100%;
+}
 
 .treat-card-item__book {
     position: absolute;

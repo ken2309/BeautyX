@@ -8,6 +8,9 @@ function Notification(props: any) {
     const { openNo } = props;
     const { USER } = useSelector((state: any) => state.USER);
     const { appsToday } = useSelector((state: any) => state.APP.APPS);
+    const { ORDER_SERVICES_NOT_BOOK_COUNT } = useSelector(
+        (state: any) => state.ORDER
+    );
     const history = useHistory();
     const { t } = useContext(AppContext);
     return (
@@ -32,7 +35,7 @@ function Notification(props: any) {
                 </span>
             </div>
             <ul className="hd-noti__list">
-                {appsToday.length > 0 ? (
+                {appsToday.length > 0 && (
                     <li onClick={() => history.push("/lich-hen?tab=1")}>
                         <div className="flex-row">
                             <img
@@ -59,8 +62,30 @@ function Notification(props: any) {
                             </div>
                         </div>
                     </li>
-                ) : (
-                    <p className="noti-empty">{t("Header.not_noti")}</p>
+                )}
+                {ORDER_SERVICES_NOT_BOOK_COUNT > 0 && (
+                    <li onClick={() => history.push("/lich-hen?tab=2")}>
+                        <div className="flex-row">
+                            <img
+                                style={{ width: "12px", height: "12px" }}
+                                src={icon.dotPurple}
+                                alt=""
+                            />
+                            <div className="no-box-item__text">
+                                <p className="no-box-item__text-name">
+                                    Thông báo đặt hẹn
+                                </p>
+                                <p className="no-box-item__text-content">
+                                    {USER?.fullname} ơi ! Bạn có{" "}
+                                    {ORDER_SERVICES_NOT_BOOK_COUNT} gói dịch vụ
+                                    chưa đặt hẹn. Xem ngay nhé
+                                </p>
+                                <p className="no-box-item__text-time">
+                                    Xem dịch vụ
+                                </p>
+                            </div>
+                        </div>
+                    </li>
                 )}
             </ul>
             {/* <ButtonCus

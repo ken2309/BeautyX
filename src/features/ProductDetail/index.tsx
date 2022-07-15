@@ -20,7 +20,7 @@ import ProductDetailLeft from "./components/ProductDetailLeft";
 import ProductDetailRight from "./components/ProductDetailRight";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 import icon from "../../constants/icon";
 import Review from "../Reviews";
 import HeadOrg from "../MerchantDetail/components/HeadOrg";

@@ -13,15 +13,17 @@ import { clearAllServices } from "../../../redux/servicesBookSlice";
 import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
-import useFullScreen from "../../../utils/useFullScreen";
 import PopupSuccess from "../../PopupSuccess";
 import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
-
+import DiscountDetailRightReview from "../../DiscountDetail/components/DiscountDetailRightReview";
+// ==== api tracking ====
+// import tracking from "../../../api/trackApi";
+// end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
-import DiscountDetailRightReview from "./DiscountDetailRightReview";
-import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
+import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { AppContext } from "../../../context/AppProvider";
+import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
 // end
 interface IProps {
     discount: IDiscountPar;
@@ -32,7 +34,7 @@ interface IProps {
 
 function DiscountDetailRight(props: IProps) {
     const { discount, org, detail, NOW } = props;
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
     const ITEM_DISCOUNT: IITEMS_DISCOUNT = useSelector(
@@ -83,6 +85,12 @@ function DiscountDetailRight(props: IProps) {
         discount
     );
     const handleAddCart = () => {
+        // tracking.ADD_CART_CLICK(
+        //     values.org_id,
+        //     values.id,
+        //     values.price,
+        //     values.quantity
+        // );
         GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
         dispatch(addCart(values));
         setPopupSuccess(true);
@@ -92,7 +100,13 @@ function DiscountDetailRight(props: IProps) {
         const TYPE = "BOOK_NOW";
         const service = { ...detail, discount: discount };
         const services = [{ service, quantity: quantity }];
-        // console.log(service, services);
+        console.log(service, services);
+        // tracking.ADD_CART_CLICK(
+        //     values.org_id,
+        //     values.id,
+        //     values.price,
+        //     values.quantity
+        // );
         GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
         history.push({
             pathname: "/dat-hen",

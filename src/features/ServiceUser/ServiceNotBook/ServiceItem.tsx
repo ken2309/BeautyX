@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { formatDate, checkTimeExpired } from "../../../utils/format";
 import { IOrganization } from "../../../interface/organization";
 import ServiceReview from "../ServiceReview";
+//import { Appointment } from '../../../interface/appointment'
 
 interface IProps {
     service: IUser_Service;
@@ -18,7 +19,7 @@ interface IProps {
 }
 
 function ServiceItem(props: IProps) {
-    const { t } = useContext(AppContext);
+    //const { t } = useContext(AppContext);
     const {
         service,
         handleServiceBook,
@@ -28,6 +29,13 @@ function ServiceItem(props: IProps) {
     } = props;
     const [open, setOpen] = useState(false);
     const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
+    //const { appointments } = useSelector((state: any) => state.APP.APPS);
+
+    //const APPOINT_BY_ORDER_ID: Appointment = appointments.find((val: Appointment) => val.order_id === order_id);
+    //const services_appointment = APPOINT_BY_ORDER_ID?.services;
+
+    //const service_item_app = services_appointment?.filter((i: any) => i.id === service.id);
+
     const servicesBook = servicesBookSlice.servicesBook;
     const servicesBook_id = servicesBook.map((item: any) => item.ser_book_id);
     const dateExpired = checkTimeExpired(service?.time_expired);
@@ -54,10 +62,20 @@ function ServiceItem(props: IProps) {
                         className="treatment-ser-item__out"
                         style={{ marginRight: "4px" }}
                     >
-                        {t("pr.service_used_evaluate")}
+                        Dịch vụ đã sử dụng | Đánh giá
                     </span>
                 )}
-                {dateExpired && (
+                {/* {
+          (service_item_app?.length > 0 && service.remain_time > 0) &&
+          <span
+            onClick={onOpenServiceReview}
+            className="treatment-ser-item__out"
+            style={{ marginRight: "4px" }}
+          >
+            Đang thực hiện
+          </span>
+        } */}
+                {dateExpired && service.remain_time > 0 && (
                     <span
                         style={{
                             backgroundColor: "var(--red-cl)",
@@ -65,7 +83,7 @@ function ServiceItem(props: IProps) {
                         }}
                         className="treatment-ser-item__out"
                     >
-                        {t("pm.service_has_expired")}
+                        Dịch vụ đã hết hạn
                     </span>
                 )}
                 <div
@@ -100,10 +118,6 @@ function ServiceItem(props: IProps) {
                         <span className="ser-name">
                             {service?.service_name}
                         </span>
-                        {/* {
-            service.time_expired &&
-            <p>Ngày hết hạn : {service.time_expired}</p>
-          } */}
                         <span className="ser-desc">
                             {service.description !== null &&
                                 service.description}
@@ -111,17 +125,16 @@ function ServiceItem(props: IProps) {
                         <div className="flex-row-sp">
                             {service.time_expired && (
                                 <div className="quantity-text__time-ex">
-                                    {`${t("pr.expiration_date")}`} |{" "}
-                                    {formatDate(service.time_expired)}
+                                    Hết hạn | {formatDate(service.time_expired)}
                                 </div>
                             )}
                             <div className="flex-row quantity">
                                 <div className="quantity-text">
                                     {service.unlimited === true ? (
-                                        <span>{t("pr.unlimited")}</span>
+                                        <span>Không giới hạn</span>
                                     ) : (
                                         <span>
-                                            {`${t("detail_item.used")}: `}
+                                            Đã sử dụng{" "}
                                             {service.times -
                                                 service.remain_time}
                                             /{service.times}

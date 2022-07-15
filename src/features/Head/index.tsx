@@ -4,7 +4,7 @@ import "./head.css";
 import { Container } from "@mui/material";
 import ButtonCus from "../../components/ButtonCus";
 import { AppContext } from "../../context/AppProvider";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import icon from "../../constants/icon";
 import img from "../../constants/img";
 import Notification from "./components/Notification";
@@ -29,12 +29,22 @@ import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 // });
 //////
 
-function Head(props: any) {
+interface IProps {
+    IN_HOME?: boolean,
+    setCloseDialog?: (closeDialog?: boolean) => void,
+    headerStyle?: any,
+    handleCancelPayment?: () => void,
+    prev_url?: string,
+}
+
+function Head(props: IProps) {
     const {
         t,
         //profile,
         //userInfo
     } = useContext(AppContext);
+    const location = useLocation();
+    const currentUrl = location.pathname;
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const dispatch = useDispatch();
     const {
@@ -51,6 +61,7 @@ function Head(props: any) {
     const { appsToday } = useSelector((state: any) => state.APP.APPS);
     const [unit, setUnit] = useState("VND");
     const history = useHistory();
+    const { ORDER_SERVICES_NOT_BOOK_COUNT } = useSelector((state: any) => state.ORDER);
 
     //get total amount cart
 
@@ -258,11 +269,17 @@ function Head(props: any) {
                                             {USER?.fullname?.slice(0, 1)}
                                         </div>
                                     )}
-                                    {appsToday.length > 0 && (
+                                    {(appsToday.length > 0 || ORDER_SERVICES_NOT_BOOK_COUNT > 0) && (
                                         <div className="hd-cnt__right-avatar-dot"></div>
                                     )}
                                     <Notification openNo={openNo} />
                                 </div>
+                                {/* <Link
+                                    to={{ pathname: "/chat", state: `${currentUrl}${location.search}` }}
+                                    className="head-chat-btn"
+                                >
+                                    <img src={icon.chatPurple} alt="" />
+                                </Link> */}
                             </div>
                         )}
                         {/* menu for mobile */}

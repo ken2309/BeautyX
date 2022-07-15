@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { fetchAsyncUser } from "../../../redux/USER/userSlice";
 import dayjs from "dayjs";
 import { fetchAsyncApps } from "../../../redux/appointment/appSlice";
+import { fetchAsyncOrderServices } from "../../../redux/order/orderSlice";
 
 function SignIn(props: any) {
     const { t } = useContext(AppContext);
@@ -43,9 +44,10 @@ function SignIn(props: any) {
             const res = await dispatch(fetchAsyncUser());
             if (res?.payload) {
                 dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
+                dispatch(fetchAsyncOrderServices({ page: 1 }))
             }
             setLoading(false);
-            history.goBack();
+            history.push("/homepage");
         } catch (error) {
             setLoading(false);
             const err = error as AxiosError;

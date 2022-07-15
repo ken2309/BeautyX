@@ -14,24 +14,24 @@ function MenuBox(props: any) {
         <>
           <li
             onClick={() => history.push("/tai-khoan/thong-tin-ca-nhan")}
-            className="{menu.menuBoxItem}"
+            
           >
             <div className="flex-row hd-menu__item">
               <img src={icon.User_purple} alt="" />
               <span className="hd-menu__item-text">{t("Header.my_acc")}</span>
             </div>
           </li>
-          <li className="{menu.menuBoxItem}">
+          {/* <li >
             <div className="flex-row hd-menu__item">
               <img src={icon.Credit_card} alt="" />
               <span className="hd-menu__item-text">
                 {t("pm.payment_method")}
               </span>
             </div>
-          </li>
+          </li> */}
           <li
             onClick={() => history.push("/tai-khoan/lich-su-mua")}
-            className="{menu.menuBoxItem}"
+            
           >
             <div className="flex-row hd-menu__item">
               <img src={icon.Clock_purple} alt="" />
@@ -40,7 +40,7 @@ function MenuBox(props: any) {
           </li>
           <li
             onClick={() => history.push("/lich-hen?tab=1")}
-            className="{menu.menuBoxItem}"
+            
           >
             <div className="flex-row hd-menu__item">
               <img src={icon.bag} alt="" />
@@ -49,20 +49,20 @@ function MenuBox(props: any) {
           </li>
           <li
             onClick={() => history.push("/lich-hen?tab=2")}
-            className="{menu.menuBoxItem}"
+            
           >
             <div className="flex-row hd-menu__item">
               <img src={icon.bag} alt="" />
               <span className="hd-menu__item-text">{t('app.my_services')}</span>
             </div>
           </li>
-          <li onClick={() => history.push('/tai-khoan/ma-uu-dai')} className="{menu.menuBoxItem}">
+          <li onClick={() => history.push('/tai-khoan/ma-uu-dai')} >
             <div className="flex-row hd-menu__item">
               <img src={icon.Ticket} alt="" />
               <span className="hd-menu__item-text">{t("Header.my_codes")}</span>
             </div>
           </li>
-          {/* <li className="{menu.menuBoxItem}">
+          {/* <li >
             <div className="flex-row hd-menu__item">
               <img src={icon.Bell} alt="" />
               <span className="hd-menu__item-text">{t("cart.noti")}</span>
@@ -72,7 +72,7 @@ function MenuBox(props: any) {
       ) : (
         ""
       )}
-      {/* <li className="{menu.menuBoxItem}">
+      {/* <li >
         <div className="flex-row-sp hd-menu__item">
           <div className="flex-row">
             <img src={icon.Setting} alt="" />

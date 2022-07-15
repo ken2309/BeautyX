@@ -339,7 +339,8 @@
         "pain": "Đã thanh toán",
         "all": "Tất cả",
         "date_created": "Ngày tạo",
-        "history": "Lịch sử"
+        "history": "Lịch sử",
+        "set_default_address": "Đặt làm địa chỉ mặc định"
     },
     "order": {
         "order_his": "Lịch sử đơn hàng",
@@ -378,7 +379,9 @@
         "bk_fail": "Đặt hẹn thất bại",
         "rv_booked": "Bạn có thể xem lại dịch vụ đã đặt hẹn",
         "bk_fail_title": "Có lỗi xảy ra trong quá trình đặt hẹn",
-        "code_err": "Mã lỗi"
+        "code_err": "Mã lỗi",
+        "booking": "Đặt lịch",
+        "booking_his": "Lịch sử"
     },
     "home_2": {
         "categories": "Danh mục",
@@ -418,7 +421,8 @@
         "instructions_terms": "Hướng dẫn & Điều khoản",
         "search_result": "Kết quả tìm kiếm",
         "distance": "Khoảng cách",
-        "edit": "Sửa"
+        "guide": "Hướng dẫn sử dụng",
+        "edit": "Chỉnh sửa"
     },
     "Contact": {
         "success": "Đã nhận thông tin"

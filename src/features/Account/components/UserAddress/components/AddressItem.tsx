@@ -3,8 +3,15 @@ import icon from "../../../../../constants/icon";
 import { AppContext } from "../../../../../context/AppProvider";
 
 function AddressItem(props: any) {
-    const { item, handleRemoveAddress, index, handleUpdateAddress } = props;
+    const {
+        item,
+        handleRemoveAddress,
+        index,
+        handleUpdateAddress,
+        address_default,
+    } = props;
     const { t } = useContext(AppContext);
+
     const onRemoveAddress = () => {
         if (handleRemoveAddress) {
             handleRemoveAddress(item);
@@ -20,10 +27,10 @@ function AddressItem(props: any) {
             <div className="us-add_item">
                 <div className="flex-row-sp us-add_item-header">
                     <span className="title">
-                        {t("pm.address")} {index + 1}
+                        {t("Mer_de.address")} {index + 1}
                     </span>
                     <div className="flex-row us-add_item-header_left">
-                        {item.is_default === true ? (
+                        {item.id === address_default?.id ? (
                             <span className="default">{t("acc.default")}</span>
                         ) : (
                             <>
@@ -31,7 +38,7 @@ function AddressItem(props: any) {
                                     onClick={onUpdateAddress}
                                     className="se-default"
                                 >
-                                    {t("acc.set_as_default_address")}
+                                    {t("acc.set_default_address")}
                                 </span>
                                 <button onClick={onRemoveAddress}>
                                     <img src={icon.TrashOrange} alt="" />

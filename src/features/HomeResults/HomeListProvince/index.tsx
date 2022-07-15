@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 //import icon from '../../../constants/icon';
 import { AppContext } from "../../../context/AppProvider";
 import { IProvince } from "../../../interface/provinces";
-import HomeTitleSection from "../../Homev2/components/HomeTitleSection/index";
+import HomeTitleSection from "../../HomePage/HomeTitleSection/index/index";
 import Head from "../../Head";
 import HeadTitle from "../../HeadTitle";
 import scrollTop from "../../../utils/scrollTop";

@@ -154,30 +154,34 @@ function Footer() {
         },
     ];
     const payment = [
-        {
-            id: 2,
-            img: paymentMethod.visa,
-        },
-        {
-            id: 3,
-            img: paymentMethod.masterCard,
-        },
-        {
-            id: 4,
-            img: paymentMethod.jcb,
-        },
-        {
-            id: 5,
-            img: paymentMethod.atm,
-        },
+        // {
+        //     id: 1,
+        //     img: paymentMethod.tikiPay,
+        // },
+        // {
+        //     id: 2,
+        //     img: paymentMethod.visa,
+        // },
+        // {
+        //     id: 3,
+        //     img: paymentMethod.masterCard,
+        // },
+        // {
+        //     id: 4,
+        //     img: paymentMethod.jcb,
+        // },
+        // {
+        //     id: 5,
+        //     img: paymentMethod.atm,
+        // },
         {
             id: 6,
             img: paymentMethod.momoPayment,
         },
-        {
-            id: 7,
-            img: paymentMethod.zaloPay,
-        },
+        // {
+        //     id: 7,
+        //     img: paymentMethod.zaloPay,
+        // },
         // {
         //     id: 8,
         //     img: paymentMethod.mocaGrap,
@@ -194,10 +198,10 @@ function Footer() {
             id: 11,
             img: paymentMethod.handPay,
         },
-        {
-            id: 12,
-            img: icon.payon,
-        },
+        // {
+        //     id: 12,
+        //     img: icon.payon,
+        // },
     ];
     const app = [
         {
@@ -382,6 +386,9 @@ function Footer() {
                     }
                 >
                     {t("footer.address_company")}
+                </div>
+                <div className="footer-copy-right">
+                    © Copyright 2022 Myspa | ProductX teams.
                 </div>
             </Container>
         </div>

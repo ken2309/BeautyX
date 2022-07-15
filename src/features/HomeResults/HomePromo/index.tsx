@@ -4,7 +4,7 @@ import Head from "../../Head";
 import HeadTitle from "../../HeadTitle";
 import { Container } from "@mui/material";
 import "../home-result.css";
-import HomeTitleSection from "../../Homev2/components/HomeTitleSection/index";
+import HomeTitleSection from "../../HomePage/HomeTitleSection/index/index";
 import ServicePromoItem from "../../ViewItemCommon/ServicePromoItem";
 import { IServicePromo } from "../../../interface/servicePromo";
 import { AppContext } from "../../../context/AppProvider";
@@ -16,11 +16,13 @@ import { STATUS } from "../../../redux/status";
 import { onSetFilterPromo } from '../../../redux/filter/filterSlice';
 import { useHistory } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
-import useFullScreen from "../../../utils/useFullScreen";
+import useFullScreen from "../../../utils/useDeviceMobile";
 import HeadMobile from "../../HeadMobile";
 import ServiceResultItem from "../../Search/components/ServiceResultItem";
 import BackTopButton from "../../../components/BackTopButton";
 import Footer from "../../Footer";
+import LoadingMore from "../../../components/LoadingMore";
+import { LoadingServices } from "../../../components/LoadingSketion";
 
 function HomePromo(props: any) {
     const { t } = useContext(AppContext);
@@ -92,6 +94,7 @@ function HomePromo(props: any) {
                     <FilterService
                         onChangeFilter={onChangeServicesByFilter}
                     />
+                    {(status !== STATUS.SUCCESS && page === 1) && <LoadingServices />}
                     <InfiniteScroll
                         next={onViewMore}
                         hasMore={true}
@@ -117,6 +120,7 @@ function HomePromo(props: any) {
                         </ul>
                     </InfiniteScroll>
                 </div>
+                {services.length === totalItem ? <></> : <LoadingMore />}
                 <div style={{ marginBottom: "24px" }}>
                 </div>
             </Container>

@@ -17,7 +17,6 @@ import { AppContext } from '../../context/AppProvider';
 interface Org {
 	id: number, name: string
 }
-const isCart: boolean = true
 function Cart(props: any) {
 	const { t } = useContext(AppContext)
 	const headerTitle = t('cart.cart')
@@ -74,10 +73,7 @@ function Cart(props: any) {
 			<HeadTitle
 				title={headerTitle}
 			/>
-			<Head
-				isCart={isCart}
-				title={headerTitle}
-			/>
+			<Head />
 			{
 				carts?.cartList.length === 0 || !carts.cartList ?
 					<CartNull />

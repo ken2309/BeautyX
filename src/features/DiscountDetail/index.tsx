@@ -27,7 +27,6 @@ import Review from "../Reviews";
 import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
 import icon from "../../constants/icon";
 import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
-import useFullScreen from "../../utils/useFullScreen";
 import HeadOrg from "../MerchantDetail/components/HeadOrg";
 import {
     handleChangeScroll,
@@ -40,15 +39,16 @@ import ModalLoad from "../../components/ModalLoad";
 
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
+import useDeviceMobile from "../../utils/useDeviceMobile";
 import { AppContext } from "../../context/AppProvider";
 // end
 function DiscountDetail() {
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
-    const IS_MB = useFullScreen();
+    const { t } = useContext(AppContext);
+    const IS_MB = useDeviceMobile();
     const discount: IDiscountPar = DISCOUNT.discount;
     const status_detail = DISCOUNT.status;
-    const is_mobile = useFullScreen();
-    const { t } = useContext(AppContext);
+    const is_mobile = useDeviceMobile();
     const [open, setOpen] = useState({
         NOW: true,
         open: false,

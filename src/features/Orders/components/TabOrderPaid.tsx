@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IOrderV2 } from "../../../interface/orderv2";
 import { fetchAsyncOrderPaid } from "../../../redux/order/orderSlice";

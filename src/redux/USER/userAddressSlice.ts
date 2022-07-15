@@ -5,6 +5,7 @@ import { IUserAddress } from '../../interface/userAddress';
 
 interface IInitialState {
     address: IUserAddress[],
+    address_default:any,
     status: any,
     status_up: any,
 }
@@ -62,6 +63,7 @@ export const updateAsyncAddress: any = createAsyncThunk(
 )
 const initialState: IInitialState = {
     address: [],
+    address_default:null,
     status: null,
     status_up: null,
 }
@@ -73,9 +75,14 @@ const userAddressSlice = createSlice({
             state.address = state.address.filter((item: any) => item.id !== action.payload.id)
         },
         removeDefaultItem: (state, action) => {
-            const old_address = { ...action.payload, is_default: false }
-            const itemIndex = state.address.findIndex((item: any) => item.id === action.payload.id);
-            state.address = state.address.fill(old_address, itemIndex, itemIndex + 1)
+            state.address_default = action.payload
+            // const iIndex = state.address.findIndex((item: any) =>
+            //     item.id === action.payload.id
+            // );
+            // state.address[iIndex].is_default = false
+            //const old_address = { ...action.payload, is_default: false }
+            //const itemIndex = state.address.findIndex((item: any) => item.id === action.payload.id);
+            //state.address = state.address.fill(old_address, itemIndex, itemIndex + 1)
         }
     },
     extraReducers: {
@@ -85,6 +92,7 @@ const userAddressSlice = createSlice({
         [fetchAsyncUserAddress.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
+                address_default: payload.find((i:IUserAddress) => i.is_default === true),
                 address: payload,
                 status: STATUS.SUCCESS
             }
@@ -113,6 +121,7 @@ const userAddressSlice = createSlice({
         [postAsyncAddress.fulfilled]: (state, { payload }) => {
             return {
                 ...state,
+                address_default : payload,
                 address: [payload, ...state.address,],
                 status_up: STATUS.SUCCESS
             }
@@ -125,11 +134,12 @@ const userAddressSlice = createSlice({
             return { ...state, status_up: STATUS.LOADING }
         },
         [updateAsyncAddress.fulfilled]: (state, { payload }) => {
-            const itemIndex = state.address.findIndex((item: any) => item.id === payload.id);
-            const arr = state.address.filter((item: any, index: number) => index !== itemIndex);
+            //const itemIndex = state.address.findIndex((item: any) => item.id === payload.id);
+            //const arr = state.address.filter((item: any, index: number) => index !== itemIndex);
             return {
                 ...state,
-                address: [payload, ...arr],
+                address_default: payload,
+                //address: [payload, ...arr],
                 status_up: STATUS.SUCCESS
             }
         },

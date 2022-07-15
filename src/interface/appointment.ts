@@ -14,5 +14,6 @@ export interface Appointment {
   time_start: string;
   updated_at: string;
   user_id: number;
+  services:any[]
 }
 

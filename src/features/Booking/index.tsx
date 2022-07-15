@@ -16,7 +16,6 @@ import Footer from "../Footer";
 import order from "../../api/orderApi";
 import { pickBy, identity } from "lodash";
 import HeadMobile from "../HeadMobile";
-import useFullScreen from "../../utils/useFullScreen";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
 import PaymentMethodCpn from "../PaymentMethod/index";
@@ -30,21 +29,32 @@ import { STATUS } from "../../redux/status";
 import apointmentApi from "../../api/apointmentApi";
 import Notification from "../../components/Notification";
 import { onSetStatusApp } from "../../redux/appointment/appSlice";
+import AlertSnack from "../../components/AlertSnack";
 
+// ==== api tracking ====
+//import tracking from "../../api/trackApi";
+import { formatProductList } from "../../utils/tracking";
+import { onRefreshServicesNoBookCount } from "../../redux/order/orderSlice";
+import useDeviceMobile from "../../utils/useDeviceMobile";
+// end
 const date = dayjs();
 function Booking() {
     const dispatch = useDispatch();
     const { SERVICES_BOOK } = useSelector((state: any) => state);
     const { org, status } = useSelector((state: any) => state.ORG);
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const FLAT_FORM = EXTRA_FLAT_FORM();
+    const [openAlertSnack, setOpenAlertSnack] = useState({
+        title: "",
+        open: false,
+    });
     const [openNoti, setOpenNoti] = useState({
         title: "",
         open: false,
         titleLeft: "",
         titleRight: "",
-        onClickLeft: () => {},
-        onClickRight: () => {},
+        onClickLeft: () => { },
+        onClickRight: () => { },
     });
     const { USER } = useSelector((state: any) => state.USER);
     const { payments_method } = useSelector(
@@ -73,7 +83,6 @@ function Booking() {
     }, [location.state]);
     const { servicesBook } = SERVICES_BOOK;
     const branches = org?.branches?.concat(org);
-    //const [branch, setChooseBranch] = useState<any>();
     const [open, setOpen] = useState(false);
     const [chooseE_wall, setChooseE_wall] = useState<any>();
     const [bookTime, setBookTime] = useState({
@@ -82,6 +91,7 @@ function Booking() {
         note: "",
         branch_id: null,
     });
+    const [seatAmount, SetSeatAmount] = useState(1);
     const onDropBranchList = () => {
         branchRef?.current?.classList?.toggle("drop-show-branches");
     };
@@ -105,10 +115,7 @@ function Booking() {
     });
 
     //
-    const payment_method_id = extraPaymentMethodId(
-        payments_method,
-        chooseE_wall
-    );
+    const payment_method_id = extraPaymentMethodId(payments_method, chooseE_wall);
     const params_string = {
         products: [],
         services: services,
@@ -134,9 +141,10 @@ function Booking() {
         );
         return values;
     });
+
     const dayBook = formatDatePost(bookTime.date);
     const action = {
-        note: bookTime.note,
+        note: '[ Số lượng người: '+seatAmount+' ] '+bookTime.note,
         time_start: `${dayBook} ${bookTime.time}:00`,
         branch_id: bookTime.branch_id,
         order_id: location.state.order_id,
@@ -145,6 +153,7 @@ function Booking() {
     async function handlePostOrder() {
         const params = pickBy(params_string, identity);
         try {
+            //tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(params.products))
             const response = await order.postOrder(org?.id, params);
             const state_payment = await response.data.context;
             const transaction_uuid =
@@ -193,6 +202,7 @@ function Booking() {
     const handlePostApps = async () => {
         try {
             await apointmentApi.postAppointment(action, org?.id);
+            dispatch(onRefreshServicesNoBookCount())
             setOpenNoti({
                 open: true,
                 title: "Đặt hẹn thành công",
@@ -219,6 +229,18 @@ function Booking() {
             branch_id: itemMap.subdomain ? null : itemMap.id,
         });
     };
+    const handleSeatsAmount = (props:any) => {
+        switch(props){
+            case 'asc':
+                SetSeatAmount(seatAmount+1);
+                break;
+            case 'desc':
+                SetSeatAmount(seatAmount-1);
+                break;
+            default:
+                break;
+        }
+    }
 
     const handleBooking = () => {
         if (USER) {
@@ -226,6 +248,13 @@ function Booking() {
                 if (location.state.TYPE === "BOOK_NOW") {
                     if (FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX) {
                         if (chooseE_wall) return handlePostOrder();
+                        else {
+                            setOpenAlertSnack({
+                                ...openAlertSnack,
+                                open: true,
+                                title: 'Bạn Chưa chọn phương thức thanh toán!'
+                            })
+                        }
                     } else {
                         return handlePostOrder();
                     }
@@ -234,6 +263,11 @@ function Booking() {
                 }
             } else {
                 //pop up choose time request
+                setOpenAlertSnack({
+                    ...openAlertSnack,
+                    open: true,
+                    title: 'Bạn cần chọn Thời Gian cho buổi hẹn!'
+                })
             }
         } else {
             history.push("/sign-in?1");
@@ -241,6 +275,14 @@ function Booking() {
     };
     return (
         <>
+            <AlertSnack
+                title={openAlertSnack.title}
+                open={openAlertSnack.open}
+                status="FAIL"
+                onClose={() => setOpenAlertSnack({
+                    ...openAlertSnack, open: false
+                })}
+            />
             <HeadTitle title="Đặt hẹn" />
             {IS_MB ? <HeadMobile title="Đặt hẹn" /> : <Head />}
             <div className="booking-wrap">
@@ -297,10 +339,10 @@ function Booking() {
                                         />
                                         {bookTime.branch_id
                                             ? org?.branches?.find(
-                                                  (i: any) =>
-                                                      i.id ===
-                                                      bookTime.branch_id
-                                              )?.full_address
+                                                (i: any) =>
+                                                    i.id ===
+                                                    bookTime.branch_id
+                                            )?.full_address
                                             : org?.full_address}
                                     </span>
                                     {org?.branches?.length > 0 && (
@@ -320,10 +362,10 @@ function Booking() {
                                                     }
                                                     style={
                                                         bookTime.branch_id ===
-                                                        item.id
+                                                            item.id
                                                             ? {
-                                                                  color: "var(--text-black)",
-                                                              }
+                                                                color: "var(--text-black)",
+                                                            }
                                                             : {}
                                                     }
                                                     key={index}
@@ -357,6 +399,19 @@ function Booking() {
                                 loading={false}
                             />
                         </div>
+                        <div className="flex-row-sp booking-cnt__right-time">
+                            <div className="book-seats-amount">
+                                <span className="book-section-title">
+                                    Số lượng người
+                                </span>
+                                <div className="seats_amount-cnt">
+                                    <button className="desc" disabled={(seatAmount === 1)?true:false} onClick={()=>handleSeatsAmount('desc')}>{'-'}</button>
+                                    <div className="book-section-title amount">{seatAmount}</div>
+                                    <button className="asc"  disabled={(seatAmount >= 10)?true:false} onClick={()=>handleSeatsAmount('asc')}>{'+'}</button>
+                                </div>
+                            </div>
+
+                        </div>
                         <div className="booking-cnt__right-time">
                             <span className="book-section-title">Ghi chú</span>
                             <br />
@@ -376,7 +431,7 @@ function Booking() {
                         <div
                             style={
                                 FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
-                                location.state.TYPE === "BOOK_NOW"
+                                    location.state.TYPE === "BOOK_NOW"
                                     ? { display: "block" }
                                     : { display: "none" }
                             }

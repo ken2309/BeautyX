@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import icon from "../../../constants/icon";
@@ -9,7 +9,7 @@ import {
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
 import Slider from "react-slick";
-import useFullScreen from "../../../utils/useFullScreen";
+import useFullScreen from "../../../utils/useDeviceMobile";
 import { AppContext } from "../../../context/AppProvider";
 const PrevButton = (props: any) => {
     const { onClick } = props;
@@ -39,7 +39,7 @@ const NextButton = (props: any) => {
 };
 export default function ServiceDetailLeft(props: any) {
     const { org, service } = props;
-    const videoRef = useRef<any>();
+
     const history = useHistory();
     const dispatch = useDispatch();
     const { t } = useContext(AppContext);

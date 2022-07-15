@@ -5,9 +5,8 @@ import Head from "../Head";
 import { Container, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import "./style.css";
-import HomeLoggedCalendar from "../Home/components/HomeLogged/HomeLoggedCalendar";
+import HomeLoggedCalendar from "../Apointment/HomeLoggedCalendar";
 import ServicesUser from "../ServiceUser";
-import useFullScreen from "../../utils/useFullScreen";
 import icon from "../../constants/icon";
 import { clearAllServices } from "../../redux/servicesBookSlice";
 import { useDispatch } from "react-redux";
@@ -15,18 +14,20 @@ import { useHistory, useLocation } from "react-router-dom";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import Bottom from "../../featuresMobile/Bottom";
 import { AppContext } from "../../context/AppProvider";
+import Footer from "../Footer";
+import useDeviceMobile from "../../utils/useDeviceMobile";
 
 function Calendar() {
-    const IS_MB = useFullScreen();
+    const { t } = useContext(AppContext);
+    const IS_MB = useDeviceMobile();
     const dispatch = useDispatch();
     const history = useHistory();
     const location: any = useLocation();
     const params: any = extraParamsUrl();
-    const { t } = useContext(AppContext);
     const tabList = [
-        { value: "1", title: `${t("Bottom.appointment")}` },
-        { value: "2", title: `${t("order.book")}` },
-        { value: "3", title: `${t("acc.history")}` },
+        { value: "1", title: t("Bottom.appointment") },
+        { value: "2", title: t("Đặt lịch") },
+        { value: "3", title: t("my_ser.booking_his") },
     ];
     const [valueTab, setValueTab] = useState(params?.tab || "1");
     const onChangeTab = (event: React.SyntheticEvent, newValue: string) => {
@@ -82,6 +83,7 @@ function Calendar() {
                 </div>
             </div>
             <Bottom />
+            <Footer />
         </>
     );
 }

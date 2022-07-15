@@ -340,7 +340,8 @@
         "pain": "Pain",
         "all": "All",
         "date_created": "Date created",
-        "history": "History"
+        "history": "History",
+        "set_default_address": "Set default address"
     },
     "order": {
         "order_his": "Orders history",
@@ -379,7 +380,9 @@
         "bk_fail": "Booking failed !",
         "rv_booked": "You can review your booked services",
         "bk_fail_title": "An error occurred during the booking process",
-        "code_err": "Code error"
+        "code_err": "Code error",
+        "booking": "Booking",
+        "booking_his": "History"
     },
     "home_2": {
         "categories": "Categories",
@@ -419,6 +422,7 @@
         "search_result": "Search result",
         "instructions_terms": "Instructions & Terms",
         "distance": "Distance",
+        "guide": "Guides",
         "edit": "Edit"
     },
     "Contact": {

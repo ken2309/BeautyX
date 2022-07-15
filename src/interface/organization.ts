@@ -22,4 +22,5 @@ export interface IOrganization {
   is_favorite?: boolean | null,
   distance: number | undefined,
   tags:[],
+  telephone:[]
 }

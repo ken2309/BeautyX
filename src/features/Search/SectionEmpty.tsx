@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import { AppContext } from "../../context/AppProvider";
+import { onSetEmptyOrgs, onSetEmptyProducts, onSetEmptyServices } from "../../redux/search/searchResultSlice";
 import {
     removeKeyWord,
     onToggleSearchCnt,
@@ -47,9 +48,12 @@ function SectionEmpty() {
     };
     const onGotoFilterResult = (keyword: string) => {
         dispatch(onToggleSearchCnt(false));
+        dispatch(onSetEmptyOrgs())
+        dispatch(onSetEmptyServices())
+        dispatch(onSetEmptyProducts())
         history.push({
             pathname: "/ket-qua-tim-kiem/",
-            search: `${keyword}`,
+            search: `?keyword=${keyword}`,
         });
     };
 

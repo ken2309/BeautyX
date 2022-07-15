@@ -7,6 +7,10 @@ import { Link } from "react-router-dom";
 import onErrorImg from "../../../utils/errorImg";
 import scrollTop from "../../../utils/scrollTop";
 import { formatRouterLinkServicePromo } from "../../../utils/formatRouterLink/formatRouter";
+
+// ==== api tracking ====
+//  import tracking from "../../../api/trackApi";
+// end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
 import { AppContext } from "../../../context/AppProvider";
@@ -26,6 +30,7 @@ function ServicePromoItem(props: IProps) {
             onClick={() => {
                 scrollTop();
                 GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
+                // tracking.USER_ITEM_CLICK(service.org_id, service.id);
             }}
             className="ser-pro-item"
         >

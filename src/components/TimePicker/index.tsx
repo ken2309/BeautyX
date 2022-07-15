@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import dayjs from "dayjs";
 import TimeItem from "./components/TimeItem";
 import "./timePicker.css";
@@ -8,14 +8,17 @@ import { extraOrgTimeWork } from "../../features/MerchantDetail/components/Funct
 interface IProps {
     onChange: (e: string) => void;
     disablePrev?: boolean;
-    org: IOrganization;
+    org?: IOrganization;
     bookTime: any;
 }
 
 function TimePicker(props: IProps) {
     const { onChange, disablePrev, org, bookTime } = props;
     const now = new Date();
-    const today = now.getDay() + 1;
+    let today = now.getDay() + 1;
+    if (now.getDay() + 1 === 1) {
+        today = 8
+    }
     const orgTimes = org && extraOrgTimeWork(org?.opening_time);
     const time_works_today = orgTimes?.find(
         (item: any, index: number) => index + 2 === today
@@ -75,10 +78,10 @@ function TimePicker(props: IProps) {
                     disablePrev={disablePrev}
                     t={t}
                     setT={setT}
-                    // Now={now}
-                    // handleClick={handleTime}
-                    // activeTime={activeTime}
-                    // activeDate={activeDate}
+                // Now={now}
+                // handleClick={handleTime}
+                // activeTime={activeTime}
+                // activeDate={activeDate}
                 />
             ))}
         </div>

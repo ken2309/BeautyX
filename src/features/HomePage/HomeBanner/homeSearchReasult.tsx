@@ -13,7 +13,7 @@ import './homeBannerSearchResult.css'
 import Footer from "../../Footer";
 import Bottom from "../../../featuresMobile/Bottom";
 import Head from "../../Head";
-import useFullScreen from "../../../utils/useFullScreen";
+import useFullScreen from "../../../utils/useDeviceMobile";
 import HeadMobile from '../../HeadMobile/index';
 
 

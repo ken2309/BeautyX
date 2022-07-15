@@ -25,6 +25,9 @@ function ExtraFlatForm() {
             case FLAT_FORM_TYPE.TIKI:
                 sessionStorage.setItem('FLAT_FORM', 'TIKI');
                 break
+            case FLAT_FORM_TYPE.MB:
+                sessionStorage.setItem('FLAT_FORM', 'MB');
+                break
             default:
                 sessionStorage.setItem('FLAT_FORM', 'BEAUTYX');
         }

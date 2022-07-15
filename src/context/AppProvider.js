@@ -7,7 +7,7 @@ import { fetchAsyncUser } from '../redux/USER/userSlice';
 import { fetchAsyncHome, fetchAsyncDiscounts } from '../redux/home/homeSlice';
 import { fetchAsyncNews, fetchAsyncVideos } from '../redux/blog/blogSlice';
 import { fetchAsyncApps } from '../redux/appointment/appSlice';
-
+import { fetchAsyncOrderServices } from '../redux/order/orderSlice'
 
 
 export const AppContext = createContext();
@@ -37,7 +37,7 @@ export default function AppProvider({ children }) {
   useEffect(() => {
     if (lg === "en-US" || lg === "en") {
       setLanguage("en");
-    } else if (lg === "vi-VN" || lg === "vn") {
+    } else if (lg === "vi-VN" || lg === "vi") {
       setLanguage("vn");
     }
   }, [lg]);
@@ -47,6 +47,7 @@ export default function AppProvider({ children }) {
       if (res?.payload) {
         const time = dayjs().format("YYYY-MM");
         dispatch(fetchAsyncApps(time))
+        dispatch(fetchAsyncOrderServices({ page: 1 }))
       }
     }
     callUserProfile()

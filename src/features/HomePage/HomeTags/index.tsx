@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AppContext } from "../../../context/AppProvider";
 import { imgTag } from "../../../constants/img";
+//import { useSelector } from "react-redux";
 
 function HomeTags(props: any) {
-    const history = useHistory();
+    //const history = useHistory();
     const { t } = useContext(AppContext);
+    // const tagsList = useSelector((state:any) => state.HOME.tags);
+    // console.log(t)
     const tags = [
         { id: 4, title: "Spa", text: "Spa", img: imgTag.spa },
         { id: 3, title: "Salon", text: "Salon", img: imgTag.hairSalon },
@@ -30,12 +33,12 @@ function HomeTags(props: any) {
         },
         //{ id: 7, title: 'Yoga', img: imgTag.yoga },
     ];
-    const gotoDetail = (tag: string) => {
-        history.push({
-            pathname: "/danh-muc/",
-            search: `${tag}`,
-        });
-    };
+    // const gotoDetail = (tag: string) => {
+    //     history.push({
+    //         pathname: "/danh-muc/",
+    //         search: `${tag}`,
+    //     });
+    // };
     return (
         <>
             {/* <div className="home-title__tag">
@@ -45,13 +48,18 @@ function HomeTags(props: any) {
                 <ul className="home-tags-list">
                     {tags.map((item) => (
                         <li
-                            onClick={() => gotoDetail(item.title)}
+                            //onClick={() => gotoDetail(item.title)}
                             key={item.id}
                         >
-                            <div className="flex-column tag-item-cnt">
+                            <Link
+                                to={{
+                                    pathname: "/ket-qua/",
+                                    search: `?tag=${item.title}`,
+                                }}
+                                className="flex-column tag-item-cnt">
                                 <img src={item.img} alt="" />
                                 <span>{item.text}</span>
-                            </div>
+                            </Link>
                         </li>
                     ))}
                 </ul>

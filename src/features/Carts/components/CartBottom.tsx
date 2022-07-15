@@ -9,12 +9,19 @@ import order from "../../../api/orderApi";
 import { useHistory } from "react-router-dom";
 import { identity, pickBy } from "lodash";
 import Notification from "../../../components/Notification";
+import AlertSnack from "../../../components/AlertSnack";
+// ==== api tracking ====
+// import tracking from "../../../api/trackApi";
+import { formatProductList } from "../../../utils/tracking";
 import { AppContext } from "../../../context/AppProvider";
-
+// end
 function CartBottom(props: any) {
     const { DATA_CART, DATA_PMT } = props;
     const { t } = useContext(AppContext);
-
+    const [openAlertSnack, setOpenAlertSnack] = useState({
+        title: "",
+        open: false,
+    });
     const [openNoti, setOpenNoti] = useState({
         title: "",
         open: false,
@@ -38,9 +45,11 @@ function CartBottom(props: any) {
 
     const pramsOrder = {
         user_address_id: DATA_PMT.address?.id,
+        branch_id: DATA_PMT.branch?.id,
         payment_method_id: DATA_PMT.payment_method_id
             ? DATA_PMT.payment_method_id
             : DATA_PMT.pmtMethod?.id,
+        // payment_method_id: 5,
         products: products.map((item: any) => {
             return { id: item.id, quantity: item.quantity };
         }),
@@ -56,6 +65,10 @@ function CartBottom(props: any) {
     async function handlePostOrder() {
         //setLoading(true)
         try {
+            // tracking.PAY_CONFIRM_CLICK(
+            //     DATA_PMT.org.id,
+            //     formatProductList(pramsOrder.products)
+            // );
             const response = await order.postOrder(
                 DATA_PMT.org.id,
                 pickBy(pramsOrder, identity)
@@ -96,12 +109,36 @@ function CartBottom(props: any) {
 
     const handleSubmitOrder = () => {
         if (USER && DATA_PMT.org && pramsOrder.payment_method_id) {
-            handlePostOrder();
+            if (!DATA_PMT.address && products.length > 0) {
+                setOpenAlertSnack({
+                    ...openAlertSnack,
+                    open: true,
+                    title: "Chưa có địa chỉ giao hàng !",
+                });
+            } else {
+                handlePostOrder();
+            }
+        } else if (!pramsOrder.payment_method_id) {
+            setOpenAlertSnack({
+                ...openAlertSnack,
+                open: true,
+                title: "Bạn Chưa chọn phương thức thanh toán!",
+            });
         }
     };
-
     return (
         <div className="re-cart-bottom">
+            <AlertSnack
+                title={openAlertSnack.title}
+                open={openAlertSnack.open}
+                status="FAIL"
+                onClose={() =>
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: false,
+                    })
+                }
+            />
             <Container>
                 <div className="re-cart-bottom__cnt">
                     <div className="re-cart-bottom__total">

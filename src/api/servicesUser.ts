@@ -4,15 +4,15 @@ import { EXTRA_FLAT_FORM } from "./extraFlatForm";
 
 
 class ServicesUser {
-    getServices = () => {
+    getServices = (values:any) => {
         const FLAT_FORM = EXTRA_FLAT_FORM();
         const url = `/orders`;
         const params = {
-            page: 1,
+            page: values.page || 1,
             limit: 15,
             "filter[status]": "PAID",
             "filter[withServicesSold]": true,
-            "include": "items|items_count|organization",
+            "include": "items|items_count|organization|appointments",
             "sort": "-created_at",
             'filter[platform]': FLAT_FORM
         }

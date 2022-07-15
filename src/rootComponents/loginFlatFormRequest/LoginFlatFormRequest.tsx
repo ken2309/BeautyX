@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 import icon from '../../constants/icon';
 import ButtonLoading from '../../components/ButtonLoading';
 import doPostMakePaymentMessageTiki from '../tiki/doPostMessageTiki';
-import useGetMessageTiki from '../tiki/useGetMessageTiki';
+import useGetMessageTiki from '../useGetMessageTiki';
 import tikiAuthApi from '../../api/_tikiAuthApi';
 import { useHistory } from 'react-router-dom';
 import { fetchAsyncUser } from '../../redux/USER/userSlice'
@@ -11,18 +11,57 @@ import './style.css'
 import { useDispatch } from 'react-redux';
 import { fetchAsyncApps } from '../../redux/appointment/appSlice'
 import dayjs from 'dayjs';
-
+import {EXTRA_FLAT_FORM} from '../../api/extraFlatForm';
+import { FLAT_FORM_TYPE } from '../flatForm';
+import momoApi from '../../api/momoApi';
 function LoginFlatFormRequest(props: any) {
     const { pathname, setClose } = props;
     const history = useHistory();
     const [load, setLoad] = useState(false);
+    const platform = EXTRA_FLAT_FORM();
     const dispatch = useDispatch();
-    const handleLogin = () => {
+    const handleLogin = async () => {
         setLoad(true)
-        doPostMakePaymentMessageTiki({
-            TYPE: "LOGIN",
-            params: 1
-        })
+        switch (platform) {
+            case FLAT_FORM_TYPE.MOMO:
+                // onLoginFlatFormMomo()
+                handleLoginMomo()
+                break;
+            case FLAT_FORM_TYPE.TIKI:
+                doPostMakePaymentMessageTiki({
+                    TYPE: "LOGIN",
+                    params: 1
+                })
+                break;
+            case FLAT_FORM_TYPE.MB:
+                alert(FLAT_FORM_TYPE.MB)
+                break;
+            default:
+                break
+        }
+        // let $: any = window;
+        // $['ReactNativeWebView']?.postMessage(JSON.stringify(
+        //     {
+        //         type: 'PAYMENT_HUB_TRANSACTION',
+        //         data: {
+        //             "id": "AW1125WDEIWH",
+        //             "amount": 600000,
+        //             "description": "Test 11dat",
+        //             "successMessage": null,
+        //             "merchant": {
+        //                 "code": "PHZMSP",
+        //                 "name": "Công ty cổ phần MySpa"
+        //             },
+        //             "type": {
+        //                 "name": "Thanh toán sản phẩm làm đẹp",
+        //                 "code": "MSPPROD",
+        //                 "allowCard": true
+        //             },
+        //         }
+        //     }
+        // ))
+        // console.log(res)
+        // alert(JSON.stringify(res))
     }
 
     const handleLoginTiki = async (params: any) => {
@@ -45,7 +84,20 @@ function LoginFlatFormRequest(props: any) {
             setLoad(false)
         }
     }
-
+    const handleLoginMomo = async () => {
+        try{
+            const res = await momoApi.getUserConsents();
+            const resLocale = await momoApi.getLocation();
+            alert(JSON.stringify(res));
+            alert(JSON.stringify(resLocale))
+            setLoad(false)
+        }
+        catch(err){
+            alert(JSON.stringify(err));
+            setLoad(false)
+        }
+        
+    }
     const response = useGetMessageTiki();
     useMemo(() => {
         // alert(JSON.stringify(response))
