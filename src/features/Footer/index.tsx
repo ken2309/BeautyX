@@ -388,7 +388,10 @@ function Footer() {
                     {t("footer.address_company")}
                 </div>
                 <div className="footer-copy-right">
-                    © Copyright 2022 Myspa | ProductX teams.
+                   {t("footer.policy")}
+                </div>
+                <div className="footer-copy-right">
+                    © Copyright Myspa | ProductX teams.
                 </div>
             </Container>
         </div>
