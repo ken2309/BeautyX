@@ -1,38 +1,42 @@
 import { Container } from "@mui/material";
-import React from "react";
-import Slider from "react-slick";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAsyncTags } from "../../../../../redux/Tags/tagsSlice";
 import "./homeTagsProducts.css";
+import { ITag } from "../../../../../interface/tags";
 export default function HomeTagsProducts() {
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 12,
-        slidesToScroll: 1,
-        arrows: true,
-    };
+    const dispatch = useDispatch();
+    const { TAGS } = useSelector((state: any) => state);
+    const tags: ITag[] = TAGS.tags;
+    console.log("tags :>> ", tags);
+    useEffect(() => {
+        dispatch(fetchAsyncTags());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <div className="homeTagsPr">
             <Container>
                 <div className="homeTagsPr-wrap">
                     <div className="homeTagsPr-list">
-                        <Slider {...settings}>
-                            <div className="homeTagsPr-item">Rau xanh</div>
-                            <div className="homeTagsPr-item">Rau xanh</div>
-                            <div className="homeTagsPr-item">Rau xanh</div>
-                            <div className="homeTagsPr-item">Rau xanh</div>
-                            <div className="homeTagsPr-item">Rau xanh</div>
-                            <div className="homeTagsPr-item">Rau xanh</div>
-                            <div className="homeTagsPr-item">Rau xanh</div>
-                            <div className="homeTagsPr-item">Rau xanh</div>
-                            <div className="homeTagsPr-item">Rau xanh</div>
-                            <div className="homeTagsPr-item">Rau xanh</div>
-                            <div className="homeTagsPr-item">Rau xanh</div>
-                            <div className="homeTagsPr-item">Rau xanh</div>
-                            <div className="homeTagsPr-item">Rau xanh</div>
-                            <div className="homeTagsPr-item">Rau xanh</div>
-                            <div className="homeTagsPr-item">Rau xanh</div>
-                        </Slider>
+                        {tags?.slice(0, 11).map((item: any, index: number) => (
+                            <>
+                                <div key={index} className="homeTagsPr-item">
+                                    <p className="item-title">{item.name}</p>
+                                    {item?.children.length > 0 ? (
+                                        <ul className="item-list">
+                                            {item?.children.map(
+                                                (e: any, i: number) => (
+                                                    <li key={i}>
+                                                        <p>{e.name}</p>
+                                                    </li>
+                                                )
+                                            )}
+                                        </ul>
+                                    ) : null}
+                                </div>
+                            </>
+                        ))}
                     </div>
                 </div>
             </Container>
