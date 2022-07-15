@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import icon from "../../../constants/icon";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { AppContext } from "../../../context/AppProvider";
 
 function Notification(props: any) {
     const { openNo } = props;
@@ -9,6 +10,7 @@ function Notification(props: any) {
     const { appsToday } = useSelector((state: any) => state.APP.APPS);
     const { ORDER_SERVICES_NOT_BOOK_COUNT } = useSelector((state: any) => state.ORDER);
     const history = useHistory();
+    const { t } = useContext(AppContext);
     return (
         <div
             style={
@@ -20,9 +22,9 @@ function Notification(props: any) {
             id="notification"
         >
             <div className="flex-row-sp hd-noti__head">
-                <span className="hd-noti__head-text">Thông báo</span>
+                <span className="hd-noti__head-text">{t("Header.noti")}</span>
                 <span className="flex-row hd-noti__head-count  cursor-pointer">
-                    Đánh dấu tất cả đã xem
+                    {t("Header.mark_all_as_viewed")}
                     <img
                         className="hd-noti__head-imgcheck"
                         src={icon.Check}
@@ -42,14 +44,19 @@ function Notification(props: any) {
                             />
                             <div className="no-box-item__text">
                                 <p className="no-box-item__text-name">
-                                    Thông báo lịch hẹn
+                                    {t("Header.appointment_notice")}
                                 </p>
                                 <p className="no-box-item__text-content">
-                                    {USER?.fullname} ơi ! Hôm nay bạn có{" "}
-                                    {appsToday.length} lịch hẹn. Xem ngay nhé
+                                    {`${t("Header.hello")}! ${
+                                        USER?.fullname
+                                    }, ${t("Header.today_you_have")}  ${
+                                        appsToday.length
+                                    } ${t("Header.appointment")}. ${t(
+                                        "Header.see_it_now"
+                                    )} `}
                                 </p>
                                 <p className="no-box-item__text-time">
-                                    Xem lịch hẹn
+                                    {t("Header.see_calendar")} {">>"}
                                 </p>
                             </div>
                         </div>

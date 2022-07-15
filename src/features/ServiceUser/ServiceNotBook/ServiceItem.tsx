@@ -1,21 +1,21 @@
 import { Checkbox } from "@mui/material";
-import React, { useCallback, useState } from "react";
-//import { AppContext } from "../../../context/AppProvider";
+import React, { useCallback, useContext, useState } from "react";
+import { AppContext } from "../../../context/AppProvider";
 //import formatPrice from "../../../utils/formatPrice";
-import { IUser_Service, IServiceSold } from '../../../interface/servicesUser';
+import { IUser_Service, IServiceSold } from "../../../interface/servicesUser";
 import onErrorImg from "../../../utils/errorImg";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import { formatDate, checkTimeExpired } from "../../../utils/format";
-import { IOrganization } from '../../../interface/organization'
+import { IOrganization } from "../../../interface/organization";
 import ServiceReview from "../ServiceReview";
 //import { Appointment } from '../../../interface/appointment'
 
 interface IProps {
-  service: IUser_Service,
-  handleServiceBook: any,
-  order_id: number
-  service_sold: IServiceSold
-  org: IOrganization | undefined
+  service: IUser_Service;
+  handleServiceBook: any;
+  order_id: number;
+  service_sold: IServiceSold;
+  org: IOrganization | undefined;
 }
 
 function ServiceItem(props: IProps) {

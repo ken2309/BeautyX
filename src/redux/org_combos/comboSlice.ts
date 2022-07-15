@@ -44,7 +44,7 @@ const initialState = {
         combo_id: null,
         comments: [],
         page: 1,
-        totalItem: 1,
+        totalItem: 0,
         status: "",
     },
 };

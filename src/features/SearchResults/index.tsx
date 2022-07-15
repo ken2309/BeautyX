@@ -36,7 +36,7 @@ function SearchResults(props: any) {
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
     const location: any = useLocation();
-    const params:any = extraParamsUrl();
+    const params: any = extraParamsUrl();
     // const searchKey = decodeURI(
     //     location.search.slice(1, location.search.length)
     // );
@@ -128,7 +128,7 @@ function SearchResults(props: any) {
                         </button>
                     }
                     onBackFunc={onGoBack}
-                    title="Kết quả tìm kiếm"
+                    title={t("se.search_result")}
                 />
             ) : (
                 <Head prev_url="/homepage" />
@@ -204,7 +204,7 @@ function SearchResults(props: any) {
                                     className="open-map"
                                 >
                                     <div className="flexX-gap-4">
-                                        <p>Bản đồ</p>
+                                        <p>{t("pr.map")}</p>
                                         <img
                                             src={icon.mapPinRed}
                                             alt=""
@@ -216,9 +216,6 @@ function SearchResults(props: any) {
                         </div>
                         <TabService keyword={searchKey} acTab={tab} />
                         <TabProduct keyword={searchKey} acTab={tab} />
-                        {
-                            // tab === 3 && (data?.orgs.length == 0) && <EmptyRes title={'Không tìm được kết quả phù hợp cho "' + searchKey + '"'} />
-                        }
                         <TabOrgs
                             acTab={tab}
                             keyword={searchKey}

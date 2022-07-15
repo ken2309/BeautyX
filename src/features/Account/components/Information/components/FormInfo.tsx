@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
-import { useFormik } from 'formik';
-import { AppContext } from '../../../../../context/AppProvider';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateAsyncUser } from '../../../../../redux/USER/userSlice';
-import ButtonLoading from '../../../../../components/ButtonLoading';
+import React, { useContext } from "react";
+import { useFormik } from "formik";
+import { AppContext } from "../../../../../context/AppProvider";
+import { useSelector, useDispatch } from "react-redux";
+import { updateAsyncUser } from "../../../../../redux/USER/userSlice";
+import ButtonLoading from "../../../../../components/ButtonLoading";
 
 function FormInfo() {
     const { t } = useContext(AppContext);
@@ -13,19 +13,19 @@ function FormInfo() {
         initialValues: {
             fullname: USER?.fullname,
             email: USER?.email,
-            phone: USER?.telephone
+            phone: USER?.telephone,
         },
         onSubmit: async (values) => {
             const params = {
-                "fullname": values.fullname,
-            }
-            await dispatch(updateAsyncUser(params))
-        }
-    })
+                fullname: values.fullname,
+            };
+            await dispatch(updateAsyncUser(params));
+        },
+    });
     return (
         <form
-            className='info_section__form'
-            autoComplete='off'
+            className="info_section__form"
+            autoComplete="off"
             onSubmit={formik.handleSubmit}
             style={{ paddingBottom: "24px" }}
         >
@@ -56,7 +56,10 @@ function FormInfo() {
                 </div>
                 <div className="form-account__wraper">
                     {/* email */}
-                    <div className="email-account" style={{ padding: "0 0 8px 0" }}>
+                    <div
+                        className="email-account"
+                        style={{ padding: "0 0 8px 0" }}
+                    >
                         <div className="form-account__label">
                             <span>Email</span>
                         </div>
@@ -76,7 +79,10 @@ function FormInfo() {
             )} */}
                     </div>
                     {/* phone */}
-                    <div className="phone-account" style={{ padding: "0 0 8px 0" }}>
+                    <div
+                        className="phone-account"
+                        style={{ padding: "0 0 8px 0" }}
+                    >
                         <div className="form-account__label">
                             <span>{t("pm.phone_number")}</span>
                         </div>
@@ -99,7 +105,7 @@ function FormInfo() {
             </div>
             <ButtonLoading
                 loading={loading}
-                title="Lưu thay đổi"
+                title={t("acc.save")}
                 type="submit"
             />
         </form>

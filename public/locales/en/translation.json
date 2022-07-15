@@ -15,7 +15,15 @@
         "support": "Support",
         "sign_out": "Sign out",
         "back": "Back",
-        "noti": "Notifications"
+        "noti": "Notifications",
+        "mark_all_as_viewed": "Mark all as viewed",
+        "appointment_notice": "Appointment notice",
+        "hello": "Hello",
+        "today_you_have": "Today you have",
+        "appointment": "appointment",
+        "see_it_now": "See it now",
+        "see_calendar": "See the appointment",
+        "not_noti": "You don't have any notifications"
     },
     "Bottom": {
         "appointment": "Appo",
@@ -94,7 +102,8 @@
         "appointment": "My appointments",
         "location": "Location",
         "trending": "Trends",
-        "cate": "Categories"
+        "cate": "Categories",
+        "scan_qr": "Scan QR"
     },
     "Search_result": {
         "text_result": "search results",
@@ -165,7 +174,14 @@
         "total": "Total",
         "add_to_cart": "Add to cart",
         "added": "Added",
-        "to_cart": "to cart"
+        "to_cart": "to cart",
+        "end_of_use": "End of use",
+        "service_used_evaluate": "Service used | Evaluate",
+        "service_has_expired": "Service has expired",
+        "expiration_date": "Expiration date",
+        "unlimited": "Unlimited",
+        "map": "Map",
+        "no_result": "No results found for"
     },
     "cart": {
         "cart": "CART",
@@ -185,7 +201,9 @@
         "cancel": "Cancel",
         "delete_all": "Delete all",
         "payment_now": "Payment now",
-        "must_sign_in": "Please sign in before paying"
+        "must_sign_in": "Please sign in before paying",
+        "limit_item_discount": "The service price has changed because you choose more than the quantity to which the code is applied",
+        "order": "Order"
     },
     "pm": {
         "payment": "PAYMENT",
@@ -217,7 +235,12 @@
         "order_fail": "order creation failed",
         "agree": "Agree",
         "goto_home": "Go to Homeoage",
-        "sale": "Sale"
+        "sale": "Sale",
+        "cancelled": "Cancelled",
+        "code_orders": "Code orders",
+        "see_details": "See details",
+        "product_service": "Product/service",
+        "service_list": "Service list"
     },
     "url": {
         "home": "home",
@@ -322,7 +345,9 @@
         "order_de": "Order details",
         "time": "Time",
         "view_org": "View business",
-        "watch_info": "Watch information"
+        "watch_info": "Watch information",
+        "book": "Book",
+        "appo_detail": "Appointment details"
     },
     "my_ser": {
         "business": "Business",
@@ -389,7 +414,9 @@
         "try": "Try searching",
         "off_service": "This service has not been activated for online sales",
         "booking_now": "Booking now",
+        "search_result": "Search result",
         "instructions_terms": "Instructions & Terms",
+        "distance": "Distance",
         "guide": "Guides",
         "edit": "Edit"
     },
@@ -439,10 +466,11 @@
         "booking_now": "Booking now",
         "add_cart": "Add cart",
         "desc": "Descript",
-        "merchant": "Merchant",
+        "merchant": "Business",
         "tutorial_rules": "Tutorial & rules",
         "utilities": "Utilities",
         "parking": "Parking",
+        "updating": "Updating",
         "accept_card_payment": "Accept card payment",
         "step_1": "Step 1: Select and pay for products/services",
         "step_2": "Step 2: Book an appointment at the time of payment or book an appointment later at \"Make an appointment\"",
@@ -453,10 +481,12 @@
         "cancellation_policy": "Cancellation policy",
         "policy_desc": "There are no refunds, cancellations or changes after the service has been purchased",
         "similar_service": "Similar service",
+        "similar_product": "Similar product",
         "open": "Open",
         "close": "Close",
         "minute": "minute",
         "not_evaluate": "There are no reviews yet",
+        "not_comment": "There are no comment yet",
         "see": "See",
         "sold": "Sold",
         "off": "off",
@@ -464,6 +494,31 @@
         "add": "Add",
         "to_cart": "To cart",
         "user_manual": "User manual",
-        "general_terms": "General terms"
+        "general_terms": "General terms",
+        "used": "Used",
+        "total": "Total",
+        "not_sale": "This product has not been activated for online sales",
+        "see_more": "See more"
+    },
+    "footer": {
+        "customer_support": "Customer support",
+        "consultation_call_center": "Consultation call center",
+        "customer_care_call_center": "Customer care call center",
+        "privacy_policy": "Privacy policy",
+        "return_and_refund": "Return and refund",
+        "protect_the_interests_of_customers": "Protect the interests interests of customers",
+        "myspa_company": "MYSPA company",
+        "operating_regulations": "Operating regulations",
+        "general_rules": "General rules",
+        "commodity_trading_regulations": "Commodity trading regulations",
+        "payment_process": " Payment process",
+        "secure_transaction": "Secure transaction",
+        "responsibility": "Responsibility",
+        "terms_and_commitments": "Terns and commitments",
+        "payment_method": "Payment method",
+        "beautyx_is_on": "BeautyX is on",
+        "contact_width_me": "Contact width me",
+        "download_app": "Download the app on your phone",
+        "address_company": "© 2018 MYSPA JSC - MYSPA Joint Stock Company - 4th floor, Nam Giao building 261-263 Phan Xich Long, Ward 2, Phu Nhuan District, HCMC - Business license: 0314964245, issued date: 03/04/2018, by Phong Dang business registration – Ho Chi Minh City Department of Planning and Investment"
     }
 }

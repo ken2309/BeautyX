@@ -10,7 +10,7 @@ import DialogChangeInfo from "./Components/DialogChangeInfo";
 import OrderMb from "./Components/Orders";
 import AccountGuide from "./Components/AccountGuide";
 import { AppContext } from "../../context/AppProvider";
-import { logoutUser } from '../../redux/USER/userSlice'
+import { logoutUser } from "../../redux/USER/userSlice";
 import { onClearApps } from "../../redux/appointment/appSlice";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
@@ -63,7 +63,7 @@ export default function AccountMobile() {
     const onChangeLanguage = (item: any) => {
         setLanguage(item.code)
         i18next.changeLanguage(item.code);
-    }
+    };
     return (
         <div className="accountMobile">
             {USER && (

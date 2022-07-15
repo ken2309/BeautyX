@@ -40,6 +40,7 @@ function MerchantDetail() {
     const { sub_domain } = param;
 
     const ORG = useSelector((state: any) => state.ORG);
+    console.log("org", ORG);
     const ORG_SPECIALS = useSelector((state: any) => state.ORG_SPECIALS);
     const { SERVICES_SPECIAL, PRODUCTS_SPECIAL, org_id } = ORG_SPECIALS;
     const { status_ser } = SERVICES_SPECIAL;

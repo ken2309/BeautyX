@@ -32,7 +32,6 @@ function DetailPolicy(props: any) {
                 <span>{t("detail_item.general_terms")}</span>
                 <span>{t("detail_item.confirm")}</span>
                 <span>{t("detail_item.confirm_desc")}</span>
-
                 <span>{t("detail_item.cancellation_policy")}</span>
                 <span>{t("detail_item.policy_desc")}</span>
             </div>

@@ -7,7 +7,7 @@ interface IProps {
     data: any;
     comment: any;
 }
-export default function ProductDetailRightReview(props: IProps) {
+export default function ComboDetailRightReview(props: IProps) {
     const { setValue, data, comment } = props;
     const { t } = useContext(AppContext);
     return (
@@ -36,7 +36,7 @@ export default function ProductDetailRightReview(props: IProps) {
 
             <div className="evaluate-item">
                 <img src={icon.Favorite} alt="" />
-                <p>{data.favorites_count}</p>
+                <p>{data.favorites_count > 0 ? data.favorites_count : "5"}</p>
             </div>
             <div className="evaluate-item">
                 <img src={icon.ShoppingCartSimple} alt="" />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
 import "../ServicePromoItem/service-promo-item.css";
@@ -12,8 +12,9 @@ import { formatRouterLinkService } from "../../../utils/formatRouterLink/formatR
  import tracking from "../../../api/trackApi";
  // end
 // google tag event
-import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
-// end 
+import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
+import { AppContext } from "../../../context/AppProvider";
+// end
 interface IProps {
     service: Service;
     org: IOrganization;
@@ -26,7 +27,9 @@ function ServiceItem(props: IProps) {
     const percent: any = Math.round(
         100 - (service?.special_price / service?.price) * 100
     );
-    const pathServiceOb = formatRouterLinkService(service, org)
+    const { t } = useContext(AppContext);
+
+    const pathServiceOb = formatRouterLinkService(service, org);
     const onDetail = () => {
         scrollTop();
         tracking.USER_ITEM_CLICK(org.id,service.id)

@@ -78,14 +78,14 @@ export default function HomeLoggedCalendarAppointmentItem(props: any) {
                                     onClick={() => setOpenQr(true)}
                                     className="calendar-appointment__item-detail"
                                 >
-                                    Quét mã QR
+                                    {t("Home.scan_qr")}
                                 </button>
                             )}
                             <button
                                 onClick={handleOpenPopupDetail}
                                 className="calendar-appointment__item-detail"
                             >
-                                {t("app.details")} {">"}
+                                {t("app.details")} {">>"}
                             </button>
                         </div>
                     </div>

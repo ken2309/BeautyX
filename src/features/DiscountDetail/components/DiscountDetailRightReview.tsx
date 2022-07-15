@@ -3,12 +3,11 @@ import React, { useContext } from "react";
 import icon from "../../../constants/icon";
 import { AppContext } from "../../../context/AppProvider";
 interface IProps {
-    setValue?: any;
     data: any;
     comment: any;
 }
-export default function ProductDetailRightReview(props: IProps) {
-    const { setValue, data, comment } = props;
+export default function DiscountDetailRightReview(props: IProps) {
+    const { data, comment } = props;
     const { t } = useContext(AppContext);
     return (
         <div className="detail-right__evaluate">
@@ -36,7 +35,7 @@ export default function ProductDetailRightReview(props: IProps) {
 
             <div className="evaluate-item">
                 <img src={icon.Favorite} alt="" />
-                <p>{data.favorites_count}</p>
+                <p>{data.favorites_count > 0 ? data.favorites_count : "5"}</p>
             </div>
             <div className="evaluate-item">
                 <img src={icon.ShoppingCartSimple} alt="" />
