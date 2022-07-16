@@ -30,7 +30,7 @@ import ModalLoad from "../../components/ModalLoad";
 import PageNotFound from "../../components/PageNotFound";
 import { onSetEmptyChooseCatePr } from "../../redux/org_products/orgProductsSlice";
 import { onSetEmptyChooseCate } from "../../redux/org_services/orgServivesSlice";
-import '../../assets/styles/main.css';
+import "../../assets/styles/main.css";
 
 function MerchantDetail() {
     const IS_MB = useFullScreen();
@@ -94,40 +94,42 @@ function MerchantDetail() {
     callOrgDetail()
   }, [sub_domain])
 
-  useEffect(() => {
-    if (ORG_DISCOUNTS.DISCOUNTS.status_list === STATUS.SUCCESS &&
-      status_ser === STATUS.SUCCESS && status_pr === STATUS.SUCCESS
-    ) {
-      if (ORG_DISCOUNTS.DISCOUNTS.totalItem === 0
-        && SERVICES_SPECIAL.totalItem === 0
-        && PRODUCTS_SPECIAL.totalItem === 0
-      ) {
-        dispatch(onActiveTab(tab === 1 ? 2 : tab))
-      }
-    }
-  }, [ORG_DISCOUNTS.DISCOUNTS, SERVICES_SPECIAL, PRODUCTS_SPECIAL])
-  return (
-    <div className="mb-cnt">
-      {status === STATUS.LOADING && <ModalLoad />}
-      {!ORG.org && <PageNotFound />}
-      <HeadTitle title={org?.name ? org.name : 'Đang tải...'} />
-      {IS_MB ? <HeadOrg org={org} isShowSearch={true} /> : <Head />}
-      {
-        status === STATUS.SUCCESS &&
-        <>
-          <OrgDetail
-            org={org}
-            galleries={GALLERIES?.galleries}
-            status_galleries={GALLERIES.status}
-          />
-          <Container>
-            <OrgContainer org={org} tab={tab} />
-          </Container>
-        </>
-      }
-      <Footer />
-    </div>
-  );
+    useEffect(() => {
+        if (
+            ORG_DISCOUNTS.DISCOUNTS.status_list === STATUS.SUCCESS &&
+            status_ser === STATUS.SUCCESS &&
+            status_pr === STATUS.SUCCESS
+        ) {
+            if (
+                ORG_DISCOUNTS.DISCOUNTS.totalItem === 0 &&
+                SERVICES_SPECIAL.totalItem === 0 &&
+                PRODUCTS_SPECIAL.totalItem === 0
+            ) {
+                dispatch(onActiveTab(tab === 1 ? 2 : tab));
+            }
+        }
+    }, [ORG_DISCOUNTS.DISCOUNTS, SERVICES_SPECIAL, PRODUCTS_SPECIAL]);
+    return (
+        <div className="mb-cnt">
+            {status === STATUS.LOADING && <ModalLoad />}
+            {!ORG.org && <PageNotFound />}
+            <HeadTitle title={org?.name ? org.name : "Đang tải..."} />
+            {IS_MB ? <HeadOrg org={org} isShowSearch={true} /> : <Head />}
+            {status === STATUS.SUCCESS && (
+                <>
+                    <OrgDetail
+                        org={org}
+                        galleries={GALLERIES?.galleries}
+                        status_galleries={GALLERIES.status}
+                    />
+                    <Container>
+                        <OrgContainer org={org} tab={tab} />
+                    </Container>
+                </>
+            )}
+            <Footer />
+        </div>
+    );
 }
 
 export default MerchantDetail;

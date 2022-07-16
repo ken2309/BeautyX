@@ -7,7 +7,6 @@ import OrderItem from "./OrderItem";
 import ButtonLoading from "../../../components/ButtonLoading";
 import { AppContext } from "../../../context/AppProvider";
 
-
 function TabOrderPaid() {
     const ORDER = useSelector((state: any) => state.ORDER.ORDER);
     const { t } = useContext(AppContext);

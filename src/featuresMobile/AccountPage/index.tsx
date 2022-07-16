@@ -19,9 +19,11 @@ import i18next from "i18next";
 import { onSetStatusServicesUser } from "../../redux/order/orderSlice";
 
 export default function AccountMobile() {
-    const {t} = useContext(AppContext);
+    const { t } = useContext(AppContext);
     const { USER } = useSelector((state: any) => state.USER);
-    const { ORDER_SERVICES_NOT_BOOK_COUNT } = useSelector((state: any) => state.ORDER);
+    const { ORDER_SERVICES_NOT_BOOK_COUNT } = useSelector(
+        (state: any) => state.ORDER
+    );
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const dispatch = useDispatch();
     const { setSign, language, setLanguage } = useContext(AppContext);
@@ -127,17 +129,23 @@ export default function AccountMobile() {
                         </div>
                     </li>
                     <li className="accountMobile-mid__item">
-                        {
-                            ORDER_SERVICES_NOT_BOOK_COUNT > 0 &&
+                        {ORDER_SERVICES_NOT_BOOK_COUNT > 0 && (
                             <span className="accountMobile-mid__item-noti"></span>
-                        }
+                        )}
                         <div
                             onClick={() => history.push("/lich-hen?tab=2")}
                             className="item-left__wrap"
                         >
                             <div className="item-left">
                                 <div>
-                                    <img style={{ width: "16px", height: "16px" }} src={icon.servicesPurpleBold} alt="" />
+                                    <img
+                                        style={{
+                                            width: "16px",
+                                            height: "16px",
+                                        }}
+                                        src={icon.servicesPurpleBold}
+                                        alt=""
+                                    />
                                 </div>
                                 <span>{t("app.my_services")}</span>
                             </div>
@@ -201,21 +209,28 @@ export default function AccountMobile() {
                             }
                         </div>
                     </li>
-                    {
-                        FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
+                    {FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX && (
                         <li className="accountMobile-mid__item">
-                            <div onClick={handleSignOut} className="item-left__wrap">
+                            <div
+                                onClick={handleSignOut}
+                                className="item-left__wrap"
+                            >
                                 <div className="item-left">
                                     <div>
                                         <img
-                                            style={{ width: "16px", height: "16px" }}
-                                            src={icon.SignOutPurple} alt="" />
+                                            style={{
+                                                width: "16px",
+                                                height: "16px",
+                                            }}
+                                            src={icon.SignOutPurple}
+                                            alt=""
+                                        />
                                     </div>
                                     <span>{t("Header.sign_out")}</span>
                                 </div>
                             </div>
                         </li>
-                    }
+                    )}
                 </ul>
             </div>
             {/* bot */}

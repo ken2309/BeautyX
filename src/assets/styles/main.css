@@ -81,7 +81,7 @@ title img {
     cursor: pointer;
 }
 
-.home-banner__img>img {
+.home-banner__img > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -606,7 +606,7 @@ title img {
     outline: none;
 }
 
-.html-template__btn>img {
+.html-template__btn > img {
     width: 100%;
     height: 100%;
 }
@@ -760,11 +760,22 @@ title img {
     border-radius: 8px;
 }
 
-.my-ser-bot.my-ser-bot__up .my-ser-bot__check .my-ser-bot__check-right .choose-time .ser-choose-date .calendar {
+.my-ser-bot.my-ser-bot__up
+    .my-ser-bot__check
+    .my-ser-bot__check-right
+    .choose-time
+    .ser-choose-date
+    .calendar {
     padding: 16px;
 }
 
-.my-ser-bot.my-ser-bot__up .my-ser-bot__check .my-ser-bot__check-right .choose-time .ser-choose-date .calendar .week-container {
+.my-ser-bot.my-ser-bot__up
+    .my-ser-bot__check
+    .my-ser-bot__check-right
+    .choose-time
+    .ser-choose-date
+    .calendar
+    .week-container {
     padding: 0;
 }
 
@@ -1270,14 +1281,20 @@ title img {
     flex-direction: column;
 }
 
-.item-bottom__active-list .item-bottom__active-item .item-content span:nth-child(1) {
+.item-bottom__active-list
+    .item-bottom__active-item
+    .item-content
+    span:nth-child(1) {
     font-weight: bold;
     font-size: 11px;
     line-height: 12px;
     color: #a2a1ab;
 }
 
-.item-bottom__active-list .item-bottom__active-item .item-content span:nth-child(2) {
+.item-bottom__active-list
+    .item-bottom__active-item
+    .item-content
+    span:nth-child(2) {
     font-weight: bold;
     font-size: 14px;
     line-height: 20px;
@@ -1285,7 +1302,7 @@ title img {
     display: flex;
 }
 
-.item-bottom>div {
+.item-bottom > div {
     transition: all 0.3s ease-in-out;
 }
 
@@ -1610,7 +1627,7 @@ title img {
         white-space: normal;
     }
 
-    .home-banner__img>img {
+    .home-banner__img > img {
         border-radius: unset;
     }
 
@@ -2239,7 +2256,7 @@ title img {
         display: none;
     }
 
-    .home-banner__img>img {
+    .home-banner__img > img {
         border-radius: unset;
     }
 

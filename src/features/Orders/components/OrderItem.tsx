@@ -13,7 +13,6 @@ interface IProp {
 function OrderItem(props: IProp) {
     const { order } = props;
     const countItem = order.items_count;
-    const { t } = useContext(AppContext);
     const [open, setOpen] = useState(false);
     const checkStatus = (status: string) => {
         switch (status) {
@@ -23,7 +22,7 @@ function OrderItem(props: IProp) {
                         style={{ backgroundColor: "var(--red-cl)" }}
                         className="status"
                     >
-                        {t("pm.cancelled")}
+                        Đã hủy
                     </div>
                 );
             case "CANCELED_BY_USER":
@@ -32,7 +31,7 @@ function OrderItem(props: IProp) {
                         style={{ backgroundColor: "var(--red-cl)" }}
                         className="status"
                     >
-                        {t("pm.cancelled")}
+                        Đã hủy
                     </div>
                 );
             case "REFUND":
@@ -41,7 +40,7 @@ function OrderItem(props: IProp) {
                         style={{ backgroundColor: "var(--red-cl)" }}
                         className="status"
                     >
-                        {t("pm.cancelled")}
+                        Đã hủy
                     </div>
                 );
             case "PENDING":
@@ -50,7 +49,7 @@ function OrderItem(props: IProp) {
                         style={{ backgroundColor: "var(--red-cl)" }}
                         className="status"
                     >
-                        {t("pm.cancelled")}
+                        Đã hủy
                     </div>
                 );
             case "PAID":
@@ -59,7 +58,7 @@ function OrderItem(props: IProp) {
                         style={{ backgroundColor: "var(--green)" }}
                         className="status"
                     >
-                        {t("acc.pain")}
+                        Đã thanh toán
                     </div>
                 );
             default:
@@ -75,14 +74,14 @@ function OrderItem(props: IProp) {
                 <div className="order-item">
                     <div className="flex-row-sp order-item__head">
                         <div className="left">
-                            {`${t("pm.code_orders")}:`}{" "}
+                            Mã đơn hàng{" "}
                             <span>
                                 #{order?.payment_gateway?.transaction_uuid}-
                                 {order?.origin_id}
                             </span>
                         </div>
                         <span onClick={handleOpenDetail} className="right">
-                            {`${t("pm.see_details")}`}
+                            Xem chi tiết
                         </span>
                     </div>
                     <div className="flex-row-sp order-item__date">
@@ -105,8 +104,8 @@ function OrderItem(props: IProp) {
                                 {order?.organization?.full_address}
                             </span>
                             <div className="flex-row price">
-                                {order.amount !==
-                                order.payment_gateway.amount ? (
+                                {order?.amount !==
+                                order?.payment_gateway?.amount ? (
                                     <>
                                         <span
                                             style={{ color: "var(--orange)" }}
@@ -133,7 +132,7 @@ function OrderItem(props: IProp) {
                     </div>
                     <div className="flex-row-sp order-item__status">
                         <span className="left">
-                            {order?.items_count} {`${t("pm.product_service")}`}
+                            {order?.items_count} sản phẩm/dịch vụ
                         </span>
                         <div className="flex-row right">
                             <span className="order-amount">

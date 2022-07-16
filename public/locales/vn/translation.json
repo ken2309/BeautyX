@@ -380,8 +380,8 @@
         "rv_booked": "Bạn có thể xem lại dịch vụ đã đặt hẹn",
         "bk_fail_title": "Có lỗi xảy ra trong quá trình đặt hẹn",
         "code_err": "Mã lỗi",
-        "booking":"Đặt lịch",
-        "booking_his":"Lịch sử"
+        "booking": "Đặt lịch",
+        "booking_his": "Lịch sử"
     },
     "home_2": {
         "categories": "Danh mục",

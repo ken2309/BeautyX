@@ -42,7 +42,7 @@ function ServicesUser(props: any) {
     }
     return (
         <>
-            {(page === 0 && status !== STATUS.SUCCESS) && <ModalLoad />}
+            {page === 0 && status !== STATUS.SUCCESS && <ModalLoad />}
             <Container>
                 <div className="flex-row-sp my-ser">
                     <div className="my-ser__right">

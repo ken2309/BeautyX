@@ -14,7 +14,7 @@ interface IProps {
 function TreatmentCardItem(props: IProps) {
     const history = useHistory();
     const { card_items } = props;
-    
+
     const org = card_items.organization;
     const { t } = useContext(AppContext);
     const [enableCart, setEnableCart] = useState(true);
@@ -41,11 +41,9 @@ function TreatmentCardItem(props: IProps) {
             className='treat-card-item'
         // style={enableCart === true ? { opacity: 0.6 } : {}}
         >
-            {
-                card_items.appointments?.length === 0 &&
-                <div className="treat-card-item__dot">
-                </div>
-            }
+            {card_items.appointments?.length === 0 && (
+                <div className="treat-card-item__dot"></div>
+            )}
             <div
                 style={
                     order_id === card_items?.id && servicesBook.length > 0

@@ -8,9 +8,9 @@ import { useHistory } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import { formatRouterLinkService } from "../../../utils/formatRouterLink/formatRouter";
 
- // ==== api tracking ====
- import tracking from "../../../api/trackApi";
- // end
+// ==== api tracking ====
+//  import tracking from "../../../api/trackApi";
+// end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
 import { AppContext } from "../../../context/AppProvider";
@@ -32,7 +32,7 @@ function ServiceItem(props: IProps) {
     const pathServiceOb = formatRouterLinkService(service, org);
     const onDetail = () => {
         scrollTop();
-        tracking.USER_ITEM_CLICK(org.id,service.id)
+        // tracking.USER_ITEM_CLICK(org.id, service.id);
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         history.push(pathServiceOb);
     };

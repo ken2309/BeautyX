@@ -18,7 +18,7 @@ import {
     fetchAsyncOrgsByFilter,
     fetchServicesByFilter,
     fetchProductsByFilter,
-    onSetEmptyOrgs
+    onSetEmptyOrgs,
 } from "../../redux/search/searchResultSlice";
 import useFullScreen from "../../utils/useDeviceMobile";
 import HeadMobile from "../HeadMobile";
@@ -28,7 +28,6 @@ import Map from "../../components/Map";
 import { STATUS } from "../../redux/status";
 import FilterOrgs from "../Filter/FilterOrgs";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
-
 
 function SearchResults(props: any) {
     const history = useHistory();
@@ -40,8 +39,10 @@ function SearchResults(props: any) {
     // const searchKey = decodeURI(
     //     location.search.slice(1, location.search.length)
     // );
-    const searchKey = params?.keyword
-    const { tab, RE_ORGS, RE_SERVICES, RE_PRODUCTS } = useSelector((state: any) => state.SEARCH_RESULT);
+    const searchKey = params?.keyword;
+    const { tab, RE_ORGS, RE_SERVICES, RE_PRODUCTS } = useSelector(
+        (state: any) => state.SEARCH_RESULT
+    );
 
     const { FILTER_ORG } = useSelector((state: any) => state.FILTER);
     const FILTER_ORGS_VAL = {
@@ -49,63 +50,82 @@ function SearchResults(props: any) {
         tags: FILTER_ORG.tags.join("|"),
         province_code: FILTER_ORG.province?.province_code,
         district_code: FILTER_ORG.district?.district_code,
-    }
+    };
     const [openMap, setOpenMap] = useState(false);
 
     let tabs = [
-        { id: 1, title: t("Mer_de.services"), total: location.state?.servicesTotal },
-        { id: 2, title: t("Mer_de.products"), total: location.state?.productsTotal },
-        { id: 3, title: t("my_ser.business"), total: location.state?.orgsTotal },
+        {
+            id: 1,
+            title: t("Mer_de.services"),
+            total: location.state?.servicesTotal,
+        },
+        {
+            id: 2,
+            title: t("Mer_de.products"),
+            total: location.state?.productsTotal,
+        },
+        {
+            id: 3,
+            title: t("my_ser.business"),
+            total: location.state?.orgsTotal,
+        },
     ];
     if (location.state) {
-        tabs = tabs.sort((a, b) => b.total - a.total)
+        tabs = tabs.sort((a, b) => b.total - a.total);
     }
     const callOrgsByKeyword = () => {
         if (RE_ORGS.status !== STATUS.SUCCESS) {
-            dispatch(onSetTabResult(tabs[0].id))
-            dispatch(fetchAsyncOrgsByFilter({
-                keyword: searchKey,
-                page: 1
-            }))
+            dispatch(onSetTabResult(tabs[0].id));
+            dispatch(
+                fetchAsyncOrgsByFilter({
+                    keyword: searchKey,
+                    page: 1,
+                })
+            );
         }
-    }
+    };
     const callServicesByKeyword = () => {
         if (RE_SERVICES.status !== STATUS.SUCCESS) {
-            dispatch(fetchServicesByFilter({
-                page: 1,
-                keyword: searchKey
-            }))
+            dispatch(
+                fetchServicesByFilter({
+                    page: 1,
+                    keyword: searchKey,
+                })
+            );
         }
-    }
+    };
     const callProductsByKeyword = () => {
         if (RE_PRODUCTS.status !== STATUS.SUCCESS) {
-            dispatch(fetchProductsByFilter({
-                page: 1,
-                keyword: searchKey
-            }))
+            dispatch(
+                fetchProductsByFilter({
+                    page: 1,
+                    keyword: searchKey,
+                })
+            );
         }
-    }
+    };
 
     useEffect(() => {
-        callOrgsByKeyword()
-        callServicesByKeyword()
-        callProductsByKeyword()
-    }, [searchKey])
+        callOrgsByKeyword();
+        callServicesByKeyword();
+        callProductsByKeyword();
+    }, [searchKey]);
     const [openFilter, setOpenFilter] = useState(false);
     const onActiveTab = useCallback((tab) => {
         dispatch(onSetTabResult(tab.id));
     }, []);
 
-
     const handleApplyFilterOrgs = () => {
-        setOpenFilter(false)
-        dispatch(onSetEmptyOrgs())
-        dispatch(fetchAsyncOrgsByFilter({
-            ...FILTER_ORGS_VAL,
-            page: 1,
-            keyword: searchKey,
-        }))
-    }
+        setOpenFilter(false);
+        dispatch(onSetEmptyOrgs());
+        dispatch(
+            fetchAsyncOrgsByFilter({
+                ...FILTER_ORGS_VAL,
+                page: 1,
+                keyword: searchKey,
+            })
+        );
+    };
 
     //
     const onGoBack = () => {
@@ -120,15 +140,14 @@ function SearchResults(props: any) {
             {IS_MB ? (
                 <HeadMobile
                     element={
-                        tab === 3 &&
-                        <button
-                            onClick={() => setOpenFilter(true)}
-                        >
-                            <img src={icon.settingsSliders} alt="" />
-                        </button>
+                        tab === 3 && (
+                            <button onClick={() => setOpenFilter(true)}>
+                                <img src={icon.settingsSliders} alt="" />
+                            </button>
+                        )
                     }
                     onBackFunc={onGoBack}
-                    title={t("se.search_result")}
+                    title="Kết quả tìm kiếm"
                 />
             ) : (
                 <Head prev_url="/homepage" />
@@ -143,10 +162,10 @@ function SearchResults(props: any) {
                                         style={
                                             tab === item.id
                                                 ? {
-                                                    backgroundColor:
-                                                        "var(--purple)",
-                                                    color: "var(--bgWhite)",
-                                                }
+                                                      backgroundColor:
+                                                          "var(--purple)",
+                                                      color: "var(--bgWhite)",
+                                                  }
                                                 : {}
                                         }
                                         onClick={() => onActiveTab(item)}
@@ -195,8 +214,7 @@ function SearchResults(props: any) {
                                 {searchKey}"
                             </span>
 
-                            {
-                                tab === 3 &&
+                            {tab === 3 && (
                                 <div
                                     onClick={() => {
                                         setOpenMap(true);
@@ -212,7 +230,7 @@ function SearchResults(props: any) {
                                         ></img>
                                     </div>
                                 </div>
-                            }
+                            )}
                         </div>
                         <TabService keyword={searchKey} acTab={tab} />
                         <TabProduct keyword={searchKey} acTab={tab} />
@@ -224,7 +242,13 @@ function SearchResults(props: any) {
                     </div>
                 </div>
             </Container>
-            {RE_ORGS.orgs.length > 0 && <Map data={RE_ORGS.orgs} open={openMap} setOpenMap={setOpenMap} />}
+            {RE_ORGS.orgs.length > 0 && (
+                <Map
+                    data={RE_ORGS.orgs}
+                    open={openMap}
+                    setOpenMap={setOpenMap}
+                />
+            )}
             <BackTopButton />
             <Footer />
         </>

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { useHistory } from "react-router-dom";
 import { IBanner } from "../../../interface/banner";
-import HomeBannerPopup from "../../HomePage/HomeBanner/HomeBannerPopup";
 import ReactPlayer from "react-player";
 import { useSelector } from "react-redux";
 import icon from "../../../constants/icon";
+import HomeBannerPopup from "../../HomePage/HomeBanner/HomeBannerPopup";
 
 function HomeBanner(props: any) {
     const history = useHistory();

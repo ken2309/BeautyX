@@ -39,8 +39,8 @@ import ModalLoad from "../../components/ModalLoad";
 
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
-import { AppContext } from "../../context/AppProvider";
 import useDeviceMobile from "../../utils/useDeviceMobile";
+import { AppContext } from "../../context/AppProvider";
 // end
 function DiscountDetail() {
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);

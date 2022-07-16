@@ -13,7 +13,6 @@ import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { AppContext } from "../../../context/AppProvider";
 const PrevButton = (props: any) => {
     const { onClick } = props;
-    const { t } = useContext(AppContext);
 
     return (
         <button onClick={onClick} className="detail-btn__prev">

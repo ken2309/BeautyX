@@ -15,16 +15,15 @@ import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
 import PopupSuccess from "../../PopupSuccess";
 import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
-
- // ==== api tracking ====
- import tracking from "../../../api/trackApi";
- // end
+import DiscountDetailRightReview from "../../DiscountDetail/components/DiscountDetailRightReview";
+// ==== api tracking ====
+//import tracking from '../../../api/trackApi'
+// end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
-import DiscountDetailRightReview from "./DiscountDetailRightReview";
-import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
-import { AppContext } from "../../../context/AppProvider";
 import useDeviceMobile from "../../../utils/useDeviceMobile";
+import { AppContext } from "../../../context/AppProvider";
+import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
 // end
 interface IProps {
     discount: IDiscountPar;
@@ -86,7 +85,12 @@ function DiscountDetailRight(props: IProps) {
         discount
     );
     const handleAddCart = () => {
-        tracking.ADD_CART_CLICK(values.org_id,values.id,values.price,values.quantity)
+        // tracking.ADD_CART_CLICK(
+        //     values.org_id,
+        //     values.id,
+        //     values.price,
+        //     values.quantity
+        // );
         GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
         dispatch(addCart(values));
         setPopupSuccess(true);
@@ -96,7 +100,7 @@ function DiscountDetailRight(props: IProps) {
         const TYPE = "BOOK_NOW";
         const service = { ...detail, discount: discount };
         const services = [{ service, quantity: quantity }];
-        tracking.ADD_CART_CLICK(values.org_id,values.id,values.price,values.quantity)
+        //tracking.ADD_CART_CLICK(values.org_id,values.id,values.price,values.quantity)
         GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
         history.push({
             pathname: "/dat-hen",

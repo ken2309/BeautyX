@@ -38,7 +38,7 @@ function AddressItem(props: any) {
                                     onClick={onUpdateAddress}
                                     className="se-default"
                                 >
-                                    {t("acc.set_as_default_address")}
+                                    {t("acc.set_default_address")}
                                 </span>
                                 <button onClick={onRemoveAddress}>
                                     <img src={icon.TrashOrange} alt="" />
