@@ -1,5 +1,5 @@
 .se-re-cnt {
-    padding: 12px 0px 0px 0px;
+    padding: 24px;
     width: 100%;
     background-color: var(--bgWhite);
     display: flex;
@@ -7,12 +7,15 @@
     margin-bottom: 48px;
 }
 
+.se-re-cnt .cnt-right__top {
+    padding: 0 24px;
+}
 .se-re-cnt__left {
     width: 16.6%;
     background-color: var(--bgWhite);
 }
-.se-re-cnt__left .filter-orgs-cnt{
-    padding: 0px 12px;
+.se-re-cnt__left .filter-orgs-cnt {
+    padding: 24px 12px;
 }
 
 .se-re-cnt__left-top {
@@ -43,7 +46,7 @@
 .se-re-cnt__right {
     width: 83.33%;
     background-color: var(--bgWhite);
-    padding-left: 12px;
+    padding-left: 24px;
 }
 
 .re-ser-list {
@@ -60,6 +63,41 @@
     padding: 12px 8px;
 }
 
+/* cus MUI tab */
+.se-re-cnt .MuiTabPanel-root {
+    padding: 16px 0 0 0;
+}
+.se-re-cnt .MuiTabs-root {
+    min-height: unset;
+}
+.se-re-cnt .MuiButtonBase-root.MuiTab-root.Mui-selected {
+    color: white;
+    z-index: 2;
+    font-size: 14px;
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: bold;
+    text-transform: capitalize;
+    line-height: 22px;
+}
+.se-re-cnt .MuiTabs-indicator {
+    background-color: var(--purple);
+    width: 100%;
+    z-index: 1;
+    border-radius: 100px;
+}
+.se-re-cnt .MuiButtonBase-root.MuiTab-root {
+    color: var(--text-black);
+    text-transform: capitalize;
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 22px;
+    min-height: unset;
+    padding: 8px 16px;
+}
+
 /* tab map */
 .se-re-map-cnt {
     width: 100%;
@@ -71,6 +109,7 @@
     .se-re-cnt {
         flex-direction: column;
         margin-top: 48px;
+        padding: 0 12px;
     }
     .se-re-cnt-title {
         font-size: 14px;
@@ -78,12 +117,16 @@
     }
     .se-re-cnt__left {
         width: 100%;
-        /* display: none; */
+        background-color: #eae9f5;
+        border-radius: 8px;
+        padding: 8px;
+        margin-top: 12px;
+        display: flex;
+        justify-content: center;
     }
-
     .se-re-cnt__left-top {
         width: 100%;
-        padding: 0 12px;
+        padding: 0;
         overflow-x: scroll;
     }
 
@@ -104,7 +147,7 @@
 
     .se-re-cnt__right {
         width: 100%;
-        padding: 0px 12px;
+        padding: 12px 0;
     }
 
     .re-ser-list li {
@@ -115,5 +158,36 @@
         width: 100% !important;
         padding: 12px 0px;
         border-bottom: solid 1px var(--grey);
+    }
+    .se-re-cnt .MuiTabs-root {
+        min-height: unset;
+    }
+    .se-re-cnt .MuiButtonBase-root.MuiTab-root.Mui-selected {
+        color: white;
+        z-index: 2;
+        font-family: "Nunito";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 22px;
+        text-transform: capitalize;
+    }
+    .se-re-cnt .MuiTabs-indicator {
+        background-color: var(--purple);
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        border-radius: 100px;
+    }
+    .se-re-cnt .MuiButtonBase-root.MuiTab-root {
+        min-height: unset;
+        color: var(--text-black);
+        font-family: "Nunito";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 22px;
+        padding: 8px 16px;
+        text-transform: capitalize;
     }
 }
