@@ -15,7 +15,7 @@ import PopupDetailContact from "./PopupDetailContact";
 import { extraOrgTimeWork } from "./Functions/extraOrg";
 import { AppContext } from "../../../context/AppProvider";
 import { STATUS } from "../../../redux/status";
-import { onToggleOpenChat } from '../../../redux/chat/chatOrgSlice'
+import { onToggleOpenChat } from "../../../redux/chat/chatOrgSlice";
 
 interface IProps {
     org: IOrganization;
@@ -92,11 +92,11 @@ function OrgDetail(props: IProps) {
     };
     const onOpenChatOrg = () => {
         if (USER) {
-            dispatch(onToggleOpenChat(true))
+            dispatch(onToggleOpenChat(true));
         } else {
             history.push("/sign-in?1");
         }
-    }
+    };
     return (
         <div className="org-detail">
             <Container>
@@ -216,6 +216,14 @@ function OrgDetail(props: IProps) {
                                             </div>
                                         </div>
                                     </div>
+                                    <div className="org-mess-flo">
+                                        <div className="org-mess">
+                                            <span>Theo dõi</span>
+                                        </div>
+                                        <div className="org-flo">
+                                            <span>Nhắn tin</span>
+                                        </div>
+                                    </div>
                                     <div className="org-time-work">
                                         <div className="flexX-gap-4 org-time-work__left">
                                             <img
@@ -260,10 +268,10 @@ function OrgDetail(props: IProps) {
                                                         <li
                                                             style={
                                                                 index + 2 ===
-                                                                    today
+                                                                today
                                                                     ? {
-                                                                        color: "var(--purple)",
-                                                                    }
+                                                                          color: "var(--purple)",
+                                                                      }
                                                                     : {}
                                                             }
                                                             key={index}
@@ -294,10 +302,10 @@ function OrgDetail(props: IProps) {
                                     style={
                                         org?.is_favorite
                                             ? {
-                                                backgroundColor:
-                                                    "var(--purple)",
-                                                color: "var(--bgWhite)",
-                                            }
+                                                  backgroundColor:
+                                                      "var(--purple)",
+                                                  color: "var(--bgWhite)",
+                                              }
                                             : {}
                                     }
                                     onClick={handleFavoriteOrg}
@@ -314,11 +322,7 @@ function OrgDetail(props: IProps) {
                                 >
                                     {t("Mer_de.contact")}
                                 </button> */}
-                                <button
-                                    onClick={onOpenChatOrg}
-                                >
-                                    Chat
-                                </button>
+                                <button onClick={onOpenChatOrg}>Chat</button>
                             </div>
                         </div>
                     </div>

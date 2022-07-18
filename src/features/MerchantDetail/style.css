@@ -11,7 +11,9 @@
 .pointer-events-none {
     pointer-events: none;
 }
-
+.org-mess-flo {
+    display: none;
+}
 .mb-head-act {
     background-color: var(--bgWhite);
     transition: all 0.5s;
@@ -881,6 +883,26 @@
 }
 
 @media only screen and (max-width: 1023px) {
+    .org-mess-flo {
+        display: flex;
+        grid-gap: 0 8px;
+        align-items: center;
+    }
+    .org-mess-flo .org-mess {
+        padding: 4px 8px;
+        background: #fadfdf;
+        border-radius: 8px;
+    }
+    .org-mess-flo .org-mess span {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 22px;
+        color: #e64d4a;
+    }
+    .org-mess-flo .org-flo {
+        border: 1px solid #fafafa;
+        border-radius: 8px;
+    }
     .mb-cnt {
         z-index: 1;
     }
