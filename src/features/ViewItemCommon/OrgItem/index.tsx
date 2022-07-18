@@ -12,7 +12,7 @@ import {
     onDeleteFavoriteOrg,
     onFavoriteOrg,
 } from "../../../redux/org/orgSlice";
-import { onToggleFavoriteOrg } from '../../../redux/search/searchResultSlice';
+import { onToggleFavoriteOrg } from "../../../redux/search/searchResultSlice";
 import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { Drawer } from "@mui/material";
 import OrgMapWrapper from "../../MerchantDetail/components/OrgMap/OrgMapWrapper";
@@ -41,7 +41,7 @@ function OrgItem(props: IProps) {
 
     const handleFavoriteOrg = (org: any) => {
         if (USER) {
-            dispatch(onToggleFavoriteOrg(org.id))
+            dispatch(onToggleFavoriteOrg(org.id));
             if (org?.is_favorite) {
                 dispatch(onDeleteFavoriteOrg(org));
             } else {
@@ -72,6 +72,17 @@ function OrgItem(props: IProps) {
                     <>
                         <div className="re-change-banner">
                             <img
+                                className="re-change-banner-bg"
+                                src={
+                                    org.image
+                                        ? `${org.image_url}`
+                                        : `${img.imgDefault}`
+                                }
+                                alt=""
+                                onError={(e) => onErrorImg(e)}
+                            />
+                            <img
+                                className="re-change-banner-img"
                                 src={
                                     org.image
                                         ? `${org.image_url}`
@@ -130,11 +141,11 @@ function OrgItem(props: IProps) {
                                             <span>
                                                 {org?.distance < 1000
                                                     ? `${Math.round(
-                                                        org?.distance
-                                                    )}(m)`
+                                                          org?.distance
+                                                      )}(m)`
                                                     : `${Math.round(
-                                                        org?.distance / 1000
-                                                    )}(km)`}
+                                                          org?.distance / 1000
+                                                      )}(km)`}
                                             </span>
                                         </div>
                                     ) : (
@@ -210,8 +221,8 @@ function OrgItem(props: IProps) {
                                     {org?.distance < 1000
                                         ? `${Math.round(org?.distance)}(m)`
                                         : `${Math.round(
-                                            org?.distance / 1000
-                                        )}(km)`}
+                                              org?.distance / 1000
+                                          )}(km)`}
                                 </div>
                             ) : (
                                 <></>

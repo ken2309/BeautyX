@@ -15,8 +15,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
-    margin: -8px 0px 0px -11px;
+    z-index: 3;
 }
 .re-org-item__enable::after {
     content: "";
