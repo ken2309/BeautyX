@@ -91,11 +91,11 @@ function OrgDetail(props: IProps) {
         dispatch(onActiveTab(7));
     };
     const onOpenChatOrg = () => {
-        if (USER) {
-            dispatch(onToggleOpenChat(true));
-        } else {
-            history.push("/sign-in?1");
-        }
+        // if (USER) {
+        //     dispatch(onToggleOpenChat(true));
+        // } else {
+        //     history.push("/sign-in?1");
+        // }
     };
     return (
         <div className="org-detail">
@@ -244,11 +244,19 @@ function OrgDetail(props: IProps) {
                                                     : t("Mer_de.flow")}
                                             </span>
                                         </div>
-                                        <div
+                                        {/* <div
                                             onClick={() => onOpenChatOrg()}
                                             className="org-flo"
                                         >
                                             <span>Nhắn tin</span>
+                                        </div> */}
+                                        <div
+                                            className="org-flo"
+                                            onClick={() => {
+                                                setOpenPopupContact(true);
+                                            }}
+                                        >
+                                            <span> {t("Mer_de.contact")}</span>
                                         </div>
                                     </div>
                                     <div className="org-time-work">
@@ -342,14 +350,14 @@ function OrgDetail(props: IProps) {
                                         : t("Mer_de.flow")}
                                 </button>
                                 <br />
-                                {/* <button
+                                <button
                                     onClick={() => {
                                         setOpenPopupContact(true);
                                     }}
                                 >
                                     {t("Mer_de.contact")}
-                                </button> */}
-                                <button onClick={onOpenChatOrg}>Chat</button>
+                                </button>
+                                {/* <button onClick={onOpenChatOrg}>Chat</button> */}
                             </div>
                         </div>
                     </div>
