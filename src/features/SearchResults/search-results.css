@@ -268,8 +268,9 @@
         height: 100%;
         z-index: 1;
         object-fit: cover;
-        filter: blur(2px);
-        -webkit-filter: blur(2px);
+        filter: blur(4px) brightness(75%);
+        -webkit-filter: blur(4px) brightness(75%);
+        -moz-filter: blur(4px) brightness(75%);
     }
     .re-change-banner .re-change-banner-img {
         width: 120px;
