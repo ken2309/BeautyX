@@ -84,7 +84,7 @@ function Search() {
         dispatch(onSetEmptyProducts());
         history.push({
             pathname: "/ket-qua-tim-kiem/",
-            search: `?keyword=${keyword}`,
+            search: `?keyword=${keyword}?tab=1`,
             state: {
                 orgsTotal: ORGS.totalItem,
                 servicesTotal: SERVICES.totalItem,

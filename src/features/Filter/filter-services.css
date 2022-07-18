@@ -176,6 +176,45 @@
     border-radius: 8px;
 }
 
+.filter-orgs-input {
+    width: 100%;
+    padding: 4px 0px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 600;
+    outline: none;
+    border: solid 1px var(--grey);
+    border-radius: 8px;
+    margin: 6px 0px;
+}
+
+.filter-orgs-ip__error {
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 600;
+    color: var(--red-cl);
+}
+
+.filter-orgs-ip__price-list {
+    display: none;
+}
+.filter-orgs-cnt__head-btn{
+    display: none;
+}
+.filter-orgs-btn{
+    width: 100%;
+}
+.filter-orgs-btn .btn-loading{
+    margin-bottom: 12px;
+    width: 100%;
+}
+.filter-orgs-btn .btn-loading:nth-child(2){
+    background-color: var(--white);
+    border: solid 1px var(--orange);
+    color: var(--orange);
+}
+
 /* Mobile */
 @media only screen and (max-width: 767px) {
     .filter-ser-list li {
@@ -202,17 +241,100 @@
     /* .home-se-re .home-promo-ser {
         margin-top: 16px;
     } */
+    .filter-orgs-wrap{
+        height: 100%;
+        position: relative;
+    }
     .filter-orgs-cnt {
         padding: 12px;
-        height: 100%;
+        height: calc(100% - 58px);
         display: flex;
+        overflow-y: scroll;
         flex-direction: column;
         justify-content: space-between;
     }
 
     .filter-org-province-list {
-        width: 80vw;
-        height: 100vh;
-        margin-left: 20vw;
+        width: 100vw;
+        max-height: 78vh;
+        height: fit-content;
+        left: 0;
+        position: fixed;
+        border-radius: 12px 12px 0px 0px;
+        bottom: 0;
+    }
+
+    .filter-orgs-ip__wrap {
+        border-radius: 12px 12px 0px 0px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px;
+        background-color: var(--grey_2);
+        border-radius: 8px;
+    }
+
+    .filter-orgs-input {
+        width: 49%;
+        margin: 0px;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 22px;
+    }
+
+    .filter-orgs-ip__error {
+        display: none;
+    }
+
+    .filter-orgs-ip__price-list {
+        display: block;
+    }
+
+    .filter-orgs-ip__price-list .list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .filter-orgs-ip__price-list .list li {
+        transition: all .3s;
+        width: 49%;
+        background-color: var(--grey_2);
+        margin: 4px 0px;
+        padding: 4px 0px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 22px;
+        border-radius: 8px;
+    }
+    .filter-orgs-cnt__head-btn{
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 2;
+        border: none;
+        outline: none;
+        background-color: var(--white);
+        padding: 8px 0px 4px 0px;
+        display: flex;
+        justify-content: center;
+    }
+    .filter-orgs-btn{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        z-index: 2;
+        padding: 12px 16px;
+        background-color: var(--white);
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+    }
+    .filter-orgs-btn .btn-loading{
+        width: 49%;
+        margin-bottom: 0px;
     }
 }

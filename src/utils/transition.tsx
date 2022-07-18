@@ -10,3 +10,11 @@ export const Transition = React.forwardRef(function Transition(
 ) {
     return <Slide direction="left" ref={ref} {...props} />;
 });
+export const TransitionUp = React.forwardRef(function Transition(
+    props: TransitionProps & {
+        children: React.ReactElement<any, any>;
+    },
+    ref: React.Ref<unknown>,
+) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});

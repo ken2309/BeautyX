@@ -24,7 +24,7 @@ class Tag {
         const params = {
             "filter[group]": "PRODUCT",
             include:
-                "parent.media|children.media|children.children.media|media",
+                "parent.media|children.media|media",
             sort: "-organizations_count",
         };
         return axiosClient.get(url, { params });
