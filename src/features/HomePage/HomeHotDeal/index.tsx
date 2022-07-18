@@ -26,7 +26,7 @@ export default function HomeHotDeal() {
             {
                 breakpoint: 1024,
                 settings: {
-                    swipe: true,
+                    swipe: false,
                     className: "center",
                     centerMode: true,
                     centerPadding: "100px",
@@ -38,7 +38,7 @@ export default function HomeHotDeal() {
                 breakpoint: 480,
                 settings: {
                     swipe: true,
-                    dots: true,
+                    dots: false,
                     speed: 500,
                     autoplaySpeed: 3000,
                     slidesToShow: 1,

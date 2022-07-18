@@ -14,12 +14,13 @@ import { useHistory } from "react-router-dom";
 import PopupDetailContact from "./PopupDetailContact";
 import { extraOrgTimeWork } from "./Functions/extraOrg";
 import { AppContext } from "../../../context/AppProvider";
-import { STATUS } from '../../../redux/status';
+import { STATUS } from "../../../redux/status";
+import { onToggleOpenChat } from '../../../redux/chat/chatOrgSlice'
 
 interface IProps {
     org: IOrganization;
     galleries: [];
-    status_galleries: string
+    status_galleries: string;
 }
 
 function OrgDetail(props: IProps) {
@@ -89,6 +90,13 @@ function OrgDetail(props: IProps) {
     const onActiveTabGallery = () => {
         dispatch(onActiveTab(7));
     };
+    const onOpenChatOrg = () => {
+        if (USER) {
+            dispatch(onToggleOpenChat(true))
+        } else {
+            history.push("/sign-in?1");
+        }
+    }
     return (
         <div className="org-detail">
             <Container>
@@ -98,29 +106,31 @@ function OrgDetail(props: IProps) {
                         className="org-detail__cnt-top"
                     >
                         <Slider {...settings}>
-                            {
-                                (galleries.length === 0 && status_galleries === STATUS.SUCCESS) &&
-                                <div className="org-detail__banner-de">
-                                    <div className="org-detail__banner-de__item">
-                                        <div className="back-drop">
-                                            <img
-                                                style={{ width: "100%" }}
-                                                src={org?.image_url}
-                                                alt=""
-                                                className="back-drop__img"
-                                                onError={(e) => onErrorImg(e)}
-                                            />
-                                            <div className="banner-item__cnt">
+                            {galleries.length === 0 &&
+                                status_galleries === STATUS.SUCCESS && (
+                                    <div className="org-detail__banner-de">
+                                        <div className="org-detail__banner-de__item">
+                                            <div className="back-drop">
                                                 <img
+                                                    style={{ width: "100%" }}
                                                     src={org?.image_url}
                                                     alt=""
-                                                    className="banner-item__img"
+                                                    className="back-drop__img"
+                                                    onError={(e) =>
+                                                        onErrorImg(e)
+                                                    }
                                                 />
+                                                <div className="banner-item__cnt">
+                                                    <img
+                                                        src={org?.image_url}
+                                                        alt=""
+                                                        className="banner-item__img"
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
+                                )}
                             {galleries.map((item: any, index: number) => (
                                 <div
                                     key={index}
@@ -294,8 +304,7 @@ function OrgDetail(props: IProps) {
                                 >
                                     {org?.is_favorite
                                         ? t("Mer_de.flowing")
-                                        : t("Mer_de.flow")
-                                    }
+                                        : t("Mer_de.flow")}
                                 </button>
                                 <br />
                                 <button
@@ -305,6 +314,11 @@ function OrgDetail(props: IProps) {
                                 >
                                     {t("Mer_de.contact")}
                                 </button>
+                                {/* <button
+                                    onClick={onOpenChatOrg}
+                                >
+                                    Chat
+                                </button> */}
                             </div>
                         </div>
                     </div>

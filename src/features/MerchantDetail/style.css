@@ -1032,7 +1032,8 @@
 
     /* org discounts */
     .org-deal-hot {
-        padding: 16px 12px;
+        padding: 0px 12px;
+        /* background-color: #ffe3d2; */
     }
 
     .org-deal-hot__discounts {
@@ -1047,7 +1048,7 @@
     }
 
     .org-deal-hot__discounts .list li {
-        width: 164px;
+        width: 172px;
         height: 278px;
     }
 

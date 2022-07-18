@@ -20,8 +20,8 @@ function FilterService(props: IProps) {
         { id: 3, title: t("Mer_de.ascending_price"), query: 'price' },
         { id: 4, title: t("Mer_de.decrease_price"), query: '-price' },
         { id: 5, title: t("home_2.selling"), query: '-bought_count' },
-        { id: 6, title: t("home_2.name") + 'A-Z', query: 'service_name' },
-        { id: 7, title: t("home_2.name") + 'Z-A', query: '-service_name' },
+        // { id: 6, title: t("home_2.name") + 'A-Z', query: 'service_name' },
+        // { id: 7, title: t("home_2.name") + 'Z-A', query: '-service_name' },
     ]
     const { FILTER_PROMO } = useSelector((state: any) => state.FILTER)
     const onChooseSortType = (item: any) => {

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Slide, Dialog } from '@mui/material'
 import { TransitionProps } from '@mui/material/transitions';
 import Information from '../../../../features/Account/components/Information/index';
 import HeadMobile from '../../../../features/HeadMobile';
+import { AppContext } from '../../../../context/AppProvider';
 
 const Transition = React.forwardRef(function Transition(
       props: TransitionProps & {
@@ -15,6 +16,7 @@ const Transition = React.forwardRef(function Transition(
 
 function AccountForm(props: any) {
       const { open } = props;
+      const {t} = useContext(AppContext);
       return (
             <Dialog
                   fullScreen
@@ -24,7 +26,7 @@ function AccountForm(props: any) {
                   <div
                         style={{ minHeight: '100vh' }}
                   >
-                        <HeadMobile title='Địa chỉ giao hàng' />
+                        <HeadMobile title={t("acc.order_address")} />
                         <Information />
                   </div>
             </Dialog>

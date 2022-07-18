@@ -14,7 +14,7 @@ import tracking from "../../api/trackApi";
 export default function AssistantBtn() {
     const dispatch = useDispatch();
     const location: any = useLocation();
-    const viewDisable = ["/trang-thai-don-hang/"]
+    const viewDisable = ["/trang-thai-don-hang/","/chat"]
 
     let disable = false;
     if (viewDisable.includes(location.pathname)) {

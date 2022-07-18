@@ -1,9 +1,9 @@
 import i18next from 'i18next';
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { AppContext } from '../../../context/AppProvider';
 import languages from '../../../data/languages';
 
-function LanguageBox(props: any) {
+function LanguageBox() {
       const { language, setLanguage } = useContext(AppContext);
       const handleChangeLang = (code: string) => {
             setLanguage(code)

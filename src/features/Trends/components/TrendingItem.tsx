@@ -16,8 +16,6 @@ export default function TrendItem(props: any) {
     return (
         <div
             className="trend-item-ctn"
-            // onMouseEnter={onHoverVideoItem}
-            // onMouseLeave={onLeaceHoverVideoItem}
         >
             <div className="logo">
                 <img

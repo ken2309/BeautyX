@@ -1,8 +1,8 @@
 import React from "react";
 //import Home from "../features/Home/index";
-import SearchResult from "../features/SearchResult/index";
 import { BrowserRouter, Switch, Redirect } from "react-router-dom";
 import { RouteComponentProps } from "@reach/router";
+import { FLAT_FORM_TYPE } from '../rootComponents/flatForm';
 import MerchantDetail from "../features/MerchantDetail/index";
 import Partner from "../features/Partner";
 import Cart from "../features/Cart/index";
@@ -18,11 +18,8 @@ import CartPaymentStatus from "../features/CartPaymentStatus";
 import ServicesUser from "../features/ServiceUser";
 //import DatePicker from "../components/DatePicker"
 import SearchResults from "../features/SearchResults/index";
-import HomeTags from "../features/HomeResults/HomeTags";
 import HomePromo from "../features/HomeResults/HomePromo";
-import HomeProvince from "../features/HomeResults/HomeProvince";
 import HomeListProvince from "../features/HomeResults/HomeListProvince";
-import HomeCardResult from "../features/HomeResults/HomeCardResult";
 import HomeDealBanner from "../features/HomeResults/HomeDealBanner";
 import Policy from "../features/Policy";
 import SellerCenter from "../features/SellerCenter";
@@ -50,8 +47,12 @@ import AssistantBtn from "../components/AssistantBtn";
 
 import ProductsByCate from "../features/CategoryTree/ProductsByCate";
 
+import Result from "../features/Results";
+import ChatOrg from "../features/Chat/ChatOrg";
+import ChatAll from "../features/Chat/ChatAll";
+
 const RouterPage = (
-    props: { pageComponent: JSX.Element } & RouteComponentProps
+  props: { pageComponent: JSX.Element } & RouteComponentProps
 ) => props.pageComponent;
 function RouterConfig(props: any) {
   const USER = useSelector((state: any) => state.USER);
@@ -73,7 +74,7 @@ function RouterConfig(props: any) {
       component: <HomePage />
     },
     {
-      path: '/MB',
+      path: '/MBBANK',
       component: <HomePage />
     },
     {
@@ -85,10 +86,6 @@ function RouterConfig(props: any) {
       component: <ResetPassword />
     },
     {
-      path: "/search-result/",
-      component: <SearchResult />,
-    },
-    {
       path: '/ket-qua-tim-kiem/',
       component: <SearchResults />
     },
@@ -97,7 +94,7 @@ function RouterConfig(props: any) {
       component: <Cart />,
     },
     {
-      path: "/product-detail/:name",
+      path: "/san-pham/:name",
       component: <ProductDetail />,
     },
     {
@@ -125,24 +122,12 @@ function RouterConfig(props: any) {
       component: <MerchantDetail />,
     },
     {
-      path: '/danh-muc/',
-      component: <HomeTags />
-    },
-    {
       path: '/deal-lam-dep-cuc-HOT',
       component: <HomePromo />
     },
     {
-      path: '/khu-vuc/',
-      component: <HomeProvince />
-    },
-    {
       path: '/dia-diem-quan-tam',
       component: <HomeListProvince />
-    },
-    {
-      path: '/doanh-nghiep/:title',
-      component: <HomeCardResult />
     },
     {
       path: '/chinh-sach/',
@@ -199,6 +184,10 @@ function RouterConfig(props: any) {
     {
       path: "/san-pham",
       component: <ProductsByCate />
+    },
+    {
+      path: "/ket-qua",
+      component: <Result />
     }
   ];
   const routesPrivate = [
@@ -233,6 +222,10 @@ function RouterConfig(props: any) {
     {
       path: "/gio-hang",
       component: Carts
+    },
+    {
+      path:"/chat",
+      component: ChatAll
     }
   ];
   return (
@@ -256,6 +249,7 @@ function RouterConfig(props: any) {
         ))}
       </Switch>
       <AssistantBtn />
+      {USER?.USER && <ChatOrg />}
     </BrowserRouter>
   );
 }

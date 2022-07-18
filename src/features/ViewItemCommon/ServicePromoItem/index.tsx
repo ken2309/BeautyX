@@ -12,8 +12,8 @@ import { formatRouterLinkServicePromo } from "../../../utils/formatRouterLink/fo
  import tracking from "../../../api/trackApi";
  // end
 // google tag event
-import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
-// end 
+import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
+// end
 
 interface IProps {
     service: IServicePromo;
@@ -41,7 +41,7 @@ function ServicePromoItem(props: IProps) {
                 />
                 <div className="ser-promo">
                     {service.discount_percent > 0 &&
-                        service.discount_percent < 50 ? (
+                    service.discount_percent < 50 ? (
                         <div className="ser-promo__percent">
                             Giảm {Math.round(service?.discount_percent)}%
                         </div>
@@ -84,8 +84,8 @@ function ServicePromoItem(props: IProps) {
                             {service._geoDistance < 1000
                                 ? `${service._geoDistance}(m)`
                                 : `${Math.round(
-                                    service._geoDistance / 1000
-                                )}(km)`}
+                                      service._geoDistance / 1000
+                                  )}(km)`}
                         </span>
                     </div>
                 ) : (

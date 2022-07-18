@@ -15,14 +15,14 @@ function Products(props: any) {
     async function handleGetProductsSpecial() {
         const ORG = await org
         try {
-            const res_products = await productsApi.getSpecialPriceByOrg_id({
+            const res_products = await productsApi.getByOrgId({
                 org_id: ORG?.id,
                 page: data.page
             });
             setData({
                 ...data,
-                products: res_products.data.context.data,
-                page_count: res_products.data.context.last_page
+                products: res_products?.data.context.data,
+                page_count: res_products?.data.context.last_page
             })
         } catch (error) {
             console.log(error)

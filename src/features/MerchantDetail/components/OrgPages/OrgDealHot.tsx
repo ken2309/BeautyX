@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { IDiscountPar, IITEMS_DISCOUNT } from '../../../../interface/discount'
@@ -16,11 +17,11 @@ function OrgDealHot() {
     return (
         <div className="org-deal-hot">
             {
-                discounts.length > 0 &&
+                discounts?.length > 0 &&
                 <div className="org-deal-hot__discounts">
                     <ul className="list">
                         {
-                            discounts.map((discount: any, index: number) => (
+                            discounts?.map((discount: any, index: number) => (
                                 <li key={index} className="org-discount__item">
                                     {
                                         discount.items.map((item: IITEMS_DISCOUNT, i: number) => (
@@ -38,12 +39,12 @@ function OrgDealHot() {
                 </div>
             }
             {
-                SERVICES_SPECIAL.services_special.length > 0 &&
+                SERVICES_SPECIAL.services_special?.length > 0 &&
                 <div className="org-deal-hot__section">
                     <span className="org-deal-hot__section-title">Dịch vụ</span>
                     <ul className="org-special__list">
                         {
-                            SERVICES_SPECIAL.services_special.map((item: Service, index: number) => (
+                            SERVICES_SPECIAL.services_special?.map((item: Service, index: number) => (
                                 <li key={index}>
                                     <OrgServiceItem
                                         org={ORG.org}
@@ -56,12 +57,12 @@ function OrgDealHot() {
                 </div>
             }
             {
-                PRODUCTS_SPECIAL.products_special.length > 0 &&
+                PRODUCTS_SPECIAL.products_special?.length > 0 &&
                 <div className="org-deal-hot__section">
                     <span className="org-deal-hot__section-title">Sản phẩm</span>
                     <ul className="org-special__list">
                         {
-                            PRODUCTS_SPECIAL.products_special.map((item: Product, index: number) => (
+                            PRODUCTS_SPECIAL.products_special?.map((item: Product, index: number) => (
                                 <li key={index}>
                                     <OrgProductItem
                                         org={ORG.org}
@@ -73,7 +74,7 @@ function OrgDealHot() {
                     </ul>
                 </div>
             }
-            { (discounts.length + SERVICES_SPECIAL.services_special.length + PRODUCTS_SPECIAL.products_special.length) == 0 && <EmptyRes title="Hiện chưa có deal hot nào dành cho bạn!" />}
+            {(discounts?.length + SERVICES_SPECIAL.services_special?.length + PRODUCTS_SPECIAL.products_special?.length) == 0 && <EmptyRes title="Hiện chưa có deal hot nào dành cho bạn!" />}
         </div>
     );
 }

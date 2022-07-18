@@ -1,6 +1,6 @@
 import React from "react";
 import Bottom from "../Bottom/index";
-import HomeLoggedCalendar from "../../features/Home/components/HomeLogged/HomeLoggedCalendar";
+import HomeLoggedCalendar from "../../features/Apointment/HomeLoggedCalendar";
 // import BackButton from '../../components/BackButton';
 import Head from "../../features/Head";
 import Footer from "../../features/Footer";

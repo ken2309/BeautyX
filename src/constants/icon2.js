@@ -10,6 +10,8 @@ import user from '../assets/icons/user.svg';
 import userAct from '../assets/icons/userAct.svg';
 import home from '../assets/icons/home.svg';
 import homeAct from '../assets/icons/homePurple.svg';
+import commentPurpleAct from "../assets/icon/commentPurpleAct.svg";
+import comments from "../assets/icon/comments.svg";
 
 export const ICON = {
     location, locationAct,
@@ -17,5 +19,6 @@ export const ICON = {
     cate, cateAct,
     calendar, calendarAct,
     user, userAct,
-    home, homeAct
+    home, homeAct,
+    comments, commentPurpleAct
 }

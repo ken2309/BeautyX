@@ -7,20 +7,24 @@ import { Container } from '@mui/material';
 import useCountDown from '../../utils/useCountDown';
 import { useLocation } from 'react-router-dom';
 import paymentGatewayApi from '../../api/paymentGatewayApi';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PaymentQr from './components/PaymentQr';
 import PaymentInfo from './components/PaymentInfo';
 import PaymentConfirm from './components/PaymentConfirm';
-import useGetMessageTiki from '../../rootComponents/tiki/useGetMessageTiki';
+import useGetMessageTiki from '../../rootComponents/useGetMessageTiki';
 import apointmentApi from '../../api/apointmentApi';
 import HeadMobile from '../HeadMobile';
 import useFullScreen from '../../utils/useFullScreen';
 import Notification from '../../components/Notification/index';
 import { useHistory } from 'react-router-dom';
+import { clearByCheck } from '../../redux/cartSlice';
+import { onClearOrder } from '../../redux/order/orderSlice';
+import { ICart } from '../../interface/cart'
 
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
-import {formatProductList} from "../../utils/tracking";
+import { formatProductList } from "../../utils/tracking";
+import { onAddServicesNoBookCount, onSetStatusServicesUser } from '../../redux/order/orderSlice';
 // end
 const timerRender = [0];
 const ORDER_STATUS = ['PENDING', 'PAID', 'CANCELED_BY_USER']
@@ -28,6 +32,7 @@ const ORDER_STATUS = ['PENDING', 'PAID', 'CANCELED_BY_USER']
 function CartPaymentStatus() {
     const sec = useCountDown(600);
     const IS_MB = useFullScreen();
+    const dispatch = useDispatch();
     const [orderStatus, setOrderStatus] = useState(ORDER_STATUS[0])
     const [openConf, setOpenConf] = useState(false);
     const history = useHistory();
@@ -49,8 +54,8 @@ function CartPaymentStatus() {
     const intervalRef = useRef<any>();
     const transaction_uuid = res?.payment_gateway?.transaction_uuid;
     const action = location?.state?.actionAfter
-    const listPayment = location.state?.listPayment;
-
+    //listPayment from page buy now product, booking now
+    const listPayment: ICart[] = location.state?.listPayment;
     const handlePostApp = async () => {
         const params = {
             order_id: action.order_id,
@@ -65,6 +70,11 @@ function CartPaymentStatus() {
             console.log(error)
         }
     }
+    const handleAfterOrder = () => {
+        dispatch(clearByCheck());
+        dispatch(onAddServicesNoBookCount())
+        dispatch(onSetStatusServicesUser())
+    }
     const handleGetPaymentStatus = async (_status: boolean) => {
         try {
             const res_status = await paymentGatewayApi.getStatus({
@@ -76,7 +86,10 @@ function CartPaymentStatus() {
                 case "PAID":
                     if (action) {
                         handlePostApp()
+                    } else {
+                        handleAfterOrder()
                     }
+                    dispatch(onClearOrder())
                     setOrderStatus(status)
                     timerRender[0] = -1;
                     break;
@@ -86,10 +99,12 @@ function CartPaymentStatus() {
                 case "CANCELED_BY_USER":
                     setOrderStatus(status)
                     timerRender[0] = -1;
+                    dispatch(onClearOrder())
                     break;
                 case "CANCELED":
                     setOrderStatus(status)
                     timerRender[0] = -1;
+                    dispatch(onClearOrder())
                     break;
                 default:
                     break;
@@ -112,7 +127,9 @@ function CartPaymentStatus() {
     useEffect(() => {
         if (transaction_uuid) {
             setInter();
-            tracking.CONFIRM_SCREEN_LOAD(listPayment[0].org_id,formatProductList(listPayment),res.amount)
+            if (listPayment) {
+                tracking.CONFIRM_SCREEN_LOAD(listPayment[0].org_id, formatProductList(listPayment), res.amount)
+            }
         }
     }, []);
     const handleCancelPayment = () => {

@@ -19,7 +19,7 @@ function HomeCategory(props: any) {
     const callOrgsByCateTag = () => {
         if (ORGS.status !== STATUS.SUCCESS) {
             const action = {
-                tag: CATE.title,
+                tags: CATE.title,
                 page: 1
             }
             dispatch(fetchOrgsByTag(action))

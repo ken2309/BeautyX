@@ -7,12 +7,13 @@ import icon from '../../../constants/icon';
 import { useHistory } from 'react-router-dom';
 
 interface IProps {
-    card_items: IServiceUser
+    card_items: IServiceUser,
 }
 
 function TreatmentCardItem(props: IProps) {
     const history = useHistory();
     const { card_items } = props;
+    
     const org = card_items.organization;
     const [enableCart, setEnableCart] = useState(true)
     const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
@@ -36,8 +37,13 @@ function TreatmentCardItem(props: IProps) {
     return (
         <div
             className='treat-card-item'
-            // style={enableCart === true ? { opacity: 0.6 } : {}}
+        // style={enableCart === true ? { opacity: 0.6 } : {}}
         >
+            {
+                card_items.appointments?.length === 0 &&
+                <div className="treat-card-item__dot">
+                </div>
+            }
             <div
                 style={
                     (order_id === card_items?.id

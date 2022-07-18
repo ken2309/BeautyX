@@ -51,10 +51,8 @@ function CartPayment(props: any) {
   const data_cart = {
     list, products, services, combos, address, note, chooseBr, carts
   }
-  console.log(address)
   return (
     <div className="payment">
-      <Head isCart={isCart} title={headerTitle} />
       <Container>
         <div className="payment-cnt">
           <PaymentForm

@@ -165,7 +165,7 @@
 }
 
 .book-time-cnt {
-    width: 60vw;
+ width: 60vw;
     background-color: var(--bgWhite);
     padding: 24px;
 }
@@ -337,6 +337,41 @@
     color: var(--orange);
 }
 
+.booking-cnt__right-time .book-seats-amount{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.seats_amount-cnt{
+    display: flex;
+    justify-content: space-evenly;
+}
+.seats_amount-cnt .amount{
+    /* font-family: 'Nunito';
+    font-size: 14px; */
+    padding: 3px 0;
+    width: 61px;
+    text-align: center;
+}
+.seats_amount-cnt .asc,
+.seats_amount-cnt .desc{
+    border: none;
+    line-height: 1;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background-color: var(--purple);
+    color: var(--white);
+    cursor: pointer;
+}
+.seats_amount-cnt .asc{
+    background-color: var(--purple);
+    color: var(--white);
+    /* margin-right: 10px; */
+}
+.seats_amount-cnt .desc{
+    background-color: var(--bg-gray);
+    color: var(--purple);
+}
 @media only screen and (max-width: 1023px) {
     .booking-cnt {
         padding: 16px 12px 136px 12px;

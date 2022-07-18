@@ -7,7 +7,7 @@ import Head from '../Head';
 import HeadMobile from '../HeadMobile';
 import HeadTitle from '../HeadTitle';
 import useFullScreen from '../../utils/useFullScreen';
-import { Container } from '@mui/material';
+import { Container, Dialog } from '@mui/material';
 import UserPaymentInfo from '../Account/components/UserPaymentInfo';
 import CartGroupItem from './components/CartGroupItem';
 import CartBottom from './components/CartBottom';
@@ -19,9 +19,13 @@ import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
 import PaymentMethodCpn from '../PaymentMethod';
 import { extraPaymentMethodId } from '../PaymentMethod/extraPaymentMethodId';
 import CartNull from '../Cart/components/CartNull';
+import { Transition } from '../../utils/transition';
 
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
+import { IOrganization } from '../../interface/organization';
+import { IBranch } from '../../interface/branch';
+import onErrorImg from '../../utils/errorImg';
 // end
 function Carts() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
@@ -33,15 +37,12 @@ function Carts() {
         (item: any) => item.isConfirm === true
     );
 
-    const intersection = cartList.filter(
-        (x: any) => !cartConfirm.includes(x)
-    );
+
 
     const handleClearByCheck = () => {
         if (cartConfirm.length > 0) {
-            const action = intersection;
             tracking.CART_DELETE_ALL_CLICK()
-            dispatch(clearByCheck(action));
+            dispatch(clearByCheck());
         }
     };
 
@@ -52,6 +53,12 @@ function Carts() {
     const [open, setOpen] = useState(false);
     const [pmtMethod, setPmtMethod] = useState<any>();
     const [address, setAddress] = useState<any>();
+    const [openBranch, setOpenBranch] = useState({
+        open: false,
+        branch: null,
+        org: org
+    });
+
 
     const DATA_CART = { cartList, cartAmountDiscount, cartAmount };
     const orgs_id = cartList.map((item: any) => item.org_id);
@@ -75,9 +82,11 @@ function Carts() {
         }
     })
 
+    const branch: any = openBranch.branch;
+
     const { payments_method } = useSelector((state: any) => state.PAYMENT.PAYMENT);
     const payment_method_id = extraPaymentMethodId(payments_method, setPmtMethod);
-    const DATA_PMT = { pmtMethod, address, payment_method_id, org }
+    const DATA_PMT = { pmtMethod, address, payment_method_id, org, branch }
     return (
         <>
             <HeadTitle title="Giỏ hàng" />
@@ -127,6 +136,8 @@ function Carts() {
                                                         item={item}
                                                         org={org}
                                                         cartList={cartList}
+                                                        openBranch={openBranch}
+                                                        setOpenBranch={setOpenBranch}
                                                     />
                                                 </li>
                                             ))
@@ -153,6 +164,11 @@ function Carts() {
                             DATA_CART={DATA_CART}
                             DATA_PMT={DATA_PMT}
                         />
+                        <BranchListOrgPay
+                            org={org}
+                            open={openBranch}
+                            setOpen={setOpenBranch}
+                        />
                     </>
             }
             <Footer />
@@ -172,5 +188,63 @@ const CartHeadRight = (props: any) => {
             <span>Xóa({length})</span>
             <img src={icon.TrashOrange} alt="" />
         </div>
+    )
+}
+const BranchListOrgPay = (props: any) => {
+    const { open, setOpen } = props;
+    const org: IOrganization = props.org;
+    return (
+        <Dialog
+            open={open.open}
+            TransitionComponent={Transition}
+            onClose={() => setOpen(({ ...open, open: false }))}
+        >
+            <div className="re-cart-branches">
+                <ul className="list">
+                    <li
+                        onClick={() => setOpen({ ...open, branch: null, open: false })}
+                        className="flex-row re-cart__branch-item"
+                    >
+                        {
+                            !open.branch && <span className="re-cart__branch-item-ck">Đã chọn</span>
+                        }
+                        <img
+                            onError={(e) => onErrorImg(e)}
+                            src={org?.image_url} alt=""
+                            className="branch-img"
+                        />
+                        <div className="detail">
+                            <span className="branch-name">{org?.name}</span>
+                            <span className="branch-address">{org?.full_address}</span>
+                            <span className="branch-phone">{org?.telephone?.join(", ")}</span>
+                        </div>
+                    </li>
+                    {
+                        org?.branches?.map((item: IBranch, index: number) => (
+                            <li
+                                onClick={() => setOpen({ ...open, branch: item, open: false })}
+                                key={index} className="flex-row re-cart__branch-item"
+                            >
+                                {
+                                    open.branch?.id === item?.id &&
+                                    <span className="re-cart__branch-item-ck">Đã chọn</span>
+                                }
+                                <img
+                                    onError={(e) => onErrorImg(e)}
+                                    src={item?.image ? item?.image_url : org?.image_url} alt=""
+                                    className="branch-img"
+                                />
+                                <div className="detail">
+                                    <span className="branch-name">{item?.name}</span>
+                                    <span className="branch-address">{item?.full_address}</span>
+                                    <span className="branch-phone">{item?.telephone}</span>
+
+                                </div>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </Dialog>
     )
 }

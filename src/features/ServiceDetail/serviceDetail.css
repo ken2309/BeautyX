@@ -82,7 +82,7 @@
 
 .service-detail__head {
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     width: 100%;
     height: 100%;
     background-color: #fff;
@@ -90,20 +90,21 @@
 }
 
 .service-detail .service-detail__left {
-    width: 40%;
+    width: 42%;
     height: 100%;
-    padding: 16px;
+    padding: 24px;
     background-color: #fff;
     flex-shrink: 0;
 }
 
 .service-detail .service-detail__right {
-    width: 60%;
+    width: 58%;
     padding: 24px;
     background-color: #fff;
     height: 100%;
     display: flex;
     flex-direction: column;
+    margin-top: 24px;
 }
 
 .service-detail .detail-left__img {
@@ -118,26 +119,105 @@
     flex-shrink: 0;
     border-radius: 8px;
 }
-.detail-left__img-item{
+.detail-left__img-item {
     width: 100%;
     height: 450px;
     position: relative;
-    
 }
-.detail-left__img-bg{
+.detail-left__img-bg {
     position: absolute;
     width: 100%;
     height: 100%;
     object-fit: cover;
     z-index: 1;
 }
-.detail-left__img-item-video{
+.detail-left__img-item-video {
     backdrop-filter: blur(10px);
     position: absolute;
     z-index: 2;
     height: 100%;
     width: 100%;
     object-fit: contain;
+}
+.service-detail .detail-left__slider-nav {
+    margin-top: 24px;
+    width: 100%;
+}
+.slick-current .slider-nav__video,
+.slick-current .slider-nav__img {
+    border: 2px solid var(--red-cl);
+}
+.service-detail .slick-track {
+    margin: unset;
+}
+.service-detail .detail-left__slider-nav .slick-slide {
+    width: unset !important;
+    display: flex;
+}
+.service-detail .detail-left__slider-nav .slick-slide > div {
+    margin-right: 16px;
+}
+/* cus btn arr img */
+.detail-btn__prev,
+.detail-btn__next {
+    position: absolute;
+    opacity: 0;
+    z-index: 100;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 100%;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    visibility: hidden;
+    transition: all 0.3s ease-out;
+    padding: 3px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.detail-btn__prev {
+    top: 50%;
+    transform: translateY(-50%) rotate(180deg);
+    left: 0;
+}
+.detail-btn__next {
+    right: 0;
+}
+.detail-btn__prev .detail-btn__prev-img,
+.detail-btn__next .detail-btn__next-img {
+    width: 30px !important;
+    height: 30px !important;
+}
+.detail-left__img:hover .detail-btn__prev {
+    opacity: 0.7;
+    visibility: visible;
+    left: 14px;
+    transition: all 0.3s ease-in;
+}
+.detail-left__img:hover .detail-btn__next {
+    opacity: 0.7;
+    right: 14px;
+    visibility: visible;
+    transition: all 0.3s ease-in;
+}
+
+.slider-nav__video,
+.slider-nav__img {
+    width: 82px !important;
+    cursor: pointer;
+    height: 82px;
+    border: 2px solid rgba(204, 204, 204, 0.419);
+}
+.slider-nav__img img {
+    width: 100%;
+    height: 100%;
+}
+.slider-nav__img {
+    width: 82px;
+    height: 82px;
+}
+.slider-nav__video .slider-video {
+    width: 100%;
+    height: 100%;
 }
 
 .service-detail .service-detail__org .service-detail__title {
@@ -175,7 +255,7 @@
     font-size: 16px;
     font-weight: bold;
     color: var(--purple);
-    padding: 0 16px;
+    padding: 0 10px;
 }
 
 .service-detail .detail-right__org p:nth-child(1) {
@@ -184,26 +264,31 @@
 
 .service-detail .detail-right__org {
     display: flex;
-    margin-left: -16px;
+    margin-left: -10px;
     margin-bottom: 8px;
 }
 
 .service-detail .detail-right__evaluate {
     display: flex;
-    grid-gap: 0 8px;
     align-items: center;
     width: 100%;
-    margin: 8px 0;
+    margin: 8px 0 8px -10px;
 }
 
 .service-detail .evaluate-item {
     display: flex;
     align-items: center;
     grid-gap: 0 4px;
+    padding: 0 10px;
+}
+.service-detail .evaluate-item:not(:last-child) {
+    border-right: 1px solid gray;
 }
 
 .service-detail .evaluate-item p {
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: normal;
+    color: gray;
     font-weight: bold;
 }
 
@@ -370,7 +455,7 @@
     width: 20px;
     height: 20px;
 }
-.service-detail .detail-right__no{
+.service-detail .detail-right__no {
     color: var(--red-cl);
     font-size: 14px;
     line-height: 16px;
@@ -464,7 +549,8 @@
 }
 .service-detail .service-detail__description p {
     margin-bottom: 24px;
-    line-height: 20px;
+    line-height: 24px;
+    font-size: 16px;
 }
 
 .service-detail .service-detail__comment {
@@ -587,6 +673,21 @@
 }
 
 @media only screen and (max-width: 1023px) {
+    .detail-left__slider-nav {
+        display: none;
+    }
+    .detail-btn__prev,
+    .detail-btn__next {
+        opacity: 0.7;
+        background-color: #fff;
+        visibility: visible;
+    }
+    .detail-btn__next {
+        right: 14px;
+    }
+    .detail-btn__prev {
+        left: 14px;
+    }
     .service-detail {
         padding: 0 0 92px 0;
         position: relative;
@@ -611,34 +712,27 @@
     }
 
     .service-detail .service-detail__tab {
-        margin: 80px 0 0 0;
+        margin: 12px 0 0 0;
         padding: 0 12px;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     }
 
     .service-detail .service-detail__left {
         width: 100%;
         padding: 0;
-        position: relative;
     }
 
     .service-detail .service-detail__mobile {
         display: block;
-        width: calc(100% - 24px);
+        width: 100%;
         background-color: #fff;
         padding: 12px;
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translate(-50%, 74%);
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         border-radius: 8px;
         display: flex;
         flex-direction: column;
         gap: 8px 0;
-    }
-
-    .service-detail .detail-left__img {
-        width: 100%;
+        position: relative;
     }
 
     .service-detail .service-detail__comment {
@@ -648,9 +742,13 @@
 
     .service-detail .detail-left__img {
         width: 100%;
-        height: 375px;
+        height: 100%;
     }
-
+    .service-detail .service-detail__wrap {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
     .service-detail .service-detail__mobile-name {
         font-weight: 700;
         font-size: 16px;
@@ -663,18 +761,20 @@
         text-overflow: ellipsis;
         word-break: break-word;
     }
-    .detail-left__img-item{
-        height: unset;
-    }
-    .detail-left__img-item-vd{
+    .detail-left__img-item,
+    .detail-left__img-item-vd {
         height: 345px;
+    }
+
+    .service-detail .slick-slider {
+        position: unset;
     }
 
     .service-detail .service-detail__mobile-favorite {
         position: absolute;
         padding: 8px;
         top: 12px;
-        right: 12px;
+        right: 13px;
         background-color: #eeedf2;
         width: 36px;
         height: 36px;
@@ -872,7 +972,7 @@
         font-size: 14px;
         margin: 0;
     }
-    .service-detail .detail-right__no{
+    .service-detail .detail-right__no {
         text-align: center;
         width: 100%;
     }

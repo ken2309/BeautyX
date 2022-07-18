@@ -1,112 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import FilterServices from '../../FilterServices';
-import servicePromoApi from '../../../api/servicePromoApi';
+import React from 'react';
 import { IServicePromo } from '../../../interface/servicePromo';
 import ServicePromoItem from '../../ViewItemCommon/ServicePromoItem';
 import useFullScreen from '../../../utils/useFullScreen';
 import ServiceResultItem from '../../Search/components/ServiceResultItem';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchServicesByFilter } from '../../../redux/search/searchResultSlice';
+import { STATUS } from '../../../redux/status';
+import { LoadingServices } from '../../../components/LoadingSketion';
+import LoadingMore from '../../../components/LoadingMore';
 
-interface IData {
-    services: IServicePromo[],
-    page: number,
-    totalItem: number
-}
 
 function TabService(props: any) {
     const { keyword, acTab } = props;
+    const dispatch = useDispatch();
     const IS_MB = useFullScreen();
-    const [dataSort, setDataSort] = useState('default')
-    const [data, setData] = useState<IData>({
-        services: [],
-        page: 1,
-        totalItem: 1
-    })
-    console.log(keyword)
-    async function getServicesByKeyword() {
-        try {
-            const res = await servicePromoApi.getByKeyword({
-                keyword: keyword,
-                page: data.page
-            });
-            setData({
-                ...data,
-                services: [...data.services, ...res?.data.data.hits],
-                totalItem: res?.data.total
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    async function getServicesBySort() {
-        try {
-            const res = await servicePromoApi.getBySort({
-                keyword: keyword,
-                page: data.page,
-                dataSort: dataSort
-            });
-            setData({
-                ...data,
-                services: [...data.services, ...res?.data.data.hits],
-                totalItem: res?.data.total
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    async function getServicesByUserLocation() {
-        try {
-            const res = await servicePromoApi.getByUserLocation({
-                keyword: keyword,
-                page: data.page
-            })
-            setData({
-                ...data,
-                services: [...data.services, ...res?.data.data.hits],
-                totalItem: res?.data.total
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    useEffect(() => {
-        if (dataSort === 'default') {
-            getServicesByKeyword()
-        } else if (dataSort === 'none') {
-            getServicesByUserLocation()
-        } else {
-            getServicesBySort()
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data.page, dataSort, keyword]);
-
+    const { services, page, totalItem, status } = useSelector((state: any) => state.SEARCH_RESULT.RE_SERVICES);
     const onViewMore = () => {
-        if (data.services.length >= 15 && data.services.length < data.totalItem) {
-            setData({
-                ...data,
-                page: data.page + 1
-            })
+        if (services.length >= 30 && services.length < totalItem) {
+            dispatch(fetchServicesByFilter({
+                page: page + 1,
+                keyword: keyword
+            }))
         }
     }
 
     return (
         acTab === 1 ?
             <div>
-                <FilterServices
-                    dataSort={dataSort}
-                    setDataSort={setDataSort}
-                    data={data}
-                    setData={setData}
-                />
+                {(page === 1 && status !== STATUS.SUCCESS) && <LoadingServices/>}
                 <InfiniteScroll
-                    dataLength={data.services.length}
+                    dataLength={services.length}
                     hasMore={true}
                     loader={<></>}
                     next={onViewMore}
                 >
                     <ul className="re-ser-list">
                         {
-                            data.services.map((item: IServicePromo, index: number) => (
+                            services.map((item: IServicePromo, index: number) => (
                                 <li className='re-ser-list__item'
                                     key={index}
                                 >
@@ -116,6 +47,7 @@ function TabService(props: any) {
                         }
                     </ul>
                 </InfiniteScroll>
+                {services.length < totalItem && <LoadingMore />}
             </div>
             :
             <></>

@@ -42,6 +42,7 @@ function Review(props: IProps) {
     const { t } = useContext(AppContext);
     const USER = useSelector((state: any) => state.USER);
     const COMMENT = useSelector((state: any) => state.COMMENT);
+    const SERVICE = useSelector((state: any) => state.SERVICE.SERVICE.service);
     const user = USER.USER;
     const dispatch = useDispatch();
     const history = useHistory();
@@ -142,6 +143,7 @@ function Review(props: IProps) {
                 <TotalStartEvaluate
                     totalItem={totalItem}
                     openSeeMoreCmt={openSeeMoreCmt}
+                    item={SERVICE}
                 />
                 <EvaluateInput
                     handleOnchange={handleOnchange}
