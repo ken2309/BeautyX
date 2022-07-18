@@ -9,7 +9,7 @@ import { LoadingOrgs } from "../../../components/LoadingSketion";
 import { STATUS } from "../../../redux/status";
 
 function TabOrgs(props: any) {
-    const { keyword, FILTER_ORGS_VAL } = props;
+    const { keyword, FILTER_ORGS_VAL, changeStyle } = props;
     const dispatch = useDispatch();
     const { orgs, page, totalItem, status } = useSelector(
         (state: any) => state.SEARCH_RESULT.RE_ORGS
@@ -35,10 +35,16 @@ function TabOrgs(props: any) {
                 loader={<></>}
                 next={onViewMore}
             >
-                <ul className="re-ser-list">
+                <ul
+                    className={
+                        changeStyle
+                            ? "re-ser-list re-ser-list__chage"
+                            : "re-ser-list"
+                    }
+                >
                     {orgs.map((item: IOrganization, index: number) => (
                         <li key={index}>
-                            <OrgItem org={item} />
+                            <OrgItem org={item} changeStyle={true} />
                         </li>
                     ))}
                 </ul>
