@@ -16,7 +16,7 @@ import BackTopButton from '../../components/BackTopButton';
 import Footer from '../Footer';
 import { fetchAsyncOrgsByFilter, onSetFilterType, onSetOrgsEmpty } from '../../redux/filter/filterSlice';
 import HeadMobile from '../HeadMobile';
-import useFullScreen from '../../utils/useFullScreen';
+import useFullScreen from '../../utils/useDeviceMobile';
 import icon from '../../constants/icon';
 import LoadingMore from '../../components/LoadingMore';
 import { LoadingOrgs } from '../../components/LoadingSketion';
@@ -25,7 +25,7 @@ function Result() {
     const IS_MB = useFullScreen();
     const params: any = extraParamsUrl();
     const dispatch = useDispatch();
-    const { tags, sort, province, district } = useSelector((state: any) => state.FILTER.FILTER_ORG);
+    const { tags, sort, province, district, min_price, max_price } = useSelector((state: any) => state.FILTER.FILTER_ORG);
     const { TYPE_FILTER } = useSelector((state: any) => state.FILTER);
     const { orgs, status, page, totalItem } = useSelector((state: any) => state.FILTER.ORGS);
     let titleHeader: string = "";
@@ -42,6 +42,8 @@ function Result() {
         tags: params?.tag ? [params?.tag, ...tags].join("|") : tags.join("|"),
         province_code: params?.province || province?.province_code,
         district_code: district?.district_code,
+        min_price: min_price,
+        max_price: max_price,
         sort: sort
     }
     const callOrgsByFilterTag = async () => {
@@ -140,12 +142,20 @@ function HeaderFilterMobile(props: any) {
             <Drawer
                 open={open}
                 onClose={() => setOpen(false)}
-                anchor={"right"}
+                anchor="bottom"
             >
                 <div className="result-cont__mobile">
-                    <FilterOrgs
-                        onApplyFilterOrgs={onApplyFilterMb}
-                    />
+                    <div className="filter-orgs-wrap">
+                        <button 
+                            onClick={() => setOpen(false)}
+                            className="filter-orgs-cnt__head-btn"
+                        >
+                            <img src={icon.lineGray} alt="" />
+                        </button>
+                        <FilterOrgs
+                            onApplyFilterOrgs={onApplyFilterMb}
+                        />
+                    </div>
                 </div>
             </Drawer>
         </>

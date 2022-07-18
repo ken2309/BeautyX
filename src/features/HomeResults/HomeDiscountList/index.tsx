@@ -11,7 +11,7 @@ import ButtonLoading from '../../../components/ButtonLoading';
 import './style.css';
 import Footer from '../../Footer';
 import HeadMobile from '../../HeadMobile';
-import useFullScreen from '../../../utils/useFullScreen';
+import useFullScreen from '../../../utils/useDeviceMobile';
 
 function HomeDiscountList() {
     const dispatch = useDispatch();

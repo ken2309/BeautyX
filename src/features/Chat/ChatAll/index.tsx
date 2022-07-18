@@ -8,7 +8,7 @@ import MessageItem from './components/MessageItem';
 import { Link, useLocation, useHistory } from 'react-router-dom'
 import './style.css';
 import { extraParamsUrl } from '../../../utils/extraParamsUrl';
-import useFullScreen from '../../../utils/useFullScreen';
+import useDeviceMobile from '../../../utils/useDeviceMobile';
 
 function ChatAll(props: any) {
     const chatRooms = [
@@ -25,7 +25,7 @@ function ChatAll(props: any) {
     const messageRoomId = parseInt(params?.message_room);
     const location = useLocation();
     const history = useHistory();
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     let prevUrl: any = "/";
     if (location.state) {
         prevUrl = location.state

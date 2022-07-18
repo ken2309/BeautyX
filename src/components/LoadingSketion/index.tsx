@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.css'
 import { Skeleton } from '@mui/material'
-import useFullScreen from '../../utils/useFullScreen';
+import useDeviceMobile from '../../utils/useDeviceMobile';
 
 const arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 export const LoadingOrgs = () => {
@@ -23,7 +23,7 @@ interface IPropsSer {
 }
 export const LoadingServices = (props: IPropsSer) => {
     const { width } = props;
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     return (
         <ul className="result-orgs-loading-cnt">
             {

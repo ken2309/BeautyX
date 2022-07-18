@@ -13,6 +13,9 @@
     margin-top: 0px;
     left: 0;
 }
+.se-re-cnt__left .btn-loading{
+    width: 100%;
+}
 
 .result-cont__right {
     width: calc(100% - 16.6%);
@@ -51,7 +54,7 @@
         padding: 4px 8px;
     }
     .result-cont__mobile{
-        width: 80vw;
-        height: 100%;
+        width: 100%;
+        height: 94vh;
     }
 }

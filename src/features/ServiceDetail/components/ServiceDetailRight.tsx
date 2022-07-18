@@ -15,7 +15,7 @@ import DetailOrgCard from "./DetailOrgCard";
 import { clearAllServices } from "../../../redux/servicesBookSlice";
 import { IOrganization } from "../../../interface/organization";
 import { Service } from "../../../interface/service";
-import useFullScreen from "../../../utils/useFullScreen";
+import useFullScreen from "../../../utils/useDeviceMobile";
 import { AppContext } from "../../../context/AppProvider";
 import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
 import { handleScroll } from "../onScrollChange";
@@ -149,10 +149,7 @@ export default function ServiceDetailRight(props: IProps) {
                         </div>
                     </div>
                     <div className="detail-right__evaluate">
-                        <div
-                            onClick={() => setValue(2)}
-                            className="evaluate-item cursor-pointer"
-                        >
+                        <div className="evaluate-item cursor-pointer">
                             <Rating
                                 size="small"
                                 readOnly
@@ -162,24 +159,26 @@ export default function ServiceDetailRight(props: IProps) {
 
                             {COMMENTS.totalItem > 0 ? (
                                 <p>
-                                    {`(${t("detail_item.see")} ${
-                                        COMMENTS.totalItem
-                                    } ${t("detail_item.evaluate")})`}
+                                    {`(${COMMENTS.totalItem} ${t(
+                                        "detail_item.evaluate"
+                                    )})`}
                                 </p>
                             ) : (
                                 <p>{`(${t("detail_item.not_evaluate")})`}</p>
                             )}
                         </div>
-                        <div className="evaluate-item">
-                            <img src={icon.Favorite} alt="" />
-                            <p>{service.favorites_count}</p>
-                        </div>
-                        <div className="evaluate-item">
-                            <img src={icon.ShoppingCartSimple} alt="" />
-                            <p>
-                                {`${t("detail_item.sold")}`}{" "}
-                                {service.bought_count}
-                            </p>
+                        <div className="evaluate-item__wrap">
+                            <div className="evaluate-item">
+                                <img src={icon.Favorite} alt="" />
+                                <p>{service.favorites_count}</p>
+                            </div>
+                            <div className="evaluate-item">
+                                <img src={icon.ShoppingCartSimple} alt="" />
+                                <p>
+                                    {`${t("detail_item.sold")}`}{" "}
+                                    {service.bought_count}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -193,7 +192,7 @@ export default function ServiceDetailRight(props: IProps) {
                             percent !== 0 && (
                                 <div className="detail-right__percent">
                                     <p>
-                                        {`${t("detail_item.off")}`}
+                                        {`${t("detail_item.off")} `}
                                         {percent}%
                                     </p>
                                 </div>

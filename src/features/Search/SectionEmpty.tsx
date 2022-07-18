@@ -90,7 +90,7 @@ function SectionEmpty() {
                                 className="keyword-item"
                                 key={index}
                             >
-                                <div className="flexX-gap-8">
+                                <div className="flexX-gap-8 cursor-pointer">
                                     <img
                                         style={{ width: "20px" }}
                                         src={icon.tumerGray}
@@ -128,7 +128,7 @@ function SectionEmpty() {
                             key={index}
                             className="keyword-item"
                         >
-                            <div className="flexX-gap-8">
+                            <div className="flexX-gap-8 cursor-pointer">
                                 <img
                                     style={{ width: "18px" }}
                                     src={icon.searchGray}

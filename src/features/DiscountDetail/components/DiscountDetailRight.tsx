@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import icon from "../../../constants/icon";
@@ -13,39 +13,49 @@ import { clearAllServices } from "../../../redux/servicesBookSlice";
 import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
-import useFullScreen from "../../../utils/useFullScreen";
 import PopupSuccess from "../../PopupSuccess";
 import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
-
- // ==== api tracking ====
- import tracking from "../../../api/trackApi";
- // end
+import DiscountDetailRightReview from "../../DiscountDetail/components/DiscountDetailRightReview";
+// ==== api tracking ====
+//import tracking from '../../../api/trackApi'
+// end
 // google tag event
-import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
-// end 
+import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
+import useDeviceMobile from "../../../utils/useDeviceMobile";
+import { AppContext } from "../../../context/AppProvider";
+import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
+// end
 interface IProps {
     discount: IDiscountPar;
     org: IOrganization;
     detail: any;
-    NOW?: boolean
+    NOW?: boolean;
 }
 
 function DiscountDetailRight(props: IProps) {
     const { discount, org, detail, NOW } = props;
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
     const ITEM_DISCOUNT: IITEMS_DISCOUNT = useSelector(
         (state: any) => state.ORG_DISCOUNTS.ITEM_DISCOUNT
     );
+    const { t } = useContext(AppContext);
+    const { COMMENTS } = useSelector((state: any) => state.SERVICE);
     const [popupSuccess, setPopupSuccess] = useState(false);
     const percent = Math.round(
         100 -
-        (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
+            (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
     );
     const { USER } = useSelector((state: any) => state.USER);
     const history = useHistory();
-
+    // get today's activity date in org
+    const now = new Date();
+    const today = now.getDay() + 1;
+    const orgTimes: any = org && extraOrgTimeWork(org?.opening_time);
+    const time_works_today = orgTimes?.find(
+        (item: any, index: number) => index + 2 === today
+    );
     const valueService = {
         org_id: org?.id,
         detail: detail,
@@ -75,7 +85,12 @@ function DiscountDetailRight(props: IProps) {
         discount
     );
     const handleAddCart = () => {
-        tracking.ADD_CART_CLICK(values.org_id,values.id,values.price,values.quantity)
+        // tracking.ADD_CART_CLICK(
+        //     values.org_id,
+        //     values.id,
+        //     values.price,
+        //     values.quantity
+        // );
         GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
         dispatch(addCart(values));
         setPopupSuccess(true);
@@ -85,8 +100,7 @@ function DiscountDetailRight(props: IProps) {
         const TYPE = "BOOK_NOW";
         const service = { ...detail, discount: discount };
         const services = [{ service, quantity: quantity }];
-        console.log(service, services);
-        tracking.ADD_CART_CLICK(values.org_id,values.id,values.price,values.quantity)
+        //tracking.ADD_CART_CLICK(values.org_id,values.id,values.price,values.quantity)
         GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
         history.push({
             pathname: "/dat-hen",
@@ -111,7 +125,19 @@ function DiscountDetailRight(props: IProps) {
                 <div className="detail-right__head-info">
                     <div className="detail-right__org">
                         <p>{org?.name}</p>
-                        <p>{"Đang mở cửa"}</p>
+                        {time_works_today?.status && (
+                            <>
+                                {time_works_today?.status === "on" ? (
+                                    <p style={{ color: "var(--green)" }}>{`${t(
+                                        "detail_item.open"
+                                    )}`}</p>
+                                ) : (
+                                    <p style={{ color: "var(--red_2)" }}>{`${t(
+                                        "detail_item.close"
+                                    )}`}</p>
+                                )}
+                            </>
+                        )}
                     </div>
                     <div className="detail-right__name">
                         <p>{detail?.service_name || detail?.product_name}</p>
@@ -126,20 +152,13 @@ function DiscountDetailRight(props: IProps) {
                             />
                         </div>
                     </div>
-                    <div className="detail-right__evaluate">
-                        <div className="evaluate-item">
-                            <p>5</p>
-                            <img src={icon.star} alt="" />
-                        </div>
-                        <div className="evaluate-item">
-                            <p>{detail?.favorites_count}</p>
-                            <img src={icon.Favorite} alt="" />
-                        </div>
-                        <div className="evaluate-item">
-                            <p>10</p>
-                            <img src={icon.ShoppingCartSimple} alt="" />
-                        </div>
-                    </div>
+
+                    {ITEM_DISCOUNT?.productable && COMMENTS && (
+                        <DiscountDetailRightReview
+                            data={ITEM_DISCOUNT?.productable}
+                            comment={COMMENTS}
+                        />
+                    )}
                 </div>
             </div>
 
@@ -148,7 +167,9 @@ function DiscountDetailRight(props: IProps) {
                     <div className="flexX-gap-8">
                         {percent !== 0 && (
                             <div className="detail-right__percent">
-                                <p>Giảm {percent}%</p>
+                                <p>
+                                    {`${t("detail_item.off")}`} {percent}%
+                                </p>
                             </div>
                         )}
                         <div className="detail-right__price">
@@ -168,7 +189,9 @@ function DiscountDetailRight(props: IProps) {
             </div>
             {quantity > 1 && (
                 <div className="flex-row-sp detail-right__calc">
-                    <span className="total-title">Tổng tiền</span>
+                    <span className="total-title">
+                        {t("cart.total_payment")}
+                    </span>
                     <div className="total-math">
                         <span>
                             {formatPrice(
@@ -180,7 +203,7 @@ function DiscountDetailRight(props: IProps) {
                         <span>
                             {formatPrice(
                                 ITEM_DISCOUNT?.productable.price * quantity -
-                                discount.discount_value
+                                    discount.discount_value
                             )}
                             đ
                         </span>
@@ -189,13 +212,14 @@ function DiscountDetailRight(props: IProps) {
             )}
             {quantity > 1 && (
                 <div className="detail-right__warn">
-                    Giá dịch vụ đã thay đổi vì bạn chọn nhiều hơn số lượng được
-                    áp dụng mã
+                    {t("cart.limit_item_discount")}
                 </div>
             )}
             <div className="detail-right__bottom">
                 <div className="bottom-quantity">
-                    <p className="bottom-quantity__text">Số lượng:</p>
+                    <p className="bottom-quantity__text">
+                        {t("detail_item.quantity")}:
+                    </p>
                     <div className="bottom-quantity__wrap">
                         <button
                             onClick={onDescQuantity}
@@ -224,7 +248,7 @@ function DiscountDetailRight(props: IProps) {
                                 onClick={onBookingNow}
                                 className="bottom-addCart bottom-buy__now"
                             >
-                                <p>Đặt hẹn ngay</p>
+                                <p>{t("detail_item.booking_now")}</p>
                             </div>
                         ) : (
                             <div
@@ -235,7 +259,7 @@ function DiscountDetailRight(props: IProps) {
                                     src={icon.ShoppingCartSimpleWhite}
                                     alt=""
                                 />
-                                <p>Thêm vào giỏ hàng</p>
+                                <p>{t("detail_item.add_cart")}</p>
                             </div>
                         )}
                     </div>
@@ -245,11 +269,11 @@ function DiscountDetailRight(props: IProps) {
                             onClick={onBookingNow}
                             className="bottom-addCart bottom-buy__now"
                         >
-                            <p>Đặt hẹn ngay</p>
+                            <p>{t("detail_item.booking_now")}</p>
                         </div>
                         <div onClick={handleAddCart} className="bottom-addCart">
                             <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                            <p>Thêm vào giỏ hàng</p>
+                            <p>{t("detail_item.add_cart")}</p>
                         </div>
                     </div>
                 )}
@@ -257,8 +281,9 @@ function DiscountDetailRight(props: IProps) {
             <PopupSuccess
                 popup={popupSuccess}
                 setPopup={setPopupSuccess}
-                title={`Đã thêm ${detail?.service_name || detail?.product_name
-                    } vào giỏ hàng`}
+                title={`Đã thêm ${
+                    detail?.service_name || detail?.product_name
+                } vào giỏ hàng`}
             />
         </div>
     );

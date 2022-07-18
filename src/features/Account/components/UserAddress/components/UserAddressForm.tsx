@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postAsyncAddress } from '../../../../../redux/USER/userAddressSlice';
 import { STATUS } from '../../../../../redux/status';
 import { useHistory } from 'react-router-dom';
-import useFullScreen from '../../../../../utils/useFullScreen';
 import { AppContext } from '../../../../../context/AppProvider';
+import useDeviceMobile from '../../../../../utils/useDeviceMobile';
 
 interface IDataAdd {
     districts: IDistrict[],
@@ -50,7 +50,7 @@ function UserAddressForm(props: any) {
     const {t} = useContext(AppContext);
     const ADDRESS = useSelector((state: any) => state.ADDRESS);
     const { provinces } = useSelector((state: any) => state.HOME);
-    const fullScreen = useFullScreen();
+    const fullScreen = useDeviceMobile();
     const { status_up } = ADDRESS;
     const dispatch = useDispatch();
     const history = useHistory();

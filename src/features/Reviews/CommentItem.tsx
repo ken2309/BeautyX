@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Rating from "@mui/material/Rating";
 import icon from "../../constants/icon";
 import { IComment } from "../../interface/comments";
 import FullImage from "../OpenFullImage";
+import { AppContext } from "../../context/AppProvider";
 interface IProps {
     comment: IComment;
     user: any;
@@ -10,6 +11,8 @@ interface IProps {
 export default function CommentItem(props: IProps) {
     const { comment } = props;
     const [open, setOpen] = useState(false);
+    const { t } = useContext(AppContext);
+
     let body;
     try {
         const cmt = JSON.parse(`${comment.body}`);
@@ -47,20 +50,19 @@ export default function CommentItem(props: IProps) {
                                 readOnly
                                 name="simple-controlled"
                                 value={body.star}
-                            // onChange={(event, newValue) => {
-                            //     setValue(newValue);
-                            // }}
+                                // onChange={(event, newValue) => {
+                                //     setValue(newValue);
+                                // }}
                             />
                         </div>
                     </div>
                 </div>
-                {
-                    body.used &&
+                {body.used && (
                     <div className="flex-row evaluate-comment__tick">
-                        <span>Đã sử dụng</span>
+                        <span>{t("detail_item.used")}</span>
                         <img src={icon.checkFlowGreen} alt="" />
                     </div>
-                }
+                )}
             </div>
 
             <div className="evaluate-comment__body">

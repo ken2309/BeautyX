@@ -20,7 +20,7 @@ import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation
 import Review from "../Reviews";
 import icon from "../../constants/icon";
 import DetailOrgCard from "./components/DetailOrgCard";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 import HeadOrg from "../MerchantDetail/components/HeadOrg";
 import DetailPolicy from "./components/DetailPolicy";
 import DetailRecommend from "./components/DetailRecommend";
@@ -229,7 +229,9 @@ function ServiceDetail(props: any) {
                                                     {t("pr.description")}:{" "}
                                                     {service.description
                                                         ? service.description
-                                                        : "Đang cập nhật"}
+                                                        : t(
+                                                              "detail_item.updating"
+                                                          )}
                                                 </p>
                                             </div>
                                         </TabPanel>
@@ -266,7 +268,11 @@ function ServiceDetail(props: any) {
                                                         }}
                                                         className="seemore-cmt"
                                                     >
-                                                        <p>{"Xem tất cả >>"}</p>
+                                                        <p>
+                                                            {t(
+                                                                "detail_item.see_more"
+                                                            )}
+                                                        </p>
                                                     </div>
                                                 ) : null}
                                                 <ReviewsContainer
@@ -293,7 +299,9 @@ function ServiceDetail(props: any) {
                                                     STATUS.SUCCESS && (
                                                     <>
                                                         <p className="service-detail__title">
-                                                            Doanh nghiệp
+                                                            {t(
+                                                                "detail_item.merchant"
+                                                            )}
                                                         </p>
                                                         <div className="service-detail__org-mb">
                                                             <DetailOrgCard
@@ -351,7 +359,10 @@ function ServiceDetail(props: any) {
                                         open={open.open}
                                         anchor="bottom"
                                         onClose={() =>
-                                            setOpen({ ...open, open: false })
+                                            setOpen({
+                                                ...open,
+                                                open: false,
+                                            })
                                         }
                                     >
                                         <div className="active-mb">

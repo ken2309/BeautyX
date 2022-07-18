@@ -9,6 +9,7 @@ import HeadTitle from "../../HeadTitle";
 import scrollTop from "../../../utils/scrollTop";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { formatRoundOrgCount } from "../../../utils/format";
 
 function HomeListProvince(props: any) {
     const { t } = useContext(AppContext);
@@ -48,7 +49,7 @@ function HomeListProvince(props: any) {
                                     <div className="province-item-cnt">
                                         <span>{item.name}</span>
                                         <span>
-                                            {item.organizations_count + item?.branches_count}{" "}
+                                            {formatRoundOrgCount(item.organizations_count + item?.branches_count)}{" "}
                                             {t("home_2.beauty_places")}{" "}
                                         </span>
                                     </div>

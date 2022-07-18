@@ -2,13 +2,13 @@ import React from "react";
 import DatePicker from "../../../components/DatePicker/index";
 import TimePicker from "../../../components/TimePicker";
 import { Dialog } from "@mui/material";
-import useFullScreen from "../../../utils/useFullScreen";
 import HeadMobile from "../../HeadMobile";
 import { Transition } from "../../../utils/transition";
+import useDeviceMobile from "../../../utils/useDeviceMobile";
 
 function BookingTime(props: any) {
     const { open, setOpen, bookTime, setBookTime, org } = props;
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const onChangeDatePicker = (e: any) => {
         setBookTime({ ...bookTime, date: e });
     };

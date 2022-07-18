@@ -16,7 +16,6 @@ import Footer from "../Footer";
 import order from "../../api/orderApi";
 import { pickBy, identity } from "lodash";
 import HeadMobile from "../HeadMobile";
-import useFullScreen from "../../utils/useFullScreen";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
 import PaymentMethodCpn from "../PaymentMethod/index";
@@ -36,13 +35,14 @@ import AlertSnack from "../../components/AlertSnack";
 //import tracking from "../../api/trackApi";
 import { formatProductList } from "../../utils/tracking";
 import { onRefreshServicesNoBookCount } from "../../redux/order/orderSlice";
+import useDeviceMobile from "../../utils/useDeviceMobile";
 // end
 const date = dayjs();
 function Booking() {
     const dispatch = useDispatch();
     const { SERVICES_BOOK } = useSelector((state: any) => state);
     const { org, status } = useSelector((state: any) => state.ORG);
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const [openAlertSnack, setOpenAlertSnack] = useState({
         title: "",

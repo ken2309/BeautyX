@@ -1,7 +1,7 @@
 import React from 'react';
 import { Drawer } from "@mui/material";
 import './style.css'
-import useFullScreen from '../../utils/useFullScreen';
+import useFullScreen from '../../utils/useDeviceMobile';
 import Review from '../Reviews';
 import { IComment } from '../../interface/comments'
 

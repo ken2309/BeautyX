@@ -4,7 +4,7 @@ import { IComment } from "../../interface/comments";
 import formatDate from "../../utils/formatDate";
 import "./full-img.css";
 import icon from "../../constants/icon";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 
 interface IProps {
     open: boolean;

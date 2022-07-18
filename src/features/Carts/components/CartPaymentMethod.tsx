@@ -1,11 +1,11 @@
 import React from 'react';
 import { Drawer } from '@mui/material';
 import PaymentMethod from '../../CartPayment/components/PaymentMethod';
-import useFullScreen from '../../../utils/useFullScreen';
+import useDeviceMobile from '../../../utils/useDeviceMobile';
 
 function CartPaymentMethod(props: any) {
     const { open, setOpen, pmtMethod, setPmtMethod } = props;
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     return (
         <>
             <Drawer

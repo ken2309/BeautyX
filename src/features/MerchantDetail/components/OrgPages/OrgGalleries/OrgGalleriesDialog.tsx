@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dialog } from '@mui/material'
 import { Masonry } from '@mui/lab';
-import useFullScreen from '../../../../../utils/useFullScreen';
+import useFullScreen from '../../../../../utils/useDeviceMobile';
 import OrgGalleryItem from './OrgGalleryItem';
 import { Transition } from '../../../../../utils/transition';
 import icon from '../../../../../constants/icon';
