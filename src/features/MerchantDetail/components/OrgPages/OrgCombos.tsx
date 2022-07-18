@@ -39,8 +39,9 @@ function OrgCombos(props: IProps) {
         }
     }
     return (
+        <>
+        <>{totalItem === 0 && status === STATUS.SUCCESS && <EmptyRes title='Không có dịch vụ phù hợp!' />}</>
         <div className="org-services-cnt">
-            {totalItem === 0 && status === STATUS.SUCCESS && <EmptyRes title='Không có dịch vụ phù hợp!' />}
             <InfiniteScroll
                 dataLength={combos.length}
                 hasMore={true}
@@ -61,6 +62,7 @@ function OrgCombos(props: IProps) {
                 </ul>
             </InfiniteScroll>
         </div>
+        </>
     );
 }
 

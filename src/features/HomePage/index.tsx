@@ -36,7 +36,7 @@ export default function HomePage() {
         <div className="homepage">
             <ExtraFlatForm />
             {IS_MB ? <HeadHomeMobile /> : <Head IN_HOME={true} />}
-            <HomeTagsProducts />
+            {/* <HomeTagsProducts /> */}
             <Container>
                 <HomeBanner />
                 <HomeTags />
