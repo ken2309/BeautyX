@@ -323,6 +323,7 @@
         "my_services": "Gói dịch vụ"
     },
     "acc": {
+        "province": "Tỉnh / Thành",
         "scores": "Điểm",
         "surplus": "Số dư",
         "rank": "Hạng",
@@ -419,8 +420,8 @@
         "off_service": "Dịch vụ này chưa được kích hoạt bán hàng Online",
         "booking_now": "Đặt hẹn ngay",
         "instructions_terms": "Hướng dẫn & Điều khoản",
-        "guide":"Hướng dẫn sử dụng",
-        "edit":"Chỉnh sửa"
+        "guide": "Hướng dẫn sử dụng",
+        "edit": "Chỉnh sửa"
     },
     "Contact": {
         "success": "Đã nhận thông tin"
@@ -522,6 +523,6 @@
         "contact_width_me": "Kết nối với chúng tôi",
         "download_app": "Tải ứng dụng trên điện thoại",
         "address_company": "© 2018 MYSPA JSC - Công ty CP MYSPA - Lầu 4, Nam Giao building 261-263 Phan Xích Long, Phường 2, Quận Phú Nhuận, TP.HCM - GPĐKKD: 0314964245, cấp ngày: 03/04/2018, bởi Phòng Đăng ký kinh doanh – Sở kế hoạch và Đầu tư TP.HCM",
-        "policy":"Mọi hành vi sao chép đều là phạm pháp nếu không có sự cho phép bằng văn bản của chúng tôi"
+        "policy": "Mọi hành vi sao chép đều là phạm pháp nếu không có sự cho phép bằng văn bản của chúng tôi"
     }
 }

@@ -296,6 +296,7 @@
         height: 32px;
         background-color: #eeedf2;
         border-radius: 100%;
+        z-index: 5;
     }
     .re-change-favorite img {
         right: 12px;

@@ -326,6 +326,7 @@
     "acc": {
         "scores": "Scores",
         "surplus": "Surplus",
+        "province": "Province",
         "rank": "Rank",
         "my_profiles": "My profiles",
         "update_acc": "Fully update personal information to make the account better security",
