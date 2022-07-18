@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Dialog } from "@mui/material";
 import HeadMobile from "../../../../features/HeadMobile";
 import { Transition } from "../../../../utils/transition";
@@ -10,43 +10,44 @@ import GuideItem from "./Components/GuideItem";
 import icon from "../../../../constants/icon";
 import Slider from "react-slick";
 import "./style.css";
+import { AppContext } from "../../../../context/AppProvider";
 
 function AccountGuide(props: any) {
     const { open } = props;
+    const { t } = useContext(AppContext);
     const step = [
         {
-            title: "Tìm kiếm/ lựa chọn sản phẩm dịch vụ spa, salon yêu thích",
+            title: `${t("account_guide.ac_gui_title1")}`,
             img: [
                 {
-                    desc: "Bộ lọc danh mục",
+                    desc: `${t("account_guide.ac_gui_desc1")}`,
                     url: step1,
                 },
             ],
         },
         {
-            title: "Thanh toán sản phẩm dịch vụ",
+            title: `${t("account_guide.ac_gui_title2")}`,
             img: [
                 {
-                    desc: "Kiểm tra giỏ hàng",
+                    desc: `${t("account_guide.ac_gui_desc2")}`,
                     url: step2,
                 },
             ],
         },
         {
-            title: `Đặt hẹn ngay khi thanh toán
-      hoặc Đặt hẹn sau tại "Gói dịch vụ"`,
+            title: `${t("account_guide.ac_gui_title3")}`,
             img: [
                 {
-                    desc: 'Chọn button “Đặt hẹn ngay" để đặt hẹn sau khi thanh toán',
+                    desc: `${t("account_guide.ac_gui_desc3")}`,
                     url: step3,
                 },
             ],
         },
         {
-            title: `Đến cơ sở trải nghiệm và đánh giá dịch vụ`,
+            title: `${t("account_guide.ac_gui_title4")}`,
             img: [
                 {
-                    desc: "Lưu trữ thông tin và nhắc hẹn khi đến lịch",
+                    desc: `${t("account_guide.ac_gui_desc4")}`,
                     url: step4,
                 },
             ],
@@ -71,7 +72,7 @@ function AccountGuide(props: any) {
 
     return (
         <Dialog open={open} fullScreen TransitionComponent={Transition}>
-            <HeadMobile title="Hướng dẫn sử dụng" />
+            <HeadMobile title={`${t("account_guide.ac_gui_tutorial")}`} />
             <div className="guided-section-content">
                 {step.map((item, index) => (
                     <GuideItem

@@ -36,7 +36,7 @@ function OrgItem(props: IProps) {
             state: org,
         });
     };
-
+    const [open, setOpen] = useState(false);
     const [openPopupMap, setOpenPopupMap] = useState(false);
 
     const handleFavoriteOrg = (org: any) => {
@@ -51,7 +51,6 @@ function OrgItem(props: IProps) {
             history.push("/sign-in?1");
         }
     };
-    const [open, setOpen] = useState(false);
     const handleOpenMap = () => {
         if (org?.branches.length > 0) {
             // open lit branch
@@ -163,7 +162,7 @@ function OrgItem(props: IProps) {
                             >
                                 <img src={icon.mapMarkerOrg} alt="" />
                                 <span className="re-change-map-text">
-                                    Bản đồ
+                                    {t("pr.map")}
                                 </span>
                                 {org?.branches.length > 0 ? (
                                     <>
@@ -243,7 +242,9 @@ function OrgItem(props: IProps) {
             </div>
             <Drawer open={open} anchor="bottom" onClose={() => setOpen(false)}>
                 <div className="se-branch__drawer">
-                    <p className="se-branch__title">Danh sách chi nhánh</p>
+                    <p className="se-branch__title">
+                        {t("Mer_de.list_branch")}
+                    </p>
                     <div className="se-branch__list">
                         {org?.branches.map((item: any, index: number) => (
                             <div key={index} className="se-branch__item">

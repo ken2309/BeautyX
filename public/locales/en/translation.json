@@ -26,7 +26,7 @@
         "not_noti": "You don't have any notifications"
     },
     "Bottom": {
-        "appointment": "Appo",
+        "appointment": "Appointment",
         "home": "Home",
         "account": "Account",
         "search": "Search"
@@ -184,6 +184,7 @@
         "no_result": "No results found for"
     },
     "cart": {
+        "into_money": "Into money",
         "cart": "CART",
         "warning": "Warning",
         "warning_text": "To facilitate the appointment booking process, customers only selected to pay for products/services in the same business",
@@ -522,5 +523,17 @@
         "download_app": "Download the app on your phone",
         "address_company": "© 2018 MYSPA JSC - MYSPA Joint Stock Company - 4th floor, Nam Giao building 261-263 Phan Xich Long, Ward 2, Phu Nhuan District, HCMC - Business license: 0314964245, issued date: 03/04/2018, by Phong Dang business registration – Ho Chi Minh City Department of Planning and Investment",
         "policy": "Any copying is illegal without our written permission"
+    },
+    "account_guide": {
+        "ac_gui_step": "Step",
+        "ac_gui_tutorial": "User manual",
+        "ac_gui_title1": "Search/select your favorite spa and salon products and services",
+        "ac_gui_title2": "Payment for products and services",
+        "ac_gui_title3": "Book an appointment at checkout or Book an appointment later at \"Service Package\"",
+        "ac_gui_title4": "Visit the facility to experience and evaluate the service",
+        "ac_gui_desc1": "Category filter",
+        "ac_gui_desc2": "Check cart",
+        "ac_gui_desc3": "Select the button \"Make an appointment now\" to book an appointment after payment",
+        "ac_gui_desc4": "Store information and remind appointments when scheduled"
     }
 }

@@ -13,7 +13,7 @@
         "my_codes": "Danh sách mã ưu đãi",
         "settings": "Cài đặt",
         "support": "Hỗ trợ",
-        "sign_out": "Đăng xuất",
+        "sign_out": "Đăng xuất khỏi trái đất",
         "back": "Trở lại",
         "noti": "Thông báo",
         "mark_all_as_viewed": "Đánh dấu tất cả là đã xem",
@@ -184,6 +184,7 @@
         "no_result": "Không tìm tháy kết quả cho"
     },
     "cart": {
+        "into_money": "Thành tiền",
         "cart": "GIỎ HÀNG",
         "warning": "Lưu ý",
         "warning_text": "Để thuận lơi cho khâu đặt hẹn, quý khách hàng chỉ được chọn thanh toán sản phẩm/dịch vụ trong cùng một doanh nghiệp",
@@ -421,7 +422,8 @@
         "booking_now": "Đặt hẹn ngay",
         "instructions_terms": "Hướng dẫn & Điều khoản",
         "guide": "Hướng dẫn sử dụng",
-        "edit": "Chỉnh sửa"
+        "edit": "Chỉnh sửa",
+        "distance": "Cách bạn"
     },
     "Contact": {
         "success": "Đã nhận thông tin"
@@ -524,5 +526,17 @@
         "download_app": "Tải ứng dụng trên điện thoại",
         "address_company": "© 2018 MYSPA JSC - Công ty CP MYSPA - Lầu 4, Nam Giao building 261-263 Phan Xích Long, Phường 2, Quận Phú Nhuận, TP.HCM - GPĐKKD: 0314964245, cấp ngày: 03/04/2018, bởi Phòng Đăng ký kinh doanh – Sở kế hoạch và Đầu tư TP.HCM",
         "policy": "Mọi hành vi sao chép đều là phạm pháp nếu không có sự cho phép bằng văn bản của chúng tôi"
+    },
+    "account_guide": {
+        "ac_gui_step": "Bước",
+        "ac_gui_tutorial": "Hướng dẫn sử dụng",
+        "ac_gui_title1": "Tìm kiếm / lựa chọn sản phẩm dịch vụ spa, salon yêu thích",
+        "ac_gui_title2": "Thanh toán sản phẩm dịch vụ",
+        "ac_gui_title3": "Đặt hẹn ngay khi thanh toán hoặc Đặt hẹn sau tại \"Gói dịch vụ\"",
+        "ac_gui_title4": "Đến cơ sở trải nghiệm và đánh giá dịch vụ",
+        "ac_gui_desc1": "Bộ lọc danh mục",
+        "ac_gui_desc2": "Kiểm tra giỏ hàng",
+        "ac_gui_desc3": "Chọn button \"Đặt hẹn ngay\" để đặt hẹn sau khi thanh toán",
+        "ac_gui_desc4": "Lưu trữ thông tin và nhắc hẹn khi đến lịch"
     }
 }
