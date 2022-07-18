@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import icon from "../../../constants/icon";
@@ -9,11 +9,10 @@ import {
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
 import Slider from "react-slick";
-import useFullScreen from "../../../utils/useDeviceMobile";
+import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { AppContext } from "../../../context/AppProvider";
 const PrevButton = (props: any) => {
     const { onClick } = props;
-    const { t } = useContext(AppContext);
 
     return (
         <button onClick={onClick} className="detail-btn__prev">
@@ -50,7 +49,7 @@ export default function ServiceDetailLeft(props: any) {
     const { USER } = useSelector((state: any) => state.USER);
     const [nav1, setNav1] = useState();
     const [nav2, setNav2] = useState();
-    const is_mb = useFullScreen();
+    const is_mb = useDeviceMobile();
 
     const onFavorite = async () => {
         if (USER) {

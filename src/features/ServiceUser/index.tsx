@@ -17,17 +17,13 @@ function ServicesUser(props: any) {
     const dispatch = useDispatch();
     const { t } = useContext(AppContext);
     const fullScreen = useFullScreen();
-    const { services, status, totalItem, page } = useSelector(
-        (state: any) => state.ORDER.ORDER_SERVICES
-    );
+    const { services, status, totalItem, page } = useSelector((state: any) => state.ORDER.ORDER_SERVICES);
 
     const callServicesUser = () => {
         if (status !== STATUS.SUCCESS) {
-            dispatch(
-                fetchAsyncOrderServices({
-                    page: 1,
-                })
-            );
+            dispatch(fetchAsyncOrderServices({
+                page: 1
+            }))
         }
     };
     useEffect(() => {

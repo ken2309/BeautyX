@@ -46,58 +46,52 @@ function MerchantDetail() {
     const { status_pr } = PRODUCTS_SPECIAL;
     const ORG_DISCOUNTS = useSelector((state: any) => state.ORG_DISCOUNTS);
 
-    const { org, status, tab, GALLERIES } = ORG;
-    const callOrgDetail = () => {
-        if (sub_domain !== org?.subdomain) {
-            dispatch(fetchAsyncOrg(sub_domain));
-            dispatch(onActiveTab(1));
-            dispatch(onSetEmptyChooseCatePr());
-            dispatch(onSetEmptyChooseCate());
-            //dispatch(clearServices())
-            //dispatch(clearProducts())
-        }
-    };
-    const callGalleriesOrg_DiscountsOrg = () => {
-        if (status === STATUS.SUCCESS) {
-            if (
-                GALLERIES.org_id !== org?.id ||
-                GALLERIES.status !== STATUS.SUCCESS
-            ) {
-                dispatch(fetchOrgGalleries(org?.id));
-            }
-            if (
-                ORG_DISCOUNTS.org_id !== org?.id ||
-                ORG_DISCOUNTS.DISCOUNTS.status_list !== STATUS.SUCCESS
-            ) {
-                const values = { org_id: org?.id };
-                dispatch(fetchAsyncOrgDiscounts(values));
-            }
-        }
-    };
-    const callOrgSpecial = () => {
-        if (status === STATUS.SUCCESS) {
-            const values = {
-                org_id: org?.id,
-                page: 1,
-                special: true,
-                isEnable: org?.is_momo_ecommerce_enable && true,
-            };
-            dispatch(onSaveOrgId(org?.id));
-            if (org?.id !== org_id || status_ser !== STATUS.SUCCESS) {
-                dispatch(fetchAsyncServicesSpecial(values));
-            }
-            if (org?.id !== org_id || status_pr !== STATUS.SUCCESS) {
-                dispatch(fetchProductsSpecial(values));
-            }
-        }
-    };
-    useEffect(() => {
-        callGalleriesOrg_DiscountsOrg();
-        callOrgSpecial();
-    }, [status]);
-    useEffect(() => {
-        callOrgDetail();
-    }, [sub_domain]);
+  const { org, status, tab, GALLERIES } = ORG;
+  const callOrgDetail = () => {
+    if (sub_domain !== org?.subdomain) {
+      dispatch(fetchAsyncOrg(sub_domain))
+      dispatch(onActiveTab(1))
+      dispatch(onSetEmptyChooseCatePr())
+      dispatch(onSetEmptyChooseCate())
+      //dispatch(clearServices())
+      //dispatch(clearProducts())
+    }
+  }
+  const callGalleriesOrg_DiscountsOrg = () => {
+    if (status === STATUS.SUCCESS) {
+      if (GALLERIES.org_id !== org?.id || GALLERIES.status !== STATUS.SUCCESS) {
+        dispatch(fetchOrgGalleries(org?.id))
+      }
+      if (ORG_DISCOUNTS.org_id !== org?.id || ORG_DISCOUNTS.DISCOUNTS.status_list !== STATUS.SUCCESS) {
+        const values = { org_id: org?.id }
+        dispatch(fetchAsyncOrgDiscounts(values))
+      }
+    }
+  }
+  const callOrgSpecial = () => {
+    if (status === STATUS.SUCCESS) {
+      const values = {
+        org_id: org?.id,
+        page: 1,
+        special: true,
+        isEnable: org?.is_momo_ecommerce_enable && true
+      }
+      dispatch(onSaveOrgId(org?.id))
+      if (org?.id !== org_id || status_ser !== STATUS.SUCCESS) {
+        dispatch(fetchAsyncServicesSpecial(values));
+      }
+      if (org?.id !== org_id || status_pr !== STATUS.SUCCESS) {
+        dispatch(fetchProductsSpecial(values))
+      }
+    }
+  }
+  useEffect(() => {
+    callGalleriesOrg_DiscountsOrg()
+    callOrgSpecial()
+  }, [status])
+  useEffect(() => {
+    callOrgDetail()
+  }, [sub_domain])
 
     useEffect(() => {
         if (

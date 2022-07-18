@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import { AppContext } from "../../../context/AppProvider";
 
 interface IProps {
-    card_items: IServiceUser;
+    card_items: IServiceUser,
 }
 
 function TreatmentCardItem(props: IProps) {
@@ -38,8 +38,8 @@ function TreatmentCardItem(props: IProps) {
 
     return (
         <div
-            className="treat-card-item"
-            // style={enableCart === true ? { opacity: 0.6 } : {}}
+            className='treat-card-item'
+        // style={enableCart === true ? { opacity: 0.6 } : {}}
         >
             {card_items.appointments?.length === 0 && (
                 <div className="treat-card-item__dot"></div>

@@ -217,10 +217,37 @@ function OrgDetail(props: IProps) {
                                         </div>
                                     </div>
                                     <div className="org-mess-flo">
-                                        <div className="org-mess">
-                                            <span>Theo dõi</span>
+                                        <div
+                                            className="org-mess"
+                                            style={
+                                                org?.is_favorite
+                                                    ? {
+                                                          backgroundColor:
+                                                              "#e64d4a",
+                                                          border: "1px solid #e64d4a",
+                                                      }
+                                                    : {}
+                                            }
+                                            onClick={handleFavoriteOrg}
+                                        >
+                                            <span
+                                                style={
+                                                    org?.is_favorite
+                                                        ? {
+                                                              color: "#fff",
+                                                          }
+                                                        : {}
+                                                }
+                                            >
+                                                {org?.is_favorite
+                                                    ? t("Mer_de.flowing")
+                                                    : t("Mer_de.flow")}
+                                            </span>
                                         </div>
-                                        <div className="org-flo">
+                                        <div
+                                            onClick={() => onOpenChatOrg()}
+                                            className="org-flo"
+                                        >
                                             <span>Nhắn tin</span>
                                         </div>
                                     </div>

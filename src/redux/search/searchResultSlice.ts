@@ -106,6 +106,13 @@ const searchResultSlice = createSlice({
             state.RE_PRODUCTS.page = 1;
             state.RE_PRODUCTS.status = "";
         },
+        onToggleFavoriteOrg: (state, action) => {
+            const iIndex = state.RE_ORGS.orgs.findIndex(
+                (org: IOrganization) => org.id === action.payload
+            );
+            const favoriteOrg = state.RE_ORGS.orgs[iIndex].is_favorite;
+            state.RE_ORGS.orgs[iIndex].is_favorite = !favoriteOrg;
+        },
     },
     extraReducers: {
         [fetchAsyncOrgsByFilter.pending]: (state) => {
@@ -192,5 +199,6 @@ export const {
     onSetEmptyOrgs,
     onSetEmptyProducts,
     onSetEmptyServices,
+    onToggleFavoriteOrg,
 } = actions;
 export default searchResultSlice.reducer;

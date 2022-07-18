@@ -13,7 +13,7 @@ import OrgServiceItem from "./OrgServiceItem";
 import { STATUS } from "../../../../redux/status";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { AppContext } from "../../../../context/AppProvider";
-import EmptyRes from "../../../EmptyRes";
+import EmptyRes from '../../../EmptyRes';
 import { LoadingServices } from "../../../../components/LoadingSketion";
 import LoadingMore from "../../../../components/LoadingMore";
 
@@ -144,12 +144,8 @@ function OrgServices(props: IProps) {
                 )}
 
             <div className="org-services-cnt__right">
-                {page === 1 && status_ser !== STATUS.SUCCESS && (
-                    <LoadingServices width="20%" />
-                )}
-                {totalItem === 0 && status === STATUS.SUCCESS && (
-                    <EmptyRes title="Không có dịch vụ phù hợp!" />
-                )}
+                {page === 1 && status_ser !== STATUS.SUCCESS && <LoadingServices width="20%" />}
+                {totalItem === 0 && status === STATUS.SUCCESS && <EmptyRes title='Không có dịch vụ phù hợp!' />}
                 <InfiniteScroll
                     dataLength={services.length}
                     hasMore={true}

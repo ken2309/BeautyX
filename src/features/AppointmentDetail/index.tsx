@@ -80,7 +80,7 @@ function AppointmentDetail(props: any) {
                                                 item.image
                                                     ? item?.image_url
                                                     : datingList?.organization
-                                                          ?.image_url
+                                                        ?.image_url
                                             }
                                             onError={(e) => onErrorImg(e)}
                                             alt=""

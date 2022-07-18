@@ -44,11 +44,11 @@ import { AppContext } from "../../context/AppProvider";
 // end
 function DiscountDetail() {
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
-    const { t } = useContext(AppContext);
     const IS_MB = useDeviceMobile();
     const discount: IDiscountPar = DISCOUNT.discount;
     const status_detail = DISCOUNT.status;
     const is_mobile = useDeviceMobile();
+    const { t } = useContext(AppContext);
     const [open, setOpen] = useState({
         NOW: true,
         open: false,

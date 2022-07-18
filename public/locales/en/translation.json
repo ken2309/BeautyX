@@ -336,11 +336,6 @@
         "default": "Default",
         "change_pass": "Change the password",
         "save": "Save",
-        "set_as_default_address": "Set as default address",
-        "pain": "Pain",
-        "all": "All",
-        "date_created": "Date created",
-        "history": "History",
         "set_default_address": "Set default address"
     },
     "order": {
@@ -524,6 +519,7 @@
         "beautyx_is_on": "BeautyX is on",
         "contact_width_me": "Contact width me",
         "download_app": "Download the app on your phone",
-        "address_company": "© 2018 MYSPA JSC - MYSPA Joint Stock Company - 4th floor, Nam Giao building 261-263 Phan Xich Long, Ward 2, Phu Nhuan District, HCMC - Business license: 0314964245, issued date: 03/04/2018, by Phong Dang business registration – Ho Chi Minh City Department of Planning and Investment"
+        "address_company": "© 2018 MYSPA JSC - MYSPA Joint Stock Company - 4th floor, Nam Giao building 261-263 Phan Xich Long, Ward 2, Phu Nhuan District, HCMC - Business license: 0314964245, issued date: 03/04/2018, by Phong Dang business registration – Ho Chi Minh City Department of Planning and Investment",
+        "policy": "Any copying is illegal without our written permission"
     }
 }

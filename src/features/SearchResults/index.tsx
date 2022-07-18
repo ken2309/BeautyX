@@ -148,17 +148,35 @@ function SearchResults(props: any) {
                 title={`${t("Search_result.text_result")} : ${searchKey}`}
             />
             {IS_MB ? (
-                <HeadMobile
-                    element={
-                        valueTab === "3" && (
-                            <button onClick={() => setOpenFilter(true)}>
-                                <img src={icon.settingsSliders} alt="" />
-                            </button>
-                        )
-                    }
-                    onBackFunc={onGoBack}
-                    title="Kết quả tìm kiếm"
-                />
+                // <HeadMobile
+                //     element={
+                //         valueTab === "3" && (
+                //             <button onClick={() => setOpenFilter(true)}>
+                //                 <img src={icon.settingsSliders} alt="" />
+                //             </button>
+                //         )
+                //     }
+                //     onBackFunc={onGoBack}
+                //     title="Kết quả tìm kiếm"
+                // />
+                <div className="flex-row-sp se-re-header-mb">
+                    <div className="flex-row-sp input">
+                        <div className="flex-row">
+                            <img onClick={()=>history.push("/homepage")} src={icon.chevronLeft} alt="" />
+                            <span onClick={onGoBack} >{searchKey}</span>
+                        </div>
+                        <img 
+                            onClick={onGoBack}
+                            src={icon.closeBlack} alt="" 
+                        />
+                    </div>
+                    <button 
+                        onClick={() => setOpenFilter(true)}
+                        className="filter"
+                    >
+                        <img src={icon.filterBlack} alt="" />
+                    </button>
+                </div>
             ) : (
                 <Head prev_url="/homepage" />
             )}
@@ -201,21 +219,22 @@ function SearchResults(props: any) {
                                 <>
                                     {IS_MB ? (
                                         <Drawer
-                                            anchor="right"
+                                            anchor="bottom"
                                             open={openFilter}
                                             onClose={() => setOpenFilter(false)}
                                         >
-                                            <div
-                                                style={{
-                                                    width: "80vw",
-                                                    height: "100vh",
-                                                }}
-                                            >
-                                                <FilterOrgs
-                                                    onApplyFilterOrgs={
-                                                        handleApplyFilterOrgs
-                                                    }
-                                                />
+                                            <div className="result-cont__mobile">
+                                                <div className="filter-orgs-wrap">
+                                                    <button
+                                                        onClick={() => setOpenFilter(false)}
+                                                        className="filter-orgs-cnt__head-btn"
+                                                    >
+                                                        <img src={icon.lineGray} alt="" />
+                                                    </button>
+                                                    <FilterOrgs
+                                                        onApplyFilterOrgs={handleApplyFilterOrgs}
+                                                    />
+                                                </div>
                                             </div>
                                         </Drawer>
                                     ) : (
@@ -295,36 +314,30 @@ function SearchResults(props: any) {
                                 ))}
                             </ul>
                         </div>
-                        {tab === 3 && (
+                        {tab === 3 &&
                             <>
-                                {IS_MB ? (
-                                    <Drawer
-                                        anchor="right"
-                                        open={openFilter}
-                                        onClose={() => setOpenFilter(false)}
-                                    >
-                                        <div
-                                            style={{
-                                                width: "80vw",
-                                                height: "100vh",
-                                            }}
+                                {
+                                    IS_MB ?
+                                        <Drawer
+                                            anchor="right"
+                                            open={openFilter}
+                                            onClose={() => setOpenFilter(false)}
                                         >
-                                            <FilterOrgs
-                                                onApplyFilterOrgs={
-                                                    handleApplyFilterOrgs
-                                                }
-                                            />
-                                        </div>
-                                    </Drawer>
-                                ) : (
-                                    <FilterOrgs
-                                        onApplyFilterOrgs={
-                                            handleApplyFilterOrgs
-                                        }
-                                    />
-                                )}
+                                            <div
+                                                style={{ width: "80vw", height: "100vh" }}
+                                            >
+                                                <FilterOrgs
+                                                    onApplyFilterOrgs={handleApplyFilterOrgs}
+                                                />
+                                            </div>
+                                        </Drawer>
+                                        :
+                                        <FilterOrgs
+                                            onApplyFilterOrgs={handleApplyFilterOrgs}
+                                        />
+                                }
                             </>
-                        )}
+                        }
                     </div>
                     <div className="se-re-cnt__right">
                         <div

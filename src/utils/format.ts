@@ -39,3 +39,16 @@ export const uniqueArr = (arr: any) => {
     }
     return newArr
 }
+export const formatRoundOrgCount = (count: number) => {
+    let countRound = ""
+    if (count <= 5) {
+        countRound = "5+"
+    } else if (count > 5 && count <= 10) {
+        countRound = "10+"
+    } else if (count > 10 && count <= 100) {
+        countRound = `${Math.ceil(count / 10) * 10}+`
+    } else if (count > 100 && count <= 1000) {
+        countRound = `${Math.ceil(count / 100) * 100}+`
+    }
+    return countRound
+}

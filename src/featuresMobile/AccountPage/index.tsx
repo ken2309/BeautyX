@@ -57,13 +57,13 @@ export default function AccountMobile() {
         setSign(false);
         dispatch(logoutUser());
         dispatch(onClearApps());
-        dispatch(onSetStatusServicesUser());
-        history.push("/homepage");
-        localStorage.removeItem("_WEB_TK");
-        window.sessionStorage.removeItem("_WEB_TK");
-    };
+        dispatch(onSetStatusServicesUser())
+        history.push("/homepage")
+        localStorage.removeItem('_WEB_TK')
+        window.sessionStorage.removeItem('_WEB_TK')
+    }
     const onChangeLanguage = (item: any) => {
-        setLanguage(item.code);
+        setLanguage(item.code)
         i18next.changeLanguage(item.code);
     };
     return (
@@ -192,28 +192,21 @@ export default function AccountMobile() {
                             <img src={icon.arownAcc} alt="" />
                         </div>
                         <div ref={refUserGuide} className="item-bot__wrap ">
-                            {languages.map((i, index) => (
-                                <div
-                                    onClick={() => onChangeLanguage(i)}
-                                    key={index}
-                                    className="item-bot__item"
-                                >
-                                    <img
-                                        style={{ width: "32px" }}
-                                        src={i.icon}
-                                        alt=""
-                                    />
-                                    <span
-                                        style={
-                                            i.code === language
-                                                ? { color: "var(--purple)" }
-                                                : {}
-                                        }
+                            {
+                                languages.map((i, index) => (
+                                    <div
+                                        onClick={() => onChangeLanguage(i)}
+                                        key={index} className="item-bot__item"
                                     >
-                                        {i.title}
-                                    </span>
-                                </div>
-                            ))}
+                                        <img
+                                            style={{ width: "32px" }}
+                                            src={i.icon}
+                                            alt=""
+                                        />
+                                        <span style={i.code === language ? { color: "var(--purple)" } : {}} >{i.title}</span>
+                                    </div>
+                                ))
+                            }
                         </div>
                     </li>
                     {FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX && (

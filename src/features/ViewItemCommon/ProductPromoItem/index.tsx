@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
-import "../ServicePromoItem/service-promo-item.css";
-import { IProductPromo } from "../../../interface/productPromo";
-import { Link } from "react-router-dom";
-import onErrorImg from "../../../utils/errorImg";
-import icon from "../../../constants/icon";
-import formatPrice from "../../../utils/formatPrice";
-import scrollTop from "../../../utils/scrollTop";
-import { formatRouterLinkProductPromo } from "../../../utils/formatRouterLink/formatRouter";
+import React, { useContext } from 'react';
+import '../ServicePromoItem/service-promo-item.css';
+import { IProductPromo } from '../../../interface/productPromo'
+import { Link } from 'react-router-dom';
+import onErrorImg from '../../../utils/errorImg';
+import icon from '../../../constants/icon';
+import formatPrice from '../../../utils/formatPrice';
+import scrollTop from '../../../utils/scrollTop';
+import { formatRouterLinkProductPromo } from '../../../utils/formatRouterLink/formatRouter';
 // ==== api tracking ====
-// import tracking from "../../../api/trackApi";
+//import tracking from "../../../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
@@ -45,7 +45,7 @@ function ProductPromoItem(props: IProps) {
                 />
                 <div className="ser-promo">
                     {product.discount_percent > 0 &&
-                    product.discount_percent < 50 ? (
+                        product.discount_percent < 50 ? (
                         <div className="ser-promo__percent">
                             {t("detail_item.off")}{" "}
                             {Math.round(product?.discount_percent)}%
@@ -92,8 +92,8 @@ function ProductPromoItem(props: IProps) {
                             {product?._geoDistance < 1000
                                 ? `${product?._geoDistance}(m)`
                                 : `${Math.round(
-                                      product?._geoDistance / 1000
-                                  )}(km)`}
+                                    product?._geoDistance / 1000
+                                )}(km)`}
                         </span>
                     </div>
                 ) : (

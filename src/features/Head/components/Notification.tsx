@@ -48,13 +48,11 @@ function Notification(props: any) {
                                     {t("Header.appointment_notice")}
                                 </p>
                                 <p className="no-box-item__text-content">
-                                    {`${t("Header.hello")}! ${
-                                        USER?.fullname
-                                    }, ${t("Header.today_you_have")}  ${
-                                        appsToday.length
-                                    } ${t("Header.appointment")}. ${t(
-                                        "Header.see_it_now"
-                                    )} `}
+                                    {`${t("Header.hello")}! ${USER?.fullname
+                                        }, ${t("Header.today_you_have")}  ${appsToday.length
+                                        } ${t("Header.appointment")}. ${t(
+                                            "Header.see_it_now"
+                                        )} `}
                                 </p>
                                 <p className="no-box-item__text-time">
                                     {t("Header.see_calendar")} {">>"}
@@ -62,8 +60,10 @@ function Notification(props: any) {
                             </div>
                         </div>
                     </li>
-                )}
-                {ORDER_SERVICES_NOT_BOOK_COUNT > 0 && (
+                )
+                }
+                {
+                    ORDER_SERVICES_NOT_BOOK_COUNT > 0 &&
                     <li onClick={() => history.push("/lich-hen?tab=2")}>
                         <div className="flex-row">
                             <img
@@ -86,7 +86,7 @@ function Notification(props: any) {
                             </div>
                         </div>
                     </li>
-                )}
+                }
             </ul>
             {/* <ButtonCus
                 width='fit-content'
