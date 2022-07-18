@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAsyncTags } from "../../../../../redux/Tags/tagsSlice";
 import "./homeTagsProducts.css";
@@ -8,7 +8,6 @@ export default function HomeTagsProducts() {
     const dispatch = useDispatch();
     const { TAGS } = useSelector((state: any) => state);
     const tags: ITag[] = TAGS.tags;
-    console.log("tags :>> ", tags);
     useEffect(() => {
         dispatch(fetchAsyncTags());
         // eslint-disable-next-line react-hooks/exhaustive-deps

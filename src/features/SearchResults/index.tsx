@@ -285,6 +285,7 @@ function SearchResults(props: any) {
                                 <TabOrgs
                                     keyword={searchKey}
                                     FILTER_ORGS_VAL={FILTER_ORGS_VAL}
+                                    changeStyle={true}
                                 />
                             </TabPanel>
                         </div>

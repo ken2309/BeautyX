@@ -105,6 +105,13 @@ const searchResultSlice = createSlice({
             state.RE_PRODUCTS.products = [];
             state.RE_PRODUCTS.page = 1;
             state.RE_PRODUCTS.status = ""
+        },
+        onToggleFavoriteOrg: (state, action) => {
+            const iIndex = state.RE_ORGS.orgs.findIndex((org: IOrganization) => (
+                org.id === action.payload
+            ))
+            const favoriteOrg = state.RE_ORGS.orgs[iIndex].is_favorite
+            state.RE_ORGS.orgs[iIndex].is_favorite = !favoriteOrg
         }
     },
     extraReducers: {
@@ -170,5 +177,5 @@ const searchResultSlice = createSlice({
     }
 })
 const { actions } = searchResultSlice;
-export const { onSetTabResult, onSetEmptyOrgs, onSetEmptyProducts, onSetEmptyServices } = actions;
+export const { onSetTabResult, onSetEmptyOrgs, onSetEmptyProducts, onSetEmptyServices, onToggleFavoriteOrg } = actions;
 export default searchResultSlice.reducer;
