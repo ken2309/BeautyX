@@ -22,7 +22,7 @@ import { onResetFilter, onSetOrgsEmpty } from "../../redux/filter/filterSlice";
 
 // ==== api tracking ====
 // import tracking from "../../api/trackApi";
-import HomeTagsProducts from "./Components/HomeTagsList/HomeTagsProducts";
+//import HomeTagsProducts from "./Components/HomeTagsList/HomeTagsProducts";
 // end
 export default function HomePage() {
     const IS_MB = useFullScreen();
@@ -36,7 +36,7 @@ export default function HomePage() {
         <div className="homepage">
             <ExtraFlatForm />
             {IS_MB ? <HeadHomeMobile /> : <Head IN_HOME={true} />}
-            <HomeTagsProducts />
+            {/* <HomeTagsProducts /> */}
             <Container>
                 <HomeBanner />
                 <HomeTags />
