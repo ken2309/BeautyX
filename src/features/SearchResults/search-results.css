@@ -115,6 +115,9 @@
 
 /* Mobile */
 @media only screen and (max-width: 1023px) {
+    .se-re-cnt .MuiTabPanel-root {
+        padding: 0;
+    }
     .se-re-header-mb {
         padding: 6px 12px;
         background-color: var(--white);
@@ -148,7 +151,7 @@
 
     .se-re-cnt {
         flex-direction: column;
-        margin-top: 48px;
+        margin-top: 54px;
         padding: 0 12px;
     }
 
@@ -189,12 +192,12 @@
 
     .se-re-cnt__right {
         width: 100%;
-        padding: 12px 0;
+        padding: 10px 0;
     }
 
     .re-ser-list li {
         width: 50%;
-        padding: 8px 4px;
+        padding: 8px 0px;
     }
 
     .re-ser-list__item {
