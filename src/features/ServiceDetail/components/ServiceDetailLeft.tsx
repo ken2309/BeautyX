@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import icon from "../../../constants/icon";
@@ -9,9 +9,11 @@ import {
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
 import Slider from "react-slick";
-import useFullScreen from "../../../utils/useFullScreen";
+import useDeviceMobile from "../../../utils/useDeviceMobile";
+import { AppContext } from "../../../context/AppProvider";
 const PrevButton = (props: any) => {
     const { onClick } = props;
+
     return (
         <button onClick={onClick} className="detail-btn__prev">
             <img
@@ -36,16 +38,17 @@ const NextButton = (props: any) => {
 };
 export default function ServiceDetailLeft(props: any) {
     const { org, service } = props;
-    
     const history = useHistory();
     const dispatch = useDispatch();
+    const { t } = useContext(AppContext);
+
     const percent = service
         ? Math.round(100 - (service.special_price / service?.price) * 100)
         : null;
     const { USER } = useSelector((state: any) => state.USER);
     const [nav1, setNav1] = useState();
     const [nav2, setNav2] = useState();
-    const is_mb = useFullScreen();
+    const is_mb = useDeviceMobile();
 
     const onFavorite = async () => {
         if (USER) {
@@ -181,14 +184,14 @@ export default function ServiceDetailLeft(props: any) {
                 <div className="service-detail__mobile-mid">
                     <img src={icon.alarmClock} alt="" />
                     <p className="service-detail__mobile-duration">
-                        {service.duration} phút
+                        {service.duration} {t("detail_item.minute")}
                     </p>
                 </div>
 
                 <div className="service-detail__mobile-bottom">
                     {service?.special_price > 0 && (
                         <div className="service-detail__mobile-percent">
-                            Giảm {percent}%
+                            {t("detail_item.off")} {percent}%
                         </div>
                     )}
                     <div className="service-detail__mobile-price">

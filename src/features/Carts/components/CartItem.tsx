@@ -7,7 +7,7 @@ import {
     descItem,
     removeItem,
     ascItem,
-    onClearPrevCartItem
+    onClearPrevCartItem,
 } from "../../../redux/cartSlice";
 import { useDispatch } from "react-redux";
 import icon from "../../../constants/icon";
@@ -17,59 +17,65 @@ import { useHistory } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import onErrorImg from "../../../utils/errorImg";
 import PopupDiscountQuantity from "../../Cart/components/PopupDiscountQuantity";
-import useFullScreen from "../../../utils/useFullScreen";
 import {
     SwipeableList,
     SwipeableListItem,
     SwipeAction,
     TrailingActions,
     Type,
-} from 'react-swipeable-list';
-import 'react-swipeable-list/dist/styles.css';
+} from "react-swipeable-list";
+import "react-swipeable-list/dist/styles.css";
 import {
     formatRouterLinkDiscount,
     formatRouterLinkProduct,
-    formatRouterLinkService
+    formatRouterLinkService,
 } from "../../../utils/formatRouterLink/formatRouter";
 
 // ==== api tracking ====
-import tracking from "../../../api/trackApi";
+// import tracking from "../../../api/trackApi";
 // end
 // google tag event
-import { GoogleTagPush, GoogleTagEvents } from '../../../utils/dataLayer';
-// end 
+import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
+import useDeviceMobile from "../../../utils/useDeviceMobile";
+// end
 interface IProps {
     inPayment?: boolean;
     cartItem: any;
-    org?: any,
-    setOpenBranch?: any,
-    openBranch?: any,
+    org?: any;
+    setOpenBranch?: any;
+    openBranch?: any;
 }
 
 function CartItem(props: IProps) {
     const { cartItem, inPayment, org, setOpenBranch, openBranch } = props;
     const [open, setOpen] = useState(false);
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const dispatch = useDispatch();
     const history = useHistory();
     const [process, setProcess] = useState(0);
     const [openConfirm, setOpenConfirm] = useState(false);
     const handleConfirm = () => {
         if (!org || org?.id === cartItem.org_id) {
-            const action = checkConfirm({ ...cartItem, isConfirm: !cartItem.isConfirm });
+            const action = checkConfirm({
+                ...cartItem,
+                isConfirm: !cartItem.isConfirm,
+            });
             dispatch(action);
         } else {
-            dispatch(onClearPrevCartItem())
-            const action = checkConfirm({ ...cartItem, isConfirm: !cartItem.isConfirm });
+            dispatch(onClearPrevCartItem());
+            const action = checkConfirm({
+                ...cartItem,
+                isConfirm: !cartItem.isConfirm,
+            });
             dispatch(action);
         }
-        //clear branch choose 
+        //clear branch choose
         if (cartItem.org_id !== org?.id) {
             setOpenBranch({
                 ...openBranch,
                 branch: null,
-                org: cartItem.org
-            })
+                org: cartItem.org,
+            });
         }
     };
     const handleAscCart = () => {
@@ -95,19 +101,30 @@ function CartItem(props: IProps) {
         setOpenConfirm(true);
     };
     const goBackDetail = () => {
-        tracking.USER_ITEM_CLICK(cartItem.org.id, cartItem.id)
+        // tracking.USER_ITEM_CLICK(cartItem.org.id, cartItem.id);
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         if (cartItem.is_type === 1) {
-            const pathProductOb = formatRouterLinkProduct(cartItem.cart_item, cartItem.org)
+            const pathProductOb = formatRouterLinkProduct(
+                cartItem.cart_item,
+                cartItem.org
+            );
             history.push(pathProductOb);
         } else if (cartItem.is_type === 2) {
             if (cartItem.discount) {
                 const discount = cartItem.discount;
-                const discountItem = discount.items.find((val: any) => val.productable_id === cartItem.id);
-                const pathDiscountOb = formatRouterLinkDiscount(discount, discountItem)
+                const discountItem = discount.items.find(
+                    (val: any) => val.productable_id === cartItem.id
+                );
+                const pathDiscountOb = formatRouterLinkDiscount(
+                    discount,
+                    discountItem
+                );
                 history.push(pathDiscountOb);
             } else {
-                const pathServiceOb = formatRouterLinkService(cartItem.cart_item, cartItem.org)
+                const pathServiceOb = formatRouterLinkService(
+                    cartItem.cart_item,
+                    cartItem.org
+                );
                 history.push(pathServiceOb);
             }
         } else if (cartItem.is_type === 3) {
@@ -119,34 +136,43 @@ function CartItem(props: IProps) {
     const total = cartItem.price * cartItem.quantity;
     const discount_value = cartItem.discount?.discount_value;
     return (
-        <SwipeableList
-            type={Type.IOS}
-        >
+        <SwipeableList type={Type.IOS}>
             <SwipeableListItem
                 className="re-cart-item-cnt"
                 trailingActions={trailingActions(handleRemoveItemCart)}
-                onSwipeProgress={progress => setProcess(progress)}
+                onSwipeProgress={(progress) => setProcess(progress)}
                 listType={Type.IOS}
             >
-                {
-                    cartItem?.discount &&
+                {cartItem?.discount && (
                     <div
-                        style={cartItem.isConfirm === false ? { opacity: 0.4 } : {}}
+                        style={
+                            cartItem.isConfirm === false ? { opacity: 0.4 } : {}
+                        }
                         className="flex-row re-cart-item__discount"
                     >
                         <span>{cartItem.discount?.coupon_code}</span>
-                        <img style={{ marginLeft: "4px" }} src={icon.cardDiscountWhite} alt="" />
+                        <img
+                            style={{ marginLeft: "4px" }}
+                            src={icon.cardDiscountWhite}
+                            alt=""
+                        />
                     </div>
-                }
+                )}
                 <div
-                    style={process > 15 ? { backgroundColor: "var(--grey)" } : {}}
+                    style={
+                        process > 15 ? { backgroundColor: "var(--grey)" } : {}
+                    }
                     className="flex-row-sp cart-item cart-item"
                 >
                     <div className="flex-row cart-item__name">
                         <div className="flex-row">
                             <Checkbox
                                 size="small"
-                                style={inPayment === true ? { display: "none" } : {}}
+                                style={
+                                    inPayment === true
+                                        ? { display: "none" }
+                                        : {}
+                                }
                                 sx={{
                                     color: "#7161BA",
                                     "&.Mui-checked": {
@@ -168,7 +194,10 @@ function CartItem(props: IProps) {
                                 alt=""
                             />
                         </div>
-                        <span onClick={goBackDetail} className="cart-item__name-text">
+                        <span
+                            onClick={goBackDetail}
+                            className="cart-item__name-text"
+                        >
                             {cartItem.name}
                         </span>
                     </div>
@@ -201,31 +230,52 @@ function CartItem(props: IProps) {
                         {cartItem.discount ? (
                             cartItem.quantity === 1 ? (
                                 <div
-                                    style={inPayment === true ? { width: "16.6%" } : {}}
+                                    style={
+                                        inPayment === true
+                                            ? { width: "16.6%" }
+                                            : {}
+                                    }
                                     className="flex-row cart-item__total"
                                 >
                                     {formatPrice(cartItem.price_discount)} đ
                                 </div>
                             ) : (
                                 <div
-                                    style={inPayment === true ? { width: "16.6%" } : {}}
+                                    style={
+                                        inPayment === true
+                                            ? { width: "16.6%" }
+                                            : {}
+                                    }
                                     className="flex-column cart-item__total"
                                 >
                                     <span>{formatPrice(total)}đ</span>
-                                    {!IS_MB && <span>-{formatPrice(discount_value)}đ</span>}
-                                    <span>{formatPrice(total - discount_value)}đ</span>
+                                    {!IS_MB && (
+                                        <span>
+                                            -{formatPrice(discount_value)}đ
+                                        </span>
+                                    )}
+                                    <span>
+                                        {formatPrice(total - discount_value)}đ
+                                    </span>
                                 </div>
                             )
                         ) : (
                             <div
-                                style={inPayment === true ? { width: "16.6%" } : {}}
+                                style={
+                                    inPayment === true ? { width: "16.6%" } : {}
+                                }
                                 className="flex-row cart-item__total"
                             >
-                                {formatPrice(cartItem.price * cartItem.quantity)} đ
+                                {formatPrice(
+                                    cartItem.price * cartItem.quantity
+                                )}{" "}
+                                đ
                             </div>
                         )}
                         <div
-                            style={inPayment === true ? { display: "none" } : {}}
+                            style={
+                                inPayment === true ? { display: "none" } : {}
+                            }
                             className="flex-row cart-item__control"
                         >
                             <ButtonCus
@@ -261,12 +311,9 @@ function CartItem(props: IProps) {
 
 export default CartItem;
 
-
 const trailingActions = (handleRemoveItemCart: any) => (
     <TrailingActions>
-        <SwipeAction
-            onClick={() => handleRemoveItemCart()}
-        >
+        <SwipeAction onClick={() => handleRemoveItemCart()}>
             <div className="re-cart-swipe-btn">
                 <button>
                     <img src={icon.trash} alt="" />

@@ -13,9 +13,17 @@
         "my_codes": "Danh sách mã ưu đãi",
         "settings": "Cài đặt",
         "support": "Hỗ trợ",
-        "sign_out": "Đăng xuất",
+        "sign_out": "Đăng xuất khỏi trái đất",
         "back": "Trở lại",
-        "noti": "Thông báo"
+        "noti": "Thông báo",
+        "mark_all_as_viewed": "Đánh dấu tất cả là đã xem",
+        "appointment_notice": "Thông báo lịch hẹn",
+        "hello": "Xin chào",
+        "today_you_have": "Hôm nay bạn có",
+        "appointment": "lịch hẹn",
+        "see_it_now": "Xem ngay nhé",
+        "see_calendar": "Xem lịch hẹn",
+        "not_noti": "Bạn không có thông báo nào!"
     },
     "Bottom": {
         "appointment": "Lịch hẹn",
@@ -94,7 +102,8 @@
         "appointment": "Lịch hẹn",
         "location": "Địa điểm",
         "trending": "Xu hướng",
-        "cate": "Danh mục"
+        "cate": "Danh mục",
+        "scan_qr": "Quét mã QR"
     },
     "Search_result": {
         "text_result": "kết quả tìm kiếm",
@@ -165,9 +174,17 @@
         "total": "Tổng cộng",
         "add_to_cart": "Thêm vào giỏ hàng",
         "added": "Đã thêm",
-        "to_cart": "vào giỏ hàng"
+        "to_cart": "vào giỏ hàng",
+        "end_of_use": "Hết lần sử dụng",
+        "service_used_evaluate": "Dịch vụ đã sử dụng | Đánh giá",
+        "service_has_expired": "Dịch vụ đã hết hạn",
+        "expiration_date": "Ngày hết hạn",
+        "unlimited": "Không giới hạn",
+        "map": "Bản đồ",
+        "no_result": "Không tìm tháy kết quả cho"
     },
     "cart": {
+        "into_money": "Thành tiền",
         "cart": "GIỎ HÀNG",
         "warning": "Lưu ý",
         "warning_text": "Để thuận lơi cho khâu đặt hẹn, quý khách hàng chỉ được chọn thanh toán sản phẩm/dịch vụ trong cùng một doanh nghiệp",
@@ -185,7 +202,9 @@
         "cancel": "Hủy",
         "delete_all": "Xóa tất cả",
         "payment_now": "Mua ngay",
-        "must_sign_in": "Vui lòng đăng nhập trước khi thanh toán"
+        "must_sign_in": "Vui lòng đăng nhập trước khi thanh toán",
+        "limit_item_discount": "Giá dịch vụ đã thay đổi vì bạn chọn nhiều hơn số lượng được áp dụng mã",
+        "order": "Đơn hàng"
     },
     "pm": {
         "payment": "THANH TOÁN",
@@ -217,7 +236,12 @@
         "order_fail": "Tạo đơn hàng thất bại",
         "agree": "Đã hiểu",
         "goto_home": "Về trang chủ",
-        "sale": "Giảm giá"
+        "sale": "Giảm giá",
+        "cancelled": "Đã hủy",
+        "code_orders": "Mã đơn hàng",
+        "see_details": "Xem chi tiết",
+        "product_service": "sản phẩm/dịch vụ",
+        "service_list": "Danh sách dịch vụ"
     },
     "url": {
         "home": "Trang-chu",
@@ -300,6 +324,7 @@
         "my_services": "Gói dịch vụ"
     },
     "acc": {
+        "province": "Tỉnh / Thành",
         "scores": "Điểm",
         "surplus": "Số dư",
         "rank": "Hạng",
@@ -312,6 +337,11 @@
         "default": "Mặc định",
         "change_pass": "Thay đổi mật khẩu",
         "save": "Lưu thay đổi",
+        "set_as_default_address": "Đặt làm địa chỉ mặc định",
+        "pain": "Đã thanh toán",
+        "all": "Tất cả",
+        "date_created": "Ngày tạo",
+        "history": "Lịch sử",
         "set_default_address": "Đặt làm địa chỉ mặc định"
     },
     "order": {
@@ -321,7 +351,9 @@
         "order_de": "Chi tiết đơn hàng",
         "time": "Thời gian",
         "view_org": "Xem doanh nghiệp",
-        "watch_info": "Xem thông tin"
+        "watch_info": "Xem thông tin",
+        "book": "Đặt lịch",
+        "appo_detail": "Chi tiết lịch hẹn"
     },
     "my_ser": {
         "business": "Doanh nghiệp",
@@ -350,8 +382,8 @@
         "rv_booked": "Bạn có thể xem lại dịch vụ đã đặt hẹn",
         "bk_fail_title": "Có lỗi xảy ra trong quá trình đặt hẹn",
         "code_err": "Mã lỗi",
-        "booking":"Đặt lịch",
-        "booking_his":"Lịch sử"
+        "booking": "Đặt lịch",
+        "booking_his": "Lịch sử"
     },
     "home_2": {
         "categories": "Danh mục",
@@ -369,7 +401,7 @@
         "beauty_places": "Địa điểm làm đẹp",
         "top_deal": "Top Deal Khủng",
         "top_selling_services": "Top Dịch Vụ Bán Chạy",
-        "favorite_places": "Địa điểm yêu thích",
+        "favorite_places": "Địa điểm bạn đã yêu thích",
         "suggestions_for_you": "Gợi ý dành cho bạn"
     },
     "se": {
@@ -389,8 +421,9 @@
         "off_service": "Dịch vụ này chưa được kích hoạt bán hàng Online",
         "booking_now": "Đặt hẹn ngay",
         "instructions_terms": "Hướng dẫn & Điều khoản",
-        "guide":"Hướng dẫn sử dụng",
-        "edit":"Chỉnh sửa"
+        "guide": "Hướng dẫn sử dụng",
+        "edit": "Chỉnh sửa",
+        "distance": "Cách bạn"
     },
     "Contact": {
         "success": "Đã nhận thông tin"
@@ -452,17 +485,58 @@
         "cancellation_policy": "Chính sách hủy",
         "policy_desc": "Không hoàn, huỷ hay thay đổi sau khi đã mua dịch vụ",
         "similar_service": "Dịch vụ tương tự",
+        "similar_product": "Sản phẩm tương tự",
         "close": "Đang đóng cửa",
         "open": "Đang mở cửa",
+        "updating": "Đang cập nhật",
         "minute": "phút",
         "not_evaluate": "Chưa có đánh giá nào",
+        "not_comment": "Chưa có bình luận nào",
         "see": "Xem",
         "sold": "Đã bán",
         "off": "Giảm",
         "write_a_comment": "Viết bình luận",
         "add": "Đã thêm",
         "to_cart": "Vào giỏ hàng",
-        "user_manual": "Hướng dẫ sử dụng",
-        "general_terms": "Điều khoản chung"
+        "user_manual": "Hướng dẫn sử dụng",
+        "general_terms": "Điều khoản chung",
+        "used": "Đã sử dụng",
+        "total": "Tổng",
+        "not_sale": "Sản phẩm này chưa được kích hoạt bán hàng Online",
+        "see_more": "Xem thêm"
+    },
+    "footer": {
+        "customer_support": "Hỗ trợ khách hàng",
+        "consultation_call_center": "Tổng đài tư vấn",
+        "customer_care_call_center": "Tổng đài CSKH",
+        "privacy_policy": "Chính sách bảo mật",
+        "return_and_refund": " Trả hàng và hoàn tiền",
+        "protect_the_interests_of_customers": "Bảo vệ quyền lợi khách hàng",
+        "myspa_company": "Công ty MYSPA",
+        "operating_regulations": "Quy định hoạt động",
+        "general_rules": "Quy định chung",
+        "commodity_trading_regulations": "Quy định giao dịch hàng hóa",
+        "payment_process": "Quy trình thanh toán",
+        "secure_transaction": "Đảm bảo an toàn giao dịch",
+        "responsibility": "Trách nhiệm",
+        "terms_and_commitments": "Điều khoản và cam kết",
+        "payment_method": "Phương thức thanh toán",
+        "beautyx_is_on": "BeautyX đã có mặt trên",
+        "contact_width_me": "Kết nối với chúng tôi",
+        "download_app": "Tải ứng dụng trên điện thoại",
+        "address_company": "© 2018 MYSPA JSC - Công ty CP MYSPA - Lầu 4, Nam Giao building 261-263 Phan Xích Long, Phường 2, Quận Phú Nhuận, TP.HCM - GPĐKKD: 0314964245, cấp ngày: 03/04/2018, bởi Phòng Đăng ký kinh doanh – Sở kế hoạch và Đầu tư TP.HCM",
+        "policy": "Mọi hành vi sao chép đều là phạm pháp nếu không có sự cho phép bằng văn bản của chúng tôi"
+    },
+    "account_guide": {
+        "ac_gui_step": "Bước",
+        "ac_gui_tutorial": "Hướng dẫn sử dụng",
+        "ac_gui_title1": "Tìm kiếm / lựa chọn sản phẩm dịch vụ spa, salon yêu thích",
+        "ac_gui_title2": "Thanh toán sản phẩm dịch vụ",
+        "ac_gui_title3": "Đặt hẹn ngay khi thanh toán hoặc Đặt hẹn sau tại \"Gói dịch vụ\"",
+        "ac_gui_title4": "Đến cơ sở trải nghiệm và đánh giá dịch vụ",
+        "ac_gui_desc1": "Bộ lọc danh mục",
+        "ac_gui_desc2": "Kiểm tra giỏ hàng",
+        "ac_gui_desc3": "Chọn button \"Đặt hẹn ngay\" để đặt hẹn sau khi thanh toán",
+        "ac_gui_desc4": "Lưu trữ thông tin và nhắc hẹn khi đến lịch"
     }
 }

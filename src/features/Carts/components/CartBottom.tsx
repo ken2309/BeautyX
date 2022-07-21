@@ -1,23 +1,23 @@
 import React, { useContext, useState } from "react";
 import { Container } from "@mui/material";
 //import icon from '../../../constants/icon';
-import ButtonLoading from '../../../components/ButtonLoading';
-import formatPrice from '../../../utils/formatPrice';
-import { cartReducer } from '../../../utils/cart/cartReducer';
-import { useSelector } from 'react-redux';
-import order from '../../../api/orderApi';
-import { useHistory } from 'react-router-dom';
-import { identity, pickBy } from 'lodash';
-import Notification from '../../../components/Notification';
+import ButtonLoading from "../../../components/ButtonLoading";
+import formatPrice from "../../../utils/formatPrice";
+import { cartReducer } from "../../../utils/cart/cartReducer";
+import { useSelector } from "react-redux";
+import order from "../../../api/orderApi";
+import { useHistory } from "react-router-dom";
+import { identity, pickBy } from "lodash";
+import Notification from "../../../components/Notification";
 import AlertSnack from "../../../components/AlertSnack";
 // ==== api tracking ====
-import tracking from "../../../api/trackApi";
+// import tracking from "../../../api/trackApi";
 import { formatProductList } from "../../../utils/tracking";
 import { AppContext } from "../../../context/AppProvider";
 // end
 function CartBottom(props: any) {
     const { DATA_CART, DATA_PMT } = props;
-    const {t} = useContext(AppContext);
+    const { t } = useContext(AppContext);
     const [openAlertSnack, setOpenAlertSnack] = useState({
         title: "",
         open: false,
@@ -46,21 +46,36 @@ function CartBottom(props: any) {
     const pramsOrder = {
         user_address_id: DATA_PMT.address?.id,
         branch_id: DATA_PMT.branch?.id,
-        payment_method_id: DATA_PMT.payment_method_id ? DATA_PMT.payment_method_id : DATA_PMT.pmtMethod?.id,
+        payment_method_id: DATA_PMT.payment_method_id
+            ? DATA_PMT.payment_method_id
+            : DATA_PMT.pmtMethod?.id,
         // payment_method_id: 5,
-        products: products.map((item: any) => { return { id: item.id, quantity: item.quantity } }),
-        services: services.map((item: any) => { return { id: item.id, quantity: item.quantity } }),
-        combos: combos.map((item: any) => { return { id: item.id, quantity: item.quantity } }),
+        products: products.map((item: any) => {
+            return { id: item.id, quantity: item.quantity };
+        }),
+        services: services.map((item: any) => {
+            return { id: item.id, quantity: item.quantity };
+        }),
+        combos: combos.map((item: any) => {
+            return { id: item.id, quantity: item.quantity };
+        }),
         coupon_code: listCouponCode.length > 0 ? listCouponCode : [],
     };
 
     async function handlePostOrder() {
         //setLoading(true)
         try {
-            tracking.PAY_CONFIRM_CLICK(DATA_PMT.org.id, formatProductList(pramsOrder.products))
-            const response = await order.postOrder(DATA_PMT.org.id, pickBy(pramsOrder, identity));
-            const state_payment = await response.data.context
-            const transaction_uuid = state_payment.payment_gateway.transaction_uuid;
+            // tracking.PAY_CONFIRM_CLICK(
+            //     DATA_PMT.org.id,
+            //     formatProductList(pramsOrder.products)
+            // );
+            const response = await order.postOrder(
+                DATA_PMT.org.id,
+                pickBy(pramsOrder, identity)
+            );
+            const state_payment = await response.data.context;
+            const transaction_uuid =
+                state_payment.payment_gateway.transaction_uuid;
             if (response.data.context.status !== "CANCELED") {
                 history.push({
                     pathname: `/trang-thai-don-hang/`,
@@ -98,29 +113,31 @@ function CartBottom(props: any) {
                 setOpenAlertSnack({
                     ...openAlertSnack,
                     open: true,
-                    title: 'Chưa có địa chỉ giao hàng !'
-                })
+                    title: "Chưa có địa chỉ giao hàng !",
+                });
             } else {
-                handlePostOrder()
+                handlePostOrder();
             }
-        }
-        else if (!pramsOrder.payment_method_id) {
+        } else if (!pramsOrder.payment_method_id) {
             setOpenAlertSnack({
                 ...openAlertSnack,
                 open: true,
-                title: 'Bạn Chưa chọn phương thức thanh toán!'
-            })
+                title: "Bạn Chưa chọn phương thức thanh toán!",
+            });
         }
-    }
+    };
     return (
         <div className="re-cart-bottom">
             <AlertSnack
                 title={openAlertSnack.title}
                 open={openAlertSnack.open}
                 status="FAIL"
-                onClose={() => setOpenAlertSnack({
-                    ...openAlertSnack, open: false
-                })}
+                onClose={() =>
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: false,
+                    })
+                }
             />
             <Container>
                 <div className="re-cart-bottom__cnt">

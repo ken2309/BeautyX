@@ -88,6 +88,10 @@ html {
     margin-top: 24px;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
 .flex-row {
     display: flex;
     align-items: center;

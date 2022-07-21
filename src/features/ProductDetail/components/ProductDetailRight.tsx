@@ -17,7 +17,7 @@ import {
     onFavoriteOrg,
 } from "../../../redux/org/orgSlice";
 import PopupSuccess from "../../PopupSuccess";
-import useFullScreen from "../../../utils/useFullScreen";
+import useFullScreen from "../../../utils/useDeviceMobile";
 import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
 import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
 import { AppContext } from "../../../context/AppProvider";
@@ -166,7 +166,9 @@ function ProductDetailRight(props: IProps) {
                     <div className="flexX-gap-8">
                         {product?.special_price > 0 && percent !== 0 && (
                             <div className="detail-right__percent">
-                                <p>Giảm {percent}%</p>
+                                <p>
+                                    {`${t("detail_item.off")}`} {percent}%
+                                </p>
                             </div>
                         )}
                         <div className="detail-right__price">
@@ -204,12 +206,14 @@ function ProductDetailRight(props: IProps) {
             {(product?.is_momo_ecommerce_enable === false ||
                 org?.is_momo_ecommerce_enable === false) && (
                 <span className="detail-right__no">
-                    Sản phẩm này chưa được kích hoạt bán hàng Online
+                    {t("detail_item.not_sale")}
                 </span>
             )}
             <div className="detail-right__bottom">
                 <div className="bottom-quantity">
-                    <p className="bottom-quantity__text">Số lượng:</p>
+                    <p className="bottom-quantity__text">
+                        {t("detail_item.quantity")}:
+                    </p>
                     <div className="bottom-quantity__wrap">
                         <button
                             onClick={onDescQuantity}
@@ -239,7 +243,7 @@ function ProductDetailRight(props: IProps) {
                                 onClick={onBuyNow}
                                 className="bottom-addCart bottom-buy__now"
                             >
-                                <p>Mua ngay</p>
+                                <p>{t("cart.payment_now")}</p>
                             </div>
                         ) : (
                             <div
@@ -250,7 +254,7 @@ function ProductDetailRight(props: IProps) {
                                     src={icon.ShoppingCartSimpleWhite}
                                     alt=""
                                 />
-                                <p>Thêm vào giỏ hàng</p>
+                                <p>{t("detail_item.add_cart")}</p>
                             </div>
                         )}
                     </div>
@@ -266,7 +270,7 @@ function ProductDetailRight(props: IProps) {
                                     : { opacity: "0.4", cursor: "not-allowed" }
                             }
                         >
-                            <p>Mua ngay</p>
+                            <p>{t("cart.payment_now")}</p>
                         </div>
                         <div
                             style={
@@ -279,7 +283,7 @@ function ProductDetailRight(props: IProps) {
                             className="bottom-addCart"
                         >
                             <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                            <p>Thêm vào giỏ hàng</p>
+                            <p>{t("detail_item.add_cart")}</p>
                         </div>
                     </div>
                 )}
@@ -287,7 +291,7 @@ function ProductDetailRight(props: IProps) {
             <PopupSuccess
                 popup={popupSuccess}
                 setPopup={setPopupSuccess}
-                title={`Đã thêm ${product.product_name} vào giỏ hàng`}
+                title={`Đã thêm ${product?.product_name} vào giỏ hàng`}
             />
         </div>
     );

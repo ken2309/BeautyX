@@ -281,8 +281,13 @@
     grid-gap: 0 4px;
     padding: 0 10px;
 }
-.service-detail .evaluate-item:not(:last-child) {
+
+.evaluate-item__wrap {
+    display: flex;
+}
+.evaluate-item__wrap .evaluate-item:first-child {
     border-right: 1px solid gray;
+    border-left: 1px solid gray;
 }
 
 .service-detail .evaluate-item p {
@@ -673,6 +678,15 @@
 }
 
 @media only screen and (max-width: 1023px) {
+    .service-detail .detail-right__evaluate {
+        flex-direction: column;
+        align-items: flex-start;
+        grid-gap: 4px 0;
+        margin: 4px 0 4px -10px;
+    }
+    .service-detail .evaluate-item:first-child {
+        border-right: 0;
+    }
     .detail-left__slider-nav {
         display: none;
     }
@@ -844,6 +858,8 @@
         background-color: #fff;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         grid-gap: 0 8px;
+        border-radius: 16px 16px 0 0 !important;
+        overflow: hidden;
     }
 
     .service-detail .service-detail__bottom button {
@@ -884,7 +900,7 @@
         padding: 0;
     }
 
-    .MuiDrawer-paper {
+    .css-9emuhu-MuiPaper-root-MuiDrawer-paper {
         border-radius: 16px 16px 0 0;
     }
 
@@ -914,6 +930,9 @@
         height: 100%;
         object-fit: cover;
     }
+    .active-mb .detail-right__head-info {
+        width: 100%;
+    }
 
     .active-mb .detail-right__head {
         display: flex;
@@ -934,6 +953,9 @@
         font-size: 16px;
         line-height: 24px;
         width: 100%;
+    }
+    .active-mb .service-detail__right {
+        margin-top: 12px;
     }
 
     .active-mb .service-detail__right .detail-right__price span:nth-child(1) {

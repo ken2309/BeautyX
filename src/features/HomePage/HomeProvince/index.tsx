@@ -5,6 +5,7 @@ import { AppContext } from "../../../context/AppProvider";
 import { IProvince } from "../../../interface/provinces";
 import scrollTop from "../../../utils/scrollTop";
 import HomeTitle from "../Components/HomeTitle";
+import { formatRoundOrgCount } from "../../../utils/format";
 
 function HomeProvince(props: any) {
     const { t } = useContext(AppContext);
@@ -43,8 +44,8 @@ function HomeProvince(props: any) {
                             <div className="province-item-cnt">
                                 <span>{item.name}</span>
                                 <span>
-                                    {item.organizations_count +
-                                        item.branches_count}{" "}
+                                    {formatRoundOrgCount(item.organizations_count +
+                                        item.branches_count)}{" "}
                                     {t("home_2.beauty_places")}{" "}
                                 </span>
                             </div>

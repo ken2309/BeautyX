@@ -1,7 +1,7 @@
 import React from 'react';
 import { EXTRA_FLAT_FORM } from '../../api/extraFlatForm';
 import { FLAT_FORM_TYPE } from '../../rootComponents/flatForm'
-import useFullScreen from '../../utils/useFullScreen';
+import useFullScreen from '../../utils/useDeviceMobile';
 
 interface IProps {
       title: string | any

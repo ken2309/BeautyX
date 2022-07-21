@@ -1,39 +1,42 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import HeadTitle from '../HeadTitle';
-import Head from '../Head';
-import './cart-status.css';
-import { Container } from '@mui/material';
-import useCountDown from '../../utils/useCountDown';
-import { useLocation } from 'react-router-dom';
-import paymentGatewayApi from '../../api/paymentGatewayApi';
-import { useDispatch, useSelector } from 'react-redux';
-import PaymentQr from './components/PaymentQr';
-import PaymentInfo from './components/PaymentInfo';
-import PaymentConfirm from './components/PaymentConfirm';
-import useGetMessageTiki from '../../rootComponents/useGetMessageTiki';
-import apointmentApi from '../../api/apointmentApi';
-import HeadMobile from '../HeadMobile';
-import useFullScreen from '../../utils/useFullScreen';
-import Notification from '../../components/Notification/index';
-import { useHistory } from 'react-router-dom';
-import { clearByCheck } from '../../redux/cartSlice';
-import { onClearOrder } from '../../redux/order/orderSlice';
-import { ICart } from '../../interface/cart'
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import HeadTitle from "../HeadTitle";
+import Head from "../Head";
+import "./cart-status.css";
+import { Container } from "@mui/material";
+import useCountDown from "../../utils/useCountDown";
+import { useLocation } from "react-router-dom";
+import paymentGatewayApi from "../../api/paymentGatewayApi";
+import { useDispatch, useSelector } from "react-redux";
+import PaymentQr from "./components/PaymentQr";
+import PaymentInfo from "./components/PaymentInfo";
+import PaymentConfirm from "./components/PaymentConfirm";
+import useGetMessageTiki from "../../rootComponents/useGetMessageTiki";
+import apointmentApi from "../../api/apointmentApi";
+import HeadMobile from "../HeadMobile";
+import Notification from "../../components/Notification/index";
+import { useHistory } from "react-router-dom";
+import { clearByCheck } from "../../redux/cartSlice";
+import { onClearOrder } from "../../redux/order/orderSlice";
+import { ICart } from "../../interface/cart";
 
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
 import { formatProductList } from "../../utils/tracking";
-import { onAddServicesNoBookCount, onSetStatusServicesUser } from '../../redux/order/orderSlice';
+import {
+    onAddServicesNoBookCount,
+    onSetStatusServicesUser,
+} from "../../redux/order/orderSlice";
+import useDeviceMobile from "../../utils/useDeviceMobile";
 // end
 const timerRender = [0];
-const ORDER_STATUS = ['PENDING', 'PAID', 'CANCELED_BY_USER']
+const ORDER_STATUS = ["PENDING", "PAID", "CANCELED_BY_USER"];
 
 function CartPaymentStatus() {
     const sec = useCountDown(600);
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const dispatch = useDispatch();
-    const [orderStatus, setOrderStatus] = useState(ORDER_STATUS[0])
+    const [orderStatus, setOrderStatus] = useState(ORDER_STATUS[0]);
     const [openConf, setOpenConf] = useState(false);
     const history = useHistory();
 
@@ -42,9 +45,9 @@ function CartPaymentStatus() {
         open: false,
         titleLeft: "",
         titleRight: "",
-        onClickLeft: () => { },
-        onClickRight: () => { }
-    })
+        onClickLeft: () => {},
+        onClickRight: () => {},
+    });
 
     const carts = useSelector((state: any) => state.carts);
     const list = carts.cartList.filter((item: any) => item.isConfirm === true);
@@ -53,7 +56,7 @@ function CartPaymentStatus() {
     const res: any = location?.state?.state_payment;
     const intervalRef = useRef<any>();
     const transaction_uuid = res?.payment_gateway?.transaction_uuid;
-    const action = location?.state?.actionAfter
+    const action = location?.state?.actionAfter;
     //listPayment from page buy now product, booking now
     const listPayment: ICart[] = location.state?.listPayment;
     const handlePostApp = async () => {
@@ -63,56 +66,56 @@ function CartPaymentStatus() {
             branch_id: action.branch,
             time_start: action.time_start,
             note: action.note,
-        }
+        };
         try {
             await apointmentApi.postAppointment(params, action.org_id);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
     const handleAfterOrder = () => {
         dispatch(clearByCheck());
-        dispatch(onAddServicesNoBookCount())
-        dispatch(onSetStatusServicesUser())
-    }
+        dispatch(onAddServicesNoBookCount());
+        dispatch(onSetStatusServicesUser());
+    };
     const handleGetPaymentStatus = async (_status: boolean) => {
         try {
             const res_status = await paymentGatewayApi.getStatus({
                 paymentId: transaction_uuid,
-                status: _status
-            })
+                status: _status,
+            });
             const status = res_status.data.context.status;
             switch (status) {
                 case "PAID":
                     if (action) {
-                        handlePostApp()
+                        handlePostApp();
                     } else {
-                        handleAfterOrder()
+                        handleAfterOrder();
                     }
-                    dispatch(onClearOrder())
-                    setOrderStatus(status)
+                    dispatch(onClearOrder());
+                    setOrderStatus(status);
                     timerRender[0] = -1;
                     break;
                 case "PENDING":
-                    setOrderStatus(status)
+                    setOrderStatus(status);
                     break;
                 case "CANCELED_BY_USER":
-                    setOrderStatus(status)
+                    setOrderStatus(status);
                     timerRender[0] = -1;
-                    dispatch(onClearOrder())
+                    dispatch(onClearOrder());
                     break;
                 case "CANCELED":
-                    setOrderStatus(status)
+                    setOrderStatus(status);
                     timerRender[0] = -1;
-                    dispatch(onClearOrder())
+                    dispatch(onClearOrder());
                     break;
                 default:
                     break;
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
     const setInter = () => {
         timerRender[0] = 200;
         intervalRef.current = setInterval(() => {
@@ -133,32 +136,32 @@ function CartPaymentStatus() {
         }
     }, []);
     const handleCancelPayment = () => {
-        handleGetPaymentStatus(true)
-        timerRender[0] = -1
-    }
+        handleGetPaymentStatus(true);
+        timerRender[0] = -1;
+    };
     const handleCancelOrder = () => {
-        setOpenConf(true)
-    }
+        setOpenConf(true);
+    };
     useEffect(() => {
         if (sec === 0) {
-            handleCancelPayment()
+            handleCancelPayment();
         }
-    }, [sec])
+    }, [sec]);
     //cancel payment TIKI
     const onGoBackCart = () => {
         const payment_url = location?.pathname;
         history.push({
             pathname: "/gio-hang",
-            state: { payment_url }
-        })
-    }
+            state: { payment_url },
+        });
+    };
     const response = useGetMessageTiki();
     useMemo(() => {
         if (response?.requestId && response?.result.status === "fail") {
-            handleCancelPayment()
-            let title = `Thanh toán thất bại \n Bạn có muốn tiếp tục thanh toán không ?`
+            handleCancelPayment();
+            let title = `Thanh toán thất bại \n Bạn có muốn tiếp tục thanh toán không ?`;
             if (action) {
-                title = `Thanh toán và đặt hẹn thất bại`
+                title = `Thanh toán và đặt hẹn thất bại`;
             }
             setOpen({
                 ...open,
@@ -167,31 +170,35 @@ function CartPaymentStatus() {
                 titleLeft: "Về trang chủ",
                 titleRight: "Tiếp tục",
                 onClickLeft: () => history.push("/Home"),
-                onClickRight: () => onGoBackCart()
-            })
+                onClickRight: () => onGoBackCart(),
+            });
         }
-    }, [response])
-    const dataCartInfo = { res, orderStatus, sec, services }
+    }, [response]);
+    const dataCartInfo = { res, orderStatus, sec, services };
     return (
         <>
             <HeadTitle
-                title={orderStatus === "PAID" ? 'Thanh toán thành công' : 'Thanh toán đơn hàng'}
+                title={
+                    orderStatus === "PAID"
+                        ? "Thanh toán thành công"
+                        : "Thanh toán đơn hàng"
+                }
             />
-            {
-                IS_MB ?
-                    <HeadMobile handleCancelPayment={handleCancelPayment} title='Thanh toán' />
-                    : <Head
-                        handleCancelPayment={handleCancelPayment}
-                    />}
+            {IS_MB ? (
+                <HeadMobile
+                    handleCancelPayment={handleCancelPayment}
+                    title="Thanh toán"
+                />
+            ) : (
+                <Head handleCancelPayment={handleCancelPayment} />
+            )}
             <Container>
-                <div
-                    className='pm-st-cnt'
-                >
+                <div className="pm-st-cnt">
                     <PaymentQr
                         res={res}
                         sec={sec}
                         orderStatus={orderStatus}
-                    //pay_url={pay_url}
+                        //pay_url={pay_url}
                     />
                     <div className="pm-st-cnt__body">
                         <PaymentInfo

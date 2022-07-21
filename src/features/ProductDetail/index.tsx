@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./product.css";
 import Head from "../Head";
@@ -20,7 +20,7 @@ import ProductDetailLeft from "./components/ProductDetailLeft";
 import ProductDetailRight from "./components/ProductDetailRight";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 import icon from "../../constants/icon";
 import Review from "../Reviews";
 import HeadOrg from "../MerchantDetail/components/HeadOrg";
@@ -34,6 +34,7 @@ import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
 import ReviewsContainer from "../ReviewsContainer";
 import ModalLoad from "../../components/ModalLoad";
 import PageNotFound from "../../components/PageNotFound";
+import { AppContext } from "../../context/AppProvider";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();
@@ -47,6 +48,7 @@ function ProductDetail(props: any) {
         NOW: true,
         open: false,
     });
+    const { t } = useContext(AppContext);
     const product = PRODUCT.product;
     const org = ORG.org;
     const [value, setValue] = useState<any>(1);
@@ -56,10 +58,10 @@ function ProductDetail(props: any) {
     };
 
     let tabs = [
-        { id: 1, title: "Mô tả" },
-        { id: 2, title: "Đánh giá" },
-        { id: 3, title: "Doanh nghiệp" },
-        { id: 4, title: "Hướng dẫn & Điều khoản" },
+        { id: 1, title: t("pr.description") },
+        { id: 2, title: t("detail_item.evaluate") },
+        { id: 3, title: t("detail_item.merchant") },
+        { id: 4, title: t("detail_item.tutorial_rules") },
     ];
 
     let refDesc = useRef<any>();
@@ -166,11 +168,13 @@ function ProductDetail(props: any) {
         if (params?.org && params?.org) {
             dispatch(fetchAsyncProductDetail(values));
         }
-    }
+    };
 
     return (
         <div className="product">
-            {PRODUCT.status === STATUS.LOADING && <ModalLoad title="Đang tải" />}
+            {PRODUCT.status === STATUS.LOADING && (
+                <ModalLoad title="Đang tải" />
+            )}
             {PRODUCT.status === STATUS.FAIL && <PageNotFound />}
             <HeadTitle
                 title={
@@ -203,10 +207,10 @@ function ProductDetail(props: any) {
                                             className="service-detail__description"
                                         >
                                             <p>
-                                                Mô tả:{" "}
+                                                {`${t("detail_item.desc")}`}:{" "}
                                                 {product?.description
                                                     ? product.description
-                                                    : "Đang cập nhật"}
+                                                    : t("detail_item.desc")}
                                             </p>
                                         </div>
                                     </TabPanel>
@@ -227,7 +231,7 @@ function ProductDetail(props: any) {
                                                 }
                                             />
                                             {COMMENTS.comments &&
-                                                COMMENTS.comments.length >= 8 ? (
+                                            COMMENTS.comments.length >= 8 ? (
                                                 <div
                                                     style={{
                                                         justifyContent:
@@ -238,7 +242,9 @@ function ProductDetail(props: any) {
                                                     }}
                                                     className="seemore-cmt"
                                                 >
-                                                    <p>{"Xem tất cả >>"}</p>
+                                                    <p>{`${t(
+                                                        "detail_item.see_more"
+                                                    )}`}</p>
                                                 </div>
                                             ) : null}
                                             <ReviewsContainer
@@ -260,20 +266,22 @@ function ProductDetail(props: any) {
                                             <div className="service-detail__org">
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                        <>
-                                                            <p className="service-detail__title">
-                                                                Doanh nghiệp
-                                                            </p>
-                                                            <div className="service-detail__org-mb">
-                                                                <DetailOrgCard
-                                                                    org={org}
-                                                                />
-                                                            </div>
-                                                            <OrgInformation
+                                                    <>
+                                                        <p className="service-detail__title">
+                                                            {`${t(
+                                                                "detail_item.merchant"
+                                                            )}`}
+                                                        </p>
+                                                        <div className="service-detail__org-mb">
+                                                            <DetailOrgCard
                                                                 org={org}
                                                             />
-                                                        </>
-                                                    )}
+                                                        </div>
+                                                        <OrgInformation
+                                                            org={org}
+                                                        />
+                                                    </>
+                                                )}
                                             </div>
                                         </div>
                                     </TabPanel>
@@ -289,49 +297,53 @@ function ProductDetail(props: any) {
                     </div>
                     {/* service bottom buttom add cart*/}
                     <div className="service-detail__bottom">
-                        {
-                            (product?.is_momo_ecommerce_enable === false || org?.is_momo_ecommerce_enable === false)
-                                ?
-                                <span className="detail-right__no">
-                                    Sản phẩm này chưa được kích hoạt bán hàng Online
-                                </span>
-                                :
-                                <>
-                                    <button
-                                        onClick={() => {
-                                            setOpen({ NOW: true, open: true });
-                                        }}
-                                        style={{ backgroundColor: "var(--orange)" }}
-                                    >
-                                        <p>Mua ngay</p>
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            setOpen({ NOW: false, open: true });
-                                        }}
-                                        className="btn-addcart"
-                                    >
-                                        <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                                        <p>Thêm vào giỏ hàng</p>
-                                    </button>
-                                    {/* drawer service detail */}
-                                    <Drawer
-                                        open={open.open}
-                                        anchor="bottom"
-                                        onClose={() => setOpen({ ...open, open: false })}
-                                    >
-                                        <div className="active-mb">
-                                            <div className="service-detail">
-                                                <ProductDetailRight
-                                                    product={product}
-                                                    org={org}
-                                                    NOW={open.NOW}
-                                                />
-                                            </div>
+                        {product?.is_momo_ecommerce_enable === false ||
+                        org?.is_momo_ecommerce_enable === false ? (
+                            <span className="detail-right__no">
+                                {`${t("detail_item.not_sale")}`}
+                            </span>
+                        ) : (
+                            <>
+                                <button
+                                    onClick={() => {
+                                        setOpen({ NOW: true, open: true });
+                                    }}
+                                    style={{ backgroundColor: "var(--orange)" }}
+                                >
+                                    <p>{t("cart.payment_now")}</p>
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setOpen({ NOW: false, open: true });
+                                    }}
+                                    className="btn-addcart"
+                                >
+                                    <img
+                                        src={icon.ShoppingCartSimpleWhite}
+                                        alt=""
+                                    />
+                                    <p>{t("detail_item.add_cart")}</p>
+                                </button>
+                                {/* drawer service detail */}
+                                <Drawer
+                                    open={open.open}
+                                    anchor="bottom"
+                                    onClose={() =>
+                                        setOpen({ ...open, open: false })
+                                    }
+                                >
+                                    <div className="active-mb">
+                                        <div className="service-detail">
+                                            <ProductDetailRight
+                                                product={product}
+                                                org={org}
+                                                NOW={open.NOW}
+                                            />
                                         </div>
-                                    </Drawer>
-                                </>
-                        }
+                                    </div>
+                                </Drawer>
+                            </>
+                        )}
                     </div>
                 </div>
             </Container>

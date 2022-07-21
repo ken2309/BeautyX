@@ -21,8 +21,8 @@ import { fetchAsyncDiscountsUser } from "../../redux/USER/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { STATUS } from "../../redux/status";
 import AccountMobile from "../../featuresMobile/AccountPage";
-import useFullScreen from "../../utils/useFullScreen";
 import { fetchAsyncOrderCancel, fetchAsyncOrderPaid, onClearOrder } from "../../redux/order/orderSlice";
+import useDeviceMobile from "../../utils/useDeviceMobile";
 const routes = [
     {
         path: `/tai-khoan/phuong-thuc-thanh-toan`,
@@ -94,7 +94,7 @@ function Account() {
         callDiscountsUser();
         callOrders()
     }, []);
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     return (
         IS_MB ?
             <AccountMobile />

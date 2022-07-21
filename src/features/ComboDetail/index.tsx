@@ -24,22 +24,22 @@ import "../ProductDetail/product.css";
 import icon from "../../constants/icon";
 import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
 import HeadOrg from "../MerchantDetail/components/HeadOrg";
-import useFullScreen from "../../utils/useFullScreen";
 import {
     handleChangeScroll,
     handleScroll,
 } from "../ServiceDetail/onScrollChange";
 import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
 import ReviewsContainer from "../ReviewsContainer";
+import useDeviceMobile from "../../utils/useDeviceMobile";
 
 function ComboDetail() {
     const { t } = useContext(AppContext);
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const params: any = shareLink();
     const dispatch = useDispatch();
     const ORG = useSelector((state: any) => state.ORG);
     const { COMBO, COMMENTS } = useSelector((state: any) => state.COMBO);
-    const is_mobile = useFullScreen();
+    const is_mobile = useDeviceMobile();
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState<any>(1);
     const [openAllCmt, setOpenAllCmt] = useState(false);
@@ -48,15 +48,14 @@ function ComboDetail() {
     };
 
     let tabs = [
-        { id: 1, title: "Mô tả" },
-        { id: 2, title: "Đánh giá" },
-        { id: 3, title: "Doanh nghiệp" },
-        { id: 4, title: "Hướng dẫn & Điều khoản" },
+        { id: 1, title: t("pr.description") },
+        { id: 2, title: t("detail_item.evaluate") },
+        { id: 3, title: t("detail_item.merchant") },
+        { id: 4, title: t("detail_item.tutorial_rules") },
     ];
 
     const org = ORG.org;
     const combo = COMBO.combo;
-
     let refDesc = useRef<any>();
     let refReview = useRef<any>();
     let refMap = useRef<any>();
@@ -82,7 +81,6 @@ function ComboDetail() {
             behavior: "smooth",
         });
     };
-
     const callOrgDetail = () => {
         if (
             parseInt(params.org_id) !== ORG.org?.id ||
@@ -117,7 +115,6 @@ function ComboDetail() {
             dispatch(fetchAsyncCommentsCombo(values));
         }
     };
-
     useEffect(() => {
         window.addEventListener("scroll", () =>
             handleScroll(
@@ -146,7 +143,6 @@ function ComboDetail() {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     });
-
     useEffect(() => {
         callOrgDetail();
         callComboDetail();
@@ -181,7 +177,9 @@ function ComboDetail() {
                                             ref={refDesc}
                                             className="service-detail__description"
                                         >
-                                            <p>{"Đang cập nhật"}</p>
+                                            <p>{`${t(
+                                                "detail_item.updating"
+                                            )}`}</p>
                                         </div>
                                     </TabPanel>
                                     <TabPanel value={value}>
@@ -238,7 +236,9 @@ function ComboDetail() {
                                                     STATUS.SUCCESS && (
                                                     <>
                                                         <p className="service-detail__title">
-                                                            Doanh nghiệp
+                                                            {t(
+                                                                "detail_item.merchant"
+                                                            )}
                                                         </p>
                                                         <div className="service-detail__org-mb">
                                                             <DetailOrgCard
@@ -265,7 +265,7 @@ function ComboDetail() {
                     {/* btn add cart */}
                     <div className="service-detail__bottom">
                         <button>
-                            <p>Mua ngay</p>
+                            <p>{t("cart.payment_now")}</p>
                         </button>
                         <button
                             onClick={() => {
@@ -274,7 +274,7 @@ function ComboDetail() {
                             className="btn-addcart"
                         >
                             <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                            <p>Thêm vào giỏ hàng</p>
+                            <p>{t("detail_item.add_cart")}</p>
                         </button>
                     </div>
                     <Drawer

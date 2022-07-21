@@ -2,8 +2,6 @@ import { Rating } from "@mui/material";
 import React, { useContext } from "react";
 import icon from "../../../constants/icon";
 import { AppContext } from "../../../context/AppProvider";
-import { IComment } from "../../../interface/comments";
-import { IServiceUser } from "../../../interface/servicesUser";
 interface IProps {
     setValue?: any;
     data: any;
@@ -12,7 +10,6 @@ interface IProps {
 export default function ProductDetailRightReview(props: IProps) {
     const { setValue, data, comment } = props;
     const { t } = useContext(AppContext);
-
     return (
         <div className="detail-right__evaluate">
             <div
@@ -42,9 +39,15 @@ export default function ProductDetailRightReview(props: IProps) {
             </div>
             <div className="evaluate-item">
                 <img src={icon.ShoppingCartSimple} alt="" />
-                <p>
-                    {`${t("detail_item.sold")}`} {data.bought_count}
-                </p>
+                {data.bought_count > 0 ? (
+                    <>
+                        <p>
+                            {`${t("detail_item.sold")}`} {data.bought_count}
+                        </p>
+                    </>
+                ) : (
+                    <p>{`${t("detail_item.sold")} 76`}</p>
+                )}
             </div>
         </div>
     );

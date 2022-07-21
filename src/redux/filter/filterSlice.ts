@@ -64,8 +64,8 @@ const initialState: IInitialState = {
         tags: [],
         province: null,
         district: null,
-        min_price: null,
-        max_price: null,
+        min_price: "",
+        max_price: "",
         sort: null,
         location: null,
     },
@@ -110,6 +110,12 @@ const filterSlice = createSlice({
         },
         onSetOrgsDistrict: (state, action) => {
             state.FILTER_ORG.district = action.payload
+        },
+        onSetMinPrice:(state, action)=>{
+            state.FILTER_ORG.min_price = action.payload
+        },
+        onSetMaxPrice:(state, action)=>{
+            state.FILTER_ORG.max_price = action.payload
         },
         onResetFilter: (state) => {
             state.FILTER_ORG = {
@@ -175,6 +181,8 @@ export const {
     onSetSortOrg,
     onSetOrgsProvince,
     onSetOrgsDistrict,
+    onSetMinPrice,
+    onSetMaxPrice,
     onResetFilter,
     onSetOrgsEmpty,
     onSetFilterType

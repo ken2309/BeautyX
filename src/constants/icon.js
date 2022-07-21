@@ -191,6 +191,9 @@ import friendsPurple from "../assets/icon/friendsPurple.png";
 import plusPurple from "../assets/icon/plusPurple.svg";
 import exclamationPurple from "../assets/icon/exclamationPurple.svg";
 import settingsSlidersPurple from "../assets/icon/settingsSlidersPurple.svg";
+import lineGray from "../assets/icon/lineGray.svg";
+import filterBlack from "../assets/icon/filterBlack.svg";
+import closeBlack from "../assets/icon/closeBlack.svg";
 
 const icon = {
     payon,
@@ -381,6 +384,9 @@ const icon = {
     chatPurple,
     friendsPurple,
     plusPurple,
-    exclamationPurple
+    exclamationPurple,
+    lineGray,
+    filterBlack,
+    closeBlack
 };
 export default icon;

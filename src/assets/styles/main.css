@@ -720,8 +720,6 @@ title img {
 .homelogged-calendar {
     background-color: var(--purple);
     width: 100%;
-    margin-bottom: 32px;
-    /* margin-top: 84px; */
 }
 
 .homelogged-calendar__content {
@@ -762,11 +760,22 @@ title img {
     border-radius: 8px;
 }
 
-.my-ser-bot.my-ser-bot__up .my-ser-bot__check .my-ser-bot__check-right .choose-time .ser-choose-date .calendar {
+.my-ser-bot.my-ser-bot__up
+    .my-ser-bot__check
+    .my-ser-bot__check-right
+    .choose-time
+    .ser-choose-date
+    .calendar {
     padding: 16px;
 }
 
-.my-ser-bot.my-ser-bot__up .my-ser-bot__check .my-ser-bot__check-right .choose-time .ser-choose-date .calendar .week-container {
+.my-ser-bot.my-ser-bot__up
+    .my-ser-bot__check
+    .my-ser-bot__check-right
+    .choose-time
+    .ser-choose-date
+    .calendar
+    .week-container {
     padding: 0;
 }
 
@@ -1714,7 +1723,9 @@ title img {
     .homelogged-foryou .section-title {
         margin-bottom: 24px;
     }
-
+    .calendar-mounth__time {
+        font-size: 16px;
+    }
     .home .section-title {
         padding: 0 48px;
     }
@@ -1789,7 +1800,6 @@ title img {
     .homelogged-calendar__right .day-cell--faded {
         font-size: 14px;
     }
-
     .homelogged-calendar__right .day-cell {
         padding: 4px 0px;
     }
@@ -1965,7 +1975,7 @@ title img {
     .calendar-mounth {
         border-radius: 8px 8px 0 0;
         overflow: hidden;
-        margin-top: 20px;
+        margin-top: 36px;
     }
 
     .week-container {
@@ -2222,11 +2232,11 @@ title img {
     }
 
     .calendar-mounth__prev {
-        left: 60px;
+        left: 100px;
     }
 
     .calendar-mounth__next {
-        right: 60px;
+        right: 100px;
     }
 
     .homelogged-location .item-top {
@@ -2240,7 +2250,7 @@ title img {
         display: none;
     }
 
-    .home-banner__img>img {
+    .home-banner__img > img {
         border-radius: unset;
     }
 

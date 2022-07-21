@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import mediaApi from "../../api/mediaApi";
@@ -9,6 +9,7 @@ import {
     clearPrevState,
 } from "../../redux/commentSlice";
 import { STATUS } from "../../redux/status";
+import { AppContext } from "../../context/AppProvider";
 interface IProps {
     handleOnchange: any;
     comment: any;
@@ -30,8 +31,9 @@ function EvaluateInput(props: IProps) {
         setComment,
         changeStyle,
     } = props;
+    const { t } = useContext(AppContext);
     const dispatch = useDispatch();
-    const {image_url,status} = useSelector((state: any) => state.COMMENT);
+    const { image_url, status } = useSelector((state: any) => state.COMMENT);
     const history = useHistory();
     //handle post media
     const onChangeMedia = (e: any) => {
@@ -79,7 +81,7 @@ function EvaluateInput(props: IProps) {
                     <input
                         onChange={handleOnchange}
                         onKeyDown={handleKeyDown}
-                        placeholder="Viết bình luận"
+                        placeholder={`${t("detail_item.write_a_comment")} ...`}
                         type="text"
                         name={comment.text}
                         id="comment"
@@ -113,7 +115,7 @@ function EvaluateInput(props: IProps) {
                     </div>
                 </div>
             </div>
-            {image_url && status === STATUS.SUCCESS  && (
+            {image_url && status === STATUS.SUCCESS && (
                 <div className="evaluate-input__upload">
                     <img
                         src={image_url}
@@ -125,11 +127,7 @@ function EvaluateInput(props: IProps) {
                     </button>
                 </div>
             )}
-            {
-                status === STATUS.LOADING && (
-                    <BeautyLoading/>
-                )
-            }
+            {status === STATUS.LOADING && <BeautyLoading />}
         </>
     );
 }

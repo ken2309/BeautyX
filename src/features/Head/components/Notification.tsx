@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import icon from "../../../constants/icon";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { AppContext } from "../../../context/AppProvider";
 
 function Notification(props: any) {
     const { openNo } = props;
     const { USER } = useSelector((state: any) => state.USER);
     const { appsToday } = useSelector((state: any) => state.APP.APPS);
-    const { ORDER_SERVICES_NOT_BOOK_COUNT } = useSelector((state: any) => state.ORDER);
+    const { ORDER_SERVICES_NOT_BOOK_COUNT } = useSelector(
+        (state: any) => state.ORDER
+    );
     const history = useHistory();
+    const { t } = useContext(AppContext);
     return (
         <div
             style={
@@ -20,9 +24,9 @@ function Notification(props: any) {
             id="notification"
         >
             <div className="flex-row-sp hd-noti__head">
-                <span className="hd-noti__head-text">Thông báo</span>
+                <span className="hd-noti__head-text">{t("Header.noti")}</span>
                 <span className="flex-row hd-noti__head-count  cursor-pointer">
-                    Đánh dấu tất cả đã xem
+                    {t("Header.mark_all_as_viewed")}
                     <img
                         className="hd-noti__head-imgcheck"
                         src={icon.Check}
@@ -31,8 +35,7 @@ function Notification(props: any) {
                 </span>
             </div>
             <ul className="hd-noti__list">
-                {
-                    appsToday.length > 0 &&
+                {appsToday.length > 0 && (
                     <li onClick={() => history.push("/lich-hen?tab=1")}>
                         <div className="flex-row">
                             <img
@@ -42,18 +45,22 @@ function Notification(props: any) {
                             />
                             <div className="no-box-item__text">
                                 <p className="no-box-item__text-name">
-                                    Thông báo lịch hẹn
+                                    {t("Header.appointment_notice")}
                                 </p>
                                 <p className="no-box-item__text-content">
-                                    {USER?.fullname} ơi ! Hôm nay bạn có{" "}
-                                    {appsToday.length} lịch hẹn. Xem ngay nhé
+                                    {`${t("Header.hello")}! ${USER?.fullname
+                                        }, ${t("Header.today_you_have")}  ${appsToday.length
+                                        } ${t("Header.appointment")}. ${t(
+                                            "Header.see_it_now"
+                                        )} `}
                                 </p>
                                 <p className="no-box-item__text-time">
-                                    Xem lịch hẹn
+                                    {t("Header.see_calendar")} {">>"}
                                 </p>
                             </div>
                         </div>
                     </li>
+                )
                 }
                 {
                     ORDER_SERVICES_NOT_BOOK_COUNT > 0 &&
@@ -70,7 +77,8 @@ function Notification(props: any) {
                                 </p>
                                 <p className="no-box-item__text-content">
                                     {USER?.fullname} ơi ! Bạn có{" "}
-                                    {ORDER_SERVICES_NOT_BOOK_COUNT} gói dịch vụ chưa đặt hẹn. Xem ngay nhé
+                                    {ORDER_SERVICES_NOT_BOOK_COUNT} gói dịch vụ
+                                    chưa đặt hẹn. Xem ngay nhé
                                 </p>
                                 <p className="no-box-item__text-time">
                                     Xem dịch vụ

@@ -18,13 +18,17 @@ import SectionOrgs from "./SectionOrgs";
 import SectionServices from "./SectionServices";
 import SectionProducts from "./SectionProducts";
 import SectionEmpty from "./SectionEmpty";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 import SectionNull from "./SectionNull";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
 // ==== api tracking ====
-import tracking from "../../api/trackApi";
-import { onSetEmptyOrgs, onSetEmptyProducts, onSetEmptyServices } from "../../redux/search/searchResultSlice";
+// import tracking from "../../api/trackApi";
+import {
+    onSetEmptyOrgs,
+    onSetEmptyProducts,
+    onSetEmptyServices,
+} from "../../redux/search/searchResultSlice";
 // end
 
 function Search() {
@@ -64,7 +68,10 @@ function Search() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debounceDropDown = useCallback(
-        debounce((nextValue) => { callByFilter(nextValue); tracking.SEARCH_ON_CHANGE(nextValue) }, 1000),
+        debounce((nextValue) => {
+            callByFilter(nextValue);
+            // tracking.SEARCH_ON_CHANGE(nextValue);
+        }, 1000),
         []
     );
     const handleOnChangeInput = (e: any) => {
@@ -72,17 +79,17 @@ function Search() {
         dispatch(onSetKeyword(e.target.value));
     };
     const onGotoFilterResult = () => {
-        dispatch(onSetEmptyOrgs())
-        dispatch(onSetEmptyServices())
-        dispatch(onSetEmptyProducts())
+        dispatch(onSetEmptyOrgs());
+        dispatch(onSetEmptyServices());
+        dispatch(onSetEmptyProducts());
         history.push({
             pathname: "/ket-qua-tim-kiem/",
-            search: `?keyword=${keyword}`,
+            search: `?keyword=${keyword}?tab=1`,
             state: {
                 orgsTotal: ORGS.totalItem,
                 servicesTotal: SERVICES.totalItem,
-                productsTotal: PRODUCTS.totalItem
-            }
+                productsTotal: PRODUCTS.totalItem,
+            },
         });
     };
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -109,22 +116,40 @@ function Search() {
 
     // const handleTrack = (props:String,item_id?:String | Number) => {
     //     const result= {
-    //         store_id: ORGS.id, 
+    //         store_id: ORGS.id,
     //         product_id: item_id
     //     };
     //     tracking.SEARCH_RESULT_ITEM_CLICK(keyword,result,props,location_user)
     // }
     const listSection = [
         {
-            element: <SectionOrgs keyword={keyword} onGotoFilterResult={onGotoFilterResult} ORGS={ORGS} />,
+            element: (
+                <SectionOrgs
+                    keyword={keyword}
+                    onGotoFilterResult={onGotoFilterResult}
+                    ORGS={ORGS}
+                />
+            ),
             total: ORGS.totalItem,
         },
         {
-            element: <SectionProducts keyword={keyword} onGotoFilterResult={onGotoFilterResult} PRODUCTS={PRODUCTS} />,
+            element: (
+                <SectionProducts
+                    keyword={keyword}
+                    onGotoFilterResult={onGotoFilterResult}
+                    PRODUCTS={PRODUCTS}
+                />
+            ),
             total: PRODUCTS.totalItem,
         },
         {
-            element: <SectionServices keyword={keyword} onGotoFilterResult={onGotoFilterResult} SERVICES={SERVICES} />,
+            element: (
+                <SectionServices
+                    keyword={keyword}
+                    onGotoFilterResult={onGotoFilterResult}
+                    SERVICES={SERVICES}
+                />
+            ),
             total: SERVICES.totalItem,
         },
     ];
@@ -170,13 +195,19 @@ function Search() {
                                 className="search-cnt__keyword cursor-pointer"
                                 onClick={() => handleSearch()}
                             >
-                                {t("se.view_the_results_for")} <span>{keyword}</span>
+                                {t("se.view_the_results_for")}{" "}
+                                <span>{keyword}</span>
                             </p>
                             {listSectionDisplay.map((item, index) => (
                                 <div key={index}>{item.element}</div>
                             ))}
                         </div>
-                        <SectionNull keyword={keyword} ORGS={ORGS} SERVICES={SERVICES} PRODUCTS={PRODUCTS} />
+                        <SectionNull
+                            keyword={keyword}
+                            ORGS={ORGS}
+                            SERVICES={SERVICES}
+                            PRODUCTS={PRODUCTS}
+                        />
                     </>
                 ) : (
                     <div className="search-cnt__body">

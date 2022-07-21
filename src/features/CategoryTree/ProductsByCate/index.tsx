@@ -1,19 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react';
-import HeadMobile from '../../HeadMobile';
-import { fetProductsByCateChild, onClearProducts } from '../../../redux/CateTree/cateTreeSlice';
-import { STATUS } from '../../../redux/status'
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import ProductCateItem from './ProductCateItem';
-import { extraParamsUrl } from '../../../utils/extraParamsUrl';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import './style.css'
+import React from "react";
+import HeadMobile from "../../HeadMobile";
+import {
+    fetProductsByCateChild,
+    onClearProducts,
+} from "../../../redux/CateTree/cateTreeSlice";
+import { STATUS } from "../../../redux/status";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import ProductCateItem from "./ProductCateItem";
+import { extraParamsUrl } from "../../../utils/extraParamsUrl";
+import InfiniteScroll from "react-infinite-scroll-component";
+import "./style.css";
 
- // ==== api tracking ====
- import tracking from "../../../api/trackApi";
- // end
+// ==== api tracking ====
+//  import tracking from "../../../api/trackApi";
+// end
 
 function ProductsByCate(props: any) {
     const params: any = extraParamsUrl();
@@ -21,30 +24,35 @@ function ProductsByCate(props: any) {
     const { products, page, totalItem } = PRODUCTS;
     const dispatch = useDispatch();
     const callProducts = () => {
-        if (PRODUCTS.status !== STATUS.SUCCESS || params.keyword !== PRODUCTS.keyword) {
+        if (
+            PRODUCTS.status !== STATUS.SUCCESS ||
+            params.keyword !== PRODUCTS.keyword
+        ) {
             const values = {
                 page: 1,
-                keyword: params.keyword
-            }
-            dispatch(onClearProducts())
-            dispatch(fetProductsByCateChild(values))
+                keyword: params.keyword,
+            };
+            dispatch(onClearProducts());
+            dispatch(fetProductsByCateChild(values));
         }
-    }
+    };
     useEffect(() => {
-        callProducts()
-    }, [])
+        callProducts();
+    }, []);
     const onViewMore = () => {
         if (products.length >= 15 && products.length < totalItem) {
-            dispatch(fetProductsByCateChild({
-                keyword: params.keyword,
-                page: page + 1
-            }))
+            dispatch(
+                fetProductsByCateChild({
+                    keyword: params.keyword,
+                    page: page + 1,
+                })
+            );
         }
-    }
+    };
     return (
         <>
-            <HeadMobile title='Danh sách sản phẩm' />
-            <div className='pr-result-cnt'>
+            <HeadMobile title="Danh sách sản phẩm" />
+            <div className="pr-result-cnt">
                 <InfiniteScroll
                     dataLength={products.length}
                     hasMore={true}
@@ -52,19 +60,16 @@ function ProductsByCate(props: any) {
                     loader={<></>}
                 >
                     <ul className="pr-result-cnt__list">
-                        {
-                            products.map((item: any, index: any) => (
-                                <li key={index} 
-                                    onClick={
-                                        () => tracking.CATEGORY_TREE_ITEM_CLICK(PRODUCTS.CATE_CHILD.id,item.org_id,item.product_id)
-                                    }
-                                >
-                                    <ProductCateItem
-                                        item={item}
-                                    />
-                                </li>
-                            ))
-                        }
+                        {products.map((item: any, index: any) => (
+                            <li
+                                key={index}
+                                // onClick={
+                                //     () => tracking.CATEGORY_TREE_ITEM_CLICK(PRODUCTS.CATE_CHILD.id,item.org_id,item.product_id)
+                                // }
+                            >
+                                <ProductCateItem item={item} />
+                            </li>
+                        ))}
                     </ul>
                 </InfiniteScroll>
             </div>

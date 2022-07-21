@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Masonry } from '@mui/lab';
 import OrgGalleryItem from './OrgGalleryItem';
-import useFullScreen from '../../../../../utils/useFullScreen';
+import useFullScreen from '../../../../../utils/useDeviceMobile';
 import OrgGalleriesDialog from './OrgGalleriesDialog';
 
 function OrgGalleries() {

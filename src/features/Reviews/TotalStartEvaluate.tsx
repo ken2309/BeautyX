@@ -16,7 +16,7 @@ export default function TotalStartEvaluate(props: IProps) {
             <div className="evaluate-rating">
                 <div className="evaluate-rating__left">
                     <div className="evaluate-rating__total">
-                        <span>{item.rating}/</span>
+                        <span>{item.rating > 0 ? item.rating : 0}/</span>
                         <span>5</span>
                     </div>
                     <div className="evaluate-rating__start">
@@ -66,7 +66,10 @@ export default function TotalStartEvaluate(props: IProps) {
             {/* rating mobile */}
             <div className="evaluate-rating__mobile">
                 <div className="rating-left">
-                    <p className="rating-left__total">4.8</p>
+                    <div className="evaluate-rating__total rating-left__total">
+                        <span>{item.rating > 0 ? item.rating : 0}/</span>
+                        <span>5</span>
+                    </div>
                     <div className="rating-left__infor">
                         <div className="rating-left__start">
                             <Rating
@@ -88,7 +91,7 @@ export default function TotalStartEvaluate(props: IProps) {
                         onClick={openSeeMoreCmt}
                         className="rating-right__btn"
                     >
-                        <p>{"Xem tất cả"}</p>
+                        <p>{t("detail_item.see_more")}</p>
                     </button>
                 </div>
             </div>

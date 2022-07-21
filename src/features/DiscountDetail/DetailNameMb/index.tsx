@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AppContext } from "../../../context/AppProvider";
 import { IITEMS_DISCOUNT } from "../../../interface/discount";
 import formatPrice from "../../../utils/formatPrice";
 import DetailControl from "./DetailControl";
@@ -8,8 +9,15 @@ function DetailNameMb(props: any) {
     const { discount } = props;
     const discount_item_child: IITEMS_DISCOUNT = discount?.items[0];
     const detailDiscountItem = discount.productable;
-    const percent = Math.round(100 - discount_item_child.view_price / discount_item_child.productable.price * 100)
+    const percent = Math.round(
+        100 -
+            (discount_item_child.view_price /
+                discount_item_child.productable.price) *
+                100
+    );
     const [open, setOpen] = useState(false);
+    const { t } = useContext(AppContext);
+
     return (
         <>
             <div className="detail-name-mb">
@@ -17,14 +25,12 @@ function DetailNameMb(props: any) {
                     {detailDiscountItem?.service_name}
                 </div>
                 <div className="detail-name-mb__price">
-                    <span
-                        className="price-old"
-                    >
+                    <span className="price-old">
                         {formatPrice(discount_item_child.productable.price)}đ
                     </span>
                     <div className="flex-row price-sale">
                         <span>
-                            Giảm
+                            {`${t("detail_item.off")}`}
                             {percent}%
                         </span>
                         <span>
@@ -34,7 +40,7 @@ function DetailNameMb(props: any) {
                 </div>
                 <div className="detail-name-mb__add">
                     <button onClick={() => setOpen(true)}>
-                        Thêm vào giỏ hàng
+                        {t("detail_item.add_cart")}
                     </button>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./footer.css";
 import { Container } from "@mui/material";
 import { useHistory } from "react-router-dom";
@@ -6,23 +6,29 @@ import slugify from "../../utils/formatUrlString";
 import scrollTop from "../../utils/scrollTop";
 import img, { paymentMethod, social } from "../../constants/img";
 import icon from "../../constants/icon";
+import { AppContext } from "../../context/AppProvider";
 
 function Footer() {
     const url_map = `https://goo.gl/maps/dnGMKnfdeB91xCj7A`;
+    const { t } = useContext(AppContext);
     const data_footer = [
         {
             id: 1,
-            title: "Hỗ trợ khách hàng",
+            title: `${t("footer.customer_support")}`,
             items: [
                 {
                     id: 11,
-                    title: "Tổng đài tư vấn : 0899310908",
+                    title: `${t(
+                        "footer.consultation_call_center"
+                    )}: 0899310908`,
                     type: "NUMBER",
                     url: "0899310908",
                 },
                 {
                     id: 12,
-                    title: "Tổng đài CSKH : 0899855223",
+                    title: `${t(
+                        "footer.customer_care_call_center"
+                    )} : 0899855223`,
                     type: "NUMBER",
                     url: "0899855223",
                 },
@@ -38,16 +44,21 @@ function Footer() {
                     type: "EMAIL",
                     url: "support@myspa.vn",
                 },
-                { id: 15, title: "Chính sách bảo mật", type: "URL", url: "/" },
+                {
+                    id: 15,
+                    title: `${t("footer.privacy_policy")}`,
+                    type: "URL",
+                    url: "/",
+                },
                 {
                     id: 16,
-                    title: "Trả hàng và hoàn tiền",
+                    title: `${t("footer.return_and_refund")}`,
                     type: "URL",
                     url: "/",
                 },
                 {
                     id: 17,
-                    title: "Bảo vệ quyền lợi khách hàng",
+                    title: `${t("footer.protect_the_interests_of_customers")}`,
                     type: "URL",
                     url: "/",
                 },
@@ -55,37 +66,47 @@ function Footer() {
         },
         {
             id: 2,
-            title: "Công ty MYSPA",
+            title: `${t("footer.myspa_company")}`,
             items: [
-                { id: 20, title: "Quy định hoạt động", type: "URL", url: "/" },
-                { id: 21, title: "Quy định chung", type: "URL", url: "/" },
+                {
+                    id: 20,
+                    title: `${t("footer.operating_regulations")}`,
+                    type: "URL",
+                    url: "/",
+                },
+                {
+                    id: 21,
+                    title: `${t("footer.general_rules")}`,
+                    type: "URL",
+                    url: "/",
+                },
                 {
                     id: 22,
-                    title: "Quy định giao dịch hàng hóa",
+                    title: `${t("footer.commodity_trading_regulations")}`,
                     type: "URL",
                     url: "/",
                 },
                 {
                     id: 23,
-                    title: "Quy trình thanh toán",
+                    title: `${t("footer.payment_process")}`,
                     type: "URL",
                     url: "/",
                 },
                 {
                     id: 24,
-                    title: "Đảm bảo an toàn giao dịch",
+                    title: `${t("footer.secure_transaction")}`,
                     type: "URL",
                     url: "/",
                 },
                 {
                     id: 26,
-                    title: "Trách nhiệm",
+                    title: `${t("footer.responsibility")}`,
                     type: "URL",
                     url: "/",
                 },
                 {
                     id: 27,
-                    title: "Điều khoản và cam kết",
+                    title: `${t("footer.terms_and_commitments")}`,
                     type: "URL",
                     url: "/",
                 },
@@ -260,7 +281,7 @@ function Footer() {
                         <div className="wrap">
                             <>
                                 <div className="footer-cnt__item-title">
-                                    Phương thức thanh toán
+                                    {t("footer.payment_method")}
                                 </div>
                                 <div
                                     style={{ marginTop: "16px" }}
@@ -281,7 +302,7 @@ function Footer() {
                                     style={{ marginTop: "24px" }}
                                     className="footer-cnt__item-title"
                                 >
-                                    BeautyX đã có mặt trên
+                                    {t("footer.beautyx_is_on")}
                                 </div>
                                 <div className="social-list">
                                     <div className="flexX-gap-16">
@@ -301,7 +322,7 @@ function Footer() {
                         <div className="wrap">
                             <>
                                 <div className="footer-cnt__item-title">
-                                    Kết nối với chúng tôi
+                                    {t("footer.contact_width_me")}
                                 </div>
                                 <div className="social-list">
                                     {social_list.map(
@@ -325,7 +346,7 @@ function Footer() {
                                     style={{ marginTop: "24px" }}
                                     className="footer-cnt__item-title"
                                 >
-                                    Tải ứng dụng trên điện thoại
+                                    {t("footer.download_app")}
                                 </div>
                                 <div className="down-app">
                                     <div className="down-app__qr">
@@ -364,13 +385,13 @@ function Footer() {
                         )
                     }
                 >
-                    © 2018 MYSPA JSC - Công ty CP MYSPA - Lầu 4, Nam Giao
-                    building 261-263 Phan Xích Long, Phường 2, Quận Phú Nhuận,
-                    TP.HCM - GPĐKKD: 0314964245, cấp ngày: 03/04/2018, bởi Phòng
-                    Đăng ký kinh doanh – Sở kế hoạch và Đầu tư TP.HCM
+                    {t("footer.address_company")}
                 </div>
                 <div className="footer-copy-right">
-                    © Copyright 2022 Myspa | ProductX teams.
+                   {t("footer.policy")}
+                </div>
+                <div className="footer-copy-right">
+                    © Copyright Myspa | ProductX teams.
                 </div>
             </Container>
         </div>
