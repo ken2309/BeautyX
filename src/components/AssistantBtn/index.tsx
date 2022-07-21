@@ -34,7 +34,8 @@ export default function AssistantBtn() {
         history.push("/homepage");
     };
     const handleOpenSubiz = () => {
-        handleSubiz();
+        // handleSubiz();
+        window.open("https://m.me/beautyxdatlichlamdep/", "_blank");
     };
 
     const refOverLay: any = useRef();
