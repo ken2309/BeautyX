@@ -20,6 +20,7 @@ import { GoogleTagPush, GoogleTagEvents } from "../../../../utils/dataLayer";
 function ServiceItem(props: any) {
     const { t } = useContext(AppContext);
     const { serviceItem, org, itemsDiscountOrg } = props;
+    console.log(serviceItem)
     const service = serviceItem.productable;
     const IS_DISCOUNT = itemsDiscountOrg.find(
         (i: any) => i.productable_id === service?.id
@@ -48,7 +49,7 @@ function ServiceItem(props: any) {
         org,
         2,
         1,
-        service?.price,
+        serviceItem.base_price,
         IS_DISCOUNT?.discount,
         true
     );
@@ -155,7 +156,7 @@ function ServiceItem(props: any) {
                             </div>
                         ) : (
                             <span className="price">
-                                {formatPrice(service?.price)}đ
+                                {formatPrice(serviceItem.base_price)}đ
                             </span>
                         )}
                         <div className="flex-row item-button">
