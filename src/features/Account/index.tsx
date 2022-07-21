@@ -11,7 +11,6 @@ import Orders from "../Orders/index";
 import Product from "./components/HistoryProduct";
 import Service from "./components/HistoryService";
 import ComboList from "./components/HistoryCombo/components/Combolist";
-import AccountMb from "../../featuresMobile/Account";
 import OrderDetail from "../OrderDetail";
 import UserAddress from "./components/UserAddress/components/UserAddress";
 import UserDiscounts from "./components/UserDiscounts";
@@ -22,7 +21,8 @@ import { fetchAsyncDiscountsUser } from "../../redux/USER/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { STATUS } from "../../redux/status";
 import AccountMobile from "../../featuresMobile/AccountPage";
-import useFullScreen from "../../utils/useFullScreen";
+import { fetchAsyncOrderCancel, fetchAsyncOrderPaid, onClearOrder } from "../../redux/order/orderSlice";
+import useDeviceMobile from "../../utils/useDeviceMobile";
 const routes = [
     {
         path: `/tai-khoan/phuong-thuc-thanh-toan`,
@@ -68,16 +68,33 @@ function Account() {
     ) => props.pageComponent;
     const dispatch = useDispatch();
     const { DISCOUNTS_USER } = useSelector((state: any) => state.USER);
+    const { ORDER_CANCEL, ORDER } = useSelector((state: any) => state.ORDER);
     const { status_discount } = DISCOUNTS_USER;
     const callDiscountsUser = () => {
         if (status_discount !== STATUS.SUCCESS) {
             dispatch(fetchAsyncDiscountsUser({ page: 1 }));
         }
     };
+    const callOrders = () => {
+        if (ORDER.status !== STATUS.SUCCESS) {
+            dispatch(onClearOrder())
+            dispatch(fetchAsyncOrderPaid({
+                page: 1,
+                status: "PAID"
+            }))
+        }
+        if (ORDER_CANCEL.status !== STATUS.SUCCESS) {
+            dispatch(onClearOrder())
+            dispatch(fetchAsyncOrderCancel({
+                page: 1
+            }))
+        }
+    }
     useEffect(() => {
         callDiscountsUser();
+        callOrders()
     }, []);
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     return (
         IS_MB ?
             <AccountMobile />

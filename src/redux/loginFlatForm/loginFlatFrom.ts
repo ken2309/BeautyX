@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import tikiAuthApi from '../../api/_tikiAuthApi';
 import momoAuthApi from '../../api/_momoAuthApi';
+import mbAuthApi from '../../api/_mbAuthApi';
 import { STATUS } from '../status'
 
 export const loginAsyncMomo: any = createAsyncThunk(
@@ -30,6 +31,20 @@ export const loginAsyncTiki: any = createAsyncThunk(
         }
     }
 )
+export const loginAsyncMb: any = createAsyncThunk(
+    "LOGIN/loginAsyncMbbank",
+    async (params: any) => {
+        try {
+            const res = await mbAuthApi.login(params);
+            window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
+            const payload = res.data.context;
+            return payload;
+        } catch (error) {
+            console.log(error)
+            return error
+        }
+    }
+)
 const initialState = {
     response: null,
     status: ''
@@ -37,7 +52,8 @@ const initialState = {
 const loginFlatFormSlice = createSlice({
     name: "LOGIN",
     initialState,
-    reducers: {},
+    reducers: {
+    },
     extraReducers: {
         [loginAsyncMomo.pending]: (state) => {
             return { ...state, status: STATUS.LOADING }
@@ -62,6 +78,19 @@ const loginFlatFormSlice = createSlice({
             }
         },
         [loginAsyncTiki.rejected]: (state) => {
+            return { ...state, status: STATUS.FAIL }
+        },
+        //Mb bank
+        [loginAsyncMb.pending]: (state) => {
+            return { ...state, status: STATUS.LOADING }
+        },
+        [loginAsyncMb.fulfilled]: (state, { payload }) => {
+            return {
+                response: payload,
+                status: STATUS.SUCCESS
+            }
+        },
+        [loginAsyncMb.rejected]: (state) => {
             return { ...state, status: STATUS.FAIL }
         }
     }

@@ -3,11 +3,11 @@ import { Transition } from '../../../../../utils/transition';
 import { Dialog } from '@mui/material';
 import UserAddress from './UserAddress';
 import HeadMobile from '../../../../HeadMobile';
-import useFullScreen from '../../../../../utils/useFullScreen';
+import useDeviceMobile from '../../../../../utils/useDeviceMobile';
 
 function UserAddressMoba(props: any) {
     const { open, setOpen } = props;
-    const fullScreen = useFullScreen();
+    const fullScreen = useDeviceMobile();
     return (
         fullScreen === true ?
             <Dialog

@@ -6,7 +6,7 @@ import { Dialog } from "@mui/material";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import { AppContext } from "../../context/AppProvider";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 import BackButton from "../../components/BackButton";
 import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";

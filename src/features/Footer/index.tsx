@@ -1,28 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./footer.css";
 import { Container } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import slugify from "../../utils/formatUrlString";
 import scrollTop from "../../utils/scrollTop";
-import img, { social } from "../../constants/img";
+import img, { paymentMethod, social } from "../../constants/img";
 import icon from "../../constants/icon";
+import { AppContext } from "../../context/AppProvider";
 
 function Footer() {
-    const url_map = `https://maps.google.com/?q=10.79319953408399,106.69011243982503`;
+    const url_map = `https://goo.gl/maps/dnGMKnfdeB91xCj7A`;
+    const { t } = useContext(AppContext);
     const data_footer = [
         {
             id: 1,
-            title: "Hỗ trợ khách hàng",
+            title: `${t("footer.customer_support")}`,
             items: [
                 {
                     id: 11,
-                    title: "Tổng đài tư vấn : 0899310908",
+                    title: `${t(
+                        "footer.consultation_call_center"
+                    )}: 0899310908`,
                     type: "NUMBER",
                     url: "0899310908",
                 },
                 {
                     id: 12,
-                    title: "Tổng đài CSKH : 0899855223",
+                    title: `${t(
+                        "footer.customer_care_call_center"
+                    )} : 0899855223`,
                     type: "NUMBER",
                     url: "0899855223",
                 },
@@ -38,16 +44,21 @@ function Footer() {
                     type: "EMAIL",
                     url: "support@myspa.vn",
                 },
-                { id: 15, title: "Chính sách bảo mật", type: "URL", url: "/" },
+                {
+                    id: 15,
+                    title: `${t("footer.privacy_policy")}`,
+                    type: "URL",
+                    url: "/",
+                },
                 {
                     id: 16,
-                    title: "Trả hàng và hoàn tiền",
+                    title: `${t("footer.return_and_refund")}`,
                     type: "URL",
                     url: "/",
                 },
                 {
                     id: 17,
-                    title: "Bảo vệ quyền lợi khách hàng",
+                    title: `${t("footer.protect_the_interests_of_customers")}`,
                     type: "URL",
                     url: "/",
                 },
@@ -55,37 +66,47 @@ function Footer() {
         },
         {
             id: 2,
-            title: "Công ty MYSPA",
+            title: `${t("footer.myspa_company")}`,
             items: [
-                { id: 20, title: "Quy định hoạt động", type: "URL", url: "/" },
-                { id: 21, title: "Quy định chung", type: "URL", url: "/" },
+                {
+                    id: 20,
+                    title: `${t("footer.operating_regulations")}`,
+                    type: "URL",
+                    url: "/",
+                },
+                {
+                    id: 21,
+                    title: `${t("footer.general_rules")}`,
+                    type: "URL",
+                    url: "/",
+                },
                 {
                     id: 22,
-                    title: "Quy định giao dịch hàng hóa",
+                    title: `${t("footer.commodity_trading_regulations")}`,
                     type: "URL",
                     url: "/",
                 },
                 {
                     id: 23,
-                    title: "Quy trình thanh toán",
+                    title: `${t("footer.payment_process")}`,
                     type: "URL",
                     url: "/",
                 },
                 {
                     id: 24,
-                    title: "Đảm bảo an toàn giao dịch",
+                    title: `${t("footer.secure_transaction")}`,
                     type: "URL",
                     url: "/",
                 },
                 {
                     id: 26,
-                    title: "Trách nhiệm và trách nhiệm",
+                    title: `${t("footer.responsibility")}`,
                     type: "URL",
                     url: "/",
                 },
                 {
                     id: 27,
-                    title: "Điều khoản và cam kết",
+                    title: `${t("footer.terms_and_commitments")}`,
                     type: "URL",
                     url: "/",
                 },
@@ -132,6 +153,70 @@ function Footer() {
             url: "https://apps.apple.com/vn/app/beautyx/id1614767784?l=vi",
         },
     ];
+    const payment = [
+        // {
+        //     id: 1,
+        //     img: paymentMethod.tikiPay,
+        // },
+        // {
+        //     id: 2,
+        //     img: paymentMethod.visa,
+        // },
+        // {
+        //     id: 3,
+        //     img: paymentMethod.masterCard,
+        // },
+        // {
+        //     id: 4,
+        //     img: paymentMethod.jcb,
+        // },
+        // {
+        //     id: 5,
+        //     img: paymentMethod.atm,
+        // },
+        {
+            id: 6,
+            img: paymentMethod.momoPayment,
+        },
+        // {
+        //     id: 7,
+        //     img: paymentMethod.zaloPay,
+        // },
+        // {
+        //     id: 8,
+        //     img: paymentMethod.mocaGrap,
+        // },
+        // {
+        //     id: 9,
+        //     img: paymentMethod.phonePay,
+        // },
+        // {
+        //     id: 10,
+        //     img: paymentMethod.vnPay,
+        // },
+        {
+            id: 11,
+            img: paymentMethod.handPay,
+        },
+        // {
+        //     id: 12,
+        //     img: icon.payon,
+        // },
+    ];
+    const app = [
+        {
+            id: 1,
+            img: icon.momo,
+            type: "APP",
+            url: "bit.ly/myspamomo",
+        },
+        {
+            id: 2,
+            img: paymentMethod.tikiPay,
+            type: "APP",
+            url: "https://ti.ki/beautyx12 ",
+        },
+    ];
     const history = useHistory();
     const gotoPolicy = (item: any) => {
         scrollTop();
@@ -152,6 +237,12 @@ function Footer() {
                     "noopener,noreferrer"
                 );
             case "DOWN":
+                return window.open(
+                    `${item.url}`,
+                    "_blank",
+                    "noopener,noreferrer"
+                );
+            case "APP":
                 return window.open(
                     `${item.url}`,
                     "_blank",
@@ -190,7 +281,48 @@ function Footer() {
                         <div className="wrap">
                             <>
                                 <div className="footer-cnt__item-title">
-                                    Kết nối với chúng tôi
+                                    {t("footer.payment_method")}
+                                </div>
+                                <div
+                                    style={{ marginTop: "16px" }}
+                                    className="social-list"
+                                >
+                                    {payment.map((item: any, index: number) => (
+                                        <div
+                                            key={index}
+                                            className="social-item__method social-item"
+                                        >
+                                            <div className="social-item__img">
+                                                <img src={item.img} alt="" />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div
+                                    style={{ marginTop: "24px" }}
+                                    className="footer-cnt__item-title"
+                                >
+                                    {t("footer.beautyx_is_on")}
+                                </div>
+                                <div className="social-list">
+                                    <div className="flexX-gap-16">
+                                        {app.map((item: any, index: number) => (
+                                            <div
+                                                key={index}
+                                                onClick={() => gotoPolicy(item)}
+                                                className="social-item__img cursor-pointer"
+                                            >
+                                                <img src={item.img} alt="" />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </>
+                        </div>
+                        <div className="wrap">
+                            <>
+                                <div className="footer-cnt__item-title">
+                                    {t("footer.contact_width_me")}
                                 </div>
                                 <div className="social-list">
                                     {social_list.map(
@@ -210,69 +342,36 @@ function Footer() {
                                         )
                                     )}
                                 </div>
-                            </>
-                            <>
                                 <div
                                     style={{ marginTop: "24px" }}
                                     className="footer-cnt__item-title"
                                 >
-                                    Phương thức thanh toán
+                                    {t("footer.download_app")}
                                 </div>
-                                <div
-                                    style={{ marginTop: "16px" }}
-                                    className="flexX-gap-16"
-                                >
-                                    <div className="social-item">
-                                        <div className="social-item__img">
-                                            <img src={icon.momo} alt="" />
-                                        </div>
+                                <div className="down-app">
+                                    <div className="down-app__qr">
+                                        <img src={img.qrCode} alt="" />
                                     </div>
-                                    <div className="social-item">
-                                        <div
-                                            style={{
-                                                borderRadius: "4px",
-                                                overflow: "hidden",
-                                                width: "36px",
-                                            }}
-                                            className="social-item__img"
-                                        >
-                                            <img
-                                                style={{ width: "100%" }}
-                                                src={icon.payon}
-                                                alt=""
-                                            />
-                                        </div>
+                                    <div className="down-app__wrap">
+                                        {downList.map(
+                                            (item: any, index: number) => (
+                                                <div
+                                                    key={index}
+                                                    className="down-app__btn"
+                                                >
+                                                    <img
+                                                        onClick={() =>
+                                                            gotoPolicy(item)
+                                                        }
+                                                        src={item.img}
+                                                        alt=""
+                                                    />
+                                                </div>
+                                            )
+                                        )}
                                     </div>
                                 </div>
                             </>
-                        </div>
-                        <div className="wrap">
-                            <div className="footer-cnt__item-title">
-                                Tải ứng dụng trên điện thoại
-                            </div>
-                            <div className="down-app">
-                                <div className="down-app__qr">
-                                    <img src={img.qrCode} alt="" />
-                                </div>
-                                <div className="down-app__wrap">
-                                    {downList.map(
-                                        (item: any, index: number) => (
-                                            <div
-                                                key={index}
-                                                className="down-app__btn"
-                                            >
-                                                <img
-                                                    onClick={() =>
-                                                        gotoPolicy(item)
-                                                    }
-                                                    src={item.img}
-                                                    alt=""
-                                                />
-                                            </div>
-                                        )
-                                    )}
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -286,10 +385,13 @@ function Footer() {
                         )
                     }
                 >
-                    Công ty CP MYSPA - Lầu 3, 27K Trần Nhật Duật, Phường Tân
-                    Định, Quận 1, TP.HCM - GPĐKKD: 0314964245, cấp
-                    ngày:03/04/2018, bởi Phòng Đăng ký kinh doanh – Sở kế hoạch
-                    và Đầu tư TP.HCM
+                    {t("footer.address_company")}
+                </div>
+                <div className="footer-copy-right">
+                   {t("footer.policy")}
+                </div>
+                <div className="footer-copy-right">
+                    © Copyright Myspa | ProductX teams.
                 </div>
             </Container>
         </div>

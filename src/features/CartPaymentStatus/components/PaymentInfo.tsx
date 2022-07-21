@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { CircularProgress } from '@mui/material';
 import formatPrice from '../../../utils/formatPrice';
 import { useHistory } from 'react-router-dom';
@@ -9,8 +9,10 @@ import { FLAT_FORM_TYPE } from '../../../rootComponents/flatForm';
 import { EXTRA_FLAT_FORM } from '../../../api/extraFlatForm';
 import { EXTRA_PAYMENT } from '../../../rootComponents/extraPayment';
 import doPostMakePaymentMessageTiki from '../../../rootComponents/tiki/doPostMessageTiki';
+import {doPostMakePaymentMessageMB} from '../../../rootComponents/mb/doPostMessageMBbank';
 import { onSetStatusApp } from '../../../redux/appointment/appSlice';
 import { onSetStatusServicesUser } from '../../../redux/order/orderSlice';
+import useGetMessage from '../../../rootComponents/mb/useListenResponseMessage';
 
 function PaymentInfo(props: any) {
     const history = useHistory();
@@ -30,12 +32,15 @@ function PaymentInfo(props: any) {
         if (FLAT_FORM) {
             switch (FLAT_FORM) {
                 case FLAT_FORM_TYPE.MOMO:
-                    return window.location.assign(EXTRA_PAYMENT_ID);
+                    return window.location.assign(EX_PAYMENT?.deepLink);
                 case FLAT_FORM_TYPE.TIKI:
                     return doPostMakePaymentMessageTiki({
                         TYPE: "ORDER",
                         params: EXTRA_PAYMENT_ID
                     })
+                case FLAT_FORM_TYPE.MB:
+                    // return
+                    return  doPostMakePaymentMessageMB(EX_PAYMENT?.EXTRA_PAYMENT_DATA)
                 default:
                     const newWindow = window.open(`${deepLink}`, '_blank', 'noopener,noreferrer');
                     if (newWindow) newWindow.opener = null
@@ -57,6 +62,11 @@ function PaymentInfo(props: any) {
         dispatch(onSetStatusServicesUser())
         history.push('/home')
     }
+    // const response =FLAT_FORM_TYPE.MB?useGetMessage():{'flatForm': FLAT_FORM};
+    
+    // useMemo(() => {
+        // alert(JSON.stringify(response))
+    // }, [response])
     const onCheckStatus = () => {
         switch (data.orderStatus) {
             case "PENDING":

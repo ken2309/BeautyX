@@ -13,7 +13,7 @@ import {
     fetchAsyncOrgComments,
 } from "../../redux/org/orgCommentsSlice";
 import { useElementOnScreen } from "../../utils/useElementScreen";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 // end
 
 function PopupPostDetail(props: any) {
@@ -54,6 +54,7 @@ function PopupPostDetail(props: any) {
             mounted = false;
         };
     }, [ORG_COMMENTS.status]);
+    console.log(ORG_COMMENTS)
     return (
         <Dialog open={open} onClose={() => setOpen(false)}>
             <div className="close_btn" onClick={() => setOpen(false)}>

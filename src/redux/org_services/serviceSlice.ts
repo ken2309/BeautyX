@@ -10,7 +10,7 @@ export const fetchAsyncServiceDetail: any = createAsyncThunk(
     async (values: any) => {
         const res = await serviceApi.getDetailById(values);
         return {
-            service: res.data.context,
+            service: res?.data.context,
             org_id: values.org_id,
         };
     }
@@ -95,9 +95,9 @@ export const fetchAsyncCancelFavoriteService: any = createAsyncThunk(
 export const fetchAsyncServicesRec: any = createAsyncThunk(
     "SERVICE/fetchAsyncServicesRec",
     async (values: any) => {
-        const res = await serviceApi.getByOrg_id(values);
+        const res = await serviceApi.getByOrgId(values);
         const payload = {
-            services: res.data.context.data,
+            services: res?.data.context.data,
             cate_id: values.cate_id,
         };
         return payload;

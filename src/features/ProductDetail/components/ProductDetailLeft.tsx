@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Product } from "../../../interface/product";
 import { IOrganization } from "../../../interface/organization";
 import onErrorImg from "../../../utils/errorImg";
@@ -10,6 +10,7 @@ import {
     onFavoriteProduct,
     onDeleteFavorite,
 } from "../../../redux/org_products/productSlice";
+import { AppContext } from "../../../context/AppProvider";
 
 interface IProps {
     product: Product;
@@ -20,6 +21,8 @@ function ProductDetailLeft(props: IProps) {
     const { product, org } = props;
     const dispatch = useDispatch();
     const history = useHistory();
+    const { t } = useContext(AppContext);
+
     const percent = Math.round(
         100 - (product?.special_price / product?.retail_price) * 100
     );
@@ -84,7 +87,7 @@ function ProductDetailLeft(props: IProps) {
                     <div className="service-detail__mobile-bottom">
                         {product?.special_price > 0 && (
                             <div className="service-detail__mobile-percent">
-                                Giảm {percent}%
+                                {`${t("detail_iten.off")}`} {percent}%
                             </div>
                         )}
                         <div className="service-detail__mobile-price">

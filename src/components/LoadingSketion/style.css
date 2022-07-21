@@ -1,0 +1,74 @@
+.result-orgs-loading-cnt {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.result-orgs-loading-cnt__item {
+    width: 20%;
+    height: 282px;
+    max-height: unset;
+    padding: 12px 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--grey_2);
+}
+.result-orgs-loading-cnt__item .MuiSkeleton-root:nth-child(1){
+    width: 100% !important;
+    height: 100% !important;
+}
+.result-orgs-loading-cnt__item .MuiSkeleton-root:nth-child(2){
+    height: 100px !important;
+}
+.result-orgs-loading-cnt .service-item{
+    width: 16.6%;
+    max-height: unset !important;
+}
+.result-orgs-loading-cnt-row{
+    display: flex;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+.result-orgs-loading-cnt-row .result-orgs-loading-cnt__item .MuiSkeleton-root:nth-child(1){
+    width: 146px !important;
+    height: calc(7% - 4px) !important;
+}
+.result-orgs-loading-cnt-row .result-orgs-loading-cnt__item .MuiSkeleton-root:nth-child(2){
+    height: auto !important;
+}
+.result-orgs-loading-cnt-row .result-orgs-loading-cnt__item{
+    height: 262px;
+}
+.result-orgs-loading-cnt-row::-webkit-scrollbar{
+    display: none;
+}
+.result-orgs-loading-cnt-row .result-orgs-loading-cnt__item.service-item span{
+    width: 146px;
+    height: calc(7% - 4px);
+    transform: unset;
+}
+.result-orgs-loading-cnt-row .result-orgs-loading-cnt__item.service-item span:nth-child(1){
+    height: calc(77% - 10px)!important;
+}
+.result-orgs-loading-cnt-row .result-orgs-loading-cnt__item.service-item span:nth-child(2){
+    height: calc(7% - 4px) !important;
+}
+.result-orgs-loading-cnt-row .result-orgs-loading-cnt__item.service-item span:nth-child(4){
+    height: calc(10% - 4px) !important;
+}
+@media only screen and (max-width: 1023px) {
+    .result-orgs-loading-cnt__item{
+        width: 50%;
+    }
+    .result-orgs-loading-cnt .service-item{
+        width: 100%;
+        height: 111px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .result-orgs-loading-cnt .service-item .MuiSkeleton-root:nth-child(2){
+        display: none !important;
+    }
+}   

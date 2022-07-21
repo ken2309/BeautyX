@@ -19,44 +19,48 @@ import searchReducer from "./search/searchSlice";
 import blogReducer from "./blog/blogSlice";
 import cateReducer from "./CateTree/cateTreeSlice";
 import comboReducer from "./org_combos/comboSlice";
-import videosReducer from './video/videosSlice';
-import trendReducer from './video/trendSlice';
+import videosReducer from "./video/videosSlice";
+import trendReducer from "./video/trendSlice";
 import appReducer from "./appointment/appSlice";
-import commentReducer from './commentSlice';
-import orderReducer from './order/orderSlice';
-import searchResultReducer from './search/searchResultSlice';
+import commentReducer from "./commentSlice";
+import orderReducer from "./order/orderSlice";
+import searchResultReducer from "./search/searchResultSlice";
 import filterReducer from "./filter/filterSlice";
 import homePageReducer from "./home/homePageSlice";
+import chatOrgReducer from "./chat/chatOrgSlice";
+import tagsReducer from "./Tags/tagsSlice";
 
 const rootReducer = {
-  carts: cartReducer,
-  HOME: homeReducer,
-  LOGIN: loginFlatFromReducer,
-  ORG_COMMENTS: orgCommentsReducer,
-  SERVICES_BOOK: servicesBookReducer,
-  USER: userReducer,
-  ORG: orgReducer,
-  ORG_SERVICES: orgServicesReducer,
-  SERVICE: serviceReducer,
-  PRODUCT: productReducer,
-  ORG_COMBOS: combosReducer,
-  ORG_PRODUCTS: orgProductsReducer,
-  ORG_SPECIALS: orgSpecialReducer,
-  ORG_DISCOUNTS: orgDiscountsReducer,
-  ADDRESS: userAddressReducer,
-  PAYMENT: paymentsReducer,
-  BLOG: blogReducer,
-  SEARCH: searchReducer,
-  CATE_TREE: cateReducer,
-  COMBO: comboReducer,
-  VID: videosReducer,
-  TRENDs: trendReducer,
-  APP: appReducer,
-  COMMENT: commentReducer,
-  ORDER: orderReducer,
-  SEARCH_RESULT: searchResultReducer,
-  FILTER: filterReducer,
-  HOME_PAGE: homePageReducer
+    TAGS: tagsReducer,
+    carts: cartReducer,
+    HOME: homeReducer,
+    LOGIN: loginFlatFromReducer,
+    ORG_COMMENTS: orgCommentsReducer,
+    SERVICES_BOOK: servicesBookReducer,
+    USER: userReducer,
+    ORG: orgReducer,
+    ORG_SERVICES: orgServicesReducer,
+    SERVICE: serviceReducer,
+    PRODUCT: productReducer,
+    ORG_COMBOS: combosReducer,
+    ORG_PRODUCTS: orgProductsReducer,
+    ORG_SPECIALS: orgSpecialReducer,
+    ORG_DISCOUNTS: orgDiscountsReducer,
+    ADDRESS: userAddressReducer,
+    PAYMENT: paymentsReducer,
+    BLOG: blogReducer,
+    SEARCH: searchReducer,
+    CATE_TREE: cateReducer,
+    COMBO: comboReducer,
+    VID: videosReducer,
+    TRENDs: trendReducer,
+    APP: appReducer,
+    COMMENT: commentReducer,
+    ORDER: orderReducer,
+    SEARCH_RESULT: searchResultReducer,
+    FILTER: filterReducer,
+    HOME_PAGE: homePageReducer,
+    CHAT_ORG: chatOrgReducer,
 };
 const store = configureStore({
     reducer: rootReducer,

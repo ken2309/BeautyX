@@ -19,14 +19,14 @@ function Services(props: any) {
         const ORG = await org;
         GoogleTagPush(GoogleTagEvents.PRODUCT_LIST_LOAD);
         try {
-            const res_services = await serviceApi.getSpecialPriceByOrg_id({
+            const res_services = await serviceApi.getByOrgId({
                 org_id: ORG?.id,
                 page: data.page
             });
             setData({
                 ...data,
-                services: res_services.data.context.data,
-                page_count: res_services.data.context.last_page
+                services: res_services?.data.context.data,
+                page_count: res_services?.data.context.last_page
             })
         } catch (error) {
             console.log(error)

@@ -6,9 +6,11 @@ import { checkConfirm, onClearPrevCartItem } from '../../../redux/cartSlice';
 import CartItem from './CartItem';
 //import { checkConfirm, onChooseCartItemByOrg } from '../../../redux/cartSlice'
 import { useDispatch } from 'react-redux';
+import ButtonLoading from '../../../components/ButtonLoading';
 
 function CartGroupItem(props: any) {
-    const { item, org, cartList } = props;
+    const { item, org, cartList, setOpenBranch, openBranch } = props;
+    
     const cartListOrg = cartList.filter((i: any) => i.org_id === org?.id);
     const cartListCheck = cartList.filter((i: any) => i.isConfirm === true);
     let isCheck = false;
@@ -27,10 +29,11 @@ function CartGroupItem(props: any) {
             }
         }
     }
+    const servicesCartListCheckByOrg = cartListCheck?.filter((i: any) => i.is_type === 2);
     return (
         <>
             <div
-                className="flex-row-sp re-cart-item-group__head"
+                className="flex-row re-cart-item-group__head"
             >
                 <div
                     onClick={onChooseCartItemOrg}
@@ -50,7 +53,27 @@ function CartGroupItem(props: any) {
                     <img src={icon.Storefront} alt="" />
                     <span>{item.org_name}</span>
                 </div>
-                {/* <span className="right" >Sửa</span> */}
+                {
+                    (
+                        org?.id === item.org_id &&
+                        org?.branches?.length > 0 &&
+                        servicesCartListCheckByOrg.length > 0) &&
+                    <ButtonLoading
+                        title="Chọn chi nhánh"
+                        onClick={() => setOpenBranch({ ...openBranch, open: true })}
+                        loading={false}
+                    />
+                }
+            </div>
+            <div className="flex-row re-cart-item-group__add">
+                {/* <div className="re-cart-item-group__add-dot"></div> */}
+                {
+                    (org?.id === item.org_id &&
+                        org?.branches?.length > 0 &&
+                        servicesCartListCheckByOrg.length && openBranch.branch) ?
+                        `Chi nhánh : ${openBranch.branch?.name} - ${openBranch?.branch?.full_address}` :
+                        `${item?.items[0]?.org?.full_address}`
+                }
             </div>
             <ul className="re-cart-item-group__body">
                 {
@@ -59,6 +82,8 @@ function CartGroupItem(props: any) {
                             <CartItem
                                 cartItem={cart}
                                 org={org}
+                                setOpenBranch={setOpenBranch}
+                                openBranch={openBranch}
                             />
                         </li>
                     ))

@@ -1,15 +1,18 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useContext, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import icon from "../../../constants/icon";
+import { AppContext } from "../../../context/AppProvider";
 import { Combo } from "../../../interface/combo";
 import { IOrganization } from "../../../interface/organization";
 import { addCart } from "../../../redux/cartSlice";
 import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
+import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
 import PopupSuccess from "../../PopupSuccess";
 import "../../ProductDetail/product.css";
 import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
+import ComboDetailRightReview from "./ComboDetailRightReview";
 
 interface IProps {
     combo: Combo;
@@ -21,9 +24,18 @@ function ComboDetailRight(props: IProps) {
     const dispatch = useDispatch();
     const list_price = [combo?.price, combo?.use_value].sort((a, b) => b - a);
     const price = list_price[0];
+    const { COMMENTS } = useSelector((state: any) => state.COMBO);
     const special_price = list_price[1];
     const percent = Math.round(100 - (special_price / price) * 100);
     const [popupSuccess, setPopupSuccess] = useState(false);
+    const { t } = useContext(AppContext);
+    // get today's activity date in org
+    const now = new Date();
+    const today = now.getDay() + 1;
+    const orgTimes: any = org && extraOrgTimeWork(org?.opening_time);
+    const time_works_today = orgTimes?.find(
+        (item: any, index: number) => index + 2 === today
+    );
     //handle add cart
     const [quantity, setQuantity] = useState(1);
     const onDescQuantity = () => {
@@ -49,7 +61,19 @@ function ComboDetailRight(props: IProps) {
                 <div className="detail-right__head-info">
                     <div className="detail-right__org">
                         <p>{org?.name}</p>
-                        <p>{"Đang mở cửa"}</p>
+                        {time_works_today?.status && (
+                            <>
+                                {time_works_today?.status === "on" ? (
+                                    <p style={{ color: "var(--green)" }}>{`${t(
+                                        "detail_item.open"
+                                    )}`}</p>
+                                ) : (
+                                    <p style={{ color: "var(--red_2)" }}>{`${t(
+                                        "detail_item.close"
+                                    )}`}</p>
+                                )}
+                            </>
+                        )}
                     </div>
                     <div className="detail-right__name">
                         <p>{combo?.name}</p>
@@ -60,20 +84,7 @@ function ComboDetailRight(props: IProps) {
                             <img src={icon.heart} alt="" />
                         </div>
                     </div>
-                    <div className="detail-right__evaluate">
-                        <div className="evaluate-item">
-                            <p>5</p>
-                            <img src={icon.star} alt="" />
-                        </div>
-                        <div className="evaluate-item">
-                            <p>112+</p>
-                            <img src={icon.Favorite} alt="" />
-                        </div>
-                        <div className="evaluate-item">
-                            <p>10</p>
-                            <img src={icon.ShoppingCartSimple} alt="" />
-                        </div>
-                    </div>
+                    <ComboDetailRightReview data={combo} comment={COMMENTS} />
                 </div>
             </div>
 
@@ -82,7 +93,9 @@ function ComboDetailRight(props: IProps) {
                     <div className="flexX-gap-8">
                         {special_price > 0 && percent !== 0 && (
                             <div className="detail-right__percent">
-                                <p>Giảm {percent}%</p>
+                                <p>
+                                    {t("detail_item.off")} {percent}%
+                                </p>
                             </div>
                         )}
                         <div className="detail-right__price">
@@ -101,7 +114,9 @@ function ComboDetailRight(props: IProps) {
             </div>
             <div className="detail-right__bottom">
                 <div className="bottom-quantity">
-                    <p className="bottom-quantity__text">Số lượng:</p>
+                    <p className="bottom-quantity__text">
+                        {t("detail_item.quantity")}:
+                    </p>
                     <div className="bottom-quantity__wrap">
                         <button
                             onClick={onDescQuantity}
@@ -125,7 +140,7 @@ function ComboDetailRight(props: IProps) {
                 </div>
                 <div onClick={handleAddCart} className="bottom-addCart">
                     <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                    <p>Thêm vào giỏ hàng</p>
+                    <p>{t("detail_item.add_cart")}</p>
                 </div>
             </div>
             <PopupSuccess

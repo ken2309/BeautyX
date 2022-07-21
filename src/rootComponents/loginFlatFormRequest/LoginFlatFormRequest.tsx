@@ -3,26 +3,75 @@ import React, { useMemo, useState } from 'react';
 import icon from '../../constants/icon';
 import ButtonLoading from '../../components/ButtonLoading';
 import doPostMakePaymentMessageTiki from '../tiki/doPostMessageTiki';
-import useGetMessageTiki from '../tiki/useGetMessageTiki';
+import useGetMessageTiki from '../useGetMessageTiki';
 import tikiAuthApi from '../../api/_tikiAuthApi';
+import mbAuthApi from '../../api/_mbAuthApi';
 import { useHistory } from 'react-router-dom';
-import { fetchAsyncUser } from '../../redux/USER/userSlice'
+import { fetchAsyncUser } from '../../redux/USER/userSlice';
+import { loginAsyncMb } from '../../redux/loginFlatForm/loginFlatFrom'
 import './style.css'
 import { useDispatch } from 'react-redux';
 import { fetchAsyncApps } from '../../redux/appointment/appSlice'
 import dayjs from 'dayjs';
-
+import { EXTRA_FLAT_FORM } from '../../api/extraFlatForm';
+import { FLAT_FORM_TYPE } from '../flatForm';
+import momoApi from '../../api/momoApi';
+import SignVeriOtp from '../../features/SignPage/components/SignVeriOtp';
+import Otp from '../../features/Otp/dialogOtp';
 function LoginFlatFormRequest(props: any) {
     const { pathname, setClose } = props;
     const history = useHistory();
     const [load, setLoad] = useState(false);
+    const [openOtp, setOpenOtp] = useState(false);
+    const [dataOtp, setDataOtp] = useState({
+        telephone: '',
+        verification_id: '',
+        code: ''
+    })
+    const platform = EXTRA_FLAT_FORM();
     const dispatch = useDispatch();
-    const handleLogin = () => {
+    const handleLogin = async () => {
         setLoad(true)
-        doPostMakePaymentMessageTiki({
-            TYPE: "LOGIN",
-            params: 1
-        })
+        switch (platform) {
+            case FLAT_FORM_TYPE.MOMO:
+                // onLoginFlatFormMomo()
+                handleLoginMomo()
+                break;
+            case FLAT_FORM_TYPE.TIKI:
+                doPostMakePaymentMessageTiki({
+                    TYPE: "LOGIN",
+                    params: 1
+                })
+                break;
+            case FLAT_FORM_TYPE.MB:
+                handleOtpMB();
+                break;
+            default:
+                break
+        }
+        // let $: any = window;
+        // $['ReactNativeWebView']?.postMessage(JSON.stringify(
+        //     {
+        //         type: 'PAYMENT_HUB_TRANSACTION',
+        //         data: {
+        //             "id": "AW1125WDEIWH",
+        //             "amount": 600000,
+        //             "description": "Test 11dat",
+        //             "successMessage": null,
+        //             "merchant": {
+        //                 "code": "PHZMSP",
+        //                 "name": "Công ty cổ phần MySpa"
+        //             },
+        //             "type": {
+        //                 "name": "Thanh toán sản phẩm làm đẹp",
+        //                 "code": "MSPPROD",
+        //                 "allowCard": true
+        //             },
+        //         }
+        //     }
+        // ))
+        // console.log(res)
+        // alert(JSON.stringify(res))
     }
 
     const handleLoginTiki = async (params: any) => {
@@ -45,7 +94,46 @@ function LoginFlatFormRequest(props: any) {
             setLoad(false)
         }
     }
+    const handleLoginMomo = async () => {
+        try {
+            const res = await momoApi.getUserConsents();
+            const resRequest = await momoApi.requestUserConsents();
+            const resLocale = await momoApi.getLocation();
+            alert(JSON.stringify(res));
+            alert(JSON.stringify(resRequest))
+            // alert(JSON.stringify(resLocale));
+            setLoad(false)
+        }
+        catch (err) {
+            alert(JSON.stringify(err));
+            setLoad(false)
+        }
 
+    }
+    const handleOtpMB = () => {
+        setOpenOtp(true);
+        setLoad(false)
+        openOtp&&console.log(dataOtp);
+    }
+    const handleLoginMB = async (code:String) => {
+        try {
+            // (!openOtp)&&setOpenOtp(true);
+            window.sessionStorage.setItem("_WEB_TK", '4220|VCWtPxfJBqjB2zjS3t0l')
+            const session = sessionStorage.getItem("_loginToken");
+            const paramsOb = {
+                "token": session,
+                "telephone": dataOtp.telephone,
+                "code": code,
+                "verification_id": dataOtp.verification_id
+            }
+            console.log(paramsOb);
+
+            // await dispatch(fetchAsyncUser())
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
     const response = useGetMessageTiki();
     useMemo(() => {
         // alert(JSON.stringify(response))
@@ -56,7 +144,6 @@ function LoginFlatFormRequest(props: any) {
             setLoad(false);
         }
     }, [response])
-
     return (
         <div className='flex-column login-re-cnt'>
             <img src={icon.loginReq} alt="" />
@@ -69,6 +156,21 @@ function LoginFlatFormRequest(props: any) {
                 onClick={handleLogin}
                 loading={load}
             />
+            {
+                platform === FLAT_FORM_TYPE.MB
+                &&
+                (
+                    <>
+                        <Otp
+                            open={openOtp}
+                            setOpen={setOpenOtp}
+                            setDataOtp={setDataOtp}
+                            dataOtp={dataOtp}
+                            handleSubmit= {handleLoginMB}
+                        />
+                    </>
+                )
+            }
         </div>
     );
 }

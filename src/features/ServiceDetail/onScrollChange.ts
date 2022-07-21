@@ -1,10 +1,10 @@
 export const handleScroll = (
-    is_mobile: boolean,
-    setValue: any,
-    scrollReview: any,
-    scrollDesc: any,
-    scrollMap: any,
-    scrollPolicy: any
+    is_mobile?: boolean,
+    setValue?: any,
+    scrollReview?: any,
+    scrollDesc?: any,
+    scrollMap?: any,
+    scrollPolicy?: any
 ) => {
     const b = is_mobile ? 113 : 72;
     if (window.scrollY + b < scrollReview) {
@@ -22,7 +22,7 @@ export const handleScroll = (
     } else if (window.scrollY + b > scrollMap) {
         setValue(4);
     }
-}
+};
 export const handleChangeScroll = (
     is_mobile: boolean,
     value: any,
@@ -55,4 +55,4 @@ export const handleChangeScroll = (
             break;
     }
     return top;
-}
+};

@@ -4,32 +4,35 @@ import { AppContext } from "../../context/AppProvider";
 interface IProps {
     totalItem: number | undefined;
     openSeeMoreCmt: any;
+    item?: any;
 }
 export default function TotalStartEvaluate(props: IProps) {
-    const {t} = useContext(AppContext);
-    const [value, setValue] = React.useState<number | null>(4);
-    const { totalItem, openSeeMoreCmt } = props;
+    const { t } = useContext(AppContext);
+    const [value, setValue] = React.useState<number | null>(5);
+    const { totalItem, openSeeMoreCmt, item } = props;
     return (
         <>
             {/* rating pc */}
             <div className="evaluate-rating">
                 <div className="evaluate-rating__left">
                     <div className="evaluate-rating__total">
-                        <span>4.8/</span>
+                        <span>{item.rating > 0 ? item.rating : 0}/</span>
                         <span>5</span>
                     </div>
                     <div className="evaluate-rating__start">
                         <Rating
                             readOnly
                             name="simple-controlled"
-                            value={value}
-                            onChange={(event, newValue) => {
-                                setValue(newValue);
-                            }}
+                            value={item.rating}
+                            // onChange={(event, newValue) => {
+                            //     setValue(item.rating);
+                            // }}
                         />
                     </div>
                     <div className="evaluate-rating__quantity">
-                        <span>{totalItem} {t("Mer_de.feedback")}</span>
+                        <span>
+                            {totalItem} {t("Mer_de.feedback")}
+                        </span>
                     </div>
                 </div>
                 <div className="evaluate-rating__right">
@@ -63,7 +66,10 @@ export default function TotalStartEvaluate(props: IProps) {
             {/* rating mobile */}
             <div className="evaluate-rating__mobile">
                 <div className="rating-left">
-                    <p className="rating-left__total">4.8</p>
+                    <div className="evaluate-rating__total rating-left__total">
+                        <span>{item.rating > 0 ? item.rating : 0}/</span>
+                        <span>5</span>
+                    </div>
                     <div className="rating-left__infor">
                         <div className="rating-left__start">
                             <Rating
@@ -85,7 +91,7 @@ export default function TotalStartEvaluate(props: IProps) {
                         onClick={openSeeMoreCmt}
                         className="rating-right__btn"
                     >
-                        <p>{"Xem tất cả"}</p>
+                        <p>{t("detail_item.see_more")}</p>
                     </button>
                 </div>
             </div>

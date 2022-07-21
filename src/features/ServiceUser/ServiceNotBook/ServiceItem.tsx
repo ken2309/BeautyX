@@ -1,24 +1,25 @@
 import { Checkbox } from "@mui/material";
-import React, { useCallback, useState } from "react";
-//import { AppContext } from "../../../context/AppProvider";
+import React, { useCallback, useContext, useState } from "react";
+import { AppContext } from "../../../context/AppProvider";
 //import formatPrice from "../../../utils/formatPrice";
-import { IUser_Service, IServiceSold } from '../../../interface/servicesUser';
+import { IUser_Service, IServiceSold } from "../../../interface/servicesUser";
 import onErrorImg from "../../../utils/errorImg";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import { formatDate, checkTimeExpired } from "../../../utils/format";
-import { IOrganization } from '../../../interface/organization'
+import { IOrganization } from "../../../interface/organization";
 import ServiceReview from "../ServiceReview";
+//import { Appointment } from '../../../interface/appointment'
 
 interface IProps {
-  service: IUser_Service,
-  handleServiceBook: any,
-  order_id: number
-  service_sold: IServiceSold
-  org: IOrganization | undefined
+  service: IUser_Service;
+  handleServiceBook: any;
+  order_id: number;
+  service_sold: IServiceSold;
+  org: IOrganization | undefined;
 }
 
 function ServiceItem(props: IProps) {
-  //const { t } = useContext(AppContext);
+  const { t } = useContext(AppContext);
   const {
     service,
     handleServiceBook,
@@ -28,6 +29,14 @@ function ServiceItem(props: IProps) {
   } = props;
   const [open, setOpen] = useState(false);
   const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
+  //const { appointments } = useSelector((state: any) => state.APP.APPS);
+
+  //const APPOINT_BY_ORDER_ID: Appointment = appointments.find((val: Appointment) => val.order_id === order_id);
+  //const services_appointment = APPOINT_BY_ORDER_ID?.services;
+
+  //const service_item_app = services_appointment?.filter((i: any) => i.id === service.id);
+
+
   const servicesBook = servicesBookSlice.servicesBook;
   const servicesBook_id = servicesBook.map((item: any) => item.ser_book_id);
   const dateExpired = checkTimeExpired(service?.time_expired)
@@ -53,13 +62,23 @@ function ServiceItem(props: IProps) {
           <span
             onClick={onOpenServiceReview}
             className="treatment-ser-item__out"
-            style={{marginRight:"4px"}}
+            style={{ marginRight: "4px" }}
           >
             Dịch vụ đã sử dụng | Đánh giá
           </span>
         }
+        {/* {
+          (service_item_app?.length > 0 && service.remain_time > 0) &&
+          <span
+            onClick={onOpenServiceReview}
+            className="treatment-ser-item__out"
+            style={{ marginRight: "4px" }}
+          >
+            Đang thực hiện
+          </span>
+        } */}
         {
-          dateExpired &&
+          (dateExpired && service.remain_time > 0) &&
           <span
             style={{ backgroundColor: "var(--red-cl)", color: "var(--white)" }}
             className="treatment-ser-item__out"
@@ -97,10 +116,6 @@ function ServiceItem(props: IProps) {
             <span className="ser-name">
               {service?.service_name}
             </span>
-            {/* {
-            service.time_expired &&
-            <p>Ngày hết hạn : {service.time_expired}</p>
-          } */}
             <span className="ser-desc">
               {service.description !== null && service.description}
             </span>
@@ -108,7 +123,7 @@ function ServiceItem(props: IProps) {
               {
                 service.time_expired &&
                 <div className="quantity-text__time-ex">
-                  Ngày hết hạn | {formatDate(service.time_expired)}
+                  Hết hạn | {formatDate(service.time_expired)}
                 </div>
               }
               <div className="flex-row quantity">

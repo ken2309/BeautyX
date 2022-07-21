@@ -8,7 +8,7 @@ import { postAsyncComment } from "../../../redux/org_services/serviceSlice";
 import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { STATUS } from "../../../redux/status";
-import useFullScreen from "../../../utils/useFullScreen";
+import useFullScreen from "../../../utils/useDeviceMobile";
 import { useHistory } from "react-router-dom";
 import {
     clearPrevState,

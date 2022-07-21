@@ -9,7 +9,7 @@ export const fetchAsyncProductDetail: any = createAsyncThunk(
     "PRODUCT/fetchAsyncProductDetail",
     async (values: any) => {
         const res = await productsApi.getDetailById(values);
-        return res.data.context;
+        return res?.data.context;
     }
 );
 
@@ -17,9 +17,9 @@ export const fetchAsyncProductDetail: any = createAsyncThunk(
 export const fetchAsynProductRecomment: any = createAsyncThunk(
     "PRODUCT/fetchAsynProductRecomment",
     async (values: any) => {
-        const res = await productsApi.getByOrg_id(values);
+        const res = await productsApi.getByOrgId(values);
         const payload = {
-            products: res.data.context.data,
+            products: res?.data.context.data,
             cate_id: values.cate_id,
         };
         return payload;

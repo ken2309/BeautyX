@@ -7,7 +7,7 @@ import { onToggleSearchCnt } from '../../redux/search/searchSlice';
 import ProductResultItem from './components/ProductResultItem';
 
 function SectionProducts(props: any) {
-    const { PRODUCTS, onGotoFilterResult } = props;
+    const { PRODUCTS, onGotoFilterResult, keyword } = props;
     const {t} = useContext(AppContext);
     const dispatch = useDispatch();
     const onViewMore = () => {
@@ -31,6 +31,7 @@ function SectionProducts(props: any) {
                                 <li key={index}>
                                     <ProductResultItem
                                         product={item}
+                                        keyword={keyword}
                                     />
                                 </li>
                             ))

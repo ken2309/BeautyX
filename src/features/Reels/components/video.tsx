@@ -4,8 +4,12 @@ import EvaluateInput from "../../Reviews/EvaluateInput";
 
 import icon from "../../../constants/icon";
 import { useElementOnScreen } from "../../../utils/useElementScreen";
-
 import onErrorImg from "../../../utils/errorImg";
+// interface
+import { IOrganization } from '../../../interface/organization';
+import { IComment } from '../../../interface/comments';
+import { Service } from '../../../interface/service';
+// end
 export default function Video(props: any) {
     const videoRef = useRef<any>();
     const options = {
@@ -14,13 +18,50 @@ export default function Video(props: any) {
         threshold: 0.3,
     };
     const isVisable = useElementOnScreen(options, videoRef);
+    // ---- interface ----
+    interface IReact {
+        favoriteCount: number;
+        isFavorite: Boolean;
+    }
+    interface Comments {
+        comments?:IComment[]|null;
+        totalItem?:number
+    }
+    interface IData {
+        org?: IOrganization | null;
+        ser?: Service[]|null;
+        cmt?: Comments|undefined|null
+    }
+    // ---- video ----
 
-    const { data, videoCur, setVideoCur } = props;
-    const { org, ser, cmt } = data?.resVidData;
-    const vd_url = data.video?.excerpt?.rendered?.slice(
+    const { org, sers, cmt, video, videoCur, setVideoCur, initialIndex, index } = props;
+    const vd_url = video?.excerpt?.rendered?.slice(
         10,
-        data.video?.excerpt?.rendered?.length - 12
+        video?.excerpt?.rendered?.length - 12
     );
+    // ---- org - service - comments ---- 
+    const [data, setData] = useState<IData|undefined>({
+        org: org,
+        ser: sers,
+        cmt: cmt
+    });
+    const [reaction, setReaction] = useState<IReact>({
+        favoriteCount: org.favorites_count,
+        isFavorite: org.is_favorite
+    })
+    const [comment, setComment] = useState<any>({
+        text: '',
+        url: video.link,
+        image_url: '',
+        used: true,
+        star: 5,
+    });
+    // ---- end ---- 
+    useEffect(()=>{
+        if (videoRef && videoRef.current && videoRef.current.id === ("reel_"+initialIndex)) {
+            videoRef.current.scrollIntoView()
+        }
+    },[initialIndex])
     useEffect(() => {
         if (isVisable) {
             videoRef.current.play();
@@ -30,13 +71,13 @@ export default function Video(props: any) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisable]);
     return (
-        <div className="trend-item-ctn">
+        <div className="trend-item-ctn" >
             <div className="video-control__info">
                 <div className="left">
                     <div className="video-control__info-label">
                         <img
                             // onClick={onOrgDetail}
-                            src={org?.context.image_url}
+                            src={org?.image_url}
                             alt=""
                             className="org_avt org_avt-spin"
                             onError={(e) => onErrorImg(e)}
@@ -46,15 +87,15 @@ export default function Video(props: any) {
                             className="org__name"
                         >
                             @
-                            {org?.context.name?.split(" ").length > 46
-                                ? org?.context.name.slice(0, 50) + "..."
-                                : org?.context.name}
+                            {org?.name?.split(" ").length > 46
+                                ? org?.name.slice(0, 50) + "..."
+                                : org?.name}
                         </span>
                     </div>
                     <span
                         className="ser__name"
                         dangerouslySetInnerHTML={{
-                            __html: data.video.title.rendered,
+                            __html: video.title.rendered,
                         }}
                     >
                         {/* {video?.title?.rendered?.split(' ').length>6?video?.title?.rendered.slice(0, 50)+'...':video?.title?.rendered} */}
@@ -66,7 +107,7 @@ export default function Video(props: any) {
                             // onClick={onFavorite}
                             className="right-item__img"
                             src={
-                                org?.context.is_favorite === true
+                                reaction.isFavorite === true
                                     ? icon.heart
                                     : icon.unHeart
                             }
@@ -74,8 +115,7 @@ export default function Video(props: any) {
                             // src={icon.unHeart}
                         />
                         <span className="right-item__count">
-                            {/* {follow.favoritesCount} */}
-                            123
+                            {reaction.favoriteCount}
                         </span>
                     </div>
                     <div className="right-item">
@@ -99,11 +139,10 @@ export default function Video(props: any) {
                             </svg>
                         </div>
                         <span className="right-item__count">
-                            {/* {data.comments.length} */}
-                            123
+                            {data?.cmt?.totalItem}
                         </span>
                     </div>
-                    <div className="right-item">
+                    {/* <div className="right-item">
                         <div className="share">
                             <svg
                                 aria-label="Share Post"
@@ -134,14 +173,14 @@ export default function Video(props: any) {
                             </svg>
                         </div>
                         <span className="right-item__count">
-                            {/* {data.comments.length} */}
                             123
                         </span>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <video
                 ref={videoRef}
+                id={"reel_"+index}
                 className="video-item__pc"
                 webkit-playsinline="webkit-playsinline"
                 playsInline={true}

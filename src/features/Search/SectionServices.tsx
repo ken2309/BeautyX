@@ -5,9 +5,8 @@ import ServiceResultItem from './components/ServiceResultItem';
 import { onSetTabResult } from '../../redux/search/searchResultSlice';
 import { onToggleSearchCnt } from '../../redux/search/searchSlice'
 import { AppContext } from '../../context/AppProvider';
-
 function SectionServices(props: any) {
-    const { SERVICES, onGotoFilterResult } = props;
+    const { SERVICES, onGotoFilterResult, keyword } = props;
     const {t} = useContext(AppContext);
     const dispatch = useDispatch();
     const onViewMore = () => {
@@ -32,6 +31,7 @@ function SectionServices(props: any) {
                                 <li key={index}>
                                     <ServiceResultItem
                                         service={item}
+                                        keyword={keyword}
                                     />
                                 </li>
                             ))

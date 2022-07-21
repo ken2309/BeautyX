@@ -14,13 +14,16 @@ import { STATUS } from "../../../../redux/status";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { AppContext } from "../../../../context/AppProvider";
 import EmptyRes from '../../../EmptyRes';
+import { LoadingServices } from "../../../../components/LoadingSketion";
+import LoadingMore from "../../../../components/LoadingMore";
+
 interface IProps {
     org: IOrganization;
 }
 
 function OrgServices(props: IProps) {
     const dispatch = useDispatch();
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext);
     const { CATE, SERVICES, choose_cate, org_id } = useSelector(
         (state: any) => state.ORG_SERVICES
     );
@@ -29,18 +32,17 @@ function OrgServices(props: IProps) {
     const { org } = props;
     const callServicesCate = () => {
         if (org_id !== org?.id || status !== STATUS.SUCCESS) {
-            dispatch(onChooseCateServices(null))
+            dispatch(onChooseCateServices(null));
             dispatch(fetchAsyncCateServices(org?.id));
         }
     };
     const callServicesOrg = () => {
         if (org_id !== org?.id || status_ser !== STATUS.SUCCESS) {
-            console.log(org)
             const values = {
                 org_id: org?.id,
                 page: 1,
                 cate_id: choose_cate,
-                isEnable: org?.is_momo_ecommerce_enable && true
+                isEnable: org?.is_momo_ecommerce_enable && true,
             };
             dispatch(clearServices());
             dispatch(fetchAsyncServices(values));
@@ -55,7 +57,7 @@ function OrgServices(props: IProps) {
             org_id: org?.id,
             page: 1,
             cate_id: id,
-            isEnable: org?.is_momo_ecommerce_enable && true
+            isEnable: org?.is_momo_ecommerce_enable && true,
         };
         dispatch(clearServices());
         dispatch(onChooseCateServices(id));
@@ -67,58 +69,59 @@ function OrgServices(props: IProps) {
                 org_id: org?.id,
                 page: page + 1,
                 cate_id: choose_cate,
-                isEnable: org?.is_momo_ecommerce_enable && true
+                isEnable: org?.is_momo_ecommerce_enable && true,
             };
             dispatch(fetchAsyncServices(values));
         }
     };
-
     return (
         <div className="org-services-cnt">
-            {
-                (categories && categories.filter((e: any) => e.services_count > 0).length > 0)
-                &&
-                <div className="org-services-cnt__left">
-                    <ul className="cates-list">
-                        <li
-                            onClick={() => handleChooseCate(null)}
-                            style={
-                                !choose_cate
-                                    ? {
-                                        color: "var(--bgWhite)",
-                                        backgroundColor: "var(--purple)",
-                                    }
-                                    : {}
-                            }
-                            className="cate-list__item"
-                        >
-                            <span
+            {categories &&
+                categories.filter((e: any) => e.services_count > 0).length >
+                    0 && (
+                    <div className="org-services-cnt__left">
+                        <ul className="cates-list">
+                            <li
+                                onClick={() => handleChooseCate(null)}
                                 style={
                                     !choose_cate
                                         ? {
-                                            color: "var(--bgWhite)",
-                                        }
+                                              color: "var(--bgWhite)",
+                                              backgroundColor: "var(--purple)",
+                                          }
                                         : {}
                                 }
-                                className="cate-list__item-title"
+                                className="cate-list__item"
                             >
-                                {t("cart.all")}
-                            </span>
-                        </li>
-                        {
-                            categories
+                                <span
+                                    style={
+                                        !choose_cate
+                                            ? {
+                                                  color: "var(--bgWhite)",
+                                              }
+                                            : {}
+                                    }
+                                    className="cate-list__item-title"
+                                >
+                                    {t("cart.all")}
+                                </span>
+                            </li>
+                            {categories
                                 .filter((i: any) => i.services_count > 0)
                                 .map((item: any, index: number) => (
                                     <li
                                         style={
                                             choose_cate === item.id
                                                 ? {
-                                                    color: "#fff",
-                                                    backgroundColor: "var(--purple)",
-                                                }
+                                                      color: "#fff",
+                                                      backgroundColor:
+                                                          "var(--purple)",
+                                                  }
                                                 : {}
                                         }
-                                        onClick={() => handleChooseCate(item.id)}
+                                        onClick={() =>
+                                            handleChooseCate(item.id)
+                                        }
                                         className="cate-list__item"
                                         key={index}
                                     >
@@ -126,8 +129,8 @@ function OrgServices(props: IProps) {
                                             style={
                                                 choose_cate === item.id
                                                     ? {
-                                                        color: "#fff",
-                                                    }
+                                                          color: "#fff",
+                                                      }
                                                     : {}
                                             }
                                             className="cate-list__item-title"
@@ -136,11 +139,12 @@ function OrgServices(props: IProps) {
                                         </span>
                                     </li>
                                 ))}
-                    </ul>
-                </div>
-            }
+                        </ul>
+                    </div>
+                )}
 
             <div className="org-services-cnt__right">
+                {page === 1 && status_ser !== STATUS.SUCCESS && <LoadingServices width="20%" />}
                 {totalItem === 0 && status === STATUS.SUCCESS && <EmptyRes title='Không có dịch vụ phù hợp!' />}
                 <InfiniteScroll
                     dataLength={services.length}
@@ -156,6 +160,7 @@ function OrgServices(props: IProps) {
                         ))}
                     </ul>
                 </InfiniteScroll>
+                {services.length < totalItem && <LoadingMore />}
             </div>
         </div>
     );

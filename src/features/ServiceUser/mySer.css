@@ -138,6 +138,16 @@
     background-color: var(--bgWhite);
     position: relative;
 }
+.treat-card-item__dot{
+    width: 10px;
+    height: 10px;
+    background-color: var(--red-cl);
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: -4px -4px 0px 0px;
+    border-radius: 100%;
+}
 
 .treat-card-item__book {
     position: absolute;
@@ -153,13 +163,13 @@
     border-radius: 6px;
     margin: -14px -12px 0px 0px;
     cursor: pointer;
-    transition: all .3s;
+    transition: all 0.3s;
     height: 0px;
     overflow: hidden;
 }
 
 .treat-card-item__book:hover {
-    opacity: .6;
+    opacity: 0.6;
 }
 
 .treat-card-item__book img {
@@ -205,13 +215,13 @@
 }
 
 .treatment-ser-item__out {
-    background-color: #DDFFE9;
+    background-color: #ddffe9;
     padding: 2px 4px;
     margin-top: 2px;
     font-size: 12px;
     line-height: 14px;
     font-weight: 700;
-    color: #13B139;
+    color: #13b139;
     border-radius: 4px;
     cursor: pointer;
 }
@@ -706,7 +716,7 @@
 }
 
 .quantity-text__time-ex {
-    background-color: #FFE3D2;
+    background-color: #ffe3d2;
     padding: 2px 4px;
     font-size: 14px;
     line-height: 16px;
@@ -890,7 +900,7 @@
 
     .my-ser {
         flex-direction: column;
-        padding: 50px 4px 12px 12px;
+        padding: 64px 4px 12px 12px;
     }
 
     .my-ser-book {

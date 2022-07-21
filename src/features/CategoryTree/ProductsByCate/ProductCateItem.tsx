@@ -18,7 +18,7 @@ function ProductCateItem(props: IProps) {
     return (
         <Link
             to={{
-                pathname: `/product-detail/${slugify(item?.product_name)}`,
+                pathname: `/san-pham/${slugify(item?.product_name)}`,
                 search: `id=${item?.product_id}&org=${item?.org_id}`,
             }}
             onClick={() => scrollTop()}

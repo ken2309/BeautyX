@@ -1,8 +1,8 @@
 .home-discounts {
     margin: 32px 0px;
     width: 100vw;
-    background-color: var(--red-cl);
-    padding: 32px 0px;
+    background-color: #ffe3d2;
+    padding: 0 0 32px 0px;
 }
 
 .home-discounts__list {
@@ -11,19 +11,25 @@
     grid-gap: 16px;
 }
 .home-discounts__title {
+    padding: 16px;
+    background-color: #ff721f;
+    margin-bottom: 16px;
+    border-radius: 0 0 16px 16px;
+}
+.home-discounts__title span {
     font-weight: 700;
     font-size: 24px;
-    line-height: 1;
+    line-height: normal;
     text-transform: uppercase;
-    color: #ffe818;
-    margin-bottom: 16px;
+    color: white;
+    font-family: 'Nunito';
 }
 .home-discounts__title span:nth-child(2) {
     cursor: pointer;
     font-size: 16px;
     line-height: 18px;
     font-weight: 700;
-    color: #fff;
+    color: white;
     text-transform: capitalize;
 }
 .home-discounts__list .item-cnt {
@@ -133,6 +139,9 @@
     color: var(--bgWhite);
     text-align: center;
 }
+.watch-more-card{
+    display: none;
+}
 /* Tablet */
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
     .home-discounts {
@@ -146,6 +155,7 @@
 @media only screen and (max-width: 767px) {
     .home-discounts {
         padding: 0px;
+        padding-top: 12px;
         margin: 16px 0;
     }
     .home-discounts__list-wrap {
@@ -160,16 +170,44 @@
         grid-gap: 12px;
     }
     .home-discounts__title {
-        padding: 12px 12px 0 12px;
-        margin-bottom: 0;
+        padding: 5px 12px;
+        /* border-radius: 0 0 8px 8px; */
+        border-radius: 8px;
+        margin: 0 12px;
     }
     .home-discounts__title span:nth-child(1) {
-        font-size: 14px;
+        /* font-weight: 800; */
+        font-size: 18px;
+        /* text-transform: capitalize; */
+        text-transform: unset;
+        line-height: 24px;
     }
     .home-discounts__title span:nth-child(2) {
         font-size: 12px;
     }
     .home-discounts__list li {
         width: 164px;
+    }
+    .watch-more-card{
+        display: flex;
+        align-items: center;
+        text-align: center;
+        font-weight: bold;
+        background: #fff;
+        border-radius: 8px;
+    }
+    .watch-more-card li>div{
+        width: fit-content;
+        margin: auto;
+        padding: 5px 10px;
+        border: 1px solid;
+        height: fit-content;
+        line-height: 1;
+        border-radius: 100%;
+    }
+    .watch-more-card li>span{
+        line-height: 3;
+        font-family: 'Nunito';
+        font-weight: 600;
     }
 }

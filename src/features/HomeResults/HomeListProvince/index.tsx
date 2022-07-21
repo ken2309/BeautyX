@@ -3,12 +3,13 @@ import React, { useContext } from "react";
 //import icon from '../../../constants/icon';
 import { AppContext } from "../../../context/AppProvider";
 import { IProvince } from "../../../interface/provinces";
-import HomeTitleSection from "../../Homev2/components/HomeTitleSection/index";
+import HomeTitleSection from "../../HomePage/HomeTitleSection/index/index";
 import Head from "../../Head";
 import HeadTitle from "../../HeadTitle";
 import scrollTop from "../../../utils/scrollTop";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { formatRoundOrgCount } from "../../../utils/format";
 
 function HomeListProvince(props: any) {
     const { t } = useContext(AppContext);
@@ -48,7 +49,7 @@ function HomeListProvince(props: any) {
                                     <div className="province-item-cnt">
                                         <span>{item.name}</span>
                                         <span>
-                                            {item.organizations_count + item?.branches_count}{" "}
+                                            {formatRoundOrgCount(item.organizations_count + item?.branches_count)}{" "}
                                             {t("home_2.beauty_places")}{" "}
                                         </span>
                                     </div>

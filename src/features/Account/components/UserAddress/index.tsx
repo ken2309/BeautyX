@@ -9,20 +9,17 @@ import {
     fetchAsyncUserAddress,
     removeAsyncUserAddress,
     updateAsyncAddress,
-    removeDefaultItem
 } from '../../../../redux/USER/userAddressSlice';
 import { STATUS } from '../../../../redux/status';
 import ModalLoad from '../../../../components/ModalLoad';
 import UserAddressMoba from './components/UserAddressMoba';
 
 function Address(props: any) {
-    //console.log(session, local)
     const history = useHistory();
     const dispatch = useDispatch();
     const ADDRESS = useSelector((state: any) => state.ADDRESS);
-    const { address, status, status_up } = ADDRESS;
+    const { address, status, status_up, address_default } = ADDRESS;
     const [openMbAddress, setOpenMbAddress] = useState(false);
-    const address_default = address?.find((item: any) => item.is_default === true);
     const callUserAddress = () => {
         if (status !== STATUS.SUCCESS) {
             dispatch(fetchAsyncUserAddress())
@@ -33,13 +30,11 @@ function Address(props: any) {
         callUserAddress()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch])
-    const handleRemoveAddress =  (address: IUserAddress) => {
-         dispatch(removeAsyncUserAddress(address.id))
+    const handleRemoveAddress = (address: IUserAddress) => {
+        dispatch(removeAsyncUserAddress(address.id))
     }
     const handleUpdateAddress = (address: any) => {
         dispatch(updateAsyncAddress(address))
-        const action = removeDefaultItem(address_default);
-        dispatch(action)
     }
 
     const gotoAddNewAddress = () => {
@@ -47,7 +42,6 @@ function Address(props: any) {
             pathname: '/tai-khoan/dia-chi',
         })
     }
-
     return (
         <>
             {
@@ -73,7 +67,7 @@ function Address(props: any) {
                         item={item}
                         handleRemoveAddress={handleRemoveAddress}
                         handleUpdateAddress={handleUpdateAddress}
-                    //chooseAdd={chooseAdd}
+                        address_default={address_default}
                     />
                 ))
             }

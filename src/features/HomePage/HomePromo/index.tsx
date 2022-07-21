@@ -14,7 +14,7 @@ function HomePromo(props: any) {
     const dispatch = useDispatch();
     const { services, status, query } = SERVICES_PROMO
     const callServicesPromo = () => {
-        if (status !== STATUS.SUCCESS) {
+        if (status !== STATUS.SUCCESS && status !== STATUS.FAIL) {
             dispatch(fetchAsyncServicesPromo({
                 page: 1,
                 sort: FILTER_PROMO.query
@@ -34,22 +34,30 @@ function HomePromo(props: any) {
         }
     }
     return (
-        <div className="home-se-promo">
-            <FilterService
-                onChangeFilter={onChangeServicesByFilter}
-            />
-            <div className="home-promo-ser">
-                <ul className="ser-list">
-                    {services
-                        .slice(0, 18)
-                        .map((item: IServicePromo, index: number) => (
-                            <li key={index}>
-                                <ServicePromoItem service={item} />
-                            </li>
-                        ))}
-                </ul>
-            </div>
-        </div>
+        <>
+            {
+                status === STATUS.FAIL
+                    ?
+                    <></>
+                    :
+                    <div className="home-se-promo">
+                        <FilterService
+                            onChangeFilter={onChangeServicesByFilter}
+                        />
+                        <div className="home-promo-ser">
+                            <ul className="ser-list">
+                                {services
+                                    .slice(0, 18)
+                                    .map((item: IServicePromo, index: number) => (
+                                        <li key={index}>
+                                            <ServicePromoItem service={item} />
+                                        </li>
+                                    ))}
+                            </ul>
+                        </div>
+                    </div>
+            }
+        </>
     );
 }
 

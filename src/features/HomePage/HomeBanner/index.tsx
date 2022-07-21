@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import ReactPlayer from "react-player";
 import { Container } from "@mui/material";
 import Slider from "react-slick";
@@ -9,9 +9,12 @@ import { dealHot } from "../../../constants/img";
 import { IBanner } from "../../../interface/banner";
 import slugify from "../../../utils/formatUrlString";
 import scrollTop from "../../../utils/scrollTop";
-import HomeBannerPopup from "../../Home/components/HomeBannerPopup";
+import HomeBannerPopup from "./HomeBannerPopup";
+import "../../../assets/styles/main.css";
 import "./homeBanner.css";
-
+// ==== api tracking ====
+// import tracking from "../../../api/trackApi";
+// end
 const PrevButton = (props: any) => {
     const { onClick } = props;
     return (
@@ -106,6 +109,7 @@ export default function HomeBanner() {
         setOpenVideo(false);
     }
     const handleClick = () => {
+        // tracking.BANNER_CLICK(banners.id);
         if (chooseBanner) {
             switch (chooseBanner.type) {
                 case "VIDEO":
@@ -115,11 +119,7 @@ export default function HomeBanner() {
                 case "WEB":
                     return openWeb();
                 case "SEARCH_RESULT":
-                    console.log(chooseBanner)
-                    // return history.push({
-                    //     // pathname: `/home-banner-result`,
-                    //     state: chooseBanner,
-                    // });
+                    console.log(chooseBanner);
                     return history.push({
                         pathname: `/home-banner-result`,
                         state: chooseBanner,
@@ -143,8 +143,8 @@ export default function HomeBanner() {
         });
     };
     useEffect(() => {
-        banners.length>0&&setChooseBanner(banners[0])
-    }, [banners])
+        banners.length > 0 && setChooseBanner(banners[0]);
+    }, [banners]);
     return (
         <div className="homepage-banner">
             <Container>
@@ -163,28 +163,42 @@ export default function HomeBanner() {
                         </Slider>
                     </div>
                     <div className="banner-right">
-                        <div className="banner-right__top">
-                            <img
-                                onClick={() => gotoDetail(deals[0])}
-                                src={dealHot.dealhot}
-                                alt=""
-                            />
-                        </div>
+                        <Link
+                            to={{
+                                pathname: `/deal/${slugify(deals[0].title)}`,
+                                search: `${deals[0].id}`,
+                            }}
+                            className="banner-right__top"
+                        >
+                            <img src={dealHot.dealhot} alt="" />
+                        </Link>
                         <div className="banner-right__bottom">
-                            <div className="banner-bottom__item">
-                                <img
-                                    onClick={() => gotoDetail(deals[1])}
-                                    src={dealHot.dealhot1}
-                                    alt=""
-                                />
-                            </div>
-                            <div className="banner-bottom__item">
+                            <Link
+                                to={{
+                                    pathname: `/deal/${slugify(
+                                        deals[1].title
+                                    )}`,
+                                    search: `${deals[1].id}`,
+                                }}
+                                className="banner-bottom__item"
+                            >
+                                <img src={dealHot.dealhot1} alt="" />
+                            </Link>
+                            <Link
+                                to={{
+                                    pathname: `/deal/${slugify(
+                                        deals[2].title
+                                    )}`,
+                                    search: `${deals[2].id}`,
+                                }}
+                                className="banner-bottom__item"
+                            >
                                 <img
                                     onClick={() => gotoDetail(deals[2])}
                                     src={dealHot.dealhot2}
                                     alt=""
                                 />
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </div>

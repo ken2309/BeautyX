@@ -6,7 +6,9 @@ import {
     resetVIDEOs,
 } from "../../../../redux/video/videosSlice";
 import VideoItemPc from "./VideoItemPc";
-
+// ==== api tracking ====
+//  import tracking from "../../../../api/trackApi";
+// end
 function ContainerPc(props: any) {
     const { videos } = props;
     const dispatch = useDispatch();
@@ -28,6 +30,7 @@ function ContainerPc(props: any) {
     };
     useEffect(() => {
         videos.status === "SUCCESS" && RESET_STATE && handleFetchAsync();
+        // videos.status === "SUCCESS" && tracking.VIDEO_SCREEN_LOAD();
         // (videos.status==='SUCCESS'&&(RESET_STATE))&&handleFetchAsync()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [videos.status]);

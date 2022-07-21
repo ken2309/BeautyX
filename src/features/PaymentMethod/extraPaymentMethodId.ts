@@ -14,6 +14,9 @@ export const extraPaymentMethodId = (payments_method: any[], chooseE_wall: any) 
         case FLAT_FORM_TYPE.TIKI:
             payment_method_id = payments_method.find((item: any) => item.name_key === FLAT_FORM_TYPE.TIKI)?.id
             break
+        case FLAT_FORM_TYPE.MB:
+            payment_method_id = payments_method.find((item: any) => item.name_key === FLAT_FORM_TYPE.MB)?.id
+            break
         default:
             break
     }

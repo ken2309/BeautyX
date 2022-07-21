@@ -40,11 +40,11 @@ export const fetchAsyncCateServices: any = createAsyncThunk(
 export const fetchAsyncServices: any = createAsyncThunk(
     "ORG_SERVICES/fetchAsyncServices",
     async (values: any) => {
-        const res = await serviceApi.getByOrg_id(values);
+        const res = await serviceApi.getByOrgId(values);
         const payload = {
-            services: res.data.context.data,
+            services: res?.data.context.data,
             page: values.page,
-            totalItem: res.data.context.total,
+            totalItem: res?.data.context.total,
             status_ser: STATUS.SUCCESS,
         };
         return payload;
@@ -78,9 +78,13 @@ const orgServicesSlice = createSlice({
                     ...state.SERVICES,
                     services: [],
                     page: 1,
+                    status_ser:""
                 },
             };
         },
+        onSetEmptyChooseCate:(state)=>{
+            state.choose_cate = null
+        }
     },
     extraReducers: {
         //get services cate org
@@ -136,5 +140,5 @@ const orgServicesSlice = createSlice({
     },
 });
 const { actions } = orgServicesSlice;
-export const { clearServices, onChooseCateServices } = actions;
+export const { clearServices, onChooseCateServices, onSetEmptyChooseCate } = actions;
 export default orgServicesSlice.reducer;

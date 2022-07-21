@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Head from '../../Head';
 import HeadTitle from '../../HeadTitle';
-import { deals } from '../../Homev2/components/HomeDeal';
 import { useLocation } from 'react-router-dom';
 import { Container } from '@mui/material';
 import servicePromoApi from '../../../api/servicePromoApi';
 import { IServicePromo } from '../../../interface/servicePromo'
 import ServicePromoItem from '../../ViewItemCommon/ServicePromoItem';
-import FilterServices from '../../FilterServices';
 import ButtonLoading from '../../../components/ButtonLoading';
+import { dealHot } from '../../../constants/img';
 
 interface IBanner {
     id: number,
@@ -25,6 +24,12 @@ interface IData {
     loadPage: boolean
 }
 
+export const deals = [
+    { id: 1, title: 'Deal hot từ 50-100k', min_price: 50000, max_price: 100000, img: dealHot.dealhot },
+    { id: 2, title: 'Deal chăm sóc da làm đẹp Giảm 50%', min_price: null, img: dealHot.dealhot1, percent: 50 },
+    { id: 3, title: 'Dịch vụ xâm lấn Giảm 30%', min_price: null, img: dealHot.dealhot2, percent: 30 }
+]
+
 function HomeDealBanner() {
     const location = useLocation();
     const id_banner = location.search.slice(1, location.search.length);
@@ -38,7 +43,7 @@ function HomeDealBanner() {
     })
     const handleGetServices = async () => {
         try {
-            const res = await servicePromoApi.getServicesDealBanner({
+            const res = await servicePromoApi.getServicesPromo({
                 page: data.page,
                 min_price: bannerDeals?.min_price,
                 max_price: bannerDeals?.max_price,
@@ -80,11 +85,6 @@ function HomeDealBanner() {
                 <Container>
                     <div className="deal-banner__wr">
                         <img src={bannerDeals?.img} alt="" className="deal-banner__img" />
-                        <FilterServices
-                            dataSort={dataSort}
-                            setDataSort={setDataSort}
-                            setData={setData}
-                        />
                         <ul className="deal-banner__list">
                             {
                                 data.services.map((item: IServicePromo, index: number) => (

@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { Container } from "@mui/material";
+import { Container, Drawer } from "@mui/material";
 import { IOrganization } from "../../../interface/organization";
 import onErrorImg from "../../../utils/errorImg";
 import icon from "../../../constants/icon";
@@ -14,12 +14,14 @@ import { useHistory } from "react-router-dom";
 import PopupDetailContact from "./PopupDetailContact";
 import { extraOrgTimeWork } from "./Functions/extraOrg";
 import { AppContext } from "../../../context/AppProvider";
-import { STATUS } from '../../../redux/status';
+import { STATUS } from "../../../redux/status";
+import { onToggleOpenChat } from "../../../redux/chat/chatOrgSlice";
+import OrgMapWrapper from "./OrgMap/OrgMapWrapper";
 
 interface IProps {
     org: IOrganization;
     galleries: [];
-    status_galleries: string
+    status_galleries: string;
 }
 
 function OrgDetail(props: IProps) {
@@ -30,7 +32,8 @@ function OrgDetail(props: IProps) {
     const history = useHistory();
     const { USER } = useSelector((state: any) => state.USER);
     const [openPopupContact, setOpenPopupContact] = useState(false);
-
+    const [open, setOpen] = useState(false);
+    const [openPopupMap, setOpenPopupMap] = useState(false);
     // time works
     const now = new Date();
     const today = now.getDay() + 1;
@@ -89,6 +92,21 @@ function OrgDetail(props: IProps) {
     const onActiveTabGallery = () => {
         dispatch(onActiveTab(7));
     };
+    const handleOpenMap = () => {
+        if (org?.branches.length > 0) {
+            // open lit branch
+            setOpen(true);
+        } else {
+            setOpenPopupMap(true);
+        }
+    };
+    const onOpenChatOrg = () => {
+        if (USER) {
+            dispatch(onToggleOpenChat(true));
+        } else {
+            history.push("/sign-in?1");
+        }
+    };
     return (
         <div className="org-detail">
             <Container>
@@ -98,29 +116,31 @@ function OrgDetail(props: IProps) {
                         className="org-detail__cnt-top"
                     >
                         <Slider {...settings}>
-                            {
-                                (galleries.length === 0 && status_galleries === STATUS.SUCCESS) &&
-                                <div className="org-detail__banner-de">
-                                    <div className="org-detail__banner-de__item">
-                                        <div className="back-drop">
-                                            <img
-                                                style={{ width: "100%" }}
-                                                src={org?.image_url}
-                                                alt=""
-                                                className="back-drop__img"
-                                                onError={(e) => onErrorImg(e)}
-                                            />
-                                            <div className="banner-item__cnt">
+                            {galleries.length === 0 &&
+                                status_galleries === STATUS.SUCCESS && (
+                                    <div className="org-detail__banner-de">
+                                        <div className="org-detail__banner-de__item">
+                                            <div className="back-drop">
                                                 <img
+                                                    style={{ width: "100%" }}
                                                     src={org?.image_url}
                                                     alt=""
-                                                    className="banner-item__img"
+                                                    className="back-drop__img"
+                                                    onError={(e) =>
+                                                        onErrorImg(e)
+                                                    }
                                                 />
+                                                <div className="banner-item__cnt">
+                                                    <img
+                                                        src={org?.image_url}
+                                                        alt=""
+                                                        className="banner-item__img"
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
+                                )}
                             {galleries.map((item: any, index: number) => (
                                 <div
                                     key={index}
@@ -205,6 +225,73 @@ function OrgDetail(props: IProps) {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div
+                                            onClick={(e) => {
+                                                handleOpenMap();
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                            }}
+                                            className="re-change-map"
+                                        >
+                                            <img
+                                                src={icon.mapMarkerOrg}
+                                                alt=""
+                                            />
+                                            <span className="re-change-map-text">
+                                                {t("pr.map")}
+                                            </span>
+                                            {org?.branches.length > 0 ? (
+                                                <>
+                                                    <span className="re-change-map-total">
+                                                        {org?.branches.length}{" "}
+                                                        CN
+                                                    </span>
+                                                </>
+                                            ) : null}
+                                        </div>
+                                    </div>
+                                    <div className="org-mess-flo">
+                                        <div
+                                            className="org-mess"
+                                            style={
+                                                org?.is_favorite
+                                                    ? {
+                                                          backgroundColor:
+                                                              "#e64d4a",
+                                                          border: "1px solid #e64d4a",
+                                                      }
+                                                    : {}
+                                            }
+                                            onClick={handleFavoriteOrg}
+                                        >
+                                            <span
+                                                style={
+                                                    org?.is_favorite
+                                                        ? {
+                                                              color: "#fff",
+                                                          }
+                                                        : {}
+                                                }
+                                            >
+                                                {org?.is_favorite
+                                                    ? t("Mer_de.flowing")
+                                                    : t("Mer_de.flow")}
+                                            </span>
+                                        </div>
+                                        {/* <div
+                                            onClick={() => onOpenChatOrg()}
+                                            className="org-flo"
+                                        >
+                                            <span>Nhắn tin</span>
+                                        </div> */}
+                                        <div
+                                            className="org-flo"
+                                            onClick={() => {
+                                                setOpenPopupContact(true);
+                                            }}
+                                        >
+                                            <span> {t("Mer_de.contact")}</span>
+                                        </div>
                                     </div>
                                     <div className="org-time-work">
                                         <div className="flexX-gap-4 org-time-work__left">
@@ -250,10 +337,10 @@ function OrgDetail(props: IProps) {
                                                         <li
                                                             style={
                                                                 index + 2 ===
-                                                                    today
+                                                                today
                                                                     ? {
-                                                                        color: "var(--purple)",
-                                                                    }
+                                                                          color: "var(--purple)",
+                                                                      }
                                                                     : {}
                                                             }
                                                             key={index}
@@ -284,18 +371,17 @@ function OrgDetail(props: IProps) {
                                     style={
                                         org?.is_favorite
                                             ? {
-                                                backgroundColor:
-                                                    "var(--purple)",
-                                                color: "var(--bgWhite)",
-                                            }
+                                                  backgroundColor:
+                                                      "var(--purple)",
+                                                  color: "var(--bgWhite)",
+                                              }
                                             : {}
                                     }
                                     onClick={handleFavoriteOrg}
                                 >
                                     {org?.is_favorite
                                         ? t("Mer_de.flowing")
-                                        : t("Mer_de.flow")
-                                    }
+                                        : t("Mer_de.flow")}
                                 </button>
                                 <br />
                                 <button
@@ -305,6 +391,7 @@ function OrgDetail(props: IProps) {
                                 >
                                     {t("Mer_de.contact")}
                                 </button>
+                                {/* <button onClick={onOpenChatOrg}>Chat</button> */}
                             </div>
                         </div>
                     </div>
@@ -313,6 +400,50 @@ function OrgDetail(props: IProps) {
             <PopupDetailContact
                 openPopupContact={openPopupContact}
                 setOpenPopupContact={setOpenPopupContact}
+            />
+            <Drawer open={open} anchor="bottom" onClose={() => setOpen(false)}>
+                <div className="se-branch__drawer">
+                    <p className="se-branch__title">
+                        {t("Mer_de.list_branch")}
+                    </p>
+                    <div className="se-branch__list">
+                        {org?.branches.map((item: any, index: number) => (
+                            <div key={index} className="se-branch__item">
+                                <div>
+                                    <div className="branch-item__top">
+                                        <div className="item-top__distance">
+                                            <img src={icon.mapPinRed} alt="" />
+                                            <span>3km</span>
+                                        </div>
+                                        <div className="item-top__name">
+                                            <p>{item?.name}</p>
+                                        </div>
+                                    </div>
+                                    <div className="branch-item__bottom">
+                                        <div className="item-bottom__address">
+                                            <p>{item?.address}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    onClick={(e) => {
+                                        setOpenPopupMap(true);
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                    }}
+                                    className="branch-item__pinmap"
+                                >
+                                    <img src={icon.mapMarkerOrg} alt="" />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </Drawer>
+            <OrgMapWrapper
+                open={openPopupMap}
+                setOpen={setOpenPopupMap}
+                org={org}
             />
         </div>
     );

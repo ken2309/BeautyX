@@ -1,15 +1,23 @@
 import React, { useContext } from 'react';
 import icon from '../../../constants/icon';
 import ButtonCus from '../../../components/ButtonCus';
-import {AppContext} from '../../../context/AppProvider';
+import { AppContext } from '../../../context/AppProvider';
 import MenuBox from './MenuBox';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../../../redux/USER/userSlice';
+import { onClearApps } from '../../../redux/appointment/appSlice';
+import { onSetStatusServicesUser } from '../../../redux/order/orderSlice';
 
-function Menu(props:any) {
+function Menu(props: any) {
       const { openMenu, setOpenMenu, USER } = props;
       const { t, setSign } = useContext(AppContext)
+      const dispatch = useDispatch();
       const handleSignOut = () => {
             setSign(false);
             setOpenMenu(!openMenu)
+            dispatch(logoutUser());
+            dispatch(onClearApps());
+            dispatch(onSetStatusServicesUser())
             localStorage.removeItem('_WEB_TK')
             window.sessionStorage.removeItem('_WEB_TK')
       }
@@ -19,7 +27,7 @@ function Menu(props:any) {
                   className="hd-menu"
             >
                   <div className="hd-menu__title">Menu</div>
-                  <MenuBox/>
+                  <MenuBox />
                   {
                         USER ?
                               <div className="hd-menu-box__bot">

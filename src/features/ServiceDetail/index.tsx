@@ -20,7 +20,7 @@ import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation
 import Review from "../Reviews";
 import icon from "../../constants/icon";
 import DetailOrgCard from "./components/DetailOrgCard";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 import HeadOrg from "../MerchantDetail/components/HeadOrg";
 import DetailPolicy from "./components/DetailPolicy";
 import DetailRecommend from "./components/DetailRecommend";
@@ -34,8 +34,8 @@ import { AppContext } from "../../context/AppProvider";
 //import ServiceVideo from "./components/ServiceVideo";
 
 // google tag event
-import { GoogleTagPush, GoogleTagEvents } from '../../utils/dataLayer';
-// end 
+import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
+// end
 
 function ServiceDetail(props: any) {
     const { t } = useContext(AppContext);
@@ -45,7 +45,6 @@ function ServiceDetail(props: any) {
     const { SERVICE, COMMENTS } = useSelector((state: any) => state.SERVICE);
     const params: any = extraParamsUrl();
     const history = useHistory();
-
     const is_mobile = useFullScreen();
     const service = SERVICE.service;
     const org = ORG.org;
@@ -164,7 +163,6 @@ function ServiceDetail(props: any) {
         callServiceDetail();
         callOrgDetail();
         callServiceComments();
-
     }, [params.id]);
 
     const handleBack = () => {
@@ -177,7 +175,7 @@ function ServiceDetail(props: any) {
         if (params.org && params.id) {
             dispatch(fetchAsyncServiceDetail(values));
         }
-    }
+    };
 
     return (
         <>
@@ -190,8 +188,7 @@ function ServiceDetail(props: any) {
                 }
             />
             {IS_MB ? <HeadOrg onBackFunc={handleBack} org={org} /> : <Head />}
-            {
-                SERVICE.status === STATUS.SUCCESS &&
+            {SERVICE.status === STATUS.SUCCESS && (
                 <Container>
                     {/* service detail */}
                     <div className="service-detail">
@@ -202,6 +199,7 @@ function ServiceDetail(props: any) {
                                 org={org}
                                 service={service}
                                 NOW={open.NOW}
+                                setValue={setValue}
                             />
                         </div>
                         {/* service body */}
@@ -231,7 +229,9 @@ function ServiceDetail(props: any) {
                                                     {t("pr.description")}:{" "}
                                                     {service.description
                                                         ? service.description
-                                                        : "Đang cập nhật"}
+                                                        : t(
+                                                              "detail_item.updating"
+                                                          )}
                                                 </p>
                                             </div>
                                         </TabPanel>
@@ -244,7 +244,9 @@ function ServiceDetail(props: any) {
                                             >
                                                 <Review
                                                     comments={COMMENTS.comments}
-                                                    totalItem={COMMENTS.totalItem}
+                                                    totalItem={
+                                                        COMMENTS.totalItem
+                                                    }
                                                     commentable_type={"SERVICE"}
                                                     id={ORG.org?.id}
                                                     page={COMMENTS.page}
@@ -254,7 +256,8 @@ function ServiceDetail(props: any) {
                                                     }
                                                 />
                                                 {COMMENTS.comments &&
-                                                    COMMENTS.comments.length >= 8 ? (
+                                                COMMENTS.comments.length >=
+                                                    8 ? (
                                                     <div
                                                         style={{
                                                             justifyContent:
@@ -265,7 +268,11 @@ function ServiceDetail(props: any) {
                                                         }}
                                                         className="seemore-cmt"
                                                     >
-                                                        <p>{"Xem tất cả >>"}</p>
+                                                        <p>
+                                                            {t(
+                                                                "detail_item.see_more"
+                                                            )}
+                                                        </p>
                                                     </div>
                                                 ) : null}
                                                 <ReviewsContainer
@@ -273,7 +280,9 @@ function ServiceDetail(props: any) {
                                                     setOpen={setOpenAllCmt}
                                                     comments={COMMENTS.comments}
                                                     org_id={ORG.org?.id}
-                                                    totalItem={COMMENTS.totalItem}
+                                                    totalItem={
+                                                        COMMENTS.totalItem
+                                                    }
                                                     page={COMMENTS.page}
                                                     commentable_type="SERVICE"
                                                 />
@@ -286,17 +295,22 @@ function ServiceDetail(props: any) {
                                                 ref={refMap}
                                                 className="service-detail__org"
                                             >
-                                                {ORG.status === STATUS.SUCCESS && (
+                                                {ORG.status ===
+                                                    STATUS.SUCCESS && (
                                                     <>
                                                         <p className="service-detail__title">
-                                                            Doanh nghiệp
+                                                            {t(
+                                                                "detail_item.merchant"
+                                                            )}
                                                         </p>
                                                         <div className="service-detail__org-mb">
                                                             <DetailOrgCard
                                                                 org={org}
                                                             />
                                                         </div>
-                                                        <OrgInformation org={org} />
+                                                        <OrgInformation
+                                                            org={org}
+                                                        />
                                                     </>
                                                 )}
                                             </div>
@@ -315,53 +329,63 @@ function ServiceDetail(props: any) {
                         </div>
                         {/* service bottom buttom add cart */}
                         <div className="service-detail__bottom">
-                            {
-                                (service?.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable) ?
-                                    <>
-                                        <button
-                                            onClick={() => {
-                                                setOpen({ NOW: true, open: true });
-                                            }}
-                                            style={{ backgroundColor: "var(--orange)" }}
-                                        >
-                                            <p>{t("se.booking_now")}</p>
-                                        </button>
-                                        <button
-                                            onClick={() => {
-                                                setOpen({ NOW: false, open: true });
-                                            }}
-                                            className="btn-addcart"
-                                        >
-                                            <img src={icon.ShoppingCartSimpleWhite} alt="" />
-                                            <p>{t("pr.add_to_cart")}</p>
-                                        </button>
-                                        {/* drawer service detail */}
-                                        <Drawer
-                                            open={open.open}
-                                            anchor="bottom"
-                                            onClose={() => setOpen({ ...open, open: false })}
-                                        >
-                                            <div className="active-mb">
-                                                <div className="service-detail">
-                                                    <ServiceDetailRight
-                                                        service={service}
-                                                        org={org}
-                                                        setOpenDrawer={setOpen}
-                                                        NOW={open.NOW}
-                                                    />
-                                                </div>
+                            {service?.is_momo_ecommerce_enable &&
+                            org?.is_momo_ecommerce_enable ? (
+                                <>
+                                    <button
+                                        onClick={() => {
+                                            setOpen({ NOW: true, open: true });
+                                        }}
+                                        style={{
+                                            backgroundColor: "var(--orange)",
+                                        }}
+                                    >
+                                        <p>{t("se.booking_now")}</p>
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setOpen({ NOW: false, open: true });
+                                        }}
+                                        className="btn-addcart"
+                                    >
+                                        <img
+                                            src={icon.ShoppingCartSimpleWhite}
+                                            alt=""
+                                        />
+                                        <p>{t("pr.add_to_cart")}</p>
+                                    </button>
+                                    {/* drawer service detail */}
+                                    <Drawer
+                                        open={open.open}
+                                        anchor="bottom"
+                                        onClose={() =>
+                                            setOpen({
+                                                ...open,
+                                                open: false,
+                                            })
+                                        }
+                                    >
+                                        <div className="active-mb">
+                                            <div className="service-detail">
+                                                <ServiceDetailRight
+                                                    service={service}
+                                                    org={org}
+                                                    setOpenDrawer={setOpen}
+                                                    NOW={open.NOW}
+                                                />
                                             </div>
-                                        </Drawer>
-                                    </>
-                                    :
-                                    <span className="detail-right__no">
-                                        {t("se.off_service")}
-                                    </span>
-                            }
+                                        </div>
+                                    </Drawer>
+                                </>
+                            ) : (
+                                <span className="detail-right__no">
+                                    {t("se.off_service")}
+                                </span>
+                            )}
                         </div>
                     </div>
                 </Container>
-            }
+            )}
             {/* footer */}
             <Footer />
         </>

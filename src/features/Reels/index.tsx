@@ -35,7 +35,12 @@ export default function Reels(props: any) {
                         TRENDs_VIDEOs?.data.map((item: any, index: number) => (
                             <Video
                                 key={index}
-                                data={item}
+                                org= {item?.resVidData.org.context}
+                                sers= {item?.resVidData.ser}
+                                cmt= {item?.resVidData.cmt}
+                                video= {item.video}
+                                index={index}
+                                initialIndex={initialIndex}
                                 videoCur={videoCur}
                                 setVideoCur={setVideoCur}
                             />

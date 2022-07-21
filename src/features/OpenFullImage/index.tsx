@@ -4,7 +4,7 @@ import { IComment } from "../../interface/comments";
 import formatDate from "../../utils/formatDate";
 import "./full-img.css";
 import icon from "../../constants/icon";
-import useFullScreen from "../../utils/useFullScreen";
+import useFullScreen from "../../utils/useDeviceMobile";
 
 interface IProps {
     open: boolean;
@@ -74,7 +74,7 @@ function FullImage(props: IProps) {
                                 </span>
                             </div>
                             <span className="full-name">
-                                {comment?.user.fullname || "Khách"}
+                                {comment?.user?.fullname || "Khách"}
                             </span>
                             <span className="create">
                                 {formatDate(comment?.created_at)}
