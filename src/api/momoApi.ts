@@ -50,6 +50,7 @@ class MOMO_API {
             ]
         }, (data:any,status:any) => {
             alert(JSON.stringify([data,status]))
+            return {data:data,status:status}
         })
     }
     getUserConsents = () => { 
@@ -67,12 +68,21 @@ class MOMO_API {
             ]
         }, (data:any) => {
             alert(JSON.stringify([data]))
+            return {data:data}
         })
     }
     getLocation = () => {
         MOMO.getLocation((data:any) => {
             alert(JSON.stringify([data]))
+            return {data:data}
         })
+    }
+    showToast = () => {
+        MOMO.showToast({
+            description: "Successfully",
+            type: "success",
+            duration: 2000
+        });
     }
 }
 export const momoApi = new MOMO_API();

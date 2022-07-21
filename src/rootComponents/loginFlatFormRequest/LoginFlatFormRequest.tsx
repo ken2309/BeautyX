@@ -23,10 +23,10 @@ function LoginFlatFormRequest(props: any) {
     const history = useHistory();
     const [load, setLoad] = useState(false);
     const [openOtp, setOpenOtp] = useState(false);
-    const [open, setOpen] = useState(false);
     const [dataOtp, setDataOtp] = useState({
         telephone: '',
-        verification_id: ''
+        verification_id: '',
+        code: ''
     })
     const platform = EXTRA_FLAT_FORM();
     const dispatch = useDispatch();
@@ -44,7 +44,7 @@ function LoginFlatFormRequest(props: any) {
                 })
                 break;
             case FLAT_FORM_TYPE.MB:
-                handleLoginMB();
+                handleOtpMB();
                 break;
             default:
                 break
@@ -97,9 +97,11 @@ function LoginFlatFormRequest(props: any) {
     const handleLoginMomo = async () => {
         try {
             const res = await momoApi.getUserConsents();
+            const resRequest = await momoApi.requestUserConsents();
             const resLocale = await momoApi.getLocation();
             alert(JSON.stringify(res));
-            alert(JSON.stringify(resLocale))
+            alert(JSON.stringify(resRequest))
+            // alert(JSON.stringify(resLocale));
             setLoad(false)
         }
         catch (err) {
@@ -108,25 +110,25 @@ function LoginFlatFormRequest(props: any) {
         }
 
     }
-    const handleLoginMB = async () => {
+    const handleOtpMB = () => {
+        setOpenOtp(true);
+        setLoad(false)
+        openOtp&&console.log(dataOtp);
+    }
+    const handleLoginMB = async (code:String) => {
         try {
-            setOpenOtp(true);
-            setOpen(true);
-            const session = sessionStorage.getItem("_WEB_TK") || '';
+            // (!openOtp)&&setOpenOtp(true);
+            window.sessionStorage.setItem("_WEB_TK", '4220|VCWtPxfJBqjB2zjS3t0l')
+            const session = sessionStorage.getItem("_loginToken");
             const paramsOb = {
-                "token": JSON.parse(session).loginToken,
+                "token": session,
                 "telephone": dataOtp.telephone,
-                "code": props.code,
-                "verification_id": props.verification_id
+                "code": code,
+                "verification_id": dataOtp.verification_id
             }
-            // const res = await mbAuthApi.login({token:paramsOb.token});
-            // console.log(res)
+            console.log(paramsOb);
 
-            // await dispatch(loginAsyncMb({
-            //     token: params.loginToken,
-            // }))
-            // if(res.meta)
-            await dispatch(fetchAsyncUser())
+            // await dispatch(fetchAsyncUser())
         }
         catch (err) {
             console.log(err)
@@ -142,7 +144,6 @@ function LoginFlatFormRequest(props: any) {
             setLoad(false);
         }
     }, [response])
-
     return (
         <div className='flex-column login-re-cnt'>
             <img src={icon.loginReq} alt="" />
@@ -160,12 +161,13 @@ function LoginFlatFormRequest(props: any) {
                 &&
                 (
                     <>
-                        <SignVeriOtp
+                        <Otp
                             open={openOtp}
                             setOpen={setOpenOtp}
                             setDataOtp={setDataOtp}
+                            dataOtp={dataOtp}
+                            handleSubmit= {handleLoginMB}
                         />
-                        <Otp open={open} />
                     </>
                 )
             }

@@ -41,11 +41,12 @@ function LoginFlatForm(props: any) {
         //     alert("flatForm: " + flatForm);
         //     // alert("msg: " + JSON.stringify(event.data));
         // });
+        
         try{
+            // window.sessionStorage.setItem("_WEB_TK", '4220|VCWtPxfJBqjB2zjS3t0l')
             await dispatch(loginAsyncMb({
                 token: params.loginToken,
             }))
-            // if(res.meta)
             await dispatch(fetchAsyncUser())
             
         }catch(err){

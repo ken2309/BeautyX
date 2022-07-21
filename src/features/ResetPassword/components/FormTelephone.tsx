@@ -8,7 +8,7 @@ import { AppContext } from '../../../context/AppProvider';
 
 function FormTelephone(props: any) {
     const { t } = useContext(AppContext);
-    const { handlePostTelephone, title, load } = props;
+    const { handlePostTelephone, title, load, isDialog } = props;
     const history = useHistory();
     const formikTelephone = useFormik({
         initialValues: {
@@ -29,11 +29,15 @@ function FormTelephone(props: any) {
         <>
             <div id="recaptcha-container" ></div>
             <div className="flex-row-sp for-pass-cnt__phone-head">
-                <button
-                    onClick={() => history.goBack()}
-                >
-                    <img src={icon.chevronLeft} alt="" />
-                </button>
+                {
+                    !isDialog
+                    &&
+                    <button
+                        onClick={() => history.goBack()}
+                    >
+                        <img src={icon.chevronLeft} alt="" />
+                    </button>
+                }
                 <span>{title ? title : t("form.reset_password")}</span>
                 <div></div>
             </div>
@@ -49,6 +53,7 @@ function FormTelephone(props: any) {
                     type="text"
                     className="for-pass-cnt__phone-ip"
                     placeholder={t("pm.phone_number")}
+                    autoFocus
                 />
                 {
                     formikTelephone.errors.telephone && formikTelephone.touched.telephone &&

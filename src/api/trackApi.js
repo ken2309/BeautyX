@@ -1,5 +1,4 @@
 import momoApi from './_momoImport';
-import MiniApi from '@momo-miniapp/api';
 import { pickBy, identity } from "lodash";
 momoApi.init({ appId: process.env.REACT_APP_MOMO_APP_ID });
 /**
