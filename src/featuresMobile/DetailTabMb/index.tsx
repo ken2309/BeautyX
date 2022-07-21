@@ -1,16 +1,14 @@
-import React,{useContext} from 'react';
+import React, { useContext } from 'react';
 import { Container } from '@mui/material';
-import {AppContext} from '../../context/AppProvider'
+import { AppContext } from '../../context/AppProvider'
 import './detailTabMb.css'
+import { onActiveTab } from '../../redux/org/orgSlice';
+import { useDispatch } from 'react-redux';
 
-interface IProps{
-      activeTab:number,
-      setActiveTab:(activeTab:number) => void
-}
-
-function DetailTabMb(props:IProps) {
-      const {t} = useContext(AppContext)
-      const { activeTab, setActiveTab } = props;
+function DetailTabMb(props: any) {
+      const { t } = useContext(AppContext)
+      const { tab } = props;
+      const dispatch = useDispatch();
       const tabList = [
             { id: 1, name: t('Mer_de.about') },
             { id: 2, name: t('Mer_de.services') },
@@ -19,7 +17,7 @@ function DetailTabMb(props:IProps) {
             { id: 5, name: t('Mer_de.sale') }
       ]
       const chooseTabClick = (id: any) => {
-            setActiveTab(id)
+            dispatch(onActiveTab(id))
       }
       return (
             <div className="mb-mer-detail__cnt">
@@ -30,7 +28,7 @@ function DetailTabMb(props:IProps) {
                                           <li key={item.id}>
                                                 <div
                                                       style={
-                                                            activeTab === item.id ?
+                                                            tab === item.id ?
                                                                   { color: 'var(--purple)', borderBottom: 'solid 2px var(--purple)' }
                                                                   :
                                                                   {}

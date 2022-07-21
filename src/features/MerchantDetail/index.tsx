@@ -1,111 +1,134 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Head from "../Head/index";
-import "./merchantDetail.css";
-import { Container } from "@mui/material";
-import DetailHead from "./components/DetailHead";
-import DetailMer from "./components/DetailMer";
-import DetailBranchList from "./components/DetailBranchList";
-import DetailSaleList from "./components/DetailSaleList";
-import ServiceByMerchant from "../ServiceByMerchant/index";
-import ProductByMerchant from "../ProductByMerchant/index";
-import ComboByMerchant from "../ComboByMerchant/index";
-import SaleByMerchant from "../SaleByMerchant";
 import Footer from "../Footer";
-import orgApi from "../../api/organizationApi";
-import DetailTab from "./components/DetailTab";
-import DetailTabMb from "../../featuresMobile/DetailTabMb";
-import MerchantMb from "../../featuresMobile/MerchantMb";
 import HeadTitle from "../HeadTitle/index";
-import { Product } from "../../interface/product";
-import productApi from "../../api/productApi";
-import { IOrganization } from "../../interface/organization";
-// view for mobile
-import RecommendListMb from "../../featuresMobile/RecomendList";
-
+import {
+    fetchAsyncOrg,
+    fetchOrgGalleries,
+    onActiveTab,
+} from "../../redux/org/orgSlice";
+import {
+    fetchAsyncServicesSpecial,
+    fetchProductsSpecial,
+    onSaveOrgId,
+} from "../../redux/org_specials/orgSpecialSlice";
+import { fetchAsyncOrgDiscounts } from "../../redux/org_discounts/orgDiscountsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { formatOrgParam } from "../../utils/formatParams";
+import { STATUS } from "../../redux/status";
+import HeadOrg from "./components/HeadOrg";
+import useFullScreen from "../../utils/useDeviceMobile";
+import OrgDetail from "./components/OrgDetail";
+import OrgContainer from "./components/OrgContainer";
+import "./style.css";
+import { Container } from "@mui/material";
+import ModalLoad from "../../components/ModalLoad";
+//import { clearServices } from '../../redux/org_services/orgServivesSlice';
+//import { clearProducts } from '../../redux/org_products/orgProductsSlice';
+import PageNotFound from "../../components/PageNotFound";
+import { onSetEmptyChooseCatePr } from "../../redux/org_products/orgProductsSlice";
+import { onSetEmptyChooseCate } from "../../redux/org_services/orgServivesSlice";
+import "../../assets/styles/main.css";
 
 function MerchantDetail() {
-  const location: any = useLocation();
-  const mer_id = parseInt(
-    `${location.search.slice(1, location.search.length)}`
-  );
-  const [org, setOrg] = useState<IOrganization>();
-  const [loading, setLoading] = useState<boolean>(true)
-  const [productsSale, setProductsSale] = useState<Product[]>([]);
-  const [activeTab, setActiveTab] = useState<number>(1);
-  const handleGetOrgDetail = async () => {
-    try {
-      const res = await orgApi.getOrgById(mer_id);
-      setOrg(res.data.context);
-      setLoading(false)
-    } catch (error) {
-      setLoading(false);
-      console.log(error)
-    }
-  }
-  const handleGetOrgPromo = async () => {
-    try {
-      const res = await productApi.getByOrgId({
-        org_id: mer_id,
-        page: 1,
-      });
-      setProductsSale(res.data.context.data);
-    } catch (error) {
+    const IS_MB = useFullScreen();
+    const location: any = useLocation();
+    const dispatch = useDispatch();
+    const param = formatOrgParam(location.pathname);
+    const { sub_domain } = param;
 
+    const ORG = useSelector((state: any) => state.ORG);
+    const ORG_SPECIALS = useSelector((state: any) => state.ORG_SPECIALS);
+    const { SERVICES_SPECIAL, PRODUCTS_SPECIAL, org_id } = ORG_SPECIALS;
+    const { status_ser } = SERVICES_SPECIAL;
+    const { status_pr } = PRODUCTS_SPECIAL;
+    const ORG_DISCOUNTS = useSelector((state: any) => state.ORG_DISCOUNTS);
+
+  const { org, status, tab, GALLERIES } = ORG;
+  const callOrgDetail = () => {
+    if (sub_domain !== org?.subdomain) {
+      dispatch(fetchAsyncOrg(sub_domain))
+      dispatch(onActiveTab(1))
+      dispatch(onSetEmptyChooseCatePr())
+      dispatch(onSetEmptyChooseCate())
+      //dispatch(clearServices())
+      //dispatch(clearProducts())
     }
   }
-  const setOrgDetail = () => {
-    if (location.state) {
-      setOrg(location.state);
-      setLoading(false)
-    } else {
-      handleGetOrgDetail()
+  const callGalleriesOrg_DiscountsOrg = () => {
+    if (status === STATUS.SUCCESS) {
+      if (GALLERIES.org_id !== org?.id || GALLERIES.status !== STATUS.SUCCESS) {
+        dispatch(fetchOrgGalleries(org?.id))
+      }
+      if (ORG_DISCOUNTS.org_id !== org?.id || ORG_DISCOUNTS.DISCOUNTS.status_list !== STATUS.SUCCESS) {
+        const values = { org_id: org?.id }
+        dispatch(fetchAsyncOrgDiscounts(values))
+      }
+    }
+  }
+  const callOrgSpecial = () => {
+    if (status === STATUS.SUCCESS) {
+      const values = {
+        org_id: org?.id,
+        page: 1,
+        special: true,
+        isEnable: org?.is_momo_ecommerce_enable && true
+      }
+      dispatch(onSaveOrgId(org?.id))
+      if (org?.id !== org_id || status_ser !== STATUS.SUCCESS) {
+        dispatch(fetchAsyncServicesSpecial(values));
+      }
+      if (org?.id !== org_id || status_pr !== STATUS.SUCCESS) {
+        dispatch(fetchProductsSpecial(values))
+      }
     }
   }
   useEffect(() => {
-    setOrgDetail()
-    handleGetOrgPromo()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  return (
-    <div className="mb-cnt">
-      <HeadTitle title={org?.name ? org.name : 'Đang tải...'} />
-      <Head />
-      <DetailHead
-        loading={loading}
-        org={org}
-      />
-      <DetailTab setActiveTab={setActiveTab} activeTab={activeTab} />
-      {/* for mobile */}
-      <DetailTabMb setActiveTab={setActiveTab} activeTab={activeTab} />
-      {/* ---------- */}
-      <div
-        className="tabMer-detail"
-        style={{ backgroundColor: "var(--bg-gray)", paddingBottom: "64px" }}
-      >
-        <Container>
-          {
-            activeTab === 1 &&
-            <>
-              <DetailMer org={org} />
-              {/* for mobile */}
-              <MerchantMb org={org} />
-              {/* ---------- */}
-              <DetailBranchList branches={org?.branches} />
-              <DetailSaleList productsSale={productsSale} merDetail={org} />
-              {/* for mobile */}
-              <RecommendListMb productsSale={productsSale} org={org} />
-            </>
-          }
-          <SaleByMerchant activeTab={activeTab} mer_id={mer_id} org={org} />
-          <ServiceByMerchant activeTab={activeTab} mer_id={mer_id} org={org} />
-          <ProductByMerchant mer_id={mer_id} activeTab={activeTab} org={org} />
-          <ComboByMerchant org={org} org_id={mer_id} activeTab={activeTab} />
-        </Container>
-      </div>
-      <Footer />
-    </div>
-  );
+    callGalleriesOrg_DiscountsOrg()
+    callOrgSpecial()
+  }, [status])
+  useEffect(() => {
+    callOrgDetail()
+  }, [sub_domain])
+
+    useEffect(() => {
+        if (
+            ORG_DISCOUNTS.DISCOUNTS.status_list === STATUS.SUCCESS &&
+            status_ser === STATUS.SUCCESS &&
+            status_pr === STATUS.SUCCESS
+        ) {
+            if (
+                ORG_DISCOUNTS.DISCOUNTS.totalItem === 0 &&
+                SERVICES_SPECIAL.totalItem === 0 &&
+                PRODUCTS_SPECIAL.totalItem === 0
+            ) {
+                dispatch(onActiveTab(tab === 1 ? 2 : tab));
+            }
+        }
+    }, [ORG_DISCOUNTS.DISCOUNTS, SERVICES_SPECIAL, PRODUCTS_SPECIAL]);
+    return (
+        <div className="mb-cnt">
+            {status === STATUS.LOADING && <ModalLoad />}
+            {!ORG.org && <PageNotFound />}
+            <HeadTitle title={org?.name ? org.name : "Đang tải..."} />
+            {IS_MB ? <HeadOrg org={org} isShowSearch={true} /> : <Head />}
+            {status === STATUS.SUCCESS && (
+                <>
+                    <OrgDetail
+                        org={org}
+                        galleries={GALLERIES?.galleries}
+                        status_galleries={GALLERIES.status}
+                    />
+                    <Container>
+                        <OrgContainer org={org} tab={tab} />
+                    </Container>
+                </>
+            )}
+            <Footer />
+        </div>
+    );
 }
 
 export default MerchantDetail;

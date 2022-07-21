@@ -30,5 +30,18 @@ export interface IProvince {
       province_id: number | null,
       district_id: number | null,
       organizations_count: number,
-      media: IMedia[]
+      media: IMedia[],
+      branches_count: number
+}
+export interface IDistrict {
+      branches_count: number
+      codename: string
+      district_code: number
+      district_id: any
+      name: string
+      organizations_count: number
+      province_code: any
+      province_id: number
+      type: string
+      ward_code: any
 }

@@ -1,110 +1,179 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Service } from "../../../../interface/service";
-import serviceApi from "../../../../api/serviceApi";
+import React, { useContext, useState } from "react";
 import ButtonCus from "../../../../components/ButtonCus";
 import formatPrice from "../../../../utils/formatPrice";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addCart } from "../../../../redux/cartSlice";
+import { addCart, onClearPrevCartItem } from "../../../../redux/cartSlice";
+import { fetchAsyncServiceDetail } from "../../../../redux/org_services/serviceSlice";
 import slugify from "../../../../utils/formatUrlString";
 import { AppContext } from "../../../../context/AppProvider";
 import onErrorImg from "../../../../utils/errorImg";
+import { formatAddCart } from "../../../../utils/cart/formatAddCart";
+import AlertSnack from "../../../../components/AlertSnack";
 
+// ==== api tracking ====
+//  import tracking from "../../../../api/trackApi";
+// end
+// google tag event
+import { GoogleTagPush, GoogleTagEvents } from "../../../../utils/dataLayer";
+// end
 function ServiceItem(props: any) {
-  const { t } = useContext(AppContext);
-  const { serviceItem, org, open } = props;
-  const [service, setService] = useState<Service>();
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const is_type = 2;
-  const values = {
-    id: service?.id,
-    org_id: org.id,
-    org_name: org.name,
-    cart_id: parseInt(`${is_type}${org.id}${service?.id}`), //is_type + org_id + id
-    name: service?.service_name,
-    quantity: 1,
-    is_type: is_type,
-    isConfirm: true,
-    price: service?.price,
-  };
-  // add cart
-  const handleAddCart = () => {
-    const action = addCart(values);
-    history.push({
-      pathname: `/cart`,
+    const { t } = useContext(AppContext);
+    const { serviceItem, org, itemsDiscountOrg } = props;
+    console.log(serviceItem)
+    const service = serviceItem.productable;
+    const IS_DISCOUNT = itemsDiscountOrg.find(
+        (i: any) => i.productable_id === service?.id
+    );
+    const [openNoti, setOpenNoti] = useState({
+        open: false,
+        title: "",
     });
-    dispatch(action);
-  };
-  // go to service detail
-  const detail = service;
-  const name = service?.service_name;
-  const handleDetailService = () => {
-    history.push({
-      pathname: `/service-detail/${slugify(service?.service_name)}`,
-      search: `${org.id},${serviceItem?.productable_id},${is_type}`,
-      state: { org, detail, name },
-    });
-  };
-  useEffect(() => {
-    async function handleGetSerDetail() {
-      try {
-        const res = await serviceApi.getDetailById({
-          org_id: org.id,
-          ser_id: serviceItem.productable_id,
-        });
-        setService(res.data.context);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    if (open === true) {
-      handleGetSerDetail();
-    }
-  }, [org.id, serviceItem.productable_id, open]);
-  return (
-    <li>
-      <div className="order-de-list__item">
-        <img
-          src={service?.image ? service?.image_url : org?.image_url}
-          alt=""
-          onError={(e)=>onErrorImg(e)}
-          className="order-de-pr-item__img"
-        />
-        <div className="order-de-pr-item__cnt">
-          <div className="item-detail">
-            <span className="flex-row-sp item-name">
-              {service?.service_name}
-              <span>x {serviceItem.quantity}</span>
-            </span>
-            <span className="item-org__name">{org.name}</span>
-          </div>
-          <div className="flex-row-sp item-bottom">
-            <span className="price">{formatPrice(service?.price)} đ</span>
-            <div className="flex-row item-button">
-              <ButtonCus
-                onClick={handleDetailService}
-                text={t("order.watch_info")}
-                padding="4px 8px"
-                color="var(--purple)"
-                backColor="var(--bgGray)"
-                borderRadius="12px"
-                margin="0px 16px 0px 0px"
-              />
-              <ButtonCus
-                onClick={handleAddCart}
-                text="Pre-Order"
-                padding="4px 8px"
-                color="var(--bgWhite)"
-                backColor="var(--purple)"
-                borderRadius="12px"
-              />
+
+    const onCheckType = () => {
+        let type;
+        switch (IS_DISCOUNT?.productable_type) {
+            case "App\\Models\\CI\\Service":
+                type = "service";
+                break;
+            case "App\\Models\\CI\\Product":
+                type = "product";
+                break;
+        }
+        return type;
+    };
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const cartValues = formatAddCart(
+        service,
+        org,
+        2,
+        1,
+        serviceItem.base_price,
+        IS_DISCOUNT?.discount,
+        true
+    );
+    const handleAddCart = async () => {
+        //check exits discount or service detail in merchant
+        //check org and services on commerce
+        const res = await dispatch(
+            fetchAsyncServiceDetail({
+                org_id: org.id,
+                ser_id: service.id,
+            })
+        );
+        if (res?.meta?.requestStatus === "fulfilled" || IS_DISCOUNT) {
+            //check org and services on commerce
+            if (
+                res?.payload?.service?.is_momo_ecommerce_enable &&
+                org?.is_momo_ecommerce_enable
+            ) {
+                dispatch(onClearPrevCartItem());
+                dispatch(addCart(cartValues));
+                history.push("/gio-hang");
+            } else {
+                setOpenNoti({
+                    open: true,
+                    title: "Hiện tại dịch vụ này này không còn được bán Online !",
+                });
+            }
+        } else {
+            setOpenNoti({
+                open: true,
+                title: "Hiện tại dịch vụ này này không còn tồn tại !",
+            });
+        }
+    };
+    const handleDetailService = () => {
+        // tracking.USER_ITEM_CLICK(org.id, service.id);
+        GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
+        if (IS_DISCOUNT) {
+            const type = onCheckType();
+            history.push({
+                pathname: `/chi-tiet-giam-gia/${slugify(
+                    IS_DISCOUNT.productable.service_name ||
+                        IS_DISCOUNT.productable.product_name
+                )}`,
+                search: `type=${type}&org_id=${org?.id}&dis_id=${IS_DISCOUNT?.discount_id}&item_id=${IS_DISCOUNT.productable_id}`,
+            });
+        } else {
+            history.push({
+                pathname: `/dich-vu/${slugify(service?.service_name)}`,
+                search: `id=${service.id}?org=${org?.id}`,
+            });
+        }
+    };
+
+    return (
+        <li>
+            <AlertSnack
+                title={openNoti.title}
+                open={openNoti.open}
+                status="WARNING"
+                onClose={() =>
+                    setOpenNoti({
+                        ...openNoti,
+                        open: false,
+                    })
+                }
+            />
+            <div className="order-de-list__item">
+                {IS_DISCOUNT && (
+                    <div className="flex-row order-de-list__item-discount">
+                        <span>{IS_DISCOUNT?.discount?.coupon_code}</span>
+                    </div>
+                )}
+                <img
+                    src={service?.image ? service?.image_url : org?.image_url}
+                    alt=""
+                    onError={(e) => onErrorImg(e)}
+                    className="order-de-pr-item__img"
+                />
+                <div className="order-de-pr-item__cnt">
+                    <div className="item-detail">
+                        <span className="flex-row-sp item-name">
+                            {service?.service_name}
+                            <span>x {serviceItem.quantity}</span>
+                        </span>
+                        <span className="item-org__name">{org.name}</span>
+                    </div>
+                    <div className="flex-row-sp item-bottom">
+                        {serviceItem?.discount_value > 0 ? (
+                            <div className="flex-row">
+                                <span
+                                    className="price"
+                                    style={{ color: "var(--orange)" }}
+                                >
+                                    {formatPrice(
+                                        service?.price -
+                                            serviceItem?.discount_value
+                                    )}
+                                    đ
+                                </span>
+                                <span className="old-price">
+                                    {formatPrice(service?.price)}
+                                </span>
+                            </div>
+                        ) : (
+                            <span className="price">
+                                {formatPrice(serviceItem.base_price)}đ
+                            </span>
+                        )}
+                        <div className="flex-row item-button">
+                            <ButtonCus
+                                onClick={handleDetailService}
+                                text={t("order.watch_info")}
+                            />
+                            <ButtonCus
+                                onClick={handleAddCart}
+                                text="Pre-Order"
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </li>
-  );
+        </li>
+    );
 }
 
 export default ServiceItem;

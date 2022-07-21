@@ -1,7 +1,6 @@
-import React from 'react';
-import icon from '../../../../../constants/icon';
-//import { IUserAddress } from '../../../../../interface/userAddress'
-
+import React, { useContext } from "react";
+import icon from "../../../../../constants/icon";
+import { AppContext } from "../../../../../context/AppProvider";
 
 function AddressItem(props: any) {
     const {
@@ -9,46 +8,48 @@ function AddressItem(props: any) {
         handleRemoveAddress,
         index,
         handleUpdateAddress,
-        chooseAdd
+        address_default,
     } = props;
+    const { t } = useContext(AppContext);
+
     const onRemoveAddress = () => {
         if (handleRemoveAddress) {
-            handleRemoveAddress(item)
+            handleRemoveAddress(item);
         }
-    }
+    };
     const onUpdateAddress = () => {
         if (handleUpdateAddress) {
-            handleUpdateAddress(item)
+            handleUpdateAddress(item);
         }
-    }
+    };
     return (
-        <div className='us-add_item'>
-            <div className="flex-row-sp us-add_item-header">
-                <span className="title">
-                    Địa chỉ {index + 1}
-                </span>
-                <div className="flex-row us-add_item-header_left">
-                    {
-                        chooseAdd === item ?
-                            <span className="default">
-                                Mặc định
-                            </span>
-                            :
+        <>
+            <div className="us-add_item">
+                <div className="flex-row-sp us-add_item-header">
+                    <span className="title">
+                        {t("Mer_de.address")} {index + 1}
+                    </span>
+                    <div className="flex-row us-add_item-header_left">
+                        {item.id === address_default?.id ? (
+                            <span className="default">{t("acc.default")}</span>
+                        ) : (
                             <>
-                                <span onClick={onUpdateAddress} className='se-default'>
-                                    Đặt làm địa chỉ mặc định
+                                <span
+                                    onClick={onUpdateAddress}
+                                    className="se-default"
+                                >
+                                    {t("acc.set_default_address")}
                                 </span>
                                 <button onClick={onRemoveAddress}>
                                     <img src={icon.TrashOrange} alt="" />
                                 </button>
                             </>
-                    }
+                        )}
+                    </div>
                 </div>
+                <div className="content">{item?.address}</div>
             </div>
-            <div className="content">
-                {item?.address}
-            </div>
-        </div>
+        </>
     );
 }
 

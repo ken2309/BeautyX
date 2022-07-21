@@ -13,6 +13,7 @@ export interface IITEMS_DISCOUNT {
         service_code: string,
         service_backup_code: string,
         service_name: string,
+        product_name: string,
         duration: number,
         price: number,
         special_price: number,

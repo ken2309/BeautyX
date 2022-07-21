@@ -1,17 +1,20 @@
 import React, { useContext, useState } from "react";
 import img from "../../constants/img";
-import icon from "../../constants/icon";
 import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
 import { AppContext } from "../../context/AppProvider";
 import { Container } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import BackButton from "../../components/BackButton";
 import SignUps from "./components/SignUps";
+import { EXTRA_FLAT_FORM } from '../../api/extraFlatForm';
+import { FLAT_FORM_TYPE } from '../../rootComponents/flatForm';
+import LoginFlatFormRequest from "../../rootComponents/loginFlatFormRequest/LoginFlatFormRequest";
 
 function SignPage(props: any) {
   const { t } = useContext(AppContext);
-  const location = useLocation();
+  const FLAT_FORM = EXTRA_FLAT_FORM();
+  const location: any = useLocation();
+  const pathname = location?.state?.from?.pathname;
   const [activeTabSign, setActiveTabSign] = useState(
     location.search
       ? parseInt(location.search.slice(1, location.search.length))
@@ -24,64 +27,75 @@ function SignPage(props: any) {
   const chooseTab = (id: any) => {
     setActiveTabSign(id);
   };
+  const switchTab = () => {
+    switch (activeTabSign) {
+      case 1:
+        return <SignIn
+          activeTabSign={activeTabSign}
+          setActiveTabSign={setActiveTabSign}
+          t={t}
+        />
+      case 2:
+        return <SignUps
+          activeTabSign={activeTabSign}
+          setActiveTabSign={setActiveTabSign}
+        />
+    }
+  }
   return (
     <>
       <BackButton />
       <div className="page-sign">
-        <Container>
-          <div className="flex-row-sp sign-content page-sign__cnt">
-            <img
-              src={icon.Logo}
-              alt=""
-              className="sign-content__left-logo-mb"
-            />
-            <div
-              className="flex-column sign-content__left"
-              style={{ justifyContent: "center" }}
-            >
-              <img className="sign-content__left-logo" src={icon.Logo} alt="" />
-              <img
-                className="sign-content__left-partner"
-                src={img.Partner}
-                alt=""
-              />
-            </div>
-            <div className="sign-content__right">
-              <div className="sign-content__right-tab">
-                {buttons.map((item) => (
-                  <button
-                    onClick={() => chooseTab(item.id)}
-                    style={
-                      item.id === activeTabSign
-                        ? {
-                          color: "var(--purple)",
-                          borderBottom: "solid 1px var(--purple)",
+        {
+          FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX ?
+            <Container>
+              <div className="flex-row-sp sign-content page-sign__cnt">
+                <img
+                  src={img.beautyx}
+                  alt=""
+                  className="sign-content__left-logo-mb"
+                />
+                <div
+                  className="flex-column sign-content__left"
+                  style={{ justifyContent: "center" }}
+                >
+                  <img style={{width:"120px"}} className="sign-content__left-logo" src={img.beautyX} alt="" />
+                  <img
+                    className="sign-content__left-partner"
+                    src={img.Partner}
+                    alt=""
+                  />
+                </div>
+                <div className="sign-content__right">
+                  <div className="sign-content__right-tab">
+                    {buttons.map((item) => (
+                      <button
+                        onClick={() => chooseTab(item.id)}
+                        style={
+                          item.id === activeTabSign
+                            ? {
+                              color: "var(--purple)",
+                              borderBottom: "solid 1px var(--purple)",
+                            }
+                            : {}
                         }
-                        : {}
-                    }
-                    key={item.id}
-                  >
-                    {item.title}
-                  </button>
-                ))}
+                        key={item.id}
+                      >
+                        {item.title}
+                      </button>
+                    ))}
+                  </div>
+                  {switchTab()}
+                </div>
               </div>
-              <SignIn
-                // setOpenSignIn={setOpenSignIn}
-                activeTabSign={activeTabSign}
-                setActiveTabSign={setActiveTabSign}
-                t={t}
+            </Container>
+            :
+            <Container>
+              <LoginFlatFormRequest
+                pathname={pathname}
               />
-              {/* <SignUp
-                activeTabSign={activeTabSign}
-                setActiveTabSign={setActiveTabSign}
-              /> */}
-              <SignUps
-                activeTabSign={activeTabSign}
-                setActiveTabSign={setActiveTabSign}
-              />
-            </div>
-          </div>
-        </Container>
+            </Container>
+        }
       </div>
     </>
   );

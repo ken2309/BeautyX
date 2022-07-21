@@ -9,17 +9,19 @@ import CartPopupNoti from "./CartPopupNoti";
 import scrollTop from "../../../utils/scrollTop";
 import CartPopupNotiSign from "./CartPopupNotiSign";
 import { AppContext } from "../../../context/AppProvider";
-import SignInUp from "../../poupSignInUp/index";
 
+
+// google tag event
+import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+// end 
 function CartBottom(props: any) {
   const { orgs, chooseOrg, chooseOrgClick } = props;
-  const { t, profile } = useContext(AppContext);
+  const { t } = useContext(AppContext);
+  const USER = useSelector((state: any) => state.USER.USER)
   const dispatch = useDispatch();
   const history = useHistory();
   const [popUp, setPopUp] = useState(false);
   const [popupSign, setPopupSign] = useState(false);
-  const [openSignIn, setOpenSignIn] = useState(false);
-  const [activeTabSign, setActiveTabSign] = useState(1);
   const carts = useSelector((state: any) => state.carts);
   useEffect(() => {
     dispatch(getTotal());
@@ -28,16 +30,14 @@ function CartBottom(props: any) {
     (item: any) => item.isConfirm === true
   );
 
-  const intersection = carts.cartList.filter(
-    (x: any) => !cartConfirm.includes(x)
-  );
 
   const firstItem = cartConfirm[0];
   const cartFirstList = cartConfirm.filter(
     (item: any) => item.org_id === firstItem.org_id
   );
   const gotoPayment = () => {
-    if (profile) {
+    GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
+    if (USER) {
       if (carts.cartAmount > 0 && cartFirstList.length === cartConfirm.length) {
         scrollTop();
         history.push("/payment");
@@ -51,8 +51,7 @@ function CartBottom(props: any) {
   const handleClearByCheck = () => {
     scrollTop();
     if (cartConfirm.length > 0) {
-      const action = intersection;
-      dispatch(clearByCheck(action));
+      dispatch(clearByCheck());
     }
   };
   return (
@@ -78,7 +77,7 @@ function CartBottom(props: any) {
                 {t("cart.total_payment")} ({carts.cartQuantity}{" "}
                 {t("Mer_de.services")}/{t("Mer_de.products")})
               </span>
-              <span>{formatPrice(carts.cartAmount)} đ</span>
+              <span>{formatPrice(carts.cartAmount - carts.cartAmountDiscount)} đ</span>
             </div>
             <div style={{ marginLeft: "auto" }}>
               <ButtonCus
@@ -106,14 +105,6 @@ function CartBottom(props: any) {
       <CartPopupNotiSign
         popupSign={popupSign}
         setPopupSign={setPopupSign}
-        setOpenSignIn={setOpenSignIn}
-        setActiveTabSign={setActiveTabSign}
-      />
-      <SignInUp
-        openSignIn={openSignIn}
-        setOpenSignIn={setOpenSignIn}
-        activeTabSign={activeTabSign}
-        setActiveTabSign={setActiveTabSign}
       />
     </div>
   );

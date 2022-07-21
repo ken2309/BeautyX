@@ -1,49 +1,69 @@
-import React from 'react';
-import '../ServicePromoItem/service-promo-item.css'
-import { Product } from '../../../interface/product';
-import { IOrganization } from '../../../interface/organization';
-import icon from '../../../constants/icon';
-import formatPrice from '../../../utils/formatPrice';
-import onErrorImg from '../../../utils/errorImg';
-import { useHistory } from 'react-router-dom';
-import slugify from '../../../utils/formatUrlString';
-import scrollTop from '../../../utils/scrollTop';
+import React, { useContext } from "react";
+import "../ServicePromoItem/service-promo-item.css";
+import { Product } from "../../../interface/product";
+import { IOrganization } from "../../../interface/organization";
+import formatPrice from "../../../utils/formatPrice";
+import onErrorImg from "../../../utils/errorImg";
+import { Link } from "react-router-dom";
+import scrollTop from "../../../utils/scrollTop";
+import { formatRouterLinkProduct } from "../../../utils/formatRouterLink/formatRouter";
 
+// ==== api tracking ====
+// import tracking from "../../../api/trackApi";
+// end
+// google tag event
+import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
+import { AppContext } from "../../../context/AppProvider";
+// end
 interface IProps {
-    product: Product,
-    org: IOrganization
+    product: Product;
+    org: IOrganization;
+    changeStyle?: boolean;
 }
 
 function ProductItem(props: IProps) {
-    const { product, org } = props;
-    const name = product?.product_name;
-    const detail = product;
-    const history = useHistory();
-    const onDetail = () => {
-        scrollTop()
-        history.push({
-            pathname: `/product-detail/${slugify(product?.product_name)}`,
-            search: `${org.id},${product.id},1`,
-            state: { org, detail, name },
-        })
-    }
-    const percent = Math.round(100 - product?.special_price / product?.retail_price * 100)
+    const { product, org, changeStyle } = props;
+    const { t } = useContext(AppContext);
+
+    const percent = Math.round(
+        100 - (product?.special_price / product?.retail_price) * 100
+    );
+    const pathProductOb = formatRouterLinkProduct(product, org);
     return (
-        <div onClick={onDetail} className='ser-pro-item'>
-            <div className="ser-img-cnt">
+        <Link
+            to={pathProductOb}
+            onClick={() => {
+                scrollTop();
+                GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
+                // tracking.USER_ITEM_CLICK(org.id, product.id);
+            }}
+            className={
+                changeStyle
+                    ? "ser-pro-item ser-pro-item__change"
+                    : "ser-pro-item"
+            }
+        >
+            <div
+                className={
+                    changeStyle
+                        ? "ser-img-cnt ser-img-cnt__change"
+                        : "ser-img-cnt"
+                }
+            >
                 <img
-                    className='ser-img'
+                    className={
+                        changeStyle ? "ser-img ser-img__change" : "ser-img"
+                    }
                     src={product?.image ? product.image_url : org?.image_url}
                     alt=""
                     onError={(e) => onErrorImg(e)}
                 />
                 <div className="ser-promo">
-                    {
-                        product?.special_price > 0 &&
+                    {product?.special_price > 0 && (
                         <div className="ser-promo__percent">
-                            Giảm <br /> {percent} %
+                            {`${t("detail_iten.off")}`} {percent}%
                         </div>
-                    }
+                    )}
                     {/* <div className="flex-row ser-promo__bot">
                         <div className="flex-row ser-promo__bot-start">
                             5
@@ -57,19 +77,24 @@ function ProductItem(props: IProps) {
                 </div>
             </div>
             <div className="ser-pro-item__cnt">
-                <span className="ser-name">
-                    {product?.product_name}
-                </span>
-                <div className="ser-price">
-                    {
-                        product?.special_price === -1 ?
-                            <span style={{ color: 'var(--purple)' }}>{formatPrice(product?.retail_price)}đ</span>
-                            :
-                            <>
-                                <span>{formatPrice(product?.special_price)}đ</span>
-                                <span>{formatPrice(product?.retail_price)}đ</span>
-                            </>
+                <span className="ser-name">{product?.product_name}</span>
+                <div
+                    className={
+                        changeStyle
+                            ? "ser-price ser-price__change"
+                            : "ser-price"
                     }
+                >
+                    {product?.special_price === -1 ? (
+                        <span style={{ color: "var(--purple)" }}>
+                            {formatPrice(product?.retail_price)}đ
+                        </span>
+                    ) : (
+                        <>
+                            <span>{formatPrice(product?.special_price)}đ</span>
+                            <span>{formatPrice(product?.retail_price)}đ</span>
+                        </>
+                    )}
                 </div>
                 {/* {
                     service._geoDistance ?
@@ -87,12 +112,16 @@ function ProductItem(props: IProps) {
                         :
                         <></>
                 } */}
-                <span className="ser-org-address">
-                    <img src={icon.mapPinRed} alt="" />
-                    {org?.address}
-                </span>
+                <div className="ser-org-address">
+                    <img
+                        src={org?.image_url}
+                        onError={(e) => onErrorImg(e)}
+                        alt=""
+                    />
+                    <p>{org?.address}</p>
+                </div>
             </div>
-        </div>
+        </Link>
     );
 }
 

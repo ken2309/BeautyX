@@ -1,26 +1,26 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import auth from "../api/authApi";
 import dateNow from "../utils/dateExp";
-import tagsApi from "../api/tagApi";
-import provincesApi from "../api/provinceApi";
-// import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import dayjs from "dayjs";
+import { fetchAsyncUser } from '../redux/USER/userSlice';
+import { fetchAsyncHome, fetchAsyncDiscounts } from '../redux/home/homeSlice';
+import { fetchAsyncNews, fetchAsyncVideos } from '../redux/blog/blogSlice';
+import { fetchAsyncApps } from '../redux/appointment/appSlice';
+import { fetchAsyncOrderServices } from '../redux/order/orderSlice'
+
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const lg = localStorage.getItem("i18nextLng");
   const [language, setLanguage] = useState();
   const [openModal, setOpenModal] = useState(false);
-  const [tk, setTk] = useState();
   const [userInfo, setUserInfo] = useState();
   const [sign, setSign] = useState();
-  const [profile, setProfile] = useState();
   const [tempCount, setTempleCount] = useState(0);
-  const [tags, setTags] = useState([]);
-  const [provinces, setProvinces] = useState([])
-
-  // Check if token expires and logout user
+  const [dayObj, setDayObj] = useState(dayjs())
   if (localStorage.getItem("_WEB_US")) {
     const tokenDecoded = JSON.parse(`${localStorage.getItem("_WEB_US")}`);
     let exp = tokenDecoded?.token_expired_at;
@@ -37,51 +37,30 @@ export default function AppProvider({ children }) {
   useEffect(() => {
     if (lg === "en-US" || lg === "en") {
       setLanguage("en");
-    } else if (lg === "vi-VN" || lg === "vn") {
+    } else if (lg === "vi-VN" || lg === "vi") {
       setLanguage("vn");
     }
   }, [lg]);
-
-  //const TK = localStorage.getItem('_WEB_TK')
   useEffect(() => {
-    function handleGetToken() {
-      const res = JSON.parse(`${localStorage.getItem("_WEB_US")}`);
-      setUserInfo(res);
-    }
-    handleGetToken();
-    return () => { };
-  }, [sign]);
-
-  useEffect(() => {
-    async function handleGetProfile() {
-      try {
-        const res = await auth.getUserProfile();
-        setProfile(res.data);
-      } catch (err) {
-        setProfile(undefined);
+    const callUserProfile = async () => {
+      const res = await dispatch(fetchAsyncUser());
+      if (res?.payload) {
+        const time = dayjs().format("YYYY-MM");
+        dispatch(fetchAsyncApps(time))
+        dispatch(fetchAsyncOrderServices({ page: 1 }))
       }
     }
-    handleGetProfile();
-    return () => { };
-  }, [sign]);
-  //get all tags
-  async function handleGetAllTags() {
-    try {
-      const res = await tagsApi.getAll();
-      setTags(res.data.context.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  async function handleGetProvinces() {
-    try {
-      const res = await provincesApi.getAll();
-      const temp = await res.data.context.data;
-      setProvinces(temp.filter(item => item.organizations_count >= 0))
-    } catch (err) {
-      console.log(err)
-    }
-  }
+    callUserProfile()
+  }, [sign, dispatch]);
+  useEffect(() => {
+    dispatch(fetchAsyncHome())
+    dispatch(fetchAsyncDiscounts({
+      page: 1
+    }))
+    dispatch(fetchAsyncNews());
+    dispatch(fetchAsyncVideos());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const getUserLocation = () => {
     navigator.geolocation.getCurrentPosition(function (position) {
       const user_location = {
@@ -93,25 +72,24 @@ export default function AppProvider({ children }) {
   }
   useEffect(() => {
     getUserLocation()
-    handleGetAllTags();
-    handleGetProvinces();
+    return function cleanup() {
+      getUserLocation()
+    }
   }, []);
   const value = {
     t,
-    tags,
-    provinces,
+    //tags,
+    //provinces,
     language,
     openModal,
     setOpenModal,
     setLanguage,
-    tk,
     userInfo,
-    setTk,
     setUserInfo,
     setSign,
-    profile,
     tempCount,
     setTempleCount,
+    dayObj, setDayObj
   };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

@@ -1,12 +1,33 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { IProvince } from '../../../../../interface/provinces';
 import { IDistrict, IWard } from '../../../../../interface/district';
 import provincesApi from '../../../../../api/provinceApi';
+import ButtonLoading from '../../../../../components/ButtonLoading';
+import { useDispatch, useSelector } from 'react-redux';
+import { postAsyncAddress } from '../../../../../redux/USER/userAddressSlice';
+import { STATUS } from '../../../../../redux/status';
+import { useHistory } from 'react-router-dom';
 import { AppContext } from '../../../../../context/AppProvider';
+import useDeviceMobile from '../../../../../utils/useDeviceMobile';
 
 interface IDataAdd {
     districts: IDistrict[],
     wards: IWard[]
+}
+interface IAddress {
+    province: {
+        code: null | number,
+        name: null | string
+    },
+    district: {
+        code: null | number,
+        name: null | string
+    },
+    ward: {
+        code: null | number,
+        name: null | string,
+    },
+    short_address: string
 }
 const $ = document.querySelector.bind(document);
 const onToggleProvince = () => {
@@ -25,8 +46,20 @@ const onToggleWard = () => {
     $('.us_address-cnt .from-label__list-district')?.classList.remove('lis-province-ac')
 }
 function UserAddressForm(props: any) {
-    const { provinces } = useContext(AppContext);
-    const { address, setAddress, handleSubmitForm } = props;
+    const { setOpen } = props;
+    const {t} = useContext(AppContext);
+    const ADDRESS = useSelector((state: any) => state.ADDRESS);
+    const { provinces } = useSelector((state: any) => state.HOME);
+    const fullScreen = useDeviceMobile();
+    const { status_up } = ADDRESS;
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const [address, setAddress] = useState<IAddress>({
+        province: { code: null, name: null },
+        district: { code: null, name: null },
+        ward: { code: null, name: null },
+        short_address: ''
+    })
     const [dataAdd, setDataAdd] = useState<IDataAdd>({
         districts: [],
         wards: []
@@ -108,9 +141,22 @@ function UserAddressForm(props: any) {
         }
     }
 
-    const onSubmitForm = () => {
-        if (handleSubmitForm) {
-            handleSubmitForm()
+    const handleSubmitForm = async () => {
+        if (
+            address.district.code &&
+            address.province.code &&
+            address.ward.code &&
+            address.short_address.length > 0
+        ) {
+            const values = {
+                address: `${address.short_address},${address.ward.name},${address.district.name},${address.province.name}`,
+                is_default: true
+            }
+            await dispatch(postAsyncAddress(values))
+            //const action = removeDefaultItem(address_default);
+            //dispatch(action)
+            if (fullScreen === false) return history.goBack();
+            if (setOpen && fullScreen === true) return setOpen(false)
         }
     }
     return (
@@ -118,7 +164,7 @@ function UserAddressForm(props: any) {
             className='us_address-cnt'
         >
             <span className="title">
-                Thêm mới địa chỉ
+                {t("acc.add_new_address")}
             </span>
             <div className="form">
                 <div
@@ -126,7 +172,7 @@ function UserAddressForm(props: any) {
                     className="from-label"
                 >
                     <span className="text-bold from-label_title">
-                        Tỉnh / Thành phố
+                        {t("acc.province")}
                     </span>
                     <div className="from-label_ip">
                         {
@@ -251,9 +297,11 @@ function UserAddressForm(props: any) {
                     </div>
                 </div>
                 <div className="form-btn">
-                    <button onClick={onSubmitForm}>
-                        Thêm mới địa chỉ
-                    </button>
+                    <ButtonLoading
+                        loading={status_up === STATUS.LOADING ? true : false}
+                        onClick={handleSubmitForm}
+                        title="Thêm mới địa chỉ"
+                    />
                 </div>
             </div>
         </div>

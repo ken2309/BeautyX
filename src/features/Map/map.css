@@ -2,6 +2,8 @@
     width: 100%;
     height: 100%;
     position: relative;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .map__list-item {
@@ -35,11 +37,11 @@
     cursor: pointer;
     box-shadow: rgb(0 0 0 / 14%) -2px 1px 16px 0px;
     border-radius: 8px;
-    transition: all .3s;
+    transition: all 0.3s;
     display: flex;
     flex-direction: row;
 }
-.map__org-item:hover{
+.map__org-item:hover {
     margin-top: -8px;
 }
 .map__org-item-avt {
@@ -47,7 +49,7 @@
     object-fit: cover;
     border-radius: 8px;
 }
-.map__list-item .content{
+.map__list-item .content {
     width: calc(100% - 120px);
     padding: 8px;
     height: 120px;
@@ -55,7 +57,7 @@
     flex-direction: column;
     justify-content: space-between;
 }
-.map__list-item .content .org-name{
+.map__list-item .content .org-name {
     font-size: 14px;
     line-height: 16px;
     font-weight: 700;
@@ -67,20 +69,20 @@
     text-overflow: ellipsis;
     word-break: break-word;
 }
-.map__org-item .org_address{
+.map__org-item .org_address {
     display: flex;
     flex-direction: row;
 }
-.map__org-item .org_address img{
+.map__org-item .org_address img {
     width: 12px;
     height: 12px;
     margin-top: 3px;
 }
-.map__org-item .org_address span{
+.map__org-item .org_address span {
     font-size: 12px;
     line-height: 18px;
     font-weight: 700;
-    color: var(--text-black);
+    color: grey;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -88,7 +90,7 @@
     text-overflow: ellipsis;
     word-break: break-word;
 }
-.map__org-item .org_bot button{
+.map__org-item .org_bot button {
     width: 49.5%;
     font-size: 12px;
     line-height: 14px;
@@ -100,7 +102,7 @@
     outline: none;
     padding: 4px 0px;
 }
-.map__org-item .org_bot button:nth-child(2){
+.map__org-item .org_bot button:nth-child(2) {
     background-color: var(--bgWhite);
-    color: var(--purple)
+    color: var(--purple);
 }

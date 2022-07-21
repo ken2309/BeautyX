@@ -1,20 +1,25 @@
 import i18next from 'i18next';
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { AppContext } from '../../../context/AppProvider';
 import languages from '../../../data/languages';
 
-function LanguageBox(props: any) {
+function LanguageBox() {
       const { language, setLanguage } = useContext(AppContext);
       const handleChangeLang = (code: string) => {
             setLanguage(code)
             i18next.changeLanguage(code);
       }
-      const handleChangeUnit = (unit: string) => {
-            //setUnit(unit)
-      }
+      // const handleChangeUnit = (unit: string) => {
+      //       //setUnit(unit)
+      // }
       return (
             <>
-                  <div className="hd-lang-box__left">
+                  <div className="hd-lang-box__left"
+                        style={{
+                              width: '100%',
+                              borderRight: 'none'
+                        }}
+                  >
                         {
                               languages.map((item) => (
                                     <div
@@ -30,7 +35,7 @@ function LanguageBox(props: any) {
                               ))
                         }
                   </div>
-                  <div className="hd-lang-box__right">
+                  {/* <div className="hd-lang-box__right">
                         {
                               languages.map((item) => (
                                     <div
@@ -44,7 +49,7 @@ function LanguageBox(props: any) {
                                     </div>
                               ))
                         }
-                  </div>
+                  </div> */}
             </>
       );
 }

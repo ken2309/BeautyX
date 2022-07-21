@@ -5,17 +5,19 @@ import { useHistory } from 'react-router-dom'
 import { AppContext } from '../../../context/AppProvider';
 import onErrorImg from '../../../utils/errorImg';
 import PaymentBranch from './PaymentBranch';
+import { useSelector } from 'react-redux';
+import UserPaymentInfo from '../../Account/components/UserPaymentInfo';
 
 //const phoneFormat = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 function PaymentForm(props: any) {
-      const { setNote, list, chooseBr, setChooseBr } = props;
+      const { setNote, list, chooseBr, setChooseBr, setAddress } = props;
       const org = list[0]?.org;
       const [open, setOpen] = useState(false);
       const { t } = useContext(AppContext);
       const history = useHistory();
       const { address } = props;
       const [popup, setPopup] = useState(false);
-      const user = JSON.parse(`${localStorage.getItem('_WEB_US')}`);
+      const { USER } = useSelector((state: any) => state.USER);
       return (
             <>
                   <PaymentBranch
@@ -30,7 +32,10 @@ function PaymentForm(props: any) {
                   >
                         <div style={{ width: '100%' }} className="flex-row-sp payment-form__box">
                               <div className="payment-form__left">
-                                    <span>{t('pm.payment_info')}</span>
+                                    <UserPaymentInfo
+                                          onSetAddressDefault={setAddress}
+                                    />
+                                    {/* <span>{t('pm.payment_info')}</span>
                                     <div className="payment-form__left-cnt">
                                           <span className="flex-row-sp sec-title">
                                                 Thông tin người nhận
@@ -45,15 +50,15 @@ function PaymentForm(props: any) {
                                           <div className="sec-item">
                                                 <div className="sec-item__label">
                                                       <span>Họ và tên:</span>
-                                                      <span>{user?.fullname}</span>
+                                                      <span>{USER?.fullname}</span>
                                                 </div>
                                                 <div className="sec-item__label">
                                                       <span>Email:</span>
-                                                      <span>{user?.email}</span>
+                                                      <span>{USER?.email}</span>
                                                 </div>
                                                 <div className="sec-item__label">
                                                       <span>Số điện thoại:</span>
-                                                      <span>{user?.telephone}</span>
+                                                      <span>{USER?.telephone}</span>
                                                 </div>
                                           </div>
                                           <span
@@ -78,7 +83,7 @@ function PaymentForm(props: any) {
                                                 type="text"
                                                 placeholder='Ghi chú cho doanh nghiệp...'
                                           />
-                                    </div>
+                                    </div> */}
                               </div>
                               <div className="payment-form__right">
                                     <img
@@ -114,11 +119,14 @@ function PaymentForm(props: any) {
                                                             </span>
                                                       </>
                                           }
-                                          <button
-                                                onClick={() => setOpen(true)}
-                                          >
-                                                Chọn chi nhánh
-                                          </button>
+                                          {
+                                                org && org.branches?.length > 0 &&
+                                                <button
+                                                      onClick={() => setOpen(true)}
+                                                >
+                                                      Chọn chi nhánh
+                                                </button>
+                                          }
                                     </div>
                               </div>
                         </div>

@@ -3,20 +3,17 @@ import { Dialog } from '@mui/material';
 import icon from '../../../constants/icon';
 import ButtonCus from '../../../components/ButtonCus';
 import { AppContext } from '../../../context/AppProvider';
-//import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 function CartPopupNotiSign(props: any) {
-      //const history = useHistory();
+      const history = useHistory();
       const { t } = useContext(AppContext)
-      const { popupSign, setPopupSign, setOpenSignIn, setActiveTabSign } = props;
+      const { popupSign, setPopupSign } = props;
       const laterClick = () => {
             setPopupSign(false);
       }
       const gotoSignInPage = () => {
-            // history.push({ pathname: '/sign-in', search: '1' })
-            setPopupSign(false);
-            setOpenSignIn(true);
-            setActiveTabSign(1);
+            history.push({ pathname: '/sign-in', search: '1' })
       };
       return (
             <>

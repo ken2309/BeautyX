@@ -12,16 +12,24 @@ import scrollTop from '../../utils/scrollTop';
 import HeadTitle from '../HeadTitle';
 import './cart.css'
 import { AppContext } from '../../context/AppProvider';
+//import _ from 'lodash';
 
 interface Org {
 	id: number, name: string
 }
-const isCart: boolean = true
 function Cart(props: any) {
 	const { t } = useContext(AppContext)
 	const headerTitle = t('cart.cart')
 	const dispatch = useDispatch();
 	const carts = useSelector((state: any) => state.carts);
+	//const list = carts.cartList;
+
+	// const listGroup = _(list)
+	// 	.groupBy(x => x.org_name)
+	// 	.map((value, key) => ({ org_name: key, cartOrg: value }))
+	// 	.value();
+	// console.log(listGroup)
+
 	const [showOrg, setShowOrg] = useState(false);
 	const orgCart: any[] = []
 	const [chooseOrg, setChooseOrg] = useState<Org>();
@@ -43,6 +51,7 @@ function Cart(props: any) {
 	for (var i of carts.cartList) {
 		listOrg.push({ id: i.org_id, name: i.org_name })
 	}
+
 	for (var item of carts.cartList) {
 		const org = {
 			name: item.org_name
@@ -64,10 +73,7 @@ function Cart(props: any) {
 			<HeadTitle
 				title={headerTitle}
 			/>
-			<Head
-				isCart={isCart}
-				title={headerTitle}
-			/>
+			<Head />
 			{
 				carts?.cartList.length === 0 || !carts.cartList ?
 					<CartNull />
@@ -142,7 +148,9 @@ function Cart(props: any) {
 						/>
 					</>
 			}
-			<Footer />
+			<div className="cart-footer">
+				<Footer />
+			</div>
 		</div>
 	);
 }

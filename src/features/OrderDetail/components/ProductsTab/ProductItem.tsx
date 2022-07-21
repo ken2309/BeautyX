@@ -1,77 +1,87 @@
-import React, { useEffect, useState, useContext } from "react";
-import productsApi from "../../../../api/productApi";
-import { Product } from "../../../../interface/product";
+import React, { useContext, useState } from "react";
 import formatPrice from "../../../../utils/formatPrice";
 import ButtonCus from "../../../../components/ButtonCus";
-import { addCart } from "../../../../redux/cartSlice";
+import { addCart, onClearPrevCartItem } from "../../../../redux/cartSlice";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import slugify from "../../../../utils/formatUrlString";
 import { AppContext } from "../../../../context/AppProvider";
 import scrollTop from "../../../../utils/scrollTop";
 import onErrorImg from "../../../../utils/errorImg";
+import { formatAddCart } from "../../../../utils/cart/formatAddCart";
+import { fetchAsyncProductDetail } from '../../../../redux/org_products/productSlice'
+import { Alert, Snackbar } from "@mui/material";
 
 function ProductItem(props: any) {
-  const { productItem, org, open } = props;
+  const { productItem, org } = props;
+  const product = productItem.productable;
   const { t } = useContext(AppContext);
-  const [product, setProduct] = useState<Product>();
   const history = useHistory();
   const dispatch = useDispatch();
-  // go to detail product
-  const is_type = 1;
-  const detail = product;
-  const name = product?.product_name;
+  const [openNoti, setOpenNoti] = useState({
+    open: false,
+    title: ""
+  })
   const handleDetailProduct = () => {
     scrollTop();
     history.push({
-      pathname: `/product-detail/${slugify(product?.product_name)}`,
-      search: `${org?.id},${productItem?.productable_id},${is_type}`,
-      state: { org, detail, name },
-    });
+      pathname: `/san-pham/${slugify(product?.product_name)}`,
+      search: `id=${product?.id}&org=${org?.id}`,
+    })
   };
   // add cart
-  const values = {
-    id: product?.id,
-    org_id: org.id,
-    org_name: org.name,
-    cart_id: parseInt(`${is_type}${org.id}${product?.id}`), //is_type + org_id + id
-    name: product?.product_name,
-    quantity: 1,
-    is_type: is_type,
-    isConfirm: true,
-    price: product?.retail_price,
-  };
-  const handleAddCart = () => {
-    scrollTop();
-    const action = addCart(values);
-    history.push({
-      pathname: `/cart`,
-    });
-    dispatch(action);
-  };
-
-  useEffect(() => {
-    async function handleGetPrDetail() {
-      try {
-        const res = await productsApi.getDetailById({
-          org_id: org.id,
-          id: productItem.productable_id,
-        });
-        setProduct(res.data.context);
-      } catch (error) {
-        console.log(error);
+  const cartValues = formatAddCart(
+    product,
+    org,
+    1,
+    1,
+    product?.price,
+    null,
+    true
+  )
+  const handleAddCart = async () => {
+    //check exits discount or service detail in merchant
+    //check org and services on commerce
+    const res = await dispatch(fetchAsyncProductDetail({
+      org_id: org.id, id: product.id
+    }))
+    if (res?.meta?.requestStatus === "fulfilled") {
+      //check org and services on commerce
+      console.log(res)
+      if (res?.payload?.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable) {
+        dispatch(onClearPrevCartItem())
+        dispatch(addCart(cartValues))
+        history.push('/gio-hang')
+      } else {
+        setOpenNoti({
+          open: true,
+          title: "Hiện tại sản phẩm này không còn được bán Online !"
+        })
       }
+    } else {
+      setOpenNoti({
+        open: true,
+        title: "Hiện tại sản phẩm này không còn tồn tại !"
+      })
     }
-    if (open === true) {
-      handleGetPrDetail();
-    }
-  }, [org.id, productItem.productable_id, open]);
+  };
   return (
     <li>
+      <Snackbar open={openNoti.open} autoHideDuration={4000}
+        onClose={() => setOpenNoti({ ...openNoti, open: false })}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={() => setOpenNoti({ ...openNoti, open: false })}
+          severity="warning" sx={{ width: '100%' }}
+        >
+          {openNoti.title}
+        </Alert>
+      </Snackbar>
       <div className="order-de-list__item">
         <img
-          src={product?.image_url ? product?.image_url : org.image_url }
-          onError={(e)=>onErrorImg(e)}
+          src={product?.image_url ? product?.image_url : org.image_url}
+          onError={(e) => onErrorImg(e)}
           alt=""
           className="order-de-pr-item__img"
         />
@@ -89,19 +99,10 @@ function ProductItem(props: any) {
               <ButtonCus
                 onClick={handleDetailProduct}
                 text={t("order.watch_info")}
-                padding="4px 8px"
-                color="var(--purple)"
-                backColor="var(--bgGray)"
-                borderRadius="12px"
-                margin="0px 16px 0px 0px"
               />
               <ButtonCus
                 onClick={handleAddCart}
                 text="Pre-Order"
-                padding="4px 8px"
-                color="var(--bgWhite)"
-                backColor="var(--purple)"
-                borderRadius="12px"
               />
             </div>
           </div>

@@ -24,5 +24,14 @@ export interface Service {
       service_name: string | null
       service_order: boolean | null
       special_price: number
-      status: boolean | null
+      status: boolean | null,
+      favorites_count: number,
+      video_url: any,
+      video: any,
+      rating: number,
+      is_favorite: boolean,
+      bought_count: number,
+      category: any,
+      is_moba_ecommerce_enable: boolean
+      is_momo_ecommerce_enable: boolean
 }

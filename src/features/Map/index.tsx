@@ -1,33 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import MapGoogle from './components/MapGoogle';
-import OrgItemMap from './components/OrgItemMap';
-import './map.css';
-import { IOrganization } from '../../interface/organization';
-
+import React, { useEffect, useState } from "react";
+import MapGoogle from "./components/MapGoogle";
+import OrgItemMap from "./components/OrgItemMap";
+import "./map.css";
+import { IOrganization } from "../../interface/organization";
+import WrapperMap from "./MapWarraper/WrapperMap";
 
 function Map(props: any) {
     const { data, setData } = props;
-    const key = "AIzaSyDfxBgfHh5HeBw2kVRcpgxgG4lswl50jTg";
+    const key = `${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`
     const [location, setLocation] = useState({
         lat: 0,
-        long: 0
-    })
+        long: 0,
+    });
     useEffect(() => {
         setLocation({
             lat: data.orgs[0]?.latitude,
-            long: data.orgs[0]?.longitude
-        })
-    }, [data.orgs])
+            long: data.orgs[0]?.longitude,
+        });
+    }, [data.orgs]);
     const handleSetLocation = (org: IOrganization) => {
         setLocation({
             lat: org.latitude,
-            long: org.longitude
-        })
-    }
+            long: org.longitude,
+        });
+    };
     return (
-        <div
-            className='map-cnt'
-        >
+        <div className="map-cnt">
+            {/* <WrapperMap/> */}
             <MapGoogle
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${key}`}
                 loadingElement={<div style={{ height: `100%` }} />}
@@ -47,18 +46,14 @@ function Map(props: any) {
             />
             <div className="map__list-item">
                 <ul className="list">
-                    {
-                        data.orgs.map((item: any, index: number) => (
-                            <li
-                                key={index}
-                            >
-                                <OrgItemMap
-                                    org={item}
-                                    handleSetLocation={handleSetLocation}
-                                />
-                            </li>
-                        ))
-                    }
+                    {data.orgs.map((item: any, index: number) => (
+                        <li key={index}>
+                            <OrgItemMap
+                                org={item}
+                                handleSetLocation={handleSetLocation}
+                            />
+                        </li>
+                    ))}
                 </ul>
             </div>
         </div>

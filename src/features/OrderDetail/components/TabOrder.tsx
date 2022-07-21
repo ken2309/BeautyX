@@ -24,7 +24,6 @@ function TabOrder(props: any) {
       ]
       const tabs = tabList.sort((a:ITab, b:ITab) => b.count - a.count);
       const [acTab, setAcTab] = useState<number>(tabs[0].id);
-      
       return (
             <>
                   <div className="flex-row order-de-tab">

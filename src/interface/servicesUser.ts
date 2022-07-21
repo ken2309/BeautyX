@@ -1,3 +1,5 @@
+import { IOrganization } from './organization'
+
 export interface IUser_Service {
     id: number,
     service_name: string,
@@ -7,7 +9,7 @@ export interface IUser_Service {
     image_url: string,
     times: number,
     remain_time: number,
-    time_expired: null | string,
+    time_expired: any,
     unlimited: boolean
 }
 export interface IServiceSold {
@@ -43,6 +45,7 @@ export interface IServiceUser {
     description: null | string,
     payment_method_id: number,
     organization_id: number,
+    organization: IOrganization,
     user_id: number,
     origin_id: number,
     branch_id: null | number,
@@ -73,5 +76,6 @@ export interface IServiceUser {
         updated_at: string,
         deleted_at: null | string
     },
-    items: IUser_Items[]
+    items: IUser_Items[],
+    appointments:any[]
 }

@@ -12,7 +12,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 2;
+    z-index: 10;
     box-shadow: 0px -3px 20px rgba(113, 97, 186, 0.15);
     border-radius: 12px 12px 0px 0px;
   }
@@ -21,7 +21,9 @@
     position: relative;
   }
   .bt-cnt__item-badge {
-    margin: -4px 0px 0px 16px;
+    margin: -2px 0px 0px 10px;
+    width: 8px;
+    height: 8px;
     position: absolute;
     font-size: 10px;
     text-align: center;
@@ -30,15 +32,15 @@
     border-radius: 100%;
     background-color: var(--red-cl);
     color: var(--bg-gray);
-    width: 14px;
   }
   .bt-cnt__item img {
     width: 20px;
     height: 20px;
   }
   .bt-cnt__item-title {
-    font-size: 12px;
-    line-height: 20px;
+    margin-top: 4px;
+    font-size: 10px;
+    line-height: 12px;
     font-weight: 500;
     color: var(--text-hover);
   }

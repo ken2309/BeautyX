@@ -69,7 +69,6 @@ export default function FormPartner() {
       ),
     }),
     onSubmit: (values) => {
-      console.log(values);
       handleContact();
     },
   });

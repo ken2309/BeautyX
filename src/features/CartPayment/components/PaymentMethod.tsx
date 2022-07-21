@@ -1,17 +1,45 @@
-import React, { useContext } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import SectionTitle from "../../SectionTitle";
 import { AppContext } from "../../../context/AppProvider";
 import { IPaymentMethod } from "../../../interface/paymentMethod";
+import { fetAsyncPaymentMethod } from '../../../redux/payments/paymentSlice';
+import { STATUS } from '../../../redux/status'
+import { useDispatch, useSelector } from "react-redux";
 
+interface IProps {
+  e: any,
+  onPaymentMethodChange: (e: any) => void,
+  setOpen?: (open?: boolean) => void,
+}
 
-function PaymentMethod(props: any) {
+function PaymentMethod(props: IProps) {
   const { t } = useContext(AppContext);
-  const { methodList, value, setValue, chooseE_wall, setChooseE_wall } = props;
-  const handleChange = (event: any) => {
+  const dispatch = useDispatch();
+  const { status } = useSelector((state: any) => state.PAYMENT.PAYMENT);
+  const { PAYMENT_METHOD } = useSelector((state: any) => state.PAYMENT);
+  const { e, onPaymentMethodChange, setOpen } = props;
+  const [value, setValue] = useState('');
+  const callPaymentMethodOnline = () => {
+    if (status !== STATUS.SUCCESS) {
+      dispatch(fetAsyncPaymentMethod())
+    }
+  }
+  useEffect(() => {
+    callPaymentMethodOnline()
+  }, [])
+  const handleOnChange = useCallback((event: any) => {
     setValue(event.target.value);
-    setChooseE_wall();
-  };
+  }, [])
+
+  const onChoosePmtClick = (item: any) => {
+    onPaymentMethodChange(item)
+    if (setOpen) {
+      setOpen(false)
+    }
+  }
+
   return (
     <div>
       <SectionTitle title={t("pm.choose_payment_method")} />
@@ -19,10 +47,10 @@ function PaymentMethod(props: any) {
         aria-label="gender"
         name="controlled-radio-buttons-group"
         value={value}
-        onChange={handleChange}
+        onChange={handleOnChange}
       >
         <ul className="payment-method">
-          {methodList.map((item: any) => (
+          {PAYMENT_METHOD?.map((item: any) => (
             <li className="flex-column" key={item.id}>
               <div className="flex-row payment-method-head">
                 <FormControlLabel
@@ -45,17 +73,17 @@ function PaymentMethod(props: any) {
                 className="pm-method_child"
               >
                 <ul>
-                  {item.method_list?.filter((item: IPaymentMethod) => item.name_key === "MOMO")
+                  {item.method_list?.filter((item: IPaymentMethod) => item?.name_key === "MOMO")
                     .map((item: IPaymentMethod) => (
                       <li
                         className="pm-method_child-item"
                         key={item.id}
-                        onClick={() => setChooseE_wall(item)}
+                        onClick={() => onChoosePmtClick(item)}
                       >
                         <div
                           className="pm-method_child-item_box"
                           style={
-                            chooseE_wall === item
+                            e === item
                               ? {
                                 backgroundColor: "#7161BA",
                                 color: "white",

@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 
 
 const PrivateRoute = (props: any) => {
-      const { component: Component, profile, ...rest } = props;
+      const { component: Component, USER, ...rest } = props;
       const local = localStorage.getItem("_WEB_TK");
       const sess = window.sessionStorage.getItem("_WEB_TK")
       return (
@@ -15,7 +15,8 @@ const PrivateRoute = (props: any) => {
                         ) : (
                               <Redirect
                                     to={{
-                                          pathname: '/sign-request',
+                                          pathname: '/sign-in',
+                                          search: '1',
                                           state: { from: routeProps.location }
                                     }}
                               />
