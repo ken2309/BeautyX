@@ -33,15 +33,6 @@ function LoginFlatForm(props: any) {
         await dispatch(fetchAsyncUser())
     }
     const onLoginFlatFormMB = async () => {
-        // let $: any = window;
-        // const res = await $["ReactNativeWebView"].postMessage(JSON.stringify({
-        //     type: "GET_LOCATION",
-        // }));
-        // $.addEventListener("message", (event: any) => {
-        //     alert("flatForm: " + flatForm);
-        //     // alert("msg: " + JSON.stringify(event.data));
-        // });
-        
         try{
             // window.sessionStorage.setItem("_WEB_TK", '4220|VCWtPxfJBqjB2zjS3t0l')
             await dispatch(loginAsyncMb({

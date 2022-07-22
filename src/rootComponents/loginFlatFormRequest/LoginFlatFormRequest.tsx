@@ -44,7 +44,7 @@ function LoginFlatFormRequest(props: any) {
                 })
                 break;
             case FLAT_FORM_TYPE.MB:
-                handleOtpMB();
+                handleLoginMB();
                 break;
             default:
                 break
@@ -115,10 +115,17 @@ function LoginFlatFormRequest(props: any) {
         setLoad(false)
         openOtp&&console.log(dataOtp);
     }
-    const handleLoginMB = async (code:String) => {
+    const handleLoginMB = async () => {
+        const session = sessionStorage.getItem("_loginToken");
+        await dispatch(loginAsyncMb({
+            token: session,
+        }))
+        await dispatch(fetchAsyncUser())
+    }
+    const handleUpdatePhone = async (code:String) => {
         try {
             // (!openOtp)&&setOpenOtp(true);
-            window.sessionStorage.setItem("_WEB_TK", '4220|VCWtPxfJBqjB2zjS3t0l')
+            // window.sessionStorage.setItem("_WEB_TK", '4220|VCWtPxfJBqjB2zjS3t0l')
             const session = sessionStorage.getItem("_loginToken");
             const paramsOb = {
                 "token": session,
@@ -166,7 +173,7 @@ function LoginFlatFormRequest(props: any) {
                             setOpen={setOpenOtp}
                             setDataOtp={setDataOtp}
                             dataOtp={dataOtp}
-                            handleSubmit= {handleLoginMB}
+                            handleSubmit= {handleUpdatePhone}
                         />
                     </>
                 )

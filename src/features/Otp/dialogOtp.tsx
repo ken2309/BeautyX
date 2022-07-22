@@ -170,11 +170,11 @@ function FieldOtps (props:any){
             anchor="bottom"
         >
             <div className="form-otp__cnt">
-                <FormTelephone
+                {/* <FormTelephone
                     title="Nhập mã OTP"
                     handlePostTelephone={handleTelephone}
                     isDialog={true}
-                />
+                /> */}
             </div>
 
         </Drawer>
