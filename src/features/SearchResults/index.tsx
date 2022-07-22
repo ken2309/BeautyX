@@ -368,7 +368,7 @@ function SearchResults(props: any) {
                                         ></img>
                                     </div>
                                 </div>
-                            )}
+                            }
                         </div>
                         <TabService keyword={searchKey} acTab={tab} />
                         <TabProduct keyword={searchKey} acTab={tab} />

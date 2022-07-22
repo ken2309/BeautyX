@@ -2,6 +2,7 @@ import React from "react";
 //import Home from "../features/Home/index";
 import { BrowserRouter, Switch, Redirect } from "react-router-dom";
 import { RouteComponentProps } from "@reach/router";
+import { FLAT_FORM_TYPE } from '../rootComponents/flatForm';
 import MerchantDetail from "../features/MerchantDetail/index";
 import Partner from "../features/Partner";
 import Cart from "../features/Cart/index";
@@ -73,7 +74,7 @@ function RouterConfig(props: any) {
       component: <HomePage />
     },
     {
-      path: '/MB',
+      path: '/MBBANK',
       component: <HomePage />
     },
     {

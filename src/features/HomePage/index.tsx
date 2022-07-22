@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@mui/material";
-import React, { useEffect } from "react";
+import React, {  useEffect } from "react";
 import Bottom from "../../featuresMobile/Bottom";
 import ExtraFlatForm from "../../rootComponents/extraFlatForm";
 import useFullScreen from "../../utils/useDeviceMobile";
@@ -22,7 +22,7 @@ import { onResetFilter, onSetOrgsEmpty } from "../../redux/filter/filterSlice";
 
 // ==== api tracking ====
 // import tracking from "../../api/trackApi";
-import HomeTagsProducts from "./Components/HomeTagsList/HomeTagsProducts";
+//import HomeTagsProducts from "./Components/HomeTagsList/HomeTagsProducts";
 // end
 export default function HomePage() {
     const IS_MB = useFullScreen();

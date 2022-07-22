@@ -14,7 +14,6 @@ interface IProps {
 function TreatmentCardItem(props: IProps) {
     const history = useHistory();
     const { card_items } = props;
-
     const org = card_items.organization;
     const { t } = useContext(AppContext);
     const [enableCart, setEnableCart] = useState(true);
