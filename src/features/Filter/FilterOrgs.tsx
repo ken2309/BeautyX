@@ -116,7 +116,12 @@ function FilterOrgs(props: IProps) {
         dispatch(onSetMaxPrice(item.max_price))
     }
     const handleApplyByFilter = () => {
-        if (min_price < max_price || max_price === "" || min_price === "") {
+        console.log(min_price, max_price)
+        if (min_price < max_price ||
+            max_price === "" ||
+            min_price === "" ||
+            !min_price || !max_price
+        ) {
             if (onApplyFilterOrgs) {
                 onApplyFilterOrgs()
             }
