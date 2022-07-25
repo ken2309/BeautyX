@@ -26,6 +26,13 @@ export const EXTRA_PAYMENT = (res: any) => {
                 EXTRA_PAYMENT_ID: res?.payment_gateway?.extra_data?.id
             }
             break;
+        case FLAT_FORM_TYPE.MB:
+            EX_PAYMENT = {
+                deepLink: null,
+                qrCode: null,
+                EXTRA_PAYMENT_DATA: res?.payment_gateway?.extra_data
+            }
+            break;
         default:
             break
     }

@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchAsyncUser } from '../../redux/USER/userSlice';
 import { FLAT_FORM_TYPE } from '../flatForm';
-import { loginAsyncMomo, loginAsyncTiki } from '../../redux/loginFlatForm/loginFlatFrom';
+import { loginAsyncMomo, loginAsyncTiki, loginAsyncMb } from '../../redux/loginFlatForm/loginFlatFrom';
 import { pickBy, identity } from 'lodash';
-import { AnyAaaaRecord } from 'dns';
+// import { AnyAaaaRecord } from 'dns';
 
 function LoginFlatForm(props: any) {
     const dispatch = useDispatch();
@@ -33,15 +33,16 @@ function LoginFlatForm(props: any) {
         await dispatch(fetchAsyncUser())
     }
     const onLoginFlatFormMB = async () => {
-        let $: any = window;
-        const res = await $['ReactNativeWebView']?.postMessage({
-            type: 'OPEN_NEW_WEBVIEW',
-            name: 'Bảo hiểm tai nạn',
-            link: 'https://www.mbageas.life/',
-        });
-        window.addEventListener("message", event => {
-            if (event.data) alert("msg: " + JSON.stringify(event.data, res));
-        });
+        try{
+            // window.sessionStorage.setItem("_WEB_TK", '4220|VCWtPxfJBqjB2zjS3t0l')
+            await dispatch(loginAsyncMb({
+                token: params.loginToken,
+            }))
+            await dispatch(fetchAsyncUser())
+            
+        }catch(err){
+            console.warn(err)
+        }
     }
     const handleLoginFlatform = () => {
         if (params) {
@@ -66,6 +67,7 @@ function LoginFlatForm(props: any) {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+    console.log(JSON.stringify(params))
     return (
         <div>
 

@@ -33,7 +33,6 @@ export default function ProductDetailRightReview(props: IProps) {
                     <p>{`(${t("detail_item.not_evaluate")})`}</p>
                 )}
             </div>
-
             <div className="evaluate-item">
                 <img src={icon.Favorite} alt="" />
                 <p>{data.favorites_count}</p>

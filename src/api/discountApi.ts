@@ -10,7 +10,7 @@ class Discounts {
             "limit": 30,
             "filter[platform]": "MOMO", // update change platform "BEAUTYX"
             "append": "user_available_purchase_count",
-            "sort": "discount_value|created_at"
+            "sort": "-created_at"
         }
         return axiosClient.get(url, { params })
     }

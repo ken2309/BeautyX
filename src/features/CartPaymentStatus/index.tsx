@@ -21,7 +21,7 @@ import { onClearOrder } from "../../redux/order/orderSlice";
 import { ICart } from "../../interface/cart";
 
 // ==== api tracking ====
-// import tracking from "../../api/trackApi";
+import tracking from "../../api/trackApi";
 import { formatProductList } from "../../utils/tracking";
 import {
     onAddServicesNoBookCount,
@@ -131,11 +131,7 @@ function CartPaymentStatus() {
         if (transaction_uuid) {
             setInter();
             if (listPayment) {
-                // tracking.CONFIRM_SCREEN_LOAD(
-                //     listPayment[0].org_id,
-                //     formatProductList(listPayment),
-                //     res.amount
-                // );
+                tracking.CONFIRM_SCREEN_LOAD(listPayment[0].org_id, formatProductList(listPayment), res.amount)
             }
         }
     }, []);

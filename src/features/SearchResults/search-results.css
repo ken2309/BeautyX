@@ -15,6 +15,9 @@
     width: 16.6%;
     background-color: var(--bgWhite);
 }
+.se-re-cnt__left .filter-orgs-cnt{
+    padding: 0px 12px;
+}
 
 .se-re-cnt__left .filter-orgs-cnt {
     padding: 12px 0px;

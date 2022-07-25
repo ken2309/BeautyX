@@ -38,7 +38,6 @@ const NextButton = (props: any) => {
 };
 export default function ServiceDetailLeft(props: any) {
     const { org, service } = props;
-
     const history = useHistory();
     const dispatch = useDispatch();
     const { t } = useContext(AppContext);

@@ -21,7 +21,7 @@ import CartNull from "../Cart/components/CartNull";
 import { Transition } from "../../utils/transition";
 
 // ==== api tracking ====
-// import tracking from "../../api/trackApi";
+import tracking from "../../api/trackApi";
 import { IOrganization } from "../../interface/organization";
 import { IBranch } from "../../interface/branch";
 import onErrorImg from "../../utils/errorImg";

@@ -187,9 +187,18 @@ export default function ServiceDetailRight(props: IProps) {
             <div className="detail-right__body">
                 <div className="detail-right__info">
                     <div className="flexX-gap-8">
-                        {service?.special_price > 0 &&
+                        {/* {service?.special_price > 0 &&
                             percent < 50 &&
                             percent !== 0 && (
+                                <div className="detail-right__percent">
+                                    <p>
+                                        {`${t("detail_item.off")} `}
+                                        {percent}%
+                                    </p>
+                                </div>
+                            )} */}
+                        {service?.special_price > 0 &&
+                            (
                                 <div className="detail-right__percent">
                                     <p>
                                         {`${t("detail_item.off")} `}
@@ -203,11 +212,14 @@ export default function ServiceDetailRight(props: IProps) {
                                     <span>
                                         {formatPrice(service?.special_price)}đ
                                     </span>
-                                    {percent < 50 && (
+                                    <span>
+                                            {formatPrice(service?.price)}đ
+                                        </span>
+                                    {/* {percent < 50 && (
                                         <span>
                                             {formatPrice(service?.price)}đ
                                         </span>
-                                    )}
+                                    )} */}
                                 </>
                             ) : (
                                 <span>{formatPrice(service?.price)}đ</span>
@@ -230,8 +242,8 @@ export default function ServiceDetailRight(props: IProps) {
             </div>
             {(service?.is_momo_ecommerce_enable === false ||
                 org?.is_momo_ecommerce_enable === false) && (
-                <span className="detail-right__no">{t("se.off_service")}</span>
-            )}
+                    <span className="detail-right__no">{t("se.off_service")}</span>
+                )}
             <div className="detail-right__bottom">
                 <div className="bottom-quantity">
                     <p className="bottom-quantity__text">{t("pr.quantity")}:</p>
@@ -283,7 +295,7 @@ export default function ServiceDetailRight(props: IProps) {
                         <div
                             style={
                                 service.is_momo_ecommerce_enable &&
-                                org.is_momo_ecommerce_enable
+                                    org.is_momo_ecommerce_enable
                                     ? {}
                                     : { opacity: "0.4", cursor: "not-allowed" }
                             }
@@ -295,7 +307,7 @@ export default function ServiceDetailRight(props: IProps) {
                         <div
                             style={
                                 service.is_momo_ecommerce_enable &&
-                                org.is_momo_ecommerce_enable
+                                    org.is_momo_ecommerce_enable
                                     ? {}
                                     : { opacity: "0.4", cursor: "not-allowed" }
                             }
