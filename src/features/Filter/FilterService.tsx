@@ -8,12 +8,15 @@ import { clearServicesPromo } from '../../redux/home/homePageSlice'
 interface IProps {
     onChangeFilter?: (item?: any) => void
 }
+export interface ISortList {
+    id: number, title: string, query: string
+}
 
 function FilterService(props: IProps) {
     const { onChangeFilter } = props;
     const { t } = useContext(AppContext)
     const dispatch = useDispatch();
-    const sortList = [
+    const sortList: ISortList[] = [
         { id: 2, title: t("home_2.hot_promotion"), query: '-discount_percent' },
         { id: 1, title: t("home_2.places_near_you"), query: 'distance' },
         //{ id: 8, title: 'Dịch vụ HOT', query: '-modified_date' },

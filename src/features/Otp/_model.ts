@@ -1,9 +1,12 @@
+import { Dispatch, SetStateAction } from "react";
+
+// import 
 export interface IPropOtp{
-    setOpen: (props: Boolean) => {}
+    setOpen: Dispatch<SetStateAction<boolean>>
     open: boolean
     dataOtp: IDataOtp
-    setDataOtp: (prop:IDataOtp)=>{}
-    handleSubmit: (props:any)=>{}
+    setDataOtp: Dispatch<SetStateAction<IDataOtp>>
+    handleSubmit: (props:any)=>any
 }
 export interface IDataOtp{
     telephone: number|string

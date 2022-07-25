@@ -19,6 +19,7 @@ import {
     fetchServicesByFilter,
     fetchProductsByFilter,
     onSetEmptyOrgs,
+    onSetEmptyServices,
 } from "../../redux/search/searchResultSlice";
 import useFullScreen from "../../utils/useDeviceMobile";
 import HeadMobile from "../HeadMobile";
@@ -29,6 +30,8 @@ import { STATUS } from "../../redux/status";
 import FilterOrgs from "../Filter/FilterOrgs";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
+import FilterService from "../Filter/FilterService";
+import { ISortList } from "../Filter/FilterService";
 
 function SearchResults(props: any) {
     const history = useHistory();
@@ -142,6 +145,26 @@ function SearchResults(props: any) {
         history.goBack();
         dispatch(onToggleSearchCnt(true));
     };
+    //open filter orgs mobile
+    const onOpenFilterOrgs = useCallback(() => {
+        if (valueTab === "3") {
+            setOpenFilter(true)
+        }
+    }, [])
+    //on filter services
+    const { FILTER_PROMO } = useSelector((state: any) => state.FILTER)
+    const handleFilterServices = (sort: ISortList) => {
+        if (FILTER_PROMO.query !== sort.query) {
+            dispatch(onSetEmptyServices())
+            dispatch(
+                fetchServicesByFilter({
+                    page: 1,
+                    keyword: searchKey,
+                    sort: sort.query
+                })
+            );
+        }
+    }
     return (
         <>
             <HeadTitle
@@ -162,16 +185,16 @@ function SearchResults(props: any) {
                 <div className="flex-row-sp se-re-header-mb">
                     <div className="flex-row-sp input">
                         <div className="flex-row">
-                            <img onClick={()=>history.push("/homepage")} src={icon.chevronLeft} alt="" />
+                            <img onClick={() => history.push("/homepage")} src={icon.chevronLeft} alt="" />
                             <span onClick={onGoBack} >{searchKey}</span>
                         </div>
-                        <img 
+                        <img
                             onClick={onGoBack}
-                            src={icon.closeBlack} alt="" 
+                            src={icon.closeBlack} alt=""
                         />
                     </div>
-                    <button 
-                        onClick={() => setOpenFilter(true)}
+                    <button
+                        onClick={onOpenFilterOrgs}
                         className="filter"
                     >
                         <img src={icon.filterBlack} alt="" />
@@ -273,6 +296,9 @@ function SearchResults(props: any) {
                                 )}
                             </div>
                             <TabPanel value="1">
+                                <FilterService
+                                    onChangeFilter={handleFilterServices}
+                                />
                                 <TabService keyword={searchKey} />
                             </TabPanel>
                             <TabPanel value="2">

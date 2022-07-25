@@ -20,7 +20,7 @@ declare global {
 }
 window.confirmationResult = window.confirmationResult || {};
 
-function RenderRecatpcha(props: any) {
+function RenderRecatpcha(props: IPropOtp) {
     const { open, setOpen, dataOtp, setDataOtp, handleSubmit }:IPropOtp = props;
     const [openDialog, setOpenDialog] = useState(false);
     const snackStatus = {
@@ -170,11 +170,11 @@ function FieldOtps (props:any){
             anchor="bottom"
         >
             <div className="form-otp__cnt">
-                {/* <FormTelephone
+                <FormTelephone
                     title="Nhập mã OTP"
                     handlePostTelephone={handleTelephone}
                     isDialog={true}
-                /> */}
+                />
             </div>
 
         </Drawer>
