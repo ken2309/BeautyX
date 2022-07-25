@@ -75,9 +75,6 @@ export function doPostMakePaymentMessageMB(res:IPaymentProps) {
     try {
         // alert(JSON.stringify(res))
         const $:any = window
-        // $['ReactNativeWebView'].postMessage(JSON.stringify({
-        //     type: "GET_LOCATION",
-        //   }))
         $['ReactNativeWebView'].postMessage(JSON.stringify({
             type: 'PAYMENT_HUB_TRANSACTION',
             data: {
@@ -89,25 +86,23 @@ export function doPostMakePaymentMessageMB(res:IPaymentProps) {
                 successMessage: res.successMessage
             },
         }))
-        // $['ReactNativeWebView'].postMessage(JSON.stringify({
-        //     type: 'PAYMENT_HUB_TRANSACTION',
-        //     data: {
-        //         merchant: {
-        //             code: 'MBAL',
-        //             name: 'Bảo hiểm nhân thọ MB AGEAS LIFE',
-        //         },
-        //         type: {
-        //             code: 'BHUT',
-        //             name: 'Mua bảo hiểm ung thư',
-        //             allowCard: true,
-        //         },
-        //         id: 'AJX014TUYI1121',
-        //         amount: 1000000,
-        //         description: 'Mua bao hiem ung thu MBAL 615000',
-        //         successMessage: 'Cám ơn bạn đã mua bảo hiểm. MBAL sẽ liên lạc lại với bạn trong vòng 24h'
-        // }}))
     } catch (e) {
         alert(e);
+    }
+}
+/**
+ * @name exitMbMiniApp
+ * @description Exit webview .
+ */
+export function exitMbMiniApp (){
+    try{
+        const $:any = window
+        $["ReactNativeWebView"].postMessage(JSON.stringify({
+            type: "GO_BACK",
+        }));
+    }
+    catch(e){
+        alert(e)
     }
 }
 export default doPostMakePaymentMessageMB;

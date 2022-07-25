@@ -1,40 +1,48 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import dayjs from 'dayjs';
+import './style.css'
 import icon from '../../constants/icon';
 import ButtonLoading from '../../components/ButtonLoading';
-import doPostMakePaymentMessageTiki from '../tiki/doPostMessageTiki';
-import useGetMessageTiki from '../useGetMessageTiki';
-import tikiAuthApi from '../../api/_tikiAuthApi';
-import mbAuthApi from '../../api/_mbAuthApi';
-import { useHistory } from 'react-router-dom';
-import { fetchAsyncUser } from '../../redux/USER/userSlice';
-import { loginAsyncMb } from '../../redux/loginFlatForm/loginFlatFrom'
-import './style.css'
-import { useDispatch } from 'react-redux';
-import { fetchAsyncApps } from '../../redux/appointment/appSlice'
-import dayjs from 'dayjs';
-import { EXTRA_FLAT_FORM } from '../../api/extraFlatForm';
 import { FLAT_FORM_TYPE } from '../flatForm';
-import momoApi from '../../api/momoApi';
-import SignVeriOtp from '../../features/SignPage/components/SignVeriOtp';
-import Otp from '../../features/Otp/dialogOtp';
+import { EXTRA_FLAT_FORM } from '../../api/extraFlatForm';
+// SLICE 
+
+    import { fetchAsyncUser } from '../../redux/USER/userSlice';
+    import { fetchAsyncApps } from '../../redux/appointment/appSlice'
+    import {EXTRA_REDUCER_STATUS} from '../../redux/status';
+
+// ==== END
+
+// MOMO
+
+    import momoApi from '../../api/momoApi';
+
+// ==== END
+// TIKI
+
+    import tikiAuthApi from '../../api/_tikiAuthApi';
+    import doPostMakePaymentMessageTiki from '../tiki/doPostMessageTiki';
+    import useGetMessageTiki from '../useGetMessageTiki';
+
+// ==== END 
+
+// MB BANK
+import { loginAsyncMb } from '../../redux/loginFlatForm/loginFlatFrom'
+import {exitMbMiniApp} from '../mb/doPostMessageMBbank';
+// ==== END
 function LoginFlatFormRequest(props: any) {
     const { pathname, setClose } = props;
     const history = useHistory();
     const [load, setLoad] = useState(false);
-    const [openOtp, setOpenOtp] = useState(false);
-    const [dataOtp, setDataOtp] = useState({
-        telephone: '',
-        verification_id: '',
-        code: ''
-    })
     const platform = EXTRA_FLAT_FORM();
     const dispatch = useDispatch();
     const handleLogin = async () => {
         setLoad(true)
         switch (platform) {
             case FLAT_FORM_TYPE.MOMO:
-                // onLoginFlatFormMomo()
                 handleLoginMomo()
                 break;
             case FLAT_FORM_TYPE.TIKI:
@@ -49,45 +57,13 @@ function LoginFlatFormRequest(props: any) {
             default:
                 break
         }
-        // let $: any = window;
-        // $['ReactNativeWebView']?.postMessage(JSON.stringify(
-        //     {
-        //         type: 'PAYMENT_HUB_TRANSACTION',
-        //         data: {
-        //             "id": "AW1125WDEIWH",
-        //             "amount": 600000,
-        //             "description": "Test 11dat",
-        //             "successMessage": null,
-        //             "merchant": {
-        //                 "code": "PHZMSP",
-        //                 "name": "Công ty cổ phần MySpa"
-        //             },
-        //             "type": {
-        //                 "name": "Thanh toán sản phẩm làm đẹp",
-        //                 "code": "MSPPROD",
-        //                 "allowCard": true
-        //             },
-        //         }
-        //     }
-        // ))
-        // console.log(res)
-        // alert(JSON.stringify(res))
     }
 
     const handleLoginTiki = async (params: any) => {
         try {
             const res = await tikiAuthApi.login(params);
             window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
-            const res_user = await dispatch(fetchAsyncUser());
-            if (res_user.payload) {
-                dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
-            }
-            if (setClose) return setClose(false)
-            if (pathname && pathname === "/tai-khoan/thong-tin-ca-nhan") {
-                history.push('/home')
-            } else {
-                history.goBack()
-            }
+            fetchAsyncUserAndinitApp();
             setLoad(false)
         } catch (error) {
             console.log(error)
@@ -110,37 +86,37 @@ function LoginFlatFormRequest(props: any) {
         }
 
     }
-    const handleOtpMB = () => {
-        setOpenOtp(true);
-        setLoad(false)
-        openOtp&&console.log(dataOtp);
-    }
     const handleLoginMB = async () => {
         const session = sessionStorage.getItem("_loginToken");
-        await dispatch(loginAsyncMb({
+        const res = await dispatch(loginAsyncMb({
             token: session,
         }))
-        await dispatch(fetchAsyncUser())
-    }
-    const handleUpdatePhone = async (code:String) => {
-        try {
-            // (!openOtp)&&setOpenOtp(true);
-            // window.sessionStorage.setItem("_WEB_TK", '4220|VCWtPxfJBqjB2zjS3t0l')
-            const session = sessionStorage.getItem("_loginToken");
-            const paramsOb = {
-                "token": session,
-                "telephone": dataOtp.telephone,
-                "code": code,
-                "verification_id": dataOtp.verification_id
+        if(res.meta.requestStatus === EXTRA_REDUCER_STATUS.FULFILLED){
+            fetchAsyncUserAndinitApp();
+        }
+        else if(res.meta.requestStatu === EXTRA_REDUCER_STATUS.REJECTED){
+            const resData = res.payload.response.data;
+            if((resData.message === 'invalid-session-token' || resData.message === 'invalid-session-customer') && resData.status === 401){
+                alert('phiên đăng nhập đã hết hạn!')
+                exitMbMiniApp()
             }
-            console.log(paramsOb);
-
-            // await dispatch(fetchAsyncUser())
         }
-        catch (err) {
-            console.log(err)
+        setLoad(false)
+    }
+    // ==== utils custom
+    async function fetchAsyncUserAndinitApp(){
+        const res_user = await dispatch(fetchAsyncUser());
+        if (res_user.payload) {
+            dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
+        }
+        if (setClose) return setClose(false)
+        if (pathname && pathname === "/tai-khoan/thong-tin-ca-nhan") {
+            history.push('/home')
+        } else {
+            history.goBack()
         }
     }
+    // ====
     const response = useGetMessageTiki();
     useMemo(() => {
         // alert(JSON.stringify(response))
@@ -163,21 +139,6 @@ function LoginFlatFormRequest(props: any) {
                 onClick={handleLogin}
                 loading={load}
             />
-            {
-                platform === FLAT_FORM_TYPE.MB
-                &&
-                (
-                    <>
-                        <Otp
-                            open={openOtp}
-                            setOpen={setOpenOtp}
-                            setDataOtp={setDataOtp}
-                            dataOtp={dataOtp}
-                            handleSubmit= {handleUpdatePhone}
-                        />
-                    </>
-                )
-            }
         </div>
     );
 }
