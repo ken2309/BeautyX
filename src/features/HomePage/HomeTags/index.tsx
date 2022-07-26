@@ -2,14 +2,17 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../../context/AppProvider";
 import { imgTag } from "../../../constants/img";
-//import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { ITag } from "../../../interface/tags";
+import onErrorImg from "../../../utils/errorImg";
 
 function HomeTags(props: any) {
     //const history = useHistory();
     const { t } = useContext(AppContext);
-    // const tagsList = useSelector((state:any) => state.HOME.tags);
+    const tagsList: ITag[] = useSelector((state: any) => state.HOME.tags);
+    const tags = tagsList.filter(e => e.children && e.children?.length > 0 && e.organizations_count > 0);
     // console.log(t)
-    const tags = [
+    const tags_data = [
         { id: 4, title: "Spa", text: "Spa", img: imgTag.spa },
         { id: 3, title: "Salon", text: "Salon", img: imgTag.hairSalon },
         { id: 1, title: "Nail", text: "Nail", img: imgTag.nails },
@@ -54,11 +57,11 @@ function HomeTags(props: any) {
                             <Link
                                 to={{
                                     pathname: "/ket-qua/",
-                                    search: `?tag=${item.title}`,
+                                    search: `?tag=${item.name}`,
                                 }}
                                 className="flex-column tag-item-cnt">
-                                <img src={item.img} alt="" />
-                                <span>{item.text}</span>
+                                <img src={item.media.length > 0 ? item.media[0].original_url : ""} onError={(e) => onErrorImg(e)} alt="" />
+                                <div className="tag-item-title">{item.name}</div>
                             </Link>
                         </li>
                     ))}

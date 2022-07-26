@@ -42,8 +42,8 @@
 
 .home-tags-list {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-gap: 0 16px;
+    grid-template-columns: repeat(7, 1fr);
+    /* grid-gap: 0 16px; */
 }
 
 .home-tags-list li {
@@ -70,15 +70,18 @@
     width: 64px;
     height: 64px;
     margin-bottom: 10px;
+    border-radius: 100%;
+    object-fit: cover;
 }
 
-.home-tags .tag-item-cnt span {
+.home-tags .tag-item-cnt > .tag-item-title {
     font-size: 16px;
     line-height: 20px;
     font-weight: 700;
     color: var(--text-black);
+    text-align: center;
 }
-.home-tags .tag-item-cnt:hover > span {
+.home-tags .tag-item-cnt:hover > .tag-item-title {
     color: var(--purple);
     transition: all 0.3s;
     font-weight: bold;
@@ -415,7 +418,7 @@
         margin-bottom: 8px;
     }
 
-    .home-tags .tag-item-cnt span {
+    .home-tags .tag-item-cnt .tag-item-title {
         font-size: 12px;
         line-height: 18px;
         font-weight: 600;
