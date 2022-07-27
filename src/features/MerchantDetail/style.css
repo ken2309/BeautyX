@@ -947,7 +947,7 @@
     }
     .org-detail {
         padding: 0px;
-        height: 355px;
+        height: 375px;
     }
 
     .org-detail__cnt-top {
@@ -1007,6 +1007,11 @@
     .org-left-detail__name {
         font-size: 16px;
         line-height: 24px;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .org-left-detail__address,
@@ -1312,5 +1317,8 @@
         padding: 0px 12px !important;
         border-bottom: none;
         border-top: none;
+    }
+    .org-des-cnt{
+        width: 80%;
     }
 }

@@ -1,15 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import icon from "../../constants/icon";
 import Search from "../../features/Search";
 import { onToggleSearchCnt } from "../../redux/search/searchSlice";
-import { handleSubiz } from "../../utils/customChat";
+import { handleChat } from "../../utils/customChat";
 import img from "../../constants/img";
 import "./style.css";
 // ==== api tracking ====
 // import tracking from "../../api/trackApi";
 import useDeviceMobile from "../../utils/useDeviceMobile";
+// import useGetMessageTiki from "../../rootComponents/useGetMessageTiki";
 // end
 export default function AssistantBtn() {
     const dispatch = useDispatch();
@@ -32,10 +33,6 @@ export default function AssistantBtn() {
     };
     const handleGoToHome = () => {
         history.push("/homepage");
-    };
-    const handleOpenSubiz = () => {
-        // handleSubiz();
-        window.open("https://m.me/beautyxdatlichlamdep/", "_blank");
     };
 
     const refOverLay: any = useRef();
@@ -71,6 +68,10 @@ export default function AssistantBtn() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [overLay]);
+    // const response = useGetMessageTiki();
+    // useMemo(() => {
+    //     alert(JSON.stringify(response))
+    // }, [response])
     const checkoutPageSearch = location.pathname === "/ket-qua-tim-kiem/";
     return disable === true ? (
         <></>
@@ -110,7 +111,7 @@ export default function AssistantBtn() {
 
                     {is_mb === true ? (
                         <div
-                            onTouchStart={() => handleOpenSubiz()}
+                            onTouchStart={() => handleChat()}
                             className="btn1 buttons"
                         >
                             <div className="btn-img">
@@ -123,7 +124,7 @@ export default function AssistantBtn() {
                         </div>
                     ) : (
                         <div
-                            onClick={() => handleOpenSubiz()}
+                            onClick={() => handleChat()}
                             className="btn1 buttons"
                         >
                             <div className="btn-img">

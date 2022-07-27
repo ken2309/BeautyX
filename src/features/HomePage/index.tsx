@@ -22,8 +22,8 @@ import { onResetFilter, onSetOrgsEmpty } from "../../redux/filter/filterSlice";
 
 // ==== api tracking ====
 // import tracking from "../../api/trackApi";
-//import HomeTagsProducts from "./Components/HomeTagsList/HomeTagsProducts";
 // end
+// import HomeTagsProducts from "./Components/HomeTagsList/HomeTagsProducts";
 export default function HomePage() {
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();

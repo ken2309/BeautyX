@@ -18,8 +18,8 @@ function HomeListProvince(props: any) {
     const history = useHistory();
     const gotoResult = (province: IProvince) => {
         history.push({
-            pathname: `/khu-vuc/`,
-            search: `${province.name},${province.province_code}`,
+            pathname: "/ket-qua/",
+            search: `?province=${province.province_code}&&name=${province.name}`,
         });
         scrollTop();
     };

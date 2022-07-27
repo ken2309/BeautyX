@@ -1,3 +1,5 @@
+import {FLAT_FORM_TYPE} from '../rootComponents/flatForm';
+import { callApiFromTiki } from '../rootComponents/tiki/doPostMessageTiki';
 export const handleSubiz = () => {
     let $:any = window;
     let su_widget =  document.querySelector("#cprhliqipldavybercftg .widget-container.widget-container--right");
@@ -12,3 +14,15 @@ export const handleSubiz = () => {
         console.log(status)
     })
 }   
+export const handleChat = () => {
+    const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
+    switch(FLAT_FORM){
+        case FLAT_FORM_TYPE.TIKI:
+            callApiFromTiki('openDeeplink',{url:'https://m.me/beautyxdatlichlamdep/'})
+        break;
+        default:
+            window.open("https://m.me/beautyxdatlichlamdep/", "_blank");
+        break;
+
+    }
+}
