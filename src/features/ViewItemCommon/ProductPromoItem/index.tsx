@@ -8,7 +8,7 @@ import formatPrice from '../../../utils/formatPrice';
 import scrollTop from '../../../utils/scrollTop';
 import { formatRouterLinkProductPromo } from '../../../utils/formatRouterLink/formatRouter';
 // ==== api tracking ====
-//import tracking from "../../../api/trackApi";
+import tracking from "../../../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
@@ -28,7 +28,7 @@ function ProductPromoItem(props: IProps) {
             onClick={() => {
                 scrollTop();
                 GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
-                // tracking.USER_ITEM_CLICK(product.org_id, product.product_id);
+                tracking.USER_ITEM_CLICK(product.org_id, product.product_id);
             }}
             className="ser-pro-item"
         >

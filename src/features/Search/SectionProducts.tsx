@@ -5,7 +5,6 @@ import { IProductPromo } from '../../interface/productPromo';
 import { onSetTabResult } from '../../redux/search/searchResultSlice';
 import { onToggleSearchCnt } from '../../redux/search/searchSlice';
 import ProductResultItem from './components/ProductResultItem';
-
 function SectionProducts(props: any) {
     const { PRODUCTS, onGotoFilterResult, keyword } = props;
     const {t} = useContext(AppContext);

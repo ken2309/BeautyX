@@ -12,7 +12,7 @@ import { formatAddCart } from "../../../../utils/cart/formatAddCart";
 import AlertSnack from "../../../../components/AlertSnack";
 
 // ==== api tracking ====
-//  import tracking from "../../../../api/trackApi";
+ import tracking from "../../../../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../../utils/dataLayer";
@@ -85,7 +85,7 @@ function ServiceItem(props: any) {
         }
     };
     const handleDetailService = () => {
-        // tracking.USER_ITEM_CLICK(org.id, service.id);
+        tracking.USER_ITEM_CLICK(org.id, service.id);
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         if (IS_DISCOUNT) {
             const type = onCheckType();

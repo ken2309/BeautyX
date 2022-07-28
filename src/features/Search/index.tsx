@@ -23,7 +23,7 @@ import SectionNull from "./SectionNull";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
 // ==== api tracking ====
-// import tracking from "../../api/trackApi";
+import tracking from "../../api/trackApi";
 import {
     onSetEmptyOrgs,
     onSetEmptyProducts,
@@ -70,7 +70,7 @@ function Search() {
     const debounceDropDown = useCallback(
         debounce((nextValue) => {
             callByFilter(nextValue);
-            // tracking.SEARCH_ON_CHANGE(nextValue);
+            tracking.SEARCH_ON_CHANGE(nextValue);
         }, 1000),
         []
     );
@@ -113,14 +113,6 @@ function Search() {
         };
         dispatch(addHistory(values));
     };
-
-    // const handleTrack = (props:String,item_id?:String | Number) => {
-    //     const result= {
-    //         store_id: ORGS.id,
-    //         product_id: item_id
-    //     };
-    //     tracking.SEARCH_RESULT_ITEM_CLICK(keyword,result,props,location_user)
-    // }
     const listSection = [
         {
             element: (

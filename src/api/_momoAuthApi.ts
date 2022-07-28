@@ -1,13 +1,15 @@
 import axiosClient from "./axios";
-
+import { pickBy, identity } from 'lodash';
 class MOMOAuth {
-    login = (params: any) => {
+    login = (data: any) => {
         const url = `/auth/momo`;
-        // const params = {
-        //     "fullname": "Nguyen Ngoc Toan",
-        //     "email": "toan@myspa.vn",
-        //     "telephone": "0392645745"
-        // }
+        const paramsOb = {
+            "fullname": data.name,
+            "email": data.email,
+            "telephone": data.phone
+        }
+        alert(JSON.stringify(paramsOb))
+        const params = pickBy(paramsOb, identity);
         return axiosClient.post(url, params)
     }
 }
