@@ -97,7 +97,6 @@ function LoginFlatForm(props: any) {
     }
     const onLoginFlatFormMB = async () => {
         try {
-            // window.sessionStorage.setItem("_WEB_TK", '4220|VCWtPxfJBqjB2zjS3t0l')
             await dispatch(loginAsyncMb({
                 token: params.loginToken,
             }))

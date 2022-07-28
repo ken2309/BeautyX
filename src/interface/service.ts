@@ -33,5 +33,5 @@ export interface Service {
       bought_count: number,
       category: any,
       is_moba_ecommerce_enable: boolean
-      is_momo_ecommerce_enable: boolean
+      is_momo_ecommerce_enable: boolean,
 }
