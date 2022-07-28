@@ -68,10 +68,23 @@ export default function AssistantBtn() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [overLay]);
+<<<<<<< Updated upstream
     // const response = useGetMessageTiki();
     // useMemo(() => {
     //     alert(JSON.stringify(response))
     // }, [response])
+=======
+    const response = useGetMessageTiki();
+    useMemo(() => {
+        alert(JSON.stringify(response))
+        // if (response?.requestId && response.result.status === "success") {
+        //     handleLoginTiki(response.result.res)
+        // }
+        // else if (response?.requestId && response.result.status === "fail") {
+        //     setLoad(false);
+        // }
+    }, [response])
+>>>>>>> Stashed changes
     const checkoutPageSearch = location.pathname === "/ket-qua-tim-kiem/";
     return disable === true ? (
         <></>
