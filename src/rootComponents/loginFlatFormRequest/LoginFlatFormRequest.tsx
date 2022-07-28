@@ -27,7 +27,7 @@ import momoAuthApi from '../../api/_momoAuthApi';
 import {
     MOMO
 } from '../../api/_momoImport';
-
+import {handleGetUserInfoMomo} from '../momo/handleMomo'
 
 // ==== END
 // TIKI
@@ -81,90 +81,12 @@ function LoginFlatFormRequest(props: any) {
     }
     const handleLoginMomo = async () => {
         try {
-            MOMO.showLoading([""]);
-            MOMO.getUserConsents({
-                "permissions": [
-                    {
-                        "role": "name",
-                    },
-                    {
-                        "role": "phone"
-                    },
-                    {
-                        "role": "email",
-                    },
-                ]
-            }, async ({ data, status }: any) => {
-                const dataOb: IUserConsentsData = {
-                    email: data?.email,
-                    name: data?.name,
-                    phone: data?.phone
-                }
-                alert(JSON.stringify(dataOb))
-                if (dataOb.phone) {
-                    setLoad(false)
-                    // const ObTest = {
-                    //     email: '',
-                    //     name: 'NGUYEN KIM TUYEN',
-                    //     phone: '0583580050'
-                    // }
-                    const res = await momoAuthApi.login(dataOb)
-                    alert('res' + JSON.stringify(res))
-                    window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
-                    fetchAsyncUserAndinitApp();
-                }
-                else {
-                    requestUserConsents();
-                    // MOMO.showToast({
-                    //     description: "có lỗi khi nhận thông tin từ momo",
-                    //     type: "failure",
-                    //     duration: 2000
-                    // });
-                    // MOMO.hideLoading()
-                }
-                return { data: data }
-            })
-
+            handleGetUserInfoMomo({fetchAsyncUserAndinitApp,setLoad})
         }
         catch (err) {
             alert(JSON.stringify(err));
             setLoad(false)
         }
-
-    }
-    const requestUserConsents = () => {
-        MOMO.showLoading([""]);
-        MOMO.requestUserConsents({
-            "permissions": [
-                {
-                    "role": "name",
-                    "require": true
-                },
-                {
-                    "role": "phone"
-                },
-                {
-                    "role": "email",
-                }
-            ]
-        }, async ({ data, status }: any) => {
-            alert(JSON.stringify(data))
-            setLoad(false)
-            if (data.phone) {
-                const res = await momoAuthApi.login(data)
-                alert('res' + JSON.stringify(res))
-                fetchAsyncUserAndinitApp();
-            }
-            else {
-                MOMO.showToast({
-                    description: "có lỗi khi nhận thông tin từ momo",
-                    type: "failure",
-                    duration: 2000
-                });
-                MOMO.hideLoading()
-            }
-            return { data: data }
-        })
     }
     const handleLoginMB = async () => {
         const session = sessionStorage.getItem("_loginToken");
@@ -189,7 +111,7 @@ function LoginFlatFormRequest(props: any) {
         if (res_user.payload) {
             dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
         }
-        if (setClose) return setClose(false)
+        if (setClose)  return setClose(false)
         if (pathname && pathname === "/tai-khoan/thong-tin-ca-nhan") {
             history.push('/home')
         } else {

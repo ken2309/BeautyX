@@ -28,6 +28,7 @@ import momoAuthApi from './_momoAuthApi';
 import { MOMO } from './_momoImport';
 
 // interface 
+type IToastType = 'success' | 'failure'
 export interface IUserConsentsData{
     phone?: string
     name?: string
@@ -60,25 +61,11 @@ class MOMO_API {
                 }
             ]
         }, async ({data,status}:any) => {
-            // const dispatch = useDispatch();
-            // const location: any = useLocation();
-            // const history = useHistory();
-            // const pathname = location?.state?.from?.pathname;
-            alert(JSON.stringify(data))
+            // alert(JSON.stringify(data))
             if(data.email && data.phone){
                 alert('in')
                 const res = await momoAuthApi.login(data)
                 alert('res'+JSON.stringify(res))
-                // window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
-                // const res_user = await dispatch(fetchAsyncUser());
-                // if (res_user.payload) {
-                //     dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
-                // }
-                // if (pathname && pathname === "/tai-khoan/thong-tin-ca-nhan") {
-                //     history.push('/home')
-                // } else {
-                //     history.goBack()
-                // }
             }
             else{
                 MOMO.showToast({
@@ -106,29 +93,16 @@ class MOMO_API {
                 },
             ]
         }, async ({data,status}:any) => {
-            // const dispatch = useDispatch();
-            // const location: any = useLocation();
-            // const history = useHistory();
-            // const pathname = location?.state?.from?.pathname;
             const dataOb:IUserConsentsData = {
                 email: data?.email,
                 name: data?.name,
                 phone: data?.phone
             }
-            alert(JSON.stringify(dataOb))
+            // alert(JSON.stringify(dataOb))
             if(dataOb.email && dataOb.phone){
                 const res = await momoAuthApi.login(data)
-                alert('res'+JSON.stringify(res))
+                // alert('res'+JSON.stringify(res))
                 window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
-                // const res_user = await dispatch(fetchAsyncUser());
-                // if (res_user.payload) {
-                //     dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
-                // }
-                // if (pathname && pathname === "/tai-khoan/thong-tin-ca-nhan") {
-                //     history.push('/home')
-                // } else {
-                //     history.goBack()
-                // }
             }
             else{
                 this.requestUserConsents();
@@ -150,10 +124,10 @@ class MOMO_API {
             return {data:data}
         })
     }
-    showToast = () => {
+    showToast = (description:string,type:IToastType) => {
         MOMO.showToast({
-            description: "Successfully",
-            type: "success",
+            description: description,
+            type: type,
             duration: 2000
         });
     }
