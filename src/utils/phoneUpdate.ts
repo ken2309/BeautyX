@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import DialogOtp from '../features/Otp/dialogOtp';
 import {IDataOtp} from '../features/Otp/_model';
-import validateForm from './validateForm';
+import {vnPhoneCheck} from './validateForm';
 
 function checkPhoneValid(phone:string|number):Boolean{
-    var result = validateForm.phone.test(phone.toString());
+    var result = vnPhoneCheck.test(phone.toString());
     return result
 }
 function sendOtp(telephone:number|string){
@@ -36,7 +36,7 @@ export default function index(props:IProps){
     
     const {telephone,token} = props
     if(checkPhoneValid(telephone)){
-        return
+        return true
     }
     else{
         sendOtp(telephone)

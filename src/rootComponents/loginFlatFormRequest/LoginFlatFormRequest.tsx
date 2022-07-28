@@ -10,28 +10,37 @@ import { FLAT_FORM_TYPE } from '../flatForm';
 import { EXTRA_FLAT_FORM } from '../../api/extraFlatForm';
 // SLICE 
 
-    import { fetchAsyncUser } from '../../redux/USER/userSlice';
-    import { fetchAsyncApps } from '../../redux/appointment/appSlice'
-    import {EXTRA_REDUCER_STATUS} from '../../redux/status';
+import { fetchAsyncUser } from '../../redux/USER/userSlice';
+import { fetchAsyncApps } from '../../redux/appointment/appSlice'
+import { EXTRA_REDUCER_STATUS } from '../../redux/status';
 
 // ==== END
 
 // MOMO
 
-    import momoApi from '../../api/momoApi';
+import momoApi, {
+    IUserConsentsData,
+    IUserConsentsStatus,
+    IUserConsents
+} from '../../api/momoApi';
+import momoAuthApi from '../../api/_momoAuthApi';
+import {
+    MOMO
+} from '../../api/_momoImport';
+
 
 // ==== END
 // TIKI
 
-    import tikiAuthApi from '../../api/_tikiAuthApi';
-    import doPostMakePaymentMessageTiki from '../tiki/doPostMessageTiki';
-    import useGetMessageTiki from '../useGetMessageTiki';
+import tikiAuthApi from '../../api/_tikiAuthApi';
+import doPostMakePaymentMessageTiki from '../tiki/doPostMessageTiki';
+import useGetMessageTiki from '../useGetMessageTiki';
 
 // ==== END 
 
 // MB BANK
 import { loginAsyncMb } from '../../redux/loginFlatForm/loginFlatFrom'
-import {exitMbMiniApp} from '../mb/doPostMessageMBbank';
+import { exitMbMiniApp } from '../mb/doPostMessageMBbank';
 // ==== END
 function LoginFlatFormRequest(props: any) {
     const { pathname, setClose } = props;
@@ -72,13 +81,50 @@ function LoginFlatFormRequest(props: any) {
     }
     const handleLoginMomo = async () => {
         try {
-            const res = await momoApi.getUserConsents();
-            const resRequest = await momoApi.requestUserConsents();
-            const resLocale = await momoApi.getLocation();
-            alert(JSON.stringify(res));
-            alert(JSON.stringify(resRequest))
-            // alert(JSON.stringify(resLocale));
-            setLoad(false)
+            MOMO.showLoading([""]);
+            MOMO.getUserConsents({
+                "permissions": [
+                    {
+                        "role": "name",
+                    },
+                    {
+                        "role": "phone"
+                    },
+                    {
+                        "role": "email",
+                    },
+                ]
+            }, async ({ data, status }: any) => {
+                const dataOb: IUserConsentsData = {
+                    email: data?.email,
+                    name: data?.name,
+                    phone: data?.phone
+                }
+                alert(JSON.stringify(dataOb))
+                if (dataOb.phone) {
+                    setLoad(false)
+                    // const ObTest = {
+                    //     email: '',
+                    //     name: 'NGUYEN KIM TUYEN',
+                    //     phone: '0583580050'
+                    // }
+                    const res = await momoAuthApi.login(dataOb)
+                    alert('res' + JSON.stringify(res))
+                    window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
+                    fetchAsyncUserAndinitApp();
+                }
+                else {
+                    requestUserConsents();
+                    // MOMO.showToast({
+                    //     description: "có lỗi khi nhận thông tin từ momo",
+                    //     type: "failure",
+                    //     duration: 2000
+                    // });
+                    // MOMO.hideLoading()
+                }
+                return { data: data }
+            })
+
         }
         catch (err) {
             alert(JSON.stringify(err));
@@ -86,17 +132,51 @@ function LoginFlatFormRequest(props: any) {
         }
 
     }
+    const requestUserConsents = () => {
+        MOMO.showLoading([""]);
+        MOMO.requestUserConsents({
+            "permissions": [
+                {
+                    "role": "name",
+                    "require": true
+                },
+                {
+                    "role": "phone"
+                },
+                {
+                    "role": "email",
+                }
+            ]
+        }, async ({ data, status }: any) => {
+            alert(JSON.stringify(data))
+            setLoad(false)
+            if (data.phone) {
+                const res = await momoAuthApi.login(data)
+                alert('res' + JSON.stringify(res))
+                fetchAsyncUserAndinitApp();
+            }
+            else {
+                MOMO.showToast({
+                    description: "có lỗi khi nhận thông tin từ momo",
+                    type: "failure",
+                    duration: 2000
+                });
+                MOMO.hideLoading()
+            }
+            return { data: data }
+        })
+    }
     const handleLoginMB = async () => {
         const session = sessionStorage.getItem("_loginToken");
         const res = await dispatch(loginAsyncMb({
             token: session,
         }))
-        if(res.meta.requestStatus === EXTRA_REDUCER_STATUS.FULFILLED){
+        if (res.meta.requestStatus === EXTRA_REDUCER_STATUS.FULFILLED) {
             fetchAsyncUserAndinitApp();
         }
-        else if(res.meta.requestStatu === EXTRA_REDUCER_STATUS.REJECTED){
+        else if (res.meta.requestStatu === EXTRA_REDUCER_STATUS.REJECTED) {
             const resData = res.payload.response.data;
-            if((resData.message === 'invalid-session-token' || resData.message === 'invalid-session-customer') && resData.status === 401){
+            if ((resData.message === 'invalid-session-token' || resData.message === 'invalid-session-customer') && resData.status === 401) {
                 alert('phiên đăng nhập đã hết hạn!')
                 exitMbMiniApp()
             }
@@ -104,7 +184,7 @@ function LoginFlatFormRequest(props: any) {
         setLoad(false)
     }
     // ==== utils custom
-    async function fetchAsyncUserAndinitApp(){
+    async function fetchAsyncUserAndinitApp() {
         const res_user = await dispatch(fetchAsyncUser());
         if (res_user.payload) {
             dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))

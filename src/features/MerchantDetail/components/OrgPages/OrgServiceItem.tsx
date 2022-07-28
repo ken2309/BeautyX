@@ -8,7 +8,7 @@ import scrollTop from "../../../../utils/scrollTop";
 import { Link } from "react-router-dom";
 import { formatRouterLinkService } from "../../../../utils/formatRouterLink/formatRouter";
 // ==== api tracking ====
-//  import tracking from "../../../../api/trackApi";
+ import tracking from "../../../../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../../utils/dataLayer";
@@ -27,7 +27,7 @@ function OrgServiceItem(props: IProps) {
             onClick={() => {
                 scrollTop();
                 GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
-                // tracking.USER_ITEM_CLICK(org.id, service.id);
+                tracking.USER_ITEM_CLICK(org.id, service.id);
             }}
         >
             <div className="org-special-item">

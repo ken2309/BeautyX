@@ -8,10 +8,10 @@ import { handleChat } from "../../utils/customChat";
 import img from "../../constants/img";
 import "./style.css";
 // ==== api tracking ====
-// import tracking from "../../api/trackApi";
+import tracking from "../../api/trackApi";
+// end
 import useDeviceMobile from "../../utils/useDeviceMobile";
 // import useGetMessageTiki from "../../rootComponents/useGetMessageTiki";
-// end
 export default function AssistantBtn() {
     const dispatch = useDispatch();
     const location: any = useLocation();
@@ -28,7 +28,7 @@ export default function AssistantBtn() {
 
     const handleOpenSearch = () => {
         const action = open ? false : true;
-        // tracking.SEARCH_CLICK();
+        tracking.SEARCH_CLICK();
         dispatch(onToggleSearchCnt(action));
     };
     const handleGoToHome = () => {

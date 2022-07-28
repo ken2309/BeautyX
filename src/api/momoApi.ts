@@ -23,9 +23,29 @@
 //     "status" : {}
 // }
 
+
+import momoAuthApi from './_momoAuthApi';
 import { MOMO } from './_momoImport';
+
+// interface 
+export interface IUserConsentsData {
+    phone?: string
+    name?: string
+    email?: string
+}
+export interface IUserConsentsStatus {
+    email: "denied",
+    name: "granted",
+    phone: "granted"
+}
+export interface IUserConsents {
+    data: IUserConsentsData | {}
+    status: IUserConsentsStatus | "cancelled" | {}
+}
+// end 
 class MOMO_API {
     requestUserConsents = () => {
+        MOMO.showLoading([""]);
         MOMO.requestUserConsents({
             "permissions": [
                 {
@@ -37,24 +57,43 @@ class MOMO_API {
                 },
                 {
                     "role": "email",
-                },
-                {
-                    "role": "gender"
-                },
-                {
-                    "role": "dateOfBirth",
-                },
-                {
-                    "role": "identify"
-                },
+                }
             ]
-        }, (data:any,status:any) => {
-            alert(JSON.stringify([data,status]))
-            return {data:data,status:status}
+        }, async ({ data, status }: any) => {
+            // const dispatch = useDispatch();
+            // const location: any = useLocation();
+            // const history = useHistory();
+            // const pathname = location?.state?.from?.pathname;
+            // alert(JSON.stringify(data))
+            if (data.email && data.phone) {
+                alert('in')
+                const res = await momoAuthApi.login(data)
+                alert('res' + JSON.stringify(res))
+                // window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
+                // const res_user = await dispatch(fetchAsyncUser());
+                // if (res_user.payload) {
+                //     dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
+                // }
+                // if (pathname && pathname === "/tai-khoan/thong-tin-ca-nhan") {
+                //     history.push('/home')
+                // } else {
+                //     history.goBack()
+                // }
+            }
+            else {
+                MOMO.showToast({
+                    description: "có lỗi khi nhận thông tin từ momo",
+                    type: "failure",
+                    duration: 2000
+                });
+                MOMO.hideLoading()
+            }
+            return { data: data }
         })
     }
-    getUserConsents = () => { 
-        MOMO.getUserConsents({
+    getUserConsents = async () => {
+        MOMO.showLoading([""]);
+        const res = await MOMO.getUserConsents({
             "permissions": [
                 {
                     "role": "name",
@@ -66,15 +105,49 @@ class MOMO_API {
                     "role": "email",
                 },
             ]
-        }, (data:any) => {
-            alert(JSON.stringify([data]))
-            return {data:data}
+        }, async ({ data, status }: any) => {
+            // const dispatch = useDispatch();
+            // const location: any = useLocation();
+            // const history = useHistory();
+            // const pathname = location?.state?.from?.pathname;
+            const dataOb: IUserConsentsData = {
+                email: data?.email,
+                name: data?.name,
+                phone: data?.phone
+            }
+            alert(JSON.stringify(dataOb))
+            if (dataOb.email && dataOb.phone) {
+                const res = await momoAuthApi.login(data)
+                // alert('res'+JSON.stringify(res))
+                window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
+                // const res_user = await dispatch(fetchAsyncUser());
+                // if (res_user.payload) {
+                //     dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
+                // }
+                // if (pathname && pathname === "/tai-khoan/thong-tin-ca-nhan") {
+                //     history.push('/home')
+                // } else {
+                //     history.goBack()
+                // }
+            }
+            else {
+                this.requestUserConsents();
+                MOMO.showToast({
+                    description: "có lỗi khi nhận thông tin từ momo",
+                    type: "failure",
+                    duration: 2000
+                });
+                MOMO.hideLoading()
+            }
+            return { data: data }
         })
+        return res
+
     }
     getLocation = () => {
-        MOMO.getLocation((data:any) => {
+        MOMO.getLocation((data: any) => {
             alert(JSON.stringify([data]))
-            return {data:data}
+            return { data: data }
         })
     }
     showToast = () => {

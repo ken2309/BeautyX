@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 import { getTotal } from "../../redux/cartSlice";
 import { AppContext } from "../../context/AppProvider";
 // ==== api tracking ====
-//  import tracking from "../../api/trackApi";
+ import tracking from "../../api/trackApi";
 // end
 
 function HeadHomeMobile() {
@@ -36,7 +36,7 @@ function HeadHomeMobile() {
             <div className="flex-row-sp head-home-mb">
                 <div
                     onClick={() => {
-                        // tracking.SEARCH_CLICK();
+                        tracking.SEARCH_CLICK();
                         dispatch(onToggleSearchCnt(true));
                     }}
                     className="flex-row head-home-mb__input"
@@ -47,7 +47,7 @@ function HeadHomeMobile() {
                 <div className="head-home-mb__button">
                     <button
                         onClick={() => {
-                            // tracking.CALENDAR_CLICK();
+                            tracking.CALENDAR_CLICK();
                             history.push("/lich-hen");
                         }}
                         className="head-home-mb__button-item"

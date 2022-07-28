@@ -18,7 +18,8 @@ export const handleChat = () => {
     const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
     switch(FLAT_FORM){
         case FLAT_FORM_TYPE.TIKI:
-            callApiFromTiki('openDeeplink',{url:'https://m.me/beautyxdatlichlamdep/'})
+            // callApiFromTiki('openDeeplink',{url:'https://m.me/beautyxdatlichlamdep/'})
+            handleSubiz()
         break;
         default:
             window.open("https://m.me/beautyxdatlichlamdep/", "_blank");

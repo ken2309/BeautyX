@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 // ==== api tracking ====
-//  import tracking from "../../../api/trackApi";
+ import tracking from "../../../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
@@ -36,9 +36,9 @@ function TabProduct2(props: any) {
                                     search: `keyword=${item.title}`,
                                 }}
                                 onClick={() => {
-                                    // tracking.CATEGORY_TREE_ITEM_CLICK(
-                                    //     catesChildByTab.id
-                                    // );
+                                    tracking.CATEGORY_TREE_ITEM_CLICK(
+                                        catesChildByTab.id
+                                    );
                                     GoogleTagPush(
                                         GoogleTagEvents.PRODUCT_CLICK
                                     );

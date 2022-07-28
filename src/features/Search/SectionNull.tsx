@@ -9,7 +9,7 @@ import { STATUS } from "../../redux/status";
 import { AppContext } from "../../context/AppProvider";
 
 // ==== api tracking ====
-// import tracking from "../../api/trackApi";
+import tracking from "../../api/trackApi";
 // end
 function SectionNull(props: any) {
     const { t } = useContext(AppContext);
@@ -30,7 +30,7 @@ function SectionNull(props: any) {
         SERVICES.status === STATUS.SUCCESS &&
         PRODUCTS.status === STATUS.SUCCESS
     ) {
-        // tracking.SEARCH_RESULT_LOAD(quantity, keyword);
+        tracking.SEARCH_RESULT_LOAD(quantity, keyword);
     } else if (
         ORGS.status === STATUS.SUCCESS &&
         SERVICES.status === STATUS.SUCCESS &&

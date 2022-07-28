@@ -47,6 +47,7 @@ function SearchResults(props: any) {
     const { tab, RE_ORGS, RE_SERVICES, RE_PRODUCTS } = useSelector(
         (state: any) => state.SEARCH_RESULT
     );
+    const valueTab = params.tab || tab
 
     const { FILTER_ORG } = useSelector((state: any) => state.FILTER);
     const FILTER_ORGS_VAL = {
@@ -77,9 +78,9 @@ function SearchResults(props: any) {
     if (location.state) {
         tabs = tabs.sort((a, b) => b.total - a.total);
     }
-    const [valueTab, setValueTab] = useState(params?.tab || "1");
+    //const [valueTab, setValueTab] = useState(params?.tab || "1");
     const onChangeTab = (event: React.SyntheticEvent, newValue: string) => {
-        setValueTab(newValue);
+        //setValueTab(newValue);
         // history.push(`/lich-hen?tab=${newValue}`);
         history.push({
             pathname: "/ket-qua-tim-kiem/",
