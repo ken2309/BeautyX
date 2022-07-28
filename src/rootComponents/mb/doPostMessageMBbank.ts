@@ -105,4 +105,23 @@ export function exitMbMiniApp (){
         alert(e)
     }
 }
+/**
+ * @name openUrlInMbMiniApp
+ * @param {string=} name - url title.
+ * @param {string=} url - link website you want to open.
+ * @description create new webview over current webview .
+ */
+ export function openUrlInMbMiniApp (name:string,url:string){
+    try{
+        const $:any = window
+        $["ReactNativeWebView"].postMessage(JSON.stringify({
+            type: "OPEN_NEW_WEBVIEW",
+            name: name,
+            link: url,
+        }));
+    }
+    catch(e){
+        alert(e)
+    }
+}
 export default doPostMakePaymentMessageMB;
