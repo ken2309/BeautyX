@@ -22,7 +22,6 @@ import {
     onSetEmptyServices,
 } from "../../redux/search/searchResultSlice";
 import useFullScreen from "../../utils/useDeviceMobile";
-import HeadMobile from "../HeadMobile";
 import BackTopButton from "../../components/BackTopButton";
 import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 import Map from "../../components/Map";
@@ -40,9 +39,7 @@ function SearchResults(props: any) {
     const dispatch = useDispatch();
     const location: any = useLocation();
     const params: any = extraParamsUrl();
-    // const searchKey = decodeURI(
-    //     location.search.slice(1, location.search.length)
-    // );
+
     const searchKey = params?.keyword;
     const { tab, RE_ORGS, RE_SERVICES, RE_PRODUCTS } = useSelector(
         (state: any) => state.SEARCH_RESULT
@@ -150,7 +147,7 @@ function SearchResults(props: any) {
         if (valueTab === "3") {
             setOpenFilter(true)
         }
-    }, [])
+    }, [valueTab])
     //on filter services
     const { FILTER_PROMO } = useSelector((state: any) => state.FILTER)
     const handleFilterServices = (sort: ISortList) => {
