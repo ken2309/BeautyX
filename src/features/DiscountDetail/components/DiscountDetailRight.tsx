@@ -17,7 +17,7 @@ import PopupSuccess from "../../PopupSuccess";
 import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
 import DiscountDetailRightReview from "../../DiscountDetail/components/DiscountDetailRightReview";
 // ==== api tracking ====
-//import tracking from '../../../api/trackApi'
+import tracking from '../../../api/trackApi'
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
@@ -85,6 +85,7 @@ function DiscountDetailRight(props: IProps) {
         discount
     );
     const handleAddCart = () => {
+<<<<<<< HEAD
         if (USER) {
             GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
             dispatch(addCart({
@@ -102,13 +103,24 @@ function DiscountDetailRight(props: IProps) {
         //     values.price,
         //     values.quantity
         // );
+=======
+        tracking.ADD_CART_CLICK(
+            values.org_id,
+            values.id,
+            values.price,
+            values.quantity
+        );
+        GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
+        dispatch(addCart(values));
+        setPopupSuccess(true);
+>>>>>>> 7687d67825f775b93cfd1ff8da3b26ea32c70355
     };
     //handle booking now
     const onBookingNow = () => {
         const TYPE = "BOOK_NOW";
         const service = { ...detail, discount: discount };
         const services = [{ service, quantity: quantity }];
-        //tracking.ADD_CART_CLICK(values.org_id,values.id,values.price,values.quantity)
+        tracking.ADD_CART_CLICK(values.org_id,values.id,values.price,values.quantity)
         GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
         history.push({
             pathname: "/dat-hen",

@@ -15,7 +15,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import "./style.css";
 
 // ==== api tracking ====
-//  import tracking from "../../../api/trackApi";
+ import tracking from "../../../api/trackApi";
 // end
 
 function ProductsByCate(props: any) {
@@ -63,9 +63,9 @@ function ProductsByCate(props: any) {
                         {products.map((item: any, index: any) => (
                             <li
                                 key={index}
-                                // onClick={
-                                //     () => tracking.CATEGORY_TREE_ITEM_CLICK(PRODUCTS.CATE_CHILD.id,item.org_id,item.product_id)
-                                // }
+                                onClick={
+                                    () => tracking.CATEGORY_TREE_ITEM_CLICK(PRODUCTS.CATE_CHILD.id,item.org_id,item.product_id)
+                                }
                             >
                                 <ProductCateItem item={item} />
                             </li>

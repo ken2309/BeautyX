@@ -10,28 +10,37 @@ import { FLAT_FORM_TYPE } from '../flatForm';
 import { EXTRA_FLAT_FORM } from '../../api/extraFlatForm';
 // SLICE 
 
-    import { fetchAsyncUser } from '../../redux/USER/userSlice';
-    import { fetchAsyncApps } from '../../redux/appointment/appSlice'
-    import {EXTRA_REDUCER_STATUS} from '../../redux/status';
+import { fetchAsyncUser } from '../../redux/USER/userSlice';
+import { fetchAsyncApps } from '../../redux/appointment/appSlice'
+import { EXTRA_REDUCER_STATUS } from '../../redux/status';
 
 // ==== END
 
 // MOMO
 
-    import momoApi from '../../api/momoApi';
+import momoApi, {
+    IUserConsentsData,
+    IUserConsentsStatus,
+    IUserConsents
+} from '../../api/momoApi';
+import momoAuthApi from '../../api/_momoAuthApi';
+import {
+    MOMO
+} from '../../api/_momoImport';
+import {handleGetUserInfoMomo} from '../momo/handleMomo'
 
 // ==== END
 // TIKI
 
-    import tikiAuthApi from '../../api/_tikiAuthApi';
-    import doPostMakePaymentMessageTiki from '../tiki/doPostMessageTiki';
-    import useGetMessageTiki from '../useGetMessageTiki';
+import tikiAuthApi from '../../api/_tikiAuthApi';
+import doPostMakePaymentMessageTiki from '../tiki/doPostMessageTiki';
+import useGetMessageTiki from '../useGetMessageTiki';
 
 // ==== END 
 
 // MB BANK
 import { loginAsyncMb } from '../../redux/loginFlatForm/loginFlatFrom'
-import {exitMbMiniApp} from '../mb/doPostMessageMBbank';
+import { exitMbMiniApp } from '../mb/doPostMessageMBbank';
 // ==== END
 function LoginFlatFormRequest(props: any) {
     const { pathname, setClose } = props;
@@ -72,31 +81,24 @@ function LoginFlatFormRequest(props: any) {
     }
     const handleLoginMomo = async () => {
         try {
-            const res = await momoApi.getUserConsents();
-            const resRequest = await momoApi.requestUserConsents();
-            const resLocale = await momoApi.getLocation();
-            alert(JSON.stringify(res));
-            alert(JSON.stringify(resRequest))
-            // alert(JSON.stringify(resLocale));
-            setLoad(false)
+            handleGetUserInfoMomo({fetchAsyncUserAndinitApp,setLoad})
         }
         catch (err) {
             alert(JSON.stringify(err));
             setLoad(false)
         }
-
     }
     const handleLoginMB = async () => {
         const session = sessionStorage.getItem("_loginToken");
         const res = await dispatch(loginAsyncMb({
             token: session,
         }))
-        if(res.meta.requestStatus === EXTRA_REDUCER_STATUS.FULFILLED){
+        if (res.meta.requestStatus === EXTRA_REDUCER_STATUS.FULFILLED) {
             fetchAsyncUserAndinitApp();
         }
-        else if(res.meta.requestStatu === EXTRA_REDUCER_STATUS.REJECTED){
+        else if (res.meta.requestStatu === EXTRA_REDUCER_STATUS.REJECTED) {
             const resData = res.payload.response.data;
-            if((resData.message === 'invalid-session-token' || resData.message === 'invalid-session-customer') && resData.status === 401){
+            if ((resData.message === 'invalid-session-token' || resData.message === 'invalid-session-customer') && resData.status === 401) {
                 alert('phiên đăng nhập đã hết hạn!')
                 exitMbMiniApp()
             }
@@ -104,12 +106,12 @@ function LoginFlatFormRequest(props: any) {
         setLoad(false)
     }
     // ==== utils custom
-    async function fetchAsyncUserAndinitApp(){
+    async function fetchAsyncUserAndinitApp() {
         const res_user = await dispatch(fetchAsyncUser());
         if (res_user.payload) {
             dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
         }
-        if (setClose) return setClose(false)
+        if (setClose)  return setClose(false)
         if (pathname && pathname === "/tai-khoan/thong-tin-ca-nhan") {
             history.push('/home')
         } else {

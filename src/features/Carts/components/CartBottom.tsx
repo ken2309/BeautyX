@@ -11,7 +11,7 @@ import { identity, pickBy } from "lodash";
 import Notification from "../../../components/Notification";
 import AlertSnack from "../../../components/AlertSnack";
 // ==== api tracking ====
-// import tracking from "../../../api/trackApi";
+import tracking from "../../../api/trackApi";
 import { formatProductList } from "../../../utils/tracking";
 import { AppContext } from "../../../context/AppProvider";
 // end
@@ -65,10 +65,10 @@ function CartBottom(props: any) {
     async function handlePostOrder() {
         //setLoading(true)
         try {
-            // tracking.PAY_CONFIRM_CLICK(
-            //     DATA_PMT.org.id,
-            //     formatProductList(pramsOrder.products)
-            // );
+            tracking.PAY_CONFIRM_CLICK(
+                DATA_PMT.org.id,
+                formatProductList(pramsOrder.products)
+            );
             const response = await order.postOrder(
                 DATA_PMT.org.id,
                 pickBy(pramsOrder, identity)

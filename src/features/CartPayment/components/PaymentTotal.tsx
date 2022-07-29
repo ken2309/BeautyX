@@ -15,7 +15,7 @@ import PaymentCreateFail from "./PaymentCreateFail";
 import { extraPaymentMethodId } from "../../PaymentMethod/extraPaymentMethodId";
 
 // ==== api tracking ====
-// import tracking from "../../../api/trackApi";
+import tracking from "../../../api/trackApi";
 import { formatProductList } from "../../../utils/tracking";
 // end
 const useInPayment: boolean = true;
@@ -58,7 +58,7 @@ function PaymentTotal(props: any) {
     async function handlePostOrder(org_id: number, params: any) {
         setLoading(true);
         try {
-            // tracking.PAY_CONFIRM_CLICK(org_id, formatProductList(params.products))
+            tracking.PAY_CONFIRM_CLICK(org_id, formatProductList(params.products))
             const response = await order.postOrder(org_id, params);
             const state_payment = await response.data.context;
             const desc = await state_payment.payment_gateway.description;

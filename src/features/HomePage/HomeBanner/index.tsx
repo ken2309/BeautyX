@@ -13,7 +13,7 @@ import HomeBannerPopup from "./HomeBannerPopup";
 import "../../../assets/styles/main.css";
 import "./homeBanner.css";
 // ==== api tracking ====
-// import tracking from "../../../api/trackApi";
+import tracking from "../../../api/trackApi";
 // end
 const PrevButton = (props: any) => {
     const { onClick } = props;
@@ -109,7 +109,7 @@ export default function HomeBanner() {
         setOpenVideo(false);
     }
     const handleClick = () => {
-        // tracking.BANNER_CLICK(banners.id);
+        tracking.BANNER_CLICK(banners.id);
         if (chooseBanner) {
             switch (chooseBanner.type) {
                 case "VIDEO":

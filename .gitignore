@@ -53,5 +53,5 @@ build/
 .vscode/
 firebase.json
 package-lock.json
-.firebase/hosting.YnVpbGQ.cache
+*.cache
 prod/

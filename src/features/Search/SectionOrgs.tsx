@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { onSetTabResult } from "../../redux/search/searchResultSlice";
 import { AppContext } from "../../context/AppProvider";
 // ==== api tracking ====
-//  import tracking from "../../api/trackApi";
+ import tracking from "../../api/trackApi";
 // end
 function SectionOrgs(props: any) {
     const { t } = useContext(AppContext);
@@ -22,12 +22,12 @@ function SectionOrgs(props: any) {
         const result = {
             store_id: ORGS.id,
         };
-        // tracking.SEARCH_RESULT_ITEM_CLICK(
-        //     keyword,
-        //     result,
-        //     props,
-        //     location_user
-        // );
+        tracking.SEARCH_RESULT_ITEM_CLICK(
+            keyword,
+            result,
+            'doanh nghiệp',
+            location_user
+        );
         dispatch(addHistory(values));
         dispatch(onToggleSearchCnt(false));
     };

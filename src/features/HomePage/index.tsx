@@ -21,14 +21,14 @@ import { useDispatch } from "react-redux";
 import { onResetFilter, onSetOrgsEmpty } from "../../redux/filter/filterSlice";
 
 // ==== api tracking ====
-// import tracking from "../../api/trackApi";
+import tracking from "../../api/trackApi";
 // end
 // import HomeTagsProducts from "./Components/HomeTagsList/HomeTagsProducts";
 export default function HomePage() {
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
     useEffect(() => {
-        // tracking.HOME_LOAD();
+        tracking.HOME_LOAD();
         dispatch(onResetFilter());
         dispatch(onSetOrgsEmpty());
     }, []);
@@ -43,7 +43,7 @@ export default function HomePage() {
             </Container>
             <HomeDiscount />
             <Container>
-                <HomeHotDeal />
+                {/* <HomeHotDeal /> */}
                 <HomeTopService />
                 {/* {IS_MB && <HomeHotTrend />} */}
                 <HomeFavorite />

@@ -32,7 +32,7 @@ import {
 } from "../../../utils/formatRouterLink/formatRouter";
 
 // ==== api tracking ====
-// import tracking from "../../../api/trackApi";
+import tracking from "../../../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
@@ -101,7 +101,7 @@ function CartItem(props: IProps) {
         setOpenConfirm(true);
     };
     const goBackDetail = () => {
-        // tracking.USER_ITEM_CLICK(cartItem.org.id, cartItem.id);
+        tracking.USER_ITEM_CLICK(cartItem.org.id, cartItem.id);
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         if (cartItem.is_type === 1) {
             const pathProductOb = formatRouterLinkProduct(
