@@ -45,7 +45,7 @@ function DiscountDetailRight(props: IProps) {
     const [popupSuccess, setPopupSuccess] = useState(false);
     const percent = Math.round(
         100 -
-            (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
+        (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
     );
     const { USER } = useSelector((state: any) => state.USER);
     const history = useHistory();
@@ -85,15 +85,23 @@ function DiscountDetailRight(props: IProps) {
         discount
     );
     const handleAddCart = () => {
+        if (USER) {
+            GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
+            dispatch(addCart({
+                ...values,
+                cart_id: parseInt(`${USER.id}${values.cart_id}`),
+                user_id: USER.id
+            }));
+            setPopupSuccess(true);
+        } else {
+            history.push("/sign-in?1")
+        }
         // tracking.ADD_CART_CLICK(
         //     values.org_id,
         //     values.id,
         //     values.price,
         //     values.quantity
         // );
-        GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
-        dispatch(addCart(values));
-        setPopupSuccess(true);
     };
     //handle booking now
     const onBookingNow = () => {
@@ -203,7 +211,7 @@ function DiscountDetailRight(props: IProps) {
                         <span>
                             {formatPrice(
                                 ITEM_DISCOUNT?.productable.price * quantity -
-                                    discount.discount_value
+                                discount.discount_value
                             )}
                             đ
                         </span>
@@ -281,9 +289,8 @@ function DiscountDetailRight(props: IProps) {
             <PopupSuccess
                 popup={popupSuccess}
                 setPopup={setPopupSuccess}
-                title={`Đã thêm ${
-                    detail?.service_name || detail?.product_name
-                } vào giỏ hàng`}
+                title={`Đã thêm ${detail?.service_name || detail?.product_name
+                    } vào giỏ hàng`}
             />
         </div>
     );

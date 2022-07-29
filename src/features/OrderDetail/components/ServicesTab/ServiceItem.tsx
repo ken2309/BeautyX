@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import ButtonCus from "../../../../components/ButtonCus";
 import formatPrice from "../../../../utils/formatPrice";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addCart, onClearPrevCartItem } from "../../../../redux/cartSlice";
 import { fetchAsyncServiceDetail } from "../../../../redux/org_services/serviceSlice";
 import slugify from "../../../../utils/formatUrlString";
@@ -20,7 +20,7 @@ import { GoogleTagPush, GoogleTagEvents } from "../../../../utils/dataLayer";
 function ServiceItem(props: any) {
     const { t } = useContext(AppContext);
     const { serviceItem, org, itemsDiscountOrg } = props;
-    console.log(serviceItem)
+const {USER} = useSelector((state:any) => state.USER);
     const service = serviceItem.productable;
     const IS_DISCOUNT = itemsDiscountOrg.find(
         (i: any) => i.productable_id === service?.id
@@ -69,7 +69,11 @@ function ServiceItem(props: any) {
                 org?.is_momo_ecommerce_enable
             ) {
                 dispatch(onClearPrevCartItem());
-                dispatch(addCart(cartValues));
+                dispatch(addCart({
+                    ...cartValues,
+                    cart_id: parseInt(`${USER.id}${cartValues.cart_id}`),
+                    user_id: USER?.id
+                }));
                 history.push("/gio-hang");
             } else {
                 setOpenNoti({

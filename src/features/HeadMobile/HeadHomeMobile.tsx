@@ -18,10 +18,10 @@ function HeadHomeMobile() {
     const dispatch = useDispatch();
     const history = useHistory();
     const { cartList, cartQuantity } = useSelector((state: any) => state.carts);
-    useMemo(() => {
-        dispatch(getTotal());
-    }, [dispatch, cartList]);
     const { USER } = useSelector((state: any) => state.USER);
+    useMemo(() => {
+        dispatch(getTotal(USER?.id));
+    }, [dispatch, cartList]);
     const onGotoCart = () => {
         if (USER) {
             history.push("/gio-hang");

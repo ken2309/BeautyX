@@ -30,9 +30,14 @@ import useDeviceMobile from "../../utils/useDeviceMobile";
 function Carts() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const dispatch = useDispatch();
-    const { cartList, cartAmountDiscount, cartAmount } = useSelector(
+    const { cartAmountDiscount, cartAmount } = useSelector(
         (state: any) => state.carts
     );
+    const { USER } = useSelector((state: any) => state.USER);
+    const cartListAll = useSelector((state: any) => state.carts.cartList)
+    const cartList = cartListAll.filter((i: any) => i?.user_id === USER?.id)
+
+
     const org = cartList.filter((item: any) => item.isConfirm === true)[0]?.org;
 
     const cartConfirm = cartList.filter((item: any) => item.isConfirm === true);
@@ -45,7 +50,7 @@ function Carts() {
     };
 
     useEffect(() => {
-        dispatch(getTotal());
+        dispatch(getTotal(USER?.id));
     }, [dispatch, cartList]);
 
     const [open, setOpen] = useState(false);

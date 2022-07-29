@@ -76,16 +76,25 @@ export default function ServiceDetailRight(props: IProps) {
                 ? service?.special_price
                 : service?.price;
         const is_type = 2;
-        const values = formatAddCart(
-            service,
-            org,
-            is_type,
-            quantity,
-            sale_price
-        );
         if (service.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable) {
-            setPopupSuccess(true);
-            dispatch(addCart(values));
+            if (USER) {
+                const values = formatAddCart(
+                    service,
+                    org,
+                    is_type,
+                    quantity,
+                    sale_price,
+                );
+                const valuesCart = {
+                    ...values,
+                    cart_id: parseInt(`${USER.id}${values.cart_id}`),
+                    user_id: USER.id
+                }
+                setPopupSuccess(true);
+                dispatch(addCart(valuesCart));
+            } else {
+                history.push("/sign-in?1")
+            }
             if (setOpenDrawer) {
                 setOpenDrawer({ NOW: true, open: false });
             }
@@ -213,8 +222,8 @@ export default function ServiceDetailRight(props: IProps) {
                                         {formatPrice(service?.special_price)}đ
                                     </span>
                                     <span>
-                                            {formatPrice(service?.price)}đ
-                                        </span>
+                                        {formatPrice(service?.price)}đ
+                                    </span>
                                     {/* {percent < 50 && (
                                         <span>
                                             {formatPrice(service?.price)}đ
