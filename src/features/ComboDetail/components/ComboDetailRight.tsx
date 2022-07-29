@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import icon from "../../../constants/icon";
 import { AppContext } from "../../../context/AppProvider";
 import { Combo } from "../../../interface/combo";
@@ -25,9 +26,11 @@ function ComboDetailRight(props: IProps) {
     const list_price = [combo?.price, combo?.use_value].sort((a, b) => b - a);
     const price = list_price[0];
     const { COMMENTS } = useSelector((state: any) => state.COMBO);
+    const { USER } = useSelector((state: any) => state.USER);
     const special_price = list_price[1];
     const percent = Math.round(100 - (special_price / price) * 100);
     const [popupSuccess, setPopupSuccess] = useState(false);
+    const history = useHistory();
     const { t } = useContext(AppContext);
     // get today's activity date in org
     const now = new Date();
@@ -42,11 +45,20 @@ function ComboDetailRight(props: IProps) {
         if (quantity > 1) setQuantity(quantity - 1);
     };
     const handleAddCart = () => {
-        const sale_price = special_price;
-        const is_type = 3;
-        const values = formatAddCart(combo, org, is_type, quantity, sale_price);
-        dispatch(addCart(values));
-        setPopupSuccess(true);
+        if (USER) {
+            const sale_price = special_price;
+            const is_type = 3;
+            const valuesOb = formatAddCart(combo, org, is_type, quantity, sale_price);
+            const values = {
+                ...valuesOb,
+                cart_id: parseInt(`${USER.id}${valuesOb.cart_id}`),
+                use_id: USER.id
+            }
+            dispatch(addCart(values));
+            setPopupSuccess(true);
+        } else {
+            history.push("/sign-in?1")
+        }
     };
     return (
         <div className="service-detail__right">

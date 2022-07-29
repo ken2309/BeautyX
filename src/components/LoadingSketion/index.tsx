@@ -8,7 +8,7 @@ export const LoadingOrgs = () => {
     return (
         <ul className="result-orgs-loading-cnt">
             {
-               arr.map((i:number, index:number) => (
+                arr.map((i: number, index: number) => (
                     <li key={index} className="result-orgs-loading-cnt__item">
                         <Skeleton animation="wave" />
                         <Skeleton animation="wave" />
@@ -52,4 +52,11 @@ export const LoadingServicesRow = () => {
             }
         </ul>
     );
+}
+export const LoadingOrg = () => {
+    return (
+        <div className="load-org-cnt">
+            load-org-cnt
+        </div>
+    )
 }

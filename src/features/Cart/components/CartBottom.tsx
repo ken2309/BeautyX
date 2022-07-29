@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import { Container } from "@mui/material";
 import { getTotal, clearByCheck } from "../../../redux/cartSlice";
@@ -24,7 +25,7 @@ function CartBottom(props: any) {
   const [popupSign, setPopupSign] = useState(false);
   const carts = useSelector((state: any) => state.carts);
   useEffect(() => {
-    dispatch(getTotal());
+    dispatch(getTotal(USER.id));
   }, [dispatch, carts]);
   const cartConfirm = carts.cartList.filter(
     (item: any) => item.isConfirm === true

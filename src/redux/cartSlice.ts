@@ -20,6 +20,7 @@ const cart = createSlice({
     initialState,
     reducers: {
         addCart: (state, action) => {
+            console.log(action.payload)
             GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
             const iIndex = state.cartList.findIndex(
                 (item: any) => item.cart_id === action.payload.cart_id
@@ -107,8 +108,9 @@ const cart = createSlice({
             //state.cartList = cartTrue
             localStorage.setItem(storageName, JSON.stringify(state.cartList));
         },
-        getTotal: (state) => {
+        getTotal: (state, { payload }) => {
             const cartListDiscounts = state.cartList
+                .filter((item: any) => item.user_id === payload)
                 .filter((item: any) => item.isConfirm === true)
                 .map((item: any) => item.discount?.discount_value)
                 .filter(Boolean);
@@ -117,22 +119,24 @@ const cart = createSlice({
                 cartListDiscounts.reduce(
                     (pre: number, cur: number) => pre + cur
                 );
-            let { total, quantity } = state.cartList.reduce(
-                (cartTotal: any, cartItem: any) => {
-                    const { quantity, price, isConfirm } = cartItem;
-                    if (isConfirm === true) {
-                        const itemTotal = price * quantity;
-                        cartTotal.total += itemTotal;
-                        //cartTotal.quantity += quantity;
+            let { total, quantity } = state.cartList
+                .filter((item: any) => item.user_id === payload)
+                .reduce(
+                    (cartTotal: any, cartItem: any) => {
+                        const { quantity, price, isConfirm } = cartItem;
+                        if (isConfirm === true) {
+                            const itemTotal = price * quantity;
+                            cartTotal.total += itemTotal;
+                            //cartTotal.quantity += quantity;
+                        }
+                        cartTotal.quantity += quantity;
+                        return cartTotal;
+                    },
+                    {
+                        total: 0,
+                        quantity: 0,
                     }
-                    cartTotal.quantity += quantity;
-                    return cartTotal;
-                },
-                {
-                    total: 0,
-                    quantity: 0,
-                }
-            );
+                );
             state.cartAmount = total;
             state.cartQuantity = quantity;
         },

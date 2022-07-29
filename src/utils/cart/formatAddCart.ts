@@ -5,7 +5,7 @@ export const formatAddCart = (
     quantity: any,
     sale_price: any,
     discount?: any,
-    isConfirm?: boolean
+    isConfirm?: boolean,
 ) => {
 
     const cartValues = {

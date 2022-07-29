@@ -3,7 +3,7 @@ import DialogOtp from '../features/Otp/dialogOtp';
 import {IDataOtp} from '../features/Otp/_model';
 import {vnPhoneCheck} from './validateForm';
 
-function checkPhoneValid(phone:string|number):Boolean{
+export function checkPhoneValid(phone:string|number):Boolean{
     var result = vnPhoneCheck.test(phone.toString());
     return result
 }
