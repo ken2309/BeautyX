@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import icon from "../../constants/icon";
 import Search from "../../features/Search";
+import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
+import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
 import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 import { handleChat } from "../../utils/customChat";
 import img from "../../constants/img";
@@ -11,12 +13,20 @@ import "./style.css";
 import tracking from "../../api/trackApi";
 // end
 import useDeviceMobile from "../../utils/useDeviceMobile";
-// import useGetMessageTiki from "../../rootComponents/useGetMessageTiki";
+import useScript from "../../utils/useScript";
 export default function AssistantBtn() {
     const dispatch = useDispatch();
     const location: any = useLocation();
-    const viewDisable = ["/trang-thai-don-hang/", "/chat"];
+    const FLAT_FORM = EXTRA_FLAT_FORM();
 
+
+    const viewDisable = ["/trang-thai-don-hang/", "/chat"];
+    if(FLAT_FORM===FLAT_FORM_TYPE.TIKI){
+        useScript(
+            // @ts-expect-error: Let's ignore a compile error like this unreachable code
+            `${!function(s,u,b,i,z){var o,t,r,y;s[i]||(s._sbzaccid=z,s[i]=function(){s[i].q.push(arguments)},s[i].q=[],s[i]("setAccount",z),r=["widget.subiz.net","storage.googleapis"+(t=".com"),"app.sbz.workers.dev",i+"a"+(o=function(k,t){var n=t<=6?5:o(k,t-1)+o(k,t-3);return k!==t?n:n.toString(32)})(20,20)+t,i+"b"+o(30,30)+t,i+"c"+o(40,40)+t],(y=function(k){var t,n;s._subiz_init_2094850928430||r[k]&&(t=u.createElement(b),n=u.getElementsByTagName(b)[0],t.async=1,t.src="https://"+r[k]+"/sbz/app.js?accid="+z,n.parentNode.insertBefore(t,n),setTimeout(y,2e3,k+1))})(0))}(window,document,"script","subiz", "acrhliqgcuqhmqodagwj")}`
+            )
+    }
     let disable = false;
     if (viewDisable.includes(location.pathname)) {
         disable = true;
@@ -53,7 +63,8 @@ export default function AssistantBtn() {
             refAssisBtn.current.classList.remove("assistantBtn-wrap-hover");
         }
     };
-
+    // () =>
+    
     useEffect(() => {
         if (is_mb === true) {
             if (overLay === true) {
