@@ -49,7 +49,7 @@ function HomeTags(props: any) {
             </div> */}
             <div className="home-tags">
                 <ul className="home-tags-list">
-                    {tags.map((item) => (
+                    {tags_data.map((item) => (
                         <li
                             //onClick={() => gotoDetail(item.title)}
                             key={item.id}
@@ -57,11 +57,14 @@ function HomeTags(props: any) {
                             <Link
                                 to={{
                                     pathname: "/ket-qua/",
-                                    search: `?tag=${item.name}`,
+                                    search: `?tag=${item.title}`,
                                 }}
                                 className="flex-column tag-item-cnt">
-                                <img src={item.media.length > 0 ? item.media[0].original_url : ""} onError={(e) => onErrorImg(e)} alt="" />
-                                <div className="tag-item-title">{item.name}</div>
+                                <img 
+                                // src={item.img.length > 0 ? item.img[0].original_url : ""} 
+                                src={item.img}
+                                onError={(e) => onErrorImg(e)} alt="" />
+                                <div className="tag-item-title">{item.text}</div>
                             </Link>
                         </li>
                     ))}

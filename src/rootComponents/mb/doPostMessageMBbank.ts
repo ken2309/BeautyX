@@ -111,7 +111,7 @@ export function exitMbMiniApp (){
  * @param {string=} url - link website you want to open.
  * @description create new webview over current webview .
  */
- export function openUrlInMbMiniApp (name:string,url:string){
+ export function openUrlIn_Mb (name:string,url:string){
     try{
         const $:any = window
         $["ReactNativeWebView"].postMessage(JSON.stringify({
