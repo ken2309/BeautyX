@@ -85,7 +85,6 @@ function DiscountDetailRight(props: IProps) {
         discount
     );
     const handleAddCart = () => {
-<<<<<<< HEAD
         if (USER) {
             GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
             dispatch(addCart({
@@ -93,6 +92,15 @@ function DiscountDetailRight(props: IProps) {
                 cart_id: parseInt(`${USER.id}${values.cart_id}`),
                 user_id: USER.id
             }));
+            setPopupSuccess(true);
+            tracking.ADD_CART_CLICK(
+                values.org_id,
+                values.id,
+                values.price,
+                values.quantity
+            );
+            GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
+            dispatch(addCart(values));
             setPopupSuccess(true);
         } else {
             history.push("/sign-in?1")
@@ -103,17 +111,6 @@ function DiscountDetailRight(props: IProps) {
         //     values.price,
         //     values.quantity
         // );
-=======
-        tracking.ADD_CART_CLICK(
-            values.org_id,
-            values.id,
-            values.price,
-            values.quantity
-        );
-        GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
-        dispatch(addCart(values));
-        setPopupSuccess(true);
->>>>>>> 7687d67825f775b93cfd1ff8da3b26ea32c70355
     };
     //handle booking now
     const onBookingNow = () => {
