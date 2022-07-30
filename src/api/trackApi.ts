@@ -13,7 +13,7 @@ export async function MOMO_API(EVENT_NAME:String,PARAMs:Object) {
             service_name: 'myspa',
             ...params
         });
-          alert(JSON.stringify(EVENT_NAME+JSON.stringify(params)+JSON.stringify(res)));
+        //   alert(JSON.stringify(EVENT_NAME+JSON.stringify(params)+JSON.stringify(res)));
         return res
     } catch (err) {
         console.log(err);

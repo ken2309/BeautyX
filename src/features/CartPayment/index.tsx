@@ -30,9 +30,10 @@ function CartPayment(props: any) {
   const list = carts.cartList.filter((item: any) => item.isConfirm === true);
   const { products, services, combos } = cartReducer(list);
   const [chooseBr, setChooseBr] = useState();
+  const { USER } = useSelector((state: any) => state.USER);
   useEffect(() => {
-    dispatch(getTotal());
-  }, [dispatch, carts]);
+    dispatch(getTotal(USER?.id));
+  }, [dispatch, carts, USER?.id]);
 
   // useEffect(() => {
   //   async function handleGetUserAddress() {

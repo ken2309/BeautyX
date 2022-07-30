@@ -34,7 +34,6 @@ function LoginFlatForm(props: any) {
                     name: data?.name,
                     phone: data?.phone
                 }
-                alert(JSON.stringify(dataOb))
                 if (dataOb.phone) {
                     await dispatch(loginAsyncMomo(dataOb))
                     await dispatch(fetchAsyncUser())
@@ -98,7 +97,6 @@ function LoginFlatForm(props: any) {
     }
     const onLoginFlatFormMB = async () => {
         try {
-            // window.sessionStorage.setItem("_WEB_TK", '4220|VCWtPxfJBqjB2zjS3t0l')
             await dispatch(loginAsyncMb({
                 token: params.loginToken,
             }))
@@ -109,7 +107,7 @@ function LoginFlatForm(props: any) {
         }
     }
     const handleLoginFlatform = () => {
-        if (params) {
+        if (params || flatForm === FLAT_FORM_TYPE.MOMO) {
             switch (flatForm) {
                 case FLAT_FORM_TYPE.MOMO:
                     onLoginFlatFormMomo()
@@ -131,7 +129,6 @@ function LoginFlatForm(props: any) {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    console.log(JSON.stringify(params))
     return (
         <div>
 

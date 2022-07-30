@@ -81,15 +81,23 @@ function ProductDetailRight(props: IProps) {
                     ? product?.special_price
                     : product.retail_price;
             const is_type = 1;
-            const values = formatAddCart(
-                product,
-                org,
-                is_type,
-                quantity,
-                sale_price
-            );
-            dispatch(addCart(values));
-            setPopupSuccess(true);
+            if(USER){
+                const values = formatAddCart(
+                    product,
+                    org,
+                    is_type,
+                    quantity,
+                    sale_price
+                );
+                dispatch(addCart({
+                    ...values,
+                    cart_id: parseInt(`${USER.id}${values.cart_id}`),
+                    user_id: USER.id
+                }));
+                setPopupSuccess(true);
+            }else{
+                history.push("/sign-in?1")
+            }
         }
     };
     const onBuyNow = () => {

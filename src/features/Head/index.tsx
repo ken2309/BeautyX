@@ -73,7 +73,7 @@ function Head(props: IProps) {
     const refLang: any = useRef();
 
     useEffect(() => {
-        dispatch(getTotal());
+        dispatch(getTotal(USER?.id));
     }, [dispatch, carts]);
     const gotoPartner = () => {
         if (IN_HOME === true) {
