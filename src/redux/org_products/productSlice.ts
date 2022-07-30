@@ -3,6 +3,7 @@ import productsApi from "../../api/productApi";
 import commentsApi from "../../api/commentsApi";
 import { STATUS } from "../status";
 import favorites from "../../api/favorite";
+import { IComment } from "../../interface/comments";
 
 // get product detail
 export const fetchAsyncProductDetail: any = createAsyncThunk(
@@ -49,6 +50,7 @@ export const postAsyncProductComment: any = createAsyncThunk(
             const payload = {
                 comment: {
                     ...res.data.context,
+                    children: [],
                     user: params.user,
                 },
             };
@@ -90,7 +92,32 @@ export const onDeleteFavorite: any = createAsyncThunk(
         return payload;
     }
 );
-const initialState = {
+//post reply comment 
+export const postAsyncReplyProductComments: any = createAsyncThunk(
+    "PRODUCT/postAsyncReplyProductComments",
+    async (values: any) => {
+        const res = await commentsApi.postComment(values.values)
+        return {
+            id: res.data.context.id,
+            commentable_id: res.data.context.commentable_id,
+            body: res.data.context.body,
+            user_id: res.data.context.user_id,
+            user: values.user
+        }
+    }
+)
+interface InitialState {
+    PRODUCT: any,
+    PRODUCT_REC: any,
+    COMMENTS: {
+        product_id: any,
+        comments: IComment[],
+        page: number,
+        totalItem: number,
+        status_cmt: string,
+    },
+}
+const initialState: InitialState = {
     PRODUCT: {
         product: {},
         status: "",
@@ -251,6 +278,20 @@ const productSlice = createSlice({
                     status: STATUS.FAIL,
                 },
             };
+        },
+        //post reply comment
+        [postAsyncReplyProductComments.pending]: (state) => {
+            return state
+        },
+        [postAsyncReplyProductComments.fulfilled]: (state, { payload }) => {
+            const { commentable_id } = payload;
+            const iIndex = state.COMMENTS.comments.findIndex((i: IComment) =>
+                i.id === commentable_id
+            )
+            state.COMMENTS.comments[iIndex].children.push(payload)
+        },
+        [postAsyncReplyProductComments.pending]: (state) => {
+            return state
         },
     },
 });
