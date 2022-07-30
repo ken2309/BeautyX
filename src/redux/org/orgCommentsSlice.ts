@@ -40,6 +40,7 @@ export const postAsyncOrgComments: any = createAsyncThunk(
             const payload = {
                 comment: {
                     ...res.data.context,
+                    children: [],
                     user: values.user,
                 },
             };
@@ -49,6 +50,19 @@ export const postAsyncOrgComments: any = createAsyncThunk(
         }
     }
 );
+export const postAsyncReplyOrgComments: any = createAsyncThunk(
+    "ORG_COMMENTS/postAsyncReplyOrgComments",
+    async (values: any) => {
+        const res = await commentsApi.postComment(values.values)
+        return {
+            id: res.data.context.id,
+            commentable_id: res.data.context.commentable_id,
+            body: res.data.context.body,
+            user_id: res.data.context.user_id,
+            user: values.user
+        }
+    }
+)
 const initialState: IInitialState = {
     org_id: null,
     comments: [],
@@ -64,6 +78,18 @@ const orgCommentsSlice = createSlice({
         clearPrevState: (state: any) => {
             state.comments = [];
         },
+        // postReplyComment: (state, { payload }) => {
+        //     const newCommentChild = {
+        //         user: payload.USER,
+        //         commentable_id: payload.values.id,
+        //         body: payload.values.body,
+        //         user_id: payload.USER.id,
+        //     }
+        //     const iIndex = state.comments.findIndex((i:IComment) => 
+        //         i.id === payload.values.id
+        //     )
+        //     state.comments[iIndex].children.push(newCommentChild)
+        // }
     },
     extraReducers: {
         [fetchAsyncOrgComments.pending]: (state) => {
@@ -102,6 +128,20 @@ const orgCommentsSlice = createSlice({
                 ...state,
                 status_ac: STATUS.FAIL,
             };
+        },
+        //post reply comment
+        [postAsyncReplyOrgComments.pending]: (state) => {
+            return state
+        },
+        [postAsyncReplyOrgComments.fulfilled]: (state, { payload }) => {
+            const { commentable_id } = payload;
+            const iIndex = state.comments.findIndex((i: IComment) =>
+                i.id === commentable_id
+            )
+            state.comments[iIndex].children.push(payload)
+        },
+        [postAsyncReplyOrgComments.pending]: (state) => {
+            return state
         },
     },
 });

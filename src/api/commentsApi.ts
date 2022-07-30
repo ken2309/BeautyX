@@ -10,7 +10,7 @@ class Comments {
             limit: 8,
             "filter[commentable_type]": "ORGANIZATION",
             "filter[commentable_id]": values.org_id,
-            include: "rate|user",
+            include: "rate|user|children",
             sort: "-created_at",
         };
         return axiosClient.get(url, { params });
@@ -35,13 +35,12 @@ class Comments {
             "filter[commentable_type]": values.type,
             "filter[commentable_id]": values.id,
             "filter[organization_id]": values.org_id,
-            include: "rate|user",
+            include: "rate|user|children",
             sort: "-created_at",
         };
         return axiosClient.get(url, { params });
     };
     postComment = (values: any) => {
-        
         const url = `/comments`;
         const params = {
             commentable_type: values.type,

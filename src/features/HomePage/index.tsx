@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@mui/material";
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import Bottom from "../../featuresMobile/Bottom";
 import ExtraFlatForm from "../../rootComponents/extraFlatForm";
 import useFullScreen from "../../utils/useDeviceMobile";
@@ -11,12 +11,12 @@ import HomeDiscount from "../HomeDiscounts";
 import HomeBanner from "./HomeBanner";
 import HomeFavorite from "./HomeFavorite";
 import HomeHotDeal from "./HomeHotDeal";
-import HomeHotTrend from "./HomeHotTrend";
+// import HomeHotTrend from "./HomeHotTrend";
 import HomeRecomment from "./HomeRecomment";
 import HomeTopService from "./HomeTopService";
 import HomeTags from "./HomeTags";
 import HomeProvince from "./HomeProvince";
-import FooterCate from "../FooterCates";
+// import FooterCate from "../FooterCates";
 import { useDispatch } from "react-redux";
 import { onResetFilter, onSetOrgsEmpty } from "../../redux/filter/filterSlice";
 
