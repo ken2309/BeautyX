@@ -7,7 +7,7 @@ export function checkPhoneValid(phone:string|number):Boolean{
     var result = vnPhoneCheck.test(phone.toString());
     return result
 }
-function sendOtp(telephone:number|string){
+function SendOtp(telephone:number|string){
     const [open, setOpen] = useState(true)
     const [dataOtp, setDataOtp] = useState<IDataOtp>({
         telephone: '',
@@ -35,10 +35,17 @@ interface IProps{
 export default function index(props:IProps){
     
     const {telephone,token} = props
-    if(checkPhoneValid(telephone)){
-        return true
+    const RenderElement = () => {
+        if(checkPhoneValid(telephone)){
+            return null
+        }
+        else{
+            return SendOtp(telephone)
+        }
     }
-    else{
-        sendOtp(telephone)
-    }
+    return (
+        <>
+            <RenderElement/>
+        </>
+    )
 }
