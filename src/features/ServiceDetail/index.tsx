@@ -35,6 +35,7 @@ import { AppContext } from "../../context/AppProvider";
 
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
+import LoadDetail from "../../components/LoadingSketion/LoadDetail";
 // end
 
 function ServiceDetail(props: any) {
@@ -179,7 +180,7 @@ function ServiceDetail(props: any) {
 
     return (
         <>
-            {SERVICE.status === STATUS.LOADING && <ModalLoad />}
+            {SERVICE.status === STATUS.LOADING && <LoadDetail />}
             {SERVICE.status === STATUS.FAIL && <PageNotFound />}
             {/* title page servive */}
             <HeadTitle

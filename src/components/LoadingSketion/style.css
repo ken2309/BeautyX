@@ -133,6 +133,39 @@
     height: 274px;
     padding: 8px;
 }
+/* load detail */
+.load-detail__head{
+    margin-top: 48px;
+    width: 100%;
+    height: 506px;
+    /* background-color: burlywood; */
+    padding: 24px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.load-detail__head .left{
+    width: 450px;
+    height: 450px;
+}
+.load-detail__head .right{
+    height: 450px;
+    width: calc(100% - 464px);
+}
+.load-detail__head .right .org-name{
+    width: 80%;
+    height: 20px;
+}
+.load-detail__head .right .detail-name{
+    width: 100%;
+    height: 72px;
+    margin: 8px 0px;
+}
+.load-detail__head .right .detail-rate{
+    width: 50%;
+    height: 18px;
+    margin-top: 16px;
+}
 @media only screen and (max-width: 1023px) {
     .result-orgs-loading-cnt__item{
         width: 50%;
