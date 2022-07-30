@@ -3,6 +3,7 @@ import serviceApi from "../../api/serviceApi";
 import commentsApi from "../../api/commentsApi";
 import { STATUS } from "../status";
 import favorites from "../../api/favorite";
+import { IComment } from "../../interface/comments";
 
 // get service detail
 export const fetchAsyncServiceDetail: any = createAsyncThunk(
@@ -38,6 +39,7 @@ export const postAsyncComment: any = createAsyncThunk(
             const payload = {
                 comment: {
                     ...res.data.context,
+                    children: [],
                     user: params.user,
                 },
             };
@@ -47,6 +49,20 @@ export const postAsyncComment: any = createAsyncThunk(
         }
     }
 );
+//post reply comment 
+export const postAsyncReplyServiceComments: any = createAsyncThunk(
+    "SERVICE/postAsyncReplyServiceComments",
+    async (values: any) => {
+        const res = await commentsApi.postComment(values.values)
+        return {
+            id: res.data.context.id,
+            commentable_id: res.data.context.commentable_id,
+            body: res.data.context.body,
+            user_id: res.data.context.user_id,
+            user: values.user
+        }
+    }
+)
 // post favorite service
 export const fetchAsyncFavoriteService: any = createAsyncThunk(
     "SERVICE/favoriteService",
@@ -103,7 +119,18 @@ export const fetchAsyncServicesRec: any = createAsyncThunk(
         return payload;
     }
 );
-const initialState = {
+interface InitialState {
+    SERVICE: any,
+    SERVICES_REC: any,
+    COMMENTS: {
+        service_id: any,
+        comments: IComment[],
+        page: number,
+        totalItem: number,
+        status_cmt: string,
+    }
+}
+const initialState: InitialState = {
     SERVICE: {
         service: {},
         status: "",
@@ -141,7 +168,7 @@ const serviceSlice: any = createSlice({
                 };
             }
         },
-        onSetStatusService:(state,action)=>{
+        onSetStatusService: (state, action) => {
             state.SERVICE.status = action.payload
         }
     },
@@ -280,8 +307,22 @@ const serviceSlice: any = createSlice({
                 SERVICES_REC: { ...state.SERVICES_REC, status: STATUS.FAIL },
             };
         },
+        //post reply comment
+        [postAsyncReplyServiceComments.pending]: (state) => {
+            return state
+        },
+        [postAsyncReplyServiceComments.fulfilled]: (state, { payload }) => {
+            const { commentable_id } = payload;
+            const iIndex = state.COMMENTS.comments.findIndex((i: IComment) =>
+                i.id === commentable_id
+            )
+            state.COMMENTS.comments[iIndex].children.push(payload)
+        },
+        [postAsyncReplyServiceComments.pending]: (state) => {
+            return state
+        },
     },
 });
-const {actions} = serviceSlice;
-export const {onSetStatusService} = actions;
+const { actions } = serviceSlice;
+export const { onSetStatusService } = actions;
 export default serviceSlice.reducer;

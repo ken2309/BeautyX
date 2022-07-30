@@ -11,7 +11,7 @@ import {
 import { STATUS } from "../../redux/status";
 import { AppContext } from "../../context/AppProvider";
 interface IProps {
-    handleOnchange: any;
+    handleOnchange?: any;
     comment: any;
     setComment: (comment: any) => void;
     handleKeyDown: any;
