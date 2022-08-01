@@ -25,7 +25,14 @@ function Result() {
     const IS_MB = useFullScreen();
     const params: any = extraParamsUrl();
     const dispatch = useDispatch();
-    const { tags, sort, province, district, min_price, max_price } = useSelector((state: any) => state.FILTER.FILTER_ORG);
+    const {
+        tags,
+        sort,
+        province,
+        district,
+        min_price,
+        max_price
+    } = useSelector((state: any) => state.FILTER.FILTER_ORG);
     const { TYPE_FILTER } = useSelector((state: any) => state.FILTER);
     const { orgs, status, page, totalItem } = useSelector((state: any) => state.FILTER.ORGS);
     let titleHeader: string = "";
@@ -49,6 +56,7 @@ function Result() {
     const callOrgsByFilterTag = async () => {
         if (status !== STATUS.SUCCESS || type !== TYPE_FILTER) {
             dispatch(fetchAsyncOrgsByFilter(paramsFilter))
+            dispatch(onSetOrgsEmpty())
             dispatch(onSetFilterType(type))
         }
     }
@@ -67,6 +75,7 @@ function Result() {
             }))
         }
     }
+    console.log(status, orgs)
     return (
         <>
             <HeadTitle title={`Kết quả tìm kiếm cho : ${titleHeader}`} />
@@ -87,7 +96,7 @@ function Result() {
                         />
                     </div>
                     <div className="result-cont__right">
-                        {(status !== STATUS.SUCCESS && page === 1) && <LoadingOrgs />}
+                        {(status === STATUS.LOADING && page === 1) && <LoadingOrgs />}
                         <InfiniteScroll
                             dataLength={orgs.length}
                             hasMore={true}
@@ -146,7 +155,7 @@ function HeaderFilterMobile(props: any) {
             >
                 <div className="result-cont__mobile">
                     <div className="filter-orgs-wrap">
-                        <button 
+                        <button
                             onClick={() => setOpen(false)}
                             className="filter-orgs-cnt__head-btn"
                         >

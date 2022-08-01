@@ -9,7 +9,7 @@ import scrollTop from "../../../utils/scrollTop";
 import { formatRouterLinkServicePromo } from "../../../utils/formatRouterLink/formatRouter";
 
 // ==== api tracking ====
- import tracking from "../../../api/trackApi";
+import tracking from "../../../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
@@ -65,8 +65,9 @@ function ServicePromoItem(props: IProps) {
                     <div className="flex-row ser-promo__bot">
                         <div className="flexX-gap-4 ser-promo__bot-start">
                             <img src={icon.star} alt="" />
-                            {/* {service?.rating} */}
-                            5
+                            {
+                                service.rating === 5 ? 5 : `4.${service?.rating}`
+                            }
                         </div>
                         {/* <div className="flexX-gap-4 ser-promo__bot-bought">
                             <img src={icon.cartCheckPurple} alt="" />
@@ -101,8 +102,8 @@ function ServicePromoItem(props: IProps) {
                             {service._geoDistance < 1000
                                 ? `${service._geoDistance}(m)`
                                 : `${Math.round(
-                                      service._geoDistance / 1000
-                                  )}(km)`}
+                                    service._geoDistance / 1000
+                                )}(km)`}
                         </span>
                     </div>
                 ) : (

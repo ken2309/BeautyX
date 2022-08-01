@@ -18,7 +18,7 @@ import HomeTags from "./HomeTags";
 import HomeProvince from "./HomeProvince";
 // import FooterCate from "../FooterCates";
 import { useDispatch } from "react-redux";
-import { onResetFilter, onSetOrgsEmpty } from "../../redux/filter/filterSlice";
+import { onResetFilter } from "../../redux/filter/filterSlice";
 
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
@@ -30,7 +30,7 @@ export default function HomePage() {
     useEffect(() => {
         tracking.HOME_LOAD();
         dispatch(onResetFilter());
-        dispatch(onSetOrgsEmpty());
+        // dispatch(onSetOrgsEmpty());
     }, []);
     return (
         <div className="homepage">

@@ -24,9 +24,34 @@ function LoadDetail() {
                                 <Skeleton width="100%" height="100%" />
                             </div>
                             <div className="detail-rate">
-                            <Skeleton width="100%" height="100%" />
+                                <Skeleton width="100%" height="100%" />
+                            </div>
+                            <div className="detail-card-cnt">
+                                <Skeleton width="100%" height="100%" />
+                            </div>
+                            <div className="flex-row-sp detail-bottom">
+                                <div className="quantity">
+                                    <Skeleton width="100%" height="100%" />
+                                </div>
+                                <div className="buy">
+                                    <Skeleton width="100%" height="100%" />
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="load-org-cnt__tab-wrap">
+                        <div className="flex-row load-org-cnt__tab">
+                            {
+                                [1, 2, 3, 4, 5, 6].map(i => (
+                                    <div key={i} className="load-org-cnt__tab-item">
+                                        <Skeleton width="100%" height="100%" />
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </div>
+                    <div className="load-detail__desc">
+                        <Skeleton width="100%" height="100%" />
                     </div>
                 </div>
             </Container>

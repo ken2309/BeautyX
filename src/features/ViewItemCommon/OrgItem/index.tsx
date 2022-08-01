@@ -16,6 +16,7 @@ import { onToggleFavoriteOrg } from "../../../redux/search/searchResultSlice";
 import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { Drawer } from "@mui/material";
 import OrgMapWrapper from "../../MerchantDetail/components/OrgMap/OrgMapWrapper";
+import { fakeOrgStar } from "../../../utils/format";
 
 interface IProps {
     org: IOrganization;
@@ -140,11 +141,11 @@ function OrgItem(props: IProps) {
                                             <span>
                                                 {org?.distance < 1000
                                                     ? `${Math.round(
-                                                          org?.distance
-                                                      )}(m)`
+                                                        org?.distance
+                                                    )}(m)`
                                                     : `${Math.round(
-                                                          org?.distance / 1000
-                                                      )}(km)`}
+                                                        org?.distance / 1000
+                                                    )}(km)`}
                                             </span>
                                         </div>
                                     ) : (
@@ -201,7 +202,9 @@ function OrgItem(props: IProps) {
                                     </div>
                                     <div className="flexX-gap-4 org-img-cnt__rate-item">
                                         <img src={icon.star} alt="" />
-                                        <span>5</span>
+                                        <span>
+                                            {fakeOrgStar(org.favorites.length)}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -220,8 +223,8 @@ function OrgItem(props: IProps) {
                                     {org?.distance < 1000
                                         ? `${Math.round(org?.distance)}(m)`
                                         : `${Math.round(
-                                              org?.distance / 1000
-                                          )}(km)`}
+                                            org?.distance / 1000
+                                        )}(km)`}
                                 </div>
                             ) : (
                                 <></>
