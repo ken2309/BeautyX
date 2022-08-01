@@ -29,8 +29,8 @@ export default function HomePage() {
     const dispatch = useDispatch();
     useEffect(() => {
         tracking.HOME_LOAD();
-        dispatch(onResetFilter());
-        dispatch(onSetOrgsEmpty());
+        // dispatch(onResetFilter());
+        // dispatch(onSetOrgsEmpty());
     }, []);
     return (
         <div className="homepage">

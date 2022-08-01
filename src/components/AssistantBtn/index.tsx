@@ -29,7 +29,6 @@ export default function AssistantBtn() {
 
 
     const viewDisable = ["/trang-thai-don-hang/", "/chat"];
-
     let disable = false;
     if (viewDisable.includes(location.pathname)) {
         disable = true;

@@ -14,7 +14,7 @@ import { STATUS } from '../../redux/status';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import BackTopButton from '../../components/BackTopButton';
 import Footer from '../Footer';
-import { fetchAsyncOrgsByFilter, onSetFilterType, onSetOrgsEmpty } from '../../redux/filter/filterSlice';
+import { fetchAsyncOrgsByFilter, onResetFilter, onSetFilterType, onSetOrgsEmpty } from '../../redux/filter/filterSlice';
 import HeadMobile from '../HeadMobile';
 import useFullScreen from '../../utils/useDeviceMobile';
 import icon from '../../constants/icon';
@@ -48,6 +48,8 @@ function Result() {
     }
     const callOrgsByFilterTag = async () => {
         if (status !== STATUS.SUCCESS || type !== TYPE_FILTER) {
+            dispatch(onResetFilter());
+            dispatch(onSetOrgsEmpty());
             dispatch(fetchAsyncOrgsByFilter(paramsFilter))
             dispatch(onSetFilterType(type))
         }
@@ -67,6 +69,7 @@ function Result() {
             }))
         }
     }
+    console.log(orgs);
     return (
         <>
             <HeadTitle title={`Kết quả tìm kiếm cho : ${titleHeader}`} />
@@ -146,7 +149,7 @@ function HeaderFilterMobile(props: any) {
             >
                 <div className="result-cont__mobile">
                     <div className="filter-orgs-wrap">
-                        <button 
+                        <button
                             onClick={() => setOpen(false)}
                             className="filter-orgs-cnt__head-btn"
                         >

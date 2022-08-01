@@ -2,9 +2,11 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../../context/AppProvider";
 import { imgTag } from "../../../constants/img";
+import icon  from "../../../constants/icon";
 import { useSelector } from "react-redux";
 import { ITag } from "../../../interface/tags";
 import onErrorImg from "../../../utils/errorImg";
+import scrollTop from "../../../utils/scrollTop";
 
 function HomeTags(props: any) {
     //const history = useHistory();
@@ -13,14 +15,21 @@ function HomeTags(props: any) {
     const tags = tagsList.filter(e => e.children && e.children?.length > 0 && e.organizations_count > 0);
     // console.log(t)
     const tags_data = [
+        // { id: 9, title: t("home_2.places_near_you"), text: t("home_2.places_near_you"), img: icon.distance },
         { id: 4, title: "Spa", text: "Spa", img: imgTag.spa },
         { id: 3, title: "Salon", text: "Salon", img: imgTag.hairSalon },
         { id: 1, title: "Nail", text: "Nail", img: imgTag.nails },
         {
             id: 6,
-            title: "Message Center",
-            text: "Message Center",
-            img: imgTag.message,
+            title: "clinic",
+            text: "clinic",
+            img: imgTag.clinic,
+        },
+        {
+            id: 8,
+            title: "Massage",
+            text: "Massage",
+            img: imgTag.massage,
         },
         {
             id: 5,
@@ -30,11 +39,11 @@ function HomeTags(props: any) {
         },
         {
             id: 2,
-            title: "Phòng khám",
-            text: t("home_2.clinic"),
+            title: "nha khoa",
+            text: t("home_2.dentistry"),
             img: imgTag.nhaKhoa,
         },
-        //{ id: 7, title: 'Yoga', img: imgTag.yoga },
+        // { id: 7, title: 'Yoga', text: "Yoga", img: imgTag.yoga },
     ];
     // const gotoDetail = (tag: string) => {
     //     history.push({
@@ -59,6 +68,7 @@ function HomeTags(props: any) {
                                     pathname: "/ket-qua/",
                                     search: `?tag=${item.title}`,
                                 }}
+                                onClick={()=>scrollTop()}
                                 className="flex-column tag-item-cnt">
                                 <img 
                                 // src={item.img.length > 0 ? item.img[0].original_url : ""} 
