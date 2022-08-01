@@ -320,15 +320,6 @@ function Head(props: IProps) {
                             />
                         )}
                         {/* --- */}
-                        <div
-                            onClick={onGotoCart}
-                            className="hd-cnt__right-cart"
-                        >
-                            <img src={icon.ShoppingCartSimple} alt="" />
-                            <div className="hd-cnt__right-cart-total">
-                                {carts.cartQuantity}
-                            </div>
-                        </div>
                         {USER && (
                             <div
                                 onClick={openMenuClick}
@@ -349,8 +340,8 @@ function Head(props: IProps) {
                             className="hd-cnt__right-lang"
                         >
                             <div className="flex-row">
-                                <img src={icon.Money} alt="" />
-                                {unit}
+                                <img src={icon.languagePurple} alt="" />
+                                {t("Header.language")}
                             </div>
                             <Language
                                 openLang={openLang}
@@ -358,6 +349,15 @@ function Head(props: IProps) {
                                 setUnit={setUnit}
                                 setOpenLang={setOpenLang}
                             />
+                        </div>
+                        <div
+                            onClick={onGotoCart}
+                            className="hd-cnt__right-cart"
+                        >
+                            <img src={icon.ShoppingCartSimple} alt="" />
+                            <div className="hd-cnt__right-cart-total">
+                                {carts.cartQuantity}
+                            </div>
                         </div>
                     </div>
                 </div>
