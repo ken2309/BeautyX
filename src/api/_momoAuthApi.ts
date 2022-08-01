@@ -8,7 +8,7 @@ class MOMOAuth {
             "email": data.email,
             "telephone": data.phone
         }
-        alert(JSON.stringify(paramsOb))
+        // alert(JSON.stringify(paramsOb))
         const params = pickBy(paramsOb, identity);
         return axiosClient.post(url, params)
     }

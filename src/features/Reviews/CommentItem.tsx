@@ -10,6 +10,9 @@ import { postAsyncReplyOrgComments } from '../../redux/org/orgCommentsSlice'
 import { useHistory } from "react-router-dom";
 import { postAsyncReplyServiceComments } from "../../redux/org_services/serviceSlice";
 import { postAsyncReplyProductComments } from "../../redux/org_products/productSlice";
+import mediaApi from "../../api/mediaApi";
+import moment from 'moment';
+import 'moment/locale/vi'
 
 interface IProps {
     comment: IComment;
@@ -23,6 +26,7 @@ export default function CommentItem(props: IProps) {
     const dispatch = useDispatch();
     const history = useHistory();
     const [cmtRep, setCmtRep] = useState('');
+    const [imgList, setImgList] = useState<number[]>([]);
     const [open, setOpen] = useState(false);
     const { USER } = useSelector((state: any) => state.USER)
     const { t } = useContext(AppContext);
@@ -51,6 +55,7 @@ export default function CommentItem(props: IProps) {
                     id: comment.id,
                     org_id: org_id,
                     body: cmtRep,
+                    media_ids: imgList
                 }
                 setCmtRep('')
                 switch (parent_type) {
@@ -80,6 +85,22 @@ export default function CommentItem(props: IProps) {
             handlePostReplyComment();
         }
     };
+    const onChangeMediaReply = (e: any) => {
+        const media = e.target.files[0];
+        handlePostMedia(media);
+    };
+    const handlePostMedia = async (media: any) => {
+        let formData = new FormData();
+        formData.append("file", media);
+        try {
+            const res = await mediaApi.postMedia(formData);
+            console.log(res)
+            setImgList([...imgList,res.data.context.model_id])
+        } catch (error) {
+
+        }
+    };
+    const displayTime = moment(comment.created_at).locale('vi').fromNow();
     return (
         <>
             <div className="evaluate-comment__top">
@@ -142,11 +163,21 @@ export default function CommentItem(props: IProps) {
                         <div className="evaluate-comment__bot">
                             <div className="evaluate-comment__bot-title">
                                 <span>
-                                    {comment.children.length > 0 && `${comment.children.length}  `}
-                                    Phản hồi
+                                    {displayTime}
                                 </span>
-                                <span>{comment.created_at}</span>
+                                <span>
+                                    {/* {comment.children.length > 0 && `${comment.children.length}  `} */}
+                                    Trả lời
+                                </span>
+                                {/* <span>{displayTime}</span> */}
                             </div>
+                            {/* {
+                                comment.children?.length > 0 &&
+                                <div className="evaluate-comment__bot-thumb">
+                                    <img src={comment.children[0]?.user?.avatar} alt="" className="avatar" />
+                                    
+                                </div>
+                            } */}
                         </div>
                     </AccordionSummary>
                     <AccordionDetails>
@@ -164,9 +195,18 @@ export default function CommentItem(props: IProps) {
                                             <span className="text">
                                                 {item.body}
                                             </span>
+                                            <br/>
+                                            <span className="time-ago">
+                                                {moment(item.created_at).locale('vi').fromNow()}
+                                            </span>
                                         </div>
                                     ))
                                 }
+                                {/* <div className="evaluate-comment__child-img">
+                                    <button className="btn-close">
+                                        <img src={icon.closeCircle} alt="" />
+                                    </button>
+                                </div> */}
                                 <div className="flex-row-sp evaluate-comment__child-reply">
                                     <img src={USER?.avatar || icon.userNotSign} alt="" className="avatar-reply" />
                                     <input
@@ -174,6 +214,17 @@ export default function CommentItem(props: IProps) {
                                         onKeyDown={handleKeyDown}
                                         onChange={onChangeReply}
                                         type="text" placeholder={`Trả lời ${comment?.user?.fullname}...`}
+                                    />
+                                    {/* <label className="btn-media" htmlFor="file-reply">
+                                        <img src={icon.addImg} alt="" />
+                                    </label> */}
+                                    <input
+                                        hidden
+                                        id="file-reply"
+                                        type="file"
+                                        name="file"
+                                        accept="image/png, image/jpeg"
+                                        onChange={onChangeMediaReply}
                                     />
                                     <button
                                         onClick={handlePostReplyComment}

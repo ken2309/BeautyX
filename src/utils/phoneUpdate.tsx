@@ -3,11 +3,11 @@ import DialogOtp from '../features/Otp/dialogOtp';
 import {IDataOtp} from '../features/Otp/_model';
 import {vnPhoneCheck} from './validateForm';
 
-function checkPhoneValid(phone:string|number):Boolean{
+export function checkPhoneValid(phone:string|number):Boolean{
     var result = vnPhoneCheck.test(phone.toString());
     return result
 }
-function sendOtp(telephone:number|string){
+function SendOtp(telephone:number|string){
     const [open, setOpen] = useState(true)
     const [dataOtp, setDataOtp] = useState<IDataOtp>({
         telephone: '',
@@ -35,10 +35,12 @@ interface IProps{
 export default function index(props:IProps){
     
     const {telephone,token} = props
-    if(checkPhoneValid(telephone)){
-        return true
-    }
-    else{
-        sendOtp(telephone)
+    const renderIndex = () => {
+        if(checkPhoneValid(telephone)){
+            return <></>
+        }
+        else{
+            return SendOtp(telephone)
+        }
     }
 }

@@ -63,9 +63,9 @@ class MOMO_API {
         }, async ({data,status}:any) => {
             // alert(JSON.stringify(data))
             if(data.email && data.phone){
-                alert('in')
+                // alert('in')
                 const res = await momoAuthApi.login(data)
-                alert('res'+JSON.stringify(res))
+                // alert('res'+JSON.stringify(res))
             }
             else{
                 MOMO.showToast({
@@ -120,7 +120,7 @@ class MOMO_API {
     }
     getLocation = () => {
         MOMO.getLocation((data:any) => {
-            alert(JSON.stringify([data]))
+            // alert(JSON.stringify([data]))
             return {data:data}
         })
     }

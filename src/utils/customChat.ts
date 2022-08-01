@@ -1,5 +1,8 @@
 import {FLAT_FORM_TYPE} from '../rootComponents/flatForm';
 import { callApiFromTiki } from '../rootComponents/tiki/doPostMessageTiki';
+import { openUrlIn_Mb } from '../rootComponents/mb/doPostMessageMBbank';
+import openUrlIn_Tiki from '../rootComponents/tiki/test';
+import { MOMO } from '../api/_momoImport';
 export const handleSubiz = () => {
     let $:any = window;
     let su_widget =  document.querySelector("#cprhliqipldavybercftg .widget-container.widget-container--right");
@@ -16,13 +19,26 @@ export const handleSubiz = () => {
 }   
 export const handleChat = () => {
     const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
+    const deepLinkMessenger = 'https://m.me/beautyxdatlichlamdep/';
     switch(FLAT_FORM){
         case FLAT_FORM_TYPE.TIKI:
-            alert(FLAT_FORM)
-            callApiFromTiki('openDeeplink',{url:'https://m.me/beautyxdatlichlamdep/'})
+            // callApiFromTiki('openNativeAppStore',{
+            //     googlePlayId: 'com.facebook.orca',
+            //     appleStoreId: '454638411'
+            // })
+            handleSubiz()
+            // openUrlIn_Tiki(deepLinkMessenger);
+            // window.open(deepLinkMessenger, "_blank");
+        break;
+        case FLAT_FORM_TYPE.MOMO:
+            MOMO.openURL(deepLinkMessenger);
+        break;
+        case FLAT_FORM_TYPE.MB:
+            // openUrlIn_Mb('messenger',deepLinkMessenger)
+            window.open(deepLinkMessenger, "_blank");
         break;
         default:
-            window.open("https://m.me/beautyxdatlichlamdep/", "_blank");
+            window.open(deepLinkMessenger, "_blank");
         break;
 
     }

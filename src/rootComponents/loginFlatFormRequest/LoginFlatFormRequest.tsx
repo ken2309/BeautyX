@@ -93,6 +93,7 @@ function LoginFlatFormRequest(props: any) {
         const res = await dispatch(loginAsyncMb({
             token: session,
         }))
+        alert('handleLoginMB!')
         if (res.meta.requestStatus === EXTRA_REDUCER_STATUS.FULFILLED) {
             fetchAsyncUserAndinitApp();
         }

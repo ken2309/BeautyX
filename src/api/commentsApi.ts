@@ -10,6 +10,7 @@ class Comments {
             limit: 8,
             "filter[commentable_type]": "ORGANIZATION",
             "filter[commentable_id]": values.org_id,
+            "append": "media_url",
             include: "rate|user|children",
             sort: "-created_at",
         };
@@ -23,6 +24,7 @@ class Comments {
             commentable_id: values.org_id,
             organization_id: values.org_id,
             body: values.body,
+            media_ids: values.media_ids
         };
         return axiosClient.post(url, params, AUTH_HEADER());
     };
@@ -35,6 +37,7 @@ class Comments {
             "filter[commentable_type]": values.type,
             "filter[commentable_id]": values.id,
             "filter[organization_id]": values.org_id,
+            "append": "media_url",
             include: "rate|user|children",
             sort: "-created_at",
         };
@@ -47,6 +50,7 @@ class Comments {
             commentable_id: values.id,
             organization_id: values.org_id,
             body: values.body,
+            media_ids: values.media_ids
         };
         return axiosClient.post(url, params, AUTH_HEADER());
     };

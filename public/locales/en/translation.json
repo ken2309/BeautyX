@@ -23,7 +23,8 @@
         "appointment": "appointment",
         "see_it_now": "See it now",
         "see_calendar": "See the appointment",
-        "not_noti": "You don't have any notifications"
+        "not_noti": "You don't have any notifications",
+        "language": "language"
     },
     "Bottom": {
         "appointment": "Appointment",
@@ -384,6 +385,7 @@
     "home_2": {
         "categories": "Categories",
         "clinic": "Clinic",
+        "dentistry": "dentistry",
         "beauty_salon": "Beauty Salon",
         "hot_beauty_deal": "HOT beauty Deal",
         "hot_promotion": "HOT Promotion",
@@ -392,7 +394,6 @@
         "name": "Name",
         "hot_deal_locations": "HOT Deal locations",
         "trusted_place": "Trusted place",
-        "places_near_you_2": "Places near you",
         "places_you_are_interested_in": "Places you are interested in",
         "beauty_places": "Beauty places",
         "top_deal": "Top Deal",

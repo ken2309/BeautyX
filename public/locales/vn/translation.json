@@ -23,7 +23,8 @@
         "appointment": "lịch hẹn",
         "see_it_now": "Xem ngay nhé",
         "see_calendar": "Xem lịch hẹn",
-        "not_noti": "Bạn không có thông báo nào!"
+        "not_noti": "Bạn không có thông báo nào!",
+        "language": "Ngôn ngữ"
     },
     "Bottom": {
         "appointment": "Lịch hẹn",
@@ -388,6 +389,7 @@
     "home_2": {
         "categories": "Danh mục",
         "clinic": "Phòng khám",
+        "dentistry": "Nha Khoa",
         "beauty_salon": "Thẩm mỹ viện",
         "hot_beauty_deal": "Deal làm đẹp cực HOT",
         "hot_promotion": "Khuyến mãi HOT",
@@ -396,7 +398,6 @@
         "name": "Tên",
         "hot_deal_locations": "Địa điểm nhiều Deal HOT",
         "trusted_place": "Địa điểm đáng tin cậy",
-        "places_near_you_2": "Địa điểm gần bạn",
         "places_you_are_interested_in": "Địa điểm bạn quan tâm",
         "beauty_places": "Địa điểm làm đẹp",
         "top_deal": "Top Deal Khủng",

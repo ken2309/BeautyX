@@ -6,6 +6,18 @@ export const formatDate = (dateParams: any) => {
     const date = dateArr[0]?.split('-')?.reverse().join('/')
     return date
 }
+export const formatDateRevArr = (dateParams: any) => {
+    const dateArr = dateParams?.split(' ');
+    const date = dateArr[0]?.split('-')
+    return date
+}
+
+export const formatHourRevArr = (dateParams: any) => {
+    const dateArr = dateParams?.split(' ');
+    const date = dateArr[1]?.split(':')
+    return date
+}
+
 export const checkTimeExpired = (time_expired: any) => {
     let dateExpired = false
     if (!time_expired || time_expired?.slice(0, 5) < 0) return dateExpired = false
