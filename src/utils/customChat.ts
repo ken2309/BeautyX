@@ -32,6 +32,7 @@ export const handleChat = () => {
         break;
         case FLAT_FORM_TYPE.MOMO:
             MOMO.openURL(deepLinkMessenger);
+            // alert(deepLinkMessenger)
         break;
         case FLAT_FORM_TYPE.MB:
             // openUrlIn_Mb('messenger',deepLinkMessenger)
