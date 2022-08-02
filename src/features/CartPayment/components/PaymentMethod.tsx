@@ -20,7 +20,7 @@ function PaymentMethod(props: IProps) {
   const { status } = useSelector((state: any) => state.PAYMENT.PAYMENT);
   const { PAYMENT_METHOD } = useSelector((state: any) => state.PAYMENT);
   const { e, onPaymentMethodChange, setOpen } = props;
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("CARD_ONLINE");
   const callPaymentMethodOnline = () => {
     if (status !== STATUS.SUCCESS) {
       dispatch(fetAsyncPaymentMethod())
@@ -35,6 +35,7 @@ function PaymentMethod(props: IProps) {
 
   const onChoosePmtClick = (item: any) => {
     onPaymentMethodChange(item)
+    console.log(item)
     if (setOpen) {
       setOpen(false)
     }

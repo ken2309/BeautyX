@@ -8,8 +8,7 @@ import {
 import InfoWindow from "react-google-maps/lib/components/InfoWindow";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
-import SearchBox from "react-google-maps/lib/components/places/SearchBox";
-import StandaloneSearchBox from "react-google-maps/lib/components/places/StandaloneSearchBox";
+import { StandaloneSearchBox } from '@react-google-maps/api';
 
 const MapTagsGoogle = (props: any) => {
     const { zoom, location, org } = props;
@@ -19,10 +18,9 @@ const MapTagsGoogle = (props: any) => {
         streetViewControl: true,
         mapTypeControl: true,
     };
-    const searchBoxRef = useRef<any>();
+    const searchRef = useRef<any>();
     const onPlacesChanged = () => {
-        let res = searchBoxRef?.current?.getPlaces();
-        console.log(res)
+        console.log(searchRef?.current?.getPlaces())
     }
     return (
         <div>
@@ -33,9 +31,10 @@ const MapTagsGoogle = (props: any) => {
                 center={{ lat: location.lat, lng: location.long }}
             >
                 {/* <StandaloneSearchBox
-                    ref={searchBoxRef}
-                    onPlacesChanged={onPlacesChanged}
-                bounds={this.state.bounds}
+                    ref={searchRef}
+                    onPlacesChanged={
+                        onPlacesChanged
+                    }
                 >
                     <input
                         type="text"
@@ -57,6 +56,7 @@ const MapTagsGoogle = (props: any) => {
                         }}
                     />
                 </StandaloneSearchBox> */}
+
                 {org?.map((item: IOrganization, index: number) => (
                     <Marker
                         icon={{

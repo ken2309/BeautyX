@@ -27,6 +27,15 @@ import { IBranch } from "../../interface/branch";
 import onErrorImg from "../../utils/errorImg";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 // end
+
+const initialMomoForBeautyx = {
+    created_at: "2022-01-07T10:00:07.000000Z",
+    id: 1,
+    is_changeable: false,
+    name_key: "MOMO",
+    updated_at: "2022-01-07T10:00:07.000000Z"
+}
+
 function Carts() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const dispatch = useDispatch();
@@ -54,7 +63,7 @@ function Carts() {
     }, [dispatch, cartList]);
 
     const [open, setOpen] = useState(false);
-    const [pmtMethod, setPmtMethod] = useState<any>();
+    const [pmtMethod, setPmtMethod] = useState<any>(initialMomoForBeautyx);
     const [address, setAddress] = useState<any>();
     const [openBranch, setOpenBranch] = useState({
         open: false,
@@ -128,7 +137,27 @@ function Carts() {
                                 >
                                     <span>Phương thức thanh toán</span>
                                     <br />
-                                    <span>
+                                    {/* <div>
+                                        Thanh toán qua 
+                                        <span
+                                            style={{
+                                                backgroundColor:"var(--pink-momo)",
+                                                marginLeft:"12px",
+                                                padding:"0px 8px",
+                                                borderRadius:"6px",
+                                                color:"var(--white)"
+                                            }}
+                                        >MOMO</span>
+                                    </div> */}
+                                    <span
+                                        style={{
+                                            backgroundColor: "var(--pink-momo)",
+                                            marginLeft: "12px",
+                                            padding: "0px 8px",
+                                            borderRadius: "6px",
+                                            color: "var(--white)"
+                                        }}
+                                    >
                                         {pmtMethod
                                             ? pmtMethod?.name_key
                                             : "Vui lòng chọn phương thức thanh toán"}

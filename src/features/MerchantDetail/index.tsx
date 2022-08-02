@@ -66,7 +66,7 @@ function MerchantDetail() {
   const callOrgDiscountsOrg = () => {
     if (status === STATUS.SUCCESS) {
       if (ORG_DISCOUNTS.org_id !== sub_domain || ORG_DISCOUNTS.DISCOUNTS.status_list !== STATUS.SUCCESS) {
-        const values = { org_id: sub_domain }
+        const values = { org_id: org?.id }
         dispatch(fetchAsyncOrgDiscounts(values))
       }
     }
