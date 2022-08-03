@@ -11,7 +11,7 @@
 //     }
 // }
 
-// // Case 2: User cancelled sharing data 
+// // Case 2: User cancelled sharing data
 // {
 //     "data" : {}
 //     "status" : "cancelled"
@@ -23,115 +23,113 @@
 //     "status" : {}
 // }
 
+import momoAuthApi from "./_momoAuthApi";
+// import { MOMO } from './_momoImport';
 
-import momoAuthApi from './_momoAuthApi';
-import { MOMO } from './_momoImport';
-
-// interface 
-type IToastType = 'success' | 'failure'
-export interface IUserConsentsData{
-    phone?: string
-    name?: string
-    email?: string
+// interface
+type IToastType = "success" | "failure";
+export interface IUserConsentsData {
+    phone?: string;
+    name?: string;
+    email?: string;
 }
-export interface IUserConsentsStatus{
-    email: "denied",
-    name: "granted",
-    phone: "granted"
+export interface IUserConsentsStatus {
+    email: "denied";
+    name: "granted";
+    phone: "granted";
 }
-export interface IUserConsents{
-    data: IUserConsentsData | {}
-    status: IUserConsentsStatus | "cancelled" | {}
+export interface IUserConsents {
+    data: IUserConsentsData | {};
+    status: IUserConsentsStatus | "cancelled" | {};
 }
-// end 
+// end
 class MOMO_API {
     requestUserConsents = () => {
-        MOMO.showLoading([""]);
-        MOMO.requestUserConsents({
-            "permissions": [
-                {
-                    "role": "name",
-                    "require": true
-                },
-                {
-                    "role": "phone"
-                },
-                {
-                    "role": "email",
-                }
-            ]
-        }, async ({data,status}:any) => {
-            // alert(JSON.stringify(data))
-            if(data.email && data.phone){
-                // alert('in')
-                const res = await momoAuthApi.login(data)
-                // alert('res'+JSON.stringify(res))
-            }
-            else{
-                MOMO.showToast({
-                    description: "có lỗi khi nhận thông tin từ momo",
-                    type: "failure",
-                    duration: 2000
-                });
-                MOMO.hideLoading()
-            }
-            return {data:data}
-        })
-    }
-    getUserConsents = async () => { 
-        MOMO.showLoading([""]);
-        const res = await MOMO.getUserConsents({
-            "permissions": [
-                {
-                    "role": "name",
-                },
-                {
-                    "role": "phone"
-                },
-                {
-                    "role": "email",
-                },
-            ]
-        }, async ({data,status}:any) => {
-            const dataOb:IUserConsentsData = {
-                email: data?.email,
-                name: data?.name,
-                phone: data?.phone
-            }
-            // alert(JSON.stringify(dataOb))
-            if(dataOb.email && dataOb.phone){
-                const res = await momoAuthApi.login(data)
-                // alert('res'+JSON.stringify(res))
-                window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
-            }
-            else{
-                this.requestUserConsents();
-                MOMO.showToast({
-                    description: "có lỗi khi nhận thông tin từ momo",
-                    type: "failure",
-                    duration: 2000
-                });
-                MOMO.hideLoading()
-            }
-            return {data:data}
-        })
-        return res
-        
-    }
+        // MOMO.showLoading([""]);
+        // MOMO.requestUserConsents({
+        //     "permissions": [
+        //         {
+        //             "role": "name",
+        //             "require": true
+        //         },
+        //         {
+        //             "role": "phone"
+        //         },
+        //         {
+        //             "role": "email",
+        //         }
+        //     ]
+        // }, async ({data,status}:any) => {
+        //     // alert(JSON.stringify(data))
+        //     if(data.email && data.phone){
+        //         // alert('in')
+        //         const res = await momoAuthApi.login(data)
+        //         // alert('res'+JSON.stringify(res))
+        //     }
+        //     else{
+        //         MOMO.showToast({
+        //             description: "có lỗi khi nhận thông tin từ momo",
+        //             type: "failure",
+        //             duration: 2000
+        //         });
+        //         MOMO.hideLoading()
+        //     }
+        //     return {data:data}
+        // })
+    };
+    getUserConsents = async () => {
+        // MOMO.showLoading([""]);
+        // const res = await MOMO.getUserConsents({
+        //     "permissions": [
+        //         {
+        //             "role": "name",
+        //         },
+        //         {
+        //             "role": "phone"
+        //         },
+        //         {
+        //             "role": "email",
+        //         },
+        //     ]
+        // }, async ({data,status}:any) => {
+        //     const dataOb:IUserConsentsData = {
+        //         email: data?.email,
+        //         name: data?.name,
+        //         phone: data?.phone
+        //     }
+        //     // alert(JSON.stringify(dataOb))
+        //     if(dataOb.email && dataOb.phone){
+        //         const res = await momoAuthApi.login(data)
+        //         // alert('res'+JSON.stringify(res))
+        //         window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
+        //     }
+        //     else{
+        //         this.requestUserConsents();
+        //         MOMO.showToast({
+        //             description: "có lỗi khi nhận thông tin từ momo",
+        //             type: "failure",
+        //             duration: 2000
+        //         });
+        //         MOMO.hideLoading()
+        //     }
+        //     return {data:data}
+        // })
+        // return res
+    };
     getLocation = () => {
-        MOMO.getLocation((data:any) => {
-            // alert(JSON.stringify([data]))
-            return {data:data}
-        })
-    }
-    showToast = (description:string,type:IToastType) => {
-        MOMO.showToast({
-            description: description,
-            type: type,
-            duration: 2000
-        });
-    }
+        // MOMO.getLocation((data:any) => {
+        //     // alert(JSON.stringify([data]))
+        //     return {data:data}
+        // })
+    };
+    showToast = (description: string, type: IToastType) => {
+        // MOMO.showToast({
+        //     description: description,
+        //     type: type,
+        //     duration: 2000
+        // });
+    };
 }
 export const momoApi = new MOMO_API();
-export const momo = MOMO;
+// export const momo = MOMO;
 export default momoApi;

@@ -8,6 +8,9 @@
     z-index: 102;
     transition: all 0.5s;
 }
+.MuiTabs-indicator {
+    background-color: var(--purple) !important;
+}
 .pointer-events-none {
     pointer-events: none;
 }
@@ -1318,7 +1321,7 @@
         border-bottom: none;
         border-top: none;
     }
-    .org-des-cnt{
+    .org-des-cnt {
         width: 80%;
     }
 }

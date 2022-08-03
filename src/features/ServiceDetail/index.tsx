@@ -70,11 +70,15 @@ function ServiceDetail(props: any) {
     let refReview = useRef<any>();
     let refMap = useRef<any>();
     let refPolicy = useRef<any>();
+    let refLimitText = useRef<any>();
     const scrollMap = refMap?.current?.offsetTop;
     const scrollDesc = refDesc?.current?.offsetTop;
     const scrollReview = refReview?.current?.offsetTop;
     const scrollPolicy = refPolicy?.current?.offsetTop;
-
+    const handleSeemoreText = () => {
+        refLimitText?.current.classList.toggle("unlimit-text");
+        refLimitText?.current.nextSibling?.classList.toggle("change-text");
+    };
     // handle onclick active menu
     const handleChange = (event: React.SyntheticEvent, value: any) => {
         const top = handleChangeScroll(
@@ -226,7 +230,10 @@ function ServiceDetail(props: any) {
                                                 ref={refDesc}
                                                 className="service-detail__description"
                                             >
-                                                <p>
+                                                <p
+                                                    ref={refLimitText}
+                                                    className="service-description"
+                                                >
                                                     {t("pr.description")}:{" "}
                                                     {service.description
                                                         ? service.description
@@ -234,6 +241,19 @@ function ServiceDetail(props: any) {
                                                               "detail_item.updating"
                                                           )}
                                                 </p>
+                                                {service?.description &&
+                                                service?.description.length >
+                                                    500 ? (
+                                                    <div
+                                                        onClick={() =>
+                                                            handleSeemoreText()
+                                                        }
+                                                        className="seemore-btn"
+                                                    >
+                                                        <p>Xem thêm &or;</p>
+                                                        <p>Thu gọn &and;</p>
+                                                    </div>
+                                                ) : null}
                                             </div>
                                         </TabPanel>
 
