@@ -220,8 +220,11 @@ function ProductDetail(props: any) {
                                                     : t("detail_item.desc")}
                                             </p>
                                             {product?.description &&
-                                            product?.description.length >
-                                                500 ? (
+                                            (is_mobile === true
+                                                ? product?.description.length >
+                                                  300
+                                                : product?.description.length >
+                                                  500) ? (
                                                 <div
                                                     onClick={() =>
                                                         handleSeemoreText()

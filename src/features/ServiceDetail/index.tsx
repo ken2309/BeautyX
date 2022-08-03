@@ -242,8 +242,11 @@ function ServiceDetail(props: any) {
                                                           )}
                                                 </p>
                                                 {service?.description &&
-                                                service?.description.length >
-                                                    500 ? (
+                                                (is_mobile === true
+                                                    ? service?.description
+                                                          .length > 300
+                                                    : service?.description
+                                                          .length > 500) ? (
                                                     <div
                                                         onClick={() =>
                                                             handleSeemoreText()

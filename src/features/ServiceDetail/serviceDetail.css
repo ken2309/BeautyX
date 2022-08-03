@@ -704,12 +704,7 @@
     display: block;
 }
 .unlimit-text {
-    display: -webkit-box;
     -webkit-line-clamp: unset !important;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
 }
 @media only screen and (max-width: 1023px) {
     .service-detail .detail-right__evaluate {
