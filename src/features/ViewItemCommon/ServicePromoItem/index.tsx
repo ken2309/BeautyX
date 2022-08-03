@@ -35,6 +35,7 @@ function ServicePromoItem(props: IProps) {
             className="ser-pro-item"
         >
             <div className="ser-img-cnt">
+                {service.org_image !== '' && service.org_image !== null && <img src={service.org_image} className="ser-img__org-logo" alt=""/> }
                 <img
                     className="ser-img"
                     src={

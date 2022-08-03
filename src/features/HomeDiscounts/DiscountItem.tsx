@@ -26,8 +26,14 @@ function DiscountItem(props: IProps) {
         );
         history.push(pathDiscountOb);
     };
+    console.log(discountItem);
     return (
         <div onClick={onDetail} className="home-discount-item__cnt">
+            {
+                discountItem.organization.image_url !== '' &&
+                discountItem.organization.image_url !== null &&
+                <img src={discountItem.organization.image_url} onError={(e) => onErrorImg(e)} className="home-discount-item__org-logo" alt="" />
+            }
             <img
                 className="home-discount-item__img"
                 src={
