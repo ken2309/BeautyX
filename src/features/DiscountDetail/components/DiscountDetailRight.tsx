@@ -24,16 +24,19 @@ import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
 import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { AppContext } from "../../../context/AppProvider";
 import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
+import { DISCOUNT_TYPE } from "../../../utils/formatRouterLink/fileType";
 // end
 interface IProps {
     discount: IDiscountPar;
     org: IOrganization;
     detail: any;
     NOW?: boolean;
+    COMMENTS: any,
+    TYPE_DE: string
 }
 
 function DiscountDetailRight(props: IProps) {
-    const { discount, org, detail, NOW } = props;
+    const { discount, org, detail, NOW, COMMENTS, TYPE_DE } = props;
     const IS_MB = useDeviceMobile();
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
@@ -41,12 +44,19 @@ function DiscountDetailRight(props: IProps) {
         (state: any) => state.ORG_DISCOUNTS.ITEM_DISCOUNT
     );
     const { t } = useContext(AppContext);
-    const { COMMENTS } = useSelector((state: any) => state.SERVICE);
     const [popupSuccess, setPopupSuccess] = useState(false);
+
+    let finalDisplayPrice = ITEM_DISCOUNT?.view_price;
+    if (discount.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key) {
+        finalDisplayPrice = discount?.discount_value;
+    }
+
     const percent = Math.round(
         100 -
-        (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
+        (finalDisplayPrice / (ITEM_DISCOUNT?.productable.price || ITEM_DISCOUNT?.productable?.retail_price)) * 100
     );
+    console.log(ITEM_DISCOUNT)
+
     const { USER } = useSelector((state: any) => state.USER);
     const history = useHistory();
     // get today's activity date in org
@@ -75,15 +85,16 @@ function DiscountDetailRight(props: IProps) {
     const onDescQuantity = () => {
         if (quantity > 1) setQuantity(quantity - 1);
     };
-    const is_type = 2;
+    const is_type = TYPE_DE === "service" ? 2 : 1;
     const values = formatAddCart(
         detail,
         org,
         is_type,
         quantity,
-        ITEM_DISCOUNT?.productable.price,
+        ITEM_DISCOUNT?.productable.price || ITEM_DISCOUNT?.productable.retail_price,
         discount
     );
+
     const handleAddCart = () => {
         if (USER) {
             GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
@@ -113,11 +124,11 @@ function DiscountDetailRight(props: IProps) {
         // );
     };
     //handle booking now
-    const onBookingNow = () => {
+    const onBookNow = () => {
         const TYPE = "BOOK_NOW";
         const service = { ...detail, discount: discount };
         const services = [{ service, quantity: quantity }];
-        tracking.ADD_CART_CLICK(values.org_id,values.id,values.price,values.quantity)
+        tracking.ADD_CART_CLICK(values.org_id, values.id, values.price, values.quantity)
         GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
         history.push({
             pathname: "/dat-hen",
@@ -125,6 +136,28 @@ function DiscountDetailRight(props: IProps) {
         });
         dispatch(clearAllServices());
     };
+    //handle buy now
+    const onBuyNow = () => {
+        const product = { ...detail, discount }
+        const TYPE = "BOOK_NOW";
+        const products = [{ product, quantity }];
+        if (USER) {
+            history.push({
+                pathname: "/mua-hang",
+                state: { org, products, TYPE },
+            });
+        } else {
+            history.push("/sign-in?1");
+        }
+    };
+    const onNow = () => {
+        switch (TYPE_DE) {
+            case "service":
+                return onBookNow();
+            case "product":
+                return onBuyNow()
+        }
+    }
     return (
         <div className="service-detail__right">
             <div className="detail-right__head">
@@ -191,20 +224,26 @@ function DiscountDetailRight(props: IProps) {
                         )}
                         <div className="detail-right__price">
                             <span>
-                                {formatPrice(ITEM_DISCOUNT?.view_price)}đ
+                                {formatPrice(finalDisplayPrice)}đ
                             </span>
                             <span>
-                                {formatPrice(ITEM_DISCOUNT?.productable.price)}đ
+                                {formatPrice(
+                                    ITEM_DISCOUNT?.productable.price ||
+                                    ITEM_DISCOUNT?.productable?.retail_price
+                                )}đ
                             </span>
                         </div>
                     </div>
-                    {/* <div className="service-detail__mobile-avi">
-                        Lượt mua còn lại : {discount?.user_available_purchase_count}
-                    </div> */}
+                    {
+                        discount.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key &&
+                        <div className="service-detail__mobile-avi">
+                            Lượt mua còn lại : {discount?.user_available_purchase_count}
+                        </div>
+                    }
                 </div>
                 <DetailOrgCard org={org} />
             </div>
-            {quantity > 1 && (
+            {(quantity > 1 && discount.discount_type !== DISCOUNT_TYPE.FINAL_PRICE.key) && (
                 <div className="flex-row-sp detail-right__calc">
                     <span className="total-title">
                         {t("cart.total_payment")}
@@ -227,7 +266,7 @@ function DiscountDetailRight(props: IProps) {
                     </div>
                 </div>
             )}
-            {quantity > 1 && (
+            {(quantity > 1 && discount.discount_type !== DISCOUNT_TYPE.FINAL_PRICE.key) && (
                 <div className="detail-right__warn">
                     {t("cart.limit_item_discount")}
                 </div>
@@ -262,10 +301,10 @@ function DiscountDetailRight(props: IProps) {
                     <div className="flex-row flexX-gap-8">
                         {NOW ? (
                             <div
-                                onClick={onBookingNow}
+                                onClick={onNow}
                                 className="bottom-addCart bottom-buy__now"
                             >
-                                <p>{t("detail_item.booking_now")}</p>
+                                <p>{t(TYPE_DE === "service" ? "detail_item.booking_now" : "Mua ngay")}</p>
                             </div>
                         ) : (
                             <div
@@ -283,10 +322,10 @@ function DiscountDetailRight(props: IProps) {
                 ) : (
                     <div className="flex-row flexX-gap-8">
                         <div
-                            onClick={onBookingNow}
+                            onClick={onNow}
                             className="bottom-addCart bottom-buy__now"
                         >
-                            <p>{t("detail_item.booking_now")}</p>
+                            <p>{t(TYPE_DE === "service" ? "detail_item.booking_now" : "Mua ngay")}</p>
                         </div>
                         <div onClick={handleAddCart} className="bottom-addCart">
                             <img src={icon.ShoppingCartSimpleWhite} alt="" />

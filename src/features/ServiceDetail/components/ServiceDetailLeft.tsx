@@ -43,7 +43,7 @@ export default function ServiceDetailLeft(props: any) {
     const { t } = useContext(AppContext);
 
     const percent = service
-        ? Math.round(100 - (service.special_price / service?.price) * 100)
+        ? Math.round(100 - (service?.special_price_momo / service?.price) * 100)
         : null;
     const { USER } = useSelector((state: any) => state.USER);
     const [nav1, setNav1] = useState();
@@ -189,16 +189,18 @@ export default function ServiceDetailLeft(props: any) {
                 </div>
 
                 <div className="service-detail__mobile-bottom">
-                    {service?.special_price > 0 && (
+                    {(service?.special_price > 0 || service?.special_price_momo > 0) && (
                         <div className="service-detail__mobile-percent">
                             {t("detail_item.off")} {percent}%
                         </div>
                     )}
                     <div className="service-detail__mobile-price">
-                        {service?.special_price > 0 ? (
+                        {(service?.special_price_momo) ? (
                             <>
                                 <span>
-                                    {formatPrice(service?.special_price)}đ
+                                    {formatPrice(
+                                        service?.special_price_momo
+                                    )}đ
                                 </span>
                                 <span>{formatPrice(service?.price)}đ</span>
                             </>

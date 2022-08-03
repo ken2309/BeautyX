@@ -51,12 +51,18 @@ import Result from "../features/Results";
 import ChatOrg from "../features/Chat/ChatOrg";
 import ChatAll from "../features/Chat/ChatAll";
 
+import MapBox from "../features/MapBeta";
+
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps
 ) => props.pageComponent;
 function RouterConfig(props: any) {
   const USER = useSelector((state: any) => state.USER);
   const routes = [
+    {
+      path:'/map-box',
+      component: <MapBox/>
+    },
     {
       path: `/home`,
       component: <HomePage />,

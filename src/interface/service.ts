@@ -34,4 +34,5 @@ export interface Service {
       category: any,
       is_moba_ecommerce_enable: boolean
       is_momo_ecommerce_enable: boolean,
+      special_price_momo: number
 }

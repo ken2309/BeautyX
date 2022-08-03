@@ -38,7 +38,8 @@ export interface IITEMS_DISCOUNT {
         is_featured: boolean,
         is_momo_ecommerce_enable: true,
         is_moba_ecommerce_enable: boolean,
-        image_url: string
+        image_url: string,
+        retail_price:number
     },
     discount: IDiscountChild,
     organization: IOrganization

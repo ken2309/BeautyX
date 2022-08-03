@@ -1,14 +1,24 @@
 import React, { useRef } from "react";
-import {
-    withGoogleMap,
-    withScriptjs,
-    GoogleMap,
-    Marker,
-} from "react-google-maps";
-import InfoWindow from "react-google-maps/lib/components/InfoWindow";
+// import {
+//     withGoogleMap,
+//     withScriptjs,
+//     GoogleMap,
+//     Marker,
+// } from "react-google-maps";
+// import InfoWindow from "react-google-maps/lib/components/InfoWindow";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
-import { StandaloneSearchBox } from '@react-google-maps/api';
+import { StandaloneSearchBox, GoogleMap, Marker, LoadScript, InfoWindow } from '@react-google-maps/api';
+
+const mapContainerStyle = {
+    height: "100vh",
+    width: "100vw"
+};
+
+const center = {
+    lat: 38.685,
+    lng: -115.234
+};
 
 const MapTagsGoogle = (props: any) => {
     const { zoom, location, org } = props;
@@ -22,15 +32,22 @@ const MapTagsGoogle = (props: any) => {
     const onPlacesChanged = () => {
         console.log(searchRef?.current?.getPlaces())
     }
+    const key = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
     return (
-        <div>
+        <LoadScript
+            id="script-loader" googleMapsApiKey={`${key}`} libraries={["places"]}
+        >
             <GoogleMap
-                defaultOptions={defaultMapOptions}
+                // defaultOptions={defaultMapOptions}
+                // zoom={zoom}
+                // defaultCenter={{ lat: location.lat, lng: location.long }}
+                // center={{ lat: location.lat, lng: location.long }}
+                id="searchbox-example"
+                mapContainerStyle={mapContainerStyle}
                 zoom={zoom}
-                defaultCenter={{ lat: location.lat, lng: location.long }}
                 center={{ lat: location.lat, lng: location.long }}
             >
-                {/* <StandaloneSearchBox
+                <StandaloneSearchBox
                     ref={searchRef}
                     onPlacesChanged={
                         onPlacesChanged
@@ -55,10 +72,11 @@ const MapTagsGoogle = (props: any) => {
                             marginLeft: "-120px"
                         }}
                     />
-                </StandaloneSearchBox> */}
+                </StandaloneSearchBox>
 
                 {org?.map((item: IOrganization, index: number) => (
                     <Marker
+                        key={index}
                         icon={{
                             url:
                                 item?.latitude === location.lat
@@ -68,15 +86,17 @@ const MapTagsGoogle = (props: any) => {
                         position={{ lat: item?.latitude, lng: item?.longitude }}
                     //animation={item?.latitude === location.lat ? window.google.maps.Animation.DROP : null}
                     >
-                        {
+                        {/* <InfoWindow/> */}
+                        {/* {
                             <InfoWindow>
                                 <div className="tooltip">{item?.name}</div>
                             </InfoWindow>
-                        }
+                        } */}
                     </Marker>
                 ))}
             </GoogleMap>
-        </div>
-    );
+        </LoadScript>
+    )
 };
-export default withScriptjs(withGoogleMap(MapTagsGoogle));
+// export default withScriptjs(withGoogleMap(MapTagsGoogle));
+export default MapTagsGoogle
