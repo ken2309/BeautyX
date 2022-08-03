@@ -552,10 +552,16 @@
 .service-detail .service-detail__description {
     margin-bottom: 24px;
 }
-.service-detail .service-detail__description p {
-    margin-bottom: 24px;
-    line-height: 24px;
+.service-detail .service-detail__description .service-description {
+    margin-bottom: 14px;
+    line-height: 26px;
     font-size: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
 }
 
 .service-detail .service-detail__comment {
@@ -676,7 +682,30 @@
     cursor: pointer;
     line-height: 34px;
 }
-
+.seemore-btn {
+    font-size: 14px;
+    color: var(--purple);
+    margin: 0 auto;
+    cursor: pointer;
+}
+.seemore-btn p {
+    font-weight: 500;
+    width: 80px;
+    margin: 0 auto;
+    text-align: center;
+}
+.seemore-btn p:nth-child(2) {
+    display: none;
+}
+.change-text p:nth-child(1) {
+    display: none;
+}
+.change-text p:nth-child(2) {
+    display: block;
+}
+.unlimit-text {
+    -webkit-line-clamp: unset !important;
+}
 @media only screen and (max-width: 1023px) {
     .service-detail .detail-right__evaluate {
         flex-direction: column;
@@ -706,9 +735,13 @@
         padding: 0 0 92px 0;
         position: relative;
     }
-    .service-detail .service-detail__description p {
+    .service-detail .service-detail__description .service-description {
         font-size: 12px;
-        line-height: 16px;
+        line-height: 20px;
+        margin-bottom: 10px;
+    }
+    .seemore-btn {
+        font-size: 12px;
     }
     .seemore-cmt {
         font-size: 12px;

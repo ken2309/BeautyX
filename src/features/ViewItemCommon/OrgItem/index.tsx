@@ -141,11 +141,11 @@ function OrgItem(props: IProps) {
                                             <span>
                                                 {org?.distance < 1000
                                                     ? `${Math.round(
-                                                        org?.distance
-                                                    )}(m)`
+                                                          org?.distance
+                                                      )}(m)`
                                                     : `${Math.round(
-                                                        org?.distance / 1000
-                                                    )}(km)`}
+                                                          org?.distance / 1000
+                                                      )}(km)`}
                                             </span>
                                         </div>
                                     ) : (
@@ -198,7 +198,7 @@ function OrgItem(props: IProps) {
                                 >
                                     <div className="flexX-gap-4 org-img-cnt__rate-item">
                                         <img src={icon.heart} alt="" />
-                                        <span>{org?.favorites_count}</span>
+                                        <span>{org?.favorites.length}</span>
                                     </div>
                                     <div className="flexX-gap-4 org-img-cnt__rate-item">
                                         <img src={icon.star} alt="" />
@@ -223,8 +223,8 @@ function OrgItem(props: IProps) {
                                     {org?.distance < 1000
                                         ? `${Math.round(org?.distance)}(m)`
                                         : `${Math.round(
-                                            org?.distance / 1000
-                                        )}(km)`}
+                                              org?.distance / 1000
+                                          )}(km)`}
                                 </div>
                             ) : (
                                 <></>
