@@ -10,12 +10,14 @@
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 16px;
 }
+
 .home-discounts__title {
     padding: 16px;
     background-color: #ff721f;
     margin-bottom: 16px;
     border-radius: 0 0 16px 16px;
 }
+
 .home-discounts__title span {
     font-weight: 700;
     font-size: 24px;
@@ -24,6 +26,7 @@
     color: white;
     font-family: 'Nunito';
 }
+
 .home-discounts__title span:nth-child(2) {
     cursor: pointer;
     font-size: 16px;
@@ -32,22 +35,35 @@
     color: white;
     text-transform: capitalize;
 }
+
 .home-discounts__list .item-cnt {
     padding: 8px;
     width: 16.666%;
     cursor: pointer;
 }
+
 .home-discount-item__cnt {
     width: 100%;
     border-radius: 8px;
     transition: all 0.4s;
     cursor: pointer;
+    position: relative;
+}
+
+.home-discount-item__org-logo {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 35px;
+    background-color: var(--bg-white);
+    border-radius: 100%;
 }
 
 .home-discount-item__img {
     width: 100%;
     border-radius: 8px 8px 0px 0px;
 }
+
 .home-discount-item__img img {
     width: 100%;
     height: 100%;
@@ -73,9 +89,11 @@
     text-overflow: ellipsis;
     word-break: break-word;
 }
+
 .home-discount-item__detail .price {
     padding: 2px 0px;
 }
+
 .home-discount-item__detail .price .sale-price {
     font-size: 16px;
     line-height: 18px;
@@ -83,6 +101,7 @@
     color: var(--red-cl);
     margin-right: 6px;
 }
+
 .home-discount-item__detail .price .old-price {
     font-size: 12px;
     line-height: 14px;
@@ -90,13 +109,16 @@
     font-weight: 700;
     text-decoration: line-through;
 }
+
 .home-discount-item__cnt .address {
     display: flex;
     align-items: flex-start;
 }
+
 .home-discount-item__cnt .address img {
     margin: 2px 4px 0px 0px;
 }
+
 .home-discount-item__cnt .address span {
     font-size: 12px;
     line-height: 18px;
@@ -109,6 +131,7 @@
     text-overflow: ellipsis;
     word-break: break-word;
 }
+
 .home-discount-item__cnt .limit-bar {
     margin-top: 6px;
     background: var(--red-cl);
@@ -118,6 +141,7 @@
     height: 18px;
     position: relative;
 }
+
 .home-discount-item__cnt .limit-bar__used {
     position: absolute;
     height: 100%;
@@ -126,6 +150,7 @@
     left: 0;
     border-radius: 9px;
 }
+
 .home-discount-item__cnt .limit-bar__num {
     z-index: 2;
     position: absolute;
@@ -139,10 +164,14 @@
     color: var(--bgWhite);
     text-align: center;
 }
-.watch-more-card{
+
+.watch-more-card {
     display: none;
 }
+
+
 /* Tablet */
+
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
     .home-discounts {
         padding: 24px;
@@ -151,7 +180,10 @@
         grid-template-columns: repeat(5, 1fr);
     }
 }
+
+
 /* Mobile */
+
 @media only screen and (max-width: 767px) {
     .home-discounts {
         padding: 0px;
@@ -188,7 +220,7 @@
     .home-discounts__list li {
         width: 164px;
     }
-    .watch-more-card{
+    .watch-more-card {
         display: flex;
         align-items: center;
         text-align: center;
@@ -196,7 +228,7 @@
         background: #fff;
         border-radius: 8px;
     }
-    .watch-more-card li>div{
+    .watch-more-card li>div {
         width: fit-content;
         margin: auto;
         padding: 5px 10px;
@@ -205,7 +237,7 @@
         line-height: 1;
         border-radius: 100%;
     }
-    .watch-more-card li>span{
+    .watch-more-card li>span {
         line-height: 3;
         font-family: 'Nunito';
         font-weight: 600;

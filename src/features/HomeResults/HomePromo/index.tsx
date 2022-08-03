@@ -23,6 +23,7 @@ import BackTopButton from "../../../components/BackTopButton";
 import Footer from "../../Footer";
 import LoadingMore from "../../../components/LoadingMore";
 import { LoadingServices } from "../../../components/LoadingSketion";
+import { blockService } from "../../../utils/blockCardItem";
 
 function HomePromo(props: any) {
     const { t } = useContext(AppContext);
@@ -68,6 +69,12 @@ function HomePromo(props: any) {
             }))
         }
     }
+    const servicesList = services.map((i: IServicePromo) => {
+        return {
+            ...i,
+            is_block: blockService(i.price, i.special_price)
+        }
+    })
 
     return (
         <>
@@ -102,21 +109,23 @@ function HomePromo(props: any) {
                         dataLength={services.length}
                     >
                         <ul className="ser-list ser-list__mb home-result__cus">
-                            {services.map(
-                                (item: IServicePromo, index: number) => (
-                                    <li
-                                        key={index}
-                                        className="ser-list-item__mb ser-item__cus"
-                                    >
-                                        {
-                                            IS_MB ?
-                                                <ServiceResultItem service={item} />
-                                                :
-                                                <ServicePromoItem service={item} />
-                                        }
-                                    </li>
-                                )
-                            )}
+                            {servicesList
+                                .filter((i: any) => i.is_block === false)
+                                .map(
+                                    (item: IServicePromo, index: number) => (
+                                        <li
+                                            key={index}
+                                            className="ser-list-item__mb ser-item__cus"
+                                        >
+                                            {
+                                                IS_MB ?
+                                                    <ServiceResultItem service={item} />
+                                                    :
+                                                    <ServicePromoItem service={item} />
+                                            }
+                                        </li>
+                                    )
+                                )}
                         </ul>
                     </InfiniteScroll>
                 </div>

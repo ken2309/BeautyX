@@ -169,7 +169,7 @@ const filterSlice = createSlice({
                 }
             }
         },
-        [fetchAsyncOrgsByFilter.pending]: (state) => {
+        [fetchAsyncOrgsByFilter.rejected]: (state) => {
             return { ...state, ORGS: { ...state.ORGS, status: STATUS.FAIL } }
         },
     }

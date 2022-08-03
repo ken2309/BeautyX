@@ -6,7 +6,7 @@ import icon from "../../constants/icon";
 import { useHistory } from "react-router-dom";
 import { formatRouterLinkDiscount } from "../../utils/formatRouterLink/formatRouter";
 // ==== api tracking ====
- import tracking from "../../api/trackApi";
+import tracking from "../../api/trackApi";
 // end
 interface IProps {
     discountPar: IDiscountPar;
@@ -25,8 +25,14 @@ function DiscountItem(props: IProps) {
         );
         history.push(pathDiscountOb);
     };
+    console.log(discountItem);
     return (
         <div onClick={onDetail} className="home-discount-item__cnt">
+            {
+                discountItem.organization.image_url !== '' &&
+                discountItem.organization.image_url !== null &&
+                <img src={discountItem.organization.image_url} onError={(e) => onErrorImg(e)} className="home-discount-item__org-logo" alt="" />
+            }
             <img
                 className="home-discount-item__img"
                 src={
@@ -57,15 +63,14 @@ function DiscountItem(props: IProps) {
                     <div
                         style={
                             !discountPar.total ||
-                            discountPar.total === discountPar.used
+                                discountPar.total === discountPar.used
                                 ? { width: "100%" }
                                 : {
-                                      width: `${
-                                          (discountPar.used /
-                                              discountPar.total) *
-                                          100
-                                      }%`,
-                                  }
+                                    width: `${(discountPar.used /
+                                        discountPar.total) *
+                                        100
+                                        }%`,
+                                }
                         }
                         className="limit-bar__used"
                     ></div>

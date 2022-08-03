@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Container, Drawer } from '@mui/material';
 import './style.css';
 import FilterOrgs from '../Filter/FilterOrgs';
@@ -20,12 +20,23 @@ import useFullScreen from '../../utils/useDeviceMobile';
 import icon from '../../constants/icon';
 import LoadingMore from '../../components/LoadingMore';
 import { LoadingOrgs } from '../../components/LoadingSketion';
+import { AppContext } from '../../context/AppProvider';
+import Map from '../../components/Map';
 
 function Result() {
     const IS_MB = useFullScreen();
     const params: any = extraParamsUrl();
+    const [openMap, setOpenMap] = useState(false);
     const dispatch = useDispatch();
-    const { tags, sort, province, district, min_price, max_price } = useSelector((state: any) => state.FILTER.FILTER_ORG);
+    const { t } = useContext(AppContext);
+    const {
+        tags,
+        sort,
+        province,
+        district,
+        min_price,
+        max_price
+    } = useSelector((state: any) => state.FILTER.FILTER_ORG);
     const { TYPE_FILTER } = useSelector((state: any) => state.FILTER);
     const { orgs, status, page, totalItem } = useSelector((state: any) => state.FILTER.ORGS);
     let titleHeader: string = "";
@@ -69,7 +80,6 @@ function Result() {
             }))
         }
     }
-    console.log(orgs);
     return (
         <>
             <HeadTitle title={`Kết quả tìm kiếm cho : ${titleHeader}`} />
@@ -90,13 +100,30 @@ function Result() {
                         />
                     </div>
                     <div className="result-cont__right">
-                        {(status !== STATUS.SUCCESS && page === 1) && <LoadingOrgs />}
+                        {(status === STATUS.LOADING && page === 1) && <LoadingOrgs />}
                         <InfiniteScroll
                             dataLength={orgs.length}
                             hasMore={true}
                             loader={<></>}
                             next={onViewMore}
                         >
+                            <div className="result-cont-map">
+                                <div
+                                    onClick={() => {
+                                        setOpenMap(true);
+                                    }}
+                                    className="open-map"
+                                >
+                                    <div className="flexX-gap-4">
+                                        <p>{t("pr.map")}</p>
+                                        <img
+                                            src={icon.mapPinRed}
+                                            alt=""
+                                            style={{ width: "16px" }}
+                                        ></img>
+                                    </div>
+                                </div>
+                            </div>
                             <ul className="result-cont__right-list">
                                 {
                                     orgs.map((org: IOrganization, index: number) => (
@@ -114,6 +141,11 @@ function Result() {
                     </div>
                 </div>
             </Container>
+            <Map
+                data={orgs}
+                open={openMap}
+                setOpenMap={setOpenMap}
+            />
             <BackTopButton />
             <Footer />
         </>
