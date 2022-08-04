@@ -11,7 +11,7 @@ import UserPaymentInfo from "../Account/components/UserPaymentInfo";
 import CartGroupItem from "./components/CartGroupItem";
 import CartBottom from "./components/CartBottom";
 import Footer from "../Footer";
-import { clearByCheck, getTotal } from "../../redux/cartSlice";
+import { addVoucherByOrg, clearByCheck, getTotal } from "../../redux/cartSlice";
 import CartPaymentMethod from "./components/CartPaymentMethod";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
@@ -26,6 +26,8 @@ import { IOrganization } from "../../interface/organization";
 import { IBranch } from "../../interface/branch";
 import onErrorImg from "../../utils/errorImg";
 import useDeviceMobile from "../../utils/useDeviceMobile";
+import { fetchAsyncOrgDiscounts } from "../../redux/org_discounts/orgDiscountsSlice";
+import { IDiscountPar } from "../../interface/discount";
 // end
 
 const initialMomoForBeautyx = {
@@ -39,15 +41,33 @@ const initialMomoForBeautyx = {
 function Carts() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const dispatch = useDispatch();
-    const { cartAmountDiscount, cartAmount } = useSelector(
+    const { cartAmountDiscount, cartAmount, VOUCHER_APPLY } = useSelector(
         (state: any) => state.carts
     );
+    console.log(VOUCHER_APPLY)
     const { USER } = useSelector((state: any) => state.USER);
     const cartListAll = useSelector((state: any) => state.carts.cartList)
     const cartList = cartListAll.filter((i: any) => i?.user_id === USER?.id)
 
 
     const org = cartList.filter((item: any) => item.isConfirm === true)[0]?.org;
+
+    const callDiscountByOrg = async () => {
+        const values = { org_id: org.id }
+        const res = await dispatch(fetchAsyncOrgDiscounts(values))
+        const { discounts } = res.payload;
+        if (discounts.length > 0) {
+            dispatch(addVoucherByOrg({
+                org: org,
+                vouchers: discounts
+            }))
+        }
+    }
+    useEffect(() => {
+        if (org) {
+            callDiscountByOrg()
+        }
+    }, [org])
 
     const cartConfirm = cartList.filter((item: any) => item.isConfirm === true);
 
@@ -60,7 +80,7 @@ function Carts() {
 
     useEffect(() => {
         dispatch(getTotal(USER?.id));
-    }, [dispatch, cartList]);
+    }, [dispatch, cartList, USER, VOUCHER_APPLY]);
 
     const [open, setOpen] = useState(false);
     const [pmtMethod, setPmtMethod] = useState<any>(initialMomoForBeautyx);

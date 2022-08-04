@@ -318,6 +318,7 @@
     height: 100%;
     object-fit: cover;
     border-radius: 8px;
+    margin-top: 24px;
     overflow: hidden;
 }
 
@@ -328,6 +329,9 @@
     outline: none;
     border: none;
     border-radius: 100px;
+}
+.btn-close img {
+    margin-top: 0;
 }
 
 .evaluate-comment__bot {

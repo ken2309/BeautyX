@@ -1,20 +1,40 @@
 import { createSlice } from "@reduxjs/toolkit";
 // ==== api tracking ====
 import tracking from "../api/trackApi";
+import { IDiscountPar } from "../interface/discount";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../utils/dataLayer";
-import { DISCOUNT_TYPE } from "../utils/formatRouterLink/fileType";
 // end
+
+interface IInitialState {
+    org: any,
+    cartList: any[],
+    cartQuantity: number,
+    cartAmountDiscount: number,
+    cartAmountDiscountTotal:number,
+    cartAmount: number,
+    VOUCHER_CART: {
+        org_id: any,
+        vouchers: any[]
+    },
+    VOUCHER_APPLY: any[]
+}
 
 const storageName = "web-booking-cart";
 const storage = JSON.parse(`${localStorage.getItem(storageName)}`);
-const initialState = {
+const initialState: IInitialState = {
     org: null,
     cartList: localStorage.getItem(storageName) ? storage : [],
     cartQuantity: 0,
     cartAmountDiscount: 0,
     cartAmount: 0,
+    VOUCHER_CART: {
+        org_id: null,
+        vouchers: []
+    },
+    cartAmountDiscountTotal:0,
+    VOUCHER_APPLY: []
 };
 const cart = createSlice({
     name: "carts",
@@ -109,6 +129,15 @@ const cart = createSlice({
             //state.cartList = cartTrue
             localStorage.setItem(storageName, JSON.stringify(state.cartList));
         },
+        onApplyVoucherSubTotal: (state, action) => {
+            const iIndex = state.VOUCHER_APPLY.findIndex((i: IDiscountPar) =>
+                i.id === action.payload.id
+            )
+            if (iIndex < 0) {
+                const newVoucher = action.payload
+                state.VOUCHER_APPLY.push(newVoucher)
+            }
+        },
         getTotal: (state, { payload }) => {
             const cartListDiscounts = state.cartList
                 .filter((item: any) => item.user_id === payload)
@@ -125,6 +154,8 @@ const cart = createSlice({
                 cartListDiscounts.reduce(
                     (pre: number, cur: number) => pre + cur
                 );
+            
+            //amount discount total, price
             let { total, quantity } = state.cartList
                 .filter((item: any) => item.user_id === payload)
                 .reduce(
@@ -150,6 +181,9 @@ const cart = createSlice({
             state.cartList = [];
             localStorage.setItem(storageName, JSON.stringify(state.cartList));
         },
+        onClearApplyVoucher : (state) =>{
+            state.VOUCHER_APPLY=[]
+        },
         clearByCheck: (state) => {
             const cartConfirm = state.cartList.filter(
                 (val: any) => val.isConfirm === true
@@ -170,6 +204,13 @@ const cart = createSlice({
             });
             state.cartList = newCartList;
         },
+        //add discount by org_id to cart
+        addVoucherByOrg: (state, action) => {
+            state.VOUCHER_CART = {
+                org_id: action.payload.org.id,
+                vouchers: action.payload.vouchers
+            }
+        }
     },
 });
 const { reducer, actions } = cart;
@@ -185,5 +226,8 @@ export const {
     clearAllCart,
     clearByCheck,
     onClearPrevCartItem,
+    addVoucherByOrg,
+    onApplyVoucherSubTotal,
+    onClearApplyVoucher
 } = actions;
 export default reducer;

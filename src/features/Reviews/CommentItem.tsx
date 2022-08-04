@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Rating from "@mui/material/Rating";
 import icon from "../../constants/icon";
-import { IComment, ICommentChild } from "../../interface/comments";
+import { IComment } from "../../interface/comments";
 import FullImage from "../OpenFullImage";
 import { AppContext } from "../../context/AppProvider";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,8 +13,6 @@ import { postAsyncReplyProductComments } from "../../redux/org_products/productS
 import mediaApi from "../../api/mediaApi";
 import moment from "moment";
 import "moment/locale/vi";
-import BeautyLoading from "../../components/BeautyxLoading";
-import { STATUS } from "../../redux/status";
 
 interface IProps {
     comment: IComment;
@@ -34,7 +32,6 @@ export default function CommentItem(props: IProps) {
     })
     const [open, setOpen] = useState(false);
     const { USER } = useSelector((state: any) => state.USER);
-    const { status } = useSelector((state: any) => state.COMMENT);
     const { t } = useContext(AppContext);
     let body;
     try {
@@ -129,7 +126,10 @@ export default function CommentItem(props: IProps) {
         })
     };
     const displayTime = moment(comment.created_at).locale("vi").fromNow();
+<<<<<<< HEAD
     console.log(commentRep);
+=======
+>>>>>>> db2a21bdb77d5385bb026767674d0539e54f271c
     return (
         <>
             <div className="evaluate-comment__top">
@@ -310,11 +310,16 @@ export default function CommentItem(props: IProps) {
                                         </button>
                                     </div>
 
+<<<<<<< HEAD
                                     {commentRep.img_url.length > 0 && (
                                         <div
                                             style={{ marginTop: "24px" }}
                                             className="evaluate-input__upload"
                                         >
+=======
+                                    {cmtRep?.cmtRepImg && (
+                                        <div className="evaluate-input__upload">
+>>>>>>> db2a21bdb77d5385bb026767674d0539e54f271c
                                             <img
                                                 src={commentRep.img_url}
                                                 className="evaluate-upload__img"
