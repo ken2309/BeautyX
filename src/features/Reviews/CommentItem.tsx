@@ -27,8 +27,11 @@ export default function CommentItem(props: IProps) {
     const { comment, org_id, parent_type } = props;
     const dispatch = useDispatch();
     const history = useHistory();
-    const [cmtRep, setCmtRep] = useState<any>([]);
-    const [imgList, setImgList] = useState<number[]>([]);
+    const [commentRep, setCommentRep] = useState({
+        text: '',
+        img_url: "",
+        media_id: null
+    })
     const [open, setOpen] = useState(false);
     const { USER } = useSelector((state: any) => state.USER);
     const { status } = useSelector((state: any) => state.COMMENT);
@@ -48,22 +51,26 @@ export default function CommentItem(props: IProps) {
         };
     }
     const onChangeReply = (e: any) => {
-        setCmtRep({
-            ...cmtRep,
-            cmtRepText: e.target.value,
-        });
+        setCommentRep({
+            ...commentRep,
+            text: e.target.value
+        })
     };
     const handlePostReplyComment = () => {
         if (USER) {
-            if (cmtRep?.cmtRepText.length > 0) {
+            if (commentRep.text.length > 0) {
                 const values = {
                     type: "REPLY_COMMENT",
                     id: comment.id,
                     org_id: org_id,
-                    media_ids: imgList,
-                    body: cmtRep.cmtRepText,
+                    media_ids: [commentRep.media_id],
+                    body: commentRep.text,
                 };
-                setCmtRep("");
+                setCommentRep({
+                    text: '',
+                    img_url: "",
+                    media_id: null
+                })
                 switch (parent_type) {
                     case "ORGANIZATION":
                         return dispatch(
@@ -106,20 +113,23 @@ export default function CommentItem(props: IProps) {
         formData.append("file", media);
         try {
             const res = await mediaApi.postMedia(formData);
-            setCmtRep({
-                ...cmtRep,
-                cmtRepImg: res?.data.context.original_url,
-            });
-            setImgList([...imgList, res.data.context.model_id]);
+            setCommentRep({
+                ...commentRep,
+                img_url: res?.data.context.original_url,
+            })
+            // setImgList([res.data.context.model_id]);
         } catch (error) {
             console.log("error", error);
         }
     };
     const onRemoveImgTemp = () => {
-        setCmtRep({ ...cmtRep, cmtRepImg: null });
+        setCommentRep({
+            ...commentRep,
+            img_url: "",
+        })
     };
     const displayTime = moment(comment.created_at).locale("vi").fromNow();
-    console.log(cmtRep?.cmtRepImg);
+    console.log(commentRep);
     return (
         <>
             <div className="evaluate-comment__top">
@@ -143,9 +153,9 @@ export default function CommentItem(props: IProps) {
                                 readOnly
                                 name="simple-controlled"
                                 value={body.star}
-                                // onChange={(event, newValue) => {
-                                //     setValue(newValue);
-                                // }}
+                            // onChange={(event, newValue) => {
+                            //     setValue(newValue);
+                            // }}
                             />
                         </div>
                     </div>
@@ -270,7 +280,7 @@ export default function CommentItem(props: IProps) {
                                             className="avatar-reply"
                                         />
                                         <input
-                                            value={cmtRep?.cmtRepText}
+                                            value={commentRep.text}
                                             onKeyDown={handleKeyDown}
                                             onChange={onChangeReply}
                                             type="text"
@@ -300,13 +310,13 @@ export default function CommentItem(props: IProps) {
                                         </button>
                                     </div>
 
-                                    {cmtRep?.cmtRepImg && (
+                                    {commentRep.img_url.length > 0 && (
                                         <div
                                             style={{ marginTop: "24px" }}
                                             className="evaluate-input__upload"
                                         >
                                             <img
-                                                src={cmtRep?.cmtRepImg}
+                                                src={commentRep.img_url}
                                                 className="evaluate-upload__img"
                                                 alt=""
                                             />
