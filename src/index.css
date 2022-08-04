@@ -96,6 +96,7 @@ html {
     display: flex;
     align-items: center;
 }
+
 .flex-row-sp {
     display: flex;
     flex-direction: row;
