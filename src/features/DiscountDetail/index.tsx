@@ -24,8 +24,8 @@ import {
 } from "../../redux/org_services/serviceSlice";
 import {
     fetchAsyncProductDetail,
-    fetchAsyncProductCmt
-} from "../../redux/org_products/productSlice"
+    fetchAsyncProductCmt,
+} from "../../redux/org_products/productSlice";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import Review from "../Reviews";
 import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
@@ -68,15 +68,19 @@ function DiscountDetail() {
     const ORG = useSelector((state: any) => state.ORG);
     const org = ORG.org;
 
-    const COMMENTS_SERVICE = useSelector((state: any) => state.SERVICE.COMMENTS)
-    const COMMENTS_PRODUCT = useSelector((state: any) => state.PRODUCT.COMMENTS);
+    const COMMENTS_SERVICE = useSelector(
+        (state: any) => state.SERVICE.COMMENTS
+    );
+    const COMMENTS_PRODUCT = useSelector(
+        (state: any) => state.PRODUCT.COMMENTS
+    );
     const { SERVICE } = useSelector((state: any) => state.SERVICE);
-    const { PRODUCT } = useSelector((state: any) => state.PRODUCT)
+    const { PRODUCT } = useSelector((state: any) => state.PRODUCT);
     let COMMENTS = COMMENTS_SERVICE;
-    let detail = SERVICE.service
+    let detail = SERVICE.service;
     if (TYPE === "product") {
-        COMMENTS = COMMENTS_PRODUCT
-        detail = PRODUCT.product
+        COMMENTS = COMMENTS_PRODUCT;
+        detail = PRODUCT.product;
     }
     const values = {
         // org_id: params.org_id,
@@ -159,8 +163,6 @@ function DiscountDetail() {
         }
     };
 
-
-
     const [value, setValue] = useState<any>(1);
     let tabs = [
         { id: 1, title: t("pr.description") },
@@ -234,7 +236,7 @@ function DiscountDetail() {
         if (TYPE === "service") {
             callServiceDetail();
         } else if (TYPE === "product") {
-            callProductDetail()
+            callProductDetail();
         }
         callOrgDetail();
     }, []);
@@ -245,9 +247,7 @@ function DiscountDetail() {
 
     return (
         <>
-            {status_detail !== STATUS.SUCCESS && (
-                <LoadDetail/>
-            )}
+            {status_detail !== STATUS.SUCCESS && <LoadDetail />}
             <HeadTitle
                 title={
                     status_detail === "LOADING" ? "Loading..." : discount?.title
@@ -268,7 +268,7 @@ function DiscountDetail() {
                                 discount={discount}
                                 detail={detail}
                                 COMMENTS={COMMENTS}
-                                TYPE_DE= {TYPE}
+                                TYPE_DE={TYPE}
                             />
                         </div>
                         <div className="service-detail__body">
@@ -297,14 +297,14 @@ function DiscountDetail() {
                                                     {detail?.description
                                                         ? detail?.description
                                                         : t(
-                                                            "detail_item.updating"
-                                                        )}
+                                                              "detail_item.updating"
+                                                          )}
                                                 </p>
-                                                {service?.description &&
+                                                {detail?.description &&
                                                 (is_mobile === true
-                                                    ? service?.description
+                                                    ? detail?.description
                                                           .length > 300
-                                                    : service?.description
+                                                    : detail?.description
                                                           .length > 500) ? (
                                                     <div
                                                         onClick={() =>
@@ -337,7 +337,7 @@ function DiscountDetail() {
                                                     }
                                                 />
                                                 {COMMENTS.comments &&
-                                                    COMMENTS.comments.length >=
+                                                COMMENTS.comments.length >=
                                                     8 ? (
                                                     <div
                                                         style={{
@@ -376,22 +376,22 @@ function DiscountDetail() {
                                             >
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                        <>
-                                                            <p className="service-detail__title">
-                                                                {t(
-                                                                    "detail_item.merchant"
-                                                                )}
-                                                            </p>
-                                                            <div className="service-detail__org-mb">
-                                                                <DetailOrgCard
-                                                                    org={ORG?.org}
-                                                                />
-                                                            </div>
-                                                            <OrgInformation
+                                                    <>
+                                                        <p className="service-detail__title">
+                                                            {t(
+                                                                "detail_item.merchant"
+                                                            )}
+                                                        </p>
+                                                        <div className="service-detail__org-mb">
+                                                            <DetailOrgCard
                                                                 org={ORG?.org}
                                                             />
-                                                        </>
-                                                    )}
+                                                        </div>
+                                                        <OrgInformation
+                                                            org={ORG?.org}
+                                                        />
+                                                    </>
+                                                )}
                                             </div>
                                         </TabPanel>
                                         <TabPanel value={value}>
