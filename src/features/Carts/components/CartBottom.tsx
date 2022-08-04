@@ -59,8 +59,8 @@ function CartBottom(props: any) {
         combos: combos.map((item: any) => {
             return { id: item.id, quantity: item.quantity };
         }),
-        coupon_code: listCouponCode.length > 0 ? listCouponCode : [],
-        // coupon_code:["EABCttwt2"]
+        // coupon_code: listCouponCode.length > 0 ? listCouponCode : [],
+        coupon_code:["A"]
     };
 
     async function handlePostOrder() {

@@ -15,7 +15,8 @@
     padding: 0px 12px;
     border-radius: 8px;
 }
-.re-cart-item-group__head .btn-loading{
+
+.re-cart-item-group__head .btn-loading {
     margin-left: 8px;
     font-size: 12px;
     line-height: 14px;
@@ -202,7 +203,8 @@
     width: 41.5vw;
     padding: 12px;
 }
-.re-cart-branches{
+
+.re-cart-branches {
     background-color: var(--white);
     padding: 24px 12px;
     width: 50vw;
@@ -210,20 +212,23 @@
     max-height: 80vh;
     overflow-y: scroll;
 }
-.re-cart__branch-item .branch-img{
+
+.re-cart__branch-item .branch-img {
     width: 48px;
     height: 48px;
     border-radius: 100%;
 }
-.re-cart__branch-item{
+
+.re-cart__branch-item {
     margin: 6px 0px;
     padding: 6px;
     border-radius: 6px;
-    border:  solid 1px var(--grey);
+    border: solid 1px var(--grey);
     cursor: pointer;
     position: relative;
 }
-.re-cart__branch-item-ck{
+
+.re-cart__branch-item-ck {
     position: absolute;
     z-index: 1;
     background-color: var(--orange);
@@ -236,7 +241,8 @@
     font-weight: 500;
     border-radius: 6px;
 }
-.re-cart-item-group__add{
+
+.re-cart-item-group__add {
     width: 100%;
     background-color: var(--grey_2);
     padding: 9px;
@@ -245,29 +251,49 @@
     font-weight: 500;
     color: var(--purple);
 }
-.re-cart__branch-item .detail{
+
+.re-cart__branch-item .detail {
     display: flex;
     flex-direction: column;
     margin-left: 8px;
 }
-.re-cart__branch-item .detail .branch-name{
+
+.re-cart__branch-item .detail .branch-name {
     font-size: 14px;
     line-height: 16px;
     font-weight: 600;
     color: var(--black);
 }
-.re-cart__branch-item .detail .branch-address{
+
+.re-cart__branch-item .detail .branch-address {
     font-size: 12px;
     line-height: 14px;
     font-weight: 500;
     margin: 3px 0px;
 }
-.re-cart__branch-item .detail .branch-phone{
+
+.re-cart__branch-item .detail .branch-phone {
     font-size: 12px;
     line-height: 14px;
     font-weight: 500;
     color: var(--text-hover);
 }
+
+/* cart group item voucher */
+.cart-item-pop-voucher{
+    width:45vw;
+    height: fit-content;
+    max-width: 90vh;
+    overflow-y: scroll;
+    background-color: var(--white);
+    padding: 12px;
+}
+.cart-vouchers-list .list .item{
+    width: 100%;
+    height: fit-content;
+    background-color: burlywood;
+}
+
 
 @media only screen and (max-width: 1023px) {
     .re-cart-cnt {
@@ -452,18 +478,21 @@
         font-weight: 500;
         margin: 0px 0px 0px 0px;
     }
-    .re-cart-item-group__add{
+
+    .re-cart-item-group__add {
         background-color: var(--white);
         padding: 0px 10px;
     }
-    .re-cart-item-group__add-dot{
+
+    .re-cart-item-group__add-dot {
         width: 8px;
         height: 8px;
         border-radius: 100%;
         margin-right: 6px;
         background-color: var(--purple);
     }
-    .re-cart-branches{
+
+    .re-cart-branches {
         width: 94vw;
         border-radius: 12px;
     }

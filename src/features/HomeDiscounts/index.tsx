@@ -12,6 +12,7 @@ import { STATUS } from "../../redux/status";
 
 import { LoadingServicesRow } from '../../components/LoadingSketion';
 import { exDiscountFinal } from "../../data/listService";
+import { DISCOUNT_TYPE } from "../../utils/formatRouterLink/fileType";
 
 function HomeDiscount() {
     const { t } = useContext(AppContext);
@@ -40,7 +41,12 @@ function HomeDiscount() {
                             :
                             <ul className="home-discounts__list">
                                 {discounts
-                                    .filter((i: IDiscountPar) => i.items.length > 0)
+                                    .filter((i: IDiscountPar) =>
+                                    (i.items.length > 0 && (
+                                        i.discount_type === DISCOUNT_TYPE.PRODUCT.key ||
+                                        i.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key
+                                    ))
+                                    )
                                     .slice(0, 12)
                                     .map((discount: IDiscountPar, index: number) => (
                                         <div key={index}>

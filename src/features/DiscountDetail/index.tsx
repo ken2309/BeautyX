@@ -300,11 +300,11 @@ function DiscountDetail() {
                                                             "detail_item.updating"
                                                         )}
                                                 </p>
-                                                {service?.description &&
+                                                {detail?.description &&
                                                 (is_mobile === true
-                                                    ? service?.description
+                                                    ? detail?.description
                                                           .length > 300
-                                                    : service?.description
+                                                    : detail?.description
                                                           .length > 500) ? (
                                                     <div
                                                         onClick={() =>
