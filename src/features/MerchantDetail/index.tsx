@@ -8,6 +8,8 @@ import LoadOrg from "../../components/LoadingSketion/LoadOrg";
 //import { clearServices } from '../../redux/org_services/orgServivesSlice';
 //import { clearProducts } from '../../redux/org_products/orgProductsSlice';
 import PageNotFound from "../../components/PageNotFound";
+import { IDiscountPar } from "../../interface/discount";
+import { addVoucherByOrg } from "../../redux/cartSlice";
 import {
   fetchAsyncOrg,
   fetchOrgGalleries,
@@ -63,11 +65,18 @@ function MerchantDetail() {
       dispatch(fetchOrgGalleries(sub_domain))
     }
   }
-  const callOrgDiscountsOrg = () => {
+  const callOrgDiscountsOrg = async () => {
     if (status === STATUS.SUCCESS) {
       if (ORG_DISCOUNTS.org_id !== org.id || ORG_DISCOUNTS.DISCOUNTS.status_list !== STATUS.SUCCESS) {
         const values = { org_id: org.id }
-        dispatch(fetchAsyncOrgDiscounts(values))
+        const res = await dispatch(fetchAsyncOrgDiscounts(values))
+        const { discounts } = res.payload;
+        if (discounts.length > 0) {
+          dispatch(addVoucherByOrg({
+            org: org,
+            vouchers: discounts
+          }))
+        }
       }
     }
   }

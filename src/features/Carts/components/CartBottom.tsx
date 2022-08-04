@@ -14,10 +14,14 @@ import AlertSnack from "../../../components/AlertSnack";
 import tracking from "../../../api/trackApi";
 import { formatProductList } from "../../../utils/tracking";
 import { AppContext } from "../../../context/AppProvider";
+import { IDiscountPar } from "../../../interface/discount";
 // end
 function CartBottom(props: any) {
     const { DATA_CART, DATA_PMT } = props;
+    const cartAmount = DATA_CART.cartAmount;
     const { t } = useContext(AppContext);
+    const VOUCHER_APPLY: IDiscountPar[] = useSelector((state: any) => state.carts.VOUCHER_APPLY);
+    console.log(VOUCHER_APPLY)
     const [openAlertSnack, setOpenAlertSnack] = useState({
         title: "",
         open: false,
@@ -59,8 +63,8 @@ function CartBottom(props: any) {
         combos: combos.map((item: any) => {
             return { id: item.id, quantity: item.quantity };
         }),
-        coupon_code: listCouponCode.length > 0 ? listCouponCode : [],
-        // coupon_code:["EABCttwt2"]
+        // coupon_code: listCouponCode.length > 0 ? listCouponCode : [],
+        coupon_code: ["d"]
     };
 
     async function handlePostOrder() {
@@ -127,6 +131,29 @@ function CartBottom(props: any) {
             });
         }
     };
+
+
+    const vouchersCal = VOUCHER_APPLY.map((i: IDiscountPar) => {
+        let discountValue = i.discount_value;
+        if (!i.maximum_discount_value || cartAmount < i.maximum_discount_value) {
+            discountValue = cartAmount - (cartAmount * i.discount_value / 100)
+        }
+        if (i.maximum_discount_value && cartAmount > i.maximum_discount_value) {
+            discountValue = i.maximum_discount_value
+        }
+        return {
+            ...i,
+            discount_value: i.discount_unit === "PERCENT" ? discountValue : i.discount_value
+        }
+    })
+    let discountVoucherTotal = 0
+    if (VOUCHER_APPLY.length > 0) {
+        discountVoucherTotal = vouchersCal
+            .map((i: IDiscountPar) => i.discount_value)
+            .reduce((pre: number, cur: number) => pre + cur)
+    }
+
+
     return (
         <div className="re-cart-bottom">
             <AlertSnack
@@ -166,6 +193,24 @@ function CartBottom(props: any) {
                                     </span>
                                 </div>
                             )}
+                            {
+                                VOUCHER_APPLY.length > 0 &&
+                                VOUCHER_APPLY
+                                    .filter((i: IDiscountPar) => i.discount_type === "SUB_TOTAL")
+                                    .map((item: IDiscountPar) => (
+                                        <div key={item.id} className="flex-row-sp re-cart-bottom__cal-item">
+                                            <span>{item.title}</span>
+                                            <span>
+                                                -
+                                                {formatPrice(
+                                                    item.discount_value
+                                                )}
+                                                {item.discount_unit === "PERCENT" && "%"}
+                                                {item.discount_unit === "PRICE" && "đ"}
+                                            </span>
+                                        </div>
+                                    ))
+                            }
                         </div>
                         <div className="flex-row-sp re-cart-bottom__pay">
                             <span className="left">{`${t(
@@ -175,7 +220,8 @@ function CartBottom(props: any) {
                                 <span className="right-money">
                                     {formatPrice(
                                         DATA_CART.cartAmount -
-                                        DATA_CART.cartAmountDiscount
+                                        DATA_CART.cartAmountDiscount -
+                                        discountVoucherTotal
                                     )}
                                     đ
                                 </span>
