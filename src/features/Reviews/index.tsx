@@ -14,7 +14,6 @@ import { useHistory } from "react-router-dom";
 import { AppContext } from "../../context/AppProvider";
 import { postAsyncOrgComments } from "../../redux/org/orgCommentsSlice";
 
-
 interface IProps {
     comments?: any;
     totalItem?: number;
@@ -132,7 +131,6 @@ function Review(props: IProps) {
             handlePostComment();
         }
     };
-    
 
     return (
         <>
@@ -176,7 +174,7 @@ function Review(props: IProps) {
                     > */}
                 <div className="evaluate__list">
                     {comments?.map((item: IComment, index: number) => (
-                        <div className="evaluate-comment" key={index} >
+                        <div className="evaluate-comment" key={index}>
                             <CommentItem
                                 key={index}
                                 comment={item}

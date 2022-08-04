@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Rating from "@mui/material/Rating";
 import icon from "../../constants/icon";
-import { IComment, ICommentChild } from "../../interface/comments";
+import { IComment } from "../../interface/comments";
 import FullImage from "../OpenFullImage";
 import { AppContext } from "../../context/AppProvider";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,8 +13,6 @@ import { postAsyncReplyProductComments } from "../../redux/org_products/productS
 import mediaApi from "../../api/mediaApi";
 import moment from "moment";
 import "moment/locale/vi";
-import BeautyLoading from "../../components/BeautyxLoading";
-import { STATUS } from "../../redux/status";
 
 interface IProps {
     comment: IComment;
@@ -31,7 +29,6 @@ export default function CommentItem(props: IProps) {
     const [imgList, setImgList] = useState<number[]>([]);
     const [open, setOpen] = useState(false);
     const { USER } = useSelector((state: any) => state.USER);
-    const { status } = useSelector((state: any) => state.COMMENT);
     const { t } = useContext(AppContext);
     let body;
     try {
@@ -119,7 +116,6 @@ export default function CommentItem(props: IProps) {
         setCmtRep({ ...cmtRep, cmtRepImg: null });
     };
     const displayTime = moment(comment.created_at).locale("vi").fromNow();
-    console.log(cmtRep?.cmtRepImg);
     return (
         <>
             <div className="evaluate-comment__top">
@@ -301,10 +297,7 @@ export default function CommentItem(props: IProps) {
                                     </div>
 
                                     {cmtRep?.cmtRepImg && (
-                                        <div
-                                            style={{ marginTop: "24px" }}
-                                            className="evaluate-input__upload"
-                                        >
+                                        <div className="evaluate-input__upload">
                                             <img
                                                 src={cmtRep?.cmtRepImg}
                                                 className="evaluate-upload__img"
