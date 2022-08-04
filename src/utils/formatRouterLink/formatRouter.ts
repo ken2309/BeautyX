@@ -28,14 +28,14 @@ export const formatRouterLinkProductPromo = (
 export const formatRouterLinkService = (service: Service, org: IOrganization) => {
     const pathServiceOb = {
         pathname: `/dich-vu/${slugify(service?.service_name)}`,
-        search: `id=${service.id}?org=${org?.id}`,
+        search: `id=${service.id}&org=${org?.id}`,
     }
     return pathServiceOb
 }
 export const formatRouterLinkServicePromo = (service: IServicePromo) => {
     const pathServiceOb = {
         pathname: `/dich-vu/${slugify(service?.service_name)}`,
-        search: `id=${service.service_id}?org=${service.org_id}`,
+        search: `id=${service.service_id}&org=${service.org_id}`,
     }
     return pathServiceOb
 }
@@ -46,12 +46,15 @@ export const formatRouterLinkDiscount = (
     const org = discountChild?.organization;
     const onCheckType = () => {
         let type;
+        // let link = ""
         switch (discountChild.productable_type) {
             case "App\\Models\\CI\\Service":
                 type = "service";
+                // link = "chi-tiet-giam-gia"
                 break;
             case "App\\Models\\CI\\Product":
                 type = "product";
+                // link = "chi-tiet-giam-gia-sp"
                 break;
         }
         return type;

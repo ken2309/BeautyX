@@ -27,8 +27,8 @@ function CartBottom(props: any) {
         open: false,
         titleLeft: "",
         titleRight: "",
-        onClickLeft: () => {},
-        onClickRight: () => {},
+        onClickLeft: () => { },
+        onClickRight: () => { },
     });
 
     const history = useHistory();
@@ -60,6 +60,7 @@ function CartBottom(props: any) {
             return { id: item.id, quantity: item.quantity };
         }),
         coupon_code: listCouponCode.length > 0 ? listCouponCode : [],
+        // coupon_code:["EABCttwt2"]
     };
 
     async function handlePostOrder() {
@@ -174,7 +175,7 @@ function CartBottom(props: any) {
                                 <span className="right-money">
                                     {formatPrice(
                                         DATA_CART.cartAmount -
-                                            DATA_CART.cartAmountDiscount
+                                        DATA_CART.cartAmountDiscount
                                     )}
                                     đ
                                 </span>

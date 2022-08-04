@@ -7,8 +7,6 @@ import CartItem from './CartItem';
 //import { checkConfirm, onChooseCartItemByOrg } from '../../../redux/cartSlice'
 import { useDispatch } from 'react-redux';
 import ButtonLoading from '../../../components/ButtonLoading';
-import { discountsOrg } from '../../../data/listService';
-import { IDiscountPar } from '../../../interface/discount';
 
 function CartGroupItem(props: any) {
     const { item, org, cartList, setOpenBranch, openBranch } = props;
@@ -34,11 +32,7 @@ function CartGroupItem(props: any) {
     }
     const servicesCartListCheckByOrg = cartListCheck?.filter((i: any) => i.is_type === 2);
 
-    const disByOrg = discountsOrg
-        .filter(
-            (item) => item.organizations.map(org => org.id).includes(itemOrgId)
-        );
-    console.log(disByOrg)
+
 
     return (
         <>
@@ -99,13 +93,13 @@ function CartGroupItem(props: any) {
                     ))
                 }
             </ul>
-            {
+            {/* {
                 disByOrg.map((item:any, index:number)=>(
                     <button key={index}>
                         {item.title}-{item.discount_value}
                     </button>
                 ))
-            }
+            } */}
         </>
     );
 }

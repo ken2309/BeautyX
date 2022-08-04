@@ -23,6 +23,7 @@ import { IUserAddress } from '../../interface/userAddress'
 import Footer from '../Footer';
 import { formatAddCart } from '../../utils/cart/formatAddCart';
 import useDeviceMobile from '../../utils/useDeviceMobile';
+import { DISCOUNT_TYPE } from '../../utils/formatRouterLink/fileType';
 
 // ==== api tracking ====
 // import tracking from "../../api/trackApi";
@@ -31,6 +32,7 @@ import useDeviceMobile from '../../utils/useDeviceMobile';
 function BuyNow() {
     const IS_MB = useDeviceMobile();
     const location: any = useLocation();
+    console.log(location)
     const history = useHistory();
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const { payments_method } = useSelector(
@@ -42,7 +44,10 @@ function BuyNow() {
     let { total } = products?.reduce(
         (cartTotal: any, cartItem: any) => {
             const { quantity, product } = cartItem;
-            const priceBuy = product.special_price > 0 ? product.special_price : product.retail_price
+            let priceBuy = product.special_price > 0 ? product.special_price : product.retail_price
+            if (product.discount?.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key) {
+                priceBuy = product.discount?.discount_value
+            }
             const itemTotal = priceBuy * quantity;
             cartTotal.total += itemTotal;
             return cartTotal;

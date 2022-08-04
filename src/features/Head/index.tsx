@@ -74,7 +74,7 @@ function Head(props: IProps) {
 
     useEffect(() => {
         dispatch(getTotal(USER?.id));
-    }, [dispatch, carts]);
+    }, [dispatch, carts, USER?.id]);
     const gotoPartner = () => {
         if (IN_HOME === true) {
             history.push("/kenh-nguoi-ban");

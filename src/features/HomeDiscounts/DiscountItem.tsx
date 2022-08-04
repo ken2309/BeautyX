@@ -5,6 +5,7 @@ import formatPrice from "../../utils/formatPrice";
 import icon from "../../constants/icon";
 import { useHistory } from "react-router-dom";
 import { formatRouterLinkDiscount } from "../../utils/formatRouterLink/formatRouter";
+import { DISCOUNT_TYPE } from "../../utils/formatRouterLink/fileType";
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
 // end
@@ -45,14 +46,20 @@ function DiscountItem(props: IProps) {
             />
             <div className="home-discount-item__detail">
                 <span className="name">
-                    {discountItem.productable.service_name}
+                    {discountItem.productable.service_name || discountItem.productable.product_name}
                 </span>
                 <div className="flex-row price">
                     <span className="sale-price">
-                        {formatPrice(discountItem.view_price)}đ
+                        {
+                            discountPar.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key ?
+                                `${formatPrice(discountPar.discount_value)}đ`
+                                :
+                                `${formatPrice(discountItem.view_price)}đ`
+                        }
                     </span>
                     <span className="old-price">
-                        {formatPrice(discountItem.productable.price)}đ
+
+                        {formatPrice(discountItem.productable.price || discountItem.productable.retail_price)}đ
                     </span>
                 </div>
                 <div className="address">
@@ -67,7 +74,7 @@ function DiscountItem(props: IProps) {
                                 ? { width: "100%" }
                                 : {
                                     width: `${(discountPar.used /
-                                        discountPar.total) *
+                                            discountPar.total) *
                                         100
                                         }%`,
                                 }

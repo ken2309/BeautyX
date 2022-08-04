@@ -4,6 +4,7 @@ import tracking from "../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../utils/dataLayer";
+import { DISCOUNT_TYPE } from "../utils/formatRouterLink/fileType";
 // end
 
 const storageName = "web-booking-cart";
@@ -112,7 +113,12 @@ const cart = createSlice({
             const cartListDiscounts = state.cartList
                 .filter((item: any) => item.user_id === payload)
                 .filter((item: any) => item.isConfirm === true)
-                .map((item: any) => item.discount?.discount_value)
+                .map((item: any) => (
+                    item.discount?.discount_type === "FINAL_PRICE" ?
+                        item.discount?.discount_value * item.quantity
+                        :
+                        item.discount?.discount_value
+                ))
                 .filter(Boolean);
             state.cartAmountDiscount =
                 cartListDiscounts.length > 0 &&

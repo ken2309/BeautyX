@@ -21,7 +21,7 @@ interface IProps {
     page?: number;
     commentable_type: string;
     id: number;
-    detail_id?: number;
+    detail_id?: number | any;
     refReview?: any;
     changeStyle?: any;
     openSeeMoreCmt?: any;

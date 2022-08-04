@@ -32,9 +32,9 @@ import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
 import ProductDetailRecomment from "./components/ProductDetailRecomment";
 import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
 import ReviewsContainer from "../ReviewsContainer";
-import ModalLoad from "../../components/ModalLoad";
 import PageNotFound from "../../components/PageNotFound";
 import { AppContext } from "../../context/AppProvider";
+import LoadDetail from "../../components/LoadingSketion/LoadDetail";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();
@@ -177,7 +177,7 @@ function ProductDetail(props: any) {
     return (
         <div className="product">
             {PRODUCT.status === STATUS.LOADING && (
-                <ModalLoad title="Đang tải" />
+                <LoadDetail/>
             )}
             {PRODUCT.status === STATUS.FAIL && <PageNotFound />}
             <HeadTitle

@@ -37,6 +37,7 @@ import tracking from "../../../api/trackApi";
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
 import useDeviceMobile from "../../../utils/useDeviceMobile";
+import { DISCOUNT_TYPE } from "../../../utils/formatRouterLink/fileType";
 // end
 interface IProps {
     inPayment?: boolean;
@@ -79,7 +80,11 @@ function CartItem(props: IProps) {
         }
     };
     const handleAscCart = () => {
-        if (cartItem.discount && cartItem.quantity === 1) {
+        if (
+            cartItem.discount &&
+            cartItem.quantity === 1 &&
+            cartItem.discount?.discount_type !== DISCOUNT_TYPE.FINAL_PRICE.key
+        ) {
             setOpen(true);
         }
         const action = ascItem(cartItem);
@@ -133,7 +138,13 @@ function CartItem(props: IProps) {
         scrollTop();
     };
     //when quantity discount > 1
-    const total = cartItem.price * cartItem.quantity;
+    let total = cartItem.price * cartItem.quantity;
+    let cartItemPrice = cartItem?.price;
+    if (cartItem?.discount?.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key) {
+        total = cartItem.price_discount * cartItem.quantity
+        cartItemPrice = cartItem.price_discount * cartItem.quantity
+    }
+    // console.log(total)
     const discount_value = cartItem.discount?.discount_value;
     return (
         <SwipeableList type={Type.IOS}>
@@ -224,7 +235,7 @@ function CartItem(props: IProps) {
                         >
                             {cartItem.discount && cartItem.quantity === 1
                                 ? formatPrice(cartItem.price_discount)
-                                : formatPrice(cartItem.price)}{" "}
+                                : formatPrice(cartItemPrice)}{" "}
                             đ
                         </div>
                         {cartItem.discount ? (
@@ -248,15 +259,29 @@ function CartItem(props: IProps) {
                                     }
                                     className="flex-column cart-item__total"
                                 >
-                                    <span>{formatPrice(total)}đ</span>
-                                    {!IS_MB && (
-                                        <span>
-                                            -{formatPrice(discount_value)}đ
-                                        </span>
-                                    )}
-                                    <span>
-                                        {formatPrice(total - discount_value)}đ
-                                    </span>
+                                    {
+                                        cartItem.discount?.discount_type !== DISCOUNT_TYPE.FINAL_PRICE.key ?
+                                            <>
+                                                <span>{formatPrice(total)}đ</span>
+                                                {!IS_MB && (
+                                                    <span>
+                                                        -{formatPrice(discount_value)}đ
+                                                    </span>
+                                                )}
+                                                <span>
+                                                    {formatPrice(total - discount_value)}đ
+                                                </span>
+                                            </>
+                                            :
+                                            <>
+                                                <span
+                                                    style={{
+                                                        textDecoration: "line-through"
+                                                    }}
+                                                >{formatPrice(cartItem.price * cartItem.quantity)}</span>
+                                                <span>{formatPrice(total)}</span>
+                                            </>
+                                    }
                                 </div>
                             )
                         ) : (

@@ -11,6 +11,7 @@ import { AppContext } from "../../context/AppProvider";
 import { STATUS } from "../../redux/status";
 
 import { LoadingServicesRow } from '../../components/LoadingSketion';
+import { exDiscountFinal } from "../../data/listService";
 
 function HomeDiscount() {
     const { t } = useContext(AppContext);
@@ -21,6 +22,7 @@ function HomeDiscount() {
         history.push("/giam-gia");
         scrollTop();
     };
+    console.log(exDiscountFinal)
     return (
         <div className="home-discounts">
             <Container>
@@ -38,6 +40,7 @@ function HomeDiscount() {
                             :
                             <ul className="home-discounts__list">
                                 {discounts
+                                    .filter((i: IDiscountPar) => i.items.length > 0)
                                     .slice(0, 12)
                                     .map((discount: IDiscountPar, index: number) => (
                                         <div key={index}>
@@ -53,6 +56,22 @@ function HomeDiscount() {
                                             )}
                                         </div>
                                     ))}
+                                {/* {
+                                    exDiscountFinal.map((discount: any, index: number) => (
+                                        <div key={index}>
+                                            {discount.items.map(
+                                                (item: IITEMS_DISCOUNT, i: number) => (
+                                                    <li key={i}>
+                                                        <DiscountItem
+                                                            discountItem={item}
+                                                            discountPar={discount}
+                                                        />
+                                                    </li>
+                                                )
+                                            )}
+                                        </div>
+                                    ))
+                                } */}
                                 <div className="watch-more-card" onClick={onViewMore}>
                                     <li>
                                         <div>{'>'}</div>

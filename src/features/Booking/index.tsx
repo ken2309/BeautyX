@@ -82,6 +82,7 @@ function Booking() {
         }
     }, [location.state]);
     const { servicesBook } = SERVICES_BOOK;
+    console.log(servicesBook)
     const branches = org?.branches?.concat(org);
     const [open, setOpen] = useState(false);
     const [chooseE_wall, setChooseE_wall] = useState<any>();
