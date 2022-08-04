@@ -6,29 +6,35 @@ import FullImage from "../OpenFullImage";
 import { AppContext } from "../../context/AppProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
-import { postAsyncReplyOrgComments } from '../../redux/org/orgCommentsSlice'
+import { postAsyncReplyOrgComments } from "../../redux/org/orgCommentsSlice";
 import { useHistory } from "react-router-dom";
 import { postAsyncReplyServiceComments } from "../../redux/org_services/serviceSlice";
 import { postAsyncReplyProductComments } from "../../redux/org_products/productSlice";
 import mediaApi from "../../api/mediaApi";
-import moment from 'moment';
-import 'moment/locale/vi'
+import moment from "moment";
+import "moment/locale/vi";
+import BeautyLoading from "../../components/BeautyxLoading";
+import { STATUS } from "../../redux/status";
 
 interface IProps {
     comment: IComment;
     user: any;
-    org_id: number,
-    parent_type: string
+    org_id: number;
+    parent_type: string;
 }
 
 export default function CommentItem(props: IProps) {
     const { comment, org_id, parent_type } = props;
     const dispatch = useDispatch();
     const history = useHistory();
-    const [cmtRep, setCmtRep] = useState('');
-    const [imgList, setImgList] = useState<number[]>([]);
+    const [commentRep, setCommentRep] = useState({
+        text: '',
+        img_url: "",
+        media_id: null
+    })
     const [open, setOpen] = useState(false);
-    const { USER } = useSelector((state: any) => state.USER)
+    const { USER } = useSelector((state: any) => state.USER);
+    const { status } = useSelector((state: any) => state.COMMENT);
     const { t } = useContext(AppContext);
     let body;
     try {
@@ -45,41 +51,54 @@ export default function CommentItem(props: IProps) {
         };
     }
     const onChangeReply = (e: any) => {
-        setCmtRep(e.target.value);
-    }
+        setCommentRep({
+            ...commentRep,
+            text: e.target.value
+        })
+    };
     const handlePostReplyComment = () => {
         if (USER) {
-            if (cmtRep.length > 0) {
+            if (commentRep.text.length > 0) {
                 const values = {
                     type: "REPLY_COMMENT",
                     id: comment.id,
                     org_id: org_id,
-                    body: cmtRep,
-                    media_ids: imgList
-                }
-                setCmtRep('')
+                    media_ids: [commentRep.media_id],
+                    body: commentRep.text,
+                };
+                setCommentRep({
+                    text: '',
+                    img_url: "",
+                    media_id: null
+                })
                 switch (parent_type) {
                     case "ORGANIZATION":
-                        return dispatch(postAsyncReplyOrgComments({
-                            values: values,
-                            user: USER
-                        }));
+                        return dispatch(
+                            postAsyncReplyOrgComments({
+                                values: values,
+                                user: USER,
+                            })
+                        );
                     case "SERVICE":
-                        return dispatch(postAsyncReplyServiceComments({
-                            values: values,
-                            user: USER
-                        }))
+                        return dispatch(
+                            postAsyncReplyServiceComments({
+                                values: values,
+                                user: USER,
+                            })
+                        );
                     case "PRODUCT":
-                        return dispatch(postAsyncReplyProductComments({
-                            values: values,
-                            user: USER
-                        }))
+                        return dispatch(
+                            postAsyncReplyProductComments({
+                                values: values,
+                                user: USER,
+                            })
+                        );
                 }
             }
         } else {
-            history.push("/sign-in?1")
+            history.push("/sign-in?1");
         }
-    }
+    };
     const handleKeyDown = (event: any) => {
         if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
             handlePostReplyComment();
@@ -94,13 +113,23 @@ export default function CommentItem(props: IProps) {
         formData.append("file", media);
         try {
             const res = await mediaApi.postMedia(formData);
-            console.log(res)
-            setImgList([...imgList,res.data.context.model_id])
+            setCommentRep({
+                ...commentRep,
+                img_url: res?.data.context.original_url,
+            })
+            // setImgList([res.data.context.model_id]);
         } catch (error) {
-
+            console.log("error", error);
         }
     };
-    const displayTime = moment(comment.created_at).locale('vi').fromNow();
+    const onRemoveImgTemp = () => {
+        setCommentRep({
+            ...commentRep,
+            img_url: "",
+        })
+    };
+    const displayTime = moment(comment.created_at).locale("vi").fromNow();
+    console.log(commentRep);
     return (
         <>
             <div className="evaluate-comment__top">
@@ -162,9 +191,7 @@ export default function CommentItem(props: IProps) {
                     >
                         <div className="evaluate-comment__bot">
                             <div className="evaluate-comment__bot-title">
-                                <span>
-                                    {displayTime}
-                                </span>
+                                <span>{displayTime}</span>
                                 <span>
                                     {/* {comment.children.length > 0 && `${comment.children.length}  `} */}
                                     Trả lời
@@ -183,11 +210,17 @@ export default function CommentItem(props: IProps) {
                     <AccordionDetails>
                         <div className="evaluate-comment__child">
                             <ul className="evaluate-comment__child-list">
-                                {
-                                    comment.children.map((item: ICommentChild, index: number) => (
-                                        <div key={index} className="evaluate-comment__child-item">
+                                {comment.children.map(
+                                    (item: any, index: number) => (
+                                        <li
+                                            key={index}
+                                            className="evaluate-comment__child-item"
+                                        >
                                             <div className="flex-row evaluate-comment__child-info">
-                                                <img src={item.user?.avatar} alt="" />
+                                                <img
+                                                    src={item.user?.avatar}
+                                                    alt=""
+                                                />
                                                 <span className="name">
                                                     {item.user?.fullname}
                                                 </span>
@@ -195,42 +228,109 @@ export default function CommentItem(props: IProps) {
                                             <span className="text">
                                                 {item.body}
                                             </span>
-                                            <br/>
+
+                                            <ul className="comment-img__list">
+                                                {item?.media &&
+                                                    item?.media.map(
+                                                        (
+                                                            e: any,
+                                                            index: number
+                                                        ) => (
+                                                            <li
+                                                                key={index}
+                                                                className="comment-img__item"
+                                                            >
+                                                                <img
+                                                                    onClick={() =>
+                                                                        setOpen(
+                                                                            true
+                                                                        )
+                                                                    }
+                                                                    src={
+                                                                        e?.original_url
+                                                                    }
+                                                                    alt=""
+                                                                />
+                                                            </li>
+                                                        )
+                                                    )}
+                                            </ul>
+
                                             <span className="time-ago">
-                                                {moment(item.created_at).locale('vi').fromNow()}
+                                                {moment(item.created_at)
+                                                    .locale("vi")
+                                                    .fromNow()}
                                             </span>
-                                        </div>
-                                    ))
-                                }
+                                        </li>
+                                    )
+                                )}
                                 {/* <div className="evaluate-comment__child-img">
                                     <button className="btn-close">
                                         <img src={icon.closeCircle} alt="" />
                                     </button>
                                 </div> */}
-                                <div className="flex-row-sp evaluate-comment__child-reply">
-                                    <img src={USER?.avatar || icon.userNotSign} alt="" className="avatar-reply" />
-                                    <input
-                                        value={cmtRep}
-                                        onKeyDown={handleKeyDown}
-                                        onChange={onChangeReply}
-                                        type="text" placeholder={`Trả lời ${comment?.user?.fullname}...`}
-                                    />
-                                    {/* <label className="btn-media" htmlFor="file-reply">
-                                        <img src={icon.addImg} alt="" />
-                                    </label> */}
-                                    <input
-                                        hidden
-                                        id="file-reply"
-                                        type="file"
-                                        name="file"
-                                        accept="image/png, image/jpeg"
-                                        onChange={onChangeMediaReply}
-                                    />
-                                    <button
-                                        onClick={handlePostReplyComment}
-                                    >
-                                        <img src={icon.sendComment} alt="" />
-                                    </button>
+
+                                <div className="">
+                                    <div className="flex-row-sp evaluate-comment__child-reply">
+                                        <img
+                                            src={
+                                                USER?.avatar || icon.userNotSign
+                                            }
+                                            alt=""
+                                            className="avatar-reply"
+                                        />
+                                        <input
+                                            value={commentRep.text}
+                                            onKeyDown={handleKeyDown}
+                                            onChange={onChangeReply}
+                                            type="text"
+                                            placeholder={`Trả lời ${comment?.user?.fullname}...`}
+                                        />
+                                        <label
+                                            className="btn-media"
+                                            htmlFor="file-reply"
+                                        >
+                                            <img src={icon.addImg} alt="" />
+                                        </label>
+                                        <input
+                                            hidden
+                                            id="file-reply"
+                                            type="file"
+                                            name="file"
+                                            accept="image/png, image/jpeg"
+                                            onChange={onChangeMediaReply}
+                                        />
+                                        <button
+                                            onClick={handlePostReplyComment}
+                                        >
+                                            <img
+                                                src={icon.sendComment}
+                                                alt=""
+                                            />
+                                        </button>
+                                    </div>
+
+                                    {commentRep.img_url.length > 0 && (
+                                        <div
+                                            style={{ marginTop: "24px" }}
+                                            className="evaluate-input__upload"
+                                        >
+                                            <img
+                                                src={commentRep.img_url}
+                                                className="evaluate-upload__img"
+                                                alt=""
+                                            />
+                                            <button
+                                                className="btn-close"
+                                                onClick={onRemoveImgTemp}
+                                            >
+                                                <img
+                                                    src={icon.closeCircle}
+                                                    alt=""
+                                                />
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             </ul>
                         </div>

@@ -1044,13 +1044,13 @@
     font-weight: 500;
     line-height: 22px;
 }
-.voucher-org-condition-cnt{
+.voucher-org-condition-cnt {
     position: absolute;
     z-index: 10;
     margin-top: 100px;
     width: 346px;
 }
-.voucher-org-condition{
+.voucher-org-condition {
     width: 100%;
     height: fit-content;
     padding: 6px 12px;
@@ -1059,12 +1059,12 @@
     box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
     border-radius: 8px;
 }
-.voucher-org-condition .title{
+.voucher-org-condition .title {
     font-size: 14px;
     line-height: 16px;
     font-weight: 600;
 }
-.voucher-org-condition .section-item{
+.voucher-org-condition .section-item {
     /* background-color: #8c8c8c; */
     margin: 4px 0px;
     padding: 6px;
@@ -1072,14 +1072,14 @@
     border: solid 1px var(--bg-color);
     border-radius: 6px;
 }
-.voucher-org-condition .section-item .section-item__title{
+.voucher-org-condition .section-item .section-item__title {
     font-size: 12px;
     line-height: 14px;
     font-weight: 500;
     color: var(--text-hover);
     width: 84px;
 }
-.voucher-org-condition .section-item .section-item__desc{
+.voucher-org-condition .section-item .section-item__desc {
     width: calc(100% - 84px);
     font-size: 12px;
     line-height: 14px;
