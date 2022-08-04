@@ -12,6 +12,7 @@ interface IInitialState {
     cartList: any[],
     cartQuantity: number,
     cartAmountDiscount: number,
+    cartAmountDiscountTotal:number,
     cartAmount: number,
     VOUCHER_CART: {
         org_id: any,
@@ -32,6 +33,7 @@ const initialState: IInitialState = {
         org_id: null,
         vouchers: []
     },
+    cartAmountDiscountTotal:0,
     VOUCHER_APPLY: []
 };
 const cart = createSlice({
@@ -152,6 +154,8 @@ const cart = createSlice({
                 cartListDiscounts.reduce(
                     (pre: number, cur: number) => pre + cur
                 );
+            
+            //amount discount total, price
             let { total, quantity } = state.cartList
                 .filter((item: any) => item.user_id === payload)
                 .reduce(
@@ -176,6 +180,9 @@ const cart = createSlice({
         clearAllCart: (state) => {
             state.cartList = [];
             localStorage.setItem(storageName, JSON.stringify(state.cartList));
+        },
+        onClearApplyVoucher : (state) =>{
+            state.VOUCHER_APPLY=[]
         },
         clearByCheck: (state) => {
             const cartConfirm = state.cartList.filter(
@@ -220,6 +227,7 @@ export const {
     clearByCheck,
     onClearPrevCartItem,
     addVoucherByOrg,
-    onApplyVoucherSubTotal
+    onApplyVoucherSubTotal,
+    onClearApplyVoucher
 } = actions;
 export default reducer;

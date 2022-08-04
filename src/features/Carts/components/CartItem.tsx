@@ -8,6 +8,7 @@ import {
     removeItem,
     ascItem,
     onClearPrevCartItem,
+    onClearApplyVoucher,
 } from "../../../redux/cartSlice";
 import { useDispatch } from "react-redux";
 import icon from "../../../constants/icon";
@@ -56,6 +57,7 @@ function CartItem(props: IProps) {
     const [process, setProcess] = useState(0);
     const [openConfirm, setOpenConfirm] = useState(false);
     const handleConfirm = () => {
+        dispatch(onClearApplyVoucher())
         if (!org || org?.id === cartItem.org_id) {
             const action = checkConfirm({
                 ...cartItem,
@@ -101,6 +103,7 @@ function CartItem(props: IProps) {
     const handleRemoveItemCart = () => {
         const action = removeItem(cartItem);
         dispatch(action);
+        dispatch(onClearApplyVoucher())
     };
     const openConfirmClick = () => {
         setOpenConfirm(true);

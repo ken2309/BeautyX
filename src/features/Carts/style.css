@@ -290,8 +290,45 @@
 }
 .cart-vouchers-list .list .item{
     width: 100%;
-    height: fit-content;
-    background-color: burlywood;
+    height: 154px;
+    margin: 12px 0px;
+}
+.cart-item-voucher{
+    padding: 8px 4px;
+    border-bottom: solid 1px var(--bgGray);
+    cursor: pointer;
+}
+.cart-item-voucher .title{
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 700;
+    color: var(--red-cl);
+}
+.cart-item-voucher img{
+    width: 14px;
+    margin: 1px 0px 0px 6px;
+}
+.cart-item-pop-voucher .title{
+    font-size: 18px;
+    line-height: 20px;
+    font-weight: 700;
+}
+.cart-vouchers-list__title{
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
+}
+.cart-vouchers-list__item{
+    padding: 8px;
+    height: 100%;
+    box-shadow: 0 6px 15px #dcd8ee;
+    background-color: var(--white);
+    border-radius: 8px;
+}
+.cart-vouchers-list__item-left{
+    height: 100%;
+    width: 144px;
+    border-right: dashed 1px var(--bg-color);
 }
 
 

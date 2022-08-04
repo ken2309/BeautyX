@@ -1,7 +1,7 @@
 import moment from "moment";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../interface/discount";
 import { cartReducer, discountReducerItem } from "./cartReducer";
-import { isEqual } from 'lodash'
+// import { isEqual } from 'lodash'
 
 const date = new Date();
 
@@ -14,6 +14,18 @@ function unique(arr: any) {
         }
     }
     return newArr;
+}
+
+const IsEqualArr = (arr1: any[], arr2: any[]) => {
+    let is_Equal = false
+    arr1.length === arr2.length && arr1.sort().every((value, index) => {
+        let IS_Equal = false
+        if (value === arr2.sort()[index]) {
+            IS_Equal = true
+        }
+        return is_Equal = IS_Equal
+    });
+    return is_Equal
 }
 
 export const EX_CHECK_DATE = (voucher: IDiscountPar) => {
@@ -53,13 +65,15 @@ export const EX_CHECK_INCLUDE_ITEMS = (voucher: IDiscountPar, cartList: any[]) =
     const uniProductArr = unique(newProductArr)
     const newServiceArr = servicesInDis_id.concat(services_id);
     const uniServiceArr = unique(newServiceArr);
+    // console.log(uniServiceArr, services_id)
+    // console.log(isEqual(uniServiceArr, services_id))
 
     const checkProductCartInDiscount = () => {
         let productCartInDis = false;
         if (products_id.length === 0) {
             return productCartInDis = false
         }
-        if (isEqual(uniProductArr, productsInDis_id) || isEqual(uniProductArr, products_id)) {
+        if (IsEqualArr(uniProductArr, productsInDis_id) || IsEqualArr(uniProductArr, products_id)) {
             return productCartInDis = true
         }
         return productCartInDis
@@ -69,7 +83,7 @@ export const EX_CHECK_INCLUDE_ITEMS = (voucher: IDiscountPar, cartList: any[]) =
         if (services_id.length === 0) {
             return serviceCartInDis = false
         }
-        if (isEqual(servicesInDis_id, uniServiceArr) || isEqual(services_id, uniServiceArr)) {
+        if (IsEqualArr(servicesInDis_id, uniServiceArr) || IsEqualArr(services_id, uniServiceArr)) {
             return serviceCartInDis = true
         }
         return serviceCartInDis
