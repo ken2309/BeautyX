@@ -1,36 +1,38 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import Head from "../Head/index";
-import Footer from "../Footer";
-import HeadTitle from "../HeadTitle/index";
-import {
-  fetchAsyncOrg,
-  fetchOrgGalleries,
-  onActiveTab,
-} from "../../redux/org/orgSlice";
-import {
-  fetchAsyncServicesSpecial,
-  fetchProductsSpecial,
-  onSaveOrgId,
-} from "../../redux/org_specials/orgSpecialSlice";
-import { fetchAsyncOrgDiscounts } from "../../redux/org_discounts/orgDiscountsSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { formatOrgParam } from "../../utils/formatParams";
-import { STATUS } from "../../redux/status";
-import HeadOrg from "./components/HeadOrg";
-import useFullScreen from "../../utils/useDeviceMobile";
-import OrgDetail from "./components/OrgDetail";
-import OrgContainer from "./components/OrgContainer";
-import "./style.css";
 import { Container } from "@mui/material";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import "../../assets/styles/main.css";
+import LoadOrg from "../../components/LoadingSketion/LoadOrg";
 //import { clearServices } from '../../redux/org_services/orgServivesSlice';
 //import { clearProducts } from '../../redux/org_products/orgProductsSlice';
 import PageNotFound from "../../components/PageNotFound";
+import { IDiscountPar } from "../../interface/discount";
+import { addVoucherByOrg } from "../../redux/cartSlice";
+import {
+  fetchAsyncOrg,
+  fetchOrgGalleries,
+  onActiveTab
+} from "../../redux/org/orgSlice";
+import { fetchAsyncOrgDiscounts } from "../../redux/org_discounts/orgDiscountsSlice";
 import { onSetEmptyChooseCatePr } from "../../redux/org_products/orgProductsSlice";
 import { onSetEmptyChooseCate } from "../../redux/org_services/orgServivesSlice";
-import "../../assets/styles/main.css";
-import LoadOrg from "../../components/LoadingSketion/LoadOrg";
+import {
+  fetchAsyncServicesSpecial,
+  fetchProductsSpecial,
+  onSaveOrgId
+} from "../../redux/org_specials/orgSpecialSlice";
+import { STATUS } from "../../redux/status";
+import { formatOrgParam } from "../../utils/formatParams";
+import useFullScreen from "../../utils/useDeviceMobile";
+import Footer from "../Footer";
+import Head from "../Head/index";
+import HeadTitle from "../HeadTitle/index";
+import HeadOrg from "./components/HeadOrg";
+import OrgContainer from "./components/OrgContainer";
+import OrgDetail from "./components/OrgDetail";
+import "./style.css";
 
 
 function MerchantDetail() {
@@ -63,11 +65,18 @@ function MerchantDetail() {
       dispatch(fetchOrgGalleries(sub_domain))
     }
   }
-  const callOrgDiscountsOrg = () => {
+  const callOrgDiscountsOrg = async () => {
     if (status === STATUS.SUCCESS) {
-      if (ORG_DISCOUNTS.org_id !== sub_domain || ORG_DISCOUNTS.DISCOUNTS.status_list !== STATUS.SUCCESS) {
-        const values = { org_id: sub_domain }
-        dispatch(fetchAsyncOrgDiscounts(values))
+      if (ORG_DISCOUNTS.org_id !== org.id || ORG_DISCOUNTS.DISCOUNTS.status_list !== STATUS.SUCCESS) {
+        const values = { org_id: org.id }
+        const res = await dispatch(fetchAsyncOrgDiscounts(values))
+        const { discounts } = res.payload;
+        if (discounts.length > 0) {
+          dispatch(addVoucherByOrg({
+            org: org,
+            vouchers: discounts
+          }))
+        }
       }
     }
   }

@@ -117,7 +117,11 @@ export default function AssistantBtn() {
                             className="btn2 buttons"
                         >
                             <div className="btn-img">
-                                <img src={icon.search} alt="" />
+                                <img
+                                    style={{ width: "20px" }}
+                                    src={icon.search}
+                                    alt=""
+                                />
                             </div>
                         </div>
                     )}
@@ -129,7 +133,7 @@ export default function AssistantBtn() {
                         >
                             <div className="btn-img">
                                 <img
-                                    style={{ width: "16px" }}
+                                    style={{ width: "20px" }}
                                     src={icon.chatWhite}
                                     alt=""
                                 />
@@ -142,7 +146,7 @@ export default function AssistantBtn() {
                         >
                             <div className="btn-img">
                                 <img
-                                    style={{ width: "16px" }}
+                                    style={{ width: "20px" }}
                                     src={icon.chatWhite}
                                     alt=""
                                 />
@@ -160,7 +164,7 @@ export default function AssistantBtn() {
                         >
                             <div className="btn-img">
                                 <img
-                                    style={{ width: "16px" }}
+                                    style={{ width: "20px" }}
                                     src={icon.homeWhite}
                                     alt=""
                                 />
@@ -170,7 +174,7 @@ export default function AssistantBtn() {
                         <div onClick={handleGoToHome} className="btn3 buttons">
                             <div className="btn-img">
                                 <img
-                                    style={{ width: "16px" }}
+                                    style={{ width: "20px" }}
                                     src={icon.homeWhite}
                                     alt=""
                                 />

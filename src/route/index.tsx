@@ -30,6 +30,7 @@ import ComboDetail from "../features/ComboDetail";
 import DiscountDetail from "../features/DiscountDetail";
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 import HomeBannerSearchResult from "../features/HomePage/HomeBanner/homeSearchReasult";
+import HomeMap from "../features/HomeMap";
 
 // feature mobile
 //import Calendar from "../featuresMobile/Calendar";
@@ -51,12 +52,18 @@ import Result from "../features/Results";
 import ChatOrg from "../features/Chat/ChatOrg";
 import ChatAll from "../features/Chat/ChatAll";
 
+import MapBox from "../features/MapBeta";
+
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps
 ) => props.pageComponent;
 function RouterConfig(props: any) {
   const USER = useSelector((state: any) => state.USER);
   const routes = [
+    {
+      path:'/map-box',
+      component: <MapBox/>
+    },
     {
       path: `/home`,
       component: <HomePage />,
@@ -188,6 +195,10 @@ function RouterConfig(props: any) {
     {
       path: "/ket-qua",
       component: <Result />
+    },
+    {
+      path:"/ban-do",
+      component:<HomeMap/>
     }
   ];
   const routesPrivate = [

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../../context/AppProvider";
 import { imgTag } from "../../../constants/img";
-import icon  from "../../../constants/icon";
+import icon from "../../../constants/icon";
 import { useSelector } from "react-redux";
 import { ITag } from "../../../interface/tags";
 import onErrorImg from "../../../utils/errorImg";
@@ -58,6 +58,22 @@ function HomeTags(props: any) {
             </div> */}
             <div className="home-tags">
                 <ul className="home-tags-list">
+                    <li
+                    //onClick={() => gotoDetail(item.title)}
+                    >
+                        <Link
+                            to={{
+                                pathname: "/ban-do",
+                            }}
+                            onClick={() => scrollTop()}
+                            className="flex-column tag-item-cnt">
+                            <img
+                                // src={item.img.length > 0 ? item.img[0].original_url : ""} 
+                                src={icon.locationCate}
+                                onError={(e) => onErrorImg(e)} alt="" />
+                            <div className="tag-item-title">Gần bạn</div>
+                        </Link>
+                    </li>
                     {tags_data.map((item) => (
                         <li
                             //onClick={() => gotoDetail(item.title)}
@@ -68,12 +84,12 @@ function HomeTags(props: any) {
                                     pathname: "/ket-qua/",
                                     search: `?tag=${item.title}`,
                                 }}
-                                onClick={()=>scrollTop()}
+                                onClick={() => scrollTop()}
                                 className="flex-column tag-item-cnt">
-                                <img 
-                                // src={item.img.length > 0 ? item.img[0].original_url : ""} 
-                                src={item.img}
-                                onError={(e) => onErrorImg(e)} alt="" />
+                                <img
+                                    // src={item.img.length > 0 ? item.img[0].original_url : ""} 
+                                    src={item.img}
+                                    onError={(e) => onErrorImg(e)} alt="" />
                                 <div className="tag-item-title">{item.text}</div>
                             </Link>
                         </li>

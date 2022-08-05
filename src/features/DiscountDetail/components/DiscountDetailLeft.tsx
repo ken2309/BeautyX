@@ -11,6 +11,7 @@ import {
     fetchAsyncFavoriteService,
 } from "../../../redux/org_services/serviceSlice";
 import { AppContext } from "../../../context/AppProvider";
+import { DISCOUNT_TYPE } from "../../../utils/formatRouterLink/fileType";
 
 interface IProps {
     discount: IDiscountPar;
@@ -22,16 +23,22 @@ function DiscountDetailLeft(props: IProps) {
     const {
         org,
         detail,
-        //discount
+        discount
     } = props;
     const ITEM_DISCOUNT: IITEMS_DISCOUNT = useSelector(
         (state: any) => state.ORG_DISCOUNTS.ITEM_DISCOUNT
     );
     const { t } = useContext(AppContext);
 
+    let finalDisplayPrice = ITEM_DISCOUNT?.view_price;
+    if (discount?.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key) {
+        finalDisplayPrice = discount?.discount_value
+    }
+
+
     const percent = Math.round(
         100 -
-            (ITEM_DISCOUNT?.view_price / ITEM_DISCOUNT?.productable.price) * 100
+        (finalDisplayPrice / (ITEM_DISCOUNT?.productable.price || ITEM_DISCOUNT?.productable.retail_price)) * 100
     );
     const history = useHistory();
     const dispatch = useDispatch();
@@ -98,9 +105,9 @@ function DiscountDetailLeft(props: IProps) {
                         {t("detail_item.off")} {percent}%
                     </div>
                     <div className="service-detail__mobile-price">
-                        <span>{formatPrice(ITEM_DISCOUNT?.view_price)}đ</span>
+                        <span>{formatPrice(finalDisplayPrice)}đ</span>
                         <span>
-                            {formatPrice(ITEM_DISCOUNT?.productable.price)}đ
+                            {formatPrice(ITEM_DISCOUNT?.productable.price || ITEM_DISCOUNT?.productable?.retail_price)}đ
                         </span>
                     </div>
                 </div>

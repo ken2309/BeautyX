@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
 import onErrorImg from "../../utils/errorImg";
+import { formatDistance } from "../../utils/format";
 interface IProps {
     item: IOrganization;
     handleSetLocation: any;
@@ -24,16 +25,17 @@ export default function MapTagsOrgItem(props: IProps) {
     };
     return (
         <div
+            id={`${item.id}`}
             onMouseEnter={onHoveItem}
             onClick={() => gotoDetail()}
             style={
                 item?.latitude === location.lat
                     ? {
-                          backgroundColor: "var(--bgGray)",
-                      }
+                        backgroundColor: "var(--bgGray)",
+                    }
                     : {
-                          backgroundColor: "var(--bgWhite)",
-                      }
+                        backgroundColor: "var(--bgWhite)",
+                    }
             }
             className="dialog-map__item"
         >
@@ -69,6 +71,13 @@ export default function MapTagsOrgItem(props: IProps) {
                         </p>
                     </div>
                 </div>
+                {
+                    item.distance &&
+                    <div className="flex-row map-item__distance">
+                        <img className="map-item__distance-icon" src={icon.pinMapRed} alt="" />
+                        {formatDistance(item.distance)}
+                    </div>
+                }
             </div>
         </div>
     );

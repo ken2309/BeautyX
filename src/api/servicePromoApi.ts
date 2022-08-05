@@ -4,7 +4,7 @@ import { AUTH_LOCATION } from "./authLocation";
 
 class ServicePromo {
     //services promo
-    getServicesPromo = (values: any) => {
+    getServicesPromo = async (values: any) => {
         const url = `/services`;
         const LOCATION = AUTH_LOCATION();
         const paramsOb = {

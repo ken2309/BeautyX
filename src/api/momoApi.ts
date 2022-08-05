@@ -34,12 +34,12 @@ export interface IUserConsentsData{
     name?: string
     email?: string
 }
-export interface IUserConsentsStatus{
+export interface IUserConsentsStatus {
     email: "denied",
     name: "granted",
     phone: "granted"
 }
-export interface IUserConsents{
+export interface IUserConsents {
     data: IUserConsentsData | {}
     status: IUserConsentsStatus | "cancelled" | {}
 }
@@ -67,7 +67,7 @@ class MOMO_API {
                 const res = await momoAuthApi.login(data)
                 // alert('res'+JSON.stringify(res))
             }
-            else{
+            else {
                 MOMO.showToast({
                     description: "có lỗi khi nhận thông tin từ momo",
                     type: "failure",
@@ -75,10 +75,10 @@ class MOMO_API {
                 });
                 MOMO.hideLoading()
             }
-            return {data:data}
+            return { data: data }
         })
     }
-    getUserConsents = async () => { 
+    getUserConsents = async () => {
         MOMO.showLoading([""]);
         const res = await MOMO.getUserConsents({
             "permissions": [
@@ -104,7 +104,7 @@ class MOMO_API {
                 // alert('res'+JSON.stringify(res))
                 window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
             }
-            else{
+            else {
                 this.requestUserConsents();
                 MOMO.showToast({
                     description: "có lỗi khi nhận thông tin từ momo",
@@ -113,10 +113,10 @@ class MOMO_API {
                 });
                 MOMO.hideLoading()
             }
-            return {data:data}
+            return { data: data }
         })
         return res
-        
+
     }
     getLocation = () => {
         MOMO.getLocation((data:any) => {

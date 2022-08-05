@@ -16,6 +16,7 @@ import { onToggleFavoriteOrg } from "../../../redux/search/searchResultSlice";
 import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { Drawer } from "@mui/material";
 import OrgMapWrapper from "../../MerchantDetail/components/OrgMap/OrgMapWrapper";
+import { fakeOrgStar } from "../../../utils/format";
 
 interface IProps {
     org: IOrganization;
@@ -197,11 +198,13 @@ function OrgItem(props: IProps) {
                                 >
                                     <div className="flexX-gap-4 org-img-cnt__rate-item">
                                         <img src={icon.heart} alt="" />
-                                        <span>{org?.favorites_count}</span>
+                                        <span>{org?.favorites.length}</span>
                                     </div>
                                     <div className="flexX-gap-4 org-img-cnt__rate-item">
                                         <img src={icon.star} alt="" />
-                                        <span>5</span>
+                                        <span>
+                                            {fakeOrgStar(org.favorites.length)}
+                                        </span>
                                     </div>
                                 </div>
                             </div>

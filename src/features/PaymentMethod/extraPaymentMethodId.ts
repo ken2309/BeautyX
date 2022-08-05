@@ -7,6 +7,7 @@ export const extraPaymentMethodId = (payments_method: any[], chooseE_wall: any) 
     switch (FLAT_FORM) {
         case FLAT_FORM_TYPE.BEAUTYX:
             payment_method_id = chooseE_wall?.id
+            // payment_method_id = 1
             break
         case FLAT_FORM_TYPE.MOMO:
             payment_method_id = payments_method.find((item: any) => item.name_key === FLAT_FORM_TYPE.MOMO)?.id

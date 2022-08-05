@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import formatPrice from '../../../utils/formatPrice';
+import { DISCOUNT_TYPE } from '../../../utils/formatRouterLink/fileType';
 
 function BookingNowBill() {
     const location: any = useLocation();
@@ -17,7 +18,15 @@ function BookingNowBill() {
             total: 0
         }
     );
-    const discounts = services.map((item: any) => item.service.discount?.discount_value).filter(Boolean);
+    
+    const discounts = services
+        .map((item: any) => (
+            item.service?.discount?.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key ?
+                total - (item.service.discount?.discount_value * item.quantity)
+                :
+                item.service.discount?.discount_value
+        ))
+        .filter(Boolean);
     const totalDiscounts = discounts.length > 0 && discounts.reduce((cur: any, pre: any) => cur + pre);
     return (
         <div className="flex-row-sp booking-cnt__bot-bill">

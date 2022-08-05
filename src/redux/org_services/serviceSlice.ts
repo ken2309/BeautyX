@@ -49,20 +49,20 @@ export const postAsyncComment: any = createAsyncThunk(
         }
     }
 );
-//post reply comment 
+//post reply comment
 export const postAsyncReplyServiceComments: any = createAsyncThunk(
     "SERVICE/postAsyncReplyServiceComments",
     async (values: any) => {
-        const res = await commentsApi.postComment(values.values)
+        const res = await commentsApi.postComment(values.values);
         return {
             id: res.data.context.id,
             commentable_id: res.data.context.commentable_id,
             body: res.data.context.body,
             user_id: res.data.context.user_id,
-            user: values.user
-        }
+            user: values.user,
+        };
     }
-)
+);
 // post favorite service
 export const fetchAsyncFavoriteService: any = createAsyncThunk(
     "SERVICE/favoriteService",
@@ -120,15 +120,15 @@ export const fetchAsyncServicesRec: any = createAsyncThunk(
     }
 );
 interface InitialState {
-    SERVICE: any,
-    SERVICES_REC: any,
+    SERVICE: any;
+    SERVICES_REC: any;
     COMMENTS: {
-        service_id: any,
-        comments: IComment[],
-        page: number,
-        totalItem: number,
-        status_cmt: string,
-    }
+        service_id: any;
+        comments: IComment[];
+        page: number;
+        totalItem: number;
+        status_cmt: string;
+    };
 }
 const initialState: InitialState = {
     SERVICE: {
@@ -168,9 +168,9 @@ const serviceSlice: any = createSlice({
                 };
             }
         },
-        onSetStatusService: (state, action) => {
-            state.SERVICE.status = action.payload
-        }
+        onSetStatusService: (state: any, action: any) => {
+            state.SERVICE.status = action.payload;
+        },
     },
     extraReducers: {
         // get detail service
@@ -309,17 +309,17 @@ const serviceSlice: any = createSlice({
         },
         //post reply comment
         [postAsyncReplyServiceComments.pending]: (state) => {
-            return state
+            return state;
         },
         [postAsyncReplyServiceComments.fulfilled]: (state, { payload }) => {
             const { commentable_id } = payload;
-            const iIndex = state.COMMENTS.comments.findIndex((i: IComment) =>
-                i.id === commentable_id
-            )
-            state.COMMENTS.comments[iIndex].children.push(payload)
+            const iIndex = state.COMMENTS.comments.findIndex(
+                (i: IComment) => i.id === commentable_id
+            );
+            state.COMMENTS.comments[iIndex].children.push(payload);
         },
         [postAsyncReplyServiceComments.pending]: (state) => {
-            return state
+            return state;
         },
     },
 });

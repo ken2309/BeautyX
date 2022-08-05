@@ -43,18 +43,18 @@
 
 .home-tags-list {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     /* grid-gap: 0 16px; */
 }
 
 .home-tags-list li {
-    padding: 0 16px;
+    padding: 8px 16px;
 }
 
 .home-tags .tag-item-cnt {
     background-color: var(--bgWhite);
     cursor: pointer;
-    padding: 8px;
+    padding: 8px 2px;
     transition: all 0.3s;
     border-radius: 8px;
     border: 1px solid transparent;

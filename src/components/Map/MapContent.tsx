@@ -1,18 +1,32 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { AUTH_LOCATION } from "../../api/authLocation";
 import icon from "../../constants/icon";
 import MapTagsGoogle from "./MapGoogle";
-import MapTagsListMB from "./MapListMB";
 import MapTagsOrgItem from "./MapOrgItem";
+import { fetchAsyncOrgsByFilter } from "../../redux/filter/filterSlice";
+import { useDispatch, useSelector } from "react-redux";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Slider from "react-slick";
+import MapTagsItemMB from "./MapItemMB";
+
 
 export default function MapContent(props: any) {
     const key = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
+    const location = useLocation();
+    const dispatch = useDispatch();
     const { org, onChangeCardMap } = props;
-    const [location, setLocation] = useState({
-        lat: org[0]?.latitude,
-        long: org[0]?.longitude,
+
+    const slideRef = useRef<any>();
+
+    const LOCATION = AUTH_LOCATION()
+    const [local, setLocal] = useState({
+        lat: LOCATION ? parseFloat(LOCATION?.split(",")[0]) : org[0]?.latitude,
+        long: LOCATION ? parseFloat(LOCATION?.split(",")[1]) : org[0]?.longitude,
     });
     const refListOrg: any = useRef();
     const [openListOrg, setOpenListOrg] = useState(true);
+    const { page, totalItem } = useSelector((state: any) => state.FILTER.ORGS);
     const handleToggleListOrg = () => {
         refListOrg.current.classList.toggle("list-org__active");
         setOpenListOrg(!openListOrg);
@@ -21,7 +35,7 @@ export default function MapContent(props: any) {
         if (onChangeCardMap) {
             onChangeCardMap(cardMapItem);
         }
-        setLocation({
+        setLocal({
             lat: cardMapItem?.latitude,
             long: cardMapItem?.longitude,
         });
@@ -29,13 +43,43 @@ export default function MapContent(props: any) {
     }, []);
 
     useEffect(() => {
-        setLocation({
-            lat: org[0]?.latitude,
-            long: org[0]?.longitude,
+        setLocal({
+            lat: LOCATION ? parseFloat(LOCATION?.split(",")[0]) : org[0]?.latitude,
+            long: LOCATION ? parseFloat(LOCATION?.split(",")[1]) : org[0]?.longitude,
         });
-
-        console.log("first");
     }, [org]);
+
+    const onViewMoreOrgs = () => {
+        if (location.pathname === "/ban-do"
+            && totalItem >=15 && org.length < totalItem
+        ) {
+            dispatch(fetchAsyncOrgsByFilter({
+                page: page + 1,
+                sort: "distance",
+                path_url: location.pathname
+            }))
+        }
+    }
+
+    const onGotoSlickOrgItem = (index: number) => {
+        slideRef?.current?.slickGoTo(index);
+    }
+
+    const settings = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        centerPadding: "30px",
+        className: "center",
+        centerMode: true,
+        afterChange: function (index: any) {
+            handleSetLocation(org[index]);
+        },
+    };
+
     return (
         <div className="map-content">
             <MapTagsGoogle
@@ -43,7 +87,7 @@ export default function MapContent(props: any) {
                 loadingElement={<div style={{ height: `100%` }} />}
                 zoom={16}
                 org={org}
-                location={location}
+                location={local}
                 containerElement={
                     <div
                         style={{
@@ -54,6 +98,9 @@ export default function MapContent(props: any) {
                     />
                 }
                 mapElement={<div style={{ height: `100%` }} />}
+                onChangeCardMap={onChangeCardMap}
+                setLocal={setLocal}
+                onGotoSlickOrgItem={onGotoSlickOrgItem}
             />
             <div
                 className={
@@ -63,17 +110,25 @@ export default function MapContent(props: any) {
                 }
                 ref={refListOrg}
             >
-                <div className="dialog-map__list">
-                    {org?.map((item: any, index: number) => (
-                        <MapTagsOrgItem
-                            location={location}
-                            handleSetLocation={handleSetLocation}
-                            key={index}
-                            item={item}
-                        />
-                    ))}
-                </div>
 
+                <div id="scrollableDiv" className="dialog-map__list">
+                    <InfiniteScroll
+                        hasMore={true}
+                        loader={<></>}
+                        next={onViewMoreOrgs}
+                        dataLength={org.length}
+                        scrollableTarget="scrollableDiv"
+                    >
+                        {org?.map((item: any, index: number) => (
+                            <MapTagsOrgItem
+                                location={local}
+                                handleSetLocation={handleSetLocation}
+                                key={index}
+                                item={item}
+                            />
+                        ))}
+                    </InfiniteScroll>
+                </div>
                 {/* btn toggle open close list map org */}
                 <div
                     onClick={() => {
@@ -91,11 +146,13 @@ export default function MapContent(props: any) {
                     />
                 </div>
             </div>
-            <MapTagsListMB
-                handleSetLocation={handleSetLocation}
-                listOrg={org}
-                location={location}
-            />
+            <div className="map-list__mobile">
+                <Slider ref={slideRef} {...settings}>
+                    {org.map((item: any, index: number) => (
+                        <MapTagsItemMB key={index} item={item} />
+                    ))}
+                </Slider>
+            </div>
         </div>
     );
 }

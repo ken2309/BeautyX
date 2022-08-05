@@ -1,8 +1,13 @@
 import React from 'react';
 import formatPrice from '../../utils/formatPrice';
+import { DISCOUNT_TYPE } from '../../utils/formatRouterLink/fileType';
 
 function ProductItem(props: any) {
     const { product, quantity } = props;
+    let DISCOUNT_FINAl = false;
+    if (product.discount?.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key) {
+        DISCOUNT_FINAl = true
+    }
     return (
         <div className='buy-now-item'>
             <div className="product-item">
@@ -16,15 +21,22 @@ function ProductItem(props: any) {
                     <span className="quantity">x {quantity}</span>
                     <div className="price">
                         {
-                            product.special_price > 0 ?
-                                <>
-                                    <span style={{ color: "var(--orange)" }} >{formatPrice(product.special_price)}đ</span>
-                                    <span>{formatPrice(product.retail_price)}đ</span>
-                                </>
+                            DISCOUNT_FINAl ?
+                                <span>{formatPrice(product.discount?.discount_value)}</span>
                                 :
-                                <span>
-                                    {formatPrice(product.retail_price)}đ
-                                </span>
+                                <>
+                                    {
+                                        product.special_price > 0 ?
+                                            <>
+                                                <span style={{ color: "var(--orange)" }} >{formatPrice(product.special_price)}đ</span>
+                                                <span>{formatPrice(product.retail_price)}đ</span>
+                                            </>
+                                            :
+                                            <span>
+                                                {formatPrice(product.retail_price)}đ
+                                            </span>
+                                    }
+                                </>
                         }
                     </div>
                 </div>

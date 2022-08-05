@@ -20,7 +20,7 @@ interface IProps {
     page?: number;
     commentable_type: string;
     id: number;
-    detail_id?: number;
+    detail_id?: number | any;
     refReview?: any;
     changeStyle?: any;
     openSeeMoreCmt?: any;
@@ -174,7 +174,7 @@ function Review(props: IProps) {
                     > */}
                 <div className="evaluate__list">
                     {comments?.map((item: IComment, index: number) => (
-                        <div className="evaluate-comment" key={index} >
+                        <div className="evaluate-comment" key={index}>
                             <CommentItem
                                 key={index}
                                 comment={item}
