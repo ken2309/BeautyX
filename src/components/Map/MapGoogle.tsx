@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     withGoogleMap,
     withScriptjs,
@@ -20,36 +20,51 @@ const MapTagsGoogle = (props: any) => {
         streetViewControl: true,
         mapTypeControl: true,
     };
+    // const [curLocat, setCurLocat] = useState({
+    //     USER_LAT: 0,
+    //     USER_LNG: 0
+    // })
+    const LOCATION = AUTH_LOCATION()
     let USER_LAT:any = 0;
     let USER_LNG:any = 0;
-    const LOCATION = AUTH_LOCATION()
     if (LOCATION) {
         USER_LAT = parseFloat(LOCATION.split(",")[0])
         USER_LNG = parseFloat(LOCATION.split(",")[1])
     }
-    const onMarkerClick = (item: IOrganization, index:number)=>{
+    const onMarkerClick = (item: IOrganization, index: number) => {
         // document.getElementById(`${item.id}`)?.scrollIntoView()
-        if(onChangeCardMap){
+        if (onChangeCardMap) {
             onChangeCardMap(item)
         }
-        if(setLocal){
+        if (setLocal) {
             setLocal({
                 lat: item.latitude,
                 long: item.longitude
             })
         }
-        if(IS_MB && onGotoSlickOrgItem){
+        if (IS_MB && onGotoSlickOrgItem) {
             onGotoSlickOrgItem(index)
         }
 
     }
+    // useEffect(() => {
+    //     if (LOCATION) {
+    //         curLocat.USER_LAT = parseFloat(LOCATION.split(",")[0])
+    //         curLocat.USER_LNG = parseFloat(LOCATION.split(",")[1])
+    //     }
+    // }, [location])
     return (
         <div>
             <GoogleMap
                 defaultOptions={defaultMapOptions}
                 zoom={zoom}
                 // defaultCenter={{ lat: location.lat, lng: location.long }}
-                center={{ lat: location.lat, lng: location.long }}
+                center={{
+                    // lat: 10.7993730882723,
+                    // lng: 106.68555167265609,
+                    lat: location.lat,
+                    lng: location.long
+                }}
             >
                 {
                     LOCATION &&
@@ -69,7 +84,7 @@ const MapTagsGoogle = (props: any) => {
                 }
                 {org?.map((item: IOrganization, index: number) => (
                     <Marker
-                        onClick={()=>onMarkerClick(item, index)}
+                        onClick={() => onMarkerClick(item, index)}
                         key={index}
                         icon={{
                             url:

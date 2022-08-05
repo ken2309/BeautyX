@@ -1,10 +1,14 @@
 import { Dialog } from "@mui/material";
-import React from "react";
+import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import MapContent from "./MapContent";
 import "./style.css";
 export default function Map(props: any) {
     const { open, setOpenMap, data } = props;
+    const history = useHistory();
+    function handleClose() {
+        setOpenMap?setOpenMap(false):history.goBack()
+    }
     return (
         <Dialog
             fullScreen
@@ -15,7 +19,7 @@ export default function Map(props: any) {
         >
             <div className="map">
                 <div
-                    onClick={() => setOpenMap(false)}
+                    onClick={handleClose}
                     className="dialog-map__close"
                 >
                     <div className="dialog-map__close-img">

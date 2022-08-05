@@ -49,7 +49,6 @@ export default function MapContent(props: any) {
         });
     }, [org]);
 
-
     const onViewMoreOrgs = () => {
         if (location.pathname === "/ban-do"
             && totalItem >=15 && org.length < totalItem
