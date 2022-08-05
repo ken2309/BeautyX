@@ -25,8 +25,11 @@ export default function CommentItem(props: IProps) {
     const { comment, org_id, parent_type } = props;
     const dispatch = useDispatch();
     const history = useHistory();
-    const [cmtRep, setCmtRep] = useState<any>([]);
-    const [imgList, setImgList] = useState<number[]>([]);
+    const [commentRep, setCommentRep] = useState({
+        text: '',
+        img_url: "",
+        media_id: null
+    })
     const [open, setOpen] = useState(false);
     const { USER } = useSelector((state: any) => state.USER);
     const { t } = useContext(AppContext);
@@ -45,22 +48,26 @@ export default function CommentItem(props: IProps) {
         };
     }
     const onChangeReply = (e: any) => {
-        setCmtRep({
-            ...cmtRep,
-            cmtRepText: e.target.value,
-        });
+        setCommentRep({
+            ...commentRep,
+            text: e.target.value
+        })
     };
     const handlePostReplyComment = () => {
         if (USER) {
-            if (cmtRep?.cmtRepText.length > 0) {
+            if (commentRep.text.length > 0) {
                 const values = {
                     type: "REPLY_COMMENT",
                     id: comment.id,
                     org_id: org_id,
-                    media_ids: imgList,
-                    body: cmtRep.cmtRepText,
+                    media_ids: [commentRep.media_id].filter(Boolean),
+                    body: commentRep.text,
                 };
-                setCmtRep("");
+                setCommentRep({
+                    text: '',
+                    img_url: "",
+                    media_id: null
+                })
                 switch (parent_type) {
                     case "ORGANIZATION":
                         return dispatch(
@@ -103,19 +110,23 @@ export default function CommentItem(props: IProps) {
         formData.append("file", media);
         try {
             const res = await mediaApi.postMedia(formData);
-            setCmtRep({
-                ...cmtRep,
-                cmtRepImg: res?.data.context.original_url,
-            });
-            setImgList([...imgList, res.data.context.model_id]);
+            setCommentRep({
+                ...commentRep,
+                img_url: res?.data.context.original_url,
+                media_id: res?.data.context.model_id
+            })
         } catch (error) {
             console.log("error", error);
         }
     };
     const onRemoveImgTemp = () => {
-        setCmtRep({ ...cmtRep, cmtRepImg: null });
+        setCommentRep({
+            ...commentRep,
+            img_url: "",
+        })
     };
-    const displayTime = moment(comment.created_at).locale("vi").fromNow();
+    // const displayTime = moment(comment.created_at).locale("vi").fromNow();
+    console.log(commentRep);
     return (
         <>
             <div className="evaluate-comment__top">
@@ -139,9 +150,9 @@ export default function CommentItem(props: IProps) {
                                 readOnly
                                 name="simple-controlled"
                                 value={body.star}
-                                // onChange={(event, newValue) => {
-                                //     setValue(newValue);
-                                // }}
+                            // onChange={(event, newValue) => {
+                            //     setValue(newValue);
+                            // }}
                             />
                         </div>
                     </div>
@@ -177,7 +188,7 @@ export default function CommentItem(props: IProps) {
                     >
                         <div className="evaluate-comment__bot">
                             <div className="evaluate-comment__bot-title">
-                                <span>{displayTime}</span>
+                                {/* <span>{displayTime}</span> */}
                                 <span>
                                     {/* {comment.children.length > 0 && `${comment.children.length}  `} */}
                                     Trả lời
@@ -266,18 +277,18 @@ export default function CommentItem(props: IProps) {
                                             className="avatar-reply"
                                         />
                                         <input
-                                            value={cmtRep?.cmtRepText}
+                                            value={commentRep.text}
                                             onKeyDown={handleKeyDown}
                                             onChange={onChangeReply}
                                             type="text"
                                             placeholder={`Trả lời ${comment?.user?.fullname}...`}
                                         />
-                                        <label
+                                        {/* <label
                                             className="btn-media"
                                             htmlFor="file-reply"
                                         >
                                             <img src={icon.addImg} alt="" />
-                                        </label>
+                                        </label> */}
                                         <input
                                             hidden
                                             id="file-reply"
@@ -296,10 +307,13 @@ export default function CommentItem(props: IProps) {
                                         </button>
                                     </div>
 
-                                    {cmtRep?.cmtRepImg && (
-                                        <div className="evaluate-input__upload">
+                                    {/* {commentRep.img_url.length > 0 && (
+                                        <div
+                                            style={{ marginTop: "24px" }}
+                                            className="evaluate-input__upload"
+                                        >
                                             <img
-                                                src={cmtRep?.cmtRepImg}
+                                                src={commentRep.img_url}
                                                 className="evaluate-upload__img"
                                                 alt=""
                                             />
@@ -313,7 +327,7 @@ export default function CommentItem(props: IProps) {
                                                 />
                                             </button>
                                         </div>
-                                    )}
+                                    )} */}
                                 </div>
                             </ul>
                         </div>

@@ -14,7 +14,12 @@ import { STATUS } from '../../redux/status';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import BackTopButton from '../../components/BackTopButton';
 import Footer from '../Footer';
-import { fetchAsyncOrgsByFilter, onResetFilter, onSetFilterType, onSetOrgsEmpty } from '../../redux/filter/filterSlice';
+import {
+    fetchAsyncOrgsByFilter,
+    onResetFilter,
+    onSetFilterType,
+    onSetOrgsEmpty
+} from '../../redux/filter/filterSlice';
 import HeadMobile from '../HeadMobile';
 import useFullScreen from '../../utils/useDeviceMobile';
 import icon from '../../constants/icon';
@@ -22,11 +27,14 @@ import LoadingMore from '../../components/LoadingMore';
 import { LoadingOrgs } from '../../components/LoadingSketion';
 import { AppContext } from '../../context/AppProvider';
 import Map from '../../components/Map';
+import { useLocation } from 'react-router-dom';
 
 function Result() {
     const IS_MB = useFullScreen();
     const params: any = extraParamsUrl();
     const [openMap, setOpenMap] = useState(false);
+    const location = useLocation();
+    console.log(location);
     const dispatch = useDispatch();
     const { t } = useContext(AppContext);
     const {
@@ -38,7 +46,7 @@ function Result() {
         max_price
     } = useSelector((state: any) => state.FILTER.FILTER_ORG);
     const { TYPE_FILTER } = useSelector((state: any) => state.FILTER);
-    const { orgs, status, page, totalItem } = useSelector((state: any) => state.FILTER.ORGS);
+    const { orgs, status, page, totalItem, path_url } = useSelector((state: any) => state.FILTER.ORGS);
     let titleHeader: string = "";
     let type: string = ""
     if (params.tag) {
@@ -55,10 +63,11 @@ function Result() {
         district_code: district?.district_code,
         min_price: min_price,
         max_price: max_price,
-        sort: sort
+        sort: sort,
+        path_url: location.pathname
     }
     const callOrgsByFilterTag = async () => {
-        if (status !== STATUS.SUCCESS || type !== TYPE_FILTER) {
+        if (path_url !== location.pathname || type !== TYPE_FILTER) {
             dispatch(onResetFilter());
             dispatch(onSetOrgsEmpty());
             dispatch(fetchAsyncOrgsByFilter(paramsFilter))

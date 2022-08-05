@@ -1,81 +1,75 @@
-import React, { useRef } from "react";
-// import {
-//     withGoogleMap,
-//     withScriptjs,
-//     GoogleMap,
-//     Marker,
-// } from "react-google-maps";
-// import InfoWindow from "react-google-maps/lib/components/InfoWindow";
+import React from "react";
+import {
+    withGoogleMap,
+    withScriptjs,
+    GoogleMap,
+    Marker,
+} from "react-google-maps";
+import InfoWindow from "react-google-maps/lib/components/InfoWindow";
+import { AUTH_LOCATION } from "../../api/authLocation";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
-import { StandaloneSearchBox, GoogleMap, Marker, LoadScript, InfoWindow } from '@react-google-maps/api';
-
-const mapContainerStyle = {
-    height: "100vh",
-    width: "100vw"
-};
-
-const center = {
-    lat: 38.685,
-    lng: -115.234
-};
+import useDeviceMobile from "../../utils/useDeviceMobile";
 
 const MapTagsGoogle = (props: any) => {
-    const { zoom, location, org } = props;
+    const { zoom, location, org, onChangeCardMap, setLocal, onGotoSlickOrgItem } = props;
+    const IS_MB = useDeviceMobile();
     const defaultMapOptions = {
         fullscreenControl: true,
         zoomControl: true,
         streetViewControl: true,
         mapTypeControl: true,
     };
-    const searchRef = useRef<any>();
-    const onPlacesChanged = () => {
-        console.log(searchRef?.current?.getPlaces())
+    let USER_LAT:any = 0;
+    let USER_LNG:any = 0;
+    const LOCATION = AUTH_LOCATION()
+    if (LOCATION) {
+        USER_LAT = parseFloat(LOCATION.split(",")[0])
+        USER_LNG = parseFloat(LOCATION.split(",")[1])
     }
-    const key = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
+    const onMarkerClick = (item: IOrganization, index:number)=>{
+        // document.getElementById(`${item.id}`)?.scrollIntoView()
+        if(onChangeCardMap){
+            onChangeCardMap(item)
+        }
+        if(setLocal){
+            setLocal({
+                lat: item.latitude,
+                long: item.longitude
+            })
+        }
+        if(IS_MB && onGotoSlickOrgItem){
+            onGotoSlickOrgItem(index)
+        }
+
+    }
     return (
-        <LoadScript
-            id="script-loader" googleMapsApiKey={`${key}`} libraries={["places"]}
-        >
+        <div>
             <GoogleMap
-                // defaultOptions={defaultMapOptions}
-                // zoom={zoom}
-                // defaultCenter={{ lat: location.lat, lng: location.long }}
-                // center={{ lat: location.lat, lng: location.long }}
-                id="searchbox-example"
-                mapContainerStyle={mapContainerStyle}
+                defaultOptions={defaultMapOptions}
                 zoom={zoom}
+                // defaultCenter={{ lat: location.lat, lng: location.long }}
                 center={{ lat: location.lat, lng: location.long }}
             >
-                <StandaloneSearchBox
-                    ref={searchRef}
-                    onPlacesChanged={
-                        onPlacesChanged
-                    }
-                >
-                    <input
-                        type="text"
-                        placeholder="Customized your placeholder"
-                        style={{
-                            boxSizing: `border-box`,
-                            border: `1px solid transparent`,
-                            width: `240px`,
-                            height: `32px`,
-                            padding: `0 12px`,
-                            borderRadius: `3px`,
-                            boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-                            fontSize: `14px`,
-                            outline: `none`,
-                            textOverflow: `ellipses`,
-                            position: "absolute",
-                            left: "50%",
-                            marginLeft: "-120px"
+                {
+                    LOCATION &&
+                    <Marker
+                        icon={{
+                            url: icon.pinMapRed
                         }}
-                    />
-                </StandaloneSearchBox>
-
+                        position={{ lat: USER_LAT, lng: USER_LNG }}
+                    //animation={item?.latitude === location.lat ? window.google.maps.Animation.DROP : null}
+                    >
+                        {
+                            <InfoWindow>
+                                <div className="tooltip tooltip-current">Vị trí của bạn</div>
+                            </InfoWindow>
+                        }
+                    </Marker>
+                }
                 {org?.map((item: IOrganization, index: number) => (
                     <Marker
+                        onClick={()=>onMarkerClick(item, index)}
                         key={index}
                         icon={{
                             url:
@@ -86,17 +80,15 @@ const MapTagsGoogle = (props: any) => {
                         position={{ lat: item?.latitude, lng: item?.longitude }}
                     //animation={item?.latitude === location.lat ? window.google.maps.Animation.DROP : null}
                     >
-                        {/* <InfoWindow/> */}
-                        {/* {
+                        {
                             <InfoWindow>
                                 <div className="tooltip">{item?.name}</div>
                             </InfoWindow>
-                        } */}
+                        }
                     </Marker>
                 ))}
             </GoogleMap>
-        </LoadScript>
-    )
+        </div>
+    );
 };
-// export default withScriptjs(withGoogleMap(MapTagsGoogle));
-export default MapTagsGoogle
+export default withScriptjs(withGoogleMap(MapTagsGoogle));
