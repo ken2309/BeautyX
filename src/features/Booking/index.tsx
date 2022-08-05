@@ -92,7 +92,13 @@ function Booking() {
         note: "",
         branch_id: null,
     });
-    const [seatAmount, SetSeatAmount] = useState(1);
+    const services = servicesBook.map((item: any) => {
+        return {
+            id: item.service?.id,
+            quantity: item.quantity,
+        };
+    });
+    const [seatAmount, SetSeatAmount] = useState(services[0]?.quantity);
     const onDropBranchList = () => {
         branchRef?.current?.classList?.toggle("drop-show-branches");
     };
@@ -108,12 +114,6 @@ function Booking() {
         ?.map((i: any) => i?.discount)
         ?.map((j: any) => j?.coupon_code)
         ?.filter(Boolean);
-    const services = servicesBook.map((item: any) => {
-        return {
-            id: item.service?.id,
-            quantity: item.quantity,
-        };
-    });
 
     //
     const payment_method_id = extraPaymentMethodId(payments_method, chooseE_wall);
@@ -406,9 +406,9 @@ function Booking() {
                                     Số lượng người
                                 </span>
                                 <div className="seats_amount-cnt">
-                                    <button className="desc" disabled={(seatAmount === 1)?true:false} onClick={()=>handleSeatsAmount('desc')}>{'-'}</button>
+                                    {/* <button className="desc" disabled={(seatAmount === 1)?true:false} onClick={()=>handleSeatsAmount('desc')}>{'-'}</button> */}
                                     <div className="book-section-title amount">{seatAmount}</div>
-                                    <button className="asc"  disabled={(seatAmount >= 10)?true:false} onClick={()=>handleSeatsAmount('asc')}>{'+'}</button>
+                                    {/* <button className="asc"  disabled={(seatAmount >= 10 && seatAmount<=services[0]?.quantity)?true:false} onClick={()=>handleSeatsAmount('asc')}>{'+'}</button> */}
                                 </div>
                             </div>
 
