@@ -100,6 +100,7 @@ function MerchantDetail() {
       org_id: sub_domain,
       page: 1,
       special: true,
+      special_ecommerce: true,
       isEnable: org?.is_momo_ecommerce_enable && true
     }
     dispatch(onSaveOrgId(sub_domain))

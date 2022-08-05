@@ -9,7 +9,7 @@ import { AppContext } from "../../context/AppProvider";
 function PopupSuccess(props: any) {
     const history = useHistory();
     const { t } = useContext(AppContext);
-    const { popup, setPopup, title, useInPayment } = props;
+    const { popup, setPopup, title, useInPayment, isNotSuccess } = props;
     const handleClose = () => {
         setPopup(false);
     };
@@ -33,7 +33,7 @@ function PopupSuccess(props: any) {
     return (
         <Dialog open={popup}>
             <div className="flex-column pu-success">
-                <img className="pu-success__img" src={icon.success} alt="" />
+                {!isNotSuccess&&<img className="pu-success__img" src={icon.success} alt="" />}
                 <p style={{ color: "unset" }} className="pu-success__title">
                     <span className="pu-success__title">{title}</span>
                 </p>
