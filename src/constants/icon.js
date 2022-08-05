@@ -115,6 +115,7 @@ import fire from "../assets/icon/fire.svg";
 import shield from "../assets/icon/sheild.svg";
 import editWhite from "../assets/icon/editWhite.svg";
 import pinMapGreen from "../assets/icon/pinMapGreen.svg";
+import pinMapRed from "../assets/icon/pinMapRed.svg";
 import closeCircleWhite from "../assets/icon/closeCircleWhite.svg";
 import sucessGreen from "../assets/icon/sucessGreen.svg";
 import xCircleRed from "../assets/icon/xCircleRed.svg";
@@ -194,6 +195,7 @@ import settingsSlidersPurple from "../assets/icon/settingsSlidersPurple.svg";
 import lineGray from "../assets/icon/lineGray.svg";
 import filterBlack from "../assets/icon/filterBlack.svg";
 import closeBlack from "../assets/icon/closeBlack.svg";
+import locationCate from "../assets/icon/locationCate.png";
 
 const icon = {
     payon,
@@ -387,6 +389,8 @@ const icon = {
     exclamationPurple,
     lineGray,
     filterBlack,
-    closeBlack
+    closeBlack,
+    locationCate,
+    pinMapRed
 };
 export default icon;

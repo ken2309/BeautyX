@@ -152,6 +152,16 @@
     font-size: 14px;
     font-weight: bold;
 }
+.map .map-item__distance{
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 14px;
+}
+.map .map-item__distance-icon{
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+}
 .dialog-map__wrapper {
     position: absolute;
     z-index: 2;

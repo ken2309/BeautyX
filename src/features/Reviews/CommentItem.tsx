@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Rating from "@mui/material/Rating";
 import icon from "../../constants/icon";
-import { IComment, ICommentChild } from "../../interface/comments";
+import { IComment } from "../../interface/comments";
 import FullImage from "../OpenFullImage";
 import { AppContext } from "../../context/AppProvider";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,8 +13,6 @@ import { postAsyncReplyProductComments } from "../../redux/org_products/productS
 import mediaApi from "../../api/mediaApi";
 import moment from "moment";
 import "moment/locale/vi";
-import BeautyLoading from "../../components/BeautyxLoading";
-import { STATUS } from "../../redux/status";
 
 interface IProps {
     comment: IComment;
@@ -34,7 +32,6 @@ export default function CommentItem(props: IProps) {
     })
     const [open, setOpen] = useState(false);
     const { USER } = useSelector((state: any) => state.USER);
-    const { status } = useSelector((state: any) => state.COMMENT);
     const { t } = useContext(AppContext);
     let body;
     try {
@@ -63,7 +60,7 @@ export default function CommentItem(props: IProps) {
                     type: "REPLY_COMMENT",
                     id: comment.id,
                     org_id: org_id,
-                    media_ids: [commentRep.media_id],
+                    media_ids: [commentRep.media_id].filter(Boolean),
                     body: commentRep.text,
                 };
                 setCommentRep({
@@ -116,8 +113,8 @@ export default function CommentItem(props: IProps) {
             setCommentRep({
                 ...commentRep,
                 img_url: res?.data.context.original_url,
+                media_id: res?.data.context.model_id
             })
-            // setImgList([res.data.context.model_id]);
         } catch (error) {
             console.log("error", error);
         }
@@ -128,7 +125,7 @@ export default function CommentItem(props: IProps) {
             img_url: "",
         })
     };
-    const displayTime = moment(comment.created_at).locale("vi").fromNow();
+    // const displayTime = moment(comment.created_at).locale("vi").fromNow();
     console.log(commentRep);
     return (
         <>
@@ -191,7 +188,7 @@ export default function CommentItem(props: IProps) {
                     >
                         <div className="evaluate-comment__bot">
                             <div className="evaluate-comment__bot-title">
-                                <span>{displayTime}</span>
+                                {/* <span>{displayTime}</span> */}
                                 <span>
                                     {/* {comment.children.length > 0 && `${comment.children.length}  `} */}
                                     Trả lời
@@ -286,12 +283,12 @@ export default function CommentItem(props: IProps) {
                                             type="text"
                                             placeholder={`Trả lời ${comment?.user?.fullname}...`}
                                         />
-                                        <label
+                                        {/* <label
                                             className="btn-media"
                                             htmlFor="file-reply"
                                         >
                                             <img src={icon.addImg} alt="" />
-                                        </label>
+                                        </label> */}
                                         <input
                                             hidden
                                             id="file-reply"
@@ -310,7 +307,7 @@ export default function CommentItem(props: IProps) {
                                         </button>
                                     </div>
 
-                                    {commentRep.img_url.length > 0 && (
+                                    {/* {commentRep.img_url.length > 0 && (
                                         <div
                                             style={{ marginTop: "24px" }}
                                             className="evaluate-input__upload"
@@ -330,7 +327,7 @@ export default function CommentItem(props: IProps) {
                                                 />
                                             </button>
                                         </div>
-                                    )}
+                                    )} */}
                                 </div>
                             </ul>
                         </div>
