@@ -216,8 +216,8 @@ const VoucherOrgItem = (props: any) => {
             style={
                 active === true
                     ? {
-                          backgroundColor: "#e3e1f1",
-                          border: "1px solid var(--purple)",
+                          backgroundColor: "#ffe3d2",
+                          border: "1px solid var(--red-cl)",
                       }
                     : {}
             }
@@ -226,7 +226,7 @@ const VoucherOrgItem = (props: any) => {
             <div
                 style={
                     active === true
-                        ? { borderRight: "dashed 1px var(--purple)" }
+                        ? { borderRight: "dashed 1px var(--red-cl)" }
                         : {}
                 }
                 className="cart-vouchers-list__item-left"
