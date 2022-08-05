@@ -149,7 +149,16 @@ export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
             onClose={() => setOpen(false)}
         >
             <div className="cart-item-pop-voucher">
-                <span className="title">{org?.name} khuyến mại</span>
+                <div className="flex-row-sp">
+                    <span className="title">{org?.name} khuyến mại</span>
+
+                    <img
+                        className="cursor-pointer"
+                        onClick={() => setOpen(false)}
+                        src={icon.closeCircle}
+                        alt=""
+                    />
+                </div>
                 <div className="cart-vouchers-list">
                     <span className="cart-vouchers-list__title">
                         Danh sách mã ưu đãi
