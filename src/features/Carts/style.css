@@ -280,7 +280,7 @@
 
 /* cart group item voucher */
 .cart-item-pop-voucher {
-    width: 45vw;
+    width: 40vw;
     height: fit-content;
     max-width: 90vh;
     overflow-y: scroll;
@@ -322,12 +322,11 @@
 }
 .cart-vouchers-list__item {
     height: 100%;
-    box-shadow: 0 6px 15px #dcd8ee;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     background-color: var(--white);
     border-radius: 8px;
-    border: 1px solid var(--purple);
+    border: 1px solid transparent;
     display: flex;
-    background-color: #e3e1f1;
     /* overflow: hidden; */
 }
 .cart-vouchers-list__item-left {
@@ -337,7 +336,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-right: dashed 1px var(--purple);
+    border-right: dashed 1px var(--bgGray);
     position: relative;
 }
 .cart-vouchers-list__item-left::after {
@@ -418,6 +417,7 @@
     border-radius: 8px;
     background-color: var(--purple);
     cursor: pointer;
+    user-select: none;
 }
 .cart-vouchers-list__item-right .item-right__bottom .item-right__btn span {
     font-size: 16px;

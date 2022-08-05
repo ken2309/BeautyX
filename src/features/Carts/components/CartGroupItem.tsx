@@ -173,13 +173,14 @@ export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
 };
 const VoucherOrgItem = (props: any) => {
     const { org } = props;
-    console.log("org :>> ", org);
     const voucher: IDiscountPar = {
         ...props.voucher,
         // minimum_order_value:1000000,
         // valid_from: "2022-01-01 10:00:00",
         // valid_util: "2022-03-01 10:00:00"
     };
+    console.log("voucher :>> ", voucher);
+    const [active, setActive] = useState(false);
     const dispatch = useDispatch();
     const { cartAmountDiscount, cartAmount, cartList } = useSelector(
         (state: any) => state.carts
@@ -201,17 +202,35 @@ const VoucherOrgItem = (props: any) => {
     // console.log(applyCondition)
 
     const handleApplyVoucher = () => {
-        if (applyCondition && cartAmount > 0) {
-            dispatch(onApplyVoucherSubTotal(voucher));
-        }
+        // if (applyCondition && cartAmount > 0) {
+        //     dispatch(onApplyVoucherSubTotal(voucher));
+        // }
+        setActive(!active);
     };
 
     // console.log("date", dateCondition)
     // console.log("total", subTotalCondition)
     // console.log("itemsCondition", itemsCondition)
     return (
-        <div className="cart-vouchers-list__item">
-            <div className="cart-vouchers-list__item-left">
+        <div
+            style={
+                active === true
+                    ? {
+                          backgroundColor: "#e3e1f1",
+                          border: "1px solid var(--purple)",
+                      }
+                    : {}
+            }
+            className="cart-vouchers-list__item"
+        >
+            <div
+                style={
+                    active === true
+                        ? { borderRight: "dashed 1px var(--purple)" }
+                        : {}
+                }
+                className="cart-vouchers-list__item-left"
+            >
                 <div className="item-left__img">
                     <img
                         onError={(e) => onErrorImg(e)}
@@ -232,9 +251,13 @@ const VoucherOrgItem = (props: any) => {
                 </div>
                 <div className="item-right__bottom">
                     <span className="item-right__expired">HSD: 31/8/2022</span>
-                    <div className="item-right__btn">
-                        <span>Bỏ chọn</span>
+                    <div
+                        onClick={() => handleApplyVoucher()}
+                        className="item-right__btn"
+                    >
+                        <span>{active === true ? "Bỏ chọn" : "Áp dụng"}</span>
                     </div>
+                    {/* <img src={icon.noApply} alt="" /> */}
                 </div>
             </div>
             {/* {voucher.title}<br />

@@ -186,7 +186,7 @@ import payon from "../assets/icon/payon.jpg";
 import settingsSliders from "../assets/icon/settingsSliders.svg";
 import crossPurple from "../assets/icon/crossPurple.svg";
 import minusPurple from "../assets/icon/minusPurple.svg";
-import chatPurple from '../assets/icon/chatPurple.svg';
+import chatPurple from "../assets/icon/chatPurple.svg";
 import friendsPurple from "../assets/icon/friendsPurple.png";
 import plusPurple from "../assets/icon/plusPurple.svg";
 import exclamationPurple from "../assets/icon/exclamationPurple.svg";
@@ -194,8 +194,10 @@ import settingsSlidersPurple from "../assets/icon/settingsSlidersPurple.svg";
 import lineGray from "../assets/icon/lineGray.svg";
 import filterBlack from "../assets/icon/filterBlack.svg";
 import closeBlack from "../assets/icon/closeBlack.svg";
+import noApply from "../assets/icon/no-apply.svg";
 
 const icon = {
+    noApply,
     payon,
     momo,
     settingPurple,
@@ -387,6 +389,6 @@ const icon = {
     exclamationPurple,
     lineGray,
     filterBlack,
-    closeBlack
+    closeBlack,
 };
 export default icon;
