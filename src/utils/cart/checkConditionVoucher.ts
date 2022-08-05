@@ -69,11 +69,15 @@ export const EX_CHECK_INCLUDE_ITEMS = (voucher: IDiscountPar, cartList: any[]) =
     // console.log(isEqual(uniServiceArr, services_id))
 
     const checkProductCartInDiscount = () => {
+
+
         let productCartInDis = false;
         if (products_id.length === 0) {
             return productCartInDis = false
         }
-        if (IsEqualArr(uniProductArr, productsInDis_id) || IsEqualArr(uniProductArr, products_id)) {
+        if (
+            IsEqualArr(uniProductArr, productsInDis_id) || IsEqualArr(uniProductArr, products_id)
+        ) {
             return productCartInDis = true
         }
         return productCartInDis

@@ -11,14 +11,15 @@ interface IInitialState {
     org: any,
     cartList: any[],
     cartQuantity: number,
+    cartQuantityCheck: number,
     cartAmountDiscount: number,
-    cartAmountDiscountTotal:number,
+    cartAmountDiscountTotal: number,
     cartAmount: number,
     VOUCHER_CART: {
         org_id: any,
         vouchers: any[]
     },
-    VOUCHER_APPLY: any[]
+    VOUCHER_APPLY: IDiscountPar[]
 }
 
 const storageName = "web-booking-cart";
@@ -27,13 +28,14 @@ const initialState: IInitialState = {
     org: null,
     cartList: localStorage.getItem(storageName) ? storage : [],
     cartQuantity: 0,
+    cartQuantityCheck: 0,
     cartAmountDiscount: 0,
     cartAmount: 0,
     VOUCHER_CART: {
         org_id: null,
         vouchers: []
     },
-    cartAmountDiscountTotal:0,
+    cartAmountDiscountTotal: 0,
     VOUCHER_APPLY: []
 };
 const cart = createSlice({
@@ -154,9 +156,9 @@ const cart = createSlice({
                 cartListDiscounts.reduce(
                     (pre: number, cur: number) => pre + cur
                 );
-            
+
             //amount discount total, price
-            let { total, quantity } = state.cartList
+            let { total, quantity, quantityCheck } = state.cartList
                 .filter((item: any) => item.user_id === payload)
                 .reduce(
                     (cartTotal: any, cartItem: any) => {
@@ -164,7 +166,7 @@ const cart = createSlice({
                         if (isConfirm === true) {
                             const itemTotal = price * quantity;
                             cartTotal.total += itemTotal;
-                            //cartTotal.quantity += quantity;
+                            cartTotal.quantityCheck += quantity;
                         }
                         cartTotal.quantity += quantity;
                         return cartTotal;
@@ -172,17 +174,19 @@ const cart = createSlice({
                     {
                         total: 0,
                         quantity: 0,
+                        quantityCheck: 0
                     }
                 );
             state.cartAmount = total;
             state.cartQuantity = quantity;
+            state.cartQuantityCheck = quantityCheck
         },
         clearAllCart: (state) => {
             state.cartList = [];
             localStorage.setItem(storageName, JSON.stringify(state.cartList));
         },
-        onClearApplyVoucher : (state) =>{
-            state.VOUCHER_APPLY=[]
+        onClearApplyVoucher: (state) => {
+            state.VOUCHER_APPLY = []
         },
         clearByCheck: (state) => {
             const cartConfirm = state.cartList.filter(
@@ -210,7 +214,12 @@ const cart = createSlice({
                 org_id: action.payload.org.id,
                 vouchers: action.payload.vouchers
             }
+        },
+        onCancelApplyVoucher: (state, action) => {
+            const newVoucher = state.VOUCHER_APPLY.filter((i: IDiscountPar) => i.id !== action.payload)
+            state.VOUCHER_APPLY = newVoucher
         }
+
     },
 });
 const { reducer, actions } = cart;
@@ -228,6 +237,7 @@ export const {
     onClearPrevCartItem,
     addVoucherByOrg,
     onApplyVoucherSubTotal,
-    onClearApplyVoucher
+    onClearApplyVoucher,
+    onCancelApplyVoucher
 } = actions;
 export default reducer;

@@ -44,7 +44,7 @@ function Carts() {
     const { cartAmountDiscount, cartAmount, VOUCHER_APPLY } = useSelector(
         (state: any) => state.carts
     );
-    console.log(VOUCHER_APPLY)
+    // console.log(VOUCHER_APPLY)
     const { USER } = useSelector((state: any) => state.USER);
     const cartListAll = useSelector((state: any) => state.carts.cartList)
     const cartList = cartListAll.filter((i: any) => i?.user_id === USER?.id)
