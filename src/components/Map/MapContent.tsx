@@ -15,17 +15,6 @@ interface IProps {
     org: any;
 }
 
-// const detail = document.querySelector(".dialog-map__detail");
-// window.addEventListener("scroll", function () {
-//     const scrolled = window.scrollY;
-//     const de_header = document.querySelector(".content-head");
-//     const windowPosition = scrolled > 30;
-//     console.log("windowPosition :>> ", windowPosition);
-//     if (de_header) {
-//         de_header.classList.toggle("head-active", windowPosition);
-//     }
-// });
-
 export default function MapContent(props: IProps) {
     const key = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
     const location = useLocation();
@@ -39,33 +28,10 @@ export default function MapContent(props: IProps) {
         open: false,
         item: {},
     });
-
-    const onFavoriteOrganization = async () => {
-        if (USER) {
-            if (openDetail?.item.is_favorite === false) {
-                await dispatch(onFavoriteOrg(openDetail?.item));
-                // setOpenDetail({
-                //     ...openDetail,
-                //     item: {
-                //         ...openDetail.item,
-                //         is_favorite: true,
-                //     },
-                // });
-            } else {
-                await dispatch(onDeleteFavoriteOrg(openDetail?.item));
-                // setOpenDetail({
-                //     ...openDetail,
-                //     item: {
-                //         ...openDetail.item,
-                //         is_favorite: false,
-                //     },
-                // });
-            }
-        } else {
-            history.push("/sign-in");
-        }
-    };
-    const [local, setLocal] = useState({
+    console.log("openDetail :>> ", openDetail);
+    const refDetail: any = useRef();
+    const refHead: any = useRef();
+    const [local, setLocal] = useState<any>({
         lat: LOCATION ? parseFloat(LOCATION?.split(",")[0]) : org[0]?.latitude,
         long: LOCATION
             ? parseFloat(LOCATION?.split(",")[1])
@@ -73,14 +39,52 @@ export default function MapContent(props: IProps) {
     });
     const refListOrg: any = useRef();
     const [openListOrg, setOpenListOrg] = useState(true);
+    console.log("openListOrg", openListOrg);
     const { page, totalItem } = useSelector((state: any) => state.FILTER.ORGS);
+
+    const handleFolower = async () => {
+        if (USER) {
+            if (openDetail?.item.is_favorite === false) {
+                await dispatch(onFavoriteOrg(openDetail?.item));
+            } else {
+                await dispatch(onDeleteFavoriteOrg(openDetail?.item));
+            }
+        } else {
+            history.push("/sign-in");
+        }
+    };
+
     const handleToggleListOrg = () => {
         refListOrg.current.classList.toggle("list-org__active");
         setOpenListOrg(!openListOrg);
-        setOpenDetail({
-            ...openDetail,
-            open: false,
-        });
+        if (openDetail.item) {
+            setOpenDetail({
+                ...openDetail,
+                open: true,
+            });
+        }
+
+        if (
+            openListOrg === true &&
+            !openDetail.item &&
+            openDetail.open === false
+        ) {
+            setOpenDetail({
+                ...openDetail,
+                open: true,
+            });
+        }
+
+        if (
+            openListOrg === true &&
+            openDetail.item &&
+            openDetail.open === true
+        ) {
+            setOpenDetail({
+                ...openDetail,
+                open: false,
+            });
+        }
     };
     const handleSetLocation = useCallback((cardMapItem: any) => {
         if (onChangeCardMap) {
@@ -101,6 +105,24 @@ export default function MapContent(props: IProps) {
         });
     };
 
+    const handleScrollActive = () => {
+        if (refDetail && refDetail?.current) {
+            refDetail?.current.addEventListener(
+                "scroll",
+                function () {
+                    const scrolled = refDetail?.current.scrollTop;
+                    if (refHead?.current) {
+                        refHead?.current.classList.toggle(
+                            "head-active",
+                            scrolled > 80
+                        );
+                    }
+                },
+                false
+            );
+        }
+    };
+
     useEffect(() => {
         setLocal({
             lat: LOCATION
@@ -110,6 +132,8 @@ export default function MapContent(props: IProps) {
                 ? parseFloat(LOCATION?.split(",")[1])
                 : org[0]?.longitude,
         });
+        handleScrollActive();
+        console.log("render");
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [org, openDetail?.item]);
 
@@ -169,6 +193,8 @@ export default function MapContent(props: IProps) {
                 onChangeCardMap={onChangeCardMap}
                 setLocal={setLocal}
                 onGotoSlickOrgItem={onGotoSlickOrgItem}
+                setOpenDetail={setOpenDetail}
+                openDetail={openDetail}
             />
 
             {/* list map desktop */}
@@ -203,19 +229,21 @@ export default function MapContent(props: IProps) {
                 </div>
 
                 {/* org detail */}
-                {openDetail.open === true ? (
+                {openDetail.open === true && openDetail.item.id ? (
                     <>
-                        <div className="dialog-map__detail">
+                        <div ref={refDetail} className="dialog-map__detail">
                             <div className="dialog-map__content">
-                                <div className="content-head">
+                                <div ref={refHead} className="content-head">
                                     <span className="content-head__name">
                                         {openDetail.item?.name}
                                     </span>
                                     <img
+                                        className="cursor-pointer"
                                         onClick={() =>
                                             setOpenDetail({
                                                 ...openDetail,
                                                 open: false,
+                                                item: {},
                                             })
                                         }
                                         src={icon.x}
@@ -264,43 +292,18 @@ export default function MapContent(props: IProps) {
                                         </div>
 
                                         <div
-                                            onClick={onFavoriteOrganization}
+                                            onClick={handleFolower}
                                             className="content-info__btn"
                                         >
                                             <img src={icon.rss} alt="" />
                                             <span>Theo dõi</span>
                                         </div>
                                     </div>
-                                    <span>
-                                        Lorem ipsum dolor sit amet consectetur,
-                                        adipisicing elit. Tenetur, veritatis
-                                        earum quidem natus suscipit dolores
-                                        voluptatum placeat asperiores eaque
-                                        velit, voluptatibus reiciendis
-                                        consectetur perferendis sint eius
-                                        debitis praesentium voluptatem quis.
-                                        Lorem ipsum dolor sit amet consectetur,
-                                        adipisicing elit. Tenetur, veritatis
-                                        earum quidem natus suscipit dolores
-                                        voluptatum placeat asperiores eaque
-                                        velit, voluptatibus reiciendis
-                                        consectetur perferendis sint eius
-                                        debitis praesentium voluptatem quis.
-                                        Lorem ipsum dolor sit amet consectetur,
-                                        adipisicing elit. Tenetur, veritatis
-                                        earum quidem natus suscipit dolores
-                                        voluptatum placeat asperiores eaque
-                                        velit, voluptatibus reiciendis
-                                        consectetur perferendis sint eius
-                                        debitis praesentium voluptatem quis.
-                                    </span>
                                 </div>
                             </div>
                         </div>
                     </>
-                ) : (
-                    <></>
-                )}
+                ) : null}
 
                 {/* btn toggle open close list map org */}
                 <div

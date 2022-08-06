@@ -12,7 +12,16 @@ import { IOrganization } from "../../interface/organization";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 
 const MapTagsGoogle = (props: any) => {
-    const { zoom, location, org, onChangeCardMap, setLocal, onGotoSlickOrgItem } = props;
+    const {
+        zoom,
+        location,
+        org,
+        onChangeCardMap,
+        setLocal,
+        onGotoSlickOrgItem,
+        setOpenDetail,
+        openDetail,
+    } = props;
     const IS_MB = useDeviceMobile();
     const defaultMapOptions = {
         fullscreenControl: true,
@@ -20,29 +29,33 @@ const MapTagsGoogle = (props: any) => {
         streetViewControl: true,
         mapTypeControl: true,
     };
-    let USER_LAT:any = 0;
-    let USER_LNG:any = 0;
-    const LOCATION = AUTH_LOCATION()
+    let USER_LAT: any = 0;
+    let USER_LNG: any = 0;
+    const LOCATION = AUTH_LOCATION();
     if (LOCATION) {
-        USER_LAT = parseFloat(LOCATION.split(",")[0])
-        USER_LNG = parseFloat(LOCATION.split(",")[1])
+        USER_LAT = parseFloat(LOCATION.split(",")[0]);
+        USER_LNG = parseFloat(LOCATION.split(",")[1]);
     }
-    const onMarkerClick = (item: IOrganization, index:number)=>{
+    const onMarkerClick = (item: IOrganization, index: number) => {
         // document.getElementById(`${item.id}`)?.scrollIntoView()
-        if(onChangeCardMap){
-            onChangeCardMap(item)
+        if (onChangeCardMap) {
+            onChangeCardMap(item);
         }
-        if(setLocal){
+        setOpenDetail({
+            ...openDetail,
+            item: item,
+            open: true,
+        });
+        if (setLocal) {
             setLocal({
                 lat: item.latitude,
-                long: item.longitude
-            })
+                long: item.longitude,
+            });
         }
-        if(IS_MB && onGotoSlickOrgItem){
-            onGotoSlickOrgItem(index)
+        if (IS_MB && onGotoSlickOrgItem) {
+            onGotoSlickOrgItem(index);
         }
-
-    }
+    };
     return (
         <div>
             <GoogleMap
@@ -51,25 +64,26 @@ const MapTagsGoogle = (props: any) => {
                 // defaultCenter={{ lat: location.lat, lng: location.long }}
                 center={{ lat: location.lat, lng: location.long }}
             >
-                {
-                    LOCATION &&
+                {LOCATION && (
                     <Marker
                         icon={{
-                            url: icon.pinMapRed
+                            url: icon.pinMapRed,
                         }}
                         position={{ lat: USER_LAT, lng: USER_LNG }}
-                    //animation={item?.latitude === location.lat ? window.google.maps.Animation.DROP : null}
+                        //animation={item?.latitude === location.lat ? window.google.maps.Animation.DROP : null}
                     >
                         {
                             <InfoWindow>
-                                <div className="tooltip tooltip-current">Vị trí của bạn</div>
+                                <div className="tooltip tooltip-current">
+                                    Vị trí của bạn
+                                </div>
                             </InfoWindow>
                         }
                     </Marker>
-                }
+                )}
                 {org?.map((item: IOrganization, index: number) => (
                     <Marker
-                        onClick={()=>onMarkerClick(item, index)}
+                        onClick={() => onMarkerClick(item, index)}
                         key={index}
                         icon={{
                             url:
@@ -78,7 +92,7 @@ const MapTagsGoogle = (props: any) => {
                                     : icon.pinMap,
                         }}
                         position={{ lat: item?.latitude, lng: item?.longitude }}
-                    //animation={item?.latitude === location.lat ? window.google.maps.Animation.DROP : null}
+                        //animation={item?.latitude === location.lat ? window.google.maps.Animation.DROP : null}
                     >
                         {
                             <InfoWindow>

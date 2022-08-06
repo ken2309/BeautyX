@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
 import onErrorImg from "../../utils/errorImg";
@@ -14,8 +13,6 @@ interface IProps {
 export default function MapTagsOrgItem(props: IProps) {
     const { item, handleSetLocation, location, setOpenDetail, openDetail } =
         props;
-    // const history = useHistory();
-
     const onHoveItem = () => {
         handleSetLocation(item);
     };
