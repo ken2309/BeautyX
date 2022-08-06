@@ -27,6 +27,13 @@ const IsEqualArr = (arr1: any[], arr2: any[]) => {
     });
     return is_Equal
 }
+export const IS_VOUCHER = (discounts:IDiscountPar[])=>{
+    const vouchers:IDiscountPar[] = discounts.filter((i: IDiscountPar) => (
+        i.discount_type === "SUB_TOTAL" ||
+        (i.discount_type === "PRODUCT" && i.items_count === 0)
+    ));
+    return vouchers
+}
 
 export const EX_CHECK_DATE = (voucher: IDiscountPar) => {
     let dateCondition = false;

@@ -1,8 +1,9 @@
 import moment from 'moment';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { IDiscountPar } from '../../../../interface/discount';
+import { IDiscountPar, IITEMS_DISCOUNT } from '../../../../interface/discount';
 import { IOrganization } from '../../../../interface/organization';
+import { IS_VOUCHER } from '../../../../utils/cart/checkConditionVoucher';
 import onErrorImg from '../../../../utils/errorImg';
 import formatPrice from '../../../../utils/formatPrice';
 import { EX_DISCOUNT_TYPE, EX_APPLY_DATE } from '../../../../utils/formatRouterLink/fileType';
@@ -11,28 +12,30 @@ import { EX_DISCOUNT_TYPE, EX_APPLY_DATE } from '../../../../utils/formatRouterL
 function OrgVoucher({ org_id }: { org_id: number }) {
     const { DISCOUNTS } = useSelector((state: any) => state.ORG_DISCOUNTS);
     const discounts: IDiscountPar[] = DISCOUNTS.discounts;
-    const vouchers = discounts.filter((i: IDiscountPar) => i.items.length === 0);
-    console.log(vouchers)
+    const vouchers = IS_VOUCHER(discounts);
     return (
-        <div className='org-voucher'>
-            <span className="org-voucher__title">
-                Mã khuyến mãi
-            </span>
-            <div className="org-voucher__list">
-                <ul className="list">
-                    {
-                        vouchers.map((item: IDiscountPar, index: number) => (
-                            <li key={index} className="org-voucher__list-item">
-                                <VoucherItem
-                                    discount={item}
-                                    org_id={org_id}
-                                />
-                            </li>
-                        ))
-                    }
-                </ul>
+        vouchers.length > 0 ?
+            <div className='org-voucher'>
+                <span className="org-voucher__title">
+                    Mã khuyến mãi
+                </span>
+                <div className="org-voucher__list">
+                    <ul className="list">
+                        {
+                            vouchers.map((item: IDiscountPar, index: number) => (
+                                <li key={index} className="org-voucher__list-item">
+                                    <VoucherItem
+                                        discount={item}
+                                        org_id={org_id}
+                                    />
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
             </div>
-        </div>
+            :
+            <></>
     );
 }
 
@@ -100,6 +103,9 @@ export const VoucherItemCondition = ({
         voucher: IDiscountPar, org_id: number
     }) => {
     const orgVoucher = voucher.organizations.find((o: IOrganization) => o.id === org_id);
+    const itemListName: string[] = voucher.items
+        .filter((i: IITEMS_DISCOUNT) => i?.organization?.id === org_id)
+        .map((i: IITEMS_DISCOUNT) => (i?.productable?.service_name || i?.productable?.product_name))
     return (
         <div className="voucher-org-condition">
             <span className="title">
@@ -148,7 +154,15 @@ export const VoucherItemCondition = ({
                 </div>
                 <div className="section-item__desc">
                     <span className="section-item__desc-i">
-                        * Áp dụng cho dịch vụ, sản phẩm của {orgVoucher?.name}
+                        {
+                            itemListName.length > 0 ?
+                                <>
+                                    Áp dụng cho các dịch vụ, sản phẩm:
+                                    <span style={{ fontWeight: "bold" }}> {itemListName.join(", ")}</span>
+                                </>
+                                :
+                                `* Áp dụng cho dịch vụ, sản phẩm của ${orgVoucher?.name}`
+                        }
                     </span>
                     {
                         voucher.minimum_order_value > 0 &&

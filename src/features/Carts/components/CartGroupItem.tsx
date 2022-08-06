@@ -22,6 +22,7 @@ import {
     EX_CHECK_DATE,
     EX_CHECK_INCLUDE_ITEMS,
     EX_CHECK_SUB_TOTAL,
+    IS_VOUCHER,
 } from "../../../utils/cart/checkConditionVoucher";
 import { DISCOUNT_TYPE, EX_DISCOUNT_TYPE } from "../../../utils/formatRouterLink/fileType";
 import onErrorImg from "../../../utils/errorImg";
@@ -34,6 +35,7 @@ function CartGroupItem(props: any) {
     const itemOrgId = item.org_id;
     const [open, setOpen] = useState(false);
     const { VOUCHER_CART } = useSelector((state: any) => state.carts);
+    // const vouchers = IS_VOUCHER(VOUCHER_CART.vouchers)
     const cartListOrg = cartList.filter((i: any) => i.org_id === org?.id);
     const cartListCheck = cartList.filter((i: any) => i.isConfirm === true);
     let isCheck = false;
@@ -191,7 +193,7 @@ const VoucherOrgItem = (props: any) => {
         // valid_util: "2022-03-01 10:00:00"
     };
     const listItemName = voucher.items
-        .filter((i: IITEMS_DISCOUNT) => i.organization?.id === org.id)
+        .filter((i: IITEMS_DISCOUNT) => i.organization?.id === org?.id)
         .map((i: IITEMS_DISCOUNT) =>
             i.productable?.service_name || i?.productable.product_name
         )
