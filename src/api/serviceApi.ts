@@ -11,6 +11,7 @@ class ServiceApi {
             "filter[keyword]": values.keyword,
             "filter[service_group_id]": values.cate_id,
             "filter[special]": values.special,
+            "filter[special_ecommerce]": values.special_ecommerce,
             "filter[is_momo_ecommerce_enable]": values.isEnable,
             "include": "category|favorites_count",
             "append": "is_favorite|rating|bought_count",
