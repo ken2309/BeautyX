@@ -21,7 +21,9 @@ function CartBottom(props: any) {
     const cartAmount = DATA_CART.cartAmount;
     const { t } = useContext(AppContext);
     const VOUCHER_APPLY: IDiscountPar[] = useSelector((state: any) => state.carts.VOUCHER_APPLY);
-    console.log(VOUCHER_APPLY)
+    const { cartQuantityCheck } = useSelector((state: any) => state.carts);
+
+    // console.log(VOUCHER_APPLY, cartQuantityCheck)
     const [openAlertSnack, setOpenAlertSnack] = useState({
         title: "",
         open: false,
@@ -42,7 +44,9 @@ function CartBottom(props: any) {
         .map((item: any) => item.discount);
     const listCouponCode = listDiscount
         .map((item: any) => item?.coupon_code)
-        .filter(Boolean);
+        .filter(Boolean)
+        .concat(VOUCHER_APPLY.map((i: IDiscountPar) => i.coupon_code))
+        ;
     const { products, services, combos } = cartReducer(
         DATA_CART.cartList.filter((i: any) => i.isConfirm === true)
     );
@@ -63,8 +67,8 @@ function CartBottom(props: any) {
         combos: combos.map((item: any) => {
             return { id: item.id, quantity: item.quantity };
         }),
-        // coupon_code: listCouponCode.length > 0 ? listCouponCode : [],
-        coupon_code: ["d"]
+        coupon_code: listCouponCode.length > 0 ? listCouponCode : [],
+        // coupon_code: ["d"]
     };
 
     async function handlePostOrder() {
@@ -141,9 +145,15 @@ function CartBottom(props: any) {
         if (i.maximum_discount_value && cartAmount > i.maximum_discount_value) {
             discountValue = i.maximum_discount_value
         }
+        if (i.discount_type === "PRODUCT" && i.items_count === 0 && i.discount_unit === "PRICE") {
+            // console.log(cartQuantityCheck, i.discount_value)
+            discountValue = cartQuantityCheck * i.discount_value
+        }
+        // console.log(discountValue)
         return {
             ...i,
-            discount_value: i.discount_unit === "PERCENT" ? discountValue : i.discount_value
+            discount_value: (i.discount_unit === "PERCENT" || i.discount_type === "PRODUCT") ?
+                discountValue : i.discount_value
         }
     })
     let discountVoucherTotal = 0
@@ -152,6 +162,7 @@ function CartBottom(props: any) {
             .map((i: IDiscountPar) => i.discount_value)
             .reduce((pre: number, cur: number) => pre + cur)
     }
+    // console.log(discountVoucherTotal, vouchersCal)
 
 
     return (
@@ -195,8 +206,8 @@ function CartBottom(props: any) {
                             )}
                             {
                                 VOUCHER_APPLY.length > 0 &&
-                                VOUCHER_APPLY
-                                    .filter((i: IDiscountPar) => i.discount_type === "SUB_TOTAL")
+                                vouchersCal
+                                    // .filter((i: IDiscountPar) => i.discount_type === "SUB_TOTAL")
                                     .map((item: IDiscountPar) => (
                                         <div key={item.id} className="flex-row-sp re-cart-bottom__cal-item">
                                             <span>{item.title}</span>
@@ -204,9 +215,9 @@ function CartBottom(props: any) {
                                                 -
                                                 {formatPrice(
                                                     item.discount_value
-                                                )}
-                                                {item.discount_unit === "PERCENT" && "%"}
-                                                {item.discount_unit === "PRICE" && "đ"}
+                                                )}đ
+                                                {/* {item.discount_unit === "PERCENT" && "%"} */}
+                                                {/* {item.discount_unit === "PRICE" && "đ"} */}
                                             </span>
                                         </div>
                                     ))

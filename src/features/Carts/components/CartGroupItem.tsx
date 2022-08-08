@@ -6,6 +6,7 @@ import {
     addVoucherByOrg,
     checkConfirm,
     onApplyVoucherSubTotal,
+    onCancelApplyVoucher,
     onClearApplyVoucher,
     onClearPrevCartItem,
 } from "../../../redux/cartSlice";
@@ -14,23 +15,27 @@ import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonLoading from "../../../components/ButtonLoading";
 import { fetchAsyncOrgDiscounts } from "../../../redux/org_discounts/orgDiscountsSlice";
-import { IDiscountPar } from "../../../interface/discount";
+import { IDiscountPar, IITEMS_DISCOUNT } from "../../../interface/discount";
 import { IOrganization } from "../../../interface/organization";
 import useDeviceMobile from "../../../utils/useDeviceMobile";
 import {
     EX_CHECK_DATE,
     EX_CHECK_INCLUDE_ITEMS,
     EX_CHECK_SUB_TOTAL,
+    IS_VOUCHER,
 } from "../../../utils/cart/checkConditionVoucher";
-import { DISCOUNT_TYPE } from "../../../utils/formatRouterLink/fileType";
+import { DISCOUNT_TYPE, EX_DISCOUNT_TYPE } from "../../../utils/formatRouterLink/fileType";
 import onErrorImg from "../../../utils/errorImg";
 import img from "../../../constants/img";
+import formatPrice from "../../../utils/formatPrice";
+import moment from "moment";
 
 function CartGroupItem(props: any) {
     const { item, org, cartList, setOpenBranch, openBranch } = props;
     const itemOrgId = item.org_id;
     const [open, setOpen] = useState(false);
     const { VOUCHER_CART } = useSelector((state: any) => state.carts);
+    const vouchers = IS_VOUCHER(VOUCHER_CART.vouchers)
     const cartListOrg = cartList.filter((i: any) => i.org_id === org?.id);
     const cartListCheck = cartList.filter((i: any) => i.isConfirm === true);
     let isCheck = false;
@@ -90,13 +95,13 @@ function CartGroupItem(props: any) {
             <div className="flex-row re-cart-item-group__add">
                 {/* <div className="re-cart-item-group__add-dot"></div> */}
                 {org?.id === item.org_id &&
-                org?.branches?.length > 0 &&
-                servicesCartListCheckByOrg.length &&
-                openBranch.branch
+                    org?.branches?.length > 0 &&
+                    servicesCartListCheckByOrg.length &&
+                    openBranch.branch
                     ? `Chi nhánh : ${openBranch.branch?.name} - ${openBranch?.branch?.full_address}`
                     : `${item?.items[0]?.org?.full_address}`}
             </div>
-            {VOUCHER_CART.vouchers.length > 0 &&
+            {vouchers.length > 0 &&
                 VOUCHER_CART.org_id === itemOrgId && (
                     <div className="cart-item-voucher">
                         <span
@@ -110,7 +115,7 @@ function CartGroupItem(props: any) {
                             org={org}
                             open={open}
                             setOpen={setOpen}
-                            vouchers={VOUCHER_CART.vouchers}
+                            vouchers={vouchers}
                         />
                     </div>
                 )}
@@ -169,11 +174,6 @@ export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
                                 <VoucherOrgItem org={org} voucher={item} />
                             </li>
                         ))}
-                        {vouchers.map((item: IDiscountPar, index: number) => (
-                            <li key={index} className="item">
-                                <VoucherOrgItem org={org} voucher={item} />
-                            </li>
-                        ))}
                     </ul>
                 </div>
             </div>
@@ -184,16 +184,24 @@ const VoucherOrgItem = (props: any) => {
     const { org } = props;
     const voucher: IDiscountPar = {
         ...props.voucher,
-        // minimum_order_value:1000000,
+        // discount_type:"PRODUCT",
+        // discount_value:500,
+        // items:[],
+        // items_count:0,
+        // minimum_order_value: null,
         // valid_from: "2022-01-01 10:00:00",
-        // valid_util: "2022-03-01 10:00:00"
+        // valid_util: "2022-10-01 10:00:00"
     };
-    console.log("voucher :>> ", voucher);
-    const [active, setActive] = useState(false);
+    const listItemName = voucher.items
+        .filter((i: IITEMS_DISCOUNT) => i.organization?.id === org?.id)
+        .map((i: IITEMS_DISCOUNT) =>
+            i.productable?.service_name || i?.productable.product_name
+        )
     const dispatch = useDispatch();
-    const { cartAmountDiscount, cartAmount, cartList } = useSelector(
+    const { cartAmount, cartList, VOUCHER_APPLY } = useSelector(
         (state: any) => state.carts
     );
+    const active = VOUCHER_APPLY.map((i: IDiscountPar) => i.id).includes(voucher.id)
     const cartCheck = cartList.filter((item: any) => item.isConfirm === true);
     const subTotalCondition = EX_CHECK_SUB_TOTAL(cartAmount, voucher);
     const dateCondition = EX_CHECK_DATE(voucher);
@@ -208,13 +216,21 @@ const VoucherOrgItem = (props: any) => {
     ) {
         applyCondition = true;
     }
+    if (
+        voucher.discount_type === DISCOUNT_TYPE.PRODUCT.key
+    ) {
+        applyCondition = true
+    }
     // console.log(applyCondition)
 
     const handleApplyVoucher = () => {
-        // if (applyCondition && cartAmount > 0) {
-        //     dispatch(onApplyVoucherSubTotal(voucher));
-        // }
-        setActive(!active);
+        if (active) {
+            dispatch(onCancelApplyVoucher(voucher.id))
+        } else {
+            if (applyCondition && cartAmount > 0) {
+                dispatch(onApplyVoucherSubTotal(voucher));
+            }
+        }
     };
 
     // console.log("date", dateCondition)
@@ -225,9 +241,9 @@ const VoucherOrgItem = (props: any) => {
             style={
                 active === true
                     ? {
-                          backgroundColor: "#ffe3d2",
-                          border: "1px solid var(--red-cl)",
-                      }
+                        backgroundColor: "#ffe3d2",
+                        border: "1px solid var(--red-cl)",
+                    }
                     : {}
             }
             className="cart-vouchers-list__item"
@@ -253,20 +269,55 @@ const VoucherOrgItem = (props: any) => {
             </div>
             <div className="cart-vouchers-list__item-right">
                 <div className="item-right__top">
-                    <span className="item-right__name">Giảm 50%</span>
-                    <span className="item-right__desc">
-                        Cho đơn hàng từ 300k
+                    <span className="item-right__name">
+                        {EX_DISCOUNT_TYPE(voucher)}
                     </span>
+                    {
+                        voucher?.minimum_order_value &&
+                        <span className="item-right__desc">
+                            Cho đơn hàng từ {formatPrice(voucher.minimum_order_value)}đ
+                        </span>
+                    }
+                    {
+                        listItemName.length > 0 ?
+                            <span className="item-right__desc">
+                                Áp dụng cho các dịch vụ, sản phẩm : <span
+                                    style={{ fontWeight: "bold" }}
+                                >
+                                    {listItemName.join(",")}
+                                </span>
+                            </span>
+                            :
+                            <span className="item-right__desc">
+                                Áp dụng tất cả sản phẩm, dịch vụ
+                            </span>
+                    }
                 </div>
                 <div className="item-right__bottom">
-                    <span className="item-right__expired">HSD: 31/8/2022</span>
-                    <div
-                        onClick={() => handleApplyVoucher()}
-                        className="item-right__btn"
-                    >
-                        <span>{active === true ? "Bỏ chọn" : "Áp dụng"}</span>
-                    </div>
-                    {/* <img src={icon.noApply} alt="" /> */}
+                    {
+                        (voucher.valid_from || voucher.valid_util) ?
+                            <span className="item-right__expired">
+                                Áp dụng: {voucher.valid_from && moment(voucher.valid_from).format("DD/MM/YYYY")} -
+                                {voucher.valid_util && moment(voucher.valid_util).format("DD/MM/YYYY")}
+                            </span>
+                            :
+                            <span className="item-right__expired"></span>
+                    }
+                    {
+                        applyCondition === true ?
+                            <div
+                                onClick={() => handleApplyVoucher()}
+                                className="item-right__btn"
+                            >
+                                <span>{
+                                    active
+                                        ?
+                                        "Bỏ chọn" : "Áp dụng"
+                                }</span>
+                            </div>
+                            :
+                            <img src={icon.noApply} alt="" />
+                    }
                 </div>
             </div>
             {/* {voucher.title}<br />

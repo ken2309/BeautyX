@@ -28,7 +28,8 @@ export interface IProductPromo {
     product_name: string
     rating: number
     retail_price: number
-    special_price: number
+    special_price: number,
+    special_price_momo: number,
     _geo: {
         lat: number
         lng: number

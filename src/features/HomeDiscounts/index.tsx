@@ -11,7 +11,6 @@ import { AppContext } from "../../context/AppProvider";
 import { STATUS } from "../../redux/status";
 
 import { LoadingServicesRow } from '../../components/LoadingSketion';
-import { exDiscountFinal } from "../../data/listService";
 import { DISCOUNT_TYPE } from "../../utils/formatRouterLink/fileType";
 
 function HomeDiscount() {
@@ -23,7 +22,6 @@ function HomeDiscount() {
         history.push("/giam-gia");
         scrollTop();
     };
-    console.log(exDiscountFinal)
     return (
         <div className="home-discounts">
             <Container>

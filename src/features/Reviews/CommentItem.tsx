@@ -125,8 +125,8 @@ export default function CommentItem(props: IProps) {
             img_url: "",
         })
     };
-    // const displayTime = moment(comment.created_at).locale("vi").fromNow();
-    console.log(commentRep);
+    const displayTime = moment(comment.created_at).locale("vi").fromNow();
+    // console.log(commentRep);
     return (
         <>
             <div className="evaluate-comment__top">
@@ -188,7 +188,7 @@ export default function CommentItem(props: IProps) {
                     >
                         <div className="evaluate-comment__bot">
                             <div className="evaluate-comment__bot-title">
-                                {/* <span>{displayTime}</span> */}
+                                <span>{displayTime}</span>
                                 <span>
                                     {/* {comment.children.length > 0 && `${comment.children.length}  `} */}
                                     Trả lời

@@ -24,6 +24,7 @@ import {
   onSaveOrgId
 } from "../../redux/org_specials/orgSpecialSlice";
 import { STATUS } from "../../redux/status";
+import { IS_VOUCHER } from "../../utils/cart/checkConditionVoucher";
 import { formatOrgParam } from "../../utils/formatParams";
 import useFullScreen from "../../utils/useDeviceMobile";
 import Footer from "../Footer";
@@ -74,7 +75,7 @@ function MerchantDetail() {
         if (discounts.length > 0) {
           dispatch(addVoucherByOrg({
             org: org,
-            vouchers: discounts
+            vouchers: IS_VOUCHER(discounts)
           }))
         }
       }
@@ -100,6 +101,7 @@ function MerchantDetail() {
       org_id: sub_domain,
       page: 1,
       special: true,
+      special_ecommerce: true,
       isEnable: org?.is_momo_ecommerce_enable && true
     }
     dispatch(onSaveOrgId(sub_domain))
@@ -128,7 +130,8 @@ function MerchantDetail() {
       if (
         ORG_DISCOUNTS.DISCOUNTS.totalItem === 0 &&
         SERVICES_SPECIAL.totalItem === 0 &&
-        PRODUCTS_SPECIAL.totalItem === 0
+        PRODUCTS_SPECIAL.totalItem === 0 &&
+        IS_VOUCHER(ORG_DISCOUNTS.DISCOUNTS.discounts).length === 0
       ) {
         dispatch(onActiveTab(tab === 1 ? 2 : tab));
       }

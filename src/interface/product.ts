@@ -33,5 +33,6 @@ export interface Product {
       unit_ratio: number | string | null,
       rating: number,
       is_favorite: boolean,
-      favorites_count: number
+      favorites_count: number,
+      special_price_momo: number,
 }

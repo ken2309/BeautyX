@@ -28,6 +28,7 @@ import onErrorImg from "../../utils/errorImg";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 import { fetchAsyncOrgDiscounts } from "../../redux/org_discounts/orgDiscountsSlice";
 import { IDiscountPar } from "../../interface/discount";
+import { IS_VOUCHER } from "../../utils/cart/checkConditionVoucher";
 // end
 
 const initialMomoForBeautyx = {
@@ -44,7 +45,7 @@ function Carts() {
     const { cartAmountDiscount, cartAmount, VOUCHER_APPLY } = useSelector(
         (state: any) => state.carts
     );
-    console.log(VOUCHER_APPLY)
+    // console.log(VOUCHER_APPLY)
     const { USER } = useSelector((state: any) => state.USER);
     const cartListAll = useSelector((state: any) => state.carts.cartList)
     const cartList = cartListAll.filter((i: any) => i?.user_id === USER?.id)
@@ -59,7 +60,7 @@ function Carts() {
         if (discounts.length > 0) {
             dispatch(addVoucherByOrg({
                 org: org,
-                vouchers: discounts
+                vouchers: IS_VOUCHER(discounts)
             }))
         }
     }

@@ -195,8 +195,8 @@ import settingsSlidersPurple from "../assets/icon/settingsSlidersPurple.svg";
 import lineGray from "../assets/icon/lineGray.svg";
 import filterBlack from "../assets/icon/filterBlack.svg";
 import closeBlack from "../assets/icon/closeBlack.svg";
-import noApply from "../assets/icon/no-apply.svg";
 import locationCate from "../assets/icon/locationCate.png";
+import noApply from "../assets/icon/no-apply.svg";
 
 const icon = {
     noApply,
@@ -393,6 +393,6 @@ const icon = {
     filterBlack,
     closeBlack,
     locationCate,
-    pinMapRed,
+    pinMapRed
 };
 export default icon;

@@ -23,6 +23,7 @@ export interface IServicePromo {
     org_full_address: string,
     branch_id: null | number,
     branch_is_active: boolean,
+    special_price_momo:number,
     _geo: {
         lat: null | number,
         lng: null | number

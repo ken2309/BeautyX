@@ -3,6 +3,7 @@ import './style.css'
 import { Skeleton } from '@mui/material'
 import useDeviceMobile from '../../utils/useDeviceMobile';
 
+
 const arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 export const LoadingOrgs = () => {
     return (

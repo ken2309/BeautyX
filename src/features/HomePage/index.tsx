@@ -17,16 +17,20 @@ import HomeTopService from "./HomeTopService";
 import HomeTags from "./HomeTags";
 import HomeProvince from "./HomeProvince";
 // import FooterCate from "../FooterCates";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { onResetFilter } from "../../redux/filter/filterSlice";
+import { LoadHomeBanner } from "../../components/LoadingSketion/LoadHome";
 
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
+import { STATUS } from "../../redux/status";
 // end
 // import HomeTagsProducts from "./Components/HomeTagsList/HomeTagsProducts";
 export default function HomePage() {
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
+    const banner_status = useSelector((state: any) => state.HOME.status);
+
     useEffect(() => {
         tracking.HOME_LOAD();
         dispatch(onResetFilter());
@@ -38,8 +42,15 @@ export default function HomePage() {
             {IS_MB ? <HeadHomeMobile /> : <Head IN_HOME={true} />}
             {/* <HomeTagsProducts /> */}
             <Container>
-                <HomeBanner />
-                <HomeTags />
+                {
+                    banner_status !== STATUS.SUCCESS ?
+                        <LoadHomeBanner/>
+                        :
+                        <>
+                            <HomeBanner />
+                            <HomeTags />
+                        </>
+                }
             </Container>
             <HomeDiscount />
             <Container>

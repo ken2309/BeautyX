@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import "./service-promo-item.css";
 import { IServicePromo } from "../../../interface/servicePromo";
 import icon from "../../../constants/icon";
-import formatPrice from "../../../utils/formatPrice";
+import formatPrice, { formatSalePriceService } from "../../../utils/formatPrice";
 import { Link } from "react-router-dom";
 import onErrorImg from "../../../utils/errorImg";
 import scrollTop from "../../../utils/scrollTop";
@@ -14,6 +14,7 @@ import tracking from "../../../api/trackApi";
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
 import { AppContext } from "../../../context/AppProvider";
+import { formatDistance } from "../../../utils/format";
 // end
 
 interface IProps {
@@ -24,6 +25,7 @@ function ServicePromoItem(props: IProps) {
     const { service } = props;
     const { t } = useContext(AppContext);
     const patchServiceOb = formatRouterLinkServicePromo(service);
+    const serviceSaleSpecial = formatSalePriceService(service.special_price, service?.special_price_momo)
     return (
         <Link
             to={patchServiceOb}
@@ -35,7 +37,7 @@ function ServicePromoItem(props: IProps) {
             className="ser-pro-item"
         >
             <div className="ser-img-cnt">
-                {service.org_image !== '' && service.org_image !== null && <img src={service.org_image} className="ser-img__org-logo" alt=""/> }
+                {service.org_image !== '' && service.org_image !== null && <img src={service.org_image} className="ser-img__org-logo" onError={(e)=>onErrorImg(e)} alt=""/> }
                 <img
                     className="ser-img"
                     src={
@@ -80,19 +82,19 @@ function ServicePromoItem(props: IProps) {
             <div className="ser-pro-item__cnt">
                 <span className="ser-name">{service?.service_name}</span>
                 <div className="ser-price">
-                    {service?.special_price === -1 ? (
-                        <span style={{ color: "var(--purple)" }}>
-                            {formatPrice(service?.price)}đ
-                        </span>
-                    ) : (
-                        <>
-                            <span>{formatPrice(service?.special_price)}đ</span>
-                            <span>{formatPrice(service?.price)}đ</span>
-                            {/* {service?.discount_percent < 50 && (
+                    {serviceSaleSpecial  > 0 ?
+                        (
+                            <>
+                                <span>{formatPrice(serviceSaleSpecial)}đ</span>
                                 <span>{formatPrice(service?.price)}đ</span>
-                            )} */}
-                        </>
-                    )}
+                            </>
+                        )
+                        :
+                        (
+                            <span style={{ color: "var(--purple)" }}>
+                                {formatPrice(service?.price)}đ
+                            </span>
+                        )}
                 </div>
                 {service._geoDistance ? (
                     <div className="flex-row ser-distance">
@@ -100,11 +102,7 @@ function ServicePromoItem(props: IProps) {
                         <span>
                             {t("se.distance")}
                             {": "}
-                            {service._geoDistance < 1000
-                                ? `${service._geoDistance}(m)`
-                                : `${Math.round(
-                                    service._geoDistance / 1000
-                                )}(km)`}
+                            {formatDistance(service?._geoDistance)}
                         </span>
                     </div>
                 ) : (

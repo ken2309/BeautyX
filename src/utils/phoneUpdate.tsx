@@ -35,7 +35,7 @@ interface IProps{
 export default function index(props:IProps){
     
     const {telephone,token} = props
-    const renderIndex = () => {
+    const RenderIndex = () => {
         if(checkPhoneValid(telephone)){
             return <></>
         }
@@ -43,4 +43,9 @@ export default function index(props:IProps){
             return SendOtp(telephone)
         }
     }
+    return (
+        <>
+            <RenderIndex/>
+        </>
+    )
 }

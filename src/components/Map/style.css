@@ -404,6 +404,35 @@
     width: 100%;
 }
 
+.map .input-btn {
+    right: 20px;
+}
+.map .evaluate-rating__left {
+    width: 33.33%;
+    grid-gap: 4px 0;
+    border: 0;
+}
+.map .evaluate-rating__right {
+    width: 66.66%;
+    margin-right: 16px;
+}
+.map .MuiRating-root {
+    font-size: 16px;
+}
+.map .evaluate-rating__left,
+.map .evaluate-rating__right {
+    padding: 0px;
+}
+.map .evaluate-rating__quantity {
+    font-size: 14px;
+}
+.map .org-evaluate__cnt .evaluate-rating {
+    border: 0;
+    flex-direction: row-reverse;
+}
+.map .org-evaluate {
+    width: 100%;
+}
 @media only screen and (max-width: 1023px) {
     .open-map {
         padding: 6px 14px;

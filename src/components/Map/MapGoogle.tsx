@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     withGoogleMap,
     withScriptjs,
@@ -6,10 +6,14 @@ import {
     Marker,
 } from "react-google-maps";
 import InfoWindow from "react-google-maps/lib/components/InfoWindow";
+// import { GoogleMap, LoadScript, Marker, StandaloneSearchBox } from '@react-google-maps/api';
 import { AUTH_LOCATION } from "../../api/authLocation";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
 import useDeviceMobile from "../../utils/useDeviceMobile";
+
+
+// const lib = ["places"];
 
 const MapTagsGoogle = (props: any) => {
     const {
@@ -22,6 +26,7 @@ const MapTagsGoogle = (props: any) => {
         setOpenDetail,
         openDetail,
     } = props;
+    const key = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
     const IS_MB = useDeviceMobile();
     const defaultMapOptions = {
         fullscreenControl: true,
@@ -31,7 +36,7 @@ const MapTagsGoogle = (props: any) => {
     };
     let USER_LAT: any = 0;
     let USER_LNG: any = 0;
-    const LOCATION = AUTH_LOCATION();
+    const LOCATION = AUTH_LOCATION()
     if (LOCATION) {
         USER_LAT = parseFloat(LOCATION.split(",")[0]);
         USER_LNG = parseFloat(LOCATION.split(",")[1]);
@@ -39,13 +44,8 @@ const MapTagsGoogle = (props: any) => {
     const onMarkerClick = (item: IOrganization, index: number) => {
         // document.getElementById(`${item.id}`)?.scrollIntoView()
         if (onChangeCardMap) {
-            onChangeCardMap(item);
+            onChangeCardMap(item)
         }
-        setOpenDetail({
-            ...openDetail,
-            item: item,
-            open: true,
-        });
         if (setLocal) {
             setLocal({
                 lat: item.latitude,
@@ -53,24 +53,51 @@ const MapTagsGoogle = (props: any) => {
             });
         }
         if (IS_MB && onGotoSlickOrgItem) {
-            onGotoSlickOrgItem(index);
+            onGotoSlickOrgItem(index)
         }
-    };
+
+    }
     return (
         <div>
             <GoogleMap
+                // id="searchbox-example"
+                // mapContainerClassName="google-map-view"
+                // mapContainerStyle={containerStyle}
                 defaultOptions={defaultMapOptions}
                 zoom={zoom}
-                // defaultCenter={{ lat: location.lat, lng: location.long }}
-                center={{ lat: location.lat, lng: location.long }}
+                center={{
+                    lat: location.lat,
+                    lng: location.long
+                }}
             >
+                {/* <StandaloneSearchBox
+                >
+                    <input
+                        type="text"
+                        placeholder="Customized your placeholder"
+                        style={{
+                            boxSizing: `border-box`,
+                            border: `1px solid transparent`,
+                            width: `240px`,
+                            height: `32px`,
+                            padding: `0 12px`,
+                            borderRadius: `3px`,
+                            boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+                            fontSize: `14px`,
+                            outline: `none`,
+                            textOverflow: `ellipses`,
+                            position: "absolute",
+                            left: "50%",
+                            marginLeft: "-120px"
+                        }}
+                    />
+                </StandaloneSearchBox> */}
                 {LOCATION && (
                     <Marker
                         icon={{
                             url: icon.pinMapRed,
                         }}
                         position={{ lat: USER_LAT, lng: USER_LNG }}
-                        //animation={item?.latitude === location.lat ? window.google.maps.Animation.DROP : null}
                     >
                         {
                             <InfoWindow>
@@ -92,7 +119,6 @@ const MapTagsGoogle = (props: any) => {
                                     : icon.pinMap,
                         }}
                         position={{ lat: item?.latitude, lng: item?.longitude }}
-                        //animation={item?.latitude === location.lat ? window.google.maps.Animation.DROP : null}
                     >
                         {
                             <InfoWindow>
@@ -106,3 +132,4 @@ const MapTagsGoogle = (props: any) => {
     );
 };
 export default withScriptjs(withGoogleMap(MapTagsGoogle));
+// export default MapTagsGoogle
