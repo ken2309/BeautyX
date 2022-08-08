@@ -2,7 +2,7 @@ import React from "react";
 import { Service } from "../../../../interface/service";
 import { IOrganization } from "../../../../interface/organization";
 import onErrorImg from "../../../../utils/errorImg";
-import formatPrice from "../../../../utils/formatPrice";
+import formatPrice, { formatSalePriceService } from "../../../../utils/formatPrice";
 import icon from "../../../../constants/icon";
 import scrollTop from "../../../../utils/scrollTop";
 import { Link } from "react-router-dom";
@@ -21,6 +21,7 @@ interface IProps {
 function OrgServiceItem(props: IProps) {
     const { org, service } = props;
     const pathServiceOb = formatRouterLinkService(service, org);
+    const serviceSaleSpecial = formatSalePriceService(service?.special_price, service?.special_price_momo)
     return (
         <Link
             to={pathServiceOb}
@@ -57,10 +58,10 @@ function OrgServiceItem(props: IProps) {
                         </span>
                         {/* <span className="item-head__desc">{service?.description}</span> */}
                     </div>
-                    {service?.special_price > 0 ? (
+                    {serviceSaleSpecial > 0 ? (
                         <div className="item-price">
                             <span className="item-price__special">
-                                {formatPrice(service?.special_price)}đ
+                                {formatPrice(serviceSaleSpecial)}đ
                             </span>
                             <span className="item-price__old">
                                 {formatPrice(service?.price)}đ

@@ -2,7 +2,7 @@ import React from "react";
 import { IOrganization } from "../../../../interface/organization";
 import { Product } from "../../../../interface/product";
 import onErrorImg from "../../../../utils/errorImg";
-import formatPrice from "../../../../utils/formatPrice";
+import formatPrice, { formatSalePriceService } from "../../../../utils/formatPrice";
 import icon from "../../../../constants/icon";
 import scrollTop from "../../../../utils/scrollTop";
 import { Link } from "react-router-dom";
@@ -22,6 +22,7 @@ interface IProps {
 function OrgProductItem(props: IProps) {
     const { product, org } = props;
     const pathProductOb = formatRouterLinkProduct(product, org);
+    const productSalePrice = formatSalePriceService(product.special_price, product.special_price_momo);
     return (
         <Link
             to={pathProductOb}
@@ -57,10 +58,10 @@ function OrgProductItem(props: IProps) {
                         {/* <span className="item-head__desc">{product?.description}</span> */}
                     </div>
                     <div className="item-price">
-                        {product.special_price > 0 ? (
+                        {productSalePrice> 0 ? (
                             <>
                                 <span className="item-price__special">
-                                    {formatPrice(product?.special_price)}đ
+                                    {formatPrice(productSalePrice)}đ
                                 </span>
                                 <span className="item-price__old">
                                     {formatPrice(product?.retail_price)}đ

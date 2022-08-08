@@ -30,7 +30,7 @@ const IsEqualArr = (arr1: any[], arr2: any[]) => {
 export const IS_VOUCHER = (discounts:IDiscountPar[])=>{
     const vouchers:IDiscountPar[] = discounts.filter((i: IDiscountPar) => (
         i.discount_type === "SUB_TOTAL" ||
-        (i.discount_type === "PRODUCT" && i.items_count === 0)
+        ((i.discount_type === "PRODUCT" || i.discount_type === "FINAL_PRICE") && i.items_count === 0)
     ));
     return vouchers
 }
@@ -50,7 +50,7 @@ export const EX_CHECK_SUB_TOTAL = (
     totalAmount: number, voucher: IDiscountPar
 ) => {
     let subTotalCondition = false;
-    if (!voucher.minimum_order_value || totalAmount > voucher.minimum_order_value) {
+    if (!voucher.minimum_order_value || totalAmount >= voucher.minimum_order_value) {
         subTotalCondition = true
     }
     return subTotalCondition

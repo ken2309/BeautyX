@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import icon from "../../../constants/icon";
 import onErrorImg from "../../../utils/errorImg";
-import formatPrice from "../../../utils/formatPrice";
+import formatPrice, { formatSalePriceService } from "../../../utils/formatPrice";
 import { useHistory } from "react-router-dom";
 import {
     fetchAsyncCancelFavoriteService,
@@ -38,8 +38,9 @@ export default function ServiceDetailRight(props: IProps) {
     const { COMMENTS } = useSelector((state: any) => state.SERVICE);
     const history = useHistory();
     const [popupSuccess, setPopupSuccess] = useState(false);
+    const serviceSaleSpecial = formatSalePriceService(service.special_price, service.special_price_momo);
     const percent: any = service
-        ? Math.round(100 - (service?.special_price / service?.price) * 100)
+        ? Math.round(100 - (serviceSaleSpecial / service?.price) * 100)
         : null;
     const { USER } = useSelector((state: any) => state.USER);
 
@@ -73,8 +74,8 @@ export default function ServiceDetailRight(props: IProps) {
     };
     const handleAddCart = () => {
         const sale_price =
-            (service?.special_price > 0)
-                ? service?.special_price_momo
+            (serviceSaleSpecial > 0)
+                ? serviceSaleSpecial
                 : service?.price;
         const is_type = 2;
         if (service.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable) {
@@ -207,7 +208,7 @@ export default function ServiceDetailRight(props: IProps) {
                                     </p>
                                 </div>
                             )} */}
-                        {(service?.special_price > 0 || service?.special_price_momo > 0) &&
+                        {serviceSaleSpecial > 0 &&
                             (
                                 <div className="detail-right__percent">
                                     <p>
@@ -217,11 +218,11 @@ export default function ServiceDetailRight(props: IProps) {
                                 </div>
                             )}
                         <div className="detail-right__price">
-                            {(service?.special_price_momo > 0) ? (
+                            {serviceSaleSpecial > 0 ? (
                                 <>
                                     <span>
                                         {formatPrice(
-                                            service?.special_price_momo
+                                           serviceSaleSpecial
                                         )}đ
                                     </span>
                                     <span>

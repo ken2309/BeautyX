@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Product } from "../../../interface/product";
 import { IOrganization } from "../../../interface/organization";
 import icon from "../../../constants/icon";
-import formatPrice from "../../../utils/formatPrice";
+import formatPrice, { formatSalePriceService } from "../../../utils/formatPrice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import {
@@ -41,6 +41,9 @@ function ProductDetailRight(props: IProps) {
     const [popupSuccess, setPopupSuccess] = useState(false);
     const { t } = useContext(AppContext);
 
+    const productSaleSpecial = formatSalePriceService(product.special_price, product.special_price_momo);
+    // console.log(productSaleSpecial)
+
     // get today's activity date in org
     const now = new Date();
     const today = now.getDay() + 1;
@@ -65,7 +68,7 @@ function ProductDetailRight(props: IProps) {
         }
     };
     const percent = Math.round(
-        100 - (product?.special_price / product?.retail_price) * 100
+        100 - (productSaleSpecial / product?.retail_price) * 100
     );
     //handle add cart
     const onDescQuantity = () => {
@@ -77,8 +80,8 @@ function ProductDetailRight(props: IProps) {
             org?.is_momo_ecommerce_enable
         ) {
             const sale_price =
-                product?.special_price > 0
-                    ? product?.special_price
+                productSaleSpecial > 0
+                    ? productSaleSpecial
                     : product.retail_price;
             const is_type = 1;
             if(USER){
@@ -172,7 +175,7 @@ function ProductDetailRight(props: IProps) {
             <div className="detail-right__body">
                 <div className="detail-right__info">
                     <div className="flexX-gap-8">
-                        {product?.special_price > 0 && percent !== 0 && (
+                        {productSaleSpecial > 0 && percent !== 0 && (
                             <div className="detail-right__percent">
                                 <p>
                                     {`${t("detail_item.off")}`} {percent}%
@@ -180,10 +183,10 @@ function ProductDetailRight(props: IProps) {
                             </div>
                         )}
                         <div className="detail-right__price">
-                            {product?.special_price > 0 ? (
+                            {productSaleSpecial > 0 ? (
                                 <>
                                     <span>
-                                        {formatPrice(product?.special_price)}đ
+                                        {formatPrice(productSaleSpecial)}đ
                                     </span>
                                     <span>
                                         {formatPrice(product?.retail_price)}đ

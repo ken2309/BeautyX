@@ -188,9 +188,9 @@ const VoucherOrgItem = (props: any) => {
         // discount_value:500,
         // items:[],
         // items_count:0,
-        // minimum_order_value: 1000000,
+        // minimum_order_value: null,
         // valid_from: "2022-01-01 10:00:00",
-        // valid_util: "2022-03-01 10:00:00"
+        // valid_util: "2022-10-01 10:00:00"
     };
     const listItemName = voucher.items
         .filter((i: IITEMS_DISCOUNT) => i.organization?.id === org?.id)

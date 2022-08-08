@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import onErrorImg from "../../../utils/errorImg";
-import formatPrice from "../../../utils/formatPrice";
+import formatPrice, { formatSalePriceService } from "../../../utils/formatPrice";
 import "../ServicePromoItem/service-promo-item.css";
 import { Service } from "../../../interface/service";
 import { IOrganization } from "../../../interface/organization";
@@ -9,11 +9,10 @@ import scrollTop from "../../../utils/scrollTop";
 import { formatRouterLinkService } from "../../../utils/formatRouterLink/formatRouter";
 
 // ==== api tracking ====
- import tracking from "../../../api/trackApi";
+import tracking from "../../../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
-import { AppContext } from "../../../context/AppProvider";
 // end
 interface IProps {
     service: Service;
@@ -24,10 +23,10 @@ interface IProps {
 function ServiceItem(props: IProps) {
     const { service, org, changeStyle } = props;
     const history = useHistory();
+    const serviceSaleSpecial = formatSalePriceService(service?.special_price, service?.special_price_momo);
     const percent: any = Math.round(
-        100 - (service?.special_price / service?.price) * 100
+        100 - (serviceSaleSpecial / service?.price) * 100
     );
-    const { t } = useContext(AppContext);
 
     const pathServiceOb = formatRouterLinkService(service, org);
     const onDetail = () => {
@@ -89,18 +88,19 @@ function ServiceItem(props: IProps) {
                             : "ser-price"
                     }
                 >
-                    {service?.special_price === -1 ? (
-                        <span style={{ color: "var(--purple)" }}>
-                            {formatPrice(service?.price)}đ
-                        </span>
-                    ) : (
-                        <>
-                            <span>{formatPrice(service?.special_price)}đ</span>
-                            {percent < 50 && (
+                    {serviceSaleSpecial > 0 ?
+                        (
+                            <>
+                                <span>{formatPrice(serviceSaleSpecial)}đ</span>
                                 <span>{formatPrice(service?.price)}đ</span>
-                            )}
-                        </>
-                    )}
+                            </>
+                        )
+                        :
+                        (
+                            <span style={{ color: "var(--purple)" }}>
+                                {formatPrice(service?.price)}đ
+                            </span>
+                        )}
                 </div>
                 {/* {
                     service._geoDistance ?
