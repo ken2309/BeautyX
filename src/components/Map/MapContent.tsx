@@ -220,6 +220,7 @@ export default function MapContent(props: IProps) {
                                 handleSetLocation={handleSetLocation}
                                 key={index}
                                 item={item}
+                                history={history}
                                 setOpenDetail={setOpenDetail}
                                 openDetail={setOpenDetail}
                             />
@@ -228,7 +229,7 @@ export default function MapContent(props: IProps) {
                 </div>
 
                 {/* org detail */}
-                {openDetail.open === true && openDetail.item.id ? (
+                {/* {openDetail.open === true && openDetail.item.id ? (
                     <>
                         <div ref={refDetail} className="dialog-map__detail">
                             <div className="dialog-map__content">
@@ -302,12 +303,13 @@ export default function MapContent(props: IProps) {
                             </div>
                         </div>
                     </>
-                ) : null}
+                ) : null} */}
 
                 {/* btn toggle open close list map org */}
                 <div
                     onClick={() => {
-                        handleToggleListOrg();
+                        // handleToggleListOrg();
+                        handleGotoOrg();
                     }}
                     className="open-list__org close"
                 >
