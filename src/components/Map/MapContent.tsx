@@ -48,7 +48,6 @@ export default function MapContent(props: IProps) {
     const time_works_today = orgTimes?.find(
         (item: any, index: number) => index + 2 === today
     );
-    console.log("time", time_works_today);
     // close time ORG
     const refDetail: any = useRef();
     const refHead: any = useRef();
@@ -254,7 +253,7 @@ export default function MapContent(props: IProps) {
                 </div>
 
                 {/* org detail */}
-                {openDetail.open === true && openDetail.item ? (
+                {openDetail.open === true && openDetail.item?.id ? (
                     <>
                         <div ref={refDetail} className="dialog-map__detail">
                             <div className="dialog-map__content">
