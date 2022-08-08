@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import {
-    withGoogleMap,
-    withScriptjs,
-    GoogleMap,
-    Marker,
-} from "react-google-maps";
-import InfoWindow from "react-google-maps/lib/components/InfoWindow";
-// import { GoogleMap, LoadScript, Marker, StandaloneSearchBox } from '@react-google-maps/api';
+import React from "react";
+// import {
+//     withGoogleMap,
+//     withScriptjs,
+//     GoogleMap,
+//     Marker,
+// } from "react-google-maps";
+// import InfoWindow from "react-google-maps/lib/components/InfoWindow";
+import { GoogleMap, LoadScript, Marker, StandaloneSearchBox } from '@react-google-maps/api';
 import { AUTH_LOCATION } from "../../api/authLocation";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
@@ -58,23 +58,26 @@ const MapTagsGoogle = (props: any) => {
 
     }
     return (
-        <div>
+        <LoadScript
+            googleMapsApiKey={`${key}`}
+            libraries={["places"]}
+        >
             <GoogleMap
-                // id="searchbox-example"
-                // mapContainerClassName="google-map-view"
+                id="searchbox-example"
+                mapContainerClassName="google-map-view"
                 // mapContainerStyle={containerStyle}
-                defaultOptions={defaultMapOptions}
+                // defaultOptions={defaultMapOptions}
                 zoom={zoom}
                 center={{
                     lat: location.lat,
                     lng: location.long
                 }}
             >
-                {/* <StandaloneSearchBox
+                <StandaloneSearchBox
                 >
                     <input
                         type="text"
-                        placeholder="Customized your placeholder"
+                        placeholder="Tìm kiếm trên Map..."
                         style={{
                             boxSizing: `border-box`,
                             border: `1px solid transparent`,
@@ -91,7 +94,7 @@ const MapTagsGoogle = (props: any) => {
                             marginLeft: "-120px"
                         }}
                     />
-                </StandaloneSearchBox> */}
+                </StandaloneSearchBox>
                 {LOCATION && (
                     <Marker
                         icon={{
@@ -99,13 +102,13 @@ const MapTagsGoogle = (props: any) => {
                         }}
                         position={{ lat: USER_LAT, lng: USER_LNG }}
                     >
-                        {
+                        {/* {
                             <InfoWindow>
                                 <div className="tooltip tooltip-current">
                                     Vị trí của bạn
                                 </div>
                             </InfoWindow>
-                        }
+                        } */}
                     </Marker>
                 )}
                 {org?.map((item: IOrganization, index: number) => (
@@ -120,16 +123,16 @@ const MapTagsGoogle = (props: any) => {
                         }}
                         position={{ lat: item?.latitude, lng: item?.longitude }}
                     >
-                        {
+                        {/* {
                             <InfoWindow>
                                 <div className="tooltip">{item?.name}</div>
                             </InfoWindow>
-                        }
+                        } */}
                     </Marker>
                 ))}
             </GoogleMap>
-        </div>
+        </LoadScript>
     );
 };
-export default withScriptjs(withGoogleMap(MapTagsGoogle));
-// export default MapTagsGoogle
+// export default withScriptjs(withGoogleMap(MapTagsGoogle));
+export default MapTagsGoogle
