@@ -2,9 +2,15 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import img from "../../constants/img";
+import { IOrganization } from "../../interface/organization";
 import onErrorImg from "../../utils/errorImg";
+import { formatDistance } from "../../utils/format";
 
-export default function MapTagsItemMB(props: any) {
+interface IProps{
+    item: IOrganization
+}
+
+export default function MapTagsItemMB(props: IProps) {
     const { item } = props;
     const history = useHistory();
     const gotoDetail = () => {
@@ -38,22 +44,30 @@ export default function MapTagsItemMB(props: any) {
                             </div>
                             <p>5</p>
                         </div>
-                        <div className="evaluate-item">
+                        {/* <div className="evaluate-item">
                             <div className="evaluate-item__img">
                                 <img src={icon.cartCheckPurple} alt="" />
                             </div>
                             <p>10</p>
-                        </div>
+                        </div> */}
                         <div className="evaluate-item">
                             <div className="evaluate-item__img">
                                 <img src={icon.heart} alt="" />
                             </div>
                             <p>
-                                {item?.favorites_count
-                                    ? item?.favorites_count
-                                    : "0"}
+                                {item?.favorites?.length}
                             </p>
                         </div>
+                        {item.distance && (
+                            <div className="flex-row map-item__distance">
+                                <img
+                                    className="map-item__distance-icon"
+                                    src={icon.pinMapRed}
+                                    alt=""
+                                />
+                                {formatDistance(item.distance)}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

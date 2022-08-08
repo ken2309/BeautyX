@@ -1,3 +1,12 @@
+interface IFavorite {
+    created_at: string
+    favoritetable_id?: number
+    favoritetable_type?: number
+    id: number
+    organization_id: number
+    updated_at: string
+    user_id: number
+}
 export interface IOrganization {
     id: number;
     name: string;
@@ -20,7 +29,7 @@ export interface IOrganization {
     opening_time: any;
     favorites_count: number;
     is_favorite?: boolean | null;
-    favorites: [];
+    favorites: IFavorite[];
     distance: number | undefined;
     tags: [];
     telephone: [];

@@ -35,7 +35,7 @@ function CartGroupItem(props: any) {
     const itemOrgId = item.org_id;
     const [open, setOpen] = useState(false);
     const { VOUCHER_CART } = useSelector((state: any) => state.carts);
-    // const vouchers = IS_VOUCHER(VOUCHER_CART.vouchers)
+    const vouchers = IS_VOUCHER(VOUCHER_CART.vouchers)
     const cartListOrg = cartList.filter((i: any) => i.org_id === org?.id);
     const cartListCheck = cartList.filter((i: any) => i.isConfirm === true);
     let isCheck = false;
@@ -101,7 +101,7 @@ function CartGroupItem(props: any) {
                     ? `Chi nhánh : ${openBranch.branch?.name} - ${openBranch?.branch?.full_address}`
                     : `${item?.items[0]?.org?.full_address}`}
             </div>
-            {VOUCHER_CART.vouchers.length > 0 &&
+            {vouchers.length > 0 &&
                 VOUCHER_CART.org_id === itemOrgId && (
                     <div className="cart-item-voucher">
                         <span
@@ -115,7 +115,7 @@ function CartGroupItem(props: any) {
                             org={org}
                             open={open}
                             setOpen={setOpen}
-                            vouchers={VOUCHER_CART.vouchers}
+                            vouchers={vouchers}
                         />
                     </div>
                 )}
@@ -198,7 +198,7 @@ const VoucherOrgItem = (props: any) => {
             i.productable?.service_name || i?.productable.product_name
         )
     const dispatch = useDispatch();
-    const { cartAmountDiscount, cartAmount, cartList, VOUCHER_APPLY } = useSelector(
+    const { cartAmount, cartList, VOUCHER_APPLY } = useSelector(
         (state: any) => state.carts
     );
     const active = VOUCHER_APPLY.map((i: IDiscountPar) => i.id).includes(voucher.id)
