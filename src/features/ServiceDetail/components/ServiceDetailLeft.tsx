@@ -189,18 +189,18 @@ export default function ServiceDetailLeft(props: any) {
                 </div>
 
                 <div className="service-detail__mobile-bottom">
-                    {(service?.special_price > 0 || service?.special_price_momo > 0) && (
+                    {(service?.special_price > 0 ||
+                        service?.special_price_momo > 0) && (
                         <div className="service-detail__mobile-percent">
                             {t("detail_item.off")} {percent}%
                         </div>
                     )}
                     <div className="service-detail__mobile-price">
-                        {(service?.special_price_momo) ? (
+                        {service?.special_price > 0 ||
+                        service?.special_price_momo > 0 ? (
                             <>
                                 <span>
-                                    {formatPrice(
-                                        service?.special_price_momo
-                                    )}đ
+                                    {formatPrice(service?.special_price_momo)}đ
                                 </span>
                                 <span>{formatPrice(service?.price)}đ</span>
                             </>
