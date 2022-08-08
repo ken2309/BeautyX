@@ -275,6 +275,7 @@ export default function MapContent(props: IProps) {
                                         alt=""
                                     />
                                 </div>
+
                                 <div className="content-img">
                                     <img
                                         onError={(e) => onErrorImg(e)}
@@ -286,6 +287,7 @@ export default function MapContent(props: IProps) {
                                         alt=""
                                     />
                                 </div>
+
                                 <div className="content-info">
                                     <span className="content-info__name">
                                         {openDetail.item?.name}
@@ -340,10 +342,7 @@ export default function MapContent(props: IProps) {
                                             {openDetail?.item?.full_address}
                                         </span>
                                     </div>
-                                    <div
-                                        style={{ alignItems: "center" }}
-                                        className="content-info__item"
-                                    >
+                                    <div className="content-info__item">
                                         <div className="item-icon">
                                             <img src={icon.time} alt="" />
                                         </div>
