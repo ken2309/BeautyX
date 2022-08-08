@@ -157,7 +157,6 @@ export default function MapContent(props: IProps) {
                 : org[0]?.longitude,
         });
         handleScrollActive();
-        console.log("render");
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [org, openDetail?.item]);
 
@@ -446,7 +445,7 @@ export default function MapContent(props: IProps) {
                                 </div>
 
                                 <div className="content-info__rating">
-                                    <OrgReviews org={openDetail?.item?.id} />
+                                    <OrgReviews org={openDetail?.item} />
                                 </div>
                             </div>
                         </div>

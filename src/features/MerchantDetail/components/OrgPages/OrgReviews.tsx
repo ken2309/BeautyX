@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IOrganization } from "../../../../interface/organization";
 import {
@@ -57,6 +57,7 @@ function OrgReviews(props: IProps) {
                         }}
                         onClick={() => {
                             setOpenAll(true);
+                            console.log("first");
                         }}
                         className="seemore-cmt"
                     >
