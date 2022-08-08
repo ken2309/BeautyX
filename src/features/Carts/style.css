@@ -444,11 +444,14 @@
     .cart-vouchers-list__item-right {
         grid-gap: 8px 0;
     }
+    .cart-vouchers-list .list .item {
+        height: 130px;
+    }
     .cart-vouchers-list__item-right .item-right__top .item-right__name {
         font-size: 14px;
     }
     .cart-vouchers-list__item-right .item-right__top .item-right__desc {
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 2;
         font-size: 12px;
         line-height: 18px;
     }

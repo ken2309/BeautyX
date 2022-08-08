@@ -30,6 +30,7 @@ import ComboDetail from "../features/ComboDetail";
 import DiscountDetail from "../features/DiscountDetail";
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 import HomeBannerSearchResult from "../features/HomePage/HomeBanner/homeSearchReasult";
+import HomeMap from "../features/HomeMap";
 
 // feature mobile
 //import Calendar from "../featuresMobile/Calendar";
@@ -194,6 +195,10 @@ function RouterConfig(props: any) {
     {
       path: "/ket-qua",
       component: <Result />
+    },
+    {
+      path:"/ban-do",
+      component:<HomeMap/>
     }
   ];
   const routesPrivate = [

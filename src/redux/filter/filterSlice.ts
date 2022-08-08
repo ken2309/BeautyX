@@ -21,7 +21,8 @@ export const fetchAsyncOrgsByFilter: any = createAsyncThunk(
         return {
             orgs: res.data.context.data,
             totalItem: res.data.context.total,
-            page: values.page
+            page: values.page,
+            path_url: values.path_url
         }
     }
 )
@@ -47,6 +48,7 @@ interface IInitialState {
     },
     TYPE_FILTER: string,
     ORGS: {
+        path_url: string,
         orgs: any[],
         page: number,
         totalItem: number,
@@ -76,6 +78,7 @@ const initialState: IInitialState = {
     },
     TYPE_FILTER: "",
     ORGS: {
+        path_url: "",
         orgs: [],
         page: 1,
         totalItem: 1,
@@ -111,10 +114,10 @@ const filterSlice = createSlice({
         onSetOrgsDistrict: (state, action) => {
             state.FILTER_ORG.district = action.payload
         },
-        onSetMinPrice:(state, action)=>{
+        onSetMinPrice: (state, action) => {
             state.FILTER_ORG.min_price = action.payload
         },
-        onSetMaxPrice:(state, action)=>{
+        onSetMaxPrice: (state, action) => {
             state.FILTER_ORG.max_price = action.payload
         },
         onResetFilter: (state) => {
@@ -130,7 +133,8 @@ const filterSlice = createSlice({
         },
         onSetOrgsEmpty: (state) => {
             state.ORGS.orgs = [];
-            state.ORGS.page = 1
+            state.ORGS.page = 1;
+            state.ORGS.totalItem = 1
         },
         onSetFilterType: (state, action) => {
             state.TYPE_FILTER = action.payload
@@ -158,10 +162,12 @@ const filterSlice = createSlice({
             return { ...state, ORGS: { ...state.ORGS, status: STATUS.LOADING } }
         },
         [fetchAsyncOrgsByFilter.fulfilled]: (state, { payload }) => {
-            const { orgs, page, totalItem } = payload
+            const { orgs, page, totalItem, path_url } = payload
             return {
                 ...state,
                 ORGS: {
+                    ...state.ORGS,
+                    path_url: path_url,
                     orgs: [...state.ORGS.orgs, ...orgs],
                     page: page,
                     totalItem: totalItem,

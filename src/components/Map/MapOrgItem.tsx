@@ -1,29 +1,31 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
 import onErrorImg from "../../utils/errorImg";
+import { formatDistance } from "../../utils/format";
 interface IProps {
     item: IOrganization;
     handleSetLocation: any;
     location: any;
+    setOpenDetail: any;
+    openDetail: any;
 }
 export default function MapTagsOrgItem(props: IProps) {
-    const { item, handleSetLocation, location } = props;
-    const history = useHistory();
-
+    const { item, handleSetLocation, location, setOpenDetail, openDetail } =
+        props;
     const onHoveItem = () => {
         handleSetLocation(item);
     };
     const gotoDetail = () => {
-        history.push({
-            pathname: `/org/${item.subdomain}`,
-            // search: `${item.id}`,
-            state: item,
+        setOpenDetail({
+            ...openDetail,
+            open: true,
+            item: item,
         });
     };
     return (
         <div
+            id={`${item.id}`}
             onMouseEnter={onHoveItem}
             onClick={() => gotoDetail()}
             style={
@@ -63,12 +65,22 @@ export default function MapTagsOrgItem(props: IProps) {
                     <div className="evaluate-item">
                         <img src={icon.heart} alt="" />
                         <p>
-                            {item?.favorites_count
-                                ? item?.favorites_count
+                            {item?.favorites?.length
+                                ? item?.favorites?.length
                                 : "0"}
                         </p>
                     </div>
                 </div>
+                {item.distance && (
+                    <div className="flex-row map-item__distance">
+                        <img
+                            className="map-item__distance-icon"
+                            src={icon.pinMapRed}
+                            alt=""
+                        />
+                        {formatDistance(item.distance)}
+                    </div>
+                )}
             </div>
         </div>
     );

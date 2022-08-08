@@ -3,7 +3,7 @@
     height: 100vh;
     position: relative;
 }
-.map-cnt{
+.map-cnt {
     height: 100%;
 }
 .open-map {
@@ -56,6 +56,7 @@
     border-right: 1px solid #ccc;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
+
 .map .dialog-map__list::-webkit-scrollbar {
     width: 2px;
     display: block;
@@ -64,6 +65,115 @@
     background-color: darkgrey;
 }
 
+.map .dialog-map__detail {
+    position: absolute;
+    top: 50%;
+    right: -50%;
+    transform: translate(60%, -50%);
+    width: 100%;
+    max-height: calc(100vh - 64px);
+    background-color: #fff;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 16px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.head-active {
+    background-color: var(--bgWhite) !important;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    transition: all 0.5s;
+}
+.content-head.head-active span {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: all 0.5s;
+}
+.map .dialog-map__content {
+    position: relative;
+}
+.map .content-head {
+    height: 56px;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s;
+}
+.map .content-img {
+    height: 240px;
+    width: 100%;
+    margin-top: -56px;
+}
+.map .content-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.map .content-head span {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: center;
+    visibility: hidden;
+    opacity: 0;
+}
+.map .content-head img {
+    margin-right: 16px;
+    background-color: #fff;
+    padding: 4px;
+    width: 30px;
+    border-radius: 100px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+}
+
+.map .content-info {
+    padding: 16px 24px 24px 24px;
+    border-bottom: 1px solid rgba(204, 204, 204, 0.663);
+}
+.map .content-info .content-info__name {
+    font-size: 18px;
+    line-height: 28px;
+    display: inline-block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+.map .content-info .content-info__wrapbtn {
+    margin-top: 16px;
+    display: flex;
+    grid-gap: 0 16px;
+}
+
+.map .content-info .content-info__wrapbtn .content-info__btn {
+    padding: 8px 16px;
+    border: 1px solid var(--purple);
+    display: flex;
+    grid-gap: 0 6px;
+    width: 100%;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.map .content-info .content-info__wrapbtn .content-info__btn img {
+    width: 24px;
+}
+.map .content-info .content-info__wrapbtn .content-info__btn span {
+    font-size: 14px;
+    color: var(--purple);
+    font-weight: bold;
+}
 .list-org__active {
     margin-left: 0 !important;
     transition: all 0.1s linear;
@@ -116,7 +226,6 @@
 .map .map-item__address p {
     font-size: 14px;
     font-weight: bold;
-    line-height: 24px;
     color: #8c8c8c;
     margin-top: auto;
     display: -webkit-box;
@@ -151,6 +260,16 @@
 .map .evaluate-item p {
     font-size: 14px;
     font-weight: bold;
+}
+.map .map-item__distance {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 14px;
+}
+.map .map-item__distance-icon {
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
 }
 .dialog-map__wrapper {
     position: absolute;
