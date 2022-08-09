@@ -1,0 +1,10 @@
+.home_title {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 700;
+}
