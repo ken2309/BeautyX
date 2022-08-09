@@ -124,7 +124,7 @@ function Carts() {
         setPmtMethod
     );
     const DATA_PMT = { pmtMethod, address, payment_method_id, org, branch };
-    console.log(cartListGroupOrg,cartList);
+    // console.log(cartListGroupOrg,cartList,cartListAll);
     return (
         <>
             <HeadTitle title="Giỏ hàng" />

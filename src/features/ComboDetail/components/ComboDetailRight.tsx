@@ -52,12 +52,12 @@ function ComboDetailRight(props: IProps) {
             const values = {
                 ...valuesOb,
                 cart_id: parseInt(`${USER.id}${valuesOb.cart_id}`),
-                use_id: USER.id
-            }
+                user_id: USER.id
+            };
             dispatch(addCart(values));
             setPopupSuccess(true);
         } else {
-            history.push("/sign-in?1")
+            history.push("/sign-in?1");
         }
     };
     return (
@@ -160,8 +160,8 @@ function ComboDetailRight(props: IProps) {
                 popup={popupSuccess}
                 setPopup={setPopupSuccess}
                 isNotSuccess={true}
-                // title={`Đã thêm ${combo?.name} vào giỏ hàng`}
-                title='Hiện tại BeautyX đang update tính năng sử dụng combo vui lòng thử lại sau nha!'
+                title={`Đã thêm ${combo?.name} vào giỏ hàng`}
+                // title='Hiện tại BeautyX đang update tính năng sử dụng combo vui lòng thử lại sau nha!'
             />
         </div>
     );
