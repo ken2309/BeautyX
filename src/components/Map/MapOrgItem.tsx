@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
@@ -16,7 +15,6 @@ interface IProps {
 export default function MapTagsOrgItem(props: IProps) {
     const { item, handleSetLocation, location, setOpenDetail, openDetail } =
         props;
-    const history = useHistory()
     const dispatch = useDispatch();
     const onHoveItem = () => {
         handleSetLocation(item);
@@ -25,28 +23,23 @@ export default function MapTagsOrgItem(props: IProps) {
         setOpenDetail({
             ...openDetail,
             open: true,
-            item: item,
+            check: true,
         });
+        dispatch(fetchAsyncOrg(item.subdomain));
     };
     return (
         <div
             id={`${item.id}`}
             onMouseEnter={onHoveItem}
-            onClick={() => 
-                history.push({
-                    pathname: `/org/${item.subdomain}`,
-                    // search: `${openDetail?.item.id}`,
-                    state: item,
-                })
-            }
+            onClick={() => gotoDetail()}
             style={
                 item?.latitude === location.lat
                     ? {
-                          backgroundColor: "var(--bgGray)",
-                      }
+                        backgroundColor: "var(--bgGray)",
+                    }
                     : {
-                          backgroundColor: "var(--bgWhite)",
-                      }
+                        backgroundColor: "var(--bgWhite)",
+                    }
             }
             className="dialog-map__item"
         >
