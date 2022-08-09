@@ -13,6 +13,7 @@ import { postAsyncReplyProductComments } from "../../redux/org_products/productS
 import mediaApi from "../../api/mediaApi";
 import moment from "moment";
 import "moment/locale/vi";
+import { postAsyncReplyComboComments } from "../../redux/org_combos/comboSlice";
 
 interface IProps {
     comment: IComment;
@@ -90,6 +91,14 @@ export default function CommentItem(props: IProps) {
                                 user: USER,
                             })
                         );
+                    case "TREATMENT_COMBO":
+                        // console.log(values);
+                        return dispatch(
+                            postAsyncReplyComboComments({
+                                values: values,
+                                user: USER,
+                            })
+                        );
                 }
             }
         } else {
@@ -127,6 +136,7 @@ export default function CommentItem(props: IProps) {
     };
     const displayTime = moment(comment.created_at).locale("vi").fromNow();
     // console.log(commentRep);
+    // console.log(props)
     return (
         <>
             <div className="evaluate-comment__top">
@@ -207,7 +217,7 @@ export default function CommentItem(props: IProps) {
                     <AccordionDetails>
                         <div className="evaluate-comment__child">
                             <ul className="evaluate-comment__child-list">
-                                {comment.children.map(
+                                {comment?.children && (comment.children.length > 0 && comment.children.map(
                                     (item: any, index: number) => (
                                         <li
                                             key={index}
@@ -260,7 +270,7 @@ export default function CommentItem(props: IProps) {
                                             </span>
                                         </li>
                                     )
-                                )}
+                                ))}
                                 {/* <div className="evaluate-comment__child-img">
                                     <button className="btn-close">
                                         <img src={icon.closeCircle} alt="" />
