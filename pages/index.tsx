@@ -15,7 +15,7 @@ function index(props: IPopsHomePage) {
     const { services } = props;
     return (
         <div
-            style={{backgroundColor:"var(--bg-gray)"}}
+            style={{ backgroundColor: "var(--bg-gray)" }}
         >
             <Container>
                 <HomePromo services={services} />
@@ -26,19 +26,6 @@ function index(props: IPopsHomePage) {
 
 export default index;
 
-
-export const getStaticProps: GetStaticProps<IPopsHomePage> = async (context: GetStaticPathsContext) => {
-    const res = await servicePromoApi.getServicesPromo({
-        page: 1,
-        sort: "-discount_percent"
-    })
-    const hits: IServicePromo[] = await res.data.data.hits
-    return {
-        props: {
-            services: hits
-        }
-    }
-}
 interface IPropsHomePromo {
     services: IServicePromo[]
 }
@@ -51,7 +38,7 @@ const HomePromo = (props: IPropsHomePromo) => {
             />
             <ul className={style.home_service_list}>
                 {
-                    services.map((i: IServicePromo, index: number) => (
+                    services?.map((i: IServicePromo, index: number) => (
                         <li key={index}>
                             <ServicePromoItem
                                 service={i}
@@ -63,3 +50,15 @@ const HomePromo = (props: IPropsHomePromo) => {
         </div>
     )
 }
+// export const getStaticProps: GetStaticProps<IPopsHomePage> = async (context: GetStaticPathsContext) => {
+//     const res = await servicePromoApi.getServicesPromo({
+//         page: 1,
+//         sort: "-discount_percent"
+//     })
+//     const hits: IServicePromo[] = await res.data.data.hits
+//     return {
+//         props: {
+//             services: hits
+//         }
+//     }
+// }
