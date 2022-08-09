@@ -9,25 +9,32 @@ interface IProps {
     location: any;
     setOpenDetail: any;
     openDetail: any;
+    history: any;
 }
 export default function MapTagsOrgItem(props: IProps) {
-    const { item, handleSetLocation, location, setOpenDetail, openDetail } =
+    const { item, handleSetLocation, location, setOpenDetail, openDetail, history } =
         props;
     const onHoveItem = () => {
         handleSetLocation(item);
     };
-    const gotoDetail = () => {
-        setOpenDetail({
-            ...openDetail,
-            open: true,
-            item: item,
-        });
-    };
+    // const gotoDetail = () => {
+    //     setOpenDetail({
+    //         ...openDetail,
+    //         open: true,
+    //         item: item,
+    //     });
+    // };
     return (
         <div
             id={`${item.id}`}
             onMouseEnter={onHoveItem}
-            onClick={() => gotoDetail()}
+            onClick={() => 
+                history.push({
+                    pathname: `/org/${item.subdomain}`,
+                    // search: `${openDetail?.item.id}`,
+                    state: item,
+                })
+            }
             style={
                 item?.latitude === location.lat
                     ? {

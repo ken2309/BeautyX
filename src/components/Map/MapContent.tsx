@@ -244,6 +244,7 @@ export default function MapContent(props: IProps) {
                                 handleSetLocation={handleSetLocation}
                                 key={index}
                                 item={item}
+                                history={history}
                                 setOpenDetail={setOpenDetail}
                                 openDetail={setOpenDetail}
                             />
@@ -349,7 +350,7 @@ export default function MapContent(props: IProps) {
                                                 {time_works_today?.status && (
                                                     <>
                                                         {time_works_today?.status ===
-                                                        "on" ? (
+                                                            "on" ? (
                                                             <p
                                                                 style={{
                                                                     color: "var(--green)",
@@ -404,10 +405,10 @@ export default function MapContent(props: IProps) {
                                                                 style={
                                                                     index +
                                                                         2 ===
-                                                                    today
+                                                                        today
                                                                         ? {
-                                                                              color: "var(--purple)",
-                                                                          }
+                                                                            color: "var(--purple)",
+                                                                        }
                                                                         : {}
                                                                 }
                                                                 key={index}
@@ -455,7 +456,8 @@ export default function MapContent(props: IProps) {
                 {/* btn toggle open close list map org */}
                 <div
                     onClick={() => {
-                        handleToggleListOrg();
+                        // handleToggleListOrg();
+                        handleGotoOrg();
                     }}
                     className="open-list__org close"
                 >
