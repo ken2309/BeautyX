@@ -114,7 +114,7 @@ export default function MapOrgItemDetail(props: IProps) {
                             src={
                                 galleries?.galleries[0]?.image_url
                                     ? galleries?.galleries[0]?.image_url
-                                    : org?.image
+                                    : org?.image_url
                             }
                             alt=""
                         />

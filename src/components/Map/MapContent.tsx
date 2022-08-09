@@ -55,6 +55,16 @@ export default function MapContent(props: IProps) {
                 open: false,
             });
         }
+        if (
+            openListOrg === false &&
+            openDetail.open === true &&
+            openDetail.check === true
+        ) {
+            setOpenDetail({
+                ...openDetail,
+                open: true,
+            });
+        }
     };
     const handleSetLocation = useCallback((cardMapItem: any) => {
         if (onChangeCardMap) {
