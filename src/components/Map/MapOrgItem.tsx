@@ -1,6 +1,8 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
+import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import onErrorImg from "../../utils/errorImg";
 import { formatDistance } from "../../utils/format";
 interface IProps {
@@ -13,6 +15,7 @@ interface IProps {
 export default function MapTagsOrgItem(props: IProps) {
     const { item, handleSetLocation, location, setOpenDetail, openDetail } =
         props;
+    const dispatch = useDispatch();
     const onHoveItem = () => {
         handleSetLocation(item);
     };
@@ -20,8 +23,9 @@ export default function MapTagsOrgItem(props: IProps) {
         setOpenDetail({
             ...openDetail,
             open: true,
-            item: item,
+            check: true,
         });
+        dispatch(fetchAsyncOrg(item.subdomain));
     };
     return (
         <div

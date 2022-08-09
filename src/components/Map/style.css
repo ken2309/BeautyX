@@ -48,7 +48,7 @@
 .map .dialog-map__list {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 25%;
     height: 100%;
     overflow-y: scroll;
     background-color: var(--bgWhite);
@@ -64,13 +64,16 @@
 .map .dialog-map__list::-webkit-scrollbar-thumb {
     background-color: darkgrey;
 }
-
-.map .dialog-map__detail {
-    position: absolute;
-    top: 50%;
-    right: -50%;
-    transform: translate(60%, -50%);
+.map .dialog-wrap__list {
+    align-items: center;
+    display: flex;
+    height: 100%;
     width: 100%;
+    position: relative;
+}
+.map .dialog-map__detail {
+    margin-left: 24px;
+    width: 25%;
     max-height: calc(100vh - 64px);
     background-color: #fff;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -276,7 +279,7 @@
     position: absolute;
     z-index: 2;
     height: 100%;
-    width: 25%;
+    width: 100%;
     top: 0;
     left: 0;
     margin-left: -25%;
@@ -284,26 +287,13 @@
 }
 .map .open-list__org {
     z-index: 6;
-    position: absolute;
     padding: 16px 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: max-content;
+    height: fit-content;
     background-color: var(--purple);
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     cursor: pointer;
     border-radius: 0 8px 8px 0;
 }
-.map .open-list__org.open {
-    left: 0;
-    z-index: 6;
-}
-.map .open-list__org.close {
-    z-index: 6;
-    right: -23px;
-}
-/* cus google map marker */
-
 .gm-style .gm-style-iw-c {
     width: max-content;
     background-color: var(--purple);
