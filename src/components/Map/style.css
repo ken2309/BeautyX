@@ -92,6 +92,11 @@
     border-radius: 16px;
     overflow: hidden;
     overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.dialog-map__detail::-webkit-scrollbar {
+    display: none;
 }
 
 .head-active {
@@ -337,6 +342,10 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     cursor: pointer;
     border-radius: 0 8px 8px 0;
+}
+
+.css-1u2w381-MuiModal-root-MuiDrawer-root.isMap {
+    z-index: 9000;
 }
 
 .gm-style .gm-style-iw-c {
