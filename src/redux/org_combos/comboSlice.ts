@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import comboApi from "../../api/comboApi";
 import commentsApi from "../../api/commentsApi";
+import { IComment } from "../../interface/comments";
 import { STATUS } from "../status";
 
 export const fetchAsyncComboDetail: any = createAsyncThunk(
@@ -34,8 +35,31 @@ export const postCommentCombo: any = createAsyncThunk(
         return payload;
     }
 );
-
-const initialState = {
+//post reply comment 
+export const postAsyncReplyComboComments: any = createAsyncThunk(
+    "COMBO/postAsyncReplyComboComments",
+    async (values: any) => {
+        const res = await commentsApi.postComment(values.values)
+        return {
+            id: res.data.context.id,
+            commentable_id: res.data.context.commentable_id,
+            body: res.data.context.body,
+            user_id: res.data.context.user_id,
+            user: values.user
+        }
+    }
+)
+interface InitialState {
+    COMBO: any,
+    COMMENTS: {
+        combo_id: any,
+        comments: IComment[],
+        page: number,
+        totalItem: number,
+        status: string,
+    },
+}
+const initialState:InitialState = {
     COMBO: {
         combo: {},
         status: "",
@@ -114,6 +138,20 @@ const comboSlice = createSlice({
         },
         [postCommentCombo.pending]: (state) => {
             return state;
+        },
+        //post reply combo
+        [postAsyncReplyComboComments.pending]: (state) => {
+            return state
+        },
+        [postAsyncReplyComboComments.fulfilled]: (state, { payload }) => {
+            const { commentable_id } = payload;
+            const iIndex = state.COMMENTS.comments.findIndex((i: IComment) =>
+                i.id === commentable_id
+            )
+            state.COMMENTS.comments[iIndex].children.push(payload)
+        },
+        [postAsyncReplyComboComments.pending]: (state) => {
+            return state
         },
     },
 });

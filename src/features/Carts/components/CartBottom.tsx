@@ -64,7 +64,7 @@ function CartBottom(props: any) {
         services: services.map((item: any) => {
             return { id: item.id, quantity: item.quantity };
         }),
-        combos: combos.map((item: any) => {
+        treatment_combo: combos.map((item: any) => {
             return { id: item.id, quantity: item.quantity };
         }),
         coupon_code: listCouponCode.length > 0 ? listCouponCode : [],
