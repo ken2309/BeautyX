@@ -38,7 +38,7 @@ function OrgReviews(props: IProps) {
     };
     useEffect(() => {
         callOrgComments();
-    }, []);
+    }, [org]);
     return (
         <>
             <div ref={refReview} className="org-evaluate">
