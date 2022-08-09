@@ -55,6 +55,7 @@
     z-index: 4;
     border-right: 1px solid #ccc;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    pointer-events: fill;
 }
 
 .map .dialog-map__list::-webkit-scrollbar {
@@ -70,9 +71,11 @@
     height: 100%;
     width: 100%;
     position: relative;
+    pointer-events: none;
 }
 .map .dialog-map__detail {
     margin-left: 24px;
+    pointer-events: fill;
     width: 25%;
     max-height: calc(100vh - 64px);
     background-color: #fff;
@@ -284,9 +287,11 @@
     left: 0;
     margin-left: -25%;
     transition: all 0.2s !important;
+    pointer-events: none;
 }
 .map .open-list__org {
     z-index: 6;
+    pointer-events: fill;
     padding: 16px 8px;
     height: fit-content;
     background-color: var(--purple);

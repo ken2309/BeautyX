@@ -6,10 +6,12 @@ import {
     Marker,
 } from "react-google-maps";
 import InfoWindow from "react-google-maps/lib/components/InfoWindow";
+import { useDispatch } from "react-redux";
 // import { GoogleMap, LoadScript, Marker, StandaloneSearchBox } from '@react-google-maps/api';
 import { AUTH_LOCATION } from "../../api/authLocation";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
+import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 
 // const lib = ["places"];
@@ -26,6 +28,7 @@ const MapTagsGoogle = (props: any) => {
         openDetail,
     } = props;
     const key = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
+    const dispatch = useDispatch();
     const IS_MB = useDeviceMobile();
     const defaultMapOptions = {
         fullscreenControl: true,
@@ -42,6 +45,8 @@ const MapTagsGoogle = (props: any) => {
     }
     const onMarkerClick = (item: IOrganization, index: number) => {
         // document.getElementById(`${item.id}`)?.scrollIntoView()
+        dispatch(fetchAsyncOrg(item.subdomain));
+
         if (onChangeCardMap) {
             onChangeCardMap(item);
         }
@@ -54,6 +59,11 @@ const MapTagsGoogle = (props: any) => {
         if (IS_MB && onGotoSlickOrgItem) {
             onGotoSlickOrgItem(index);
         }
+        setOpenDetail({
+            ...openDetail,
+            open: true,
+            check: true,
+        });
     };
     return (
         <div>
