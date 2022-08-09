@@ -48,7 +48,7 @@
 .map .dialog-map__list {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 25%;
     height: 100%;
     overflow-y: scroll;
     background-color: var(--bgWhite);
@@ -64,13 +64,16 @@
 .map .dialog-map__list::-webkit-scrollbar-thumb {
     background-color: darkgrey;
 }
-
-.map .dialog-map__detail {
-    position: absolute;
-    top: 50%;
-    right: -50%;
-    transform: translate(60%, -50%);
+.map .dialog-wrap__list {
+    align-items: center;
+    display: flex;
+    height: 100%;
     width: 100%;
+    position: relative;
+}
+.map .dialog-map__detail {
+    margin-left: 24px;
+    width: 25%;
     max-height: calc(100vh - 64px);
     background-color: #fff;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -101,6 +104,7 @@
     justify-content: center;
     align-items: center;
     transition: all 0.5s;
+    z-index: 999;
 }
 .map .content-img {
     height: 240px;
@@ -110,9 +114,10 @@
 .map .content-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover !important;
 }
 .map .content-head span {
+    padding: 0 40px 0 24px;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
@@ -122,7 +127,6 @@
     font-size: 18px;
     font-weight: 500;
     line-height: 24px;
-    text-align: center;
     visibility: hidden;
     opacity: 0;
 }
@@ -176,7 +180,7 @@
 }
 .list-org__active {
     margin-left: 0 !important;
-    transition: all 0.1s linear;
+    transition: all 0.1s;
 }
 .map .dialog-map__item {
     display: flex;
@@ -275,34 +279,21 @@
     position: absolute;
     z-index: 2;
     height: 100%;
-    width: 25%;
+    width: 100%;
     top: 0;
     left: 0;
     margin-left: -25%;
-    transition: all 0.3s ease-in !important;
+    transition: all 0.2s !important;
 }
 .map .open-list__org {
     z-index: 6;
-    position: absolute;
     padding: 16px 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: max-content;
+    height: fit-content;
     background-color: var(--purple);
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     cursor: pointer;
     border-radius: 0 8px 8px 0;
 }
-.map .open-list__org.open {
-    left: 0;
-    z-index: 6;
-}
-.map .open-list__org.close {
-    z-index: 6;
-    right: -23px;
-}
-/* cus google map marker */
-
 .gm-style .gm-style-iw-c {
     width: max-content;
     background-color: var(--purple);
@@ -337,11 +328,102 @@
 .map .map-item__mobile {
     display: none;
 }
-.google-map-view{
-    width: 100vw;
-    height: 100vh;
+.map .content-info__list {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 16px 0;
+    border-bottom: 1px solid #ccc;
+}
+.map .content-info__item {
+    display: flex;
+    grid-gap: 0 8px;
+    width: 100%;
+    align-items: center;
+}
+.map .content-info__item .item-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+.map .content-info__item .item-text {
+    font-size: 14px;
+    font-weight: 500;
+}
+.map .content-info__item .item-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.map .content-info__rating {
+    padding: 24px;
+    position: relative;
+}
+.map .evaluate-input__change {
+    width: 100%;
+    bottom: unset;
+    padding: 16px 24px;
 }
 
+.map .input-btn {
+    right: 20px;
+}
+.map .evaluate-rating__left {
+    width: 33.33%;
+    grid-gap: 4px 0;
+    border: 0;
+}
+.map .evaluate-rating__right {
+    width: 66.66%;
+    margin-right: 16px;
+}
+.map .MuiRating-root {
+    font-size: 16px;
+}
+.map .evaluate-rating__left,
+.map .evaluate-rating__right {
+    padding: 0px;
+}
+.map .evaluate-rating__quantity {
+    font-size: 14px;
+}
+.map .org-evaluate__cnt .evaluate-rating {
+    border: 0;
+    flex-direction: row-reverse;
+}
+.map .org-evaluate {
+    width: 100%;
+}
+
+.map .input-btn {
+    right: 20px;
+}
+.map .evaluate-rating__left {
+    width: 33.33%;
+    grid-gap: 4px 0;
+    border: 0;
+}
+.map .evaluate-rating__right {
+    width: 66.66%;
+    margin-right: 16px;
+}
+.map .MuiRating-root {
+    font-size: 16px;
+}
+.map .evaluate-rating__left,
+.map .evaluate-rating__right {
+    padding: 0px;
+}
+.map .evaluate-rating__quantity {
+    font-size: 14px;
+}
+.map .org-evaluate__cnt .evaluate-rating {
+    border: 0;
+    flex-direction: row-reverse;
+}
+.map .org-evaluate {
+    width: 100%;
+}
 @media only screen and (max-width: 1023px) {
     .open-map {
         padding: 6px 14px;

@@ -12,7 +12,6 @@ import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 
-
 // const lib = ["places"];
 
 const MapTagsGoogle = (props: any) => {
@@ -36,7 +35,7 @@ const MapTagsGoogle = (props: any) => {
     };
     let USER_LAT: any = 0;
     let USER_LNG: any = 0;
-    const LOCATION = AUTH_LOCATION()
+    const LOCATION = AUTH_LOCATION();
     if (LOCATION) {
         USER_LAT = parseFloat(LOCATION.split(",")[0]);
         USER_LNG = parseFloat(LOCATION.split(",")[1]);
@@ -44,7 +43,7 @@ const MapTagsGoogle = (props: any) => {
     const onMarkerClick = (item: IOrganization, index: number) => {
         // document.getElementById(`${item.id}`)?.scrollIntoView()
         if (onChangeCardMap) {
-            onChangeCardMap(item)
+            onChangeCardMap(item);
         }
         if (setLocal) {
             setLocal({
@@ -53,10 +52,9 @@ const MapTagsGoogle = (props: any) => {
             });
         }
         if (IS_MB && onGotoSlickOrgItem) {
-            onGotoSlickOrgItem(index)
+            onGotoSlickOrgItem(index);
         }
-
-    }
+    };
     return (
         <div>
             <GoogleMap
@@ -67,7 +65,7 @@ const MapTagsGoogle = (props: any) => {
                 zoom={zoom}
                 center={{
                     lat: location.lat,
-                    lng: location.long
+                    lng: location.long,
                 }}
             >
                 {/* <StandaloneSearchBox
