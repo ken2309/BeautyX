@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import store from '../../../redux/store';
 import { IServicePromo } from '../src/interface/servicePromo';
 import servicePromoApi from '../src/api/servicePromoApi';
-import App from './app';
 import { GetStaticPathsContext, GetStaticProps } from 'next';
 
 interface IPopsHomePage {
@@ -13,9 +12,15 @@ interface IPopsHomePage {
 function index(props: IPopsHomePage) {
     const {services} = props;
     return (
-        <App 
-        services={services}
-        />
+        <ul>
+            {
+                services.map((i:IServicePromo, index:number) =>(
+                    <li key={index}>
+                        {i.service_name}
+                    </li>
+                ))
+            }
+        </ul>
     );
 }
 
