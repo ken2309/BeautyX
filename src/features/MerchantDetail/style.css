@@ -1527,3 +1527,10 @@
         width: 80%;
     }
 }
+
+@media only screen and (max-width: 475px) {
+    .org-information__map-cnt .map-org-detail__slide {
+        width: 65%;
+        min-width: 240px;
+    }
+}
