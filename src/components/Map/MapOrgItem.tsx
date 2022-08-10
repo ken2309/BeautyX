@@ -35,11 +35,11 @@ export default function MapTagsOrgItem(props: IProps) {
             style={
                 item?.latitude === location.lat
                     ? {
-                          backgroundColor: "var(--bgGray)",
-                      }
+                        backgroundColor: "var(--bgGray)",
+                    }
                     : {
-                          backgroundColor: "var(--bgWhite)",
-                      }
+                        backgroundColor: "var(--bgWhite)",
+                    }
             }
             className="dialog-map__item"
         >

@@ -13,10 +13,11 @@ import ReviewsContainer from "../../../ReviewsContainer";
 interface IProps {
     org: IOrganization;
     refReview?: any;
+    isMapReview?: Boolean;
 }
 
 function OrgReviews(props: IProps) {
-    const { org, refReview } = props;
+    const { org, refReview, isMapReview } = props;
     const dispatch = useDispatch();
     const [openAll, setOpenAll] = useState(false);
     const { org_id, comments, totalItem, status, page } = useSelector(
@@ -72,6 +73,7 @@ function OrgReviews(props: IProps) {
                 org_id={org_id}
                 totalItem={totalItem}
                 page={page}
+                muiCustomClass={isMapReview?'isMap':''}
                 commentable_type="ORGANIZATION"
             />
         </>

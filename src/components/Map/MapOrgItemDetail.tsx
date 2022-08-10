@@ -299,7 +299,7 @@ export default function MapOrgItemDetail(props: IProps) {
 
                     {/* rating */}
                     <div className="content-info__rating">
-                        <OrgReviews org={org} />
+                        <OrgReviews org={org} isMapReview={true} />
                     </div>
                     {/* close rating */}
                 </div>
