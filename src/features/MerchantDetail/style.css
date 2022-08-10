@@ -536,11 +536,17 @@
 
 .org-information__map-cnt .map-org-detail__slide {
     height: 100%;
+    width: 60%;
+    margin-left: auto;
+}
+
+.org-information__map-cnt .map-org-detail__slide .map-org-detail__item .branch-avatar {
+    width: auto;
 }
 
 .org-information__map-cnt .map-org-detail__item {
     width: 100%;
-    height: 108px;
+    height: 96px;
     background-color: var(--bgWhite);
     border-radius: 8px;
     padding: 8px 12px;

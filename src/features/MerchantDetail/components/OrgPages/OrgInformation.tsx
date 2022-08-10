@@ -40,7 +40,10 @@ function OrgInformation(props: IProps) {
         <div className="org-information" ref={refMap}>
             <div className="org-information__map-cnt">
                 <div className="map-cnt">
-                    <WrapperMap />
+                    <WrapperMap
+                        lat={org.latitude}
+                        long={org.longitude}
+                    />
                 </div>
                 <div className="map-org__seemore">
                     <p
