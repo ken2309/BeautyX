@@ -236,20 +236,14 @@ function ServiceDetail(props: any) {
                                                 <p
                                                     ref={refLimitText}
                                                     className="service-description"
-                                                >
-                                                    {t("pr.description")}:{" "}
-                                                    {service.description
-                                                        ? service.description
-                                                        : t(
-                                                            "detail_item.updating"
-                                                        )}
-                                                </p>
+                                                    dangerouslySetInnerHTML={{ '__html': service.description||t("detail_item.updating") }}
+                                                ></p>
                                                 {service?.description &&
-                                                (is_mobile === true
-                                                    ? service?.description
-                                                          .length > 300
-                                                    : service?.description
-                                                          .length > 500) ? (
+                                                    (is_mobile === true
+                                                        ? service?.description
+                                                            .length > 300
+                                                        : service?.description
+                                                            .length > 500) ? (
                                                     <div
                                                         onClick={() =>
                                                             handleSeemoreText()
