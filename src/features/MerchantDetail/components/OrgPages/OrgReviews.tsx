@@ -37,7 +37,7 @@ function OrgReviews(props: IProps) {
         }
     };
     useEffect(() => {
-        callOrgComments();
+        // callOrgComments();
     }, [org]);
     return (
         <>
