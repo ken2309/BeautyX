@@ -8,7 +8,7 @@ import { formatDistance } from "../../utils/format";
 
 interface IProps{
     item: IOrganization,
-    handleDirection:() => void
+    handleDirection?:() => void
 }
 
 export default function MapTagsItemMB(props: IProps) {
@@ -23,7 +23,7 @@ export default function MapTagsItemMB(props: IProps) {
     };
     const onRouteDirection = (e:any) =>{
         e.stopPropagation()
-        handleDirection()
+        handleDirection&&handleDirection()
     }
     return (
         <div onClick={gotoDetail} className="map-item__wrap">
