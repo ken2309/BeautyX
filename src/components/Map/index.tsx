@@ -1,4 +1,5 @@
 import { Dialog } from "@mui/material";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import MapContent from "./MapContent";
@@ -23,7 +24,9 @@ export default function Map(props: any) {
                         <img src={icon.closeCircleWhite} alt="" />
                     </div>
                 </div>
-                <MapContent orgs={data} />
+                <MapContent 
+                    orgs={data} 
+                />
             </div>
         </Dialog>
     );

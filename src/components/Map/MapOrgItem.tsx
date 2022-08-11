@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
+import { onSetOrgCenter } from "../../redux/org/orgMapSlice";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import onErrorImg from "../../utils/errorImg";
 import { formatDistance } from "../../utils/format";
@@ -11,15 +12,20 @@ interface IProps {
     location: any;
     setOpenDetail: any;
     openDetail: any;
+    map:any,
+    setLocal:any,
+    setZoom:any
 }
 export default function MapTagsOrgItem(props: IProps) {
-    const { item, handleSetLocation, location, setOpenDetail, openDetail } =
+    const { item,location, setOpenDetail, openDetail, map, setZoom} =
         props;
     const dispatch = useDispatch();
     const onHoveItem = () => {
-        handleSetLocation(item);
+        map?.panTo({ lat: item.latitude, lng: item.longitude })
+        dispatch(onSetOrgCenter(item))
     };
     const gotoDetail = () => {
+        setZoom(16)
         setOpenDetail({
             ...openDetail,
             open: true,
