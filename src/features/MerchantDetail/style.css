@@ -1460,10 +1460,11 @@
     .org-container .org-galleries-cnt {
         padding: 16px 12px;
     }
-    .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+    .org-galleries__images-section
+        .MuiButtonBase-root.MuiTab-root.Mui-selected {
         color: var(--purple) !important;
     }
-    .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+    .org-galleries__images-section .MuiButtonBase-root.MuiTab-root {
         text-transform: capitalize !important;
         font-family: "Quicksand" !important;
         line-height: 1.5 !important;

@@ -54,7 +54,7 @@
 .map .dialog-map__list {
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 20%;
     height: 100%;
     overflow-y: scroll;
     background-color: var(--bgWhite);
@@ -83,7 +83,7 @@
 }
 
 .map .dialog-map__detail {
-    margin-left: 24px;
+    margin-left: 16px;
     pointer-events: fill;
     width: 25%;
     max-height: calc(100vh - 64px);
@@ -131,7 +131,9 @@
 .map .content-img {
     height: 240px;
     width: 100%;
+    position: relative;
     margin-top: -56px;
+    cursor: pointer;
 }
 
 .map .content-img img {
@@ -168,7 +170,7 @@
 }
 
 .map .content-info {
-    padding: 16px 24px 24px 24px;
+    padding: 16px;
     border-bottom: 1px solid rgba(204, 204, 204, 0.663);
 }
 
@@ -187,7 +189,7 @@
 }
 
 .map .content-info .content-info__wrapbtn .content-info__btn {
-    padding: 8px 16px;
+    padding: 8px;
     border: 1px solid var(--purple);
     display: flex;
     grid-gap: 0 6px;
@@ -199,7 +201,7 @@
 }
 
 .map .content-info .content-info__wrapbtn .content-info__btn img {
-    width: 24px;
+    width: 20px;
 }
 
 .map .content-info .content-info__wrapbtn .content-info__btn span {
@@ -218,8 +220,8 @@
     background-color: var(--bgWhite);
     flex-shrink: 0;
     overflow: hidden;
-    grid-gap: 0 16px;
-    padding: 16px;
+    grid-gap: 0 12px;
+    padding: 12px;
     align-items: center;
     cursor: pointer;
     transition: all 0.1s ease-out;
@@ -236,8 +238,8 @@
 }
 
 .map .map-item__img {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     border-radius: 8px;
     overflow: hidden;
     flex-shrink: 0;
@@ -248,7 +250,6 @@
     height: 100%;
     object-fit: cover;
 }
-
 
 /* .dialog-map__org .map-item__content {
     padding: 16px;
@@ -320,15 +321,14 @@
     height: 14px;
     margin-right: 6px;
 }
-
-.dialog-map__wrapper {
+.map .dialog-map__wrapper {
     position: absolute;
     z-index: 2;
     height: 100%;
     width: 100%;
     top: 0;
     left: 0;
-    margin-left: -25%;
+    margin-left: -20%;
     transition: all 0.2s !important;
     pointer-events: none;
 }
@@ -397,7 +397,7 @@
 }
 
 .map .content-info__list {
-    padding: 24px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     grid-gap: 16px 0;
@@ -406,7 +406,7 @@
 
 .map .content-info__item {
     display: flex;
-    grid-gap: 0 8px;
+    grid-gap: 0 12px;
     width: 100%;
     align-items: center;
 }
@@ -429,7 +429,7 @@
 }
 
 .map .content-info__rating {
-    padding: 24px;
+    padding: 16px;
     position: relative;
 }
 
@@ -573,7 +573,168 @@
 }
 .map-list-org__item:hover{
     background-color: var(--bg-gray);
-    transition: all .3s;
+    transition: all .3s
+}
+.google-map-view {
+    width: 100vw;
+    height: 100vh;
+}
+.map .content-info__galleries {
+    border-bottom: 1px solid #ccc;
+    padding: 16px 12px;
+}
+.map .galleries-title {
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 0 4px;
+}
+.map .galleries-update {
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 24px;
+    padding: 0 4px;
+    color: #8c8c8c;
+}
+.map .galleries-list {
+    width: 100%;
+    padding: 16px 0 0 0;
+}
+.map .galleries-list .galleries-item {
+    height: 150px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+.map .galleries-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.map .slick-initialized .slick-slide {
+    padding: 0 4px;
+}
+.map .galleries-btn__next,
+.map .galleries-btn__prev {
+    border-radius: 100px;
+    border: 0;
+    padding: 4px;
+    outline: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    border: 1px solid rgba(204, 204, 204, 0.223);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.map .galleries-btn__prev {
+    left: -10px;
+    transform: translateY(-50%) rotate(180deg);
+}
+.map .galleries-btn__next {
+    right: -10px;
+}
+.map .galleries-item .item-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+}
+.map .content-seemore__img {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    grid-gap: 0 6px;
+    padding: 6px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 6px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+.map .content-seemore__img img {
+    width: 22px;
+    height: 22px;
+}
+.map .content-seemore__img span {
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+}
+.map .content-img:hover > .content-seemore__img {
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.3s;
+}
+.map .galleries-item .item-text span {
+    color: #fff;
+    font-size: 13px;
+    margin: 8px 8px 14px 8px;
+    font-weight: 500;
+    text-transform: capitalize;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+.dialog-galleries {
+    padding: 24px 28px 28px 24px;
+    max-width: 60vw;
+    max-height: 80vh;
+    height: 700px;
+    display: flex;
+    background-color: #fff;
+    align-items: center;
+    grid-gap: 0 24px;
+}
+.dialog-galleries__left {
+    width: 33.33%;
+    height: 100%;
+}
+.galleries-left__masonry {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+.galleries-left__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.galleries-left__item {
+    height: 100%;
+    width: 100%;
+}
+.galleries-left__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.dialog-galleries__right {
+    width: 66.66%;
+    height: 100%;
+    border: 1px solid #ccc;
+}
+.galleries-right__img {
+    width: 100%;
+    height: 100%;
+}
+.galleries-right__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 @media only screen and (max-width: 1023px) {
     .open-map {
