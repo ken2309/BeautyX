@@ -26,12 +26,12 @@
 import momoAuthApi from "./_momoAuthApi";
 import { MOMO } from './_momoImport';
 
-// interface
-type IToastType = "success" | "failure";
-export interface IUserConsentsData {
-    phone?: string;
-    name?: string;
-    email?: string;
+type IToastType = 'success' | 'failure'
+export interface IUserConsentsData{
+// >>>>>>> b1ada437284a4b4182fa444d41980c72238c254e
+    phone?: string
+    name?: string
+    email?: string
 }
 export interface IUserConsentsStatus {
     email: "denied",
@@ -118,10 +118,10 @@ class MOMO_API {
 
     }
     getLocation = () => {
-        // MOMO.getLocation((data:any) => {
-        //     // alert(JSON.stringify([data]))
-        //     return {data:data}
-        // })
+        MOMO.getLocation((data:any) => {
+            // alert(JSON.stringify([data]))
+            return {data:data}
+        })
     };
     showToast = (description: string, type: IToastType) => {
         // MOMO.showToast({

@@ -1,7 +1,9 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import Slider from "react-slick";
 import icon from "../../constants/icon";
+import { ICON } from "../../constants/icon2";
 import { AppContext } from "../../context/AppProvider";
 import { extraOrgTimeWork } from "../../features/MerchantDetail/components/Functions/extraOrg";
 import OrgReviews from "../../features/MerchantDetail/components/OrgPages/OrgReviews";
@@ -11,6 +13,7 @@ import {
     onFavoriteOrg,
 } from "../../redux/org/orgSlice";
 import onErrorImg from "../../utils/errorImg";
+import MapGalleries from "./MapGalleries";
 
 interface IProps {
     org: any;
@@ -27,7 +30,11 @@ export default function MapOrgItemDetail(props: IProps) {
     const refDetail: any = useRef();
     const refHead: any = useRef();
     const refListTimeWorks = useRef<any>();
+    const [open, setOpen] = useState(false);
+    // galleries
     const galleries = useSelector((state: any) => state.ORG.GALLERIES);
+    const [totalCountGalleries, setTotalCountGalleries] = useState("");
+    // close galleries
     // time open ORG
     const now = new Date();
     const today = now.getDay() + 1;
@@ -108,7 +115,12 @@ export default function MapOrgItemDetail(props: IProps) {
                 {/* content */}
                 <div className="dialog-map__content">
                     {/* image */}
-                    <div className="content-img">
+                    <div
+                        onClick={() =>
+                            totalCountGalleries.length > 0 && setOpen(true)
+                        }
+                        className="content-img"
+                    >
                         <img
                             onError={(e) => onErrorImg(e)}
                             src={
@@ -118,6 +130,12 @@ export default function MapOrgItemDetail(props: IProps) {
                             }
                             alt=""
                         />
+                        {totalCountGalleries.length > 0 && (
+                            <div className="content-seemore__img">
+                                <img src={ICON.photoLibraryWhite} alt="" />
+                                <span>{totalCountGalleries.length} ảnh</span>
+                            </div>
+                        )}
                     </div>
                     {/* close image */}
 
@@ -270,9 +288,18 @@ export default function MapOrgItemDetail(props: IProps) {
                     </div>
                     {/* close info */}
 
+                    {/* galleries */}
+                    <MapGalleries
+                        GALLERIES={galleries.galleries}
+                        setTotalCountGalleries={setTotalCountGalleries}
+                        open={open}
+                        setOpen={setOpen}
+                    />
+                    {/* close galleries */}
+
                     {/* rating */}
                     <div className="content-info__rating">
-                        <OrgReviews org={org} />
+                        <OrgReviews org={org} isMapReview={true} />
                     </div>
                     {/* close rating */}
                 </div>
