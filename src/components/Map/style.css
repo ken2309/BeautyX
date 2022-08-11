@@ -54,7 +54,7 @@
 .map .dialog-map__list {
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 20%;
     height: 100%;
     overflow-y: scroll;
     background-color: var(--bgWhite);
@@ -83,7 +83,7 @@
 }
 
 .map .dialog-map__detail {
-    margin-left: 24px;
+    margin-left: 16px;
     pointer-events: fill;
     width: 25%;
     max-height: calc(100vh - 64px);
@@ -170,7 +170,7 @@
 }
 
 .map .content-info {
-    padding: 16px 24px 24px 24px;
+    padding: 16px;
     border-bottom: 1px solid rgba(204, 204, 204, 0.663);
 }
 
@@ -189,7 +189,7 @@
 }
 
 .map .content-info .content-info__wrapbtn .content-info__btn {
-    padding: 8px 16px;
+    padding: 8px;
     border: 1px solid var(--purple);
     display: flex;
     grid-gap: 0 6px;
@@ -201,7 +201,7 @@
 }
 
 .map .content-info .content-info__wrapbtn .content-info__btn img {
-    width: 24px;
+    width: 20px;
 }
 
 .map .content-info .content-info__wrapbtn .content-info__btn span {
@@ -220,8 +220,8 @@
     background-color: var(--bgWhite);
     flex-shrink: 0;
     overflow: hidden;
-    grid-gap: 0 16px;
-    padding: 16px;
+    grid-gap: 0 12px;
+    padding: 12px;
     align-items: center;
     cursor: pointer;
     transition: all 0.1s ease-out;
@@ -238,8 +238,8 @@
 }
 
 .map .map-item__img {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     border-radius: 8px;
     overflow: hidden;
     flex-shrink: 0;
@@ -328,7 +328,7 @@
     width: 100%;
     top: 0;
     left: 0;
-    margin-left: -25%;
+    margin-left: -20%;
     transition: all 0.2s !important;
     pointer-events: none;
 }
@@ -387,7 +387,7 @@
 }
 
 .map .content-info__list {
-    padding: 24px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     grid-gap: 16px 0;
@@ -396,7 +396,7 @@
 
 .map .content-info__item {
     display: flex;
-    grid-gap: 0 8px;
+    grid-gap: 0 12px;
     width: 100%;
     align-items: center;
 }
@@ -419,7 +419,7 @@
 }
 
 .map .content-info__rating {
-    padding: 24px;
+    padding: 16px;
     position: relative;
 }
 
@@ -508,7 +508,7 @@
 }
 .map .content-info__galleries {
     border-bottom: 1px solid #ccc;
-    padding: 24px 20px;
+    padding: 16px 12px;
 }
 .map .galleries-title {
     font-weight: 800;
@@ -525,7 +525,7 @@
 }
 .map .galleries-list {
     width: 100%;
-    padding: 24px 0 0 0;
+    padding: 16px 0 0 0;
 }
 .map .galleries-list .galleries-item {
     height: 150px;
