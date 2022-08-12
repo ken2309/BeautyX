@@ -32,7 +32,7 @@
     position: absolute;
     top: 14px;
     right: 60px;
-    z-index: 2;
+    z-index: 20000;
     background-color: var(--purple);
     border-radius: 100px;
     padding: 2px;
@@ -192,7 +192,8 @@
 .map .content-info .content-info__wrapbtn .content-info__btn {
     width: 25%;
 }
-.map .content-info .content-info__wrapbtn .content-info__btn button{
+
+.map .content-info .content-info__wrapbtn .content-info__btn button {
     border: none;
     outline: none;
     padding: 12px;
@@ -200,15 +201,18 @@
     border-radius: 100%;
     transition: all .3s;
 }
-.map .content-info .content-info__wrapbtn .content-info__btn button:hover{
+
+.map .content-info .content-info__wrapbtn .content-info__btn button:hover {
     transition: all .3s;
     opacity: 0.7;
 }
-.map .content-info .content-info__wrapbtn .content-info__btn button img{
+
+.map .content-info .content-info__wrapbtn .content-info__btn button img {
     width: 16px;
     height: 16px;
 }
-.map .content-info .content-info__wrapbtn .content-info__btn span{
+
+.map .content-info .content-info__wrapbtn .content-info__btn span {
     margin-top: 10px;
     font-size: 12px;
     line-height: 16px;
@@ -255,6 +259,7 @@
     height: 100%;
     object-fit: cover;
 }
+
 
 /* .dialog-map__org .map-item__content {
     padding: 16px;
@@ -521,7 +526,9 @@
     width: 100%;
 }
 
+
 /* map filter container */
+
 .map-filter-cnt {
     position: absolute;
     z-index: 100;
@@ -530,7 +537,7 @@
     right: 0;
     /* height: 100px; */
     /* background-color: burlywood; */
-    padding:8px;
+    padding: 8px;
 }
 
 .map-filter-cnt__left {
@@ -578,9 +585,11 @@
     border-radius: 3px;
 }
 
+
 /* .map-filter-list-org{
     padding: 12px;
 } */
+
 .map-list-org__item {
     margin: 4px 0px;
     cursor: pointer;
@@ -596,11 +605,13 @@
     background-color: var(--bg-gray);
     transition: all .3s
 }
-.map-filter-cnt__right{
+
+.map-filter-cnt__right {
     padding-left: 8px;
     width: 75%;
 }
-.map-filter-cnt__right-switch{
+
+.map-filter-cnt__right-switch {
     background-color: var(--bgWhite);
     width: fit-content;
     padding: 6px 6px;
@@ -611,6 +622,7 @@
     border-radius: 3px;
     box-shadow: 0 2px 6px rgb(0 0 0 / 30%);
 }
+
 
 /* end map filter */
 
@@ -804,32 +816,25 @@
     .open-map {
         padding: 6px 14px;
     }
-
     .open-map p {
         font-size: 14px;
     }
-
     .map .evaluate-item p {
         font-size: 12px;
     }
-
     .map {
         width: 100vw;
         height: 100vh;
     }
-
     .map .dialog-map__wrapper {
         display: none;
     }
-
     .map .open-list__org {
         display: none;
     }
-
     .map .map-cnt {
         border-radius: unset;
     }
-
     .map .map-list__mobile {
         width: 100%;
         z-index: 2;
@@ -837,7 +842,6 @@
         bottom: 0;
         left: 0;
     }
-
     .map .map-item__mobile {
         width: 100%;
         background-color: var(--bgWhite);
@@ -849,18 +853,15 @@
         border-radius: 12px;
         align-items: center;
     }
-
     .map .map-item__mobile .item-img {
         width: 136px;
         height: 136px;
         padding: 12px;
         flex-shrink: 0;
     }
-
     .map .map-list__mobile .map-item__wrap {
         padding: 16px 6px;
     }
-
     .map .map-item__mobile .item-img img {
         border-radius: 12px;
         overflow: hidden;
@@ -869,14 +870,12 @@
         object-fit: cover;
         box-shadow: 0 8px 24px rgb(149 157 165 / 20%);
     }
-
     .map .map-item__mobile .item-content {
         padding: 12px 12px 12px 0;
         display: flex;
         flex-direction: column;
         gap: 4px 0;
     }
-
     .map .map-item__mobile .item-content__name {
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -885,12 +884,10 @@
         text-overflow: ellipsis;
         word-break: break-word;
     }
-
     .map .map-item__mobile .item-content__name p {
         font-size: 14px;
         font-weight: bold;
     }
-
     .map .map-list__mobile .item-content__address {
         display: -webkit-box;
         -webkit-line-clamp: 3;
@@ -899,45 +896,37 @@
         text-overflow: ellipsis;
         word-break: break-word;
     }
-
     .map .map-list__mobile .item-content__address p {
         font-size: 12px;
         font-weight: bold;
         color: #8c8c8c;
     }
-
     .map .map-list__mobile .item-content__evaluate {
         display: flex;
         grid-gap: 0 8px;
     }
-
     .map .map-list__mobile .item-content__evaluate .evaluate-item {
         display: flex;
         grid-gap: 0 4px;
     }
-
     .map .map-list__mobile .evaluate-item__img {
         width: 16px;
         height: 16px;
     }
-
     .map .map-list__mobile .evaluate-item__img img {
         width: 100%;
         height: 100%;
     }
-
     .map .gm-fullscreen-control {
         display: none;
     }
-
     .map .gmnoprint {
         display: none;
     }
-
     .map .dialog-map__close {
         right: 16px;
     }
-    .item-content__btn-direction{
+    .item-content__btn-direction {
         background-color: var(--purple);
         border: none;
         outline: none;

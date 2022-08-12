@@ -23,9 +23,7 @@ export default function MapTagsItemMB(props: IProps) {
     };
     const onRouteDirection = (e:any) =>{
         e.stopPropagation()
-        if(handleDirection){
-            handleDirection()
-        }
+        handleDirection&&handleDirection()
     }
     return (
         <div onClick={gotoDetail} className="map-item__wrap">
