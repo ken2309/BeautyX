@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
+=======
+import React from "react";
+>>>>>>> Next
 // import {
 //     withGoogleMap,
 //     withScriptjs,
@@ -6,6 +10,7 @@ import React, { useEffect, useState } from "react";
 //     Marker,
 // } from "react-google-maps";
 // import InfoWindow from "react-google-maps/lib/components/InfoWindow";
+<<<<<<< HEAD
 import { useDispatch } from "react-redux";
 import {
     GoogleMap,
@@ -13,6 +18,9 @@ import {
     Marker,
     StandaloneSearchBox,
 } from "@react-google-maps/api";
+=======
+import { GoogleMap, LoadScript, Marker, StandaloneSearchBox } from '@react-google-maps/api';
+>>>>>>> Next
 import { AUTH_LOCATION } from "../../api/authLocation";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
@@ -73,7 +81,11 @@ const MapTagsGoogle = (props: any) => {
     return (
         <LoadScript
             googleMapsApiKey={`${key}`}
+<<<<<<< HEAD
             libraries={["places", "drawing"]}
+=======
+            libraries={["places"]}
+>>>>>>> Next
         >
             <GoogleMap
                 id="searchbox-example"
@@ -86,10 +98,15 @@ const MapTagsGoogle = (props: any) => {
                     lng: location.long,
                 }}
             >
+<<<<<<< HEAD
                 {/* <StandaloneSearchBox>
+=======
+                <StandaloneSearchBox
+                >
+>>>>>>> Next
                     <input
                         type="text"
-                        placeholder="Customized your placeholder"
+                        placeholder="Tìm kiếm trên Map..."
                         style={{
                             boxSizing: `border-box`,
                             border: `1px solid transparent`,
@@ -106,7 +123,7 @@ const MapTagsGoogle = (props: any) => {
                             marginLeft: "-120px",
                         }}
                     />
-                </StandaloneSearchBox> */}
+                </StandaloneSearchBox>
                 {LOCATION && (
                     <Marker
                         icon={{
@@ -147,4 +164,8 @@ const MapTagsGoogle = (props: any) => {
     );
 };
 // export default withScriptjs(withGoogleMap(MapTagsGoogle));
+<<<<<<< HEAD
 export default MapTagsGoogle;
+=======
+export default MapTagsGoogle
+>>>>>>> Next

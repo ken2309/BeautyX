@@ -1,0 +1,16 @@
+.home_section_promo {
+    padding: 10px;
+    background-color: #FFF;
+}
+
+.home_service_list {
+    grid-gap: 16px;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(6, 1fr);
+    margin: 24px 0;
+    width: 100%;
+}
+.home_service_item_cnt{
+    
+}
