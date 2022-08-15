@@ -1,0 +1,7 @@
+.po-container{
+    width: 1050px;
+    padding-top: 32px;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
