@@ -13,7 +13,7 @@ import useStorage from '../context/hooks/useStorage';
 import Head from 'next/head'
 
 interface IPopsHomePage {
-    services: IServicePromo[];
+    services: any[];
 }
 
 function Home(props: IPopsHomePage) {
@@ -62,6 +62,9 @@ const HomePromo = (props: IPropsHomePromo) => {
                             <ServicePromoItem
                                 service={i}
                             />
+                            {/* <span>
+                                {i.service_name}
+                            </span> */}
                         </li>
                     ))
                 }
@@ -69,15 +72,15 @@ const HomePromo = (props: IPropsHomePromo) => {
         </div>
     )
 }
-// export const getStaticProps: GetStaticProps<IPopsHomePage> = async (context: GetStaticPathsContext) => {
-//     const res = await servicePromoApi.getServicesPromo({
-//         page: 1,
-//         sort: "-discount_percent"
-//     })
-//     const hits: IServicePromo[] = await res.data.data.hits
-//     return {
-//         props: {
-//             services: hits
-//         }
-//     }
-// }
+
+export const getStaticProps: GetStaticProps<IPopsHomePage> = async (context: GetStaticPathsContext) => {
+    const res = await servicePromoApi.getServicesPromo({
+        page: 1
+    })
+    const hits: any[] = await res.data.data.hits
+    return {
+        props: {
+            services: hits
+        }
+    }
+}

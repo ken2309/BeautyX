@@ -3,7 +3,8 @@ import React from 'react';
 
 function Services(props) {
     const route = useRouter();
-    console.log(route)
+    const {ser_id} = route.query;
+    console.log(ser_id)
     return (
         <div>
             Services List

@@ -6,8 +6,27 @@ const nextConfig = {
 
 module.exports = {
   i18n,
+  images: {
+    domains: ['dev.myspa.vn', 'dev_spala.myspa.vn', 'myspa.vn'],
+  },
   async rewrites() {
     return [
+      {
+        source: "/v1/:url",
+        destination: "/api/:url",
+      },
+      {
+        source: "/v1/:context/:id",
+        destination: "/api/:context/:id",
+      },
+      {
+        source: "/v1/:context/:id/:context_child",
+        destination: "/api/:context/:id/:context_child",
+      },
+      {
+        source: "/v1/:context/:id/:context_child/:child_id",
+        destination: "/api/:context/:id/:context_child/:child_id",
+      },
       {
         source: '/MOMO',
         destination: '/'

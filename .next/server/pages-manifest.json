@@ -2,6 +2,10 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
+<<<<<<< HEAD
   "/": "pages/index.js",
   "/org/[orgId]": "pages/org/[orgId].js"
+=======
+  "/api/auth/login": "pages/api/auth/login.js"
+>>>>>>> 2afb5e5e5e11e6b884783b69ec11e7117269153b
 }

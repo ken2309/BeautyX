@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { IServicePromo } from '../../src/interface/servicePromo';
 import style from './ServicePromo.module.css';
@@ -8,6 +9,7 @@ import onErrorImg from '../../src/utils/errorImg';
 import formatPrice, { formatSalePriceService } from '../../src/utils/formatPrice';
 import { formatDistance } from "../../src/utils/format";
 import Image from 'next/image'
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 
 interface IProps {
@@ -23,9 +25,22 @@ function ServicePromoItem(props: IProps) {
             href={`/${slugify(service.service_name)}?ser_id=${service.service_id}`}
         >
             <a className={style.ser_pro_item}>
+                {/* <span>{service.service_name}</span> */}
                 <div className={style.ser_img_cnt}>
-                    {service.org_image !== '' && service.org_image !== null && <img src={service.org_image} className={style.ser_img__org_logo} onError={(e) => onErrorImg(e)} alt="" />}
-                    <img
+                    <LazyLoadImage
+                    className={style.ser_img}
+                        alt={""}
+                        src={
+                            service?.image_url
+                                ? `${service.image_url}`
+                                : `${service?.org_image}`
+                        }
+                        width="100%"
+                        height="100%"
+                    />
+                    {/* {service.org_image !== '' && service.org_image !== null && <img src={service.org_image} className={style.ser_img__org_logo} onError={(e) => onErrorImg(e)} alt="" />} */}
+                    {/* <Image
+                        layout={"fill"}
                         className={style.ser_img}
                         src={
                             service?.image_url
@@ -33,8 +48,7 @@ function ServicePromoItem(props: IProps) {
                                 : `${service?.org_image}`
                         }
                         alt=""
-                        onError={(e) => onErrorImg(e)}
-                    />
+                    /> */}
                     <div className={style.ser_promo}>
                         {
                             service.discount_percent > 0 &&
@@ -43,15 +57,6 @@ function ServicePromoItem(props: IProps) {
                                 {Math.round(service?.discount_percent)}%
                             </div>
                         }
-                        {/* {service.discount_percent > 0 &&
-                    service.discount_percent < 50 ? (
-                        <div className="ser-promo__percent">
-                            {t("detail_item.off")}{" "}
-                            {Math.round(service?.discount_percent)}%
-                        </div>
-                    ) : (
-                        <div></div>
-                    )} */}
                         <div className={style.ser_promo__bot}>
                             <div className={style.ser_promo__bot_start}>
                                 <Image width={16} height={16} src={icon.star} alt="" />
@@ -59,10 +64,6 @@ function ServicePromoItem(props: IProps) {
                                     service.rating === 5 ? 5 : `4.${service?.rating}`
                                 }
                             </div>
-                            {/* <div className="flexX-gap-4 ser-promo__bot-bought">
-                            <img src={icon.cartCheckPurple} alt="" />
-                            <p>{service?.bought_count}</p>
-                        </div> */}
                         </div>
                     </div>
                 </div>
