@@ -1,11 +1,23 @@
 {
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-<<<<<<< HEAD
+  "/api/[...path]": "pages/api/[...path].js",
+  "/api/auth/login": "pages/api/auth/login.js",
+  "/api/hello": "pages/api/hello.js",
   "/": "pages/index.js",
-  "/org/[orgId]": "pages/org/[orgId].js"
-=======
-  "/api/auth/login": "pages/api/auth/login.js"
->>>>>>> 2afb5e5e5e11e6b884783b69ec11e7117269153b
+  "/_document": "pages/_document.js",
+  "/vi/404": "pages/vi/404.html",
+  "/en/404": "pages/en/404.html",
+  "/vi/500": "pages/vi/500.html",
+  "/en/500": "pages/en/500.html",
+  "/vi/about": "pages/vi/about.html",
+  "/en/about": "pages/en/about.html",
+  "/vi/org/[orgId]": "pages/vi/org/[orgId].html",
+  "/en/org/[orgId]": "pages/en/org/[orgId].html",
+  "/vi/org": "pages/vi/org.html",
+  "/en/org": "pages/en/org.html",
+  "/vi/products": "pages/vi/products.html",
+  "/en/products": "pages/en/products.html",
+  "/vi/services": "pages/vi/services.html",
+  "/en/services": "pages/en/services.html"
 }
