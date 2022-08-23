@@ -41,6 +41,22 @@ module.exports = {
 
 /***/ }),
 
+/***/ 8638:
+/***/ ((module) => {
+
+// Exports
+module.exports = {
+	"province": "home_province__qawH7",
+	"provinceList": "home_provinceList__xaNLX",
+	"provinceItem": "home_provinceItem__7zL2f",
+	"provinceTitle": "home_provinceTitle__K84pK",
+	"provinceTotal": "home_provinceTotal__6N5Eo",
+	"provinceContent": "home_provinceContent__Jv3Ju"
+};
+
+
+/***/ }),
+
 /***/ 7017:
 /***/ ((module) => {
 
@@ -54,7 +70,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 1640:
+/***/ 8024:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -80,8 +96,8 @@ var external_query_string_default = /*#__PURE__*/__webpack_require__.n(external_
 ;// CONCATENATED MODULE: ./api/client/axios.ts
 
 
-// export const baseURL = process.env.REACT_APP_API_TEST;
-//export const baseURL = process.env.REACT_APP_API_URL;
+// export const baseURL = process.env.REACT_APP_API_TEST
+// export const baseURL = process.env.REACT_APP_API_URL
 const baseURL = process.env.REACT_APP_API_PRO;
 const axiosClient = external_axios_default().create({
     baseURL: baseURL,
@@ -1609,6 +1625,93 @@ const useTrans = ()=>{
 
 // EXTERNAL MODULE: ./components/layout/index.ts + 66 modules
 var layout = __webpack_require__(6444);
+// EXTERNAL MODULE: ./components/home/home.module.css
+var home_module = __webpack_require__(8638);
+var home_module_default = /*#__PURE__*/__webpack_require__.n(home_module);
+;// CONCATENATED MODULE: ./components/home/HomeProvinces.tsx
+
+
+
+
+
+
+
+function Province(props) {
+    const { province  } = props;
+    const trans = hooks_useTrans();
+    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+        className: (home_module_default()).province,
+        children: [
+            /*#__PURE__*/ jsx_runtime_.jsx(homeSectionHead, {
+                title: trans.home_2.places_you_are_interested_in
+            }),
+            /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                className: (home_module_default()).provinceList,
+                children: province.slice(0, 6).map((item, number)=>{
+                    /*#__PURE__*/ return (0,jsx_runtime_.jsxs)("div", {
+                        className: (home_module_default()).provinceItem,
+                        children: [
+                            /*#__PURE__*/ jsx_runtime_.jsx(external_react_lazy_load_image_component_namespaceObject.LazyLoadImage, {
+                                src: `${item.media[1].original_url}`,
+                                alt: ""
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                                className: (home_module_default()).provinceContent,
+                                children: [
+                                    /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                                        className: (home_module_default()).provinceTitle,
+                                        children: item === null || item === void 0 ? void 0 : item.name
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                                        className: (home_module_default()).provinceTotal,
+                                        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("span", {
+                                            children: [
+                                                formatRoundOrgCount(item.organizations_count + item.branches_count),
+                                                " ",
+                                                trans.home_2.beauty_places
+                                            ]
+                                        })
+                                    })
+                                ]
+                            })
+                        ]
+                    });
+                })
+            })
+        ]
+    });
+};
+
+;// CONCATENATED MODULE: ./api/client/provinceApi.ts
+
+class Provinces {
+    getAll = ()=>{
+        const url = `/provinces`;
+        const params = {
+            type: "PROVINCE",
+            sort: "-organizations_count|branches_count",
+            include: "media"
+        };
+        return axios.get(url, {
+            params
+        });
+    };
+    //get list district by province code
+    getDistricts = (province_code)=>{
+        const url = `provinces/${province_code}/districts`;
+        return axios.get(url);
+    };
+    //get list ward by district code 
+    getWards = (district_code)=>{
+        const url = `districts/${district_code}/wards`;
+        if (district_code) {
+            return axios.get(url);
+        }
+    };
+}
+const provincesApi = new Provinces();
+/* harmony default export */ const provinceApi = (provincesApi);
+
 ;// CONCATENATED MODULE: ./pages/index.tsx
 
 
@@ -1622,8 +1725,10 @@ var layout = __webpack_require__(6444);
 
 
 
+
+
 const Home = (props)=>{
-    const { services  } = props;
+    const { services , province  } = props;
     const { setItem  } = hooks_useStorage();
     const router = (0,router_.useRouter)();
     const changeLang = (lang)=>{
@@ -1639,10 +1744,15 @@ const Home = (props)=>{
                 style: {
                     backgroundColor: "var(--bg-gray)"
                 },
-                children: /*#__PURE__*/ jsx_runtime_.jsx(material_namespaceObject.Container, {
-                    children: /*#__PURE__*/ jsx_runtime_.jsx(HomePromo, {
-                        services: services
-                    })
+                children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)(material_namespaceObject.Container, {
+                    children: [
+                        /*#__PURE__*/ jsx_runtime_.jsx(HomePromo, {
+                            services: services
+                        }),
+                        /*#__PURE__*/ jsx_runtime_.jsx(Province, {
+                            province: province
+                        })
+                    ]
                 })
             })
         ]
@@ -1653,21 +1763,23 @@ Home.Layout = layout/* HeaderLayout */.Y;
 const HomePromo = (props)=>{
     const trans = hooks_useTrans();
     const { services  } = props;
-    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-        className: (Home_module_default()).home_section_promo,
-        children: [
-            /*#__PURE__*/ jsx_runtime_.jsx(homeSectionHead, {
-                title: trans.home_2.top_deal
-            }),
-            /*#__PURE__*/ jsx_runtime_.jsx("ul", {
-                className: (Home_module_default()).home_service_list,
-                children: services === null || services === void 0 ? void 0 : services.map((i, index)=>/*#__PURE__*/ jsx_runtime_.jsx("li", {
-                        children: /*#__PURE__*/ jsx_runtime_.jsx(components_ServicePromoItem, {
-                            service: i
-                        })
-                    }, index))
-            })
-        ]
+    return /*#__PURE__*/ jsx_runtime_.jsx(jsx_runtime_.Fragment, {
+        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+            className: (Home_module_default()).home_section_promo,
+            children: [
+                /*#__PURE__*/ jsx_runtime_.jsx(homeSectionHead, {
+                    title: trans.home_2.top_deal
+                }),
+                /*#__PURE__*/ jsx_runtime_.jsx("ul", {
+                    className: (Home_module_default()).home_service_list,
+                    children: services === null || services === void 0 ? void 0 : services.map((i, index)=>/*#__PURE__*/ jsx_runtime_.jsx("li", {
+                            children: /*#__PURE__*/ jsx_runtime_.jsx(components_ServicePromoItem, {
+                                service: i
+                            })
+                        }, index))
+                })
+            ]
+        })
     });
 };
 const getStaticProps = async (context)=>{
@@ -1675,9 +1787,13 @@ const getStaticProps = async (context)=>{
         page: 1
     });
     const hits = await res.data.data.hits;
+    const resProvinces = await provinceApi.getAll();
+    const provinces = await resProvinces.data.context.data;
+    console.log("province", resProvinces);
     return {
         props: {
-            services: hits
+            services: hits,
+            province: provinces
         }
     };
 };
@@ -1948,7 +2064,7 @@ module.exports = require("react/jsx-runtime");
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [952,61,444], () => (__webpack_exec__(1640)));
+var __webpack_exports__ = __webpack_require__.X(0, [952,61,444], () => (__webpack_exec__(8024)));
 module.exports = __webpack_exports__;
 
 })();

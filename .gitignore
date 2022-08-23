@@ -7,7 +7,7 @@ dist/
 .history
 # Compiled Java class files
 *.class
-
+.next
 # Compiled Python bytecode
 *.py[cod]
 

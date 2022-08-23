@@ -13,13 +13,16 @@ import useStorage from '../context/hooks/useStorage'
 import Head from 'next/head'
 import { NextPageWithLayout } from '../models'
 import { HeaderLayout } from '../components/layout'
+import Province from '../components/home/HomeProvinces'
+import provincesApi from '../api/client/provinceApi'
 
 interface IPopsHomePage {
 	services: any[]
+	province: any[]
 }
 
 const Home: NextPageWithLayout = (props: any) => {
-	const { services } = props
+	const { services, province } = props
 	const { setItem } = useStorage()
 	const router = useRouter()
 	const changeLang = (lang: string) => {
@@ -35,6 +38,7 @@ const Home: NextPageWithLayout = (props: any) => {
 			<div style={{ backgroundColor: 'var(--bg-gray)' }}>
 				<Container>
 					<HomePromo services={services} />
+					<Province province={province} />
 				</Container>
 			</div>
 		</>
@@ -51,19 +55,21 @@ const HomePromo = (props: IPropsHomePromo) => {
 	const trans = useTrans()
 	const { services } = props
 	return (
-		<div className={style.home_section_promo}>
-			<HomeSectionHead title={trans.home_2.top_deal} />
-			<ul className={style.home_service_list}>
-				{services?.map((i: IServicePromo, index: number) => (
-					<li key={index}>
-						<ServicePromoItem service={i} />
-						{/* <span>
+		<>
+			<div className={style.home_section_promo}>
+				<HomeSectionHead title={trans.home_2.top_deal} />
+				<ul className={style.home_service_list}>
+					{services?.map((i: IServicePromo, index: number) => (
+						<li key={index}>
+							<ServicePromoItem service={i} />
+							{/* <span>
                                 {i.service_name}
                             </span> */}
-					</li>
-				))}
-			</ul>
-		</div>
+						</li>
+					))}
+				</ul>
+			</div>
+		</>
 	)
 }
 
@@ -74,9 +80,14 @@ export const getStaticProps: GetStaticProps<IPopsHomePage> = async (
 		page: 1,
 	})
 	const hits: any[] = await res.data.data.hits
+
+	const resProvinces = await provincesApi.getAll()
+	const provinces: any = await resProvinces.data.context.data
+	console.log('province', resProvinces)
 	return {
 		props: {
 			services: hits,
+			province: provinces,
 		},
 	}
 }
