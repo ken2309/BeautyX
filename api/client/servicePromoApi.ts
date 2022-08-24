@@ -9,7 +9,7 @@ class ServicePromo {
         // const LOCATION = AUTH_LOCATION();
         const paramsOb = {
             page: values.page || 1,
-            limit: 30,
+            limit: values.limit ?? 30,
             "filter[keyword]": values.keyword,
             "filter[min_price]": values.min_price || 1000,
             "filter[max_price]": values.max_price,

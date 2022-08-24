@@ -11,6 +11,10 @@ module.exports = {
 	},
 	async rewrites() {
 		return [
+			// {
+			// 	source:"/v1/auth/momo",
+			// 	destination:"/api/auth/momo"
+			// },
 			{
 				source: '/v1/:url',
 				destination: '/api/:url',

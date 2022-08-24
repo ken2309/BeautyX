@@ -1,7 +1,7 @@
-import * as React from 'react'
+import * as React from 'react';
+import { LayoutProps } from '../../models'
 
-export interface IEmptyLayoutProps {}
 
-export function EmptyLayout(props: IEmptyLayoutProps) {
-	return <div>EmptyLayout</div>
+export function EmptyLayout({ children }: LayoutProps) {
+	return <div>{children}</div>
 }

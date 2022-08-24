@@ -62,9 +62,6 @@ const HomePromo = (props: IPropsHomePromo) => {
 					{services?.map((i: IServicePromo, index: number) => (
 						<li key={index}>
 							<ServicePromoItem service={i} />
-							{/* <span>
-                                {i.service_name}
-                            </span> */}
 						</li>
 					))}
 				</ul>
@@ -78,16 +75,17 @@ export const getStaticProps: GetStaticProps<IPopsHomePage> = async (
 ) => {
 	const res = await servicePromoApi.getServicesPromo({
 		page: 1,
+		limit: 18,
+		sort:"-discount_percent"
 	})
 	const hits: any[] = await res.data.data.hits
-
 	const resProvinces = await provincesApi.getAll()
 	const provinces: any = await resProvinces.data.context.data
-	console.log('province', resProvinces)
 	return {
 		props: {
 			services: hits,
-			province: provinces,
+			province: provinces.slice(0, 6),
 		},
+		revalidate: 3600 * 24
 	}
 }

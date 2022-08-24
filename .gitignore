@@ -7,7 +7,6 @@ dist/
 .history
 # Compiled Java class files
 *.class
-.next
 # Compiled Python bytecode
 *.py[cod]
 
@@ -51,13 +50,11 @@ build/
 .firebase/
 .firebaserc
 .vscode/
+.next/
 firebase.json
 package-lock.json
-<<<<<<< HEAD
 .firebase/hosting.YnVpbGQ.cache
 prod/
 .firebase/hosting.YnVpbGQ.cache
-=======
 *.cache
 prod/
->>>>>>> b1ada437284a4b4182fa444d41980c72238c254e

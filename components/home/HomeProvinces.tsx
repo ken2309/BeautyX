@@ -15,8 +15,8 @@ export default function Province(props: IProvinceProps) {
 		<div className={style.province}>
 			<HomeSectionHead title={trans.home_2.places_you_are_interested_in} />
 			<div className={style.provinceList}>
-				{province.slice(0, 6).map((item: any, number: number) => (
-					<div className={style.provinceItem}>
+				{province.map((item: any, index: number) => (
+					<div key={index} className={style.provinceItem}>
 						<LazyLoadImage src={`${item.media[1].original_url}`} alt="" />
 						<div className={style.provinceContent}>
 							<div className={style.provinceTitle}>{item?.name}</div>
