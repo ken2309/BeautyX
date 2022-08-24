@@ -7,7 +7,7 @@ const nextConfig = {
 module.exports = {
 	i18n,
 	images: {
-		domains: ['dev.myspa.vn', 'dev_spala.myspa.vn', 'myspa.vn'],
+		domains: ['dev.myspa.vn', 'dev_spala.myspa.vn', 'myspa.vn', 'api.myspa.vn'],
 	},
 	async rewrites() {
 		return [

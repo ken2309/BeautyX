@@ -1,10 +1,20 @@
+.sectionHeadWrap {
+	display: flex;
+	justify-content: space-between;
+}
 .home_title {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
 }
 
 .title {
-    font-size: 24px;
-    font-weight: 700;
+	font-size: 24px;
+	font-weight: 700;
+}
+.homeSeemore {
+	font-size: 14px;
+	color: var(--purple);
+	font-weight: bold;
+	cursor: pointer;
 }

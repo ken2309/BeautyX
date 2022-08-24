@@ -13,16 +13,24 @@ import useStorage from '../context/hooks/useStorage'
 import Head from 'next/head'
 import { NextPageWithLayout } from '../models'
 import { HeaderLayout } from '../components/layout'
-import Province from '../components/home/HomeProvinces'
+import {
+	HomeFooterTags,
+	Province,
+	HomeTags
+} from "../components/home/index"
 import provincesApi from '../api/client/provinceApi'
+import tagsApi from "../api/client/tagApi";
+import { ITag } from '../interfaces/tags'
 
 interface IPopsHomePage {
 	services: any[]
 	province: any[]
+	tags: ITag[]
 }
 
 const Home: NextPageWithLayout = (props: any) => {
-	const { services, province } = props
+	const { services, province, tags } = props
+	console.log(tags)
 	const { setItem } = useStorage()
 	const router = useRouter()
 	const changeLang = (lang: string) => {
@@ -32,13 +40,19 @@ const Home: NextPageWithLayout = (props: any) => {
 	return (
 		<>
 			{/* <span>Home</span> */}
+			<Head>
+				<title>BeautyX - Đặt lịch làm hẹn Online</title>
+				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+			</Head>
 			<ExtraFlatForm />
 			{/* <button onClick={() => changeLang('vi')}>Việt</button>
 			<button onClick={() => changeLang('en')}>Anh</button> */}
 			<div style={{ backgroundColor: 'var(--bg-gray)' }}>
 				<Container>
+					<HomeTags/>
 					<HomePromo services={services} />
 					<Province province={province} />
+					<HomeFooterTags tags={tags} />
 				</Container>
 			</div>
 		</>
@@ -76,15 +90,20 @@ export const getStaticProps: GetStaticProps<IPopsHomePage> = async (
 	const res = await servicePromoApi.getServicesPromo({
 		page: 1,
 		limit: 18,
-		sort:"-discount_percent"
+		sort: "-discount_percent"
 	})
 	const hits: any[] = await res.data.data.hits
 	const resProvinces = await provincesApi.getAll()
+	const resTags = await tagsApi.getAll({
+		include: "children"
+	})
 	const provinces: any = await resProvinces.data.context.data
+	const tags = await resTags.data.context.data;
 	return {
 		props: {
 			services: hits,
 			province: provinces.slice(0, 6),
+			tags: tags
 		},
 		revalidate: 3600 * 24
 	}
