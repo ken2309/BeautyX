@@ -7,6 +7,49 @@ import img from '../../../src/constants/img'
 import icon from '../../../src/constants/icon'
 import Image from 'next/image'
 import { Container } from '@mui/system'
+
+const dataTag = [
+	{
+		id: 1,
+		name: 'Gần bạn',
+		url: '/',
+	},
+	{
+		id: 2,
+		name: 'Spa',
+		url: '/',
+	},
+	{
+		id: 3,
+		name: 'Salon',
+		url: '/',
+	},
+	{
+		id: 4,
+		name: 'Nail',
+		url: '/',
+	},
+	{
+		id: 5,
+		name: 'Clinic',
+		url: '/',
+	},
+	{
+		id: 6,
+		name: 'Massage',
+		url: '/',
+	},
+	{
+		id: 7,
+		name: 'Thẩm mỹ viện',
+		url: '/',
+	},
+	{
+		id: 8,
+		name: 'Nha khoa',
+		url: '/',
+	},
+]
 export function HeaderLayout({ children }: LayoutProps) {
 	return (
 		<>
@@ -27,34 +70,21 @@ export function HeaderLayout({ children }: LayoutProps) {
 										readOnly
 									/>
 									<div className={style.headerSearchImg}>
-										<Image className={style.img} src={icon.searchPurple} alt="" />
+										<Image
+											width={24}
+											height={24}
+											className={style.img}
+											src={icon.searchPurple}
+											alt=""
+										/>
 									</div>
 								</>
 								<div className={style.headerSearchBot}>
-									<Link href="#">
-										<a className={style.headerSearchBotItem}>Gần bạn</a>
-									</Link>
-									<Link href="#">
-										<a className={style.headerSearchBotItem}>Spa</a>
-									</Link>
-									<Link href="#">
-										<a className={style.headerSearchBotItem}>Salon</a>
-									</Link>
-									<Link href="#">
-										<a className={style.headerSearchBotItem}>Nail</a>
-									</Link>
-									<Link href="#">
-										<a className={style.headerSearchBotItem}>Clinic</a>
-									</Link>
-									<Link href="#">
-										<a className={style.headerSearchBotItem}>Massage</a>
-									</Link>
-									<Link href="#">
-										<a className={style.headerSearchBotItem}>Thẩm mỹ viện</a>
-									</Link>
-									<Link href="#">
-										<a className={style.headerSearchBotItem}>Nha khoa</a>
-									</Link>
+									{dataTag.map((item: any, index: number) => (
+										<Link key={index} href={item.url}>
+											<a className={style.headerSearchBotItem}>{item.name}</a>
+										</Link>
+									))}
 								</div>
 							</div>
 						</div>
@@ -78,14 +108,14 @@ export function HeaderLayout({ children }: LayoutProps) {
 							<div className={style.headerLanguage}>
 								<Link href="/">
 									<>
-										<Image src={icon.languagePurple} alt="" />
+										<Image width={24} height={24} src={icon.languagePurple} alt="" />
 										<a>VN</a>
 									</>
 								</Link>
 							</div>
 							<div className={style.headerCart}>
 								<Link href="/">
-									<Image src={icon.ShoppingCartSimple} alt="" />
+									<Image width={30} height={30} src={icon.ShoppingCartSimple} alt="" />
 								</Link>
 							</div>
 						</div>
