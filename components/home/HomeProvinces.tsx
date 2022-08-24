@@ -4,6 +4,7 @@ import useTrans from '../../context/hooks/useTrans'
 import style from './home.module.css'
 import { formatRoundOrgCount } from '../../src/utils/format'
 import Image from 'next/image'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 export interface IProvinceProps {
 	province: any[]
 }
@@ -18,7 +19,7 @@ export function Province(props: IProvinceProps) {
 			<div className={style.provinceList}>
 				{province.slice(0, 6).map((item: any, index: number) => (
 					<div key={index} className={style.provinceItem}>
-						<Image layout="fill" src={`${item.media[1].original_url}`} alt="" />
+						<LazyLoadImage src={`${item.media[1].original_url}`} alt="" />
 
 						<div className={style.provinceContent}>
 							<div className={style.provinceTitle}>{item?.name}</div>

@@ -1,6 +1,7 @@
 .sectionHeadWrap {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 }
 .home_title {
 	align-items: center;
@@ -17,4 +18,13 @@
 	color: var(--purple);
 	font-weight: bold;
 	cursor: pointer;
+}
+
+@media screen and (max-width: 767.98px) {
+	.sectionHeadWrap {
+		padding: 0 16px;
+	}
+	.title {
+		font-size: 20px;
+	}
 }
