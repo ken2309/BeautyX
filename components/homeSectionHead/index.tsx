@@ -17,7 +17,7 @@ function HomeSectionHead(props: IProps) {
 					<span className={style.title}>{title}</span>
 				</div>
 
-				<div className={style.homeSeemore}>{seemore !== '' ? seemore : 'Xem thêm >>'}</div>
+				<div className={style.homeSeemore}>{seemore ? seemore : null}</div>
 			</div>
 		</Link>
 	)
