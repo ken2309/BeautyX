@@ -83,7 +83,6 @@ export const getStaticProps: GetStaticProps<IPopsHomePage> = async (
 
 	const resProvinces = await provincesApi.getAll()
 	const provinces: any = await resProvinces.data.context.data
-	console.log('province', resProvinces)
 	return {
 		props: {
 			services: hits,

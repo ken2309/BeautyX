@@ -15,4 +15,6 @@
 .homeSeemore {
 	font-size: 14px;
 	color: var(--purple);
+	font-weight: bold;
+	cursor: pointer;
 }

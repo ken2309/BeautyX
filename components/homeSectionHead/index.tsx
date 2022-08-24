@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 import style from './HomeSectionTitle.module.css'
 
@@ -8,14 +9,17 @@ interface IProps {
 
 function HomeSectionHead(props: IProps) {
 	const { title, seemore } = props
-	return (
-		<div className={style.sectionHeadWrap}>
-			<div className={style.home_title}>
-				<span className={style.title}>{title}</span>
-			</div>
 
-			<div className={style.homeSeemore}>{'Xem thêm >>'}</div>
-		</div>
+	return (
+		<Link href="/seemoreProvince">
+			<div className={style.sectionHeadWrap}>
+				<div className={style.home_title}>
+					<span className={style.title}>{title}</span>
+				</div>
+
+				<div className={style.homeSeemore}>{seemore !== '' ? seemore : 'Xem thêm >>'}</div>
+			</div>
+		</Link>
 	)
 }
 
