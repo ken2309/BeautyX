@@ -56,6 +56,96 @@
 	text-transform: capitalize;
 }
 
+/* home banner */
+
+.bannerWrap {
+	grid-gap: 0 16px;
+	display: flex;
+	height: 350px;
+	margin: 32px 0;
+	overflow: hidden;
+	width: 100%;
+}
+.bannerLeft {
+	width: 70%;
+	cursor: pointer;
+}
+.bannerRight {
+	grid-gap: 16px 0;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 30%;
+}
+.bannerRightTop {
+	background-color: #cfeaff;
+	flex-shrink: 0;
+	height: 50%;
+	cursor: pointer;
+}
+.bannerRightBot {
+	grid-gap: 0 16px;
+	display: flex;
+	height: 50%;
+	width: 100%;
+}
+.bannerRightBotItem:nth-child(1) {
+	width: 50%;
+	background-color: #fff4e1;
+	cursor: pointer;
+}
+.bannerRightBotItem:nth-child(2) {
+	background-color: #e3e0f1;
+	width: 50%;
+	cursor: pointer;
+}
+
+.bannerBtnPrev,
+.bannerBtnNext {
+	position: absolute;
+	opacity: 0;
+	z-index: 100;
+	top: 50%;
+	transform: translateY(-50%);
+	border-radius: 100%;
+	border: none;
+	outline: none;
+	background-color: #fff;
+	visibility: hidden;
+	transition: all 0.3s ease-out;
+	padding: 3px;
+}
+.bannerBtnPrev {
+	top: 50%;
+	transform: translateY(-50%) rotate(180deg);
+	left: 0;
+}
+.bannerBtnPrev > span,
+.bannerBtnNext > span {
+	display: block !important;
+}
+.bannerBtnNext {
+	right: 0;
+}
+.bannerBtnPrev img,
+.bannerBtnNext img {
+	width: 32px;
+	height: 32px;
+}
+.bannerLeft:hover .bannerBtnPrev {
+	opacity: 0.7;
+	visibility: visible;
+	left: 14px;
+	transition: all 0.3s ease-in;
+}
+.bannerLeft:hover .bannerBtnNext {
+	opacity: 0.7;
+	right: 14px;
+	visibility: visible;
+	transition: all 0.3s ease-in;
+}
+/* close banner */
+
 /* home province */
 .province {
 	padding: 16px;
@@ -202,6 +292,43 @@
 	.home_service_list {
 		grid-template-columns: repeat(4, 1fr);
 	}
+
+	/* banner */
+	.bannerBtnNext,
+	.bannerBtnPrev {
+		opacity: 0.7;
+		background-color: #fff;
+		visibility: visible;
+	}
+	.bannerBtnNext {
+		right: 16px;
+	}
+	.bannerBtnPrev {
+		left: 16px;
+	}
+	.bannerWrap {
+		flex-direction: column;
+		grid-gap: 24px 0;
+		height: 100%;
+		margin: 0;
+	}
+
+	.bannerLeft,
+	.bannerRight {
+		width: 100%;
+	}
+	.bannerRight {
+		display: flex;
+		flex-direction: row;
+		grid-gap: 16px;
+		padding: 0 16px;
+	}
+	.bannerRightTop,
+	.bannerRightBot {
+		width: 50%;
+		grid-gap: 16px;
+	}
+	/* close banner */
 }
 
 @media screen and (max-width: 767.98px) {
@@ -296,4 +423,13 @@
 	/* open tags */
 
 	/* close tags */
+
+	/* open banner */
+	.bannerRight {
+		display: none;
+	}
+	.bannerWrap {
+		margin: 0;
+	}
+	/* close banner */
 }

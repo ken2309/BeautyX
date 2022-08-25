@@ -15,19 +15,21 @@ import { NextPageWithLayout } from '../models'
 import { HeaderLayout } from '../components/layout'
 import { HomeFooterTags, Province, HomeTags } from '../components/home/index'
 import provincesApi from '../api/client/provinceApi'
+import bannerApi from '../api/client/bannerApi'
 import tagsApi from '../api/client/tagApi'
 import { ITag } from '../interfaces/tags'
 import { HomePromo } from '../components/home/HomePromo'
+import HomeBanners from '../components/home/HomeBanners'
 
 interface IPopsHomePage {
 	services: any[]
 	province: any[]
 	tags: ITag[]
+	banners: any[]
 }
 
 const Home: NextPageWithLayout = (props: any) => {
-	const { services, province, tags } = props
-	console.log(tags)
+	const { services, province, tags, banners } = props
 	const { setItem } = useStorage()
 	const router = useRouter()
 	const changeLang = (lang: string) => {
@@ -36,7 +38,6 @@ const Home: NextPageWithLayout = (props: any) => {
 	}
 	return (
 		<>
-			{/* <span>Home</span> */}
 			<Head>
 				<title>BeautyX - Đặt lịch làm hẹn Online</title>
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -46,6 +47,7 @@ const Home: NextPageWithLayout = (props: any) => {
 			<button onClick={() => changeLang('en')}>Anh</button> */}
 			<div style={{ backgroundColor: 'var(--bg-gray)' }}>
 				<Container>
+					<HomeBanners banners={banners} />
 					<HomeTags />
 					<HomePromo services={services} />
 					<Province province={province} />
@@ -72,13 +74,16 @@ export const getStaticProps: GetStaticProps<IPopsHomePage> = async (
 	const resTags = await tagsApi.getAll({
 		include: 'children',
 	})
+	const resBanners = await bannerApi.getAll()
 	const provinces: any = await resProvinces.data.context.data
 	const tags = await resTags.data.context.data
+	const banners = await resBanners.data.context.data
 	return {
 		props: {
 			services: hits,
 			province: provinces.slice(0, 6),
 			tags: tags,
+			banners: banners,
 		},
 		revalidate: 3600 * 24,
 	}

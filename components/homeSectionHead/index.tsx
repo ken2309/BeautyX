@@ -14,7 +14,7 @@ function HomeSectionHead(props: IProps) {
 		<Link href="/seemoreProvince">
 			<div className={style.sectionHeadWrap}>
 				<div className={style.home_title}>
-					<span className={style.title}>{title}</span>
+					<h2 className={style.title}>{title}</h2>
 				</div>
 
 				<div className={style.homeSeemore}>{seemore ? seemore : null}</div>
