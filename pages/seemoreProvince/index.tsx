@@ -4,7 +4,7 @@ import { NextPageWithLayout } from '../../models'
 import style from './seemoreProvince.module.css'
 import { GetStaticPathsContext, GetStaticProps } from 'next'
 import provincesApi from '../../api/client/provinceApi'
-import Province from '../../components/home/HomeProvinces'
+// import Province from '../../components/home/HomeProvinces'
 import { Container } from '@mui/system'
 import Image from 'next/image'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
@@ -20,7 +20,7 @@ const SeemoreProvince: NextPageWithLayout = ({ provinces }: any) => {
 	return (
 		<Container>
 			<div className={style.seemoreProvince}>
-				<Province province={provinces} />
+				{/* <Province province={provinces} /> */}
 
 				<div className={style.seemoreList}>
 					{provinces.map((item: any, index: number) => (

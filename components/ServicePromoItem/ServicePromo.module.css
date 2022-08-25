@@ -7,8 +7,15 @@
 	flex-direction: column;
 	flex-shrink: 0;
 	height: 100%;
-	transition: all 0.4s;
+	transition: all 0.3s;
 	width: 100%;
+	border: 1px solid #ccc;
+}
+.ser_pro_item:hover {
+	border: 1px solid var(--red-cl);
+	transform: translateY(-4px);
+	transition: all 0.3s;
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .ser_img_cnt {
