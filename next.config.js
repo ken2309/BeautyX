@@ -12,10 +12,6 @@ module.exports = {
 	},
 	async rewrites() {
 		return [
-			// {
-			// 	source:"/v1/auth/momo",
-			// 	destination:"/api/auth/momo"
-			// },
 			{
 				source: '/v1/:url',
 				destination: '/api/:url',
@@ -60,6 +56,10 @@ module.exports = {
 			{
 				source: '/cua-hang',
 				destination: '/org',
+			},
+			{
+				source: '/giam-gia',
+				destination: '/discounts',
 			},
 			//org detail
 			{

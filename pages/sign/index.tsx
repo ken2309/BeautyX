@@ -1,14 +1,13 @@
 import React from 'react';
-import authentication from '../../api/client/authApi';
-import momoAuthApi from '../../api/client/_momoAuthApi';
+import authentication from '../../api-client/authApi'
 
 function index(props) {
     const handleLogin = async () => {
         try {
-            const res = await momoAuthApi.login({
-                name: "n",
-                email: "ngoctoan06011998@gmail.com",
-                phone: "0392645745"
+            const res = await authentication.login({
+                email:"0392645745",
+                password:"06011998",
+                platform:"BEAUTYX"
             })
             console.log(res)
         } catch (error) {

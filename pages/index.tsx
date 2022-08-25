@@ -1,6 +1,6 @@
 import React from 'react'
 import { IServicePromo } from '../src/interface/servicePromo'
-import servicePromoApi from '../api/client/servicePromoApi'
+import servicePromoApi from '../api-client/servicePromoApi'
 import { GetStaticPathsContext, GetStaticProps } from 'next'
 import { Container } from '@mui/material'
 import ServicePromoItem from '../components/ServicePromoItem'
@@ -13,19 +13,27 @@ import useStorage from '../context/hooks/useStorage'
 import Head from 'next/head'
 import { NextPageWithLayout } from '../models'
 import { HeaderLayout } from '../components/layout'
-import { HomeFooterTags, Province, HomeTags } from '../components/home/index'
-import provincesApi from '../api/client/provinceApi'
-import bannerApi from '../api/client/bannerApi'
-import tagsApi from '../api/client/tagApi'
+import {
+	HomeFooterTags,
+	HomeDiscounts,
+	Province,
+	HomeTags,
+	HomeBanners
+} from "../components/home/index"
+import provincesApi from '../api-client/provinceApi'
+import tagsApi from "../api-client/tagApi";
+import bannerApi from "../api-client/bannerApi"
 import { ITag } from '../interfaces/tags'
+import { IBanner } from "../interfaces/banner"
 import { HomePromo } from '../components/home/HomePromo'
-import HomeBanners from '../components/home/HomeBanners'
+// import HomeBanners from '../components/home/HomeBanners'
+
 
 interface IPopsHomePage {
 	services: any[]
 	province: any[]
 	tags: ITag[]
-	banners: any[]
+	banners: IBanner[]
 }
 
 const Home: NextPageWithLayout = (props: any) => {
@@ -49,6 +57,9 @@ const Home: NextPageWithLayout = (props: any) => {
 				<Container>
 					<HomeBanners banners={banners} />
 					<HomeTags />
+				</Container>
+				<HomeDiscounts />
+				<Container>
 					<HomePromo services={services} />
 					<Province province={province} />
 					<HomeFooterTags tags={tags} />
@@ -83,7 +94,7 @@ export const getStaticProps: GetStaticProps<IPopsHomePage> = async (
 			services: hits,
 			province: provinces.slice(0, 6),
 			tags: tags,
-			banners: banners,
+			banners: banners
 		},
 		revalidate: 3600 * 24,
 	}

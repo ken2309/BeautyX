@@ -39,7 +39,7 @@ const NextButton = (props: any) => {
 	)
 }
 
-function HomeBanners(props: IProps) {
+export function HomeBanners(props: IProps) {
 	const { banners } = props
 	console.log('banner', banners)
 	const [chooseBanner, setChooseBanner] = useState<any>()
@@ -111,5 +111,3 @@ function HomeBanners(props: IProps) {
 		</div>
 	)
 }
-
-export default HomeBanners
