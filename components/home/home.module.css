@@ -21,7 +21,7 @@
 	border-radius: 8px;
 	cursor: pointer;
 	padding: 8px 2px;
-	transition: all .3s;
+	transition: all 0.3s;
 }
 
 .tag_item_cnt:hover {
@@ -55,6 +55,96 @@
 	text-align: center;
 	text-transform: capitalize;
 }
+
+/* home banner */
+
+.bannerWrap {
+	grid-gap: 0 16px;
+	display: flex;
+	height: 350px;
+	margin: 32px 0;
+	overflow: hidden;
+	width: 100%;
+}
+.bannerLeft {
+	width: 70%;
+	cursor: pointer;
+}
+.bannerRight {
+	grid-gap: 16px 0;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 30%;
+}
+.bannerRightTop {
+	background-color: #cfeaff;
+	flex-shrink: 0;
+	height: 50%;
+	cursor: pointer;
+}
+.bannerRightBot {
+	grid-gap: 0 16px;
+	display: flex;
+	height: 50%;
+	width: 100%;
+}
+.bannerRightBotItem:nth-child(1) {
+	width: 50%;
+	background-color: #fff4e1;
+	cursor: pointer;
+}
+.bannerRightBotItem:nth-child(2) {
+	background-color: #e3e0f1;
+	width: 50%;
+	cursor: pointer;
+}
+
+.bannerBtnPrev,
+.bannerBtnNext {
+	position: absolute;
+	opacity: 0;
+	z-index: 100;
+	top: 50%;
+	transform: translateY(-50%);
+	border-radius: 100%;
+	border: none;
+	outline: none;
+	background-color: #fff;
+	visibility: hidden;
+	transition: all 0.3s ease-out;
+	padding: 3px;
+}
+.bannerBtnPrev {
+	top: 50%;
+	transform: translateY(-50%) rotate(180deg);
+	left: 0;
+}
+.bannerBtnPrev > span,
+.bannerBtnNext > span {
+	display: block !important;
+}
+.bannerBtnNext {
+	right: 0;
+}
+.bannerBtnPrev img,
+.bannerBtnNext img {
+	width: 32px;
+	height: 32px;
+}
+.bannerLeft:hover .bannerBtnPrev {
+	opacity: 0.7;
+	visibility: visible;
+	left: 14px;
+	transition: all 0.3s ease-in;
+}
+.bannerLeft:hover .bannerBtnNext {
+	opacity: 0.7;
+	right: 14px;
+	visibility: visible;
+	transition: all 0.3s ease-in;
+}
+/* close banner */
 
 /* home province */
 .province {
@@ -166,12 +256,12 @@
 	line-height: 18px;
 	font-weight: 700;
 	text-transform: capitalize;
-	transition: all .6s;
+	transition: all 0.6s;
 }
 
 .tagNamePar:hover {
 	opacity: 0.6;
-	transition: all .6s;
+	transition: all 0.6s;
 }
 
 .tag_item_child {
@@ -179,6 +269,20 @@
 	line-height: 16px;
 	font-weight: 500;
 	text-transform: capitalize;
+}
+
+.home_section_promo {
+	padding: 16px;
+	background-color: #fff;
+}
+
+.home_service_list {
+	grid-gap: 16px;
+	display: grid;
+	gap: 16px;
+	grid-template-columns: repeat(6, 1fr);
+	margin: 24px 0;
+	width: 100%;
 }
 
 /* end home province */
@@ -216,7 +320,63 @@
 /* end home discount */
 
 /* reponsive */
+@media screen and (max-width: 1023.98px) {
+	.home_service_list {
+		grid-template-columns: repeat(4, 1fr);
+	}
+
+	/* banner */
+	.bannerBtnNext,
+	.bannerBtnPrev {
+		opacity: 0.7;
+		background-color: #fff;
+		visibility: visible;
+	}
+	.bannerBtnNext {
+		right: 16px;
+	}
+	.bannerBtnPrev {
+		left: 16px;
+	}
+	.bannerWrap {
+		flex-direction: column;
+		grid-gap: 24px 0;
+		height: 100%;
+		margin: 0;
+	}
+
+	.bannerLeft,
+	.bannerRight {
+		width: 100%;
+	}
+	.bannerRight {
+		display: flex;
+		flex-direction: row;
+		grid-gap: 16px;
+		padding: 0 16px;
+	}
+	.bannerRightTop,
+	.bannerRightBot {
+		width: 50%;
+		grid-gap: 16px;
+	}
+	/* close banner */
+}
+
 @media screen and (max-width: 767.98px) {
+	.home_section_promo {
+		padding: 16px 0 0 0;
+		margin: 16px 0 0 0;
+	}
+	.home_service_list {
+		grid-gap: 12px;
+		display: flex;
+		overflow-x: scroll;
+		width: 100%;
+		padding: 16px;
+		margin: 0;
+	}
+	/* open province */
 	.tags_cnt {
 		overflow-x: scroll;
 		width: 100%;
@@ -271,7 +431,7 @@
 		grid-template-rows: repeat(4, 1fr);
 		height: 100%;
 		margin-top: 16px;
-		padding: 0 12px;
+		padding: 0 16px 16px 16px;
 	}
 
 	.provinceItem:first-child {
@@ -331,4 +491,18 @@
 		-moz-filter: grayscale(10%) brightness(70%);
 		transition: all 0.2s ease-in;
 	}
+	/* close province */
+
+	/* open tags */
+
+	/* close tags */
+
+	/* open banner */
+	.bannerRight {
+		display: none;
+	}
+	.bannerWrap {
+		margin: 0;
+	}
+	/* close banner */
 }

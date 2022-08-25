@@ -1,16 +1,16 @@
-import axiosClient from "./axios";
+import axiosClient from './axios'
 
 class BannerApi {
-  getAll = () => {
-    const params = {
-      page: 1,
-      limit: 15,
-      platform: "MOMO",
-      sort: "-created_at",
-    };
-    const url = `/banners`;
-    return axiosClient.get(url, { params });
-  };
+	getAll = () => {
+		const url = `/banners`
+		const params = {
+			page: 1,
+			limit: 15,
+			platform: 'MOMO',
+			sort: '-created_at',
+		}
+		return axiosClient.get(url, { params })
+	}
 }
-const bannerApi = new BannerApi();
-export default bannerApi;
+const bannerApi = new BannerApi()
+export default bannerApi

@@ -20,7 +20,7 @@ const SeemoreProvince: NextPageWithLayout = ({ provinces }: any) => {
 	return (
 		<Container>
 			<div className={style.seemoreProvince}>
-				<Province province={provinces} />
+				{/* <Province province={provinces} /> */}
 
 				<div className={style.seemoreList}>
 					{provinces.map((item: any, index: number) => (

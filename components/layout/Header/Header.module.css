@@ -119,18 +119,8 @@
 	font-weight: bold;
 }
 @media screen and (max-width: 1023.98px) {
-	.headerWrap {
-		padding: 24px 16px;
-		grid-gap: 0 24px;
-	}
-	.headerSearchBot {
+	.header {
 		display: none;
-	}
-	.headerLeft {
-		width: 40%;
-	}
-	.headerRight {
-		width: 60%;
 	}
 }
 @media screen and (max-width: 767.98px) {
