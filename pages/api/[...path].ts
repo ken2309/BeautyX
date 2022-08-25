@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import httpProxy from "http-proxy";
+import { baseURL } from '../../api-client/axios';
 
 const proxy = httpProxy.createProxyServer();
-export const API_URL = process.env.API_URL
 export const config = {
     api: {
         bodyParser: {
@@ -15,6 +15,7 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<any>
 ) {
+    const API_URL = baseURL?.slice(0, baseURL?.length - 4)
     return new Promise((resolved) => {
         req.headers.cookie = "";
         proxy.web(req, res, {

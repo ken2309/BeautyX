@@ -1,5 +1,5 @@
 import axiosClient from "./axios";
-import { AUTH_HEADER } from "../utils/authHeader";
+import { AUTH_HEADER } from "../src/utils/authHeader";
 
 class Auth {
   login = (values: any) => {

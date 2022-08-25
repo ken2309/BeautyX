@@ -1,6 +1,6 @@
 import React from 'react'
 import { IServicePromo } from '../src/interface/servicePromo'
-import servicePromoApi from '../api/client/servicePromoApi'
+import servicePromoApi from '../api-client/servicePromoApi'
 import { GetStaticPathsContext, GetStaticProps } from 'next'
 import { Container } from '@mui/material'
 import ServicePromoItem from '../components/ServicePromoItem'
@@ -15,22 +15,22 @@ import { NextPageWithLayout } from '../models'
 import { HeaderLayout } from '../components/layout'
 import {
 	HomeFooterTags,
+	HomeDiscounts,
 	Province,
 	HomeTags
 } from "../components/home/index"
-import provincesApi from '../api/client/provinceApi'
-import tagsApi from "../api/client/tagApi";
+import provincesApi from '../api-client/provinceApi'
+import tagsApi from "../api-client/tagApi";
 import { ITag } from '../interfaces/tags'
 
 interface IPopsHomePage {
 	services: any[]
 	province: any[]
-	tags: ITag[]
+	tags: ITag[],
 }
 
 const Home: NextPageWithLayout = (props: any) => {
 	const { services, province, tags } = props
-	console.log(tags)
 	const { setItem } = useStorage()
 	const router = useRouter()
 	const changeLang = (lang: string) => {
@@ -48,8 +48,9 @@ const Home: NextPageWithLayout = (props: any) => {
 			{/* <button onClick={() => changeLang('vi')}>Việt</button>
 			<button onClick={() => changeLang('en')}>Anh</button> */}
 			<div style={{ backgroundColor: 'var(--bg-gray)' }}>
+				<HomeTags />
+				<HomeDiscounts/>
 				<Container>
-					<HomeTags/>
 					<HomePromo services={services} />
 					<Province province={province} />
 					<HomeFooterTags tags={tags} />
@@ -102,7 +103,7 @@ export const getStaticProps: GetStaticProps<IPopsHomePage> = async (
 	return {
 		props: {
 			services: hits,
-			province: provinces.slice(0, 6),
+			province: provinces.slice(0,6),
 			tags: tags
 		},
 		revalidate: 3600 * 24

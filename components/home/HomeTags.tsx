@@ -6,6 +6,7 @@ import useTrans from '../../context/hooks/useTrans';
 import Link from 'next/link';
 import style from './home.module.css'
 import Image from 'next/image';
+import { Container } from '@mui/material';
 
 export function HomeTags() {
     const trans = useTrans()
@@ -41,49 +42,51 @@ export function HomeTags() {
         // { id: 7, title: 'Yoga', text: "Yoga", img: imgTag.yoga },
     ];
     return (
-        <div className={style.tags_cnt}>
-            <ul className={style.tag_list}>
-                <li className={style.tag_item}>
-                    <Link href={"/#"}>
-                        <a>
-                            <div className={style.tag_item_cnt}>
-                                <div className={style.tag_item_img}>
-                                    <Image
-                                        src={icon.locationCate}
-                                        alt=""
-                                        layout="responsive"
-                                    />
-                                </div>
-                                <span className={style.item_name}>
-                                    Gần bạn
-                                </span>
-                            </div>
-                        </a>
-                    </Link>
-                </li>
-                {
-                    tags_data.map(item => (
-                        <li key={item.id} className={style.tag_item}>
-                            <Link href={"/#"}>
-                                <a>
-                                    <div className={style.tag_item_cnt}>
-                                        <div className={style.tag_item_img}>
-                                            <Image
-                                                src={item.img}
-                                                alt={item.title}
-                                                layout="responsive"
-                                            />
-                                        </div>
-                                        <span className={style.item_name}>
-                                            {item.text}
-                                        </span>
+        <Container>
+            <div className={style.tags_cnt}>
+                <ul className={style.tag_list}>
+                    <li className={style.tag_item}>
+                        <Link href={"/#"}>
+                            <a>
+                                <div className={style.tag_item_cnt}>
+                                    <div className={style.tag_item_img}>
+                                        <Image
+                                            src={icon.locationCate}
+                                            alt=""
+                                            layout="responsive"
+                                        />
                                     </div>
-                                </a>
-                            </Link>
-                        </li>
-                    ))
-                }
-            </ul>
-        </div>
+                                    <span className={style.item_name}>
+                                        Gần bạn
+                                    </span>
+                                </div>
+                            </a>
+                        </Link>
+                    </li>
+                    {
+                        tags_data.map(item => (
+                            <li key={item.id} className={style.tag_item}>
+                                <Link href={"/#"}>
+                                    <a>
+                                        <div className={style.tag_item_cnt}>
+                                            <div className={style.tag_item_img}>
+                                                <Image
+                                                    src={item.img}
+                                                    alt={item.title}
+                                                    layout="responsive"
+                                                />
+                                            </div>
+                                            <span className={style.item_name}>
+                                                {item.text}
+                                            </span>
+                                        </div>
+                                    </a>
+                                </Link>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </Container>
     );
 }
