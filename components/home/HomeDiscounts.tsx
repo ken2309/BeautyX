@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Container } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
@@ -5,10 +6,11 @@ import useSWR from 'swr';
 import axiosClient from '../../api-client/axios';
 import { IDiscountPar, IITEMS_DISCOUNT } from '../../interfaces/discount';
 import { DISCOUNT_TYPE } from "../../src/utils/formatRouterLink/fileType";
+import { discountParamsURL } from '../../context/query-params'
 import style from "./home.module.css"
 
 export function HomeDiscounts(props) {
-    const { data, error, mutate, isValidating } = useSWR("/discounts", {
+    const { data, error, mutate, isValidating } = useSWR(`/discounts?page=1&${discountParamsURL}`, {
         revalidateOnFocus: false,
     });
     let discounts: IDiscountPar[] = [];
