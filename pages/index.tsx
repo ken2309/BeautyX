@@ -1,33 +1,27 @@
 import React from 'react'
-import { IServicePromo } from '../src/interface/servicePromo'
 import servicePromoApi from '../api-client/servicePromoApi'
 import { GetStaticPathsContext, GetStaticProps } from 'next'
 import { Container } from '@mui/material'
-import ServicePromoItem from '../components/ServicePromoItem'
-import HomeSectionHead from '../components/homeSectionHead'
-import style from '../styles/Home.module.css'
 import ExtraFlatForm from '../rootComponents/extraPlatForm'
 import { useRouter } from 'next/router'
-import useTrans from '../context/hooks/useTrans'
 import useStorage from '../context/hooks/useStorage'
 import Head from 'next/head'
 import { NextPageWithLayout } from '../models'
-import { HeaderLayout } from '../components/layout'
 import {
 	HomeFooterTags,
 	HomeDiscounts,
 	Province,
 	HomeTags,
-	HomeBanners
-} from "../components/home/index"
+	HomeBanners,
+} from '../components/home/index'
 import provincesApi from '../api-client/provinceApi'
-import tagsApi from "../api-client/tagApi";
-import bannerApi from "../api-client/bannerApi"
+import tagsApi from '../api-client/tagApi'
+import bannerApi from '../api-client/bannerApi'
 import { ITag } from '../interfaces/tags'
-import { IBanner } from "../interfaces/banner"
+import { IBanner } from '../interfaces/banner'
 import { HomePromo } from '../components/home/HomePromo'
+import MainLayout from '../components/layout/Main'
 // import HomeBanners from '../components/home/HomeBanners'
-
 
 interface IPopsHomePage {
 	services: any[]
@@ -68,7 +62,7 @@ const Home: NextPageWithLayout = (props: any) => {
 		</>
 	)
 }
-Home.Layout = HeaderLayout
+Home.Layout = MainLayout
 
 export default Home
 
@@ -94,7 +88,7 @@ export const getStaticProps: GetStaticProps<IPopsHomePage> = async (
 			services: hits,
 			province: provinces.slice(0, 6),
 			tags: tags,
-			banners: banners
+			banners: banners,
 		},
 		revalidate: 3600 * 24,
 	}

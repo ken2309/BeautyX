@@ -50,7 +50,7 @@ const dataTag = [
 		url: '/',
 	},
 ]
-export function HeaderLayout({ children }: LayoutProps) {
+export function HeaderLayout() {
 	return (
 		<>
 			<header className={style.header}>
@@ -122,7 +122,6 @@ export function HeaderLayout({ children }: LayoutProps) {
 					</div>
 				</Container>
 			</header>
-			<div>{children}</div>
 		</>
 	)
 }

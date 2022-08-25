@@ -1,15 +1,13 @@
 import * as React from 'react'
-import { HeaderLayout } from '../../components/layout'
 import { NextPageWithLayout } from '../../models'
 import style from './seemoreProvince.module.css'
 import { GetStaticPathsContext, GetStaticProps } from 'next'
 import provincesApi from '../../api-client/provinceApi'
-import {Province} from '../../components/home/index'
 import { Container } from '@mui/system'
-import Image from 'next/image'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { formatRoundOrgCount } from '../../src/utils/format'
 import useTrans from '../../context/hooks/useTrans'
+import MainLayout from '../../components/layout/Main'
 
 export interface ISeemoreProvinceProps {
 	provinces: any
@@ -42,7 +40,7 @@ const SeemoreProvince: NextPageWithLayout = ({ provinces }: any) => {
 		</Container>
 	)
 }
-SeemoreProvince.Layout = HeaderLayout
+SeemoreProvince.Layout = MainLayout
 export default SeemoreProvince
 
 export const getStaticProps: GetStaticProps<ISeemoreProvinceProps> = async (
