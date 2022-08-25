@@ -5,7 +5,7 @@ const nextConfig = {
 }
 
 module.exports = {
-	// nextConfig,
+	nextConfig,
 	i18n,
 	images: {
 		domains: ['dev.myspa.vn', 'dev_spala.myspa.vn', 'myspa.vn', 'api.myspa.vn', 'i.imgur.com'],

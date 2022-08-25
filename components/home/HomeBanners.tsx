@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
-import Slider from 'react-slick'
 import icon from '../../src/constants/icon'
 import { dealHot } from '../../src/constants/img'
 import style from './home.module.css'
 import useDeviceMobile from '../../src/utils/useDeviceMobile'
+import Slider from 'react-slick'
 
 interface IProps {
 	banners: any[]
@@ -87,7 +87,7 @@ export function HomeBanners(props: IProps) {
 			<div className={style.bannerWrap}>
 				<div className={style.bannerLeft}>
 					<Slider {...settings}>
-						{banners.map((item: any, index: number) => (
+						{banners?.map((item: any, index: number) => (
 							<div key={index + item.url} className={style.bannerLeftItem}>
 								<Image width={840} height={350} src={item?.imageURL} alt="" />
 							</div>
