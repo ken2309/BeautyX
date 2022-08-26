@@ -71,6 +71,7 @@ const MapTagsGoogle = (props: any) => {
         });
     };
     return (
+        <>
         <LoadScript
             googleMapsApiKey={`${key}`}
             libraries={["places", "drawing"]}
@@ -144,6 +145,7 @@ const MapTagsGoogle = (props: any) => {
                 ))}
             </GoogleMap>
         </LoadScript>
+        </>
     );
 };
 // export default withScriptjs(withGoogleMap(MapTagsGoogle));

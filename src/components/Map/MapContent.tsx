@@ -207,6 +207,7 @@ const MapContent = (props: IProps) => {
             />
             {
                 isLoaded &&
+                <>
                 <GoogleMap
                     id="searchbox-example"
                     onCenterChanged={onCenterChanged}
@@ -252,6 +253,7 @@ const MapContent = (props: IProps) => {
                         <DirectionsRenderer directions={directionsResponse} />
                     }
                 </GoogleMap>
+                </>
             }
             <div
                 className={
