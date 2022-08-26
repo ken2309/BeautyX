@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import icon from "../../../constants/icon";
 import onErrorImg from "../../../utils/errorImg";
-import formatPrice from "../../../utils/formatPrice";
+import formatPrice, { formatSalePriceService } from "../../../utils/formatPrice";
 import { useHistory } from "react-router-dom";
 import {
     fetchAsyncCancelFavoriteService,
@@ -20,6 +20,7 @@ import { AppContext } from "../../../context/AppProvider";
 import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
 import { handleScroll } from "../onScrollChange";
 import { Rating } from "@mui/material";
+// import { formatSalePriceService } from "../../../utils/formatPrice";
 
 interface IProps {
     org: IOrganization;
@@ -37,8 +38,9 @@ export default function ServiceDetailRight(props: IProps) {
     const { COMMENTS } = useSelector((state: any) => state.SERVICE);
     const history = useHistory();
     const [popupSuccess, setPopupSuccess] = useState(false);
+    const serviceSaleSpecial = formatSalePriceService(service.special_price, service.special_price_momo);
     const percent: any = service
-        ? Math.round(100 - (service.special_price / service?.price) * 100)
+        ? Math.round(100 - (serviceSaleSpecial / service?.price) * 100)
         : null;
     const { USER } = useSelector((state: any) => state.USER);
 
@@ -72,20 +74,29 @@ export default function ServiceDetailRight(props: IProps) {
     };
     const handleAddCart = () => {
         const sale_price =
-            service?.special_price > 0
-                ? service?.special_price
+            (serviceSaleSpecial > 0)
+                ? serviceSaleSpecial
                 : service?.price;
         const is_type = 2;
-        const values = formatAddCart(
-            service,
-            org,
-            is_type,
-            quantity,
-            sale_price
-        );
         if (service.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable) {
-            setPopupSuccess(true);
-            dispatch(addCart(values));
+            if (USER) {
+                const values = formatAddCart(
+                    service,
+                    org,
+                    is_type,
+                    quantity,
+                    sale_price,
+                );
+                const valuesCart = {
+                    ...values,
+                    cart_id: parseInt(`${USER.id}${values.cart_id}`),
+                    user_id: USER.id
+                }
+                setPopupSuccess(true);
+                dispatch(addCart(valuesCart));
+            } else {
+                history.push("/sign-in?1")
+            }
             if (setOpenDrawer) {
                 setOpenDrawer({ NOW: true, open: false });
             }
@@ -154,7 +165,7 @@ export default function ServiceDetailRight(props: IProps) {
                                 size="small"
                                 readOnly
                                 name="simple-controlled"
-                                value={service.rating}
+                                value={(service.rating === 5) ? 5 : 4+(service.rating/10)}
                             />
 
                             {COMMENTS.totalItem > 0 ? (
@@ -197,7 +208,7 @@ export default function ServiceDetailRight(props: IProps) {
                                     </p>
                                 </div>
                             )} */}
-                        {service?.special_price > 0 &&
+                        {serviceSaleSpecial > 0 &&
                             (
                                 <div className="detail-right__percent">
                                     <p>
@@ -207,14 +218,16 @@ export default function ServiceDetailRight(props: IProps) {
                                 </div>
                             )}
                         <div className="detail-right__price">
-                            {service?.special_price > 0 ? (
+                            {serviceSaleSpecial > 0 ? (
                                 <>
                                     <span>
-                                        {formatPrice(service?.special_price)}đ
+                                        {formatPrice(
+                                           serviceSaleSpecial
+                                        )}đ
                                     </span>
                                     <span>
-                                            {formatPrice(service?.price)}đ
-                                        </span>
+                                        {formatPrice(service?.price)}đ
+                                    </span>
                                     {/* {percent < 50 && (
                                         <span>
                                             {formatPrice(service?.price)}đ

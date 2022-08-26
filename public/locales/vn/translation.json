@@ -13,7 +13,7 @@
         "my_codes": "Danh sách mã ưu đãi",
         "settings": "Cài đặt",
         "support": "Hỗ trợ",
-        "sign_out": "Đăng xuất khỏi trái đất",
+        "sign_out": "Đăng xuất",
         "back": "Trở lại",
         "noti": "Thông báo",
         "mark_all_as_viewed": "Đánh dấu tất cả là đã xem",
@@ -23,7 +23,8 @@
         "appointment": "lịch hẹn",
         "see_it_now": "Xem ngay nhé",
         "see_calendar": "Xem lịch hẹn",
-        "not_noti": "Bạn không có thông báo nào!"
+        "not_noti": "Bạn không có thông báo nào!",
+        "language": "Ngôn ngữ"
     },
     "Bottom": {
         "appointment": "Lịch hẹn",
@@ -314,7 +315,7 @@
         "a_place": "Là nơi để doanh nghiệp đăng tải các hình ảnh, thông tin, đánh giá, tăng khả năng quảng bá cho thương hiệu.",
         "create": "Ghi nhận đánh giá của khách hàng dành cho sản phẩm, dịch vụ. Tăng uy tín thương hiệu dễ dàng với những đánh giá tốt.",
         "create_a_beauty": "Tạo nên một cộng đồng làm đẹp, để doanh nghiệp và khách hàng đều có thể chia sẻ và trao đổi những kinh nghiệm cho nhau.",
-        "become_a_myspa": "Trở thành đối tác Myspa để kinh doanh hiệu quả hơn trong giai đoạn chuyển đối số.",
+        "become_a_myspa": "Trở thành đối tác Myspa để kinh doanh hiệu quả hơn trong giai đoạn chuyển đổi số.",
         "company_name": "Tên doanh nghiệp",
         "branch_quantity": "Số lượng chi nhánh",
         "read": "Tôi đã đọc và đồng ý với"
@@ -388,6 +389,7 @@
     "home_2": {
         "categories": "Danh mục",
         "clinic": "Phòng khám",
+        "dentistry": "Nha Khoa",
         "beauty_salon": "Thẩm mỹ viện",
         "hot_beauty_deal": "Deal làm đẹp cực HOT",
         "hot_promotion": "Khuyến mãi HOT",
@@ -396,7 +398,6 @@
         "name": "Tên",
         "hot_deal_locations": "Địa điểm nhiều Deal HOT",
         "trusted_place": "Địa điểm đáng tin cậy",
-        "places_near_you_2": "Địa điểm gần bạn",
         "places_you_are_interested_in": "Địa điểm bạn quan tâm",
         "beauty_places": "Địa điểm làm đẹp",
         "top_deal": "Top Deal Khủng",

@@ -19,9 +19,9 @@ import {
     fetchServicesByFilter,
     fetchProductsByFilter,
     onSetEmptyOrgs,
+    onSetEmptyServices,
 } from "../../redux/search/searchResultSlice";
 import useFullScreen from "../../utils/useDeviceMobile";
-import HeadMobile from "../HeadMobile";
 import BackTopButton from "../../components/BackTopButton";
 import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 import Map from "../../components/Map";
@@ -29,6 +29,8 @@ import { STATUS } from "../../redux/status";
 import FilterOrgs from "../Filter/FilterOrgs";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
+import FilterService from "../Filter/FilterService";
+import { ISortList } from "../Filter/FilterService";
 
 function SearchResults(props: any) {
     const history = useHistory();
@@ -37,13 +39,12 @@ function SearchResults(props: any) {
     const dispatch = useDispatch();
     const location: any = useLocation();
     const params: any = extraParamsUrl();
-    // const searchKey = decodeURI(
-    //     location.search.slice(1, location.search.length)
-    // );
+
     const searchKey = params?.keyword;
     const { tab, RE_ORGS, RE_SERVICES, RE_PRODUCTS } = useSelector(
         (state: any) => state.SEARCH_RESULT
     );
+    const valueTab = params.tab || tab
 
     const { FILTER_ORG } = useSelector((state: any) => state.FILTER);
     const FILTER_ORGS_VAL = {
@@ -74,13 +75,13 @@ function SearchResults(props: any) {
     if (location.state) {
         tabs = tabs.sort((a, b) => b.total - a.total);
     }
-    const [valueTab, setValueTab] = useState(params?.tab || "1");
+    //const [valueTab, setValueTab] = useState(params?.tab || "1");
     const onChangeTab = (event: React.SyntheticEvent, newValue: string) => {
-        setValueTab(newValue);
+        //setValueTab(newValue);
         // history.push(`/lich-hen?tab=${newValue}`);
         history.push({
             pathname: "/ket-qua-tim-kiem/",
-            search: `?keyword=${searchKey}?tab=${newValue}`,
+            search: `?keyword=${encodeURIComponent(searchKey)}?tab=${newValue}`,
         });
     };
     const callOrgsByKeyword = () => {
@@ -142,6 +143,26 @@ function SearchResults(props: any) {
         history.goBack();
         dispatch(onToggleSearchCnt(true));
     };
+    //open filter orgs mobile
+    const onOpenFilterOrgs = useCallback(() => {
+        if (valueTab === "3") {
+            setOpenFilter(true)
+        }
+    }, [valueTab])
+    //on filter services
+    const { FILTER_PROMO } = useSelector((state: any) => state.FILTER)
+    const handleFilterServices = (sort: ISortList) => {
+        if (FILTER_PROMO.query !== sort.query) {
+            dispatch(onSetEmptyServices())
+            dispatch(
+                fetchServicesByFilter({
+                    page: 1,
+                    keyword: searchKey,
+                    sort: sort.query
+                })
+            );
+        }
+    }
     return (
         <>
             <HeadTitle
@@ -162,16 +183,16 @@ function SearchResults(props: any) {
                 <div className="flex-row-sp se-re-header-mb">
                     <div className="flex-row-sp input">
                         <div className="flex-row">
-                            <img onClick={()=>history.push("/homepage")} src={icon.chevronLeft} alt="" />
+                            <img onClick={() => history.push("/homepage")} src={icon.chevronLeft} alt="" />
                             <span onClick={onGoBack} >{searchKey}</span>
                         </div>
-                        <img 
+                        <img
                             onClick={onGoBack}
-                            src={icon.closeBlack} alt="" 
+                            src={icon.closeBlack} alt=""
                         />
                     </div>
-                    <button 
-                        onClick={() => setOpenFilter(true)}
+                    <button
+                        onClick={onOpenFilterOrgs}
                         className="filter"
                     >
                         <img src={icon.filterBlack} alt="" />
@@ -273,6 +294,9 @@ function SearchResults(props: any) {
                                 )}
                             </div>
                             <TabPanel value="1">
+                                <FilterService
+                                    onChangeFilter={handleFilterServices}
+                                />
                                 <TabService keyword={searchKey} />
                             </TabPanel>
                             <TabPanel value="2">

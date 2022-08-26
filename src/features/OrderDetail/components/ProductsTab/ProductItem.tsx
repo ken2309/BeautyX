@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import formatPrice from "../../../../utils/formatPrice";
 import ButtonCus from "../../../../components/ButtonCus";
 import { addCart, onClearPrevCartItem } from "../../../../redux/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import slugify from "../../../../utils/formatUrlString";
 import { AppContext } from "../../../../context/AppProvider";
@@ -15,6 +15,7 @@ import { Alert, Snackbar } from "@mui/material";
 function ProductItem(props: any) {
   const { productItem, org } = props;
   const product = productItem.productable;
+  const { USER } = useSelector((state: any) => state.USER);
   const { t } = useContext(AppContext);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -50,7 +51,11 @@ function ProductItem(props: any) {
       console.log(res)
       if (res?.payload?.is_momo_ecommerce_enable && org?.is_momo_ecommerce_enable) {
         dispatch(onClearPrevCartItem())
-        dispatch(addCart(cartValues))
+        dispatch(addCart({
+          ...cartValues,
+          cart_id: parseInt(`${USER.id}${cartValues.cart_id}`),
+          user_id: USER?.id
+        }))
         history.push('/gio-hang')
       } else {
         setOpenNoti({

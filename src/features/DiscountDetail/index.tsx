@@ -22,6 +22,10 @@ import {
     fetchAsyncServiceCmt,
     fetchAsyncServiceDetail,
 } from "../../redux/org_services/serviceSlice";
+import {
+    fetchAsyncProductDetail,
+    fetchAsyncProductCmt,
+} from "../../redux/org_products/productSlice";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import Review from "../Reviews";
 import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
@@ -35,7 +39,7 @@ import {
 import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
 import ReviewsContainer from "../ReviewsContainer";
 import Footer from "../Footer";
-import ModalLoad from "../../components/ModalLoad";
+import LoadDetail from "../../components/LoadingSketion/LoadDetail";
 
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
@@ -60,15 +64,28 @@ function DiscountDetail() {
 
     const dispatch = useDispatch();
     const params: any = extraParamsUrl();
+    const TYPE = params.type;
     const ORG = useSelector((state: any) => state.ORG);
     const org = ORG.org;
 
-    const { SERVICE, COMMENTS } = useSelector((state: any) => state.SERVICE);
+    const COMMENTS_SERVICE = useSelector(
+        (state: any) => state.SERVICE.COMMENTS
+    );
+    const COMMENTS_PRODUCT = useSelector(
+        (state: any) => state.PRODUCT.COMMENTS
+    );
+    const { SERVICE } = useSelector((state: any) => state.SERVICE);
+    const { PRODUCT } = useSelector((state: any) => state.PRODUCT);
+    let COMMENTS = COMMENTS_SERVICE;
+    let detail = SERVICE.service;
+    if (TYPE === "product") {
+        COMMENTS = COMMENTS_PRODUCT;
+        detail = PRODUCT.product;
+    }
     const values = {
-        org_id: params.org_id,
+        // org_id: params.org_id,
         id: params.dis_id,
     };
-    const service = SERVICE.service;
 
     const callDiscountDetail = () => {
         if (
@@ -90,10 +107,12 @@ function DiscountDetail() {
         if (status_detail === STATUS.SUCCESS) {
             const values = discount.items.find(
                 (item: IITEMS_DISCOUNT) => item.productable_id == params.item_id
+                // (item: IITEMS_DISCOUNT) => 138 == params.item_id
             );
             dispatch(onSetItemDiscount(values));
         }
     };
+    //type service
     const callServiceDetail = () => {
         if (
             parseInt(params.item_id) !== SERVICE.service.id ||
@@ -105,8 +124,6 @@ function DiscountDetail() {
             };
             dispatch(fetchAsyncServiceDetail(values));
         }
-    };
-    const callServiceComments = () => {
         if (
             parseInt(params.item_id) !== COMMENTS.service_id ||
             COMMENTS.status_cmt !== STATUS.SUCCESS
@@ -118,6 +135,31 @@ function DiscountDetail() {
                 org_id: params.org_id,
             };
             dispatch(fetchAsyncServiceCmt(values));
+        }
+    };
+    // type product
+    const callProductDetail = () => {
+        if (
+            parseInt(params.item_id) !== PRODUCT.product_id ||
+            SERVICE.status !== STATUS.SUCCESS
+        ) {
+            const values = {
+                org_id: params.org_id,
+                id: params.item_id,
+            };
+            dispatch(fetchAsyncProductDetail(values));
+        }
+        if (
+            parseInt(params.item_id) !== COMMENTS.product_id ||
+            COMMENTS.status_cmt !== STATUS.SUCCESS
+        ) {
+            const values = {
+                type: "PRODUCT",
+                page: 1,
+                id: params.item_id,
+                org_id: params.org_id,
+            };
+            dispatch(fetchAsyncProductCmt(values));
         }
     };
 
@@ -133,11 +175,15 @@ function DiscountDetail() {
     let refReview = useRef<any>();
     let refMap = useRef<any>();
     let refPolicy = useRef<any>();
+    let refLimitText = useRef<any>();
     const scrollMap = refMap?.current?.offsetTop;
     const scrollDesc = refDesc?.current?.offsetTop;
     const scrollReview = refReview?.current?.offsetTop;
     const scrollPolicy = refPolicy?.current?.offsetTop;
-
+    const handleSeemoreText = () => {
+        refLimitText?.current.classList.toggle("unlimit-text");
+        refLimitText?.current.nextSibling?.classList.toggle("change-text");
+    };
     // handle onclick active menu
     const handleChange = (event: React.SyntheticEvent, value: any) => {
         const top = handleChangeScroll(
@@ -187,8 +233,11 @@ function DiscountDetail() {
     useEffect(() => {
         GoogleTagPush(GoogleTagEvents.PROMOTION_LOAD);
         callDiscountDetail();
-        callServiceDetail();
-        callServiceComments();
+        if (TYPE === "service") {
+            callServiceDetail();
+        } else if (TYPE === "product") {
+            callProductDetail();
+        }
         callOrgDetail();
     }, []);
 
@@ -198,9 +247,7 @@ function DiscountDetail() {
 
     return (
         <>
-            {status_detail !== STATUS.SUCCESS && (
-                <ModalLoad title="Đang tải..." />
-            )}
+            {status_detail !== STATUS.SUCCESS && <LoadDetail />}
             <HeadTitle
                 title={
                     status_detail === "LOADING" ? "Loading..." : discount?.title
@@ -214,12 +261,14 @@ function DiscountDetail() {
                             <DiscountDetailLeft
                                 org={ORG.org}
                                 discount={discount}
-                                detail={service}
+                                detail={detail}
                             />
                             <DiscountDetailRight
                                 org={ORG.org}
                                 discount={discount}
-                                detail={service}
+                                detail={detail}
+                                COMMENTS={COMMENTS}
+                                TYPE_DE={TYPE}
                             />
                         </div>
                         <div className="service-detail__body">
@@ -240,14 +289,33 @@ function DiscountDetail() {
                                                 ref={refDesc}
                                                 className="service-detail__description"
                                             >
-                                                <p>
+                                                <p
+                                                    ref={refLimitText}
+                                                    className="service-description"
+                                                >
                                                     {t("pr.description")}:{" "}
-                                                    {service.description
-                                                        ? service.description
+                                                    {detail?.description
+                                                        ? detail?.description
                                                         : t(
-                                                              "detail_item.updating"
-                                                          )}
+                                                            "detail_item.updating"
+                                                        )}
                                                 </p>
+                                                {detail?.description &&
+                                                    (is_mobile === true
+                                                        ? detail?.description
+                                                            .length > 100
+                                                        : detail?.description
+                                                            .length > 300) ? (
+                                                    <div
+                                                        onClick={() =>
+                                                            handleSeemoreText()
+                                                        }
+                                                        className="seemore-btn"
+                                                    >
+                                                        <p>Xem thêm &or;</p>
+                                                        <p>Thu gọn &and;</p>
+                                                    </div>
+                                                ) : null}
                                             </div>
                                         </TabPanel>
                                         <TabPanel value={value}>
@@ -263,13 +331,13 @@ function DiscountDetail() {
                                                     commentable_type={"SERVICE"}
                                                     page={COMMENTS.page}
                                                     id={ORG.org?.id}
-                                                    detail_id={service?.id}
+                                                    detail_id={detail?.id}
                                                     openSeeMoreCmt={
                                                         handleOpenSeemoreCmt
                                                     }
                                                 />
                                                 {COMMENTS.comments &&
-                                                COMMENTS.comments.length >=
+                                                    COMMENTS.comments.length >=
                                                     8 ? (
                                                     <div
                                                         style={{
@@ -308,22 +376,22 @@ function DiscountDetail() {
                                             >
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                    <>
-                                                        <p className="service-detail__title">
-                                                            {t(
-                                                                "detail_item.merchant"
-                                                            )}
-                                                        </p>
-                                                        <div className="service-detail__org-mb">
-                                                            <DetailOrgCard
+                                                        <>
+                                                            <p className="service-detail__title">
+                                                                {t(
+                                                                    "detail_item.merchant"
+                                                                )}
+                                                            </p>
+                                                            <div className="service-detail__org-mb">
+                                                                <DetailOrgCard
+                                                                    org={ORG?.org}
+                                                                />
+                                                            </div>
+                                                            <OrgInformation
                                                                 org={ORG?.org}
                                                             />
-                                                        </div>
-                                                        <OrgInformation
-                                                            org={ORG?.org}
-                                                        />
-                                                    </>
-                                                )}
+                                                        </>
+                                                    )}
                                             </div>
                                         </TabPanel>
                                         <TabPanel value={value}>
@@ -367,8 +435,10 @@ function DiscountDetail() {
                                     <DiscountDetailRight
                                         discount={discount}
                                         org={ORG.org}
-                                        detail={service}
+                                        detail={detail}
+                                        COMMENTS={COMMENTS}
                                         NOW={open.NOW}
+                                        TYPE_DE={TYPE}
                                     />
                                 </div>
                             </div>

@@ -31,10 +31,14 @@ import PageNotFound from "../../components/PageNotFound";
 import { useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
+import { EXTRA_DETAIL_SERVICE } from "../../utils/extraDetail";
 //import ServiceVideo from "./components/ServiceVideo";
 
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
+import LoadDetail from "../../components/LoadingSketion/LoadDetail";
+import { formatSalePriceService } from "../../utils/formatPrice";
+import { Service } from "../../interface/service";
 // end
 
 function ServiceDetail(props: any) {
@@ -46,7 +50,7 @@ function ServiceDetail(props: any) {
     const params: any = extraParamsUrl();
     const history = useHistory();
     const is_mobile = useFullScreen();
-    const service = SERVICE.service;
+    const service: Service = EXTRA_DETAIL_SERVICE(SERVICE.service);
     const org = ORG.org;
     const [open, setOpen] = useState({
         NOW: true,
@@ -69,11 +73,15 @@ function ServiceDetail(props: any) {
     let refReview = useRef<any>();
     let refMap = useRef<any>();
     let refPolicy = useRef<any>();
+    let refLimitText = useRef<any>();
     const scrollMap = refMap?.current?.offsetTop;
     const scrollDesc = refDesc?.current?.offsetTop;
     const scrollReview = refReview?.current?.offsetTop;
     const scrollPolicy = refPolicy?.current?.offsetTop;
-
+    const handleSeemoreText = () => {
+        refLimitText?.current.classList.toggle("unlimit-text");
+        refLimitText?.current.nextSibling?.classList.toggle("change-text");
+    };
     // handle onclick active menu
     const handleChange = (event: React.SyntheticEvent, value: any) => {
         const top = handleChangeScroll(
@@ -176,10 +184,10 @@ function ServiceDetail(props: any) {
             dispatch(fetchAsyncServiceDetail(values));
         }
     };
-
+    console.log(service?.description?.length);
     return (
         <>
-            {SERVICE.status === STATUS.LOADING && <ModalLoad />}
+            {SERVICE.status === STATUS.LOADING && <LoadDetail />}
             {SERVICE.status === STATUS.FAIL && <PageNotFound />}
             {/* title page servive */}
             <HeadTitle
@@ -225,14 +233,28 @@ function ServiceDetail(props: any) {
                                                 ref={refDesc}
                                                 className="service-detail__description"
                                             >
-                                                <p>
-                                                    {t("pr.description")}:{" "}
-                                                    {service.description
-                                                        ? service.description
-                                                        : t(
-                                                              "detail_item.updating"
-                                                          )}
-                                                </p>
+                                                <p
+                                                    ref={refLimitText}
+                                                    className="service-description"
+                                                    dangerouslySetInnerHTML={{ '__html': service.description || t("detail_item.updating") }}
+                                                ></p>
+                                                {service?.description &&
+                                                    (
+                                                        is_mobile === true
+                                                        ? service?.description.length > 100
+                                                        : service?.description.length > 300
+                                                    )
+                                                    ? (
+                                                        <div
+                                                            onClick={() =>
+                                                                handleSeemoreText()
+                                                            }
+                                                            className="seemore-btn"
+                                                        >
+                                                            <p>Xem thêm &or;</p>
+                                                            <p>Thu gọn &and;</p>
+                                                        </div>
+                                                    ) : null}
                                             </div>
                                         </TabPanel>
 
@@ -256,7 +278,7 @@ function ServiceDetail(props: any) {
                                                     }
                                                 />
                                                 {COMMENTS.comments &&
-                                                COMMENTS.comments.length >=
+                                                    COMMENTS.comments.length >=
                                                     8 ? (
                                                     <div
                                                         style={{
@@ -297,22 +319,22 @@ function ServiceDetail(props: any) {
                                             >
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                    <>
-                                                        <p className="service-detail__title">
-                                                            {t(
-                                                                "detail_item.merchant"
-                                                            )}
-                                                        </p>
-                                                        <div className="service-detail__org-mb">
-                                                            <DetailOrgCard
+                                                        <>
+                                                            <p className="service-detail__title">
+                                                                {t(
+                                                                    "detail_item.merchant"
+                                                                )}
+                                                            </p>
+                                                            <div className="service-detail__org-mb">
+                                                                <DetailOrgCard
+                                                                    org={org}
+                                                                />
+                                                            </div>
+                                                            <OrgInformation
                                                                 org={org}
                                                             />
-                                                        </div>
-                                                        <OrgInformation
-                                                            org={org}
-                                                        />
-                                                    </>
-                                                )}
+                                                        </>
+                                                    )}
                                             </div>
                                         </TabPanel>
 
@@ -330,7 +352,7 @@ function ServiceDetail(props: any) {
                         {/* service bottom buttom add cart */}
                         <div className="service-detail__bottom">
                             {service?.is_momo_ecommerce_enable &&
-                            org?.is_momo_ecommerce_enable ? (
+                                org?.is_momo_ecommerce_enable ? (
                                 <>
                                     <button
                                         onClick={() => {

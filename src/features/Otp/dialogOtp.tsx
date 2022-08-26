@@ -20,7 +20,7 @@ declare global {
 }
 window.confirmationResult = window.confirmationResult || {};
 
-function RenderRecatpcha(props: any) {
+function RenderRecatpcha(props: IPropOtp) {
     const { open, setOpen, dataOtp, setDataOtp, handleSubmit }:IPropOtp = props;
     const [openDialog, setOpenDialog] = useState(false);
     const snackStatus = {

@@ -1,39 +1,55 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
+import { onSetOrgCenter } from "../../redux/org/orgMapSlice";
+import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import onErrorImg from "../../utils/errorImg";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import _, { debounce } from "lodash";
+
 interface IProps {
     item: IOrganization;
     handleSetLocation: any;
     location: any;
+    setOpenDetail: any;
+    openDetail: any;
+    map: any,
+    setLocal: any,
+    setZoom: any,
 }
 export default function MapTagsOrgItem(props: IProps) {
-    const { item, handleSetLocation, location } = props;
-    const history = useHistory();
+    const { item, location, setOpenDetail, openDetail, map, setZoom } =
+        props;
+    const dispatch = useDispatch();
 
     const onHoveItem = () => {
-        handleSetLocation(item);
+        // map?.panTo({ lat: item.latitude, lng: item.longitude })
+        dispatch(onSetOrgCenter(item))
     };
     const gotoDetail = () => {
-        history.push({
-            pathname: `/org/${item.subdomain}`,
-            // search: `${item.id}`,
-            state: item,
+        setZoom(16)
+        setOpenDetail({
+            ...openDetail,
+            open: true,
+            check: true,
         });
+        dispatch(fetchAsyncOrg(item.subdomain));
+        map?.panTo({ lat: item.latitude, lng: item.longitude })
     };
     return (
         <div
+            id={`${item.id}`}
             onMouseEnter={onHoveItem}
             onClick={() => gotoDetail()}
             style={
                 item?.latitude === location.lat
                     ? {
-                          backgroundColor: "var(--bgGray)",
-                      }
+                        backgroundColor: "var(--bgGray)",
+                    }
                     : {
-                          backgroundColor: "var(--bgWhite)",
-                      }
+                        backgroundColor: "var(--bgWhite)",
+                    }
             }
             className="dialog-map__item"
         >
@@ -63,12 +79,22 @@ export default function MapTagsOrgItem(props: IProps) {
                     <div className="evaluate-item">
                         <img src={icon.heart} alt="" />
                         <p>
-                            {item?.favorites_count
-                                ? item?.favorites_count
+                            {item?.favorites?.length
+                                ? item?.favorites?.length
                                 : "0"}
                         </p>
                     </div>
                 </div>
+                {/* {item.distance && (
+                    <div className="flex-row map-item__distance">
+                        <img
+                            className="map-item__distance-icon"
+                            src={icon.pinMapRed}
+                            alt=""
+                        />
+                        {formatDistance(item.distance)}
+                    </div>
+                )} */}
             </div>
         </div>
     );

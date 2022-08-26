@@ -3,3 +3,8 @@ export const STATUS = {
     SUCCESS: "SUCCESS",
     FAIL: "FAIL"
 }
+export const EXTRA_REDUCER_STATUS = {
+    PENDING: 'pending',
+    FULFILLED: 'fulfilled',
+    REJECTED: 'rejected'
+}

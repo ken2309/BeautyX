@@ -11,13 +11,19 @@ import { identity, pickBy } from "lodash";
 import Notification from "../../../components/Notification";
 import AlertSnack from "../../../components/AlertSnack";
 // ==== api tracking ====
-// import tracking from "../../../api/trackApi";
+import tracking from "../../../api/trackApi";
 import { formatProductList } from "../../../utils/tracking";
 import { AppContext } from "../../../context/AppProvider";
+import { IDiscountPar } from "../../../interface/discount";
 // end
 function CartBottom(props: any) {
     const { DATA_CART, DATA_PMT } = props;
+    const cartAmount = DATA_CART.cartAmount;
     const { t } = useContext(AppContext);
+    const VOUCHER_APPLY: IDiscountPar[] = useSelector((state: any) => state.carts.VOUCHER_APPLY);
+    const { cartQuantityCheck } = useSelector((state: any) => state.carts);
+
+    // console.log(VOUCHER_APPLY, cartQuantityCheck)
     const [openAlertSnack, setOpenAlertSnack] = useState({
         title: "",
         open: false,
@@ -27,8 +33,8 @@ function CartBottom(props: any) {
         open: false,
         titleLeft: "",
         titleRight: "",
-        onClickLeft: () => {},
-        onClickRight: () => {},
+        onClickLeft: () => { },
+        onClickRight: () => { },
     });
 
     const history = useHistory();
@@ -38,7 +44,9 @@ function CartBottom(props: any) {
         .map((item: any) => item.discount);
     const listCouponCode = listDiscount
         .map((item: any) => item?.coupon_code)
-        .filter(Boolean);
+        .filter(Boolean)
+        .concat(VOUCHER_APPLY.map((i: IDiscountPar) => i.coupon_code))
+        ;
     const { products, services, combos } = cartReducer(
         DATA_CART.cartList.filter((i: any) => i.isConfirm === true)
     );
@@ -56,19 +64,20 @@ function CartBottom(props: any) {
         services: services.map((item: any) => {
             return { id: item.id, quantity: item.quantity };
         }),
-        combos: combos.map((item: any) => {
+        treatment_combo: combos.map((item: any) => {
             return { id: item.id, quantity: item.quantity };
         }),
         coupon_code: listCouponCode.length > 0 ? listCouponCode : [],
+        // coupon_code: ["d"]
     };
 
     async function handlePostOrder() {
         //setLoading(true)
         try {
-            // tracking.PAY_CONFIRM_CLICK(
-            //     DATA_PMT.org.id,
-            //     formatProductList(pramsOrder.products)
-            // );
+            tracking.PAY_CONFIRM_CLICK(
+                DATA_PMT.org.id,
+                formatProductList(pramsOrder.products)
+            );
             const response = await order.postOrder(
                 DATA_PMT.org.id,
                 pickBy(pramsOrder, identity)
@@ -126,6 +135,36 @@ function CartBottom(props: any) {
             });
         }
     };
+
+
+    const vouchersCal = VOUCHER_APPLY.map((i: IDiscountPar) => {
+        let discountValue = i.discount_value;
+        if (!i.maximum_discount_value || cartAmount < i.maximum_discount_value) {
+            discountValue = cartAmount - (cartAmount * i.discount_value / 100)
+        }
+        if (i.maximum_discount_value && cartAmount > i.maximum_discount_value) {
+            discountValue = i.maximum_discount_value
+        }
+        if (i.discount_type === "PRODUCT" && i.items_count === 0 && i.discount_unit === "PRICE") {
+            // console.log(cartQuantityCheck, i.discount_value)
+            discountValue = cartQuantityCheck * i.discount_value
+        }
+        // console.log(discountValue)
+        return {
+            ...i,
+            discount_value: (i.discount_unit === "PERCENT" || i.discount_type === "PRODUCT") ?
+                discountValue : i.discount_value
+        }
+    })
+    let discountVoucherTotal = 0
+    if (VOUCHER_APPLY.length > 0) {
+        discountVoucherTotal = vouchersCal
+            .map((i: IDiscountPar) => i.discount_value)
+            .reduce((pre: number, cur: number) => pre + cur)
+    }
+    // console.log(discountVoucherTotal, vouchersCal)
+
+
     return (
         <div className="re-cart-bottom">
             <AlertSnack
@@ -165,6 +204,24 @@ function CartBottom(props: any) {
                                     </span>
                                 </div>
                             )}
+                            {
+                                VOUCHER_APPLY.length > 0 &&
+                                vouchersCal
+                                    // .filter((i: IDiscountPar) => i.discount_type === "SUB_TOTAL")
+                                    .map((item: IDiscountPar) => (
+                                        <div key={item.id} className="flex-row-sp re-cart-bottom__cal-item">
+                                            <span>{item.title}</span>
+                                            <span>
+                                                -
+                                                {formatPrice(
+                                                    item.discount_value
+                                                )}đ
+                                                {/* {item.discount_unit === "PERCENT" && "%"} */}
+                                                {/* {item.discount_unit === "PRICE" && "đ"} */}
+                                            </span>
+                                        </div>
+                                    ))
+                            }
                         </div>
                         <div className="flex-row-sp re-cart-bottom__pay">
                             <span className="left">{`${t(
@@ -174,7 +231,8 @@ function CartBottom(props: any) {
                                 <span className="right-money">
                                     {formatPrice(
                                         DATA_CART.cartAmount -
-                                            DATA_CART.cartAmountDiscount
+                                        DATA_CART.cartAmountDiscount -
+                                        discountVoucherTotal
                                     )}
                                     đ
                                 </span>

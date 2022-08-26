@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import MapTagsItemMB from "./MapItemMB";
 
 export default function MapTagsListMB(props: any) {
-    const { listOrg, handleSetLocation } = props;
+    const { listOrg, handleSetLocation, sliderRef } = props;
     const settings = {
         dots: false,
         infinite: true,
@@ -20,7 +20,7 @@ export default function MapTagsListMB(props: any) {
     };
     return (
         <div className="map-list__mobile">
-            <Slider {...settings}>
+            <Slider ref={sliderRef} {...settings}>
                 {listOrg.map((item: any, index: number) => (
                     <MapTagsItemMB key={index} item={item} />
                 ))}

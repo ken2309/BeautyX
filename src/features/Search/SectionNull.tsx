@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import imgNull from "../../assets/image/user_guide/searchNull.png";
+// import imgNull from "../../assets/image/user_guide/searchNull.png";
 import icon from "../../constants/icon";
 import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 import { listRecomment } from "./SectionEmpty";
@@ -9,7 +9,7 @@ import { STATUS } from "../../redux/status";
 import { AppContext } from "../../context/AppProvider";
 
 // ==== api tracking ====
-// import tracking from "../../api/trackApi";
+import tracking from "../../api/trackApi";
 // end
 function SectionNull(props: any) {
     const { t } = useContext(AppContext);
@@ -21,7 +21,7 @@ function SectionNull(props: any) {
         dispatch(onToggleSearchCnt(false));
         history.push({
             pathname: "/ket-qua-tim-kiem/",
-            search: `?keyword=${title}`,
+            search: `?keyword=${encodeURIComponent(title)}`,
         });
     };
     let showNull = false;
@@ -30,7 +30,7 @@ function SectionNull(props: any) {
         SERVICES.status === STATUS.SUCCESS &&
         PRODUCTS.status === STATUS.SUCCESS
     ) {
-        // tracking.SEARCH_RESULT_LOAD(quantity, keyword);
+        tracking.SEARCH_RESULT_LOAD(quantity, keyword);
     } else if (
         ORGS.status === STATUS.SUCCESS &&
         SERVICES.status === STATUS.SUCCESS &&
@@ -44,7 +44,7 @@ function SectionNull(props: any) {
     return showNull ? (
         <>
             <div className="search-null">
-                <img src={imgNull} alt="" />
+                {/* <img src={imgNull} alt="" /> */}
                 <div className="title">
                     {t("se.no_results_found_for")} <span>{keyword}</span>
                 </div>

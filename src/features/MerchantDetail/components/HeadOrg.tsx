@@ -90,7 +90,7 @@ function HeadOrg(props: IProps) {
     }
     const carts = useSelector((state: any) => state.carts);
     useEffect(() => {
-        dispatch(getTotal());
+        dispatch(getTotal(USER?.id));
     }, [dispatch, carts]);
 
     const onGotoCart = () => {

@@ -182,72 +182,77 @@ function OrgDetail(props: IProps) {
                                             <span className="org-left-detail__name">
                                                 {org?.name}
                                             </span>
-                                            <div className="flexX-gap-4 org-left-detail__address">
-                                                <img
-                                                    src={icon.mapPinRed}
-                                                    alt=""
-                                                    className="icon"
-                                                />
-                                                <span className="title">
-                                                    {org?.full_address}
-                                                </span>
-                                            </div>
-                                            <div className="flexX-gap-8 org-left-detail__rate">
-                                                <div className="flexX-gap-4 org-left-detail__rate-item">
-                                                    <img
-                                                        src={icon.star}
-                                                        alt=""
-                                                        className="icon"
-                                                    />
-                                                    <span className="text">
-                                                        4.5
-                                                    </span>
+                                            <div className="flex-row ">
+                                                <div className="flex-col org-des-cnt">
+
+                                                    <div className="flexX-gap-4 org-left-detail__address">
+                                                        <img
+                                                            src={icon.mapPinRed}
+                                                            alt=""
+                                                            className="icon"
+                                                        />
+                                                        <span className="title">
+                                                            {org?.full_address}
+                                                        </span>
+                                                    </div>
+                                                    <div className="flexX-gap-8 org-left-detail__rate">
+                                                        <div className="flexX-gap-4 org-left-detail__rate-item">
+                                                            <img
+                                                                src={icon.star}
+                                                                alt=""
+                                                                className="icon"
+                                                            />
+                                                            <span className="text">
+                                                                4.5
+                                                            </span>
+                                                        </div>
+                                                        <div className="flexX-gap-4 org-left-detail__rate-item">
+                                                            <img
+                                                                src={icon.chatAll}
+                                                                alt=""
+                                                                className="icon"
+                                                            />
+                                                            <span className="text">
+                                                                {totalItem}
+                                                            </span>
+                                                        </div>
+                                                        <div className="flexX-gap-4 org-left-detail__rate-item">
+                                                            <img
+                                                                src={icon.heart}
+                                                                alt=""
+                                                                className="icon"
+                                                            />
+                                                            <span className="text">
+                                                                {org?.favorites_count}
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="flexX-gap-4 org-left-detail__rate-item">
+                                                <div
+                                                    onClick={(e) => {
+                                                        handleOpenMap();
+                                                        e.preventDefault();
+                                                        e.stopPropagation();
+                                                    }}
+                                                    className="re-change-map"
+                                                >
                                                     <img
-                                                        src={icon.chatAll}
+                                                        src={icon.mapMarkerOrg}
                                                         alt=""
-                                                        className="icon"
                                                     />
-                                                    <span className="text">
-                                                        {totalItem}
+                                                    <span className="re-change-map-text">
+                                                        {t("pr.map")}
                                                     </span>
-                                                </div>
-                                                <div className="flexX-gap-4 org-left-detail__rate-item">
-                                                    <img
-                                                        src={icon.heart}
-                                                        alt=""
-                                                        className="icon"
-                                                    />
-                                                    <span className="text">
-                                                        {org?.favorites_count}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            onClick={(e) => {
-                                                handleOpenMap();
-                                                e.preventDefault();
-                                                e.stopPropagation();
-                                            }}
-                                            className="re-change-map"
-                                        >
-                                            <img
-                                                src={icon.mapMarkerOrg}
-                                                alt=""
-                                            />
-                                            <span className="re-change-map-text">
-                                                {t("pr.map")}
-                                            </span>
-                                            {org?.branches.length > 0 ? (
-                                                <>
-                                                    <span className="re-change-map-total">
-                                                        {org?.branches.length}{" "}
+                                                    {org?.branches.length > 0 ? (
+                                                        <>
+                                                            <span className="re-change-map-total">
+                                                                {org?.branches.length}{" "}
                                                         CN
                                                     </span>
-                                                </>
-                                            ) : null}
+                                                        </>
+                                                    ) : null}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="org-mess-flo">
@@ -256,10 +261,10 @@ function OrgDetail(props: IProps) {
                                             style={
                                                 org?.is_favorite
                                                     ? {
-                                                          backgroundColor:
-                                                              "#e64d4a",
-                                                          border: "1px solid #e64d4a",
-                                                      }
+                                                        backgroundColor:
+                                                            "#e64d4a",
+                                                        border: "1px solid #e64d4a",
+                                                    }
                                                     : {}
                                             }
                                             onClick={handleFavoriteOrg}
@@ -268,8 +273,8 @@ function OrgDetail(props: IProps) {
                                                 style={
                                                     org?.is_favorite
                                                         ? {
-                                                              color: "#fff",
-                                                          }
+                                                            color: "#fff",
+                                                        }
                                                         : {}
                                                 }
                                             >
@@ -337,10 +342,10 @@ function OrgDetail(props: IProps) {
                                                         <li
                                                             style={
                                                                 index + 2 ===
-                                                                today
+                                                                    today
                                                                     ? {
-                                                                          color: "var(--purple)",
-                                                                      }
+                                                                        color: "var(--purple)",
+                                                                    }
                                                                     : {}
                                                             }
                                                             key={index}
@@ -371,10 +376,10 @@ function OrgDetail(props: IProps) {
                                     style={
                                         org?.is_favorite
                                             ? {
-                                                  backgroundColor:
-                                                      "var(--purple)",
-                                                  color: "var(--bgWhite)",
-                                              }
+                                                backgroundColor:
+                                                    "var(--purple)",
+                                                color: "var(--bgWhite)",
+                                            }
                                             : {}
                                     }
                                     onClick={handleFavoriteOrg}

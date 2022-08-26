@@ -23,12 +23,13 @@ import SectionNull from "./SectionNull";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
 // ==== api tracking ====
-// import tracking from "../../api/trackApi";
+import tracking from "../../api/trackApi";
 import {
     onSetEmptyOrgs,
     onSetEmptyProducts,
     onSetEmptyServices,
 } from "../../redux/search/searchResultSlice";
+import { URL } from "url";
 // end
 
 function Search() {
@@ -70,13 +71,14 @@ function Search() {
     const debounceDropDown = useCallback(
         debounce((nextValue) => {
             callByFilter(nextValue);
-            // tracking.SEARCH_ON_CHANGE(nextValue);
+            tracking.SEARCH_ON_CHANGE(nextValue);
         }, 1000),
         []
     );
     const handleOnChangeInput = (e: any) => {
-        debounceDropDown(e.target.value);
-        dispatch(onSetKeyword(e.target.value));
+        var keyword = e.target.value;
+        debounceDropDown(keyword);
+        dispatch(onSetKeyword(keyword));
     };
     const onGotoFilterResult = () => {
         dispatch(onSetEmptyOrgs());
@@ -84,7 +86,7 @@ function Search() {
         dispatch(onSetEmptyProducts());
         history.push({
             pathname: "/ket-qua-tim-kiem/",
-            search: `?keyword=${keyword}?tab=1`,
+            search: `?keyword=${encodeURIComponent(keyword)}?tab=1`,
             state: {
                 orgsTotal: ORGS.totalItem,
                 servicesTotal: SERVICES.totalItem,
@@ -113,14 +115,6 @@ function Search() {
         };
         dispatch(addHistory(values));
     };
-
-    // const handleTrack = (props:String,item_id?:String | Number) => {
-    //     const result= {
-    //         store_id: ORGS.id,
-    //         product_id: item_id
-    //     };
-    //     tracking.SEARCH_RESULT_ITEM_CLICK(keyword,result,props,location_user)
-    // }
     const listSection = [
         {
             element: (

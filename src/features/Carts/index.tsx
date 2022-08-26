@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 import icon from "../../constants/icon";
@@ -11,7 +12,7 @@ import UserPaymentInfo from "../Account/components/UserPaymentInfo";
 import CartGroupItem from "./components/CartGroupItem";
 import CartBottom from "./components/CartBottom";
 import Footer from "../Footer";
-import { clearByCheck, getTotal } from "../../redux/cartSlice";
+import { addVoucherByOrg, clearByCheck, getTotal } from "../../redux/cartSlice";
 import CartPaymentMethod from "./components/CartPaymentMethod";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
@@ -26,14 +27,51 @@ import { IOrganization } from "../../interface/organization";
 import { IBranch } from "../../interface/branch";
 import onErrorImg from "../../utils/errorImg";
 import useDeviceMobile from "../../utils/useDeviceMobile";
+import { fetchAsyncOrgDiscounts } from "../../redux/org_discounts/orgDiscountsSlice";
+import { IDiscountPar } from "../../interface/discount";
+import { IS_VOUCHER } from "../../utils/cart/checkConditionVoucher";
+import { checkPhoneValid } from "../../utils/phoneUpdate";
 // end
+
+const initialMomoForBeautyx = {
+    created_at: "2022-01-07T10:00:07.000000Z",
+    id: 1,
+    is_changeable: false,
+    name_key: "MOMO",
+    updated_at: "2022-01-07T10:00:07.000000Z"
+}
+
 function Carts() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const dispatch = useDispatch();
-    const { cartList, cartAmountDiscount, cartAmount } = useSelector(
+    const { cartAmountDiscount, cartAmount, VOUCHER_APPLY } = useSelector(
         (state: any) => state.carts
     );
+    // console.log(VOUCHER_APPLY)
+    const { USER } = useSelector((state: any) => state.USER);
+    const cartListAll = useSelector((state: any) => state.carts.cartList)
+    const history = useHistory();
+    const cartList = cartListAll.filter((i: any) => i?.user_id === USER?.id)
+
+
     const org = cartList.filter((item: any) => item.isConfirm === true)[0]?.org;
+
+    const callDiscountByOrg = async () => {
+        const values = { org_id: org.id }
+        const res = await dispatch(fetchAsyncOrgDiscounts(values))
+        const { discounts } = res.payload;
+        if (discounts.length > 0) {
+            dispatch(addVoucherByOrg({
+                org: org,
+                vouchers: IS_VOUCHER(discounts)
+            }))
+        }
+    }
+    useEffect(() => {
+        if (org) {
+            callDiscountByOrg()
+        }
+    }, [org])
 
     const cartConfirm = cartList.filter((item: any) => item.isConfirm === true);
 
@@ -45,11 +83,12 @@ function Carts() {
     };
 
     useEffect(() => {
-        dispatch(getTotal());
-    }, [dispatch, cartList]);
+        dispatch(getTotal(USER?.id));
+        ((USER && FLAT_FORM === FLAT_FORM_TYPE.MB) && (!checkPhoneValid(USER.telephone) && (history.push('/otp'))));
+    }, [dispatch, cartList, USER, VOUCHER_APPLY]);
 
     const [open, setOpen] = useState(false);
-    const [pmtMethod, setPmtMethod] = useState<any>();
+    const [pmtMethod, setPmtMethod] = useState<any>(initialMomoForBeautyx);
     const [address, setAddress] = useState<any>();
     const [openBranch, setOpenBranch] = useState({
         open: false,
@@ -89,6 +128,7 @@ function Carts() {
         setPmtMethod
     );
     const DATA_PMT = { pmtMethod, address, payment_method_id, org, branch };
+    // console.log(cartListGroupOrg,cartList,cartListAll);
     return (
         <>
             <HeadTitle title="Giỏ hàng" />
@@ -123,7 +163,27 @@ function Carts() {
                                 >
                                     <span>Phương thức thanh toán</span>
                                     <br />
-                                    <span>
+                                    {/* <div>
+                                        Thanh toán qua 
+                                        <span
+                                            style={{
+                                                backgroundColor:"var(--pink-momo)",
+                                                marginLeft:"12px",
+                                                padding:"0px 8px",
+                                                borderRadius:"6px",
+                                                color:"var(--white)"
+                                            }}
+                                        >MOMO</span>
+                                    </div> */}
+                                    <span
+                                        style={{
+                                            backgroundColor: "var(--pink-momo)",
+                                            marginLeft: "12px",
+                                            padding: "0px 8px",
+                                            borderRadius: "6px",
+                                            color: "var(--white)"
+                                        }}
+                                    >
                                         {pmtMethod
                                             ? pmtMethod?.name_key
                                             : "Vui lòng chọn phương thức thanh toán"}

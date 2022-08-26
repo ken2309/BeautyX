@@ -12,7 +12,6 @@ function ExtraFlatForm() {
     const params = extraParamsUrl();
 
     const flatForm = location.pathname.slice(1, params ? location.pathname.length - 1 : location.pathname.length);
-    console.log(flatForm);
     const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
     if (!FLAT_FORM) {
         switch (flatForm) {
@@ -26,6 +25,7 @@ function ExtraFlatForm() {
                 sessionStorage.setItem('FLAT_FORM', FLAT_FORM_TYPE.TIKI);
                 break
             case FLAT_FORM_TYPE.MB:
+                // sessionStorage.setItem('FLAT_FORM', 'BEAUTYX');
                 sessionStorage.setItem('FLAT_FORM', FLAT_FORM_TYPE.MB);
                 sessionStorage.setItem('_loginToken', params?.loginToken+'');
                 break

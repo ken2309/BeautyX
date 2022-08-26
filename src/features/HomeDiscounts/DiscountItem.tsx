@@ -5,8 +5,9 @@ import formatPrice from "../../utils/formatPrice";
 import icon from "../../constants/icon";
 import { useHistory } from "react-router-dom";
 import { formatRouterLinkDiscount } from "../../utils/formatRouterLink/formatRouter";
+import { DISCOUNT_TYPE } from "../../utils/formatRouterLink/fileType";
 // ==== api tracking ====
-//  import tracking,{COMPONENT_NAME} from "../../api/trackApi";
+import tracking from "../../api/trackApi";
 // end
 interface IProps {
     discountPar: IDiscountPar;
@@ -18,15 +19,21 @@ function DiscountItem(props: IProps) {
     const pathDiscountOb = formatRouterLinkDiscount(discountPar, discountItem);
     const history = useHistory();
     const onDetail = () => {
-        // tracking.DISCOOUNT_ITEM_CLICK(
-        //     discountItem.organization.id,
-        //     COMPONENT_NAME.HOT_DEAL,
-        //     discountItem.discount_id
-        // );
+        tracking.DISCOOUNT_ITEM_CLICK(
+            discountItem.organization.id,
+            'khuyến mãi hot',
+            discountItem.discount_id
+        );
         history.push(pathDiscountOb);
     };
+    // console.log(discountItem);
     return (
         <div onClick={onDetail} className="home-discount-item__cnt">
+            {
+                discountItem.organization.image_url !== '' &&
+                discountItem.organization.image_url !== null &&
+                <img src={discountItem.organization.image_url} onError={(e) => onErrorImg(e)} className="home-discount-item__org-logo" alt="" />
+            }
             <img
                 className="home-discount-item__img"
                 src={
@@ -39,14 +46,20 @@ function DiscountItem(props: IProps) {
             />
             <div className="home-discount-item__detail">
                 <span className="name">
-                    {discountItem.productable.service_name}
+                    {discountItem.productable.service_name || discountItem.productable.product_name}
                 </span>
                 <div className="flex-row price">
                     <span className="sale-price">
-                        {formatPrice(discountItem.view_price)}đ
+                        {
+                            discountPar.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key ?
+                                `${formatPrice(discountPar.discount_value)}đ`
+                                :
+                                `${formatPrice(discountItem.view_price)}đ`
+                        }
                     </span>
                     <span className="old-price">
-                        {formatPrice(discountItem.productable.price)}đ
+
+                        {formatPrice(discountItem.productable.price || discountItem.productable.retail_price)}đ
                     </span>
                 </div>
                 <div className="address">
@@ -57,15 +70,14 @@ function DiscountItem(props: IProps) {
                     <div
                         style={
                             !discountPar.total ||
-                            discountPar.total === discountPar.used
+                                discountPar.total === discountPar.used
                                 ? { width: "100%" }
                                 : {
-                                      width: `${
-                                          (discountPar.used /
-                                              discountPar.total) *
-                                          100
-                                      }%`,
-                                  }
+                                    width: `${(discountPar.used /
+                                            discountPar.total) *
+                                        100
+                                        }%`,
+                                }
                         }
                         className="limit-bar__used"
                     ></div>

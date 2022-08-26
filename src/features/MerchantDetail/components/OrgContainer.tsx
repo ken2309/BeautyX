@@ -25,7 +25,7 @@ interface ITabs {
 
 function OrgContainer(props: IProps) {
     const is_mb = useFullScreen();
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const { totalItem } = useSelector((state: any) => state.ORG_COMMENTS);
     const { org, tab } = props;
     const dispatch = useDispatch();
@@ -38,6 +38,20 @@ function OrgContainer(props: IProps) {
         { id: 6, title: `${t("Mer_de.feedback")} (${totalItem > 30 ? "30+" : totalItem})` },
         { id: 7, title: t("Mer_de.galleries") },
     ];
+    // special merchant 
+    const SPECIAL_MERCHANT_ID = '1626'
+    if (SPECIAL_MERCHANT_ID == org.id.toString()) {
+        tabs = [
+            { id: 1, title: "Deal Hot" },
+            // { id: 2, title: t("Mer_de.services") },
+            { id: 2, title: t("Mer_de.products") },
+            { id: 3, title: "Combos" },
+            { id: 4, title: is_mb ? t("app.details") : t("pr.merchant_detail") },
+            { id: 5, title: `${t("Mer_de.feedback")} (${totalItem > 30 ? "30+" : totalItem})` },
+            { id: 6, title: t("Mer_de.galleries") },
+        ]
+    }
+    // end 
     if (is_mb === false) {
         tabs = tabs.filter((item: any) => item.id !== 6);
     }
@@ -75,31 +89,58 @@ function OrgContainer(props: IProps) {
         }
     }
     const onSwitchTab = (value: any) => {
-        switch (value) {
-            case 1:
-                return <OrgDealHot />;
-            case 2:
-                return <OrgServices org={org} />;
-            case 3:
-                return <OrgProducts org={org} />;
-            case 4:
-                return <OrgCombos org={org} />;
-            case 5:
-                return (
-                    <div className="org-information-cnt">
-                        <OrgInformation refMap={refMap} org={org} />
-                        <OrgReviews refReview={refReview} org={org} />
-                    </div>
-                );
-            case 6:
-                return (
-                    <div className="org-information-cnt">
-                        <OrgInformation refMap={refMap} org={org} />
-                        <OrgReviews refReview={refReview} org={org} />
-                    </div>
-                );
-            case 7:
-                return <OrgGalleries />;
+        if (SPECIAL_MERCHANT_ID == org.id.toString()) {
+            switch (value) {
+                case 1:
+                    return <OrgDealHot />;
+                case 2:
+                    return <OrgProducts org={org} />;
+                case 3:
+                    return <OrgCombos org={org} />;
+                case 4:
+                    return (
+                        <div className="org-information-cnt">
+                            <OrgInformation refMap={refMap} org={org} />
+                            <OrgReviews refReview={refReview} org={org} />
+                        </div>
+                    );
+                case 5:
+                    return (
+                        <div className="org-information-cnt">
+                            <OrgInformation refMap={refMap} org={org} />
+                            <OrgReviews refReview={refReview} org={org} />
+                        </div>
+                    );
+                case 6:
+                    return <OrgGalleries />;
+            }
+        } else {
+            switch (value) {
+                case 1:
+                    return <OrgDealHot />;
+                case 2:
+                    return <OrgServices org={org} />;
+                case 3:
+                    return <OrgProducts org={org} />;
+                case 4:
+                    return <OrgCombos org={org} />;
+                case 5:
+                    return (
+                        <div className="org-information-cnt">
+                            <OrgInformation refMap={refMap} org={org} />
+                            <OrgReviews refReview={refReview} org={org} />
+                        </div>
+                    );
+                case 6:
+                    return (
+                        <div className="org-information-cnt">
+                            <OrgInformation refMap={refMap} org={org} />
+                            <OrgReviews refReview={refReview} org={org} />
+                        </div>
+                    );
+                case 7:
+                    return <OrgGalleries />;
+            }
         }
     };
     useEffect(() => {
@@ -120,13 +161,13 @@ function OrgContainer(props: IProps) {
                             onChange={handleChange}
                             aria-label="lab API tabs example"
                         >
-                            {tabs.map((item: ITabs, i: number) => (
+                            {tabs.map((item: ITabs, i: number) =>
                                 <Tab
                                     key={i}
                                     label={item.title}
                                     value={item.id}
                                 />
-                            ))}
+                            )}
                         </TabList>
                         <TabPanel value={tab}>{onSwitchTab(tab)}</TabPanel>
                     </TabContext>

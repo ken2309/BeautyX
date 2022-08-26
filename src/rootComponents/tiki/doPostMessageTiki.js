@@ -44,23 +44,23 @@ export function doPostMakePaymentMessageTiki(params) {
 /**
  * @name callApisFromTiki
  * @description Call api name from tini app.
- * @param {object}   {   api:'',params:{} } 
+ * @param {object}   {   api:[api_name],params:{} } 
  * 
  * @returns {string} response
  */
-export function callApiFromTiki(params, callback) {
+export function callApiFromTiki(api,params) {
     const requestId =
         new Date().getTime() +
         '' +
         Math.floor(Math.random() * 1000000);
-    callbacks[requestId] = callback;
     // eslint-disable-next-line no-undef
-    my.postMessage({
-        requestId,
+    my?.postMessage({
+        requestId: requestId,
         params: {
-            api: 'makePayment',
+            api: api,
             params: {
-                orderId: params
+                TYPE: 'CALL_API',
+                response: params
             }
         },
         success: function () {

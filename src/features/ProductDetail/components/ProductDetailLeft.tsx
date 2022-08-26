@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Product } from "../../../interface/product";
 import { IOrganization } from "../../../interface/organization";
 import onErrorImg from "../../../utils/errorImg";
-import formatPrice from "../../../utils/formatPrice";
+import formatPrice, { formatSalePriceService } from "../../../utils/formatPrice";
 import icon from "../../../constants/icon";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -22,9 +22,10 @@ function ProductDetailLeft(props: IProps) {
     const dispatch = useDispatch();
     const history = useHistory();
     const { t } = useContext(AppContext);
+    const productSaleSpecial = formatSalePriceService(product.special_price, product.special_price_momo)
 
     const percent = Math.round(
-        100 - (product?.special_price / product?.retail_price) * 100
+        100 - (productSaleSpecial / product?.retail_price) * 100
     );
     const { USER } = useSelector((state: any) => state.USER);
     const onFavorite = () => {
@@ -85,16 +86,16 @@ function ProductDetailLeft(props: IProps) {
                     </div> */}
 
                     <div className="service-detail__mobile-bottom">
-                        {product?.special_price > 0 && (
+                        {productSaleSpecial > 0 && (
                             <div className="service-detail__mobile-percent">
-                                {`${t("detail_iten.off")}`} {percent}%
+                                {`${t("detail_item.off")}`} {percent}%
                             </div>
                         )}
                         <div className="service-detail__mobile-price">
-                            {product?.special_price > 0 ? (
+                            {productSaleSpecial > 0 ? (
                                 <>
                                     <span>
-                                        {formatPrice(product?.special_price)}đ
+                                        {formatPrice(productSaleSpecial)}đ
                                     </span>
                                     <span>
                                         {formatPrice(product?.retail_price)}

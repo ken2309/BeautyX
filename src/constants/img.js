@@ -30,12 +30,14 @@ import thumb_2 from "../assets/image/thumb_2.png";
 import imgDefault from "../assets/image/imgDefault.png";
 
 import hairSalon from "../assets/image/tags/hairSalon.svg";
-import message from "../assets/image/tags/message.svg";
+import massage from "../assets/image/tags/message.svg";
+import eyelash_extensions from "../assets/image/tags/eyelash_extensions.jpg";
 import nails from "../assets/image/tags/nails.svg";
 import nhaKhoa from "../assets/image/tags/nhaKhoa.svg";
 import skinCare from "../assets/image/tags/skinCare.svg";
 import spa from "../assets/image/tags/spa.svg";
 import yoga from "../assets/image/tags/yoga.svg";
+import clinic from "../assets/image/tags/clinic.jpg";
 
 import dealhot from "../assets/image/homeBannerDeal/dealhot.png";
 import dealhot1 from "../assets/image/homeBannerDeal/dealhot1.png";
@@ -64,6 +66,7 @@ import tikiPay from "../assets/image/social/tiki.png";
 import visa from "../assets/image/paymentMethod/visa.svg";
 import vnPay from "../assets/image/paymentMethod/vnPay.svg";
 import zaloPay from "../assets/image/paymentMethod/zaloPay.svg";
+import bannerBlur from "../assets/image/bannerBlur.png";
 
 const img = {
     appStore,
@@ -101,6 +104,7 @@ const img = {
     imgDefault,
     sellerCenterImg,
     beautyx,
+    bannerBlur,
 };
 export const social = {
     facebook,
@@ -124,12 +128,14 @@ export const paymentMethod = {
 
 export const imgTag = {
     hairSalon,
-    message,
+    massage,
+    eyelash_extensions,
     nails,
     nhaKhoa,
     skinCare,
     spa,
     yoga,
+    clinic,
 };
 export const dealHot = {
     dealhot1,

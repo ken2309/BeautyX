@@ -19,7 +19,7 @@ import slugify from "../../../../../utils/formatUrlString";
 // }
 // ---- end ----
 // ==== api tracking ====
-//   import tracking from "../../../../../api/trackApi";
+  import tracking from "../../../../../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../../../utils/dataLayer";
@@ -28,7 +28,7 @@ export default function PostProductList(props: any) {
     const { data } = props;
     const history = useHistory();
     const goDetail = (item: any) => {
-        // tracking.USER_ITEM_CLICK(data.org_id, item.id);
+        tracking.USER_ITEM_CLICK(data.org_id, item.id);
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         history.push({
             pathname: `/dich-vu/${slugify(item?.service_name)}`,

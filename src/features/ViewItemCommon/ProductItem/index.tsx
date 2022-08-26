@@ -2,14 +2,14 @@ import React, { useContext } from "react";
 import "../ServicePromoItem/service-promo-item.css";
 import { Product } from "../../../interface/product";
 import { IOrganization } from "../../../interface/organization";
-import formatPrice from "../../../utils/formatPrice";
+import formatPrice, { formatSalePriceService } from "../../../utils/formatPrice";
 import onErrorImg from "../../../utils/errorImg";
 import { Link } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import { formatRouterLinkProduct } from "../../../utils/formatRouterLink/formatRouter";
 
 // ==== api tracking ====
-// import tracking from "../../../api/trackApi";
+import tracking from "../../../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
@@ -24,9 +24,10 @@ interface IProps {
 function ProductItem(props: IProps) {
     const { product, org, changeStyle } = props;
     const { t } = useContext(AppContext);
+    const productSaleSpecial = formatSalePriceService(product?.special_price, product?.special_price_momo)
 
     const percent = Math.round(
-        100 - (product?.special_price / product?.retail_price) * 100
+        100 - (productSaleSpecial / product?.retail_price) * 100
     );
     const pathProductOb = formatRouterLinkProduct(product, org);
     return (
@@ -35,7 +36,7 @@ function ProductItem(props: IProps) {
             onClick={() => {
                 scrollTop();
                 GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
-                // tracking.USER_ITEM_CLICK(org.id, product.id);
+                tracking.USER_ITEM_CLICK(org.id, product.id);
             }}
             className={
                 changeStyle
@@ -85,16 +86,19 @@ function ProductItem(props: IProps) {
                             : "ser-price"
                     }
                 >
-                    {product?.special_price === -1 ? (
-                        <span style={{ color: "var(--purple)" }}>
-                            {formatPrice(product?.retail_price)}đ
-                        </span>
-                    ) : (
-                        <>
-                            <span>{formatPrice(product?.special_price)}đ</span>
-                            <span>{formatPrice(product?.retail_price)}đ</span>
-                        </>
-                    )}
+                    {productSaleSpecial > 0 ?
+                        (
+                            <>
+                                <span>{formatPrice(productSaleSpecial)}đ</span>
+                                <span>{formatPrice(product?.retail_price)}đ</span>
+                            </>
+                        )
+                        :
+                        (
+                            <span style={{ color: "var(--purple)" }}>
+                                {formatPrice(product?.retail_price)}đ
+                            </span>
+                        )}
                 </div>
                 {/* {
                     service._geoDistance ?

@@ -5,14 +5,12 @@ import CommentItem from "./CommentItem";
 import EvaluateInput from "./EvaluateInput";
 import TotalStartEvaluate from "./TotalStartEvaluate";
 import { useDispatch, useSelector } from "react-redux";
-
 import { postAsyncComment } from "../../redux/org_services/serviceSlice";
 import { postAsyncProductComment } from "../../redux/org_products/productSlice";
 import { postCommentCombo } from "../../redux/org_combos/comboSlice";
 import { clearPrevState } from "../../redux/commentSlice";
 import { pickBy, identity } from "lodash";
 import { useHistory } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { AppContext } from "../../context/AppProvider";
 import { postAsyncOrgComments } from "../../redux/org/orgCommentsSlice";
 
@@ -21,8 +19,8 @@ interface IProps {
     totalItem?: number;
     page?: number;
     commentable_type: string;
-    id: number | undefined;
-    detail_id?: number;
+    id: number;
+    detail_id?: number | any;
     refReview?: any;
     changeStyle?: any;
     openSeeMoreCmt?: any;
@@ -176,7 +174,15 @@ function Review(props: IProps) {
                     > */}
                 <div className="evaluate__list">
                     {comments?.map((item: IComment, index: number) => (
-                        <CommentItem key={index} comment={item} user={user} />
+                        <div className="evaluate-comment" key={index}>
+                            <CommentItem
+                                key={index}
+                                comment={item}
+                                user={user}
+                                org_id={id}
+                                parent_type={commentable_type}
+                            />
+                        </div>
                     ))}
                 </div>
                 {/* </InfiniteScroll>
