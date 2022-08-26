@@ -2,7 +2,7 @@
 import React from 'react'
 import { LayoutProps } from '../../../models'
 import Link from 'next/link'
-import style from './Header.module.css'
+import style from './header.module.css'
 import img from '../../../src/constants/img'
 import icon from '../../../src/constants/icon'
 import Image from 'next/image'

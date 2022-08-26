@@ -1,7 +1,7 @@
 import { Container } from '@mui/system'
 import * as React from 'react'
 import useTrans from '../../../context/hooks/useTrans'
-import style from './Footer.module.css'
+import style from './footer.module.css'
 export interface IFooterProps {}
 
 export default function Footer(props: IFooterProps) {
