@@ -15,9 +15,8 @@ import {
     GoogleMap, Marker, useLoadScript, InfoWindow, DirectionsRenderer
 } from "@react-google-maps/api";
 import MapOrgFilter from "./MapOrgFilter";
-import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import useDeviceMobile from "../../utils/useDeviceMobile";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import _, { debounce } from "lodash";
 import { onSetOrgCenter } from "../../redux/org/orgMapSlice";
 import { fetchOrgsMapFilter } from "../../redux/org/orgMapSlice";
